@@ -18,7 +18,7 @@ import com.starrynight.tourapiproject.databinding.ActivityMainBinding;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+//세인 주석
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
