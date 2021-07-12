@@ -6,9 +6,23 @@
     tools:context=".SearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello_search_fragment" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txt_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hello_search_fragment" />
+        <Button
+            android:id="@+id/test_map"
+            android:text="지도"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/txt_test"/>
+
+    </RelativeLayout>
 
 </FrameLayout>
