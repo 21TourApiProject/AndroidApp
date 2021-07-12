@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TourapiProject">
-        <activity android:name=".postWritePage.AddHashTagActivity"></activity>
+        <activity android:name=".postWritePage.PostWriteActivity" />
+        <activity android:name=".postWritePage.AddHashTagActivity" />
         <activity android:name=".postWritePage.SearchObservingPointActivity" />
         <activity android:name=".weatherActivity" />
         <activity

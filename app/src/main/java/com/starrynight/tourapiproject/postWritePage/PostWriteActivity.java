@@ -19,8 +19,6 @@ import com.starrynight.tourapiproject.R;
 
 import java.io.InputStream;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class PostWriteActivity extends AppCompatActivity {
     final int PICK_IMAGE = 201;
@@ -94,6 +92,16 @@ public class PostWriteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchObservingPointActivity.class);
                 startActivityForResult(intent, 202);
+            }
+        });
+
+        //해시태그추가 버튼 클릭 이벤트
+        Button addHashTag = findViewById(R.id.hashTag);
+        addHashTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AddHashTagActivity.class);
+                startActivityForResult(intent, 203);
             }
         });
 
