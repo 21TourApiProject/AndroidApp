@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        Button buttonOpen = (Button) findViewById(R.id.open) ;
-        buttonOpen.setOnClickListener(new Button.OnClickListener() {
+        Button button =findViewById(R.id.weather_button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer) ;
-                if (!drawer.isDrawerOpen(Gravity.START)) {
-                    drawer.openDrawer(Gravity.START) ;
-                }
+                Intent intent = new Intent(getApplicationContext(),weatherActivity.class);
+                startActivity(intent);
+
+                finish();
             }
         });
 
