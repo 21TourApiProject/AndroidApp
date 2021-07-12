@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -27,15 +30,11 @@ import java.security.NoSuchAlgorithmException;
 public class MainActivity extends AppCompatActivity {
 //주석 추가
     private ActivityMainBinding binding;
-    MapFragment mapFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mapFragment = new MapFragment();
-
-//        getHashKey();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -50,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+
+        Button buttonOpen = (Button) findViewById(R.id.open) ;
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
+
+      
         Button button =findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 finish();
-            }
-        });
-
-        Button maptest_btn = (Button) findViewById(R.id.test_map);
-        maptest_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, mapFragment).commit();
             }
         });
 
@@ -80,25 +78,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private void getHashKey(){
-//        PackageInfo packageInfo = null;
-//        try {
-//            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        if (packageInfo == null)
-//            Log.e("KeyHash", "KeyHash:null");
-//
-//        for (Signature signature : packageInfo.signatures) {
-//            try {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            } catch (NoSuchAlgorithmException e) {
-//                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
-//            }
-//        }
-//    }
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, fragment).commit();
+    }
 
 }
