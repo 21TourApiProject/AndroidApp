@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_main">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.starrynight.tourapiproject.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_main"
+        android:name="com.starrynight.tourapiproject.MainFragment"
+        android:label="@string/title_main"
+        tools:layout="@layout/fragment_main" />
 
     <fragment
         android:id="@+id/navigation_search"

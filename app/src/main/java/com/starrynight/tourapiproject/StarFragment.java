@@ -6,6 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.starrynight.tourapiproject.databinding.FragmentMainBinding;
+import com.starrynight.tourapiproject.databinding.FragmentPersonBinding;
+import com.starrynight.tourapiproject.databinding.FragmentStarBinding;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link StarFragment#newInstance} factory method to
@@ -13,6 +17,8 @@ import android.view.ViewGroup;
  */
 public class StarFragment extends Fragment {
 
+
+    private FragmentStarBinding binding;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,6 +63,15 @@ public class StarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_star, container, false);
+        View v = inflater.inflate(R.layout.fragment_star, container, false);
+
+        binding = FragmentStarBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }
