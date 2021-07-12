@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.postWritePage;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.starrynight.tourapiproject.R;
 
 import java.io.InputStream;
 import java.util.Calendar;
@@ -82,6 +84,16 @@ public class PostWriteActivity extends AppCompatActivity {
                 if (editText.getText().toString().equals("내용을 입력해주세요.")){
                     editText.setText("");
                 }
+            }
+        });
+
+        //관측지점검색 버튼 클릭 이벤트
+        Button observingPoint = findViewById(R.id.observingPoint);
+        observingPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchObservingPointActivity.class);
+                startActivityForResult(intent, 202);
             }
         });
 

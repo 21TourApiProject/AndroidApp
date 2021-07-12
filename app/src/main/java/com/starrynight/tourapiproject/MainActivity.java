@@ -1,16 +1,9 @@
 package com.starrynight.tourapiproject;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,12 +13,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.starrynight.tourapiproject.databinding.ActivityMainBinding;
+import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-//세인 주석
 public class MainActivity extends AppCompatActivity {
-//주석 추가
+
     private ActivityMainBinding binding;
     MapFragment mapFragment;
 
@@ -75,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PostWriteActivity.class);
-                startActivityForResult(intent, 101);
+                startActivity(intent);
             }
         });
     }
