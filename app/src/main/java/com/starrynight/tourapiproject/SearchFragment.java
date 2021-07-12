@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.starrynight.tourapiproject.databinding.FragmentMainBinding;
+import com.starrynight.tourapiproject.databinding.FragmentPersonBinding;
+import com.starrynight.tourapiproject.databinding.FragmentSearchBinding;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SearchFragment#newInstance} factory method to
@@ -14,6 +18,7 @@ import android.widget.Button;
  */
 public class SearchFragment extends Fragment {
 
+    private FragmentSearchBinding binding;
 
 
     public SearchFragment() {
@@ -39,8 +44,10 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_search, container, false);
-        MapFragment mapFragment;
-        mapFragment = new MapFragment();
+
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
         Button maptest_btn = (Button) v.findViewById(R.id.test_map);
         maptest_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +55,12 @@ public class SearchFragment extends Fragment {
                 ((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
             }
         });
-        return v;
+
+        return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }
