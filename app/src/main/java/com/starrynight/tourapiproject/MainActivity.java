@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -65,6 +66,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, mapFragment).commit();
+            }
+        });
+
+        // 게시물 작성 페이지로 넘어가는 이벤트
+        Button postWrite = findViewById(R.id.postWrite);
+        postWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PostWriteActivity.class);
+                startActivityForResult(intent, 101);
             }
         });
     }
