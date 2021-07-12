@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +20,8 @@
         tools:targetApi="n">
 
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="2201411c61cc7086fe639ce660ccb21e"/>
+
+        <activity android:name=".weatherActivity"></activity>
 
         <activity
             android:name=".MainActivity"

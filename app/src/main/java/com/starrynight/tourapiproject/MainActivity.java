@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -48,11 +49,33 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+
         Button buttonOpen = (Button) findViewById(R.id.open) ;
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
 
+      
+        Button button =findViewById(R.id.weather_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),weatherActivity.class);
+                startActivity(intent);
+
+                finish();
+            }
+        });
+
+        // 게시물 작성 페이지로 넘어가는 이벤트
+        Button postWrite = findViewById(R.id.postWrite);
+        postWrite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PostWriteActivity.class);
+                startActivityForResult(intent, 101);
+            }
+        });
     }
 
     public void replaceFragment(Fragment fragment) {
