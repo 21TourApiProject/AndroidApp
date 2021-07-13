@@ -10,12 +10,6 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/open"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_baseline_list_24" />
-
-        <Button
             android:id="@+id/weather_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
