@@ -8,17 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.starrynight.tourapiproject.databinding.FragmentDashboardBinding;
-import com.starrynight.tourapiproject.databinding.FragmentMainBinding;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
-
-    private FragmentMainBinding binding;
 
     public MainFragment() {
         // Required empty public constructor
@@ -43,10 +38,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-        binding = FragmentMainBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-        Button buttonOpen = (Button) v.findViewById(R.id.open) ;
 
         Button button =(Button) v.findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -68,8 +60,7 @@ public class MainFragment extends Fragment {
                 startActivityForResult(intent, 101);
             }
         });
-
-        return root;
+        return v;
     }
 
     @Override

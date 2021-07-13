@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,32 +24,51 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.starrynight.tourapiproject.databinding.ActivityMainBinding;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 //세인 주석
 public class MainActivity extends AppCompatActivity {
 //주석 추가
-    private ActivityMainBinding binding;
+    MainFragment mainFragment;
+    SearchFragment searchFragment;
+    StarFragment starFragment;
+    PersonFragment personFragment;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        mainFragment = new MainFragment();
+        searchFragment = new SearchFragment();
+        starFragment = new StarFragment();
+        personFragment = new PersonFragment();
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_main, R.id.navigation_search, R.id.navigation_star,R.id.navigation_person)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,mainFragment).commit();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.navigation_main:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,mainFragment).commit();
+                        return true;
+                    case R.id.navigation_search:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,searchFragment).commit();
+                        return true;
+                    case R.id.navigation_star:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,starFragment).commit();
+                        return true;
+                    case R.id.navigation_person:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,personFragment).commit();
+                        return true;
+                }
+                return false;
+            }
+        });
+
+
 
 
 

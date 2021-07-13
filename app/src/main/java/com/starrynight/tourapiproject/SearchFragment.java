@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.starrynight.tourapiproject.databinding.FragmentMainBinding;
-import com.starrynight.tourapiproject.databinding.FragmentPersonBinding;
-import com.starrynight.tourapiproject.databinding.FragmentSearchBinding;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,9 +15,6 @@ import com.starrynight.tourapiproject.databinding.FragmentSearchBinding;
  * create an instance of this fragment.
  */
 public class SearchFragment extends Fragment {
-
-    private FragmentSearchBinding binding;
-
 
     public SearchFragment() {
         // Required empty public constructor
@@ -45,9 +40,6 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
-        binding = FragmentSearchBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
         Button maptest_btn = (Button) v.findViewById(R.id.test_map);
         maptest_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +48,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        return root;
+        return v;
     }
 
     @Override
