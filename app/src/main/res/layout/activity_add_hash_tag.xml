@@ -37,7 +37,7 @@
                         android:background="@drawable/ic_baseline_search_24" />
 
                     <EditText
-                        android:id="@+id/findObservePoint"
+                        android:id="@+id/findHashTag"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -61,27 +61,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
                     <LinearLayout
+                        android:id="@+id/dynamicLayout2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/hashTag1"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/post_write__edge"
-                            android:text="해시태그 1"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/hashTag2"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/post_write__edge"
-                            android:text="해시태그 2"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
+                        android:orientation="vertical" />
                 </ScrollView>
 
             </android.support.constraint.ConstraintLayout>
