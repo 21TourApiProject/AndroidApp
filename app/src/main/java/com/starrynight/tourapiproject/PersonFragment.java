@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PersonFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class PersonFragment extends Fragment {
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +59,14 @@ public class PersonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_person, container, false);
+        View v = inflater.inflate(R.layout.fragment_person, container, false);
+
+        return v;
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 }
