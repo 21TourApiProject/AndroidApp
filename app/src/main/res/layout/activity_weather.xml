@@ -150,8 +150,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="20dp"
-        app:layout_constraintEnd_toStartOf="@id/wt_guideline"
         app:layout_constraintBottom_toBottomOf="@id/wt_guideline1"
+        app:layout_constraintEnd_toStartOf="@id/wt_guideline"
         app:layout_constraintTop_toBottomOf="@+id/wt_star_ob_fit_info" />
 
     <TextView
@@ -237,9 +237,9 @@
         android:id="@+id/wt_cloud"
         style="@style/ImageView.size60"
         android:layout_marginBottom="50dp"
-        app:layout_constraintTop_toTopOf="@id/wt_guideline1"
         app:layout_constraintBottom_toTopOf="@id/wt_wind"
-        app:layout_constraintStart_toStartOf="@id/wt_wind" />
+        app:layout_constraintStart_toStartOf="@id/wt_wind"
+        app:layout_constraintTop_toTopOf="@id/wt_guideline1" />
 
     <TextView
         android:id="@+id/wt_cloud_txt"
@@ -264,9 +264,9 @@
         android:id="@+id/wt_temp"
         style="@style/ImageView.size60"
         android:layout_marginBottom="50dp"
-        app:layout_constraintTop_toTopOf="@id/wt_guideline1"
         app:layout_constraintBottom_toTopOf="@id/wt_humidity"
-        app:layout_constraintStart_toStartOf="@id/wt_humidity" />
+        app:layout_constraintStart_toStartOf="@id/wt_humidity"
+        app:layout_constraintTop_toTopOf="@id/wt_guideline1" />
 
     <TextView
         android:id="@+id/wt_temp_txt"
@@ -288,11 +288,11 @@
 
     <ImageView
         android:id="@+id/wt_moon_phase"
-        app:layout_constraintTop_toTopOf="@id/wt_guideline1"
         style="@style/ImageView.size60"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@id/wt_dayLength"
-        app:layout_constraintStart_toStartOf="@id/wt_dayLength" />
+        app:layout_constraintStart_toStartOf="@id/wt_dayLength"
+        app:layout_constraintTop_toTopOf="@id/wt_guideline1" />
 
     <TextView
         android:id="@+id/wt_moon_txt"
@@ -312,11 +312,11 @@
 
     <ImageView
         android:id="@+id/wt_visibility"
-        app:layout_constraintTop_toTopOf="@id/wt_guideline1"
         style="@style/ImageView.size60"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@id/wt_sunAltitude"
-        app:layout_constraintStart_toStartOf="@id/wt_sunAltitude" />
+        app:layout_constraintStart_toStartOf="@id/wt_sunAltitude"
+        app:layout_constraintTop_toTopOf="@id/wt_guideline1" />
 
     <TextView
         android:id="@+id/wt_visibility_txt"
@@ -339,9 +339,9 @@
         style="@style/ImageView.size60"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="70dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/wt_humidity" />
+        app:layout_constraintEnd_toStartOf="@id/wt_humidity"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/wt_wind_txt"
@@ -409,8 +409,8 @@
         android:id="@+id/wt_sunAltitude"
         style="@style/ImageView.size60"
         android:layout_marginStart="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/wt_wind"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/wt_dayLength" />
 
     <TextView
@@ -428,5 +428,4 @@
         app:layout_constraintEnd_toEndOf="@+id/wt_sunAltitude_txt"
         app:layout_constraintStart_toStartOf="@+id/wt_sunAltitude_txt"
         app:layout_constraintTop_toBottomOf="@+id/wt_sunAltitude_txt" />
-
 </android.support.constraint.ConstraintLayout>
