@@ -3,26 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    tools:context=".MainFragment">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txt_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hello_search_fragment" />
         <Button
-            android:id="@+id/test_map"
-            android:text="지도"
+            android:id="@+id/weather_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="날씨" />
+
+        <Button
+            android:id="@+id/postWrite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_below="@+id/txt_test"/>
+            android:text="게시글작성" />
 
-    </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메인페이지 입니다"/>
+
+    </LinearLayout>
 
 </FrameLayout>
