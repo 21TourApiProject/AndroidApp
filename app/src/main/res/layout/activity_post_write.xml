@@ -28,34 +28,50 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <android.support.constraint.ConstraintLayout
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/post_write__edge">
+
+                        <Button
+                            android:id="@+id/addPicture"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/post_write__edge"
+                            android:gravity="bottom|center_horizontal"
+                            android:text="0/10" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginTop="20dp"
+                            app:srcCompat="@drawable/post_write__add_button"
+                            tools:ignore="VectorDrawableCompat" />
+
+                    </RelativeLayout>
+
+                    <FrameLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp">
 
                         <Button
-                            android:id="@+id/addPicture"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/post_write__edge"
-                            android:gravity="bottom|center_horizontal"
-                            android:text="0/10"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:id="@+id/remove3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="80dp"
+                            android:background="@drawable/post_write__remove_button" />
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="25dp"
-                            android:layout_marginTop="20dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/post_write__add_button"
+                            android:id="@+id/imageView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:srcCompat="@drawable/ic_launcher_background"
                             tools:ignore="VectorDrawableCompat" />
 
-                    </android.support.constraint.ConstraintLayout>
+                    </FrameLayout>
 
                 </LinearLayout>
 

@@ -1,29 +1,24 @@
 package com.starrynight.tourapiproject.postWritePage;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,7 +62,10 @@ public class PostWriteActivity extends AppCompatActivity {
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (numOfPicture >= 10){
+                    Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent("android.intent.action.MULTIPLE_PICK");
                 intent.setType("image/*");
                 PackageManager manager = getApplicationContext().getPackageManager();
@@ -263,8 +261,12 @@ public class PostWriteActivity extends AppCompatActivity {
         imageView.setImageBitmap(img);
         imageView.setId(numOfPicture);
 
+        Button button = new Button(this);
+        button.setBackground(ContextCompat.getDrawable(this, R.drawable.post_write__remove_button));
+        button.setId(numOfPicture+10);
+
         final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(20,0,0,0);
         dynamicLayout.addView(imageView, params);
     }
@@ -282,7 +284,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 imageView.setId(numOfPicture);
 
                 final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(20,0,0,0);
                 dynamicLayout.addView(imageView, params);
             } catch (Exception e) {
