@@ -24,6 +24,9 @@
             android:value="2201411c61cc7086fe639ce660ccb21e" />
 
         <activity android:name=".weatherActivity" />
+        <activity android:name=".postWritePage.PostWriteActivity"/>
+        <activity android:name=".postWritePage.SearchObservingPointActivity"/>
+        <activity android:name=".postWritePage.AddHashTagActivity"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
