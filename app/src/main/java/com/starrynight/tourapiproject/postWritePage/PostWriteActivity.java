@@ -1,12 +1,21 @@
 package com.starrynight.tourapiproject.postWritePage;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ClipData;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,14 +23,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class PostWriteActivity extends AppCompatActivity {
-    final int PICK_IMAGE = 201;
+    final int PICK_IMAGE_SAMSUNG = 200;
+    final int PICK_IMAGE_MULTIPLE = 201;
+
     private TextView textView;
     private Button addPicture;
     private ImageView imageView;
@@ -48,9 +63,27 @@ public class PostWriteActivity extends AppCompatActivity {
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent, PICK_IMAGE);
+
+                Intent intent = new Intent("android.intent.action.MULTIPLE_PICK");
+                intent.setType("image/*");
+                PackageManager manager = getApplicationContext().getPackageManager();
+                List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
+
+                if (infos.size() > 0) {
+                    Log.e("FAT=","삼성폰");
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_SAMSUNG);
+                } else {
+                    Log.e("FAT=","일반폰");
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // 일반폰 - 반드시 있어야 다중선택 가능
+                    intent.setAction(Intent.ACTION_PICK); // ACTION_GET_CONTENT 사용불가 - 엘지 G2 테스트
+                    startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_MULTIPLE);
+
+//                    Intent intent = new Intent(Intent.ACTION_PICK);
+//                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+//                    //intent.setType("image/*");
+//                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                    startActivityForResult(Intent.createChooser(intent, "사진 최대 9장 선택가능"), PICK_IMAGE_MULTIPLE);
+                }
             }
         });
 
@@ -73,8 +106,8 @@ public class PostWriteActivity extends AppCompatActivity {
             }
         };
 
-        textView = findViewById(R.id.textView);
         //작성란 클릭 이벤트
+        textView = findViewById(R.id.textView);
         EditText editText = findViewById(R.id.editText);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,28 +140,123 @@ public class PostWriteActivity extends AppCompatActivity {
 
     }
 
-    @Override //갤러리에서 이미지 불러온 후 행동
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    // 선택한 이미지에서 비트맵 생성
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
-                    // 이미지뷰에 세팅
-                    imageView.setImageBitmap(img);
 
-                    //설명, 버튼 숨기기
-                    textView.setVisibility(View.INVISIBLE);
-                    addPicture.setVisibility(View.INVISIBLE);
-                    System.out.println("was hidden!");
-                } catch (Exception e) {
-                    e.printStackTrace();
+//    @Override //갤러리에서 이미지 불러온 후 행동
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == PICK_IMAGE) {
+//            if (resultCode == RESULT_OK) {
+//                try {
+//                    // 선택한 이미지에서 비트맵 생성
+//                    InputStream in = getContentResolver().openInputStream(data.getData());
+//                    Bitmap img = BitmapFactory.decodeStream(in);
+//                    in.close();
+//                    // 이미지뷰에 세팅
+//                    imageView.setImageBitmap(img);
+//
+//                    //설명, 버튼 숨기기
+//                    textView.setVisibility(View.INVISIBLE);
+//                    addPicture.setVisibility(View.INVISIBLE);
+//                    System.out.println("was hidden!");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        String imageEncoded;
+//        try {
+//            if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && null != data) {
+//                // Get the Image from data
+//
+//                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//                ArrayList<String> imagesEncodedList = new ArrayList<String>();
+//
+//                if(data.getData()!=null){ //1장 선택했을 때
+//                    System.out.println("처음");
+//                    Uri mImageUri=data.getData();
+//                    // Get the cursor
+//                    Cursor cursor = getContentResolver().query(mImageUri, filePathColumn, null, null, null);
+//                    // Move to first row
+//                    cursor.moveToFirst();
+//
+//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                    imageEncoded  = cursor.getString(columnIndex);
+//                    cursor.close();
+//
+//                } else { //여러장 선택했을 때
+//                    if (data.getClipData() != null) {
+//                        System.out.println("다음");
+//                        ClipData mClipData = data.getClipData();
+//                        ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+//
+//                        for (int i = 0; i < mClipData.getItemCount(); i++) {
+//                            ClipData.Item item = mClipData.getItemAt(i);
+//                            Uri uri = item.getUri();
+//                            mArrayUri.add(uri);
+//                            // Get the cursor
+//                            Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
+//                            // Move to first row
+//                            cursor.moveToFirst();
+//
+//                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                            imageEncoded  = cursor.getString(columnIndex);
+//                            imagesEncodedList.add(imageEncoded);
+//                            cursor.close();
+//                        }
+//                        Log.v("LOG_TAG", "# Of Selected Images: " + mArrayUri.size());
+//                    }
+//                }
+//            } else {
+//                Toast.makeText(this, "사진을 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+//            }
+//        } catch (Exception e) {
+//            Toast.makeText(this, "오류가 발생했습니다.", Toast.LENGTH_LONG).show();
+//        }
+//
+//        //super.onActivityResult(requestCode, resultCode, data);
+//    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+        if (requestCode == PICK_IMAGE_SAMSUNG) { //삼성폰 일때
+            final Bundle extras = data.getExtras();
+            int count = extras.getInt("selectedCount");
+            Object items = extras.getStringArrayList("selectedItems");
+            // do somthing
+            Log.e("FAT=", "삼성폰 : " + items.toString());
+        }
+        else { //일반폰 일때
+            if (data != null && data.getData() != null) {
+                Uri uri = data.getData();
+                // do somthing
+                Log.e("FAT=", "일반폰/단일 : "+uri.toString());
+            }
+            else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    ClipData clipData = data.getClipData();
+                    if (clipData != null) {
+                        ArrayList<Uri> uris = new ArrayList<>();
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
+                            ClipData.Item item = clipData.getItemAt(i);
+                            Uri uri = item.getUri();
+                            Log.e("FAT=", "일반폰/다중 : "+uri.toString());
+                            uris.add(uri);
+                        }
+                        // Do someting
+                    }
                 }
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 
     public void onClickDatePicker(View view){
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, callbackMethod, mYear, mMonth, mDay);
