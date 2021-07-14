@@ -31,68 +31,20 @@
         android:text="별 헤는밤"
         android:textSize="30sp" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50sp"
-        android:layout_marginBottom="50sp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="50dp">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:background="@drawable/post_write__picture_edge" />
-
-            <Button
-                android:id="@+id/hash_button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="200dp"
-                android:text="#hash" />
-
-            <Button
-                android:id="@+id/hash_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/hash_button2"
-                android:layout_marginTop="200dp"
-                android:layout_marginEnd="-113dp"
-                android:text="#hash" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:layout_below="@id/hash_button"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/ic_launcher_background" />
-
-            <Button
-                android:id="@+id/hash_button3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imageView2"
-                android:text="#hash" />
-
-            <Button
-                android:id="@+id/hash_button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imageView2"
-                android:layout_alignEnd="@id/hash_button3"
-                android:layout_marginEnd="-113dp"
-                android:text="#hash" />
-
-        </RelativeLayout>
-
-
-    </ScrollView>
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
 
 </RelativeLayout>
