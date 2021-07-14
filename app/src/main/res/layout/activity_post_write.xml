@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostWriteActivity">
+    tools:context=".postWritePage.PostWriteActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,31 +13,35 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="50dp">
+            android:orientation="vertical">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="300dp"
                 android:layout_height="200dp"
-                android:layout_marginTop="44dp">
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="45dp">
 
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="300dp"
                     android:layout_height="200dp"
+                    android:background="@drawable/post_write__edge"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/post_write__picture_edge" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/post_write__edge" />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="사진을 추가하세요."
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:text="사진을 추가해주세요."
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +59,8 @@
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="300dp"
-                android:layout_height="100dp">
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/datePicker"
@@ -88,6 +93,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="당시 별 관측 적합도 : 좋음/나쁨으로 표시"
                 android:textSize="16sp" />
 
@@ -95,32 +101,36 @@
                 android:id="@+id/editText"
                 android:layout_width="300dp"
                 android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
+                android:background="@drawable/post_write__edge"
                 android:ems="10"
+                android:hint="내용을 입력해주세요."
                 android:inputType="textPersonName"
-                android:text="내용을 입력해주세요."
-                android:background="@null"/>
+                android:textAlignment="viewStart" />
 
             <Button
-                android:id="@+id/addHashTag"
+                android:id="@+id/observingPoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="48dp"
-                android:layout_marginEnd="80dp"
-                android:text="해시태그 추가" />
-
-            <Button
-                android:id="@+id/addObservePoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:text="관측 지점 검색"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
+                android:id="@+id/hashTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:text="해시태그 추가" />
+
+            <Button
                 android:id="@+id/save"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="60dp"
                 android:text="저장" />
