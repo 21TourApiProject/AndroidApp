@@ -62,6 +62,7 @@ public class PostWriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_write);
 
         // + 버튼 클릭 이벤트
+        dynamicLayout = findViewById(R.id.dynamicLayout);
         addPicture = findViewById(R.id.addPicture);
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,7 +220,7 @@ public class PostWriteActivity extends AppCompatActivity {
             final Bundle extras = data.getExtras();
             int count = extras.getInt("selectedCount");
             Object items = extras.getStringArrayList("selectedItems");
-            // do somthing
+
             Log.e("FAT=", "삼성폰 : " + items.toString());
         }
         else { //일반폰/단일 일때
@@ -242,7 +243,6 @@ public class PostWriteActivity extends AppCompatActivity {
                     if (clipData != null) {
                         ArrayList<Uri> uris = new ArrayList<>();
                         for (int i = 0; i < clipData.getItemCount(); i++) {
-                            numOfPicture ++;
                             ClipData.Item item = clipData.getItemAt(i);
                             Uri uri = item.getUri();
                             Log.e("FAT=", "일반폰/다중 : "+uri.toString());
@@ -258,13 +258,15 @@ public class PostWriteActivity extends AppCompatActivity {
 
     private void addImage(Bitmap img) {
         numOfPicture ++;
-        addPicture.setText("1/10");
+        addPicture.setText(Integer.toString(numOfPicture) + "/10");
         ImageView imageView = new ImageView(this);
         imageView.setImageBitmap(img);
         imageView.setId(numOfPicture);
 
         final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-        dynamicLayout.addView(imageView, new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.MATCH_PARENT));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(20,0,0,0);
+        dynamicLayout.addView(imageView, params);
     }
 
     private void addImages(ArrayList<Uri> uris) {
@@ -275,18 +277,19 @@ public class PostWriteActivity extends AppCompatActivity {
                 Bitmap img = BitmapFactory.decodeStream(in);
                 in.close();
 
-                addPicture.setText(Integer.toString(numOfPicture) + "/10");
                 ImageView imageView = new ImageView(this);
                 imageView.setImageBitmap(img);
                 imageView.setId(numOfPicture);
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(20,0,0,0);
                 dynamicLayout.addView(imageView, params);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+        addPicture.setText(Integer.toString(numOfPicture) + "/10");
     }
 
     public void onClickDatePicker(View view){
