@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainFragment">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/weather_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="날씨" />
+    <Button
+        android:id="@+id/weather_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="false"
+        android:text="날씨" />
 
-        <Button
-            android:id="@+id/postWrite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="게시글작성" />
+    <Button
+        android:id="@+id/postWrite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:text="게시글작성" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="메인페이지 입니다"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="false"
+        android:layout_centerHorizontal="true"
+        android:text="별 헤는밤"
+        android:textSize="30sp" />
 
-    </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>
