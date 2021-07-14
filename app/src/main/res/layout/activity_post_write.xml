@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textAlignment="textEnd"
     tools:context=".postWritePage.PostWriteActivity">
 
     <ScrollView
@@ -15,47 +16,66 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_marginTop="45dp">
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="40dp">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="300dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/post_write__edge"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/post_write__edge" />
+                <LinearLayout
+                    android:id="@+id/dynamicLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="16dp"
-                    android:text="사진을 추가해주세요."
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/post_write__edge">
 
-                <Button
-                    android:id="@+id/addPicture"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:text="+"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+                        <Button
+                            android:id="@+id/addPicture"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/post_write__edge"
+                            android:gravity="bottom|center_horizontal"
+                            android:text="0/10" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginTop="20dp"
+                            app:srcCompat="@drawable/post_write__add_button"
+                            tools:ignore="VectorDrawableCompat" />
+
+                    </RelativeLayout>
+
+                    <FrameLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp">
+
+                        <Button
+                            android:id="@+id/remove3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="80dp"
+                            android:background="@drawable/post_write__remove_button" />
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:srcCompat="@drawable/ic_launcher_background"
+                            tools:ignore="VectorDrawableCompat" />
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="300dp"
@@ -90,7 +110,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -102,12 +122,11 @@
                 android:layout_width="300dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/post_write__edge"
-                android:ems="10"
+                android:ems="0"
                 android:hint="내용을 입력해주세요."
-                android:inputType="textPersonName"
-                android:textAlignment="viewStart" />
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/observingPoint"

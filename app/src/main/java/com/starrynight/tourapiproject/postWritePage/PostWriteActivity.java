@@ -1,26 +1,26 @@
 package com.starrynight.tourapiproject.postWritePage;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.provider.MediaStore;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -34,12 +34,12 @@ import java.util.Calendar;
 import java.util.List;
 
 public class PostWriteActivity extends AppCompatActivity {
+
     final int PICK_IMAGE_SAMSUNG = 200;
     final int PICK_IMAGE_MULTIPLE = 201;
-
-    private TextView textView;
+    int numOfPicture = 0;
+    LinearLayout dynamicLayout;
     private Button addPicture;
-    private ImageView imageView;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -56,27 +56,29 @@ public class PostWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_write);
 
-        imageView = findViewById(R.id.imageView);
-
         // + 버튼 클릭 이벤트
+        dynamicLayout = findViewById(R.id.dynamicLayout);
         addPicture = findViewById(R.id.addPicture);
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (numOfPicture >= 10){
+                    Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent("android.intent.action.MULTIPLE_PICK");
                 intent.setType("image/*");
                 PackageManager manager = getApplicationContext().getPackageManager();
                 List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
 
-                if (infos.size() > 0) {
+                if (infos.size() > 0) { //테스트 하고 삼성,일반 차이없으면 삭제 예정
                     Log.e("FAT=","삼성폰");
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_SAMSUNG);
+                    startActivityForResult(Intent.createChooser(intent, "사진을 선택해주세요"), PICK_IMAGE_SAMSUNG);
                 } else {
                     Log.e("FAT=","일반폰");
                     intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // 일반폰 - 반드시 있어야 다중선택 가능
                     intent.setAction(Intent.ACTION_PICK); // ACTION_GET_CONTENT 사용불가 - 엘지 G2 테스트
-                    startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_MULTIPLE);
+                    startActivityForResult(Intent.createChooser(intent,"여러장을 선택하려면 갤러리를 클릭해주세요"), PICK_IMAGE_MULTIPLE);
 
 //                    Intent intent = new Intent(Intent.ACTION_PICK);
 //                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -105,18 +107,6 @@ public class PostWriteActivity extends AppCompatActivity {
                 timePicker.setText(hourOfDay + " : " + minute);
             }
         };
-
-        //작성란 클릭 이벤트
-        textView = findViewById(R.id.textView);
-        EditText editText = findViewById(R.id.editText);
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editText.getText().toString().equals("내용을 입력해주세요.")){
-                    editText.setText("");
-                }
-            }
-        });
 
         //관측지점검색 버튼 클릭 이벤트
         Button observingPoint = findViewById(R.id.observingPoint);
@@ -228,16 +218,24 @@ public class PostWriteActivity extends AppCompatActivity {
             final Bundle extras = data.getExtras();
             int count = extras.getInt("selectedCount");
             Object items = extras.getStringArrayList("selectedItems");
-            // do somthing
+
             Log.e("FAT=", "삼성폰 : " + items.toString());
         }
-        else { //일반폰 일때
+        else { //일반폰/단일 일때
             if (data != null && data.getData() != null) {
                 Uri uri = data.getData();
-                // do somthing
                 Log.e("FAT=", "일반폰/단일 : "+uri.toString());
+                try {
+                    InputStream in = getContentResolver().openInputStream(uri);
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    in.close();
+                    //이미지 추가
+                    addImage(img);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-            else {
+            else { //일반폰/다중 일때
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ClipData clipData = data.getClipData();
                     if (clipData != null) {
@@ -248,7 +246,7 @@ public class PostWriteActivity extends AppCompatActivity {
                             Log.e("FAT=", "일반폰/다중 : "+uri.toString());
                             uris.add(uri);
                         }
-                        // Do someting
+                        addImages(uris);
                     }
                 }
             }
@@ -256,7 +254,45 @@ public class PostWriteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void addImage(Bitmap img) {
+        numOfPicture ++;
+        addPicture.setText(Integer.toString(numOfPicture) + "/10");
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(img);
+        imageView.setId(numOfPicture);
 
+        Button button = new Button(this);
+        button.setBackground(ContextCompat.getDrawable(this, R.drawable.post_write__remove_button));
+        button.setId(numOfPicture+10);
+
+        final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(20,0,0,0);
+        dynamicLayout.addView(imageView, params);
+    }
+
+    private void addImages(ArrayList<Uri> uris) {
+        for (Uri uri : uris){
+            numOfPicture ++;
+            try {
+                InputStream in = getContentResolver().openInputStream(uri);
+                Bitmap img = BitmapFactory.decodeStream(in);
+                in.close();
+
+                ImageView imageView = new ImageView(this);
+                imageView.setImageBitmap(img);
+                imageView.setId(numOfPicture);
+
+                final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(20,0,0,0);
+                dynamicLayout.addView(imageView, params);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        addPicture.setText(Integer.toString(numOfPicture) + "/10");
+    }
 
     public void onClickDatePicker(View view){
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, callbackMethod, mYear, mMonth, mDay);
