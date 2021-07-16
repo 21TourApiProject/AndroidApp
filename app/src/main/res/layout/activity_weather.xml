@@ -29,23 +29,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/wt_month_date"
-        android:layout_width="70dp"
+
+    <Button
+        android:id="@+id/wt_datePicker"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginTop="100dp"
+        android:text="월/일 선택"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/wt_area"
+    <Button
+        android:id="@+id/wt_areaPicker"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintStart_toEndOf="@id/wt_month_date"
+        android:text="지역 선택"
+        app:layout_constraintStart_toEndOf="@id/wt_datePicker"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -54,9 +57,9 @@
         android:layout_marginStart="10dp"
         android:text="은/는"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@id/wt_month_date"
-        app:layout_constraintStart_toEndOf="@id/wt_area"
-        app:layout_constraintTop_toTopOf="@id/wt_month_date" />
+        app:layout_constraintBottom_toBottomOf="@id/wt_datePicker"
+        app:layout_constraintStart_toEndOf="@id/wt_areaPicker"
+        app:layout_constraintTop_toTopOf="@id/wt_datePicker" />
 
     <TextView
         android:id="@+id/wt_ment"
@@ -67,7 +70,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@id/wt_guideline"
         app:layout_constraintStart_toStartOf="@id/wt_guideline"
-        app:layout_constraintTop_toBottomOf="@id/wt_month_date" />
+        app:layout_constraintTop_toBottomOf="@id/wt_datePicker" />
 
     <ImageView
         android:id="@+id/wt_weather"
