@@ -1,0 +1,52 @@
+package com.starrynight.tourapiproject;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+public class Touristspot_Activity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView (R.layout.activity_touristspot);
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_post);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
+        recyclerView.setAdapter(adapter);
+
+        adapter.addItem(new post_point_item("관광지1"));
+        adapter.addItem(new post_point_item("관광지2"));
+        adapter.addItem(new post_point_item("관광지3"));
+
+        recyclerView.setAdapter((adapter));
+
+        RecyclerView recyclerView1 = findViewById(R.id.recyclerview_post2);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView1.setLayoutManager(layoutManager1);
+
+        recyclerView1.setAdapter(adapter);
+
+        adapter.addItem(new post_point_item("관광지1"));
+        adapter.addItem(new post_point_item("관광지2"));
+        adapter.addItem(new post_point_item("관광지3"));
+
+        recyclerView1.setAdapter((adapter));
+
+
+        Button button = findViewById(R.id.heart_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.setSelected(!v.isSelected());
+                }
+            });
+        }
+    }
