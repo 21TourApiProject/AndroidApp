@@ -30,7 +30,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
+    <TextView
+        android:onClick="wtClickDatePicker"
         android:id="@+id/wt_datePicker"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -40,7 +41,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <TextView
+        android:onClick="wtClickAreaPicker"
         android:id="@+id/wt_areaPicker"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
