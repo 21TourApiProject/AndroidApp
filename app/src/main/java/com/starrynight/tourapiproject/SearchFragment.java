@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -46,6 +47,16 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
+            }
+        });
+        Button button  =(Button)v.findViewById(R.id.Touristspot_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),Touristspot_Activity.class);
+                startActivity(intent);
+
+                getActivity().finish();
             }
         });
 
