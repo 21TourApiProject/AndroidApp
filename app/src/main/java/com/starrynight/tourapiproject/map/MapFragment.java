@@ -1,12 +1,16 @@
 package com.starrynight.tourapiproject.map;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starrynight.tourapiproject.R;
 
@@ -25,8 +29,9 @@ public class MapFragment extends Fragment {
     private MarkereventListner markereventListner= new MarkereventListner();
     private MapeventListner mapeventListner=new MapeventListner();
     RelativeLayout details;
-    TextView detailsNameText;
-    TextView detailsContentText;
+    TextView detailsName_Text;
+    TextView detailsContent_Text;
+    Button kmap_btn;
 
     public MapFragment() {
         // Required empty public constructor
@@ -66,10 +71,28 @@ public class MapFragment extends Fragment {
 
         @Override
         public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+            //상세정보 레이아웃 등장 설정
             BalloonObject bobject = (BalloonObject) mapPOIItem.getUserObject();
-            detailsNameText.setText(bobject.getName());
-            detailsContentText.setText(bobject.getContent());
+            detailsName_Text.setText(bobject.getName());
+            detailsContent_Text.setText(bobject.getContent());
             details.setVisibility(View.VISIBLE);
+            String url ="kakaomap://look?p="+bobject.getLatitude()+","+bobject.getLongitude();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+            kmap_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(intent);
+                }
+            });
+
+            details.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "상세정보 클릭됨", Toast.LENGTH_SHORT).show();
+                }
+            });
+            
         }
 
         @Override
@@ -154,8 +177,9 @@ public class MapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         details = view.findViewById(R.id.detail_layout);
-        detailsNameText = view.findViewById(R.id.name_txt);
-        detailsContentText = view.findViewById(R.id.content_txt);
+        detailsName_Text = view.findViewById(R.id.name_txt);
+        detailsContent_Text = view.findViewById(R.id.content_txt);
+        kmap_btn = view.findViewById(R.id.kmap_btn);
         //지도 띄우기
         MapView mapView = new MapView(getActivity());
 
@@ -226,9 +250,10 @@ public class MapFragment extends Fragment {
         balloon_Object.setName(name);
         balloon_Object.setContent(content);
         balloon_Object.setTag(tag);
+        balloon_Object.setLatitude(latitude);
+        balloon_Object.setLongitude(longitude);
 
-        //마커 위치설정
-        MARKER_POINT=MapPoint.mapPointWithGeoCoord(latitude, longitude);
+        MARKER_POINT= MapPoint.mapPointWithGeoCoord(latitude, longitude);
 
         return  balloon_Object;
     }
