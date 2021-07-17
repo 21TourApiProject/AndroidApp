@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.postItemPage;
 
 public class post_item {
     String hash;

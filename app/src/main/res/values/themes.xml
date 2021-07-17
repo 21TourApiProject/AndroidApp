@@ -8,6 +8,36 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="ImageView">
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="ImageView.size48">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+    <style name="ImageView.size60">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+    </style>
+
+    <style name="Wt_climate_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Wt_climate_info">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
     <style name="ThemeOverlay.TourapiProject.FullscreenContainer" parent="">
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>

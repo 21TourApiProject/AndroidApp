@@ -16,17 +16,16 @@
 
     <Button
         android:id="@+id/postWrite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
-        android:text="게시글작성" />
+        android:background="@drawable/post_plus__button" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="false"
         android:layout_centerHorizontal="true"
         android:text="별 헤는밤"
         android:textSize="30sp" />
@@ -41,7 +40,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            tools:itemCount="5">
 
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>

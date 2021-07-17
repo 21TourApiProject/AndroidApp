@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
+import com.starrynight.tourapiproject.postItemPage.post_item;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
-
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +64,7 @@ public class MainFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),weatherActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),WeatherActivity.class);
                 startActivity(intent);
 
                 getActivity().finish();
