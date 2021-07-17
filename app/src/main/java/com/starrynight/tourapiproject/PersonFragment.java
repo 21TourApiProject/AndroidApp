@@ -2,11 +2,21 @@ package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
+import com.starrynight.tourapiproject.postItemPage.post_point_item;
 
 
 /**
@@ -15,7 +25,6 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class PersonFragment extends Fragment {
-
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,10 +78,26 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),ProfileActivity.class);
                 startActivity(intent);
-
                 getActivity().finish();
             }
         });
+        DrawerLayout drawLayout = (DrawerLayout) v.findViewById(R.id.drawerLayout);
+        NavigationView navigationView = (NavigationView) v.findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                drawLayout.openDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+        RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
+        recyclerView.setAdapter(adapter);
+
+        adapter.addItem(new post_point_item("내 게시물"));
         return v;
     }
 
