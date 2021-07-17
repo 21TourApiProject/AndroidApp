@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.postItemPage;
 
 public class post_point_item {
     String tourname;
