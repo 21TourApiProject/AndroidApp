@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.starrynight.tourapiproject.R;
@@ -19,7 +20,13 @@ public class MapFragment extends Fragment {
     //마커, 위치, 오브젝트 생성
     private MapPOIItem mMarker;
     private MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304);
-    BalloonObject balloon_Object = new BalloonObject();
+
+
+    private MarkereventListner markereventListner= new MarkereventListner();
+    private MapeventListner mapeventListner=new MapeventListner();
+    RelativeLayout details;
+    TextView detailsNameText;
+    TextView detailsContentText;
 
     public MapFragment() {
         // Required empty public constructor
@@ -27,9 +34,9 @@ public class MapFragment extends Fragment {
 
 
     public static MapFragment newInstance() {
-        MapFragment fragment = new MapFragment();
+        MapFragment mapFragment = new MapFragment();
 
-        return fragment;
+        return mapFragment;
     }
 
     class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter {
@@ -42,9 +49,9 @@ public class MapFragment extends Fragment {
         @Override
         public View getCalloutBalloon(MapPOIItem poiItem) {
             //말풍선 내용 설정
-            BalloonObject bobject = (BalloonObject)poiItem.getUserObject();
+//            BalloonObject bobject = (BalloonObject)poiItem.getUserObject();
             ((TextView) mCalloutBalloon.findViewById(R.id.title)).setText(poiItem.getItemName());
-            ((TextView) mCalloutBalloon.findViewById(R.id.desc)).setText(bobject.getContent());
+//            ((TextView) mCalloutBalloon.findViewById(R.id.desc)).setText(bobject.getContent());
             return mCalloutBalloon;
         }
 
@@ -53,6 +60,87 @@ public class MapFragment extends Fragment {
             return null;
         }
     }
+
+
+    class MarkereventListner implements MapView.POIItemEventListener{
+
+        @Override
+        public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+            BalloonObject bobject = (BalloonObject) mapPOIItem.getUserObject();
+            detailsNameText.setText(bobject.getName());
+            detailsContentText.setText(bobject.getContent());
+            details.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+
+        }
+
+        @Override
+        public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+
+        }
+
+        @Override
+        public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
+
+        }
+    }
+
+    class MapeventListner implements MapView.MapViewEventListener
+    {
+
+        @Override
+        public void onMapViewInitialized(MapView mapView) {
+            MapPoint classPoint = MapPoint.mapPointWithGeoCoord( 37.537229,127.005515 );
+            mapView.setMapCenterPoint(classPoint, true);
+            mapView.setZoomLevel( 2, true );
+        }
+
+        @Override
+        public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
+
+        }
+
+        @Override
+        public void onMapViewZoomLevelChanged(MapView mapView, int i) {
+
+        }
+
+        @Override
+        public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
+            //상세정보 숨기기
+            details.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
+
+        }
+
+        @Override
+        public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
+
+        }
+
+        @Override
+        public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
+
+        }
+
+        @Override
+        public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
+
+        }
+
+        @Override
+        public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
+
+        }
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,42 +153,45 @@ public class MapFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
+        details = view.findViewById(R.id.detail_layout);
+        detailsNameText = view.findViewById(R.id.name_txt);
+        detailsContentText = view.findViewById(R.id.content_txt);
+        //지도 띄우기
         MapView mapView = new MapView(getActivity());
 
         ViewGroup mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
-        //지도 중심점 설정
-       mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304), true);
+    //어댑터, 리스너 설정
         mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
+        mapView.setPOIItemEventListener(markereventListner);
+        mapView.setMapViewEventListener(mapeventListner);
 
-        // 줌 레벨 변경
-        mapView.setZoomLevel(4, true);
 
-        setupMaker(1,"1100고지", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
-        if(balloon_Object.getTag()==1)
-            createObserveMarker(mapView);
-        else if(balloon_Object.getTag()==2)
-            createTourMarker(mapView);
+        BalloonObject balloonObject= setupMaker (1,"관측지1", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
+        if(balloonObject.getTag()==1)
+            createObserveMarker(mapView, balloonObject);
+        else if(balloonObject.getTag()==2)
+            createTourMarker(mapView, balloonObject);
 
-        setupMaker(2,"안반데기", "강릉에 있는 관측지", 37.53737528, 127.00557633);
-        if(balloon_Object.getTag()==1)
-            createObserveMarker(mapView);
-        else if(balloon_Object.getTag()==2)
-            createTourMarker(mapView);
+        balloonObject = setupMaker(2,"관광지1", "강릉에 있는 관광지", 37.53737528, 127.00557633);
+        if(balloonObject.getTag()==1)
+            createObserveMarker(mapView, balloonObject);
+        else if(balloonObject.getTag()==2)
+            createTourMarker(mapView, balloonObject);
 
         return view;
     }
 
-    private void createObserveMarker(MapView mapView) {
+    private void createObserveMarker(MapView mapView, BalloonObject balloonObject) {
         //관측지 마커 생성, 태그는 1번, 파란핀
         mMarker = new MapPOIItem();
-        mMarker.setItemName(balloon_Object.getName());
+        mMarker.setItemName(balloonObject.getName());
         mMarker.setTag(1);
         mMarker.setMapPoint(MARKER_POINT);
         mMarker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 마커타입을 지정
         mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        mMarker.setUserObject(balloon_Object);   //
+        mMarker.setUserObject(balloonObject);   //
 
 //        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red); //마커타입을 커스텀으로 지정 후 이용
 //        mCustomMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
@@ -110,15 +201,15 @@ public class MapFragment extends Fragment {
         mapView.setMapCenterPoint(MARKER_POINT, false);
     }
 
-    private void createTourMarker(MapView mapView) {
+    private void createTourMarker(MapView mapView, BalloonObject balloonObject) {
         //관광지 마커 생성, 태그는 2번, 노란핀
         mMarker = new MapPOIItem();
-        mMarker.setItemName(balloon_Object.getName());
+        mMarker.setItemName(balloonObject.getName());
         mMarker.setTag(2);
         mMarker.setMapPoint(MARKER_POINT);
         mMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커타입을 지정
         mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        mMarker.setUserObject(balloon_Object);   //
+        mMarker.setUserObject(balloonObject);   //
 
 //        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red); //마커타입을 커스텀으로 지정 후 이용
 //        mCustomMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
@@ -128,12 +219,17 @@ public class MapFragment extends Fragment {
         mapView.setMapCenterPoint(MARKER_POINT, false);
     }
 
-    private void setupMaker(int tag, String name, String content, double  latitude, double longitude)
+    private BalloonObject setupMaker(int tag, String name, String content, double  latitude, double longitude)
     {
+        //마커 기본정보 object 생성 및 setup
+        BalloonObject balloon_Object = new BalloonObject();
         balloon_Object.setName(name);
         balloon_Object.setContent(content);
         balloon_Object.setTag(tag);
 
+        //마커 위치설정
         MARKER_POINT=MapPoint.mapPointWithGeoCoord(latitude, longitude);
+
+        return  balloon_Object;
     }
 }

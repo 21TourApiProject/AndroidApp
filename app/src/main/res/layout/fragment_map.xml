@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/map_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <RelativeLayout
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</FrameLayout>
+        <RelativeLayout
+            android:id="@+id/detail_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="16dp"
+            android:background="@color/white"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/name_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="테스트제목"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/content_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="테스트 세부사항 어쩌구 저쩌구"
+                android:layout_below="@+id/name_txt"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"/>
+            <Button
+                android:id="@+id/kmap_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="카카오맵"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@+id/content_txt"/>
+            <View
+                android:layout_below="@+id/content_txt"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+        </RelativeLayout>
+
+
+</RelativeLayout>
