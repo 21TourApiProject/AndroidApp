@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject.postWritePage;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -13,6 +14,8 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -28,6 +31,7 @@ import android.widget.Toast;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,8 +42,9 @@ public class PostWriteActivity extends AppCompatActivity {
     final int PICK_IMAGE_SAMSUNG = 200;
     final int PICK_IMAGE_MULTIPLE = 201;
     int numOfPicture = 0;
-    LinearLayout dynamicLayout;
     private Button addPicture;
+    SelectImageAdapter adapter;
+    RecyclerView recyclerView;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -57,7 +62,6 @@ public class PostWriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_write);
 
         // + 버튼 클릭 이벤트
-        dynamicLayout = findViewById(R.id.dynamicLayout);
         addPicture = findViewById(R.id.addPicture);
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,12 +77,18 @@ public class PostWriteActivity extends AppCompatActivity {
 
                 if (infos.size() > 0) { //테스트 하고 삼성,일반 차이없으면 삭제 예정
                     Log.e("FAT=","삼성폰");
-                    startActivityForResult(Intent.createChooser(intent, "사진을 선택해주세요"), PICK_IMAGE_SAMSUNG);
+                    startActivityForResult(intent, PICK_IMAGE_SAMSUNG);
                 } else {
                     Log.e("FAT=","일반폰");
-                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // 일반폰 - 반드시 있어야 다중선택 가능
-                    intent.setAction(Intent.ACTION_PICK); // ACTION_GET_CONTENT 사용불가 - 엘지 G2 테스트
-                    startActivityForResult(Intent.createChooser(intent,"여러장을 선택하려면 갤러리를 클릭해주세요"), PICK_IMAGE_MULTIPLE);
+                    Intent pickerIntent = new Intent(Intent.ACTION_PICK);
+                    pickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    pickerIntent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                    pickerIntent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickerIntent, PICK_IMAGE_MULTIPLE);
+
+//                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // 일반폰 - 반드시 있어야 다중선택 가능
+//                    intent.setAction(Intent.ACTION_PICK); // ACTION_GET_CONTENT 사용불가 - 엘지 G2 테스트
+//                    startActivityForResult(intent, PICK_IMAGE_MULTIPLE);
 
 //                    Intent intent = new Intent(Intent.ACTION_PICK);
 //                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -86,6 +96,27 @@ public class PostWriteActivity extends AppCompatActivity {
 //                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 //                    startActivityForResult(Intent.createChooser(intent, "사진 최대 9장 선택가능"), PICK_IMAGE_MULTIPLE);
                 }
+            }
+        });
+
+        //선택한 사진 추가 어댑터
+        recyclerView = findViewById(R.id.recyclerView);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new SelectImageAdapter();
+        recyclerView.setAdapter(adapter);
+
+        //사진 삭제 버튼 클릭 이벤트
+        adapter.setOnSelectImageItemClickListener(new OnSelectImageItemClickListener() {
+            @Override
+            public void onItemClick(SelectImageAdapter.ViewHolder holder, View view, int position) {
+                System.out.println("position = " + position);
+                adapter.removeItem(position);
+                adapter.notifyDataSetChanged();
+                numOfPicture --;
+                addPicture.setText(Integer.toString(numOfPicture) + "/10");
             }
         });
 
@@ -127,87 +158,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 startActivityForResult(intent, 203);
             }
         });
-
     }
-
-
-//    @Override //갤러리에서 이미지 불러온 후 행동
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == PICK_IMAGE) {
-//            if (resultCode == RESULT_OK) {
-//                try {
-//                    // 선택한 이미지에서 비트맵 생성
-//                    InputStream in = getContentResolver().openInputStream(data.getData());
-//                    Bitmap img = BitmapFactory.decodeStream(in);
-//                    in.close();
-//                    // 이미지뷰에 세팅
-//                    imageView.setImageBitmap(img);
-//
-//                    //설명, 버튼 숨기기
-//                    textView.setVisibility(View.INVISIBLE);
-//                    addPicture.setVisibility(View.INVISIBLE);
-//                    System.out.println("was hidden!");
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        String imageEncoded;
-//        try {
-//            if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == RESULT_OK && null != data) {
-//                // Get the Image from data
-//
-//                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//                ArrayList<String> imagesEncodedList = new ArrayList<String>();
-//
-//                if(data.getData()!=null){ //1장 선택했을 때
-//                    System.out.println("처음");
-//                    Uri mImageUri=data.getData();
-//                    // Get the cursor
-//                    Cursor cursor = getContentResolver().query(mImageUri, filePathColumn, null, null, null);
-//                    // Move to first row
-//                    cursor.moveToFirst();
-//
-//                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                    imageEncoded  = cursor.getString(columnIndex);
-//                    cursor.close();
-//
-//                } else { //여러장 선택했을 때
-//                    if (data.getClipData() != null) {
-//                        System.out.println("다음");
-//                        ClipData mClipData = data.getClipData();
-//                        ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
-//
-//                        for (int i = 0; i < mClipData.getItemCount(); i++) {
-//                            ClipData.Item item = mClipData.getItemAt(i);
-//                            Uri uri = item.getUri();
-//                            mArrayUri.add(uri);
-//                            // Get the cursor
-//                            Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-//                            // Move to first row
-//                            cursor.moveToFirst();
-//
-//                            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                            imageEncoded  = cursor.getString(columnIndex);
-//                            imagesEncodedList.add(imageEncoded);
-//                            cursor.close();
-//                        }
-//                        Log.v("LOG_TAG", "# Of Selected Images: " + mArrayUri.size());
-//                    }
-//                }
-//            } else {
-//                Toast.makeText(this, "사진을 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
-//            }
-//        } catch (Exception e) {
-//            Toast.makeText(this, "오류가 발생했습니다.", Toast.LENGTH_LONG).show();
-//        }
-//
-//        //super.onActivityResult(requestCode, resultCode, data);
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -226,10 +177,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 Uri uri = data.getData();
                 Log.e("FAT=", "일반폰/단일 : "+uri.toString());
                 try {
-                    InputStream in = getContentResolver().openInputStream(uri);
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
-                    //이미지 추가
+                    Bitmap img = resize(this, uri, 75);
                     addImage(img);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -239,6 +187,11 @@ public class PostWriteActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ClipData clipData = data.getClipData();
                     if (clipData != null) {
+                        if (numOfPicture + clipData.getItemCount() >= 10){
+                            Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
                         ArrayList<Uri> uris = new ArrayList<>();
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             ClipData.Item item = clipData.getItemAt(i);
@@ -257,36 +210,23 @@ public class PostWriteActivity extends AppCompatActivity {
     private void addImage(Bitmap img) {
         numOfPicture ++;
         addPicture.setText(Integer.toString(numOfPicture) + "/10");
-        ImageView imageView = new ImageView(this);
-        imageView.setImageBitmap(img);
-        imageView.setId(numOfPicture);
 
-        Button button = new Button(this);
-        button.setBackground(ContextCompat.getDrawable(this, R.drawable.post_write__remove_button));
-        button.setId(numOfPicture+10);
-
-        final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(20,0,0,0);
-        dynamicLayout.addView(imageView, params);
+        adapter.addItem(new SelectImage(img, numOfPicture));
+        recyclerView.setAdapter(adapter);
     }
 
     private void addImages(ArrayList<Uri> uris) {
         for (Uri uri : uris){
             numOfPicture ++;
             try {
-                InputStream in = getContentResolver().openInputStream(uri);
-                Bitmap img = BitmapFactory.decodeStream(in);
-                in.close();
+//                InputStream in = getContentResolver().openInputStream(uri);
+//                Bitmap img = BitmapFactory.decodeStream(in);
+//                in.close();
 
-                ImageView imageView = new ImageView(this);
-                imageView.setImageBitmap(img);
-                imageView.setId(numOfPicture);
+                Bitmap img = resize(this, uri, 75); //해상도 최대로 하고싶으면 100으로
+                adapter.addItem(new SelectImage(img, numOfPicture));
+                recyclerView.setAdapter(adapter);
 
-                final int width = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(width, FrameLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(20,0,0,0);
-                dynamicLayout.addView(imageView, params);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -307,4 +247,30 @@ public class PostWriteActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    private Bitmap resize(Context context, Uri uri, int resize){
+        Bitmap resizeBitmap=null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        try {
+            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+
+            int width = options.outWidth;
+            int height = options.outHeight;
+            int samplesize = 1;
+
+            while (true) {
+                if (width / 2 < resize || height / 2 < resize)
+                    break;
+                width /= 2;
+                height /= 2;
+                samplesize *= 2;
+            }
+            options.inSampleSize = samplesize;
+            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+            resizeBitmap = bitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resizeBitmap;
+    }
 }
