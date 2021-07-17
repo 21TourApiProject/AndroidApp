@@ -117,6 +117,15 @@
                 android:text="당시 별 관측 적합도 : 좋음/나쁨으로 표시"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/observingPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:text="관측 지점 검색"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <EditText
                 android:id="@+id/editText"
                 android:layout_width="300dp"
@@ -127,15 +136,6 @@
                 android:ems="0"
                 android:hint="내용을 입력해주세요."
                 android:inputType="textPersonName" />
-
-            <Button
-                android:id="@+id/observingPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:text="관측 지점 검색"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/hashTag"
