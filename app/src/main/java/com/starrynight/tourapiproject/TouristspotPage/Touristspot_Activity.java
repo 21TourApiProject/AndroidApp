@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.TouristspotPage;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
+import com.starrynight.tourapiproject.MainActivity;
+import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 
@@ -56,9 +58,25 @@ public class Touristspot_Activity extends AppCompatActivity {
             postback_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
+                }
+            });
+            Button morespot_btn = findViewById(R.id.morespotbutton);
+            morespot_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),MoretouristspotActivity.class);
+                    startActivity(intent);
+                }
+            });
+            Button review_btn =findViewById(R.id.reviewmore_button);
+            review_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),TouristreviewActivity.class);
+                    startActivity(intent);
                 }
             });
         }

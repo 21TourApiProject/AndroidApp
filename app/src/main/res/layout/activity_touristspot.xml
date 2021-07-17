@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Touristspot_Activity">
+    tools:context=".TouristspotPage.Touristspot_Activity">
 
 
     <ScrollView
@@ -88,7 +88,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                 <Button
-                    android:id="@+id/button11"
+                    android:id="@+id/morespotbutton"
                     android:layout_width="wrap_content"
                     android:layout_height="30sp"
                     android:background="#ffffff"
