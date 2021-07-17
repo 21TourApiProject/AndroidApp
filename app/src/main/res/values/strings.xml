@@ -4,6 +4,9 @@
     <string name="title_main">Main</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="title_search">Search</string>
     <string name="title_star">Star</string>
     <string name="title_person">Person</string>
