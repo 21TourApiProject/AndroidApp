@@ -64,7 +64,7 @@ public class MainFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),weatherActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),WeatherActivity.class);
                 startActivity(intent);
 
                 getActivity().finish();

@@ -21,17 +21,19 @@
         <activity android:name=".ObservationsiteActivity"></activity>
         <activity android:name=".TouristspotPage.TouristreviewActivity" />
         <activity android:name=".TouristspotPage.MoretouristspotActivity" />
-        <activity android:name=".TouristspotPage.Touristspot_Activity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".WeatherActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".Touristspot_Activity"></activity>
+
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="2201411c61cc7086fe639ce660ccb21e" />
 
-        <activity android:name=".weatherActivity" />
-        <activity android:name=".postWritePage.PostWriteActivity" />
-        <activity android:name=".postWritePage.SearchObservingPointActivity" />
-        <activity android:name=".postWritePage.AddHashTagActivity" />
+        <activity android:name=".postWritePage.PostWriteActivity"/>
+        <activity android:name=".postWritePage.SearchObservingPointActivity"/>
+        <activity android:name=".postWritePage.AddHashTagActivity"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
