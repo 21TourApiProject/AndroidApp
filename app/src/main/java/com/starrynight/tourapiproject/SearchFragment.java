@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.starrynight.tourapiproject.TouristspotPage.Touristspot_Activity;
 import com.starrynight.tourapiproject.map.MapFragment;
 
 
@@ -53,10 +54,18 @@ public class SearchFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),Touristspot_Activity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), Touristspot_Activity.class);
                 startActivity(intent);
 
                 getActivity().finish();
+            }
+        });
+        Button observation_btn = (Button)v.findViewById(R.id.observation_button);
+        observation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),ObservationsiteActivity.class);
+                startActivity(intent);
             }
         });
 
