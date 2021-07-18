@@ -27,8 +27,8 @@ public class PostActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        sliderViewPager = findViewById(R.id.sliderViewPager);
-        layoutIndicator = findViewById(R.id.layoutIndicators);
+        sliderViewPager = findViewById(R.id.slider);
+        layoutIndicator = findViewById(R.id.indicator);
 
         sliderViewPager.setOffscreenPageLimit(1);
         sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));

@@ -17,22 +17,15 @@
             android:orientation="vertical" >
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/sliderViewPager"
+                android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="40dp">
+                android:layout_height="300dp">
 
             </androidx.viewpager2.widget.ViewPager2>
 
-            <View
-                android:id="@+id/viewFadingEdge"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="@drawable/post__fading_edge" />
-
             <LinearLayout
-                android:id="@+id/layoutIndicators"
-                android:layout_width="0dp"
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"

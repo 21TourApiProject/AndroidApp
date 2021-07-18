@@ -7,6 +7,6 @@
         android:height="8dp" />
 
     <solid
-        android:color="#eeeeee" />
+        android:color="@color/cardview_dark_background" />
 
 </shape>
