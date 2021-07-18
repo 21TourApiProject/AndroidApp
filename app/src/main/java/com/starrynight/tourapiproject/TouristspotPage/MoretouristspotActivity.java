@@ -1,13 +1,12 @@
 package com.starrynight.tourapiproject.TouristspotPage;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 
-import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 
 public class MoretouristspotActivity extends AppCompatActivity {
