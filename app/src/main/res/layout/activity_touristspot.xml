@@ -21,7 +21,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/postThumbnail"
                     android:layout_width="320dp"
                     android:layout_height="200dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:text="관광지 이름"
                     android:textSize="40sp"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView"
+                    app:layout_constraintBottom_toTopOf="@+id/postThumbnail"
                     app:layout_constraintEnd_toStartOf="@+id/button2"
                     app:layout_constraintStart_toEndOf="@+id/postbackbutton"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="1dp"
                     android:background="@drawable/ic_baseline_location_on_24"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView"
+                    app:layout_constraintBottom_toTopOf="@+id/postThumbnail"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.722"
                     app:layout_constraintStart_toEndOf="@+id/postbackbutton"
@@ -59,13 +59,13 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="3dp"
                     android:background="@drawable/ic_baseline_chevron_left_24"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintBottom_toTopOf="@+id/postThumbnail"
+                    app:layout_constraintEnd_toStartOf="@+id/postThumbnail"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/heart_button"
+                    android:id="@+id/like"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/heart__button"
@@ -73,7 +73,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.875"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/postThumbnail"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
@@ -82,10 +82,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="관광지 이름"
-                    app:layout_constraintEnd_toStartOf="@+id/heart_button"
+                    app:layout_constraintEnd_toStartOf="@+id/like"
                     app:layout_constraintHorizontal_bias="0.185"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
 
                 <Button
                     android:id="@+id/morespotbutton"
@@ -96,7 +96,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.885"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/heart_button" />
+                    app:layout_constraintTop_toBottomOf="@+id/like" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
