@@ -68,8 +68,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
+//
+//
 
 
     }
