@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,17 +16,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="40dp">
+<!--            <HorizontalScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_marginTop="40dp">-->
 
                 <LinearLayout
                     android:id="@+id/dynamicLayout"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="40dp">
 
                     <RelativeLayout
                         android:layout_width="100dp"
@@ -52,16 +53,16 @@
 
                     </RelativeLayout>
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
+<!--            </HorizontalScrollView>-->
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="300dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal">
@@ -91,7 +92,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView"
@@ -100,15 +101,6 @@
                 android:layout_gravity="center_horizontal"
                 android:text="당시 별 관측 적합도 : 좋음/나쁨으로 표시"
                 android:textSize="16sp" />
-
-            <Button
-                android:id="@+id/observingPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:text="관측 지점 검색"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
                 android:id="@+id/editText"
@@ -120,6 +112,15 @@
                 android:ems="0"
                 android:hint="내용을 입력해주세요."
                 android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/observingPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="40dp"
+                android:text="관측 지점 검색"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/hashTag"
@@ -141,4 +142,4 @@
         </LinearLayout>
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
