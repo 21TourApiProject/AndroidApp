@@ -23,7 +23,7 @@
         <activity android:name=".TouristspotPage.MoretouristspotActivity" />
         <activity android:name=".WeatherActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".Touristspot_Activity"></activity>
+        <activity android:name=".TouristspotPage.Touristspot_Activity"></activity>
 
 
         <meta-data
