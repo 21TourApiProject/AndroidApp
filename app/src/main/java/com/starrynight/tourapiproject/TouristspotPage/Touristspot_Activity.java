@@ -46,7 +46,7 @@ public class Touristspot_Activity extends AppCompatActivity {
         recyclerView1.setAdapter((adapter));
 
 
-        Button button = findViewById(R.id.heart_button);
+        Button button = findViewById(R.id.like);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
