@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
+import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
 /**
@@ -78,6 +79,15 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), PostWriteActivity.class);
                 startActivityForResult(intent, 101);
+            }
+        });
+        // 게시물 페이지로 넘어가는 이벤트(수정 예정)
+        Button post =(Button) v.findViewById(R.id.post);
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), PostActivity.class);
+                startActivityForResult(intent, 102);
             }
         });
         return v;
