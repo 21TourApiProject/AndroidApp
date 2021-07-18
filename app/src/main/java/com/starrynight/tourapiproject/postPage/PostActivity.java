@@ -1,25 +1,30 @@
 package com.starrynight.tourapiproject.postPage;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.R;
 
 public class PostActivity extends AppCompatActivity{
     private ViewPager2 sliderViewPager;
-    private LinearLayout layoutIndicator;
+    private LinearLayout indicator;
 
     private String[] images = new String[] {
-            "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg",
-            "https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg",
             "https://cdn.pixabay.com/photo/2020/09/02/18/03/girl-5539094_1280.jpg",
-            "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg"
+            "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg",
+            "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg",
+            "https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg"
     };
 
     @Override
@@ -28,7 +33,7 @@ public class PostActivity extends AppCompatActivity{
         setContentView(R.layout.activity_post);
 
         sliderViewPager = findViewById(R.id.slider);
-        layoutIndicator = findViewById(R.id.indicator);
+        indicator = findViewById(R.id.indicator);
 
         sliderViewPager.setOffscreenPageLimit(1);
         sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
@@ -42,6 +47,34 @@ public class PostActivity extends AppCompatActivity{
         });
 
         setupIndicators(images.length);
+
+        Button button = findViewById(R.id.like);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setSelected(!v.isSelected());
+            }
+        });
+
+        RecyclerView recyclerView = findViewById(R.id.relatePost);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(layoutManager);
+
+        RelatePostAdapter adapter = new RelatePostAdapter();
+        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 1"));
+        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 2"));
+        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 3"));
+        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 4"));
+
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnPersonItemClickListener(new OnRelatePostItemClickListener() {
+            @Override
+            public void onItemClick(RelatePostAdapter.ViewHolder holder, View view, int position) {
+                RelatePost item = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(), "클릭됨 : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setupIndicators(int count) {
@@ -56,15 +89,15 @@ public class PostActivity extends AppCompatActivity{
             indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
                     R.drawable.post__indicator_inactive));
             indicators[i].setLayoutParams(params);
-            layoutIndicator.addView(indicators[i]);
+            indicator.addView(indicators[i]);
         }
         setCurrentIndicator(0);
     }
 
     private void setCurrentIndicator(int position) {
-        int childCount = layoutIndicator.getChildCount();
+        int childCount = indicator.getChildCount();
         for (int i = 0; i < childCount; i++) {
-            ImageView imageView = (ImageView) layoutIndicator.getChildAt(i);
+            ImageView imageView = (ImageView) indicator.getChildAt(i);
             if (i == position) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,

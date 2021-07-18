@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
@@ -32,6 +33,93 @@
                 android:paddingBottom="8dp">
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/observeSpot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="관측지점" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/like"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:background="@drawable/heart__button"
+                    app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dateNtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="2021년 7월 20일 (월) PM 9:00"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/explain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="당시 별 관측 적합도 : "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="좋음"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/caution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="*3년 정도 이전의 관측 정확도는 부정확할 수 있습니다."
+                android:textSize="14sp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:id="@+id/postContent"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/post_write__edge"
+                android:text="게시물 내용" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:text="관련 게시물"
+                android:textSize="20sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/relatePost"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
         </LinearLayout>
     </ScrollView>
