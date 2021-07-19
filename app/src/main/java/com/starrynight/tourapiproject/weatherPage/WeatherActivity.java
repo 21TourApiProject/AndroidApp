@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,15 +11,24 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 public class WeatherActivity extends AppCompatActivity {
 
     private TextView wtDatePicker;
+    private TextView wtTimePicker;
 
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             wtDatePicker.setText(month + "월 " + dayOfMonth + "일");
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            wtTimePicker.setText(hourOfDay + "시");
         }
     };
 
@@ -51,7 +61,12 @@ public class WeatherActivity extends AppCompatActivity {
     public void wtClickDatePicker(View view) {
         WtDatePickerDialog pd = new WtDatePickerDialog();
         pd.setListener(d);
+        pd.setListenerT(t);
         pd.show(getFragmentManager(), "test");
+    }
+
+    public void wtClickTimePicker(View view){
+
     }
 
     public void wtClickAreaPicker(View view) {
