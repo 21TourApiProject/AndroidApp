@@ -21,7 +21,7 @@
         <activity android:name=".ObservationsiteActivity"></activity>
         <activity android:name=".TouristspotPage.TouristreviewActivity" />
         <activity android:name=".TouristspotPage.MoretouristspotActivity" />
-        <activity android:name=".WeatherActivity"></activity>
+        <activity android:name=".weatherPage.WeatherActivity"></activity>
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".TouristspotPage.Touristspot_Activity"></activity>
 
