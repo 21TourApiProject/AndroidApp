@@ -1,10 +1,24 @@
 package com.starrynight.tourapiproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
+import com.starrynight.tourapiproject.postItemPage.post_point_item;
+import com.starrynight.tourapiproject.postPage.ImageSliderAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -12,6 +26,14 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class StarFragment extends Fragment {
+    private ViewPager2 sliderViewPager;
+    private LinearLayout indicator;
+    private String[] images = new String[] {
+            "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639125_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2015/03/17/15/25/horoscope-677900_960_720.jpg",
+            "https://cdn.pixabay.com/photo/2015/02/17/08/24/horoscope-639123_960_720.jpg"
+    };
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -60,11 +82,82 @@ public class StarFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_star, container, false);
 
+        RecyclerView recyclerView =v.findViewById(R.id.recyclerview_star);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
+        recyclerView.setAdapter(adapter);
+
+        adapter.addItem(new post_point_item("별자리 1"));
+        adapter.addItem(new post_point_item("별자리 2"));
+        adapter.addItem(new post_point_item("별자리 3"));
+
+        recyclerView.setAdapter((adapter));
+
+        sliderViewPager = v.findViewById(R.id.starslider);
+        indicator = v.findViewById(R.id.indicator_star);
+
+        sliderViewPager.setOffscreenPageLimit(1);
+        sliderViewPager.setAdapter(new ImageSliderAdapter(getContext(), images));
+
+        sliderViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setCurrentIndicator(position);
+            }
+        });
+        setupIndicators(images.length);
+
+        Button example=v.findViewById(R.id.example_btn);
+        example.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return v;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+    private void setupIndicators(int count) {
+        ImageView[] indicators = new ImageView[count];
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        params.setMargins(16, 8, 16, 8);
+
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i] = new ImageView(getContext());
+            indicators[i].setImageDrawable(ContextCompat.getDrawable(getContext(),
+                    R.drawable.post__indicator_inactive));
+            indicators[i].setLayoutParams(params);
+            indicator.addView(indicators[i]);
+        }
+        setCurrentIndicator(0);
+    }
+
+    private void setCurrentIndicator(int position) {
+        int childCount = indicator.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView imageView = (ImageView) indicator.getChildAt(i);
+            if (i == position) {
+                imageView.setImageDrawable(ContextCompat.getDrawable(
+                        getContext(),
+                        R.drawable.post__indicator_active
+                ));
+            } else {
+                imageView.setImageDrawable(ContextCompat.getDrawable(
+                        getContext(),
+                        R.drawable.post__indicator_inactive
+                ));
+            }
+        }
     }
 }

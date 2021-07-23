@@ -15,14 +15,14 @@ public class ObservationsiteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observationsite);
 
-        Button heart_btn = findViewById(R.id.button6);
+        Button heart_btn = findViewById(R.id.obvheart_btn);
         heart_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 v.setSelected(!v.isSelected());
             }
         });
-        Button back_btn =findViewById(R.id.button);
+        Button back_btn =findViewById(R.id.obvback_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

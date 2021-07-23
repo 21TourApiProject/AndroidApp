@@ -2,17 +2,24 @@ package com.starrynight.tourapiproject.postItemPage;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.ClipData;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.StarFragment;
 
 import java.util.ArrayList;
 
 public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_item_Adapter.ViewHolder> {
     ArrayList<post_point_item> items = new ArrayList<post_point_item>();
+    private Intent intent;
+    private ArrayList<post_point_item> itemList;
 
     public void addItem(post_point_item item){ items.add(item); }
     public void setItems(ArrayList<post_point_item> items){ this.items = items; }
@@ -40,13 +47,14 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView;
+        ImageView imageView;
 
         public ViewHolder(View itemView){
             super(itemView);
-
             textView =itemView.findViewById(R.id.PostText);
-        }
+            imageView = itemView.findViewById(R.id.PostButton);
 
+        }
         public void setItem(post_point_item item){ textView.setText(item.getTourname()); }
     }
 }
