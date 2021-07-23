@@ -7,7 +7,7 @@
     tools:context=".ObservationsiteActivity">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/obv_name"
         android:layout_width="0dp"
         android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/backgroundocean" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/obvback_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/obvheart_btn"
         android:layout_width="50dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button13"
+        android:id="@+id/obvlink_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/link__button"
@@ -49,11 +49,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/obv_name"
         app:layout_constraintVertical_bias="0.031" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/obv_nametext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="관측지 이름"
@@ -61,32 +61,32 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/button13"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/obvlink_btn"
+        app:layout_constraintTop_toBottomOf="@+id/obv_name"
         app:layout_constraintVertical_bias="0.025" />
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/obvlocation_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/ic_baseline_location_on_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/obv_nametext"
+        app:layout_constraintTop_toBottomOf="@+id/obv_name"
         app:layout_constraintVertical_bias="0.031" />
 
     <Button
-        android:id="@+id/button15"
+        android:id="@+id/obv_postplus_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/post_plus__button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.304"
-        app:layout_constraintStart_toEndOf="@+id/button14"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/obvlocation_btn"
+        app:layout_constraintTop_toBottomOf="@+id/obv_name"
         app:layout_constraintVertical_bias="0.031" />
 
     <ScrollView
@@ -94,10 +94,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.693">
+        app:layout_constraintTop_toBottomOf="@id/obv_nametext">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -109,7 +107,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/obvpostname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -121,7 +119,7 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <Button
-                    android:id="@+id/button16"
+                    android:id="@+id/moreobvpost_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="30sp"
                     android:background="#ffffff"
@@ -129,7 +127,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.814"
-                    app:layout_constraintStart_toEndOf="@+id/textView17"
+                    app:layout_constraintStart_toEndOf="@+id/obvpostname"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
@@ -140,7 +138,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/button16">
+                    app:layout_constraintTop_toBottomOf="@+id/moreobvpost_btn">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
