@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -17,8 +16,17 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Button test = findViewById(R.id.signUp);
-        test.setOnClickListener(new View.OnClickListener() {
+        Button generalSignUp = findViewById(R.id.generalSignUp);
+        generalSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, GeneralSingUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button kakaoSignUp = findViewById(R.id.kakaoSignUp);
+        kakaoSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignUpActivity.this, SelectHashTagActivity.class);
