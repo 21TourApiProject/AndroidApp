@@ -1,15 +1,14 @@
 package com.starrynight.tourapiproject.signUpPage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
 
@@ -18,6 +17,7 @@ import java.util.Calendar;
 public class GeneralSingUpActivity extends AppCompatActivity {
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
+
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -38,23 +38,14 @@ public class GeneralSingUpActivity extends AppCompatActivity {
             }
         };
 
-        Button duplicationCheck = findViewById(R.id.duplicationCheck);
-        duplicationCheck.setOnClickListener(new View.OnClickListener() {
+        Button next = findViewById(R.id.next);
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //중복확인하기
+                Intent intent = new Intent(GeneralSingUpActivity.this, SmsCertificationActivity.class);
+                startActivity(intent);
             }
         });
-
-        Button smsCertification = findViewById(R.id.smsCertification);
-        smsCertification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
     }
 
     public void onClickBirthPicker(View view){

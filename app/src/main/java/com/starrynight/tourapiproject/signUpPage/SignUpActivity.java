@@ -29,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
         kakaoSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //선호 해시태그 창 테스트하려고 넣어놓은거고 지우고 카카오 로그인 넣으면 될듯!
                 Intent intent = new Intent(SignUpActivity.this, SelectHashTagActivity.class);
                 startActivity(intent);
             }

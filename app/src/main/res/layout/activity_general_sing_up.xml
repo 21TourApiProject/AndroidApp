@@ -83,28 +83,6 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/mobilePhoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="전화번호"
-                    android:inputType="phone" />
-
-                <Button
-                    android:id="@+id/smsCertification"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:text="sms 인증" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <EditText
                     android:id="@+id/id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,10 +116,10 @@
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/signUp"
+                android:id="@+id/next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가입하기" />
+                android:text="다음" />
 
         </LinearLayout>
     </ScrollView>

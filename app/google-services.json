@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "55404000190",
+    "project_id": "tour-api-project",
+    "storage_bucket": "tour-api-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:55404000190:android:b9c769bd0552a81cfcffef",
+        "android_client_info": {
+          "package_name": "com.starrynight.tourapiproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "55404000190-cj0phd88q11a0bfnbih80drgkhdm41gm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4AriW3fyUelxjmhWbCh99xeLrZ7dNQws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "55404000190-cj0phd88q11a0bfnbih80drgkhdm41gm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
