@@ -14,6 +14,7 @@ import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
 /**
@@ -89,6 +90,16 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), PostActivity.class);
                 startActivityForResult(intent, 102);
+            }
+        });
+
+        // 회원가입 페이지로 넘어가는 이벤트(수정 예정)
+        Button testSignUp = (Button) v.findViewById(R.id.testSignUp);
+        testSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), SignUpActivity.class);
+                startActivityForResult(intent, 103);
             }
         });
         return v;

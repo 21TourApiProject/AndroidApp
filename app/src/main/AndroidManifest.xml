@@ -19,7 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
 
-        <activity android:name=".signUpPage.SelectHashTagActivity"></activity>
+        <activity android:name=".signUpPage.SmsCertificationActivity"/>
+        <activity android:name=".signUpPage.GeneralSingUpActivity" />
+        <activity android:name=".signUpPage.SelectHashTagActivity" />
         <activity android:name=".signUpPage.SignUpActivity" />
         <activity android:name=".StarActivity" />
         <activity android:name=".ObservationsiteActivity" />
