@@ -81,15 +81,6 @@ public class PersonFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        DrawerLayout drawLayout = (DrawerLayout) v.findViewById(R.id.drawerLayout);
-        NavigationView navigationView = (NavigationView) v.findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                drawLayout.openDrawer(GravityCompat.START);
-                return true;
-            }
-        });
         RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -98,6 +89,15 @@ public class PersonFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         adapter.addItem(new post_point_item("내 게시물"));
+
+        Button pop_btn=(Button)v.findViewById(R.id.setting_button);
+        pop_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(),PersonpopActivity.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 
