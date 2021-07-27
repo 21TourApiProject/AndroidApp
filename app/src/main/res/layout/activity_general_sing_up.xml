@@ -23,7 +23,7 @@
                 android:textSize="34sp" />
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/realName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -52,7 +52,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/birth"
+                android:id="@+id/birthDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"

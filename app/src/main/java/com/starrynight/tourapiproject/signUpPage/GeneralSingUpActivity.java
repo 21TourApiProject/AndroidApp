@@ -9,26 +9,44 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
+
+import cz.msebera.android.httpclient.HttpResponse;
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.client.ClientProtocolException;
+import cz.msebera.android.httpclient.client.HttpClient;
+import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
+import cz.msebera.android.httpclient.client.methods.HttpPost;
+import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
 public class GeneralSingUpActivity extends AppCompatActivity {
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
-    private EditText password;
     private EditText passwordCheck;
+    private Boolean isPwdSame = false;
 
+    String realName, birthDay, email, loginId, password;
+    Boolean sex;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -40,16 +58,30 @@ public class GeneralSingUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_sing_up);
 
-        birth = (TextView) findViewById(R.id.birth);
+        //생년월일
+        birth = (TextView)findViewById(R.id.birthDay);
         callbackMethod = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear += 1;
-                birth.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
+                birth.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
             }
         };
 
-        password = findViewById(R.id.password);
+        EditText editPassword = findViewById(R.id.password);
+        password = editPassword.getText().toString();
+
+        editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                password = arg0.toString();
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        });
+
         passwordCheck = findViewById(R.id.passwordCheck);
         TextView isPwdCorrect = findViewById(R.id.isPwdCorrect);
 
@@ -57,23 +89,23 @@ public class GeneralSingUpActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // 입력란에 변화가 있을 때
-                if (!password.getText().toString().equals(s)){
+                if (!password.equals(s)){
                     isPwdCorrect.setText("일치하지 않는 비밀번호입니다.");}
-                else{isPwdCorrect.setText("일치하는 비밀번호입니다.");}
+                else{isPwdCorrect.setText("일치하는 비밀번호입니다.");
+                    isPwdSame = true;}
             }
 
             @Override
             public void afterTextChanged(Editable arg0) {
                 // 입력이 끝났을 때
-                if (!password.getText().toString().equals(arg0.toString())){
+                if (!password.equals(arg0.toString())){
                     isPwdCorrect.setText("일치하지 않는 비밀번호입니다.");}
-                else{isPwdCorrect.setText("일치하는 비밀번호입니다.");}
+                else{isPwdCorrect.setText("일치하는 비밀번호입니다.");
+                    isPwdSame = true;}
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //입력하기 전
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
 
 
@@ -82,43 +114,65 @@ public class GeneralSingUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(GeneralSingUpActivity.this, SmsCertificationActivity.class);
-//                startActivity(intent);
-                String pwd = password.getText().toString();
-                if (!isCorrectPwdRule(pwd)){
-                    System.out.println("is not right.........");
+//                startActivity(intent); 문자인증
+
+                realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
+                if(realName.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                System.out.println("is right!!!!!!!!!!!!!");
 
-//                new Thread() {
-//                    public void run() {
-//                        String result = null;
-//                        try {
-//                            URL url = new URL("http://172.30.1.21:8080/v1/user/post");
-//                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//                            conn.setRequestMethod("POST");
-//                            InputStream is = conn.getInputStream();
-//
-//                            StringBuilder builder = new StringBuilder();
-//                            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-//                            String line;
-//                            while ((line = reader.readLine()) != null) {
-//                                builder.append(line);
-//                            }
-//
-//                            result = builder.toString();
-//                            System.out.println("result = " + result);
-//
-//                        }
-//                        catch (Exception e) {
-//                            Log.e("REST_API", "POST method failed: " + e.getMessage());
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }.start();
+                RadioButton male = findViewById(R.id.male);
+                RadioButton female = findViewById(R.id.female);
+                if (male.isChecked()){
+                    sex = true;
+                } else if(female.isChecked()){
+                    sex = false;
+                } else{
+                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();
+                if(birthDay.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                email = ((EditText) (findViewById(R.id.email))).getText().toString();
+                if(email.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "이메일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                loginId = ((EditText) (findViewById(R.id.loginId))).getText().toString();
+                if(loginId.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                password = ((EditText) (findViewById(R.id.password))).getText().toString();
+                if (password.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (!isCorrectPwdRule(password)) {
+                    Toast.makeText(getApplicationContext(), "규칙에 맞지 않는 비밀번호입니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(!isPwdSame){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                new Thread() {
+
+                }.start();
+
             }
         });
 
+        //중복 id 체크를 위한 get api
         Button duplicationCheck = findViewById(R.id.duplicationCheck);
         duplicationCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +206,7 @@ public class GeneralSingUpActivity extends AppCompatActivity {
                             if (result.equals("true")) {
                                 isDuplicate.setText("사용가능한 아이디 입니다.");
                             }else{
-                                isDuplicate.setText("사용 불가능한 아이디 입니다.");
+                                isDuplicate.setText("사용불가능한 아이디 입니다.");
                             }
 
                         }
@@ -166,12 +220,10 @@ public class GeneralSingUpActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private Boolean isCorrectPwdRule(String pwd) {
-        String pattern = "^.*(?=^.{8,}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^*&()+=]).*$";
+        String pattern = "^.*(?=^.{8,}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!\\\"\\[\\]\\\\\\/#$%&'()*+,.;:<=>?@^_`{|}^`_~-]).*$";
         return Pattern.matches(pattern, pwd);
     }
 
@@ -181,6 +233,49 @@ public class GeneralSingUpActivity extends AppCompatActivity {
         datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         datePickerDialog.show();
 
+    }
+
+    private void select_doProcess() {
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost("http://172.30.1.21:8080/v1/user");
+        ArrayList<NameValuePair> nameValues = new ArrayList<NameValuePair>();
+
+        try {
+            //Post방식으로 넘길 값들을 각각 지정을 해주어야 한다.
+            nameValues.add(new BasicNameValuePair(
+                    "realName", URLDecoder.decode(realName, "UTF-8")));
+            nameValues.add(new BasicNameValuePair(
+                    "sex", URLDecoder.decode(String.valueOf(sex), "UTF-8")));
+            nameValues.add(new BasicNameValuePair(
+                    "birthDay", URLDecoder.decode(birthDay, "UTF-8")));
+            nameValues.add(new BasicNameValuePair(
+                    "email", URLDecoder.decode(email, "UTF-8")));
+            nameValues.add(new BasicNameValuePair(
+                    "loginId", URLDecoder.decode(loginId, "UTF-8")));
+            nameValues.add(new BasicNameValuePair(
+                    "password", URLDecoder.decode(password, "UTF-8")));
+
+            //HttpPost에 넘길 값을들 Set해주기
+            post.setEntity(
+                    new UrlEncodedFormEntity(
+                            nameValues, "UTF-8"));
+        } catch (UnsupportedEncodingException ex) {
+            Log.e("Insert Log", ex.toString());
+        }
+
+        try {
+            //설정한 URL을 실행시키기
+            HttpResponse response = httpClient.execute(post);
+            //통신 값을 받은 Log 생성. (200이 나오는지 확인할 것~) 200이 나오면 통신이 잘 되었다는 뜻!
+            Log.i("Insert Log", "response.getStatusCode:" + response.getStatusLine().getStatusCode());
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
