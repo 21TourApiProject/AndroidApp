@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.auth.User;
+import com.squareup.okhttp.ResponseBody;
 import com.starrynight.tourapiproject.R;
 
 import java.io.BufferedReader;
@@ -26,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
@@ -38,11 +41,16 @@ import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.Body;
 
-public class GeneralSingUpActivity extends AppCompatActivity {
+public class GeneralSingUpActivity extends AppCompatActivity{
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private EditText passwordCheck;
+    private Boolean isIdDuplicate = true;
     private Boolean isPwdSame = false;
 
     String realName, birthDay, email, loginId, password;
@@ -150,6 +158,10 @@ public class GeneralSingUpActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                else if(isIdDuplicate){
+                    Toast.makeText(getApplicationContext(), "아이디 중복확인이 필요합니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 password = ((EditText) (findViewById(R.id.password))).getText().toString();
                 if (password.isEmpty()) {
@@ -165,9 +177,23 @@ public class GeneralSingUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                new Thread() {
-
-                }.start();
+                UserParams userParams = new UserParams(realName, sex, birthDay, email, loginId, password);
+                Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("성공!!!!!!!!!!!");
+                            finish();
+                        }else{
+                            System.out.println("실패ㅠㅠㅠㅠㅠㅠ");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
 
             }
         });
@@ -205,6 +231,7 @@ public class GeneralSingUpActivity extends AppCompatActivity {
 
                             if (result.equals("true")) {
                                 isDuplicate.setText("사용가능한 아이디 입니다.");
+                                isIdDuplicate = false;
                             }else{
                                 isDuplicate.setText("사용불가능한 아이디 입니다.");
                             }
