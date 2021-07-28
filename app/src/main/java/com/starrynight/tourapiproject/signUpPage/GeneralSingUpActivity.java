@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.signUpPage;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -171,9 +172,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(GeneralSingUpActivity.this, SmsCertificationActivity.class);
-//                startActivity(intent); 문자인증
-
                 realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
                 if(realName.isEmpty()){
                     Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
@@ -235,7 +233,9 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
                             System.out.println("회원가입 성공");
-                            finish();
+
+                            Intent intent = new Intent(GeneralSingUpActivity.this, SmsCertificationActivity.class);
+                            startActivity(intent);
                         } else{
                             System.out.println("회원가입 실패");
                         }
