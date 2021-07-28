@@ -76,6 +76,56 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             }
         };
 
+        //중복 id 체크를 위한 get api
+        Button duplicationCheck = findViewById(R.id.duplicationCheck);
+        duplicationCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText editText = (EditText) findViewById(R.id.loginId);
+                String loginId = editText.getText().toString();
+                String url0 = "http://172.30.1.21:8080/v1/user/duplicate/"+loginId;
+                System.out.println("url0 = " + url0);
+
+                new Thread() {
+                    public void run() {
+                        String result = null;
+                        TextView isDuplicate = findViewById(R.id.isDuplicate);
+                        try {
+                            URL url = new URL(url0);
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                            conn.setRequestMethod("GET");
+                            InputStream is = conn.getInputStream();
+
+                            StringBuilder builder = new StringBuilder();
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                builder.append(line);
+                            }
+
+                            result = builder.toString();
+                            System.out.println("result = " + result);
+
+                            if (result.equals("true")) {
+                                isDuplicate.setText("사용가능한 아이디 입니다.");
+                                isIdDuplicate = false;
+                            }else{
+                                isDuplicate.setText("사용불가능한 아이디 입니다.");
+                            }
+
+                        }
+                        catch (Exception e) {
+                            Log.e("REST_API", "GET method failed: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+
+            }
+        });
+
+        //비밀번호 확인이 비밀번호랑 같은지
         EditText editPassword = findViewById(R.id.password);
         password = editPassword.getText().toString();
 
@@ -177,6 +227,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     return;
                 }
 
+                //회원가입 post api
                 UserParams userParams = new UserParams(realName, sex, birthDay, email, loginId, password);
                 Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
                 call.enqueue(new Callback<Void>() {
@@ -198,111 +249,21 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             }
         });
 
-        //중복 id 체크를 위한 get api
-        Button duplicationCheck = findViewById(R.id.duplicationCheck);
-        duplicationCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                EditText editText = (EditText) findViewById(R.id.loginId);
-                String loginId = editText.getText().toString();
-                String url0 = "http://172.30.1.21:8080/v1/user/duplicate/"+loginId;
-                System.out.println("url0 = " + url0);
-
-                new Thread() {
-                    public void run() {
-                        String result = null;
-                        TextView isDuplicate = findViewById(R.id.isDuplicate);
-                        try {
-                            URL url = new URL(url0);
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setRequestMethod("GET");
-                            InputStream is = conn.getInputStream();
-
-                            StringBuilder builder = new StringBuilder();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                builder.append(line);
-                            }
-
-                            result = builder.toString();
-                            System.out.println("result = " + result);
-
-                            if (result.equals("true")) {
-                                isDuplicate.setText("사용가능한 아이디 입니다.");
-                                isIdDuplicate = false;
-                            }else{
-                                isDuplicate.setText("사용불가능한 아이디 입니다.");
-                            }
-
-                        }
-                        catch (Exception e) {
-                            Log.e("REST_API", "GET method failed: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-
-            }
-        });
-
     }
 
+    //비밀번호 규칙 함수
     private Boolean isCorrectPwdRule(String pwd) {
         String pattern = "^.*(?=^.{8,}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!\\\"\\[\\]\\\\\\/#$%&'()*+,.;:<=>?@^_`{|}^`_~-]).*$";
         return Pattern.matches(pattern, pwd);
     }
 
+    //생년월일 datePicker
     public void onClickBirthPicker(View view){
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setCalendarViewShown(false);
         datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         datePickerDialog.show();
 
-    }
-
-    private void select_doProcess() {
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost("http://172.30.1.21:8080/v1/user");
-        ArrayList<NameValuePair> nameValues = new ArrayList<NameValuePair>();
-
-        try {
-            //Post방식으로 넘길 값들을 각각 지정을 해주어야 한다.
-            nameValues.add(new BasicNameValuePair(
-                    "realName", URLDecoder.decode(realName, "UTF-8")));
-            nameValues.add(new BasicNameValuePair(
-                    "sex", URLDecoder.decode(String.valueOf(sex), "UTF-8")));
-            nameValues.add(new BasicNameValuePair(
-                    "birthDay", URLDecoder.decode(birthDay, "UTF-8")));
-            nameValues.add(new BasicNameValuePair(
-                    "email", URLDecoder.decode(email, "UTF-8")));
-            nameValues.add(new BasicNameValuePair(
-                    "loginId", URLDecoder.decode(loginId, "UTF-8")));
-            nameValues.add(new BasicNameValuePair(
-                    "password", URLDecoder.decode(password, "UTF-8")));
-
-            //HttpPost에 넘길 값을들 Set해주기
-            post.setEntity(
-                    new UrlEncodedFormEntity(
-                            nameValues, "UTF-8"));
-        } catch (UnsupportedEncodingException ex) {
-            Log.e("Insert Log", ex.toString());
-        }
-
-        try {
-            //설정한 URL을 실행시키기
-            HttpResponse response = httpClient.execute(post);
-            //통신 값을 받은 Log 생성. (200이 나오는지 확인할 것~) 200이 나오면 통신이 잘 되었다는 뜻!
-            Log.i("Insert Log", "response.getStatusCode:" + response.getStatusLine().getStatusCode());
-
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }
