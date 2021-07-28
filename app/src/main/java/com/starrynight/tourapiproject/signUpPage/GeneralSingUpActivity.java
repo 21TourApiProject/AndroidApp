@@ -16,36 +16,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.firestore.auth.User;
-import com.squareup.okhttp.ResponseBody;
 import com.starrynight.tourapiproject.R;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.client.ClientProtocolException;
-import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
-import cz.msebera.android.httpclient.client.methods.HttpPost;
-import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Body;
 
 public class GeneralSingUpActivity extends AppCompatActivity{
     private TextView birth;
@@ -85,7 +68,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
                 EditText editText = (EditText) findViewById(R.id.loginId);
                 String loginId = editText.getText().toString();
-                String url0 = "http://192.168.1.93:8080/v1/user/duplicate/"+loginId;
+                String url0 = "http://172.30.1.16:8080/v1/user/duplicate/"+loginId;
                 System.out.println("url0 = " + url0);
 
                 new Thread() {
@@ -248,7 +231,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
             }
         });
-
     }
 
     //비밀번호 규칙 함수
