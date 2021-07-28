@@ -234,10 +234,10 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
-                            System.out.println("성공!!!!!!!!!!!");
+                            System.out.println("회원가입 성공");
                             finish();
-                        }else{
-                            System.out.println("실패ㅠㅠㅠㅠㅠㅠ");
+                        } else{
+                            System.out.println("회원가입 실패");
                         }
                     }
                     @Override
@@ -263,7 +263,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         datePickerDialog.getDatePicker().setCalendarViewShown(false);
         datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         datePickerDialog.show();
-
     }
 
 }
