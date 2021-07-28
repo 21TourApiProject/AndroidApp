@@ -17,27 +17,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 
+import java.util.Calendar;
+
 public class WeatherActivity extends AppCompatActivity {
 
-    private TextView wtDatePicker;
+    Calendar c = Calendar.getInstance();
+    int mYear = c.get(Calendar.YEAR);
+    int mMonth = c.get(Calendar.MONTH);
+    int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            wtDatePicker.setText(month + "월 " + dayOfMonth + "일 ");
-        }
-    };
-
-    TimePickerDialog.OnTimeSetListener t = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            wtDatePicker.append(hourOfDay + "시");
-        }
-    };
+    private TextView datePicker;
+    private DatePickerDialog.OnDateSetListener dateListener;
+    private TextView timePicker;
+    private TimePickerDialog.OnTimeSetListener timeListener;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        onClickBackBtn();
+        onClickCloudInfo();
+
+        onSetDatePicker();
+        onSetTimePicker();
+
+    }
+
+    //뒤로가기 버튼 이벤트
+    public void onClickBackBtn() {
         ImageButton button = findViewById(R.id.wt_back_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,10 +53,10 @@ public class WeatherActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
-        wtDatePicker = findViewById(R.id.wt_datePicker);
-
-        // 기상청 구름 정보 페이지로 이동
+    //기상청 구름 정보 페이지로 이동
+    public void onClickCloudInfo() {
         Button button1 = findViewById(R.id.wt_today_cloud);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,11 +68,46 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
+    //날짜 설정
+    public void onSetDatePicker(){
+        datePicker = (TextView) findViewById(R.id.wt_datePicker);
+        datePicker.setText(mYear+"."+(mMonth+1)+"."+mDay);
+        dateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear += 1;
+                datePicker.setText(year + "." + monthOfYear + "." + dayOfMonth);
+            }
+        };
+    }
+
+    //날짜 선택 이벤트
     public void wtClickDatePicker(View view) {
-        WtDatePickerDialog pd = new WtDatePickerDialog();
-        pd.setListener(d);
-        pd.setListenerT(t);
-        pd.show(getFragmentManager(), "test");
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateListener, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+        datePickerDialog.show();
+
+//        Button confirmBtn = (Button)datePickerDialog.getButton(datePickerDialog.BUTTON_POSITIVE);
+//        confirmBtn.setOnClickListener(new View.OnClickListener(){
+//
+//        });
+    }
+
+    //시간 설정
+    public  void onSetTimePicker(){
+        timePicker = (TextView) findViewById(R.id.wt_timePicker);
+        timeListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                timePicker.setText(hourOfDay + " : " + minute);
+            }
+        };
+    }
+
+    //시간 선택 이벤트
+    public void wtClickTimePicker(View view) {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeListener, 15, 0, false);
+        timePickerDialog.show();
     }
 
     public void wtClickAreaPicker(View view) {
