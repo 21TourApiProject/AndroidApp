@@ -23,7 +23,7 @@
                 android:textSize="34sp" />
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/realName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -52,7 +52,7 @@
             </RadioGroup>
 
             <TextView
-                android:id="@+id/birth"
+                android:id="@+id/birthDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
@@ -83,7 +83,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/id"
+                    android:id="@+id/loginId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -99,12 +99,17 @@
                     android:text="중복확인" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/isDuplicate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="비밀번호"
+                android:hint="비밀번호(특수문자, 영문, 숫자 조합해서 8자 이상)"
                 android:inputType="textPassword" />
 
             <EditText
@@ -114,6 +119,11 @@
                 android:ems="10"
                 android:hint="비밀번호 확인"
                 android:inputType="textPassword" />
+
+            <TextView
+                android:id="@+id/isPwdCorrect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/next"
