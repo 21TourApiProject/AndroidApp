@@ -162,7 +162,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/textView2"
@@ -180,6 +180,13 @@
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
+            <TextView
+                android:id="@+id/whereText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="주변에 함께 많이간 장소"
+                android:textSize="20sp" />
+
             <LinearLayout
                 android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
@@ -190,6 +197,31 @@
                     android:id="@+id/recyclerview_post2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/daumtext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="다음 검색 결과"
+                    android:textSize="18sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/daumrecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/daum_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="250dp"
+                    android:text="다음 검색 결과 더 보기" />
             </LinearLayout>
 
         </LinearLayout>
