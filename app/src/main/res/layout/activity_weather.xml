@@ -8,9 +8,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-16dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -69,13 +67,26 @@
 
             <TextView
                 android:id="@+id/wt_datePicker"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:layout_marginTop="100dp"
                 android:onClick="wtClickDatePicker"
                 android:text="월/일 선택"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/wt_timePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="100dp"
+                android:onClick="wtClickTimePicker"
+                android:text="시간 선택"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/wt_datePicker"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -85,8 +96,8 @@
                 android:layout_marginStart="50dp"
                 android:onClick="wtClickAreaPicker"
                 android:text="지역 선택"
-                app:layout_constraintStart_toEndOf="@id/wt_datePicker"
-                app:layout_constraintTop_toTopOf="@id/wt_datePicker" />
+                app:layout_constraintStart_toStartOf="@id/wt_datePicker"
+                app:layout_constraintTop_toBottomOf="@id/wt_datePicker" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -475,6 +486,13 @@
                 android:text="오늘의 구름지도 >"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wt_sunAltitude_info" />
+
+            <TextView
+                android:id="@+id/weather_api"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wt_today_cloud"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
