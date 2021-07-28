@@ -16,7 +16,6 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="인증하기"
@@ -38,15 +37,23 @@
                     android:inputType="phone" />
 
                 <Button
-                    android:id="@+id/sendSms"
+                    android:id="@+id/requestAuth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
                     android:text="인증요청" />
+
+                <Button
+                    android:id="@+id/resendRequestAuth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:text="인증 재요청"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <EditText
-                android:id="@+id/certificateNumber"
+                android:id="@+id/authCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -55,8 +62,8 @@
                 android:inputType="number" />
 
             <Button
-                android:id="@+id/certificate"
-                android:layout_width="match_parent"
+                android:id="@+id/auth"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="인증하기" />
 
