@@ -16,14 +16,17 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Touristspot_Activity extends AppCompatActivity {
 
-    private static final String API_KEY="KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
-
+    private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
+    List<SearchData.Document> Listdocument;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +61,25 @@ public class Touristspot_Activity extends AppCompatActivity {
         RecyclerView recyclerView2 = findViewById(R.id.daumrecyclerview);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView2.setLayoutManager(layoutManager2);
+        recyclerView2.setHasFixedSize(true);
+        Listdocument = new ArrayList<>();
 
         SearchOpenApi openApi=SearchRetrofitFactory.create();
-        openApi.getData("집짓기","accuracy",1,3,API_KEY)
+        openApi.getData("일산 카페","accuracy",1,4,API_KEY)
                 .enqueue(new Callback<SearchData>() {
                     @Override
                     public void onResponse(Call<SearchData> call, Response<SearchData> response) {
                         Log.d("my tag","성공");
-                            SearchAdapter adapter1 = new SearchAdapter(response.body().meta.body);
+                        Listdocument = response.body().Searchdocuments;
+                            SearchAdapter adapter1 = new SearchAdapter(Listdocument);
                             recyclerView2.setAdapter(adapter1);
+                            adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
+                                @Override
+                                public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
+                                    startActivity(intent);
+                                }
+                            });
                     }
 
                     @Override
