@@ -85,7 +85,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
                 EditText editText = (EditText) findViewById(R.id.loginId);
                 String loginId = editText.getText().toString();
-                String url0 = "http://172.30.1.21:8080/v1/user/duplicate/"+loginId;
+                String url0 = "http://192.168.1.93:8080/v1/user/duplicate/"+loginId;
                 System.out.println("url0 = " + url0);
 
                 new Thread() {
@@ -234,7 +234,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                         if(response.isSuccessful()){
                             System.out.println("회원가입 성공");
 
-                            Intent intent = new Intent(GeneralSingUpActivity.this, SmsCertificationActivity.class);
+                            Intent intent = new Intent(GeneralSingUpActivity.this, PhoneAuthActivity.class);
                             startActivity(intent);
                         } else{
                             System.out.println("회원가입 실패");
