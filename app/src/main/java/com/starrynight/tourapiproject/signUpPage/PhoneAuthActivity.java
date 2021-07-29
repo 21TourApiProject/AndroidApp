@@ -74,7 +74,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 Log.d(TAG, "onVerificationCompleted:" + credential);
 
                 mVerificationInProgress = false;
-                signInWithPhoneAuthCredential(credential);
+                //signInWithPhoneAuthCredential(credential);
             }
 
             @Override
@@ -83,7 +83,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 mVerificationInProgress = false;
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    mobilePhoneNumber.setError("Invalid phone number.");
+                    mobilePhoneNumber.setError("올바르지 않은 전화번호 입니다.");
 
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
@@ -109,7 +109,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         System.out.println("onStart 들어옴");
 
         if (mVerificationInProgress && validatePhoneNumber()) {
-            System.out.println("여기서 true로 바뀜 아마 재전송일때");
             startPhoneNumberVerification(mobilePhoneNumber.getText().toString());
         }
     }
@@ -130,7 +129,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(phoneNumber)       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .build();
@@ -148,8 +147,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .setForceResendingToken(token)
@@ -162,13 +161,14 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.d(TAG, "인증 성공");
 
                             FirebaseUser user = task.getResult().getUser();
+                            signOut();
                         } else {
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                authCode.setError("Invalid code.");
+                                authCode.setError("올바르지 않은 인증번호입니다.");
                             }
                         }
                     }
@@ -182,9 +182,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private boolean validatePhoneNumber() {
         String phoneNumber = mobilePhoneNumber.getText().toString();
         if (TextUtils.isEmpty(phoneNumber)) {
-            mobilePhoneNumber.setError("Invalid phone number.");
+            mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
-        }return true;
+        } return true;
     }
 
     private String changePhoneNumber(String phoneNumber){
@@ -207,10 +207,10 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             case R.id.verify:
                 String code = authCode.getText().toString();
                 if (TextUtils.isEmpty(code)) {
-                    authCode.setError("Cannot be empty.");
+                    authCode.setError("인증번호를 입력해주세요.");
                     return;
                 }
-                System.out.println("인증코드 맞는지 확인들어감");
+                System.out.println("인증코드 맞는지 확인들어감 " + code);
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
