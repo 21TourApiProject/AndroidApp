@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.starrynight.tourapiproject.TouristspotPage.Touristspot_Activity;
 import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
