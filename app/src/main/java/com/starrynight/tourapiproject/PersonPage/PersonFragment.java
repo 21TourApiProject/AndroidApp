@@ -1,20 +1,17 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.PersonPage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.navigation.NavigationView;
+
 import androidx.fragment.app.Fragment;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 
@@ -76,7 +73,7 @@ public class PersonFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),ProfileActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -88,13 +85,13 @@ public class PersonFragment extends Fragment {
         Post_point_item_Adapter adapter = new Post_point_item_Adapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.addItem(new post_point_item("내 게시물"));
+        adapter.addItem(new post_point_item("내 게시물","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
 
         Button pop_btn=(Button)v.findViewById(R.id.setting_button);
         pop_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),PersonpopActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), PersonpopActivity.class);
                 startActivity(intent);
             }
         });

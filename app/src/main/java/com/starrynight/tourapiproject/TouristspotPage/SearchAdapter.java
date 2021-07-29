@@ -71,9 +71,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         }
 
-        private void startActivity(Intent intent) {
-        }
-
         public void setItem(SearchData.Document data){
             textView.setText(data.getBlogname());
             textView2.setText(data.getContents());
