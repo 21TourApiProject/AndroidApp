@@ -88,7 +88,7 @@ public class PersonFragment extends Fragment {
         Post_point_item_Adapter adapter = new Post_point_item_Adapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.addItem(new post_point_item("내 게시물"));
+        adapter.addItem(new post_point_item("내 게시물","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
 
         Button pop_btn=(Button)v.findViewById(R.id.setting_button);
         pop_btn.setOnClickListener(new View.OnClickListener() {
