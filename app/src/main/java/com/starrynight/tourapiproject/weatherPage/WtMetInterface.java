@@ -7,15 +7,15 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface WtMetInterface {
-    @GET("/getVilageFcst")
+    @GET("getVilageFcst")
     Call<WtMetModel> getMetData(
-                            @Query("serviceKey") String serviceKey,
-                            @Query("numOfRows") int numOfRows,
-                            @Query("pageNo") int pageNo,
-                            @Query("dataType") String dataType,
-                            @Query("base_date") String base_date,
-                            @Query("base_time") String base_time,
-                            @Query("nx") int nx,
-                            @Query("ny") int ny
+            @Query("serviceKey") String serviceKey,
+            @Query("numOfRows") String numOfRows,
+            @Query("pageNo") String pageNo,
+            @Query("dataType") String dataType,
+            @Query("base_date") String base_date,
+            @Query("base_time") String base_time,
+            @Query("nx") String nx,
+            @Query("ny") String ny
     );
 }

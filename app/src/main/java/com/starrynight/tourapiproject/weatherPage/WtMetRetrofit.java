@@ -7,18 +7,21 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WtMetRetrofit {
-    private static String baseUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/";
+    private static String BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/";
 
+    public static WtMetInterface wtMetInterface() {
+        return getWeatherInstance().create(WtMetInterface.class);
+    }
 
-    public static WtMetInterface create() {
+    private static Retrofit getWeatherInstance() {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        return retrofit.create(WtMetInterface.class);
     }
 }
 

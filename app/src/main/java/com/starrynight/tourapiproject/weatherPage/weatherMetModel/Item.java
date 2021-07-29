@@ -1,22 +1,33 @@
 package com.starrynight.tourapiproject.weatherPage.weatherMetModel;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Item {
+    @SerializedName("baseDate")
+    @Expose
     private String baseDate;
-
+    @SerializedName("baseTime")
+    @Expose
     private String baseTime;
-
+    @SerializedName("category")
+    @Expose
     private String category;
-
+    @SerializedName("fcstDate")
+    @Expose
     private String fcstDate;
-
+    @SerializedName("fcstTime")
+    @Expose
     private String fcstTime;
-
+    @SerializedName("fcstValue")
+    @Expose
     private String fcstValue;
-
-    private Integer nx;
-
-    private Integer ny;
-
+    @SerializedName("nx")
+    @Expose
+    private String nx;
+    @SerializedName("ny")
+    @Expose
+    private String ny;
 
     public String getBaseDate() {
         return baseDate;
@@ -66,19 +77,19 @@ public class Item {
         this.fcstValue = fcstValue;
     }
 
-    public Integer getNx() {
+    public String getNx() {
         return nx;
     }
 
-    public void setNx(Integer nx) {
+    public void setNx(String nx) {
         this.nx = nx;
     }
 
-    public Integer getNy() {
+    public String getNy() {
         return ny;
     }
 
-    public void setNy(Integer ny) {
+    public void setNy(String ny) {
         this.ny = ny;
     }
 }

@@ -1,8 +1,14 @@
 package com.starrynight.tourapiproject.weatherPage.weatherMetModel;
 
-public class Response {
-    private Header header;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class Response {
+    @SerializedName("header")
+    @Expose
+    private Header header;
+    @SerializedName("body")
+    @Expose
     private Body body;
 
     public Header getHeader() {
