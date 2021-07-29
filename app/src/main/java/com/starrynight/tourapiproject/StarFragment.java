@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postPage.ImageSliderAdapter;
@@ -89,10 +90,16 @@ public class StarFragment extends Fragment {
         Post_point_item_Adapter adapter = new Post_point_item_Adapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.addItem(new post_point_item("별자리 1"));
-        adapter.addItem(new post_point_item("별자리 2"));
-        adapter.addItem(new post_point_item("별자리 3"));
-
+        adapter.addItem(new post_point_item("별자리 1","https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
+        adapter.addItem(new post_point_item("별자리 2","https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639125_960_720.jpg"));
+        adapter.addItem(new post_point_item("별자리 3","https://cdn.pixabay.com/photo/2015/02/17/08/24/horoscope-639123_960_720.jpg"));
+        adapter.setOnItemClicklistener(new OnPostItemClickListener() {
+            @Override
+            public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter((adapter));
 
         sliderViewPager = v.findViewById(R.id.starslider);
@@ -109,15 +116,6 @@ public class StarFragment extends Fragment {
             }
         });
         setupIndicators(images.length);
-
-        Button example=v.findViewById(R.id.example_btn);
-        example.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return v;
     }

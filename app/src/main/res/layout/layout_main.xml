@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_main"
@@ -11,27 +11,61 @@
         android:id="@+id/layout_image"
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/post_write__edge" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="닉네임"
+        app:layout_constraintBottom_toBottomOf="@id/mainprofileimage"
+        app:layout_constraintStart_toEndOf="@+id/mainprofileimage"
+        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+
+    <ImageView
+        android:id="@+id/mainprofileimage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/layout_image"
+        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
 
     <Button
         android:id="@+id/hash__button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_image"
-        android:layout_alignStart="@id/layout_image"
-        android:layout_centerHorizontal="false"
-        android:layout_marginTop="10dp" />
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/hash__button2"
+        app:layout_constraintTop_toBottomOf="@+id/mainprofileimage" />
 
     <Button
         android:id="@+id/hash__button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_image"
-        android:layout_centerHorizontal="false"
-        android:layout_marginStart="10sp"
-        android:layout_marginTop="10sp"
-        android:layout_toEndOf="@id/hash__button" />
+        app:layout_constraintStart_toStartOf="@+id/mainprofileimage"
+        app:layout_constraintTop_toBottomOf="@+id/mainprofileimage" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/mainpost_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="제목"
+        app:layout_constraintStart_toStartOf="@+id/hash__button2"
+        app:layout_constraintTop_toBottomOf="@+id/hash__button2" />
+
+    <EditText
+        android:id="@+id/reviewText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="13"
+        android:inputType="textPersonName"
+        android:text="댓글"
+        app:layout_constraintStart_toStartOf="@+id/mainpost_title"
+        app:layout_constraintTop_toBottomOf="@+id/mainpost_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
