@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.StarPage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;

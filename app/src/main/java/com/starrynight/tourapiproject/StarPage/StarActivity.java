@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.StarPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.starrynight.tourapiproject.MainActivity;
+import com.starrynight.tourapiproject.R;
 
 public class StarActivity extends AppCompatActivity {
 
