@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,6 +27,10 @@ import com.starrynight.tourapiproject.R;
 
 import java.util.concurrent.TimeUnit;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
     private static final String TAG = "PhoneAuthActivity";
@@ -47,6 +52,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     String testPhoneNum = "+16505553333";
 
+    UserParams userParams;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +61,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
+
+        Intent intent = getIntent();
+        userParams = (UserParams) intent.getSerializableExtra("userParams");
 
         mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber); //전화번호
         authCode = findViewById(R.id.authCode); //인증코드
@@ -74,7 +84,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 Log.d(TAG, "onVerificationCompleted:" + credential);
 
                 mVerificationInProgress = false;
-                //signInWithPhoneAuthCredential(credential);
+                //signInWithPhoneAuthCredential(credential); (주의)이거 살리면 오류남
             }
 
             @Override
@@ -128,7 +138,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setPhoneNumber(testPhoneNum)       // Phone number to verify
                         .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
@@ -147,7 +157,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setPhoneNumber(testPhoneNum)       // Phone number to verify
                         .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
@@ -163,8 +173,29 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             Log.d(TAG, "인증 성공");
 
+                           //post 회원가입
+                           userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                            Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if(response.isSuccessful()){
+                                        System.out.println("회원가입 성공");
+                                    } else{
+                                        System.out.println("회원가입 실패");
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Log.e("연결실패", t.getMessage());
+                                }
+                            });
+
                             FirebaseUser user = task.getResult().getUser();
                             signOut();
+
+                            Intent intent = new Intent(PhoneAuthActivity.this, SelectHashTagActivity.class);
+                            startActivity(intent);
                         } else {
                             Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
