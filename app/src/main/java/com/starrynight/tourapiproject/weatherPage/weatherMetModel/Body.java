@@ -1,15 +1,24 @@
 package com.starrynight.tourapiproject.weatherPage.weatherMetModel;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Body {
+    @SerializedName("dataType")
+    @Expose
     private String dataType;
-
+    @SerializedName("items")
+    @Expose
     private Items items;
-
-    private Integer pageNo;
-
-    private Integer numOfRows;
-
-    private Integer totalCount;
+    @SerializedName("pageNo")
+    @Expose
+    private String pageNo;
+    @SerializedName("numOfRows")
+    @Expose
+    private String numOfRows;
+    @SerializedName("totalCount")
+    @Expose
+    private String totalCount;
 
     public String getDataType() {
         return dataType;
@@ -27,27 +36,27 @@ public class Body {
         this.items = items;
     }
 
-    public Integer getPageNo() {
+    public String getPageNo() {
         return pageNo;
     }
 
-    public void setPageNo(Integer pageNo) {
+    public void setPageNo(String pageNo) {
         this.pageNo = pageNo;
     }
 
-    public Integer getNumOfRows() {
+    public String getNumOfRows() {
         return numOfRows;
     }
 
-    public void setNumOfRows(Integer numOfRows) {
+    public void setNumOfRows(String numOfRows) {
         this.numOfRows = numOfRows;
     }
 
-    public Integer getTotalCount() {
+    public String getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount(Integer totalCount) {
+    public void setTotalCount(String totalCount) {
         this.totalCount = totalCount;
     }
 }

@@ -19,6 +19,8 @@ import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.weatherPage.weatherMetModel.WtMetModel;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Calendar;
 
 import retrofit2.Call;
@@ -38,7 +40,15 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView timePicker;
     private TimePickerDialog.OnTimeSetListener timeListener;
 
-    private static final String API_KEY = "%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D";
+    String API_KEY;
+
+    {
+        try {
+            API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,22 +60,9 @@ public class WeatherActivity extends AppCompatActivity {
         onSetDatePicker();
         onSetTimePicker();
 
-        WtMetInterface wtMetInterface = WtMetRetrofit.create();
-        wtMetInterface.getMetData(API_KEY, 50,1, "JSON","20210728","0500", 59, 127)
-                .enqueue(new Callback<WtMetModel>() {
-                            @Override
-                            public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
-                                Log.d("checkcheck", "성공");
-                            }
-
-                            @Override
-                            public void onFailure(Call<WtMetModel> call, Throwable t) {
-                                Log.d("checkcheck", t.getMessage());
-                            }
-                        }
-                );
-
-
+        Call<WtMetModel> getWeatherInstance = WtMetRetrofit.wtMetInterface()
+                .getMetData(API_KEY, "50", "1", "JSON", "20210729", "0500", "59", "127");
+        getWeatherInstance.enqueue(weeklyWeatherCallback);
 
     }
 
@@ -136,7 +133,28 @@ public class WeatherActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+
     public void wtClickAreaPicker(View view) {
 
     }
+
+    //기상청 API 연결
+    private Callback<WtMetModel> weeklyWeatherCallback = new Callback<WtMetModel>() {
+        @Override
+        public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
+            if (response.isSuccessful()) {
+                WtMetModel data = response.body();
+                TextView textView = findViewById(R.id.wt_cloud_info);
+                textView.setText(data.getResponse().getBody().getTotalCount());
+                Log.d("My Tag", "response= " + response.raw().request().url().url());
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<WtMetModel> call, Throwable t) {
+            t.printStackTrace();
+            Log.v("My Tag", "response= " + call.request().url());
+        }
+    };
 }
