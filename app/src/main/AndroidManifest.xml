@@ -18,7 +18,7 @@
         android:theme="@style/Theme.TourapiProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".PersonpopActivity" android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity android:name=".PersonPage.PersonpopActivity" android:theme="@style/Theme.AppCompat.Dialog"/>
         <activity android:name=".signUpPage.PhoneAuthActivity"/>
         <activity android:name=".signUpPage.GeneralSingUpActivity" />
         <activity android:name=".signUpPage.SelectHashTagActivity" />
@@ -28,7 +28,7 @@
         <activity android:name=".TouristspotPage.TouristreviewActivity" />
         <activity android:name=".TouristspotPage.MoretouristspotActivity" />
         <activity android:name=".weatherPage.WeatherActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".PersonPage.ProfileActivity" />
         <activity android:name=".TouristspotPage.Touristspot_Activity" />
 
         <meta-data
