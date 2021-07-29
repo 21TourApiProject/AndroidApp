@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_star"
-        android:name="com.starrynight.tourapiproject.StarFragment"
+        android:name="com.starrynight.tourapiproject.StarPage.StarFragment"
         android:label="@string/title_star"
         tools:layout="@layout/fragment_star" />
 
