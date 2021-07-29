@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject.signUpPage;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -208,26 +209,31 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     return;
                 }
 
-                //회원가입 post api
                 UserParams userParams = new UserParams(realName, sex, birthDay, email, loginId, password);
-                Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("회원가입 성공");
+                Intent intent = new Intent(getApplicationContext(), PhoneAuthActivity.class);
+                intent.putExtra("userParams", userParams);
+                startActivity(intent);
 
-                            Intent intent = new Intent(GeneralSingUpActivity.this, PhoneAuthActivity.class);
-                            startActivity(intent);
-                        } else{
-                            System.out.println("회원가입 실패");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                    }
-                });
+//                //회원가입 post api
+//                UserParams userParams = new UserParams(realName, sex, birthDay, email, loginId, password);
+//                Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
+//                call.enqueue(new Callback<Void>() {
+//                    @Override
+//                    public void onResponse(Call<Void> call, Response<Void> response) {
+//                        if(response.isSuccessful()){
+//                            System.out.println("회원가입 성공");
+//
+//                            Intent intent = new Intent(GeneralSingUpActivity.this, PhoneAuthActivity.class);
+//                            startActivity(intent);
+//                        } else{
+//                            System.out.println("회원가입 실패");
+//                        }
+//                    }
+//                    @Override
+//                    public void onFailure(Call<Void> call, Throwable t) {
+//                        Log.e("연결실패", t.getMessage());
+//                    }
+//                });
 
             }
         });
