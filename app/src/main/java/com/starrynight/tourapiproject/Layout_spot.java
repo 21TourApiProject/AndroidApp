@@ -25,7 +25,7 @@ public class Layout_spot extends LinearLayout {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.layout_spot, this,true);
         PostTextview = findViewById(R.id.PostText);
-        PostButton =findViewById(R.id.PostButton);
+        PostButton =findViewById(R.id.postimage);
     }
     public void setImage( int resId){ PostButton.setImageResource(resId);
     }

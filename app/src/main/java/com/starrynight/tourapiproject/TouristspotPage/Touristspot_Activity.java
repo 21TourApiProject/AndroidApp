@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.MainActivity;
+import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 
@@ -22,11 +24,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 public class Touristspot_Activity extends AppCompatActivity {
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
+    private Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +44,31 @@ public class Touristspot_Activity extends AppCompatActivity {
         Post_point_item_Adapter adapter = new Post_point_item_Adapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.addItem(new post_point_item("관광지1"));
-        adapter.addItem(new post_point_item("관광지2"));
-        adapter.addItem(new post_point_item("관광지3"));
+        adapter.addItem(new post_point_item("관광지1","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
+        adapter.addItem(new post_point_item("관광지2","https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
+        adapter.addItem(new post_point_item("관광지3","https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
 
         recyclerView.setAdapter((adapter));
-
+        Post_point_item_Adapter adapter2 =new Post_point_item_Adapter();
         RecyclerView recyclerView1 = findViewById(R.id.recyclerview_post2);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView1.setLayoutManager(layoutManager1);
 
-        recyclerView1.setAdapter(adapter);
+        recyclerView1.setAdapter(adapter2);
 
-        adapter.addItem(new post_point_item("관광지1"));
-        adapter.addItem(new post_point_item("관광지2"));
-        adapter.addItem(new post_point_item("관광지3"));
+        adapter2.addItem(new post_point_item("관광지1","https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
+        adapter2.addItem(new post_point_item("관광지2","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
+        adapter2.addItem(new post_point_item("관광지3","https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
+        adapter2.setOnItemClicklistener(new OnPostItemClickListener() {
+            @Override
+            public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
+                Intent intent = new Intent(getApplicationContext(), ObservationsiteActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-        recyclerView1.setAdapter((adapter));
+        recyclerView1.setAdapter((adapter2));
 
         RecyclerView recyclerView2 = findViewById(R.id.daumrecyclerview);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -126,7 +138,7 @@ public class Touristspot_Activity extends AppCompatActivity {
             daum_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://map.kakao.com/"));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://map.kakao.com/"+query));
                     startActivity(intent);
                 }
             });
