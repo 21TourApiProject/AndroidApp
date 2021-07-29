@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.signUpPage;
 
-public class UserParams {
+import java.io.Serializable;
+
+public class UserParams implements Serializable {
 
     private String realName;
 
@@ -8,7 +10,7 @@ public class UserParams {
 
     private String birthDay;
 
-    //private String mobilePhoneNumber;
+    private String mobilePhoneNumber;
 
     private String email;
 
@@ -25,5 +27,10 @@ public class UserParams {
         this.email = email;
         this.loginId = loginId;
         this.password = password;
+        this.mobilePhoneNumber = "";
+    }
+
+    public void setMobilePhoneNumber(String mobilePhoneNumber) {
+        this.mobilePhoneNumber = mobilePhoneNumber;
     }
 }

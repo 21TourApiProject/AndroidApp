@@ -3,7 +3,6 @@ package com.starrynight.tourapiproject.postItemPage;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.StarFragment;
-import com.starrynight.tourapiproject.TouristspotPage.SearchAdapter;
 
 import java.util.ArrayList;
 
