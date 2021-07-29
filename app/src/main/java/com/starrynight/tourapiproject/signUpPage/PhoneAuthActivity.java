@@ -74,7 +74,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 Log.d(TAG, "onVerificationCompleted:" + credential);
 
                 mVerificationInProgress = false;
-                signInWithPhoneAuthCredential(credential);
+                //signInWithPhoneAuthCredential(credential);
             }
 
             @Override
@@ -130,7 +130,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(phoneNumber)       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .build();
@@ -148,8 +148,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .setForceResendingToken(token)
@@ -162,11 +162,12 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.d(TAG, "인증 성공");
 
                             FirebaseUser user = task.getResult().getUser();
+                            signOut();
                         } else {
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 authCode.setError("Invalid code.");
                             }
@@ -210,7 +211,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     authCode.setError("Cannot be empty.");
                     return;
                 }
-                System.out.println("인증코드 맞는지 확인들어감");
+                System.out.println("인증코드 맞는지 확인들어감" + code);
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
