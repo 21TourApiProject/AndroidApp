@@ -6,96 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ObservationsiteActivity">
 
-    <ImageView
-        android:id="@+id/obv_name"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/backgroundocean" />
-
-    <Button
-        android:id="@+id/obvback_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ic_baseline_chevron_left_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/obvheart_btn"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/heart__button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/obvlink_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/link__button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/obv_name"
-        app:layout_constraintVertical_bias="0.031" />
-
-    <TextView
-        android:id="@+id/obv_nametext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="관측지 이름"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@+id/obvlink_btn"
-        app:layout_constraintTop_toBottomOf="@+id/obv_name"
-        app:layout_constraintVertical_bias="0.025" />
-
-    <Button
-        android:id="@+id/obvlocation_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/ic_baseline_location_on_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
-        app:layout_constraintStart_toEndOf="@+id/obv_nametext"
-        app:layout_constraintTop_toBottomOf="@+id/obv_name"
-        app:layout_constraintVertical_bias="0.031" />
-
-    <Button
-        android:id="@+id/obv_postplus_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/post_plus__button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.304"
-        app:layout_constraintStart_toEndOf="@+id/obvlocation_btn"
-        app:layout_constraintTop_toBottomOf="@+id/obv_name"
-        app:layout_constraintVertical_bias="0.031" />
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/obv_nametext">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,39 +23,94 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <Button
+                    android:id="@+id/obv_postplus_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/post_plus__button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/obv_name" />
+
+                <Button
+                    android:id="@+id/obvlocation_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_baseline_location_on_24"
+                    app:layout_constraintEnd_toStartOf="@+id/obv_postplus_btn"
+                    app:layout_constraintTop_toBottomOf="@id/obv_name" />
+
+                <TextView
+                    android:id="@+id/obv_nametext"
+                    android:layout_width="195dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="관측지 이름"
+                    android:textSize="40sp"
+                    app:layout_constraintEnd_toStartOf="@+id/obvlocation_btn"
+                    app:layout_constraintStart_toEndOf="@+id/obvlink_btn"
+                    app:layout_constraintTop_toBottomOf="@id/obv_name" />
+
+                <Button
+                    android:id="@+id/obvlink_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/link__button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/obv_name" />
+
+                <Button
+                    android:id="@+id/obvheart_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/heart__button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/obv_name"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/backgroundocean" />
+
+                <Button
+                    android:id="@+id/obvback_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_baseline_chevron_left_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:id="@+id/obvpostname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
                     android:text="관련 게시글"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@id/obv_nametext" />
 
                 <Button
                     android:id="@+id/moreobvpost_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="30sp"
+                    android:layout_marginTop="10dp"
                     android:background="#ffffff"
                     android:text="더 보기 >"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.814"
-                    app:layout_constraintStart_toEndOf="@+id/obvpostname"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/obv_postplus_btn" />
 
                 <LinearLayout
                     android:id="@+id/obv_linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/obvpostname">
+                    app:layout_constraintTop_toBottomOf="@+id/moreobvpost_btn">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/obv_recyclerview"
@@ -147,27 +119,33 @@
                         tools:itemCount="4" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="관련 정보"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/obv_linear" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="추천 코스"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView19" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="예상 소요 시간:"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView20" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="관련 정보" />
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="추천 코스"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="예상 소요 시간:"
-                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +195,12 @@
                         android:id="@+id/textView22"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="관광지 1번 코스" />
+                        android:ellipsize="end"
+                        android:maxLines="10"
+                        android:text="초저녁 북동쪽 하늘의 북두칠성은 누구나 찾기 쉬워 봄철 별자리의 길잡이로 알맞다. 아크투루스는 밤하늘에서 네 번째로 밝은 별로 붉은색이다. 스피카는 보리 이삭이라는 뜻을 담고 있다.
+여름철에 은하수 주위로 흩뿌려진 별은 가장 아름다운 밤하늘을 보여준다. 밤 10시 무렵 동남쪽 하늘을 보면 1등성 세 개가 여름철 대삼각형을 만든다. 이 별들은 여름철 별자리를 쉽게 찾는 길잡이 별이다.
+북쪽 하늘에는 W모양의 카시오페이아자리가 있고, 남쪽 지평선 위로는 남쪽물고기 자리의 포말하우트가 홀로 빛나고 있다. 포말하우트는 가을철의 유일한 일등성이다. 카시오페이아자리 옆에는 네 개의 2등성이 사가형을 이룬다. 이 사각형을 페가수스 사각형이라고 하며, 가을철 별자리를 찾는 길잡이 역할을 한다.
+겨울철 별자리를 찾는 길잡이는 오리온자리이다. 오리온자리는 가운데 밝은 세 별로 쉽게 찾을 수 있다. 이 세 별을 이어 오른쪽 위로 올라가면 황소자리의 알데바란을 찾을 수 있다." />
                 </LinearLayout>
 
                 <LinearLayout
