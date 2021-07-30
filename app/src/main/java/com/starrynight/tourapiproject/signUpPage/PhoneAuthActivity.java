@@ -19,7 +19,6 @@ import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -53,6 +52,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     String testPhoneNum = "+16505553333";
 
     UserParams userParams;
+    boolean isDuplicate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +115,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         System.out.println("onStart 들어옴");
 
         if (mVerificationInProgress && validatePhoneNumber()) {
@@ -138,10 +137,10 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)       // Phone number to verify
-                        .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
-                        .setActivity(this)                 // Activity (for callback binding)
-                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                        .setPhoneNumber(testPhoneNum)
+                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setActivity(this)
+                        .setCallbacks(mCallbacks)
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
 
@@ -157,10 +156,10 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)       // Phone number to verify
-                        .setTimeout(90L, TimeUnit.SECONDS) // Timeout and unit
-                        .setActivity(this)                 // Activity (for callback binding)
-                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                        .setPhoneNumber(testPhoneNum)
+                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setActivity(this)
+                        .setCallbacks(mCallbacks)
                         .setForceResendingToken(token)
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
@@ -171,9 +170,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "인증 성공");
+                            Log.d(TAG, "인증 성공"); //인증 성공하면
 
-                           //post 회원가입
+                           //회원가입을 위한 post api
                            userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
                             Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
                             call.enqueue(new Callback<Void>() {
@@ -181,6 +180,11 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if(response.isSuccessful()){
                                         System.out.println("회원가입 성공");
+                                        signOut();
+
+                                        //선호 해시태그 선택 창으로 전환
+                                        Intent intent = new Intent(PhoneAuthActivity.this, SelectHashTagActivity.class);
+                                        startActivity(intent);
                                     } else{
                                         System.out.println("회원가입 실패");
                                     }
@@ -191,11 +195,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                 }
                             });
 
-                            FirebaseUser user = task.getResult().getUser();
-                            signOut();
-
-                            Intent intent = new Intent(PhoneAuthActivity.this, SelectHashTagActivity.class);
-                            startActivity(intent);
                         } else {
                             Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
@@ -215,9 +214,36 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(phoneNumber)) {
             mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
-        } return true;
+        }
+
+        //전화번호가 중복인지 아닌지를 위한 get api
+        Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateMobilePhoneNumber(phoneNumber);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.isSuccessful()){
+                    System.out.println("중복 체크 성공");
+
+                    Boolean result = response.body();
+                    if (result == true){
+                        System.out.println("사용가능한 전화번호");
+                        isDuplicate = false;
+                    } else if (result == false){
+                        mobilePhoneNumber.setError("이미 가입된 전화번호입니다.");
+                    }
+                } else{
+                    System.out.println("중복 체크 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+        return isDuplicate;
     }
 
+    //국제 번호 붙여주는 함수
     private String changePhoneNumber(String phoneNumber){
         return "+82" + phoneNumber.substring(1);
     }

@@ -61,46 +61,17 @@
                 android:textColor="#9C9A9A"
                 android:textSize="18.5sp" />
 
-            <!--            <EditText-->
-            <!--                android:id="@+id/birth"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:ems="10"-->
-            <!--                android:hint="생년월일"-->
-            <!--                android:onClick="onClickBirthPicker"/>-->
-
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
                 android:hint="이메일"
                 android:inputType="textEmailAddress" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/loginId"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="아이디"
-                    android:inputType="textPersonName" />
-
-                <Button
-                    android:id="@+id/duplicationCheck"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:text="중복확인" />
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/isDuplicate"
+                android:id="@+id/emailGuide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -121,7 +92,7 @@
                 android:inputType="textPassword" />
 
             <TextView
-                android:id="@+id/isPwdCorrect"
+                android:id="@+id/pwdGuide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
