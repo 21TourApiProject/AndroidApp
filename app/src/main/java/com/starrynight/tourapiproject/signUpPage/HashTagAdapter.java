@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
@@ -81,6 +82,7 @@ public class HashTagAdapter extends RecyclerView.Adapter<HashTagAdapter.ViewHold
 
         public void setItem(HashTag item) {
             hashTagName.setText(item.getName());
+            hashTagName.setId(item.getId());
         }
     }
 

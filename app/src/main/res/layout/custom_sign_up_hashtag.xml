@@ -9,6 +9,7 @@
     android:layout_marginBottom="20dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/hashObject"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:cardBackgroundColor="#CECACF"
@@ -23,6 +24,7 @@
             android:layout_gravity="center"
             android:text="# 조용한"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
+
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
