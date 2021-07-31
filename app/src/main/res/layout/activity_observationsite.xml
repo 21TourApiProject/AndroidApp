@@ -35,7 +35,7 @@
                     android:id="@+id/obvlocation_btn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/ic_baseline_location_on_24"
+                    android:background="@drawable/location_btn"
                     app:layout_constraintEnd_toStartOf="@+id/obv_postplus_btn"
                     app:layout_constraintTop_toBottomOf="@id/obv_name" />
 
@@ -54,7 +54,7 @@
                     android:id="@+id/obvlink_btn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/link__button"
+                    android:background="@drawable/tour_link__button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/obv_name" />
 
@@ -79,7 +79,7 @@
                     android:id="@+id/obvback_btn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/ic_baseline_chevron_left_24"
+                    android:background="@drawable/back_btn"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
