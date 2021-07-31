@@ -22,6 +22,6 @@ public interface GeneralSignUpRetrofitService {
     @GET("hashTags")
     Call<List<HashTagResult>> getAllHashTag();
 
-//    @POST("myHashTag/{userId}")
-//    Call<Void> setMyHashTag(@Path("userId")Long userId @Body );
+    @POST("myHashTag")
+    Call<Void> createMyHashTag(@Body List<MyHashTagParams> myHashTagParams);
 }

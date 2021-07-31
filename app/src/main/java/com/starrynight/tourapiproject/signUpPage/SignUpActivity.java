@@ -29,7 +29,8 @@ public class SignUpActivity extends AppCompatActivity {
         kakaoSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(SignUpActivity.this, SelectMyHashTagActivity.class);
+                startActivity(intent);
             }
         });
     }

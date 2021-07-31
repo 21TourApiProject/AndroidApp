@@ -52,6 +52,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     String testPhoneNum = "+16505553333";
 
     UserParams userParams;
+    String userId;
     boolean isDuplicate = true;
 
     @Override
@@ -183,7 +184,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         signOut();
 
                                         //선호 해시태그 선택 창으로 전환
-                                        Intent intent = new Intent(PhoneAuthActivity.this, SelectHashTagActivity.class);
+                                        Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
+                                        intent.putExtra("mobilePhoneNumber", mobilePhoneNumber.getText().toString());
                                         startActivity(intent);
                                     } else{
                                         System.out.println("회원가입 실패");
