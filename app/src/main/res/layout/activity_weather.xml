@@ -61,7 +61,7 @@
                 style="@style/ImageView.size48"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/ic_baseline_list_24"
+                android:src="@drawable/list_btn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

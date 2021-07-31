@@ -39,7 +39,7 @@
             android:id="@+id/myLocation_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_my_location_24"
+            android:src="@drawable/map_mylocation_btn"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/observe_ck"
             android:layout_marginRight="16dp"/>
