@@ -47,6 +47,8 @@ public class SearchData {
      String datetime;
 
      public String getTitle() {
+         title=title.replaceAll("<b>","");
+         title=title.replaceAll("</b>","");
          return title;
      }
 
@@ -55,6 +57,8 @@ public class SearchData {
      }
 
      public String getContents() {
+         contents=contents.replaceAll("<b>","");
+         contents=contents.replaceAll("</b>","");
          return contents;
      }
 
@@ -71,6 +75,8 @@ public class SearchData {
      }
 
      public String getBlogname() {
+         blogname=blogname.replaceAll("<b>","");
+         blogname=blogname.replaceAll("</b>","");
          return blogname;
      }
 
