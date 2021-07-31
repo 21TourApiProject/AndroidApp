@@ -30,4 +30,5 @@ public class UserParams implements Serializable {
     public void setMobilePhoneNumber(String mobilePhoneNumber) {
         this.mobilePhoneNumber = mobilePhoneNumber;
     }
+
 }
