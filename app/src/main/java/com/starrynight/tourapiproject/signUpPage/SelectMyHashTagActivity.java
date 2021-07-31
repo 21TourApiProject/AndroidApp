@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.starrynight.tourapiproject.R;
 
@@ -20,6 +21,7 @@ import retrofit2.Response;
 public class SelectMyHashTagActivity extends AppCompatActivity {
     List<MyHashTagParams> myHashTagParams = new ArrayList<>();
     String mobilePhoneNumber;
+    String[] clicked = new String[22];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +31,23 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mobilePhoneNumber = (String) intent.getSerializableExtra("mobilePhoneNumber"); //전 페이지에서 받아온 사용자 전화번호
 
+        for(int i=0; i<22; i++){
+            clicked[i]="";
+        }
+
         Button finSelectHt = findViewById(R.id.finSelectHt);
         finSelectHt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                for(int i=0; i<22; i++){
+                    if (!clicked[i].isEmpty()){
+                        MyHashTagParams myHashTagParam = new MyHashTagParams();
+                        myHashTagParam.setHashTagName(clicked[i]);
+                        myHashTagParam.setMobilePhoneNumber(mobilePhoneNumber);
+                        myHashTagParams.add(myHashTagParam);
+                    }
+                }
                 //post api
                 Call<Void> call = RetrofitClient.getApiService().createMyHashTag(myHashTagParams);
                 call.enqueue(new Callback<Void>() {
@@ -56,10 +71,21 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
     public void clickEvent(View view) {
         Button button = (Button) view;
 
-        MyHashTagParams myHashTagParam = new MyHashTagParams();
-        myHashTagParam.setHashTagName(button.getText().toString());
-        System.out.println("선택한 해시태그 = " + button.getText().toString());
-        myHashTagParam.setMobilePhoneNumber(mobilePhoneNumber);
-        myHashTagParams.add(myHashTagParam);
+        if(button.getTag() == "isClicked"){
+            button.setTag("");
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.select_hash_tag_unclicked));
+
+            String viewId = view.getResources().getResourceEntryName(view.getId());
+            int id = Integer.parseInt(viewId.substring(2));
+            clicked[id-1] = "";
+        }
+        else{
+            button.setTag("isClicked");
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.select_hash_tag_clicked));
+
+            String viewId = view.getResources().getResourceEntryName(view.getId());
+            int id = Integer.parseInt(viewId.substring(2));
+            clicked[id-1] = button.getText().toString();
+        }
     }
 }
