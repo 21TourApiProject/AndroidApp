@@ -83,6 +83,11 @@
                 android:hint="비밀번호(특수문자, 영문, 숫자 조합해서 8자 이상)"
                 android:inputType="textPassword" />
 
+            <TextView
+                android:id="@+id/pwdGuide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <EditText
                 android:id="@+id/passwordCheck"
                 android:layout_width="match_parent"
@@ -90,11 +95,6 @@
                 android:ems="10"
                 android:hint="비밀번호 확인"
                 android:inputType="textPassword" />
-
-            <TextView
-                android:id="@+id/pwdGuide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/next"
