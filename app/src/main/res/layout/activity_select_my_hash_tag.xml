@@ -37,12 +37,14 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="여행 테마" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
 
                         <Button
                             android:id="@+id/ht1"
@@ -51,6 +53,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="5"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="공기 좋은" />
 
                         <Button
@@ -60,6 +63,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="6"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="분위기 있는" />
 
                         <Button
@@ -68,13 +72,15 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="깔끔한" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
 
                         <Button
                             android:id="@+id/ht4"
@@ -83,6 +89,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="4"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="감성적인" />
 
                         <Button
@@ -92,6 +99,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="4"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="이색적인" />
 
                         <Button
@@ -100,6 +108,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="인생샷" />
 
                         <TextView
@@ -120,6 +129,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="4"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="전문적인" />
 
                         <Button
@@ -129,6 +139,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="2"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="캠핑" />
 
                         <Button
@@ -137,6 +148,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="차박" />
 
                         <TextView
@@ -157,6 +169,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="이동수단" />
 
                     <LinearLayout
@@ -171,6 +184,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="3"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="뚜벅이" />
 
                         <Button
@@ -180,6 +194,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="4"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="드라이브" />
 
                         <Button
@@ -188,6 +203,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="자전거" />
 
                         <TextView
@@ -207,6 +223,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="분위기" />
 
                     <LinearLayout
@@ -221,6 +238,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="3"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="한적한" />
 
                         <Button
@@ -230,6 +248,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="2"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="근교" />
 
                         <Button
@@ -238,6 +257,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="도심 속" />
 
                         <TextView
@@ -257,6 +277,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="주로 함께하는 사람" />
 
                     <LinearLayout
@@ -271,6 +292,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="2"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="연인" />
 
                         <Button
@@ -280,6 +302,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="2"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="가족" />
 
                         <Button
@@ -289,6 +312,7 @@
                             android:layout_weight="2"
                             android:layout_marginRight="10dp"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="친구" />
 
                         <Button
@@ -297,6 +321,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="혼자" />
                     </LinearLayout>
 
@@ -311,6 +336,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="여행 예산" />
 
                     <LinearLayout
@@ -325,6 +351,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="3"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="가성비" />
 
                         <Button
@@ -334,6 +361,7 @@
                             android:layout_marginRight="10dp"
                             android:layout_weight="3"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="소확행" />
 
                         <Button
@@ -342,6 +370,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
                             android:onClick="clickEvent"
+                            android:background="@drawable/select_hash_tag_unclicked"
                             android:text="럭셔리한" />
 
                         <TextView

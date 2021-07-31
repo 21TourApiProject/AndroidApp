@@ -59,7 +59,18 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear += 1;
-                birth.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                String month = Integer.toString(monthOfYear);
+                String day = Integer.toString(dayOfMonth);
+
+                if (monthOfYear < 10){
+                    month = "0"+ Integer.toString(monthOfYear);
+                }
+
+                if(dayOfMonth < 10){
+                    day = "0"+ Integer.toString(dayOfMonth);
+                }
+
+                birth.setText(year + "-" + month + "-" + day);
             }
         };
 
@@ -221,6 +232,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                         Boolean result = response.body();
                         if (result) {
                             emailGuide.setText("사용가능한 이메일입니다.");
+                            email = ((EditText) (findViewById(R.id.email))).getText().toString();
                             isEmailEmpty = false;
                             isEmailDuplicate = false;
                             isNotEmail = false;
