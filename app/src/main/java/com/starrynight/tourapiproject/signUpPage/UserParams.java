@@ -14,18 +14,15 @@ public class UserParams implements Serializable {
 
     private String email;
 
-    private String loginId;
-
     private String password;
 
     public UserParams(){}
 
-    public UserParams(String realName, Boolean sex, String birthDay, String email, String loginId, String password) {
+    public UserParams(String realName, Boolean sex, String birthDay, String email, String password) {
         this.realName = realName;
         this.sex = sex;
         this.birthDay = birthDay;
         this.email = email;
-        this.loginId = loginId;
         this.password = password;
         this.mobilePhoneNumber = "";
     }
@@ -33,4 +30,5 @@ public class UserParams implements Serializable {
     public void setMobilePhoneNumber(String mobilePhoneNumber) {
         this.mobilePhoneNumber = mobilePhoneNumber;
     }
+
 }
