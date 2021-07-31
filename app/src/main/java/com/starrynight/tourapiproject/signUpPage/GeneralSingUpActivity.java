@@ -35,7 +35,10 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     private Boolean isEmailDuplicate = true; //이메일이 중복인지
 
     private TextView pwdGuide;
-    private Boolean isPwdSame = false; //비밀번호, 비밀번호 확인이 같은지
+    private Boolean isNotPwd = true; //올바른 비밀번호 형식이 아닌지
+    private String passwordCheck;
+
+    private Boolean isError = false; //서버 에러가 발생했는지
 
     String realName, birthDay, email="", password;
     Boolean sex;
@@ -81,38 +84,41 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
 
-        //비밀번호 확인이 비밀번호랑 같은지
+        //비밀번호가 규칙에 맞는지
         EditText editPassword = findViewById(R.id.password);
         password = editPassword.getText().toString();
+        pwdGuide = findViewById(R.id.pwdGuide);
 
         editPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력란에 변화가 있을 때
                 password = s.toString();
+                showPwdGuide(password);
             }
             @Override
             public void afterTextChanged(Editable arg0) {
                 // 입력이 끝났을 때
                 password = arg0.toString();
+                showPwdGuide(password);
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
 
-        EditText passwordCheck = findViewById(R.id.passwordCheck);
-        pwdGuide = findViewById(R.id.pwdGuide);
+        EditText passwordCheckEdit = findViewById(R.id.passwordCheck);
 
-        passwordCheck.addTextChangedListener(new TextWatcher() {
+        passwordCheckEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // 입력란에 변화가 있을 때
-                showPwdGuide(s);
+                passwordCheck = s.toString();
             }
 
             @Override
             public void afterTextChanged(Editable arg0) {
                 // 입력이 끝났을 때
-                showPwdGuide(arg0);
+                passwordCheck = arg0.toString();
             }
 
             @Override
@@ -126,7 +132,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             public void onClick(View v) {
                 realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
                 if(realName.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -137,40 +143,40 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 } else if(female.isChecked()){
                     sex = false;
                 } else{
-                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();
                 if(birthDay.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if(isEmailEmpty){
-                    Toast.makeText(getApplicationContext(), "이메일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else if(isNotEmail){
-                    Toast.makeText(getApplicationContext(), "올바른 이메일이 아닙니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else if(isEmailDuplicate){
-                    Toast.makeText(getApplicationContext(), "이메일 중복확인이 필요합니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "이메일 중복확인이 필요합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                password = ((EditText) (findViewById(R.id.password))).getText().toString();
+                //password = ((EditText) (findViewById(R.id.password))).getText().toString();
                 if (password.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if (!isCorrectPwdRule(password)) {
-                    Toast.makeText(getApplicationContext(), "규칙에 맞지 않는 비밀번호입니다", Toast.LENGTH_SHORT).show();
+                else if (isNotPwd) {
+                    Toast.makeText(getApplicationContext(), "비밀번호 형식이 올바르지 않습니다. (특수문자, 영문, 숫자 조합해서 8자 이상)", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if(!isPwdSame){
-                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                else if(!password.equals(passwordCheck)){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -184,14 +190,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         });
     }
 
-    private void showPwdGuide(CharSequence s) {
-        String text = s.toString();
-
-        if (!password.equals(text)) {
-            pwdGuide.setText("일치하지 않는 비밀번호입니다.");
+    private void showPwdGuide(String pwd) {
+        if (!isCorrectPwdRule(pwd)) {
+            pwdGuide.setText("비밀번호 형식이 올바르지 않습니다. (특수문자, 영문, 숫자 조합해서 8자 이상)");
+            isNotPwd = true;
         } else {
-            pwdGuide.setText("일치하는 비밀번호입니다.");
-            isPwdSame = true;
+            pwdGuide.setText("");
+            isNotPwd = false;
         }
     }
 
@@ -228,6 +233,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     } else {
                         System.out.println("중복 체크 실패");
                         emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
+                        isError = true;
                     }
                 }
 
@@ -235,6 +241,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("연결실패", t.getMessage());
                     emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
+                    isError = true;
                 }
             });
         }
