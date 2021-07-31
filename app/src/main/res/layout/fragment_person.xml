@@ -16,7 +16,7 @@
             android:layout_height="125sp"
             android:layout_marginStart="50sp"
             android:layout_marginTop="50sp"
-            tools:src="@drawable/ic_baseline_person_24" />
+            tools:src="@drawable/person_btn" />
 
         <TextView
             android:id="@+id/textView1"
@@ -63,7 +63,7 @@
             android:layout_width="50sp"
             android:layout_height="50sp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_baseline_settings_24" />
+            android:background="@drawable/setting_btn" />
 
         <TextView
             android:id="@+id/textView6"
