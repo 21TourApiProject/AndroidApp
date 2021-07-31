@@ -29,14 +29,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
 
-    private EditText emailEdit; //이메일 작성칸
     private TextView emailGuide; //이메일 칸 바로 밑에 글칸
-    private Boolean isEmailEmpty = true;
-    private Boolean isNotEmail = false;
-    private Boolean isEmailDuplicate = true;
+    private Boolean isEmailEmpty = true; //이메일이 비어있는지
+    private Boolean isNotEmail = false; //올바른 이메일 형식이 아닌지
+    private Boolean isEmailDuplicate = true; //이메일이 중복인지
 
     private TextView pwdGuide;
-    private Boolean isPwdSame = false;
+    private Boolean isPwdSame = false; //비밀번호, 비밀번호 확인이 같은지
 
     String realName, birthDay, email="", password;
     Boolean sex;
@@ -61,7 +60,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             }
         };
 
-        emailEdit = findViewById(R.id.email);
+        EditText emailEdit = findViewById(R.id.email); //이메일 작성칸
         emailGuide = findViewById(R.id.emailGuide);
 
         //이메일 칸에 글씨가 입력됨에 따라 실시간으로 emailGuide 뜨게
@@ -208,6 +207,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             isNotEmail = true;
         } else {
             //이메일이 중복인지 아닌지를 위한 get api
+            emailGuide.setText("");
             Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateEmail(text);
             call.enqueue(new Callback<Boolean>() {
                 @Override
