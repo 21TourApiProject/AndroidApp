@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface GeneralSignUpRetrofitService {
+public interface SignUpRetrofitService {
 
     @POST("user")
     Call<Void> signUp(@Body UserParams params);
@@ -21,4 +21,13 @@ public interface GeneralSignUpRetrofitService {
 
     @POST("myHashTag")
     Call<Void> createMyHashTag(@Body List<MyHashTagParams> myHashTagParams);
+
+    @GET("user/login/{email}/{password}")
+    Call<Boolean> logIn(@Path("email")String email, @Path("password")String password);
+
+    @GET("user/login/email/{realName}/{mobilePhoneNumber}")
+    Call<Boolean> getEmail(@Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
+
+    @GET("user/login/password/{email}/{realName}/{mobilePhoneNumber}")
+    Call<Boolean> getPassword(@Path("email")String email, @Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
 }
