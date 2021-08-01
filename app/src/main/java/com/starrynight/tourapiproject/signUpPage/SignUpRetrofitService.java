@@ -26,8 +26,8 @@ public interface SignUpRetrofitService {
     Call<Boolean> logIn(@Path("email")String email, @Path("password")String password);
 
     @GET("user/login/email/{realName}/{mobilePhoneNumber}")
-    Call<Boolean> getEmail(@Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
+    Call<String> getEmail(@Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
 
     @GET("user/login/password/{email}/{realName}/{mobilePhoneNumber}")
-    Call<Boolean> getPassword(@Path("email")String email, @Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
+    Call<String> getPassword(@Path("email")String email, @Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
 }

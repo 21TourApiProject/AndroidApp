@@ -53,7 +53,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     String testPhoneNum = "+16505553333";
 
     UserParams userParams;
-    String userId;
     boolean isDuplicate = true;
 
     @Override
