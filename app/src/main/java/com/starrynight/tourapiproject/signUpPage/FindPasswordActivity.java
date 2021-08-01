@@ -1,16 +1,16 @@
 package com.starrynight.tourapiproject.signUpPage;
 
-import android.content.Intent;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,9 +31,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhoneAuthActivity extends AppCompatActivity implements
+public class FindPasswordActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "PhoneAuthActivity";
+    private static final String TAG = "FindPassWordActivity";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
 
     private FirebaseAuth mAuth;
@@ -52,30 +52,20 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     String testPhoneNum = "+16505553333";
 
-    UserParams userParams;
-    boolean isDuplicate = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phone_auth);
-        if (savedInstanceState != null) {
-            onRestoreInstanceState(savedInstanceState);
-        }
+        setContentView(R.layout.activity_find_password);
 
-        Intent intent = getIntent();
-        userParams = (UserParams) intent.getSerializableExtra("userParams");
-
-        mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber); //전화번호
-        authCode = findViewById(R.id.authCode); //인증코드
-        startAuth = findViewById(R.id.startAuth); //처음 문자요청
-        resendAuth = findViewById(R.id.resendAuth); //재 문자요청
-        verify = findViewById(R.id.verify); //인증요청
+        mobilePhoneNumber = findViewById(R.id.findPwdMobilePhoneNumber); //전화번호
+        authCode = findViewById(R.id.authCode3); //인증코드
+        startAuth = findViewById(R.id.startAuth3); //처음 문자요청
+        resendAuth = findViewById(R.id.resendAuth3); //재 문자요청
+        verify = findViewById(R.id.verify3); //인증요청
 
         startAuth.setOnClickListener(this);
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
-        System.out.println("here is listener create maybe.....?");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -83,9 +73,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
                 Log.d(TAG, "onVerificationCompleted:" + credential);
-
                 mVerificationInProgress = false;
-                //signInWithPhoneAuthCredential(credential); (주의)이거 살리면 오류남
             }
 
             @Override
@@ -116,8 +104,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("onStart 들어옴");
-
         if (mVerificationInProgress && validatePhoneNumber()) {
             startPhoneNumberVerification(mobilePhoneNumber.getText().toString());
         }
@@ -165,34 +151,39 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "인증 성공"); //인증 성공하면
+                            Log.d(TAG, "인증 성공");
+                            String email = ((EditText) findViewById(R.id.findPwdEmail)).getText().toString();
+                            String realName = ((EditText) findViewById(R.id.findPwdRealName)).getText().toString();
 
-                           //회원가입을 위한 post api
-                           userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
-                            Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
-                            call.enqueue(new Callback<Void>() {
+                            //비밀번호 찾기를 위한 get api
+                            Call<String> call = RetrofitClient.getApiService().getPassword(email, realName, mobilePhoneNumber.getText().toString());
+                            call.enqueue(new Callback<String>() {
                                 @Override
-                                public void onResponse(Call<Void> call, Response<Void> response) {
-                                    if(response.isSuccessful()){
-                                        System.out.println("회원가입 성공");
-                                        signOut();
-
-                                        //선호 해시태그 선택 창으로 전환
-                                        Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
-                                        intent.putExtra("mobilePhoneNumber", mobilePhoneNumber.getText().toString());
-                                        startActivity(intent);
-                                    } else{
-                                        System.out.println("회원가입 실패");
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if (response.isSuccessful()) {
+                                        String result = response.body();
+                                        if (!result.equals("none")) {
+                                            System.out.println("비밀번호 찾기 성공");
+                                            signOut();
+                                            TextView showPassword = findViewById(R.id.showPassword);
+                                            showPassword.setText("비밀번호: " + result);
+                                        } else {
+                                            System.out.println("비밀번호 찾기 실패");
+                                            Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
                                     }
                                 }
+
                                 @Override
-                                public void onFailure(Call<Void> call, Throwable t) {
+                                public void onFailure(Call<String> call, Throwable t) {
                                     Log.e("연결실패", t.getMessage());
                                 }
                             });
@@ -217,41 +208,18 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
         }
-
-        //전화번호가 중복인지 아닌지를 위한 get api
-        Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateMobilePhoneNumber(phoneNumber);
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if(response.isSuccessful()){
-                    Boolean result = response.body();
-                    if (result == true){
-                        System.out.println("사용가능한 전화번호");
-                        isDuplicate = false;
-                    } else if (result == false){
-                        mobilePhoneNumber.setError("이미 가입된 전화번호입니다.");
-                    }
-                } else{
-                    System.out.println("중복 체크 실패");
-                }
-            }
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
-            }
-        });
-        return isDuplicate;
+        return true;
     }
 
     //국제 번호 붙여주는 함수
-    private String changePhoneNumber(String phoneNumber){
+    private String changePhoneNumber(String phoneNumber) {
         return "+82" + phoneNumber.substring(1);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.startAuth:
+            case R.id.startAuth3:
                 startAuth.setVisibility(View.GONE);
                 resendAuth.setVisibility(View.VISIBLE);
 
@@ -264,7 +232,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 break;
 
-            case R.id.verify:
+            case R.id.verify3:
                 String code = authCode.getText().toString();
                 if (TextUtils.isEmpty(code)) {
                     authCode.setError("인증번호를 입력해주세요.");
@@ -274,7 +242,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
-            case R.id.resendAuth:
+            case R.id.resendAuth3:
                 System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
                 resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
