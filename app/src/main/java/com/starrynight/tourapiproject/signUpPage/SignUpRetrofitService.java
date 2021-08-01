@@ -23,7 +23,7 @@ public interface SignUpRetrofitService {
     Call<Void> createMyHashTag(@Body List<MyHashTagParams> myHashTagParams);
 
     @GET("user/login/{email}/{password}")
-    Call<Boolean> logIn(@Path("email")String email, @Path("password")String password);
+    Call<Long> logIn(@Path("email")String email, @Path("password")String password);
 
     @GET("user/login/email/{realName}/{mobilePhoneNumber}")
     Call<String> getEmail(@Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
