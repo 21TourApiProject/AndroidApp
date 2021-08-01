@@ -7,9 +7,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "http://172.30.1.37:8080/v1/";
+    private static final String BASE_URL = "http://172.30.1.5:8080/v1/";
 
-    public static GeneralSignUpRetrofitService getApiService(){return getInstance().create(GeneralSignUpRetrofitService.class);}
+    public static SignUpRetrofitService getApiService(){return getInstance().create(SignUpRetrofitService.class);}
 
     private static Retrofit getInstance(){
         Gson gson = new GsonBuilder().setLenient().create();
