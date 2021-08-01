@@ -32,16 +32,16 @@ public class SignUpActivity extends AppCompatActivity {
                 String email = ((EditText) (findViewById(R.id.logInEmail))).getText().toString();
                 String password = ((EditText) (findViewById(R.id.logInPwd))).getText().toString();
                 //로그인을 위한 get api
-                Call<Boolean> call = RetrofitClient.getApiService().logIn(email, password);
-                call.enqueue(new Callback<Boolean>() {
+                Call<Long> call = RetrofitClient.getApiService().logIn(email, password);
+                call.enqueue(new Callback<Long>() {
                     @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    public void onResponse(Call<Long> call, Response<Long> response) {
                         if (response.isSuccessful()) {
-                            Boolean result = response.body();
-                            if (result) {
+                            Long result = response.body();
+                            if (result != -1L) {
                                 System.out.println("로그인 성공");
 
-                            } else if (!result) {
+                            } else {
                                 Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
@@ -50,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
+                    public void onFailure(Call<Long> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
