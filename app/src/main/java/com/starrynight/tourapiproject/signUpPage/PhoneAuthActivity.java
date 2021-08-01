@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -224,8 +225,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if(response.isSuccessful()){
-                    System.out.println("중복 체크 성공");
-
                     Boolean result = response.body();
                     if (result == true){
                         System.out.println("사용가능한 전화번호");
@@ -254,12 +253,15 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.startAuth:
+                startAuth.setVisibility(View.GONE);
+                resendAuth.setVisibility(View.VISIBLE);
+
                 if (!validatePhoneNumber()) {
                     System.out.println("처음 문자요청했는데 전화번호가 이상함");
                     return;
                 }
-                System.out.println("처음 문자요청됨");
                 System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 break;
 
@@ -274,8 +276,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 break;
 
             case R.id.resendAuth:
-                System.out.println("문자 재요청됨");
                 System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
                 resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                 break;
         }
