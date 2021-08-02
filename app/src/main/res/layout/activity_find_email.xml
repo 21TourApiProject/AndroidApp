@@ -29,7 +29,7 @@
 
             <EditText
                 android:id="@+id/findEmailRealName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="이름을 입력해주세요"
@@ -94,10 +94,11 @@
 
             <TextView
                 android:id="@+id/showEmail"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
 
         </LinearLayout>
