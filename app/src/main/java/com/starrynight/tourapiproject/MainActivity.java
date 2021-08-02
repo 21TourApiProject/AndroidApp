@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.MenuItem;
+import android.widget.Toast;
 
 //세인 주석
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     SearchFragment searchFragment;
     StarFragment starFragment;
     PersonFragment personFragment;
+    private long backkeyPressTime=0;
 
 
     @Override
@@ -59,6 +61,18 @@ public class MainActivity extends AppCompatActivity {
 //        fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
 
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(System.currentTimeMillis()>backkeyPressTime+2000){
+            backkeyPressTime=System.currentTimeMillis();
+            Toast.makeText(this,"한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (System.currentTimeMillis()<=backkeyPressTime+2000){
+            finish();
+        }
     }
 
     public void replaceFragment(Fragment fragment) {
