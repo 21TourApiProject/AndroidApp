@@ -252,9 +252,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.startAuth:
-                startAuth.setVisibility(View.GONE);
-                resendAuth.setVisibility(View.VISIBLE);
-
                 if (!validatePhoneNumber()) {
                     System.out.println("처음 문자요청했는데 전화번호가 이상함");
                     return;
@@ -262,6 +259,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
+                startAuth.setVisibility(View.GONE);
+                resendAuth.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.verify:

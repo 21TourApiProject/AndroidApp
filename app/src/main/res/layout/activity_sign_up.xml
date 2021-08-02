@@ -75,7 +75,7 @@
                 android:layout_width="320dp"
                 android:layout_height="65dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="80dp"
                 android:background="#F3E146"
                 android:text="카카오 1초 회원가입"
                 android:textAlignment="center"

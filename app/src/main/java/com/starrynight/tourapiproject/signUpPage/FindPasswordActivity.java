@@ -1,8 +1,5 @@
 package com.starrynight.tourapiproject.signUpPage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -50,6 +50,8 @@ public class FindPasswordActivity extends AppCompatActivity implements
     private Button resendAuth;
     private Button verify;
 
+    private TextView showPassword;
+
     String testPhoneNum = "+16505553333";
 
     @Override
@@ -66,6 +68,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
         startAuth.setOnClickListener(this);
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
+        showPassword = findViewById(R.id.showPassword);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -172,19 +175,18 @@ public class FindPasswordActivity extends AppCompatActivity implements
                                         if (!result.equals("none")) {
                                             System.out.println("비밀번호 찾기 성공");
                                             signOut();
-                                            TextView showPassword = findViewById(R.id.showPassword);
                                             showPassword.setText("비밀번호: " + result);
                                         } else {
                                             System.out.println("비밀번호 찾기 실패");
                                             Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
+                                            showPassword.setText("");
                                         }
-                                    } else {
-                                    }
+                                    } else {}
                                 }
-
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
                                     Log.e("연결실패", t.getMessage());
+                                    showPassword.setText("");
                                 }
                             });
 
@@ -192,6 +194,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
                             Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 authCode.setError("올바르지 않은 인증번호입니다.");
+                                showPassword.setText("");
                             }
                         }
                     }
@@ -207,8 +210,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(phoneNumber)) {
             mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
-        }
-        return true;
+        } return true;
     }
 
     //국제 번호 붙여주는 함수
@@ -220,9 +222,6 @@ public class FindPasswordActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.startAuth3:
-                startAuth.setVisibility(View.GONE);
-                resendAuth.setVisibility(View.VISIBLE);
-
                 if (!validatePhoneNumber()) {
                     System.out.println("처음 문자요청했는데 전화번호가 이상함");
                     return;
@@ -230,6 +229,8 @@ public class FindPasswordActivity extends AppCompatActivity implements
                 System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
+                startAuth.setVisibility(View.GONE);
+                resendAuth.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.verify3:
@@ -239,6 +240,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
                     return;
                 }
                 System.out.println("인증코드 맞는지 확인들어감 " + code);
+                showPassword.setText("잠시만 기다려주세요...");
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
