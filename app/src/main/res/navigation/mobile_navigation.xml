@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/navigation_person"
-        android:name="com.starrynight.tourapiproject.myPage.PersonFragment"
+        android:name="com.starrynight.tourapiproject.PersonFragment"
         android:label="@string/title_person"
         tools:layout="@layout/fragment_person" />
 </navigation>
