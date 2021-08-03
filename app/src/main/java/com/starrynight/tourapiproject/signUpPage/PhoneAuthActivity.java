@@ -45,7 +45,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     private EditText mobilePhoneNumber;
     private EditText authCode;
-
     private Button startAuth;
     private Button resendAuth;
     private Button verify;

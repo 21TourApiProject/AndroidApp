@@ -43,14 +43,15 @@ public class FindEmailActivity extends AppCompatActivity implements
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
+    private EditText findEmailRealName;
     private EditText mobilePhoneNumber;
     private EditText authCode;
-
+    private TextView showEmail;
     private Button startAuth;
     private Button resendAuth;
     private Button verify;
 
-    private TextView showEmail;
+    private Boolean isSend = false;
 
     String testPhoneNum = "+16505553333";
 
@@ -59,6 +60,7 @@ public class FindEmailActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_email);
 
+        findEmailRealName = findViewById(R.id.findEmailRealName); //이름
         mobilePhoneNumber = findViewById(R.id.findEmailMobilePhoneNumber); //전화번호
         authCode = findViewById(R.id.authCode2); //인증코드
         startAuth = findViewById(R.id.startAuth2); //처음 문자요청
@@ -161,7 +163,7 @@ public class FindEmailActivity extends AppCompatActivity implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "인증 성공"); //인증 성공하면
-                            String realName = ((EditText) findViewById(R.id.findEmailRealName)).getText().toString();
+                            String realName = findEmailRealName.getText().toString();
 
                             //이메일 찾기를 위한 get api
                             Call<String> call = RetrofitClient.getApiService().getEmail(realName, mobilePhoneNumber.getText().toString());
@@ -179,7 +181,10 @@ public class FindEmailActivity extends AppCompatActivity implements
                                             Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
                                             showEmail.setText("");
                                         }
-                                    } else{}
+                                    } else{
+                                        Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
+                                        showEmail.setText("");
+                                    }
                                 }
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
@@ -208,7 +213,11 @@ public class FindEmailActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(phoneNumber)) {
             mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
-        } return true;
+        }
+        if(phoneNumber.length()!=11){
+            mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
+            return false;
+        }return true;
     }
 
     //국제 번호 붙여주는 함수
@@ -224,7 +233,7 @@ public class FindEmailActivity extends AppCompatActivity implements
                     System.out.println("처음 문자요청했는데 전화번호가 이상함");
                     return;
                 }
-                System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
+                isSend = true;
                 Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 startAuth.setVisibility(View.GONE);
@@ -233,8 +242,16 @@ public class FindEmailActivity extends AppCompatActivity implements
 
             case R.id.verify2:
                 String code = authCode.getText().toString();
+                if(findEmailRealName.getText().toString().isEmpty()){
+                    findEmailRealName.setError("이름을 입력해주세요.");
+                    return;
+                }
                 if (TextUtils.isEmpty(code)) {
                     authCode.setError("인증번호를 입력해주세요.");
+                    return;
+                }
+                if (!isSend){
+                    authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
                 System.out.println("인증코드 맞는지 확인들어감 " + code);
@@ -243,7 +260,7 @@ public class FindEmailActivity extends AppCompatActivity implements
                 break;
 
             case R.id.resendAuth2:
-                System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
+
                 Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
                 resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                 break;
