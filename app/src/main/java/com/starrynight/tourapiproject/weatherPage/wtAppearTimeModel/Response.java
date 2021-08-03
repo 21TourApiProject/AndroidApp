@@ -1,14 +1,14 @@
-package com.starrynight.tourapiproject.weatherPage.weatherMetModel;
+package com.starrynight.tourapiproject.weatherPage.wtAppearTimeModel;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "Response")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Response {
-    @SerializedName("header")
-    @Expose
     private Header header;
-    @SerializedName("body")
-    @Expose
+
     private Body body;
 
     public Header getHeader() {
