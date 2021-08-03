@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.TouristspotPage;
+package com.starrynight.tourapiproject.touristspotPage;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

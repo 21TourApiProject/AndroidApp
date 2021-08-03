@@ -22,18 +22,18 @@
         <activity android:name=".signUpPage.FindEmailActivity" />
         <activity android:name=".signUpPage.SelectMyHashTagActivity" />
         <activity
-            android:name=".PersonPage.PersonpopActivity"
+            android:name=".myPage.PersonpopActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".signUpPage.PhoneAuthActivity" />
         <activity android:name=".signUpPage.GeneralSingUpActivity" />
         <activity android:name=".signUpPage.SignUpActivity" />
-        <activity android:name=".StarPage.StarActivity" />
+        <activity android:name=".starPage.StarActivity" />
         <activity android:name=".ObservationsiteActivity" />
-        <activity android:name=".TouristspotPage.TouristreviewActivity" />
-        <activity android:name=".TouristspotPage.MoretouristspotActivity" />
+        <activity android:name=".touristspotPage.TouristreviewActivity" />
+        <activity android:name=".touristspotPage.MoretouristspotActivity" />
         <activity android:name=".weatherPage.WeatherActivity" />
-        <activity android:name=".PersonPage.ProfileActivity" />
-        <activity android:name=".TouristspotPage.Touristspot_Activity" />
+        <activity android:name=".myPage.ProfileActivity" />
+        <activity android:name=".touristspotPage.Touristspot_Activity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

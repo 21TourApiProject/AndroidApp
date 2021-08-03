@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.TouristspotPage;
+package com.starrynight.tourapiproject.touristspotPage;
 
 import android.content.Intent;
 import android.net.Uri;

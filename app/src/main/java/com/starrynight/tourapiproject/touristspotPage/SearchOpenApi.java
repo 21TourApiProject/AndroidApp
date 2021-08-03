@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.TouristspotPage;
+package com.starrynight.tourapiproject.touristspotPage;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
