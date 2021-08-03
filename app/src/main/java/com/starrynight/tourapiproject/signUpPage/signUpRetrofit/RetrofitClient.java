@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.signUpPage;
+package com.starrynight.tourapiproject.signUpPage.signUpRetrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

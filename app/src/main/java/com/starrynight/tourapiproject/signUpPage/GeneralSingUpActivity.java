@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
 import java.util.Calendar;
 import java.util.regex.Pattern;
