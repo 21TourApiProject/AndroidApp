@@ -32,24 +32,24 @@ public class MainActivity extends AppCompatActivity {
         starFragment = new StarFragment();
         personFragment = new PersonFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,mainFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,mainFragment).commit();
         BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.navigation_main:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,mainFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,mainFragment).commit();
                         return true;
                     case R.id.navigation_search:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,searchFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,searchFragment).commit();
                         return true;
                     case R.id.navigation_star:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,starFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,starFragment).commit();
                         return true;
 
                     case R.id.navigation_person:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,personFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,personFragment).commit();
                         return true;
                 }
                 return false;
@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
-
-
     }
 
     @Override
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, fragment).commit();
+        fragmentTransaction.replace(R.id.bottom_nav, fragment).commit();
     }
 
 }
