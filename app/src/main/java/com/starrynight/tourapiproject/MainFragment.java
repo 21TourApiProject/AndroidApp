@@ -69,8 +69,6 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), WeatherActivity.class);
                 startActivity(intent);
-
-                getActivity().finish();
             }
         });
 
