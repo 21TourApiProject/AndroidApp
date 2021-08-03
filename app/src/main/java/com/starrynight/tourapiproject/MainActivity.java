@@ -3,7 +3,7 @@ package com.starrynight.tourapiproject;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.starrynight.tourapiproject.personPage.PersonFragment;
+import com.starrynight.tourapiproject.myPage.PersonFragment;
 import com.starrynight.tourapiproject.starPage.StarFragment;
 
 import androidx.fragment.app.Fragment;

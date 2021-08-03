@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.MyHashTagParams;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
