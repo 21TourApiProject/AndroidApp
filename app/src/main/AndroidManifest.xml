@@ -29,11 +29,11 @@
         <activity android:name=".signUpPage.SignUpActivity" />
         <activity android:name=".starPage.StarActivity" />
         <activity android:name=".ObservationsiteActivity" />
-        <activity android:name=".touristspotPage.TouristreviewActivity" />
-        <activity android:name=".touristspotPage.MoretouristspotActivity" />
+        <activity android:name=".touristSpotPage.TouristreviewActivity" />
+        <activity android:name=".touristSpotPage.MoretouristspotActivity" />
         <activity android:name=".weatherPage.WeatherActivity" />
         <activity android:name=".myPage.ProfileActivity" />
-        <activity android:name=".touristspotPage.Touristspot_Activity" />
+        <activity android:name=".touristSpotPage.Touristspot_Activity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

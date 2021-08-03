@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    tools:context=".touristspotPage.TouristreviewActivity">
+    tools:context=".touristSpotPage.TouristreviewActivity">
 
     <Button
         android:id="@+id/backbutton"
