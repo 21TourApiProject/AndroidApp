@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.weatherPage.weatherMetModel;
+package com.starrynight.tourapiproject.weatherPage.wtMetModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
