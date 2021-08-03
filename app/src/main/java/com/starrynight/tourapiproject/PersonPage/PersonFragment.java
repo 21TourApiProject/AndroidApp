@@ -75,7 +75,6 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
                 startActivity(intent);
-                getActivity().finish();
             }
         });
         RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);

@@ -113,8 +113,7 @@ public class Touristspot_Activity extends AppCompatActivity {
             postback_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
+                    finish();
                 }
             });
             Button morespot_btn = findViewById(R.id.morespotbutton);
@@ -142,11 +141,4 @@ public class Touristspot_Activity extends AppCompatActivity {
                 }
             });
          }
-    @Override
-    public void onBackPressed(){
-        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(intent);
-        finish();
-        }
     }

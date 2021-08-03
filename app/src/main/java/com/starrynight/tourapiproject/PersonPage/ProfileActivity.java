@@ -1,12 +1,11 @@
 package com.starrynight.tourapiproject.PersonPage;
 
-import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.starrynight.tourapiproject.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.starrynight.tourapiproject.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -20,8 +19,6 @@ public class ProfileActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
