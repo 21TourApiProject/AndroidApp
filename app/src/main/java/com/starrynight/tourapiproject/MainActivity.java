@@ -3,8 +3,8 @@ package com.starrynight.tourapiproject;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.starrynight.tourapiproject.PersonPage.PersonFragment;
-import com.starrynight.tourapiproject.StarPage.StarFragment;
+import com.starrynight.tourapiproject.personPage.PersonFragment;
+import com.starrynight.tourapiproject.starPage.StarFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-//세인 주석
 public class MainActivity extends AppCompatActivity {
 //주석 추가
     MainFragment mainFragment;

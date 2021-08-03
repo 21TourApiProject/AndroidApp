@@ -19,13 +19,13 @@
 
     <fragment
         android:id="@+id/navigation_star"
-        android:name="com.starrynight.tourapiproject.StarPage.StarFragment"
+        android:name="com.starrynight.tourapiproject.starPage.StarFragment"
         android:label="@string/title_star"
         tools:layout="@layout/fragment_star" />
 
     <fragment
         android:id="@+id/navigation_person"
-        android:name="com.starrynight.tourapiproject.PersonPage.PersonFragment"
+        android:name="com.starrynight.tourapiproject.personPage.PersonFragment"
         android:label="@string/title_person"
         tools:layout="@layout/fragment_person" />
 </navigation>

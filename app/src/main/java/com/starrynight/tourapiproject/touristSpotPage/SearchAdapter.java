@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.TouristspotPage;
+package com.starrynight.tourapiproject.touristSpotPage;
 
 import android.view.LayoutInflater;
 import android.view.View;

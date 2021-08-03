@@ -6,7 +6,7 @@
     android:background="#eeeeee"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".PersonPage.PersonpopActivity">
+    tools:context=".personPage.PersonpopActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

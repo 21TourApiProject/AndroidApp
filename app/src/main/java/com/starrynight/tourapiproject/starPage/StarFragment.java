@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.StarPage;
+package com.starrynight.tourapiproject.starPage;
 
 import android.content.Intent;
 import android.os.Bundle;
