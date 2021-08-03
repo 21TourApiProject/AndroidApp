@@ -24,6 +24,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
 import java.util.concurrent.TimeUnit;
 
