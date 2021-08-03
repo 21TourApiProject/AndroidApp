@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.map;
+package com.starrynight.tourapiproject.mapPage;
 
 public class BalloonObject {
     private String  name;

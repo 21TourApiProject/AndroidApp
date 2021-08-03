@@ -1,34 +1,30 @@
-package com.starrynight.tourapiproject.PersonPage;
+package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.starrynight.tourapiproject.R;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
+import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
+import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PersonFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PersonFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -36,15 +32,6 @@ public class PersonFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PersonFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static PersonFragment newInstance(String param1, String param2) {
         PersonFragment fragment = new PersonFragment();
         Bundle args = new Bundle();
@@ -66,14 +53,44 @@ public class PersonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_person, container, false);
 
-        Button button = (Button)v.findViewById(R.id.profile_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        //게시물 작성 페이지로 이동
+        Button goPostWrite = (Button) v.findViewById(R.id.goPostWrite);
+        goPostWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
+                Intent intent = new Intent(getActivity(), PostWriteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //설정 페이지로 이동
+        Button goSetting = (Button) v.findViewById(R.id.goSetting);
+        goSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //프로필 변경 페이지로 이동
+        ImageView profileImage = (ImageView) v.findViewById(R.id.profileImage);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //프로필 변경 페이지로 이동
+        TextView nickName = (TextView) v.findViewById(R.id.nickName);
+        nickName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -86,14 +103,7 @@ public class PersonFragment extends Fragment {
 
         adapter.addItem(new post_point_item("내 게시물","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
 
-        Button pop_btn=(Button)v.findViewById(R.id.setting_button);
-        pop_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), PersonpopActivity.class);
-                startActivity(intent);
-            }
-        });
+
         return v;
     }
 
