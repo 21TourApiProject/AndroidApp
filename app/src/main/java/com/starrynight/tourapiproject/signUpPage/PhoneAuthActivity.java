@@ -45,7 +45,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     private EditText mobilePhoneNumber;
     private EditText authCode;
-
     private Button startAuth;
     private Button resendAuth;
     private Button verify;
@@ -53,7 +52,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     String testPhoneNum = "+16505553333";
 
     UserParams userParams;
-    boolean isDuplicate = true;
+    private Boolean isDuplicate = true;
+    private Boolean isSend = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +116,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("onStart 들어옴");
-
         if (mVerificationInProgress && validatePhoneNumber()) {
             startPhoneNumberVerification(mobilePhoneNumber.getText().toString());
         }
@@ -139,7 +137,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(testPhoneNum)
-                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .build();
@@ -158,7 +156,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(testPhoneNum)
-                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .setForceResendingToken(token)
@@ -217,7 +215,10 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
         }
-
+        if(phoneNumber.length() != 11){
+            mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
+            return false;
+        }
         //전화번호가 중복인지 아닌지를 위한 get api
         Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateMobilePhoneNumber(phoneNumber);
         call.enqueue(new Callback<Boolean>() {
@@ -230,6 +231,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         isDuplicate = false;
                     } else if (result == false){
                         mobilePhoneNumber.setError("이미 가입된 전화번호입니다.");
+                        isDuplicate = true;
                     }
                 } else{
                     System.out.println("중복 체크 실패");
@@ -240,7 +242,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 Log.e("연결실패", t.getMessage());
             }
         });
-        return isDuplicate;
+        return !isDuplicate;
     }
 
     //국제 번호 붙여주는 함수
@@ -252,22 +254,26 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.startAuth:
-                startAuth.setVisibility(View.GONE);
-                resendAuth.setVisibility(View.VISIBLE);
-
                 if (!validatePhoneNumber()) {
                     System.out.println("처음 문자요청했는데 전화번호가 이상함");
                     return;
                 }
-                System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
+                isSend = true;
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_LONG).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
+                startAuth.setVisibility(View.GONE);
+                resendAuth.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.verify:
                 String code = authCode.getText().toString();
+
                 if (TextUtils.isEmpty(code)) {
                     authCode.setError("인증번호를 입력해주세요.");
+                    return;
+                }
+                if (!isSend){
+                    authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
                 System.out.println("인증코드 맞는지 확인들어감 " + code);
@@ -275,8 +281,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 break;
 
             case R.id.resendAuth:
-                System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_LONG).show();
                 resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                 break;
         }
