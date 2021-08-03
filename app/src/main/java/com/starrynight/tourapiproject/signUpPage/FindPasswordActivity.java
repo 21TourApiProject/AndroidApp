@@ -43,14 +43,16 @@ public class FindPasswordActivity extends AppCompatActivity implements
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
+    private EditText findPwdEmail;
+    private EditText findPwdRealName;
     private EditText mobilePhoneNumber;
     private EditText authCode;
-
     private Button startAuth;
     private Button resendAuth;
     private Button verify;
-
     private TextView showPassword;
+
+    private Boolean isSend = false;
 
     String testPhoneNum = "+16505553333";
 
@@ -59,16 +61,18 @@ public class FindPasswordActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_password);
 
+        findPwdEmail = findViewById(R.id.findPwdEmail); //이메일
+        findPwdRealName = findViewById(R.id.findPwdRealName); //이름
         mobilePhoneNumber = findViewById(R.id.findPwdMobilePhoneNumber); //전화번호
         authCode = findViewById(R.id.authCode3); //인증코드
         startAuth = findViewById(R.id.startAuth3); //처음 문자요청
         resendAuth = findViewById(R.id.resendAuth3); //재 문자요청
         verify = findViewById(R.id.verify3); //인증요청
+        showPassword = findViewById(R.id.showPassword);
 
         startAuth.setOnClickListener(this);
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
-        showPassword = findViewById(R.id.showPassword);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -128,7 +132,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(testPhoneNum)
-                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .build();
@@ -147,7 +151,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(testPhoneNum)
-                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .setForceResendingToken(token)
@@ -181,7 +185,10 @@ public class FindPasswordActivity extends AppCompatActivity implements
                                             Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
                                             showPassword.setText("");
                                         }
-                                    } else {}
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
+                                        showPassword.setText("");
+                                    }
                                 }
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
@@ -210,7 +217,11 @@ public class FindPasswordActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(phoneNumber)) {
             mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
-        } return true;
+        }
+        if(phoneNumber.length() != 11){
+            mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
+            return false;
+        }return true;
     }
 
     //국제 번호 붙여주는 함수
@@ -226,8 +237,8 @@ public class FindPasswordActivity extends AppCompatActivity implements
                     System.out.println("처음 문자요청했는데 전화번호가 이상함");
                     return;
                 }
-                System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
+                isSend = true;
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_LONG).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 startAuth.setVisibility(View.GONE);
                 resendAuth.setVisibility(View.VISIBLE);
@@ -235,8 +246,21 @@ public class FindPasswordActivity extends AppCompatActivity implements
 
             case R.id.verify3:
                 String code = authCode.getText().toString();
+
+                if(findPwdEmail.getText().toString().isEmpty()){
+                    findPwdEmail.setError("이메일을 입력해주세요.");
+                    return;
+                }
+                if(findPwdRealName.getText().toString().isEmpty()){
+                    findPwdRealName.setError("이름을 입력해주세요.");
+                    return;
+                }
                 if (TextUtils.isEmpty(code)) {
                     authCode.setError("인증번호를 입력해주세요.");
+                    return;
+                }
+                if (!isSend){
+                    authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
                 System.out.println("인증코드 맞는지 확인들어감 " + code);
@@ -245,8 +269,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
                 break;
 
             case R.id.resendAuth3:
-                System.out.println("전화번호 = " + changePhoneNumber(mobilePhoneNumber.getText().toString()));
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_LONG).show();
                 resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                 break;
         }

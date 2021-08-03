@@ -46,10 +46,10 @@ public class FindEmailActivity extends AppCompatActivity implements
     private EditText findEmailRealName;
     private EditText mobilePhoneNumber;
     private EditText authCode;
-    private TextView showEmail;
     private Button startAuth;
     private Button resendAuth;
     private Button verify;
+    private TextView showEmail;
 
     private Boolean isSend = false;
 
@@ -130,7 +130,7 @@ public class FindEmailActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(testPhoneNum)
-                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .build();
@@ -149,7 +149,7 @@ public class FindEmailActivity extends AppCompatActivity implements
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(testPhoneNum)
-                        .setTimeout(90L, TimeUnit.SECONDS)
+                        .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
                         .setForceResendingToken(token)
@@ -214,7 +214,7 @@ public class FindEmailActivity extends AppCompatActivity implements
             mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
         }
-        if(phoneNumber.length()!=11){
+        if(phoneNumber.length() != 11){
             mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
             return false;
         }return true;
@@ -234,7 +234,7 @@ public class FindEmailActivity extends AppCompatActivity implements
                     return;
                 }
                 isSend = true;
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_LONG).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 startAuth.setVisibility(View.GONE);
                 resendAuth.setVisibility(View.VISIBLE);
@@ -242,6 +242,7 @@ public class FindEmailActivity extends AppCompatActivity implements
 
             case R.id.verify2:
                 String code = authCode.getText().toString();
+
                 if(findEmailRealName.getText().toString().isEmpty()){
                     findEmailRealName.setError("이름을 입력해주세요.");
                     return;
@@ -260,8 +261,7 @@ public class FindEmailActivity extends AppCompatActivity implements
                 break;
 
             case R.id.resendAuth2:
-
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_LONG).show();
                 resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                 break;
         }
