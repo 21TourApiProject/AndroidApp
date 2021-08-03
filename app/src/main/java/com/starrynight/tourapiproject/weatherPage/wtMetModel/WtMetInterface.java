@@ -1,6 +1,6 @@
-package com.starrynight.tourapiproject.weatherPage;
+package com.starrynight.tourapiproject.weatherPage.wtMetModel;
 
-import com.starrynight.tourapiproject.weatherPage.weatherMetModel.WtMetModel;
+import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
