@@ -3,8 +3,7 @@ package com.starrynight.tourapiproject;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.starrynight.tourapiproject.PersonPage.PersonFragment;
-import com.starrynight.tourapiproject.StarPage.StarFragment;
+import com.starrynight.tourapiproject.starPage.StarFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-//세인 주석
 public class MainActivity extends AppCompatActivity {
 //주석 추가
     MainFragment mainFragment;
@@ -49,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.navigation_star:
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,starFragment).commit();
                         return true;
+
                     case R.id.navigation_person:
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main,personFragment).commit();
                         return true;
