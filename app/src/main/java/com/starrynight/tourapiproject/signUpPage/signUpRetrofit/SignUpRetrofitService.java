@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.signUpPage;
+package com.starrynight.tourapiproject.signUpPage.signUpRetrofit;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.signUpPage;
+package com.starrynight.tourapiproject.myPage.myPageRetrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,9 +7,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL = "http://172.30.1.5:8080/v1/";
+    private static final String BASE_URL = "http://172.30.1.6:8080/v1/";
 
-    public static SignUpRetrofitService getApiService(){return getInstance().create(SignUpRetrofitService.class);}
+    public static MyPageRetrofitService getApiService(){return getInstance().create(MyPageRetrofitService.class);}
 
     private static Retrofit getInstance(){
         Gson gson = new GsonBuilder().setLenient().create();
