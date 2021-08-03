@@ -11,6 +11,6 @@ public class CustomerSCActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_scactivity);
+        setContentView(R.layout.activity_customer_sc);
     }
 }
