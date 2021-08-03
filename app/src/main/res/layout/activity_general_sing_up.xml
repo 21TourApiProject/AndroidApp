@@ -22,6 +22,12 @@
                 android:text="회원가입"
                 android:textSize="34sp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="이름" />
+
             <EditText
                 android:id="@+id/realName"
                 android:layout_width="wrap_content"
@@ -29,6 +35,12 @@
                 android:ems="10"
                 android:hint="이름"
                 android:inputType="textPersonName" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="성별" />
 
             <RadioGroup
                 android:id="@+id/sex"
@@ -52,18 +64,30 @@
             </RadioGroup>
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="생년월일" />
+
+            <TextView
                 android:id="@+id/birthDay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
                 android:onClick="onClickBirthPicker"
-                android:text="생년월일"
+                android:layout_marginLeft="4dp"
+                android:text="선택하기"
                 android:textColor="#9C9A9A"
                 android:textSize="18.5sp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="이메일" />
+
             <EditText
                 android:id="@+id/email"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -74,6 +98,12 @@
                 android:id="@+id/emailGuide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="비밀번호" />
 
             <EditText
                 android:id="@+id/password"
@@ -88,9 +118,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="비밀번호 확인" />
+
             <EditText
                 android:id="@+id/passwordCheck"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="비밀번호 확인"
