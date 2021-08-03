@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.myPage;
+package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
+import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;

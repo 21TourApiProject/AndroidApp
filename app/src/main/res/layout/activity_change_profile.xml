@@ -28,17 +28,31 @@
                 android:layout_gravity="center"
                 android:src="@drawable/person_btn" />
 
-            <EditText
-                android:id="@+id/changeNickname"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                app:counterEnabled="true"
+                app:counterMaxLength="15">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/changeNickname"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:hint="닉네임" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <EditText-->
+<!--                android:id="@+id/changeNickname"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:ems="10"-->
+<!--                android:inputType="textPersonName" />-->
 
             <TextView
-                android:id="@+id/chageNicknameGuide"
-                android:layout_width="match_parent"
+                android:id="@+id/changeNicknameGuide"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
