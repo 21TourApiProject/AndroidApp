@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.PersonPage;
+package com.starrynight.tourapiproject.personPage;
 
 import android.content.Intent;
 import android.os.Bundle;

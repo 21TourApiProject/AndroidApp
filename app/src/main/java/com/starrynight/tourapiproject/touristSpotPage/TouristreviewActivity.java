@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.TouristspotPage;
+package com.starrynight.tourapiproject.touristSpotPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
