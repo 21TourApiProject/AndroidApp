@@ -20,13 +20,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -39,6 +44,8 @@ public class PostWriteActivity extends AppCompatActivity {
     private Button addPicture;
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
+    String postContent,observeFit,yearDate,time;
+    Bitmap postImage;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -49,6 +56,7 @@ public class PostWriteActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TextView timePicker;
     private TimePickerDialog.OnTimeSetListener callbackMethod2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 intent.setType("image/*");
                 PackageManager manager = getApplicationContext().getPackageManager();
                 List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
+
 
                 if (infos.size() > 0) { //테스트 하고 삼성,일반 차이없으면 삭제 예정
                     Log.e("FAT=","삼성폰");
@@ -91,6 +100,7 @@ public class PostWriteActivity extends AppCompatActivity {
 //                    startActivityForResult(Intent.createChooser(intent, "사진 최대 9장 선택가능"), PICK_IMAGE_MULTIPLE);
                 }
             }
+
         });
 
         //선택한 사진 추가 어댑터
@@ -151,6 +161,31 @@ public class PostWriteActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AddHashTagActivity.class);
                 startActivityForResult(intent, 203);
             }
+        });
+
+        Button save_btn = findViewById(R.id.save);
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                postContent= ((EditText)(findViewById(R.id.postContentText))).getText().toString();
+                if(postContent.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                yearDate =((TextView)(findViewById(R.id.datePicker))).getText().toString();
+                if(yearDate.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "관측 날짜을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                time=((TextView)(findViewById(R.id.timePicker))).getText().toString();
+                Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent intent = getIntent();
+            PostHashTagParams postHashTagParams = (PostHashTagParams) intent.getSerializableExtra("PostHashTagParam");
+            PostParams postParams = (PostParams) intent.getSerializableExtra("oberveFit");
         });
     }
 
