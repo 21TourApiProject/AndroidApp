@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
@@ -17,8 +18,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyDataActivity extends AppCompatActivity {
+import static android.graphics.BitmapFactory.decodeFile;
 
+public class MyDataActivity extends AppCompatActivity {
+    private static final int CHANGE_PROFILE = 101;
     User user;
 
     @Override
@@ -33,10 +36,10 @@ public class MyDataActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body();
 
-//                    ImageView profileImage2 = findViewById(R.id.profileImage2);
-//                    if (user.getProfileImage() != null){
-//                        profileImage2.setImageURI();
-//                    }
+                    ImageView profileImage2 = findViewById(R.id.profileImage2);
+                    if (user.getProfileImage() != null){
+                        profileImage2.setImageBitmap(decodeFile(user.getProfileImage()));
+                    }
 
                     TextView nickName2 = findViewById(R.id.nickName2);
                     nickName2.setText(user.getNickName());
@@ -74,8 +77,7 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
 
@@ -85,9 +87,20 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CHANGE_PROFILE){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+
+        }
+    }
+
 }
