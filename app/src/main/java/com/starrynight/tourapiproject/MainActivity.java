@@ -1,17 +1,20 @@
 package com.starrynight.tourapiproject;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
-import android.view.MenuItem;
-import android.widget.Toast;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 public class MainActivity extends AppCompatActivity {
 //주석 추가
@@ -21,35 +24,38 @@ public class MainActivity extends AppCompatActivity {
     PersonFragment personFragment;
     private long backkeyPressTime=0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         mainFragment = new MainFragment();
         searchFragment = new SearchFragment();
         tonightSkyFragment = new TonightSkyFragment();
         personFragment = new PersonFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,mainFragment).commit();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,mainFragment).commit();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.navigation_main:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,mainFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,mainFragment).commit();
                         return true;
                     case R.id.navigation_search:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,searchFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,searchFragment).commit();
                         return true;
                     case R.id.navigation_star:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav, tonightSkyFragment).commit();
+                        setBottomNavVisibility(View.GONE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, tonightSkyFragment).commit();
                         return true;
 
                     case R.id.navigation_person:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,personFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,personFragment).commit();
                         return true;
                 }
                 return false;
@@ -58,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
+
+
     }
 
     @Override
@@ -75,7 +83,11 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.bottom_nav, fragment).commit();
+        fragmentTransaction.replace(R.id.main_view, fragment).commit();
+    }
+
+    public void setBottomNavVisibility(int visibility){
+        findViewById(R.id.bottom_nav_view).setVisibility(visibility);
     }
 
 }
