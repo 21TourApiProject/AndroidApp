@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
-import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +20,6 @@ import retrofit2.Response;
 public class MyDataActivity extends AppCompatActivity {
 
     User user;
-    User2 user2 = new User2();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,11 +74,8 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
-                user2.setUserId(user.getUserId());
-                user2.setNickName(user.getNickName());
-                user2.setProfileImage(user.getProfileImage());
-                intent.putExtra("user2", user2);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -90,11 +85,8 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
-                user2.setUserId(user.getUserId());
-                user2.setNickName(user.getNickName());
-                user2.setProfileImage(user.getProfileImage());
-                intent.putExtra("user2", user2);
                 startActivity(intent);
+                finish();
             }
         });
     }

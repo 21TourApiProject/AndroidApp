@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +25,7 @@ import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 
+import java.io.InputStream;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -31,9 +34,13 @@ import retrofit2.Response;
 
 public class ChangeProfileActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE = 0;
+
     User user;
     String original;
 
+    ImageView profileImage;
+    EditText changeNickname;
     TextView changeNicknameGuide;
 
     private Boolean isNickNameEmpty = false; //닉네임이 비어있는지
@@ -45,8 +52,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_profile);
 
-        ImageView profileImage = findViewById(R.id.profileImage3);
-        EditText changeNickname = findViewById(R.id.changeNickname);
+        profileImage = findViewById(R.id.profileImage3);
+        changeNickname = findViewById(R.id.changeNickname);
         changeNicknameGuide = findViewById(R.id.changeNicknameGuide);
 
         Call<User> call = RetrofitClient.getApiService().getUser(1L);
@@ -55,7 +62,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-//        profileImage.setImageURI(user2.getProfileImage());
+                    //profileImage.setImageURI(user.getProfileImage());
                     changeNickname.setText(user.getNickName());
                     original = user.getNickName();
                 } else {
@@ -65,6 +72,17 @@ public class ChangeProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        //프로필 사진 변경 1
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
 
@@ -109,6 +127,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 System.out.println("닉네임 변경 성공");
+                                User2 user2 = new User2(changeNickname.getText().toString(), "");
+                                Intent intent = new Intent();
+                                intent.putExtra("result", user2);
+                                finish();
                             } else {
                                 System.out.println("닉네임 변경 실패");
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -134,6 +156,27 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    //프로필 사진 변경 2
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    InputStream in = getContentResolver().openInputStream(data.getData());
+
+                    Bitmap img = BitmapFactory.decodeStream(in);
+                    in.close();
+                    profileImage.setImageBitmap(img);
+                } catch (Exception e) {
+
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     //닉네임 규칙 함수

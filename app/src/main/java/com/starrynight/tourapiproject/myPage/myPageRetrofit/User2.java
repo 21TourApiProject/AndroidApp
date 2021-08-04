@@ -4,14 +4,12 @@ import java.io.Serializable;
 
 public class User2 implements Serializable {
 
-    Long userId;
     String nickName;
     String profileImage;
 
-    public User2(){};
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public User2(String nickName, String profileImage) {
+        this.nickName = nickName;
+        this.profileImage = profileImage;
     }
 
     public void setNickName(String nickName) {
@@ -20,10 +18,6 @@ public class User2 implements Serializable {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
-    }
-
-    public Long getUserId() {
-        return userId;
     }
 
     public String getNickName() {
