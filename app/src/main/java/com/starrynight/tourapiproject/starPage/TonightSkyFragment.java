@@ -9,13 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.starrynight.tourapiproject.R;
 
-
-public class StarFragment extends Fragment {
-
-    public StarFragment() {
-        // Required empty public constructor
-    }
-
+public class TonightSkyFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +20,7 @@ public class StarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_star, container, false);
+        View v = inflater.inflate(R.layout.fragment_tonight_sky, container, false);
 
 
         return v;

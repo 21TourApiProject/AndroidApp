@@ -3,7 +3,7 @@ package com.starrynight.tourapiproject;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.starrynight.tourapiproject.starPage.StarFragment;
+import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 //주석 추가
     MainFragment mainFragment;
     SearchFragment searchFragment;
-    StarFragment starFragment;
+    TonightSkyFragment tonightSkyFragment;
     PersonFragment personFragment;
     private long backkeyPressTime=0;
 
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainFragment = new MainFragment();
         searchFragment = new SearchFragment();
-        starFragment = new StarFragment();
+        tonightSkyFragment = new TonightSkyFragment();
         personFragment = new PersonFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,mainFragment).commit();
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,searchFragment).commit();
                         return true;
                     case R.id.navigation_star:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav,starFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav, tonightSkyFragment).commit();
                         return true;
 
                     case R.id.navigation_person:
