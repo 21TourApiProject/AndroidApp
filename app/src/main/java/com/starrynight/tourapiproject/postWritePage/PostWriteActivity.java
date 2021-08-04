@@ -172,6 +172,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 Log.e("FAT=", "일반폰/단일 : "+uri.toString());
                 try {
                     Bitmap img = resize(this, uri, 75);
+                    System.out.println("img = " + img);
                     addImage(img);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -218,6 +219,7 @@ public class PostWriteActivity extends AppCompatActivity {
 //                in.close();
 
                 Bitmap img = resize(this, uri, 75); //해상도 최대로 하고싶으면 100으로
+                System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(img, numOfPicture));
                 recyclerView.setAdapter(adapter);
 
