@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/navigation_star"
-        android:name="com.starrynight.tourapiproject.starPage.StarFragment"
+        android:name="com.starrynight.tourapiproject.starPage.TonightSkyFragment"
         android:label="@string/title_star"
-        tools:layout="@layout/fragment_star" />
+        tools:layout="@layout/fragment_tonight_sky" />
 
     <fragment
         android:id="@+id/navigation_person"
