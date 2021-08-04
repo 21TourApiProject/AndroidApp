@@ -56,8 +56,6 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), Touristspot_Activity.class);
                 startActivity(intent);
-
-                getActivity().finish();
             }
         });
         Button observation_btn = (Button)v.findViewById(R.id.observation_button);
