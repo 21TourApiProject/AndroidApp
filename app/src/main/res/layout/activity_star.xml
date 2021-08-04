@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
-        app:srcCompat="@drawable/star_image" />
+        app:srcCompat="@drawable/star__image" />
 
     <ScrollView
         android:id="@+id/starexplanation"
@@ -63,7 +63,7 @@
         android:id="@+id/voice_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/star_voice_btn"
+        android:background="@drawable/star__voice_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/starexplanation" />
 

@@ -53,8 +53,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+               finish();
             }
         });
         Button link_btn = findViewById(R.id.obvlink_btn);
