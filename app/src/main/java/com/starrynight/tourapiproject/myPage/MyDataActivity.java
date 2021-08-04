@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,6 +69,16 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        //비밀번호 변경 버튼
+        TextView changePwd = findViewById(R.id.changePwd);
+        changePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyDataActivity.this, ChangePasswordActivity.class);
+                startActivity(intent);
             }
         });
 

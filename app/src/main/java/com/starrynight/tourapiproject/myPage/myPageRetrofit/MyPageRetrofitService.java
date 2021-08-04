@@ -21,4 +21,6 @@ public interface MyPageRetrofitService {
     @PUT("user/{userId}/profileImage")
     Call<Void> updateProfileImage(@Path("userId") Long userId, @Body User3 profileImage);
 
+    @PUT("user/{userId}/password/{password}")
+    Call<Void> updatePassword(@Path("userId") Long userId, @Path("password") String password);
 }
