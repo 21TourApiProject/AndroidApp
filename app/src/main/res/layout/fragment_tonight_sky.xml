@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".starPage.StarFragment" >
     android:background="@drawable/star__image"
-    tools:context=".starPage.StarFragment">
+    tools:context=".starPage.TonightSkyFragment">
 
     <ImageButton
         android:id="@+id/question_btn"
@@ -28,6 +27,5 @@
         android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
