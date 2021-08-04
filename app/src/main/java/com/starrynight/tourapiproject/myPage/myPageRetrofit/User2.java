@@ -7,6 +7,8 @@ public class User2 implements Serializable {
     String nickName;
     String profileImage;
 
+    public User2(){};
+
     public User2(String nickName, String profileImage) {
         this.nickName = nickName;
         this.profileImage = profileImage;

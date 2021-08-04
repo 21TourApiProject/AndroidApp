@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,9 +28,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.graphics.BitmapFactory.decodeFile;
+
 
 public class PersonFragment extends Fragment {
     User user;
+    ImageView profileImage;
     TextView nickName;
 
     @Override
@@ -47,10 +50,10 @@ public class PersonFragment extends Fragment {
                 if (response.isSuccessful()) {
                     user = response.body();
 
-//                    ImageView profileImage2 = findViewById(R.id.profileImage2);
-//                    if (user.getProfileImage() != null){
-//                        profileImage2.setImageURI();
-//                    }
+                    profileImage = (ImageView) v.findViewById(R.id.profileImage);
+                    if (user.getProfileImage() != null){
+                        profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
+                    }
                     nickName.setText(user.getNickName());
 
                 } else {
@@ -79,7 +82,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
             }
         });
 
@@ -100,6 +103,7 @@ public class PersonFragment extends Fragment {
                 startActivityForResult(intent, 101);
             }
         });
+
         RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -117,8 +121,9 @@ public class PersonFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 101){
-            nickName.setText(user.getNickName());
-
+            //프래그먼트 새로고침
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
         }
     }
     @Override

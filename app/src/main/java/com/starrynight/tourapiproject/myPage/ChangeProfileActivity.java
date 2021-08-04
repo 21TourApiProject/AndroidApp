@@ -1,12 +1,8 @@
 package com.starrynight.tourapiproject.myPage;
 
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -21,11 +17,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.User3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,11 +39,11 @@ import static android.graphics.BitmapFactory.decodeFile;
 public class ChangeProfileActivity extends AppCompatActivity {
 
     private static final int GET_GALLERY_IMAGE = 0;
-    private static final String TAG = "test for path";
 
     User user;
     String beforeNickName; //변경하기전 닉네임
     Boolean isProfileImageChange = false; //프로필 사진을 바꿨는지
+    String updateProfileImage; //변경한 프로필 사진
 
     ImageView profileImage;
     EditText changeNickname;
@@ -72,7 +68,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                    //profileImage.setImageURI(user.getProfileImage());
+
+                    if (user.getProfileImage() != null){
+                        profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
+                    }
                     changeNickname.setText(user.getNickName());
                     beforeNickName = user.getNickName();
                 } else {
@@ -127,55 +126,59 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 else if(isNickNameDuplicate){
                     changeNicknameGuide.setText("닉네임 중복확인이 필요합니다.");
                 }
-                //닉네임 변경 put api
                 else{
+                    User2 user2 = new User2();
                     changeNicknameGuide.setText("");
-                    Call<Void> call = RetrofitClient.getApiService().updateNickName(user.getUserId(), changeNickname.getText().toString());
-                    call.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if (response.isSuccessful()) {
-                                System.out.println("닉네임 변경 성공");
-                                User2 user2 = new User2(changeNickname.getText().toString(), "");
-                                Intent intent = new Intent();
-                                intent.putExtra("result", user2);
-                                finish();
-                            } else {
-                                System.out.println("닉네임 변경 실패");
+
+                    if(!beforeNickName.equals(changeNickname.getText().toString())){
+                        //닉네임 변경 put api
+                        Call<Void> call = RetrofitClient.getApiService().updateNickName(user.getUserId(), changeNickname.getText().toString());
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    System.out.println("닉네임 변경 성공");
+                                    user2.setNickName(changeNickname.getText().toString());
+                                } else {
+                                    System.out.println("닉네임 변경 실패");
+                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("연결실패", t.getMessage());
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e("연결실패", t.getMessage());
-                            Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        });
+                    }
 
                     //프로필 사진 변경 put api
                     if (isProfileImageChange){
-//                        Call<Void> call = RetrofitClient.getApiService().updateNickName(user.getUserId(), changeNickname.getText().toString());
-//                        call.enqueue(new Callback<Void>() {
-//                            @Override
-//                            public void onResponse(Call<Void> call, Response<Void> response) {
-//                                if (response.isSuccessful()) {
-//                                    System.out.println("닉네임 변경 성공");
-//                                    User2 user2 = new User2(changeNickname.getText().toString(), "");
-//                                    Intent intent = new Intent();
-//                                    intent.putExtra("result", user2);
-//                                    finish();
-//                                } else {
-//                                    System.out.println("닉네임 변경 실패");
-//                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                            @Override
-//                            public void onFailure(Call<Void> call, Throwable t) {
-//                                Log.e("연결실패", t.getMessage());
-//                                Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
+                        User3 user3 = new User3(updateProfileImage);
+                        Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(user.getUserId(), user3);
+                        call2.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call2, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    System.out.println("프사 변경 성공");
+                                    user2.setProfileImage(updateProfileImage);
+                                } else {
+                                    System.out.println("프사 변경 실패");
+                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call2, Throwable t) {
+                                Log.e("연결실패", t.getMessage());
+                                Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
+
+                    Intent intent = new Intent();
+                    intent.putExtra("result", user2);
+                    setResult(1, intent);
+                    finish();
                 }
             }
         });
@@ -186,8 +189,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -203,10 +205,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     InputStream in = getContentResolver().openInputStream(data.getData());
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
-                    //profileImage.setImageBitmap(img);
+                    profileImage.setImageBitmap(img);
                     String file = BitmapToFile(img, "profileImage");
                     System.out.println("file = " + file);
-                    profileImage.setImageBitmap(decodeFile(file));
+                    updateProfileImage = file;
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -217,7 +219,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         }
     }
 
-    //Bitmap을 File로 변경
+    //Bitmap을 File로 변경하는 함수
     public String BitmapToFile(Bitmap bitmap, String name) {
         File storage = getFilesDir();
         String fileName = name + ".jpg";
