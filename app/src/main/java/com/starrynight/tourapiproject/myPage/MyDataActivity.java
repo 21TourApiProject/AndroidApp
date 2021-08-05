@@ -78,6 +78,7 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangePasswordActivity.class);
+                //intent.putExtra("userId", );
                 startActivity(intent);
             }
         });
