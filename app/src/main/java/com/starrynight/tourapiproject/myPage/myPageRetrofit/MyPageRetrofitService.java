@@ -1,5 +1,7 @@
 package com.starrynight.tourapiproject.myPage.myPageRetrofit;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -26,4 +28,8 @@ public interface MyPageRetrofitService {
 
     @PUT("user/{userId}/password/{password}")
     Call<Void> updatePassword(@Path("userId") Long userId, @Path("password") String password);
+
+    @GET("user/{userId}/myHashTag")
+    Call<List<String>> getMyHashTag(@Path("userId") Long userId);
+
 }
