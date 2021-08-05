@@ -57,10 +57,10 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/hashTagNameList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="해시태그1, 해시태그2, 해시태그3, 해시태그4" />
+                    android:layout_gravity="center" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

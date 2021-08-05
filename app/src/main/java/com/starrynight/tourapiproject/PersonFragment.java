@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +44,7 @@ public class PersonFragment extends Fragment {
     User2 user;
     ImageView profileImage;
     TextView nickName;
+    TextView hashTagNameList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +65,9 @@ public class PersonFragment extends Fragment {
 
         nickName = v.findViewById(R.id.nickName);
         profileImage = v.findViewById(R.id.profileImage);
+        hashTagNameList = v.findViewById(R.id.hashTagNameList);
 
+        //닉네임, 프로필 사진을 불러오기 위한 get api
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
         call.enqueue(new Callback<User2>() {
             @Override
@@ -81,6 +85,29 @@ public class PersonFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<User2> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        //해시태그 목록을 불러오기 위한 get api
+        Call<List<String>> call2 = RetrofitClient.getApiService().getMyHashTag(userId);
+        call2.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response <List<String>> response) {
+                if (response.isSuccessful()) {
+                    List<String> result = response.body();
+                    String names = "";
+                    for (String name : result){
+                        names += "#" + name + " ";
+                    }
+                    int len = names.length();
+                    hashTagNameList.setText(names.substring(0 , len-1));
+                } else {
+                    System.out.println("사용자 정보 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
             }
         });
