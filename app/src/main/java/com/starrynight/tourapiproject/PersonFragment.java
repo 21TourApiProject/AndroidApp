@@ -19,10 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,42 +38,55 @@ import static android.graphics.BitmapFactory.decodeFile;
 
 
 public class PersonFragment extends Fragment {
-    User user;
+
+    Long userId;
+    User2 user;
     ImageView profileImage;
     TextView nickName;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_person, container, false);
 
-        nickName = (TextView) v.findViewById(R.id.nickName);
+        //앱 내부 저장소의 userId 데이터 읽기
+        String fileName = "userId";
+        try{
+            FileInputStream fis = getActivity().openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
 
-        Call<User> call = RetrofitClient.getApiService().getUser(1L);
-        call.enqueue(new Callback<User>() {
+        nickName = v.findViewById(R.id.nickName);
+        profileImage = v.findViewById(R.id.profileImage);
+
+        Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
+        call.enqueue(new Callback<User2>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-
-                    profileImage = (ImageView) v.findViewById(R.id.profileImage);
+                    assert user != null;
                     if (user.getProfileImage() != null){
                         profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
                     }
                     nickName.setText(user.getNickName());
-
                 } else {
                     System.out.println("사용자 정보 불러오기 실패");
                 }
             }
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<User2> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
             }
         });
 
         //게시물 작성 페이지로 이동
-        Button goPostWrite = (Button) v.findViewById(R.id.goPostWrite);
+        Button goPostWrite = v.findViewById(R.id.goPostWrite);
         goPostWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,29 +96,32 @@ public class PersonFragment extends Fragment {
         });
 
         //설정 페이지로 이동
-        Button goSetting = (Button) v.findViewById(R.id.goSetting);
+        Button goSetting = v.findViewById(R.id.goSetting);
         goSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
+                intent.putExtra("userId", userId);
                 startActivityForResult(intent, 101);
             }
         });
 
         //프로필 변경 페이지로 이동
-        ImageView profileImage = (ImageView) v.findViewById(R.id.profileImage);
+        ImageView profileImage = v.findViewById(R.id.profileImage);
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
+                intent.putExtra("userId", userId);
                 startActivityForResult(intent, 101);
             }
         });
-        TextView nickName = (TextView) v.findViewById(R.id.nickName);
+        TextView nickName = v.findViewById(R.id.nickName);
         nickName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
+                intent.putExtra("userId", userId);
                 startActivityForResult(intent, 101);
             }
         });
