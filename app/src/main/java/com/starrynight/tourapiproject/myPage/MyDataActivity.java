@@ -4,24 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
-import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MyDataActivity extends AppCompatActivity {
+import static android.graphics.BitmapFactory.decodeFile;
 
+public class MyDataActivity extends AppCompatActivity {
+    private static final int CHANGE_PROFILE = 101;
     User user;
-    User2 user2 = new User2();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +37,10 @@ public class MyDataActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body();
 
-//                    ImageView profileImage2 = findViewById(R.id.profileImage2);
-//                    if (user.getProfileImage() != null){
-//                        profileImage2.setImageURI();
-//                    }
+                    ImageView profileImage2 = findViewById(R.id.profileImage2);
+                    if (user.getProfileImage() != null){
+                        profileImage2.setImageBitmap(decodeFile(user.getProfileImage()));
+                    }
 
                     TextView nickName2 = findViewById(R.id.nickName2);
                     nickName2.setText(user.getNickName());
@@ -70,17 +72,24 @@ public class MyDataActivity extends AppCompatActivity {
             }
         });
 
+        //비밀번호 변경 버튼
+        TextView changePwd = findViewById(R.id.changePwd);
+        changePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyDataActivity.this, ChangePasswordActivity.class);
+                //intent.putExtra("userId", );
+                startActivity(intent);
+            }
+        });
+
         //프로필 변경 페이지로 이동
         ImageView profileImage = findViewById(R.id.profileImage2);
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
-                user2.setUserId(user.getUserId());
-                user2.setNickName(user.getNickName());
-                user2.setProfileImage(user.getProfileImage());
-                intent.putExtra("user2", user2);
-                startActivity(intent);
+                startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
 
@@ -90,12 +99,20 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
-                user2.setUserId(user.getUserId());
-                user2.setNickName(user.getNickName());
-                user2.setProfileImage(user.getProfileImage());
-                intent.putExtra("user2", user2);
-                startActivity(intent);
+                startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == CHANGE_PROFILE){
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+
+        }
+    }
+
 }
