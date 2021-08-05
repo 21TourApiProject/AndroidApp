@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,51 +10,61 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.graphics.BitmapFactory.decodeFile;
+
 
 public class PersonFragment extends Fragment {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
-    public PersonFragment() {
-        // Required empty public constructor
-    }
-
-    public static PersonFragment newInstance(String param1, String param2) {
-        PersonFragment fragment = new PersonFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    User user;
+    ImageView profileImage;
+    TextView nickName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_person, container, false);
+
+        nickName = (TextView) v.findViewById(R.id.nickName);
+
+        Call<User> call = RetrofitClient.getApiService().getUser(1L);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    user = response.body();
+
+                    profileImage = (ImageView) v.findViewById(R.id.profileImage);
+                    if (user.getProfileImage() != null){
+                        profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
+                    }
+                    nickName.setText(user.getNickName());
+
+                } else {
+                    System.out.println("사용자 정보 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
 
         //게시물 작성 페이지로 이동
         Button goPostWrite = (Button) v.findViewById(R.id.goPostWrite);
@@ -71,7 +82,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
             }
         });
 
@@ -81,19 +92,18 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
             }
         });
-
-        //프로필 변경 페이지로 이동
         TextView nickName = (TextView) v.findViewById(R.id.nickName);
         nickName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
             }
         });
+
         RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -107,6 +117,15 @@ public class PersonFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 101){
+            //프래그먼트 새로고침
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
