@@ -1,18 +1,30 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.MyHashTagParams;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,23 +58,44 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                     if (!clicked[i].isEmpty()){
                         MyHashTagParams myHashTagParam = new MyHashTagParams();
                         myHashTagParam.setHashTagName(clicked[i]);
-                        myHashTagParam.setMobilePhoneNumber(mobilePhoneNumber);
                         myHashTagParams.add(myHashTagParam);
                     }
                 }
-                //post api
-                Call<Void> call = RetrofitClient.getApiService().createMyHashTag(myHashTagParams);
-                call.enqueue(new Callback<Void>() {
+                //선호 해시태그 입력을 위한 post api
+                Call<Long> call = RetrofitClient.getApiService().createMyHashTag(mobilePhoneNumber, myHashTagParams);
+                call.enqueue(new Callback<Long>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("post 성공");
-                        } else{
-                            System.out.println("post 실패");
+                    public void onResponse(Call<Long> call, Response<Long> response) {
+                        if (response.isSuccessful()) {
+                            Long result = response.body();
+                            if (result != -1L) {
+                                System.out.println("선호 해시태그 선택 성공");
+
+                                //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
+                                String fileName = "userId";
+                                String userId = result.toString();
+                                try{
+                                    FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                                    fos.write(userId.getBytes());
+                                    fos.close();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Intent intent = new Intent(SelectMyHashTagActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            System.out.println("오류가 발생했습니다. 다시 시도해주세요.");
                         }
                     }
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<Long> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });

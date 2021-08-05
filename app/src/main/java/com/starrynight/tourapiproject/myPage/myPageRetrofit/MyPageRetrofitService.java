@@ -12,6 +12,9 @@ public interface MyPageRetrofitService {
     @GET("user/{userId}")
     Call<User> getUser(@Path("userId") Long userId);
 
+    @GET("user2/{userId}")
+    Call<User2> getUser2(@Path("userId") Long userId);
+
     @GET("user/duplicate/nickName/{nickName}")
     Call<Boolean> checkDuplicateNickName(@Path("nickName") String nickName);
 
