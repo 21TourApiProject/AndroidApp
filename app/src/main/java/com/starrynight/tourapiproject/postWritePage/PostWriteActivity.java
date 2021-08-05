@@ -180,8 +180,10 @@ public class PostWriteActivity extends AppCompatActivity {
                     return;
                 }
                 time=((TextView)(findViewById(R.id.timePicker))).getText().toString();
+                if(time.isEmpty()){
                 Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 return;
+                }
             }
             Intent intent = getIntent();
             PostHashTagParams postHashTagParams = (PostHashTagParams) intent.getSerializableExtra("PostHashTagParam");
