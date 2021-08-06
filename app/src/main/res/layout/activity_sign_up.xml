@@ -70,16 +70,13 @@
 
             </LinearLayout>
 
-            <Button
+            <ImageButton
                 android:id="@+id/kakaoSignUp"
-                android:layout_width="320dp"
-                android:layout_height="65dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sign_up__kko_sign_up"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="80dp"
-                android:background="#F3E146"
-                android:text="카카오 1초 회원가입"
-                android:textAlignment="center"
-                android:textSize="18sp" />
+                android:layout_marginTop="16dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
