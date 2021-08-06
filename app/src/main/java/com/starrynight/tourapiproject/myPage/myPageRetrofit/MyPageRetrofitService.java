@@ -1,11 +1,12 @@
 package com.starrynight.tourapiproject.myPage.myPageRetrofit;
 
+import com.starrynight.tourapiproject.myPage.myWish.MyWishPost;
+
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -31,5 +32,8 @@ public interface MyPageRetrofitService {
 
     @GET("user/{userId}/myHashTag")
     Call<List<String>> getMyHashTag(@Path("userId") Long userId);
+
+    @GET("myWishPost/{userId}")
+    Call<List<MyWishPost>> getMyWishPost(@Path("userId") Long userId);
 
 }

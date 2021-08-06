@@ -1,15 +1,20 @@
 package com.starrynight.tourapiproject.myPage.myWish;
 
-public class MyWish {
+import com.google.gson.annotations.SerializedName;
 
+public class MyWishPost {
+
+    @SerializedName("thumbnail")
     String thumbnail;
+    @SerializedName("title")
     String title;
-    Long id;
+    @SerializedName("postId")
+    Long postId;
 
-    public MyWish(String thumbnail, String title, Long id) {
+    public MyWishPost(String thumbnail, String title, Long postId) {
         this.thumbnail = thumbnail;
         this.title = title;
-        this.id = id;
+        this.postId = postId;
     }
 
     public String getThumbnail() {
@@ -28,11 +33,11 @@ public class MyWish {
         this.title = title;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long postId) {
+        this.postId = postId;
     }
 }

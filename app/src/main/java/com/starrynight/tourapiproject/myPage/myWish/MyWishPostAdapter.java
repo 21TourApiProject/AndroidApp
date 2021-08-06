@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.myPage.myWish;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,24 +15,22 @@ import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
 
-import static android.graphics.BitmapFactory.decodeFile;
-
-public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder>{
-    ArrayList<MyWish> items = new ArrayList<>();
-    OnMyWishItemClickListener listener;
+public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.ViewHolder>{
+    ArrayList<MyWishPost> items = new ArrayList<MyWishPost>();
+    OnMyWishPostItemClickListener listener;
 
     @NonNull
     @Override
-    public MyWishAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.custom_my_wish, viewGroup, false);
 
-        return new MyWishAdapter.ViewHolder(itemView, listener);
+        return new ViewHolder(itemView, listener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyWishAdapter.ViewHolder viewHolder, int position) {
-        MyWish item = items.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        MyWishPost item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -41,32 +40,32 @@ public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder
     }
 
 
-    public void addItem(MyWish item) {
+    public void addItem(MyWishPost item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<MyWish> items) {
+    public void setItems(ArrayList<MyWishPost> items) {
         this.items = items;
     }
 
-    public MyWish getItem(int position) {
+    public MyWishPost getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, MyWish item) {
+    public void setItem(int position, MyWishPost item) {
         items.set(position, item);
     }
 
-    public void setOnMyWishItemClickListener(OnMyWishItemClickListener listener){
+    public void setOnMyWishItemClickListener(OnMyWishPostItemClickListener listener){
         this.listener = listener;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView thumbnail;
         TextView title;
         LinearLayout layout;
 
-        public ViewHolder(View itemView, final OnMyWishItemClickListener listener) {
+        public ViewHolder(View itemView, final OnMyWishPostItemClickListener listener) {
             super(itemView);
 
             thumbnail = itemView.findViewById(R.id.wishThumbnail);
@@ -79,14 +78,15 @@ public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder
                     int position = getAdapterPosition();
 
                     if (listener != null){
-                        listener.onItemClick(MyWishAdapter.ViewHolder.this, view, position);
+                        listener.onItemClick(MyWishPostAdapter.ViewHolder.this, view, position);
                     }
                 }
             });
         }
 
-        public void setItem(MyWish item) {
-            thumbnail.setImageBitmap(decodeFile(item.getThumbnail()));
+        public void setItem(MyWishPost item) {
+            //thumbnail.setImageBitmap(decodeFile(item.getThumbnail()));
+            thumbnail.setBackgroundColor(Color.BLUE);
             title.setText(item.getTitle());
         }
     }
