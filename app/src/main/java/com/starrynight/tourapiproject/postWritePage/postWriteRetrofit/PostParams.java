@@ -8,8 +8,6 @@ import java.time.LocalDateTime;
 public class PostParams implements Serializable {
     private String postContent;
 
-    private Bitmap postImage;
-
     private String observeFit;
 
     private String yearDate;
@@ -20,11 +18,42 @@ public class PostParams implements Serializable {
 
     public PostParams(){}
 
-    public PostParams(String postContent, Bitmap postImage, String observeFit, String yearDate, String time) {
+    public String getPostContent() {
+        return postContent;
+    }
+
+    public String getYearDate() {
+        return yearDate;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getObserveFit() {
+        return observeFit;
+    }
+
+    public PostParams(String postContent, String observeFit, String yearDate, String time) {
         this.postContent = postContent;
-        this.postImage = postImage;
         this.observeFit = observeFit;
         this.yearDate = yearDate;
+        this.time = time;
+    }
+
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
+    }
+
+    public void setYearDate(String yearDate) {
+        this.yearDate = yearDate;
+    }
+
+    public void setTime(String time) {
         this.time = time;
     }
 
