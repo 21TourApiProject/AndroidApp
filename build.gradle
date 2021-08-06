@@ -18,6 +18,11 @@ allprojects {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
+        maven{
+            url "https://maven.google.com"
+        }
+        //카카오sdk레포지토리
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 
