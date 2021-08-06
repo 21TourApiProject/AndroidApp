@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,13 +21,10 @@ import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
-import com.starrynight.tourapiproject.myPage.myWish.MyWish;
-import com.starrynight.tourapiproject.myPage.myWish.MyWishAdapter;
-import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
-import com.starrynight.tourapiproject.postItemPage.post_point_item;
+import com.starrynight.tourapiproject.myPage.myWish.MyWishPost;
+import com.starrynight.tourapiproject.myPage.myWish.MyWishPostAdapter;
+import com.starrynight.tourapiproject.myPage.myWish.OnMyWishPostItemClickListener;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
-import com.starrynight.tourapiproject.postWritePage.SelectImage;
-import com.starrynight.tourapiproject.postWritePage.SelectImageAdapter;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -42,16 +39,16 @@ import retrofit2.Response;
 
 import static android.graphics.BitmapFactory.decodeFile;
 
-
 public class PersonFragment extends Fragment {
 
     Long userId;
     User2 user;
+
     ImageView profileImage;
     TextView nickName;
     TextView hashTagNameList;
     RecyclerView myWishList;
-    MyWishAdapter myWishAdapter;
+    MyWishPostAdapter myWishPostAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,22 +158,49 @@ public class PersonFragment extends Fragment {
         });
 
         //추가 어댑터
-        myWishList = v.findViewById(R.id.recyclerView);
+        myWishList = v.findViewById(R.id.myWishList);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myWishList.setLayoutManager(layoutManager);
+        myWishPostAdapter = new MyWishPostAdapter();
 
-        myWishAdapter = new MyWishAdapter();
-        myWishList.setAdapter(myWishAdapter);
-
-        //myWishAdapter.addItem(new MyWish(thumbnail, title, id));
-        myWishList.setAdapter(myWishAdapter);
-        //찜한 게시물
+        //찜 게시물 클릭
         Button myPost = v.findViewById(R.id.myPost);
         myPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 내 찜 게시물 불러오는 get api
+                myWishPostAdapter = new MyWishPostAdapter();
 
+                Call<List<MyWishPost>> call = RetrofitClient.getApiService().getMyWishPost(userId);
+                call.enqueue(new Callback<List<MyWishPost>>() {
+                    @Override
+                    public void onResponse(Call<List<MyWishPost>> call, Response<List<MyWishPost>> response) {
+                        if (response.isSuccessful()) {
+                            List<MyWishPost> result = response.body();
+                            for (MyWishPost wp: result){
+                                myWishPostAdapter.addItem(new MyWishPost(wp.getThumbnail(), wp.getTitle(), wp.getPostId()));
+                            }
+                            myWishList.setAdapter(myWishPostAdapter);
+                        } else {
+                            System.out.println("내 찜 게시물 불러오기 실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<List<MyWishPost>> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
+
+
+            }
+        });
+
+        //찜 게시물 클릭 이벤트
+        myWishPostAdapter.setOnMyWishItemClickListener(new OnMyWishPostItemClickListener() {
+            @Override
+            public void onItemClick(MyWishPostAdapter.ViewHolder holder, View view, int position) {
+                Toast.makeText(getActivity().getApplicationContext(),  ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
             }
         });
 

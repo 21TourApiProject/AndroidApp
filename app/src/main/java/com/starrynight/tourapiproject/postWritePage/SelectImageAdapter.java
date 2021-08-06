@@ -43,7 +43,6 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
 
     public void removeItem(int position){
         items.remove(position);
-
     }
 
     public void setItems(ArrayList<SelectImage> items) {
