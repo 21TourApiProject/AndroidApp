@@ -24,7 +24,7 @@ public interface PostHashTagRetrofitService {
     Call<String> addContent(@Path("postContent")String postContent);
 
     @GET ("post/write/{observeFit}")
-    Call<String> addObserveFit(@Path("observeFit")String observeFit);
+    Call<Void> addObserveFit(@Path("observeFit")String observeFit);
 
     @GET ("post/write/{yearDate}/{time}")
     Call<LocalDateTime> addTime(@Path("yearDate")LocalDateTime yearDate,@Path("time")LocalDateTime time);
