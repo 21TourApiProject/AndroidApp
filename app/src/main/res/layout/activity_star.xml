@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StarPage.StarActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/starback_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_baseline_chevron_left_24" />
+
+        <TextView
+            android:id="@+id/starname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="별자리 이름" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/StarImage"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
+        app:srcCompat="@drawable/star_image" />
+
+    <ScrollView
+        android:id="@+id/starexplanation"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/StarImage">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/startext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="최초의 별자리는 약 5000년 전 바빌로니아인들이 제정한 뒤, 기원전 3000년경에 태양이 지나가는 별자리들인 황도 12궁이 만들어지고 고대 이집트에서도 별자리가 기록되기 시작한다. 이것이 그리스로 전해져 그리스의 영웅들을 기리는 별자리가 만들어졌으며, 그 후에도 수세기 동안 학자들이 새 별자리를 만들고 명칭을 붙여서 현재는 국제천문연맹 공인 88개의 별자리가 있다.[4] 별자리 경계는 1875년의 분점 위치를 기준으로 정해졌기 때문에, 현재의 분점을 기준으로 한 적도좌표계와는 미세한 차이가 있다.  고대인들의 상상력이 총동원된 것들로써 잘 봐 줘도 장어처럼 보이는 길쭉한 별자리를 물고기 두 마리가 튀어오르는 모습이라면서 물고기자리라고 하는 등 현대인의 감각으로는 이해할 수 없는 것들이 많다.[5] 게다가 현대에 들어 별자리의 개념을 새롭게 쓰면서 축소되거나 잘려나간 별자리들이 많아지는 바람에 더더욱 모양을 제대로 보기 힘들다. 예를 들어 고대에는 별자리들이 일부 별을 같이 쓰기도 했었는데, 천칭자리의 일부는 전갈자리의 집게발도 되었지만 지금은 잘려나갔다. 아예 사라진 별자리도 있는데, 아르고자리가 대표적으로 너무나 커다란 별자리였기에 용골자리, 나침반자리, 돛자리, 고물자리 4개로 분리되었다." />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/voice_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/star_voice_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/starexplanation" />
+
+    <TextView
+        android:id="@+id/starseetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="별자리 관측법"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/voice_btn" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/starseetext">
+
+        <Button
+            android:id="@+id/spring_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/starseason__button"
+            android:text="봄" />
+
+        <Button
+            android:id="@+id/summer_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/starseason__button"
+            android:text="여름" />
+
+        <Button
+            android:id="@+id/autumn_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/starseason__button"
+            android:text="가을" />
+
+        <Button
+            android:id="@+id/winter_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/starseason__button"
+            android:text="겨울" />
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+        tools:layout_editor_absoluteX="329dp" >
+
+        <LinearLayout
+            android:id="@+id/springlinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/springtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="봄 관측법" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/summerlinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/summertext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="여름 관측법" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/autumnlinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/autumntext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="가을 관측법" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/winterlinear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/wintertext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="겨울 관측법" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

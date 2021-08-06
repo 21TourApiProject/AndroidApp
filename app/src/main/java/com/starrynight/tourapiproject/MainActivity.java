@@ -3,6 +3,9 @@ package com.starrynight.tourapiproject;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.starrynight.tourapiproject.PersonPage.PersonFragment;
+import com.starrynight.tourapiproject.StarPage.StarFragment;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -52,15 +55,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
 //        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
-//
-//
 
 
     }

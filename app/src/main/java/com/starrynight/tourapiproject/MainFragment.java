@@ -12,7 +12,10 @@ import android.widget.Button;
 
 import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
+import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
+import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,10 +56,10 @@ public class MainFragment extends Fragment {
         Post_item_adapter adapter = new Post_item_adapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.addItem(new post_item(" #hash","#hash2"));
-        adapter.addItem(new post_item(" #hash3","#hash4"));
-        adapter.addItem(new post_item(" #hash5","#hash6"));
-        adapter.addItem(new post_item(" #hash7","#hash8"));
+        adapter.addItem(new post_item(" #hash","#hash2","제목1","닉네임1","댓글을 달아주세요","https://cdn.pixabay.com/photo/2017/05/27/06/18/starry-sky-2347801_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+        adapter.addItem(new post_item(" #hash3","#hash4","제목2","닉네임2","댓글을 달아주세요","https://cdn.pixabay.com/photo/2017/10/09/09/26/the-atacama-desert-2832866_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+        adapter.addItem(new post_item(" #hash5","#hash6","제목3","닉네임3","댓글을 달아주세요","https://cdn.pixabay.com/photo/2018/12/06/02/00/the-milky-way-3859013_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+        adapter.addItem(new post_item(" #hash7","#hash8","제목4","닉네임4","댓글을 달아주세요","https://cdn.pixabay.com/photo/2017/02/14/11/47/natural-2065714_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
 
         recyclerView.setAdapter((adapter));
 
@@ -64,7 +67,7 @@ public class MainFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),WeatherActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), WeatherActivity.class);
                 startActivity(intent);
 
                 getActivity().finish();
@@ -78,6 +81,25 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), PostWriteActivity.class);
                 startActivityForResult(intent, 101);
+            }
+        });
+        // 게시물 페이지로 넘어가는 이벤트(수정 예정)
+        Button post =(Button) v.findViewById(R.id.post);
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), PostActivity.class);
+                startActivityForResult(intent, 102);
+            }
+        });
+
+        // 회원가입 페이지로 넘어가는 이벤트(수정 예정)
+        Button testSignUp = (Button) v.findViewById(R.id.testSignUp);
+        testSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), SignUpActivity.class);
+                startActivityForResult(intent, 103);
             }
         });
         return v;
