@@ -229,9 +229,9 @@ public class PostWriteActivity extends AppCompatActivity {
     }
 
     public void onClickDatePicker(View view){
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, callbackMethod, mYear, mMonth, mDay);
-        datePickerDialog.getDatePicker().setCalendarViewShown(false);
-        datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, callbackMethod, mYear, mMonth, mDay);
+        //datePickerDialog.getDatePicker().setCalendarViewShown(false);
+        //datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         datePickerDialog.show();
 
     }

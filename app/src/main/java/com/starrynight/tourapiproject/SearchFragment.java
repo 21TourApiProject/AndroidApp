@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.starrynight.tourapiproject.TouristspotPage.Touristspot_Activity;
-import com.starrynight.tourapiproject.map.MapFragment;
+import com.starrynight.tourapiproject.MapPage.MapFragment;
 
 
 /**

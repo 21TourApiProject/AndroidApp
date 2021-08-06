@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -8,10 +9,11 @@ android {
 
     defaultConfig {
         applicationId "com.starrynight.tourapiproject"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
@@ -53,6 +55,30 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation files('libs\\libDaumMapAndroid.jar')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-iid:21.1.0'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'cz.msebera.android:httpclient:4.5.8'
+
+
+    implementation "com.kakao.sdk:v2-user:2.5.2" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.5.2" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-story:2.5.2" // 카카오스토리
+    implementation "com.kakao.sdk:v2-link:2.5.2" // 메시지(카카오링크)
+    implementation "com.kakao.sdk:v2-navi:2.5.2" // 카카오내비
+    implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
