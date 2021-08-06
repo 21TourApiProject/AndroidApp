@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,9 +21,13 @@ import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
+import com.starrynight.tourapiproject.myPage.myWish.MyWish;
+import com.starrynight.tourapiproject.myPage.myWish.MyWishAdapter;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+import com.starrynight.tourapiproject.postWritePage.SelectImage;
+import com.starrynight.tourapiproject.postWritePage.SelectImageAdapter;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,6 +50,8 @@ public class PersonFragment extends Fragment {
     ImageView profileImage;
     TextView nickName;
     TextView hashTagNameList;
+    RecyclerView myWishList;
+    MyWishAdapter myWishAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -153,14 +160,34 @@ public class PersonFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
+        //추가 어댑터
+        myWishList = v.findViewById(R.id.recyclerView);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        myWishList.setLayoutManager(layoutManager);
 
-        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
-        recyclerView.setAdapter(adapter);
+        myWishAdapter = new MyWishAdapter();
+        myWishList.setAdapter(myWishAdapter);
 
-        adapter.addItem(new post_point_item("내 게시물","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
+        //myWishAdapter.addItem(new MyWish(thumbnail, title, id));
+        myWishList.setAdapter(myWishAdapter);
+        //찜한 게시물
+        Button myPost = v.findViewById(R.id.myPost);
+        myPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+//        RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        recyclerView.setLayoutManager(layoutManager);
+//
+//        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
+//        recyclerView.setAdapter(adapter);
+//
+//        adapter.addItem(new post_point_item("내 게시물","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
 
 
         return v;
