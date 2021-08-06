@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
+import com.kakao.auth.Session;
 import com.starrynight.tourapiproject.R;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private SessionCallback sessionCallback = new SessionCallback();
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,9 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        Button kakaoSignUp = findViewById(R.id.kakaoSignUp);
+        ImageButton kakaoSignUp = findViewById(R.id.kakaoSignUp);
+        session = Session.getCurrentSession();
+        session.addCallback(sessionCallback);
         kakaoSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -69,7 +69,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
                 EditText editText = (EditText) findViewById(R.id.loginId);
                 String loginId = editText.getText().toString();
-                String url0 = "http://172.30.1.16:8080/v1/user/duplicate/"+loginId;
+                String url0 = "http://52.79.224.101:8080/v1/user/duplicate/"+loginId;
                 System.out.println("url0 = " + url0);
 
                 new Thread() {
