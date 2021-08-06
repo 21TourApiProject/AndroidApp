@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.kakao.auth.Session;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private SessionCallback sessionCallback = new SessionCallback();
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +95,9 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         //카카오 회원가입
-        Button kakaoSignUp = findViewById(R.id.kakaoSignUp);
+        ImageButton kakaoSignUp = findViewById(R.id.kakaoSignUp);
+        session = Session.getCurrentSession();
+        session.addCallback(sessionCallback);
         kakaoSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
