@@ -169,10 +169,12 @@ public class PersonFragment extends Fragment {
         myObWishList = v.findViewById(R.id.myObWishList);
         myTpWishList = v.findViewById(R.id.myTpWishList);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myPostWishList.setLayoutManager(layoutManager);
-        myObWishList.setLayoutManager(layoutManager);
-        myTpWishList.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myPostWishList.setLayoutManager(layoutManager1);
+        myObWishList.setLayoutManager(layoutManager2);
+        myTpWishList.setLayoutManager(layoutManager3);
 
         myPostWishAdapter = new MyPostWishAdapter();
         myObWishAdapter = new MyObWishAdapter();
@@ -183,6 +185,10 @@ public class PersonFragment extends Fragment {
         myPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myPostWishList.setVisibility(View.VISIBLE);
+                myObWishList.setVisibility(View.GONE);
+                myTpWishList.setVisibility(View.GONE);
+                myPostWishAdapter = new MyPostWishAdapter();
                 // 내 찜 게시물 불러오는 get api
                 Call<List<MyPostWish>> call = RetrofitClient.getApiService().getMyWishPost(userId);
                 call.enqueue(new Callback<List<MyPostWish>>() {
@@ -214,40 +220,48 @@ public class PersonFragment extends Fragment {
         });
 
 
-        //찜 관측지 클릭
-        Button myOb = v.findViewById(R.id.myOb);
-        myOb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 내 찜 관측지 불러오는 get api
-
-            }
-        });
-        //찜 관측지 클릭 이벤트
-        myPostWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
-            @Override
-            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), ""+"번 관측지 클릭", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        //찜 관광지 클릭
-        Button myTour = v.findViewById(R.id.myTour);
-        myTour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 내 찜 관광지 불러오는 get api
-
-            }
-        });
-        //찜 관광지 클릭 이벤트
-        myPostWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
-            @Override
-            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), ""+"번 관광지 클릭", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        //찜 관측지 클릭
+//        Button myOb = v.findViewById(R.id.myOb);
+//        myOb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                myObWishAdapter = new MyObWishAdapter();
+//                myObWishList.setVisibility(View.VISIBLE);
+//                myPostWishList.setVisibility(View.GONE);
+//                myTpWishList.setVisibility(View.GONE);
+//                // 내 찜 관측지 불러오는 get api
+//
+//            }
+//        });
+//        //찜 관측지 클릭 이벤트
+//        myObWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
+//            @Override
+//            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
+//                Toast.makeText(getActivity().getApplicationContext(), ""+"번 관측지 클릭", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//
+//        //찜 관광지 클릭
+//        Button myTour = v.findViewById(R.id.myTour);
+//        myTour.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                myTpWishAdapter = new MyTpWishAdapter();
+//                myTpWishList.setVisibility(View.VISIBLE);
+//                myPostWishList.setVisibility(View.GONE);
+//                myObWishList.setVisibility(View.GONE);
+//                // 내 찜 관광지 불러오는 get api
+//
+//            }
+//        });
+//        //찜 관광지 클릭 이벤트
+//        myTpWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
+//            @Override
+//            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
+//                Toast.makeText(getActivity().getApplicationContext(), ""+"번 관광지 클릭", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
 //        RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
