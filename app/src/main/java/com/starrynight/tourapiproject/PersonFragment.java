@@ -21,6 +21,9 @@ import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
+import com.starrynight.tourapiproject.myPage.myPost.MyPost;
+import com.starrynight.tourapiproject.myPage.myPost.MyPostAdapter;
+import com.starrynight.tourapiproject.myPage.myPost.OnMyPostItemClickListener;
 import com.starrynight.tourapiproject.myPage.myWish.observation.MyObWishAdapter;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPostWish;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPostWishAdapter;
@@ -56,6 +59,9 @@ public class PersonFragment extends Fragment {
     MyPostWishAdapter myPostWishAdapter;
     MyTpWishAdapter myTpWishAdapter;
     MyObWishAdapter myObWishAdapter;
+
+    RecyclerView myPostList;
+    MyPostAdapter myPostAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,7 +135,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PostWriteActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
             }
         });
 
@@ -164,32 +170,67 @@ public class PersonFragment extends Fragment {
             }
         });
 
-        //추가 어댑터
+        myPostList = v.findViewById(R.id.myPostList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myPostList.setLayoutManager(layoutManager);
+        myPostAdapter= new MyPostAdapter();
+        myPostList.setAdapter(myPostAdapter);
+
+        //내 게시물
+        Call<List<MyPost>> call3 = RetrofitClient.getApiService().getMyPost(userId);
+        call3.enqueue(new Callback<List<MyPost>>() {
+            @Override
+            public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
+                if (response.isSuccessful()) {
+                    List<MyPost> result = response.body();
+                    for (MyPost wp: result){
+                        myPostAdapter.addItem(new MyPost(wp.getThumbnail(), wp.getTitle(), wp.getPostId()));
+                    }
+                    myPostList.setAdapter(myPostAdapter);
+                } else {
+                    System.out.println("내 게시물 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<MyPost>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+        //내 게시물 클릭 이벤트
+        myPostAdapter.setOnMyPostItemClickListener(new OnMyPostItemClickListener() {
+            @Override
+            public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
+                Toast.makeText(getActivity().getApplicationContext(), ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        //찜 관련 리사이클러
         myPostWishList = v.findViewById(R.id.myPostWishList);
         myObWishList = v.findViewById(R.id.myObWishList);
         myTpWishList = v.findViewById(R.id.myTpWishList);
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager layoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myPostWishList.setLayoutManager(layoutManager1);
+
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myObWishList.setLayoutManager(layoutManager2);
+
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myTpWishList.setLayoutManager(layoutManager3);
 
-        myPostWishAdapter = new MyPostWishAdapter();
-        myObWishAdapter = new MyObWishAdapter();
-        myTpWishAdapter = new MyTpWishAdapter();
 
-        //찜 게시물 클릭
+        //찜(게시물) 클릭
         Button myPost = v.findViewById(R.id.myPost);
         myPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myPostWishList.setVisibility(View.VISIBLE);
+                myPostWishAdapter = new MyPostWishAdapter();
+                myPostWishList.setAdapter(myPostWishAdapter);
                 myObWishList.setVisibility(View.GONE);
                 myTpWishList.setVisibility(View.GONE);
-                myPostWishAdapter = new MyPostWishAdapter();
-                // 내 찜 게시물 불러오는 get api
+                myPostWishList.setVisibility(View.VISIBLE);
+                //찜(게시물) 불러오는 get api
                 Call<List<MyPostWish>> call = RetrofitClient.getApiService().getMyWishPost(userId);
                 call.enqueue(new Callback<List<MyPostWish>>() {
                     @Override
@@ -201,7 +242,7 @@ public class PersonFragment extends Fragment {
                             }
                             myPostWishList.setAdapter(myPostWishAdapter);
                         } else {
-                            System.out.println("내 찜 게시물 불러오기 실패");
+                            System.out.println("찜(게시물) 불러오기 실패");
                         }
                     }
                     @Override
@@ -209,18 +250,19 @@ public class PersonFragment extends Fragment {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
-            }
-        });
-        //찜 게시물 클릭 이벤트
-        myPostWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
-            @Override
-            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
+
+                //찜(게시물) 클릭 이벤트
+                myPostWishAdapter.setOnMyPostWishItemClickListener(new OnMyPostWishItemClickListener() {
+                    @Override
+                    public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
+                        Toast.makeText(getActivity().getApplicationContext(), ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
 
-//        //찜 관측지 클릭
+//        //찜(관측지) 클릭
 //        Button myOb = v.findViewById(R.id.myOb);
 //        myOb.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -229,11 +271,11 @@ public class PersonFragment extends Fragment {
 //                myObWishList.setVisibility(View.VISIBLE);
 //                myPostWishList.setVisibility(View.GONE);
 //                myTpWishList.setVisibility(View.GONE);
-//                // 내 찜 관측지 불러오는 get api
+//                // 찜(관측지) 불러오는 get api
 //
 //            }
 //        });
-//        //찜 관측지 클릭 이벤트
+//        //찜(관측지) 클릭 이벤트
 //        myObWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
 //            @Override
 //            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
@@ -242,7 +284,7 @@ public class PersonFragment extends Fragment {
 //        });
 //
 //
-//        //찜 관광지 클릭
+//        //찜(관광지) 클릭
 //        Button myTour = v.findViewById(R.id.myTour);
 //        myTour.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -251,11 +293,11 @@ public class PersonFragment extends Fragment {
 //                myTpWishList.setVisibility(View.VISIBLE);
 //                myPostWishList.setVisibility(View.GONE);
 //                myObWishList.setVisibility(View.GONE);
-//                // 내 찜 관광지 불러오는 get api
+//                // 찜(관광지) 불러오는 get api
 //
 //            }
 //        });
-//        //찜 관광지 클릭 이벤트
+//        //찜(관광지) 클릭 이벤트
 //        myTpWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
 //            @Override
 //            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {

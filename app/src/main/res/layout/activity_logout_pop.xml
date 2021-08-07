@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context=".myPage.LogoutPopActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#53AA57"
+        android:gravity="center"
+        android:text="로그아웃"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="logout"
+        android:text="로그아웃 하기" />
+
+    <Button
+        android:id="@+id/closeLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="closeLogout"
+        android:text="닫기" />
+</LinearLayout>
