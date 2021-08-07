@@ -112,6 +112,7 @@ public class MyDataActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CHANGE_PROFILE){
+            //액티비티 새로고침
             Intent intent = getIntent();
             finish();
             startActivity(intent);
