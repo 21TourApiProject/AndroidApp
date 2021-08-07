@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.myPage.myPageRetrofit;
 
+import com.starrynight.tourapiproject.myPage.myPost.MyPost;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPostWish;
 
 import java.util.List;
@@ -36,6 +37,9 @@ public interface MyPageRetrofitService {
 
     @GET("myWishPost/{userId}")
     Call<List<MyPostWish>> getMyWishPost(@Path("userId") Long userId);
+
+    @GET("post/user/{userId}")
+    Call<List<MyPost>> getMyPost(@Path("userId") Long userId);
 
     @DELETE("user/{userId}")
     Call<Void> deleteUser(@Path("userId") Long userId);
