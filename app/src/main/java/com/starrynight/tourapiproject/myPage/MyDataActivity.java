@@ -23,6 +23,7 @@ import static android.graphics.BitmapFactory.decodeFile;
 
 public class MyDataActivity extends AppCompatActivity {
     private static final int CHANGE_PROFILE = 101;
+    Long userId;
     User user;
 
     @Override
@@ -30,7 +31,10 @@ public class MyDataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_data);
 
-        Call<User> call = RetrofitClient.getApiService().getUser(1L);
+        Intent intent = getIntent();
+        userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
+
+        Call<User> call = RetrofitClient.getApiService().getUser(userId);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
