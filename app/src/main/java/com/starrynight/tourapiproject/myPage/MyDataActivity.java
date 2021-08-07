@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import retrofit2.Response;
 import static android.graphics.BitmapFactory.decodeFile;
 
 public class MyDataActivity extends AppCompatActivity {
+
     private static final int CHANGE_PROFILE = 101;
     Long userId;
     User user;
@@ -82,7 +82,7 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangePasswordActivity.class);
-                //intent.putExtra("userId", );
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });
@@ -112,6 +112,7 @@ public class MyDataActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CHANGE_PROFILE){
+            //액티비티 새로고침
             Intent intent = getIntent();
             finish();
             startActivity(intent);
