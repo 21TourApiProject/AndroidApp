@@ -1,8 +1,8 @@
-package com.starrynight.tourapiproject.myPage.myWish;
+package com.starrynight.tourapiproject.myPage.myWish.post;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MyWishPost {
+public class MyPostWish {
 
     @SerializedName("thumbnail")
     String thumbnail;
@@ -11,7 +11,7 @@ public class MyWishPost {
     @SerializedName("postId")
     Long postId;
 
-    public MyWishPost(String thumbnail, String title, Long postId) {
+    public MyPostWish(String thumbnail, String title, Long postId) {
         this.thumbnail = thumbnail;
         this.title = title;
         this.postId = postId;

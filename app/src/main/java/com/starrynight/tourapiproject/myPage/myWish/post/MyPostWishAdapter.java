@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.myPage.myWish;
+package com.starrynight.tourapiproject.myPage.myWish.post;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -15,9 +15,9 @@ import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
 
-public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.ViewHolder>{
-    ArrayList<MyWishPost> items = new ArrayList<MyWishPost>();
-    OnMyWishPostItemClickListener listener;
+public class MyPostWishAdapter extends RecyclerView.Adapter<MyPostWishAdapter.ViewHolder>{
+    ArrayList<MyPostWish> items = new ArrayList<MyPostWish>();
+    OnMyPostWishItemClickListener listener;
 
     @NonNull
     @Override
@@ -30,7 +30,7 @@ public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        MyWishPost item = items.get(position);
+        MyPostWish item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -40,23 +40,23 @@ public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.Vi
     }
 
 
-    public void addItem(MyWishPost item) {
+    public void addItem(MyPostWish item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<MyWishPost> items) {
+    public void setItems(ArrayList<MyPostWish> items) {
         this.items = items;
     }
 
-    public MyWishPost getItem(int position) {
+    public MyPostWish getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, MyWishPost item) {
+    public void setItem(int position, MyPostWish item) {
         items.set(position, item);
     }
 
-    public void setOnMyWishItemClickListener(OnMyWishPostItemClickListener listener){
+    public void setOnMyWishItemClickListener(OnMyPostWishItemClickListener listener){
         this.listener = listener;
     }
 
@@ -65,7 +65,7 @@ public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.Vi
         TextView title;
         LinearLayout layout;
 
-        public ViewHolder(View itemView, final OnMyWishPostItemClickListener listener) {
+        public ViewHolder(View itemView, final OnMyPostWishItemClickListener listener) {
             super(itemView);
 
             thumbnail = itemView.findViewById(R.id.wishThumbnail);
@@ -78,13 +78,13 @@ public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.Vi
                     int position = getAdapterPosition();
 
                     if (listener != null){
-                        listener.onItemClick(MyWishPostAdapter.ViewHolder.this, view, position);
+                        listener.onItemClick(MyPostWishAdapter.ViewHolder.this, view, position);
                     }
                 }
             });
         }
 
-        public void setItem(MyWishPost item) {
+        public void setItem(MyPostWish item) {
             //thumbnail.setImageBitmap(decodeFile(item.getThumbnail()));
             thumbnail.setBackgroundColor(Color.BLUE);
             title.setText(item.getTitle());
