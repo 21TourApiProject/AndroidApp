@@ -96,6 +96,9 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //팝업으로 처리
+                Intent intent = new Intent(SettingActivity.this, LeavePopActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
             }
         });
     }

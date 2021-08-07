@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.myPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,9 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.myPage.myWish.observation.MyObWish;
 
 import java.util.regex.Pattern;
 
@@ -22,6 +25,7 @@ import retrofit2.Response;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    Long userId;
     EditText originPwd;
     EditText newPwd;
     EditText newPwdCheck;
@@ -38,6 +42,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
+        Intent intent = getIntent();
+        userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
+
+        originPwd = findViewById(R.id.originPwd);
         newPwd = findViewById(R.id.newPwd);
         newPwdCheck = findViewById(R.id.newPwdCheck);
         newPwdGuide = findViewById(R.id.newPwdGuide);
@@ -91,25 +99,29 @@ public class ChangePasswordActivity extends AppCompatActivity {
         pwdSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String oriPwd = originPwd.getText().toString();
                 //비밀번호 변경을 위한 put api
-                Call<Void> call = RetrofitClient.getApiService().updatePassword(1L, pwd);
-                call.enqueue(new Callback<Void>() {
+                Call<Boolean> call = RetrofitClient.getApiService().updatePassword(userId, oriPwd, pwd);
+                call.enqueue(new Callback<Boolean>() {
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                         if (response.isSuccessful()) {
-
+                            Boolean result = response.body();
+                            if (result){
+                                //비밀번호 성공적으로 변경되면 이전 페이지로
+                                Intent intent = new Intent(ChangePasswordActivity.this, MyDataActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else{
+                                Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
                             System.out.println("중복 체크 실패");
-                            //emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                            //isError = true;
                         }
                     }
-
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<Boolean> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
-                        //emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                        //isError = true;
                     }
                 });
             }
