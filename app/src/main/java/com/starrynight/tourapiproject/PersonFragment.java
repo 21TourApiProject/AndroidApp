@@ -135,7 +135,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PostWriteActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 101);
             }
         });
 
@@ -202,6 +202,8 @@ public class PersonFragment extends Fragment {
         myPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                myPostWishAdapter = new MyPostWishAdapter();
+                myPostWishList.setAdapter(myPostWishAdapter);
                 myPostWishList.setVisibility(View.VISIBLE);
                 myObWishList.setVisibility(View.GONE);
                 myTpWishList.setVisibility(View.GONE);
@@ -264,7 +266,7 @@ public class PersonFragment extends Fragment {
         });
 
 
-//        //찜 관측지 클릭
+//        //찜(관측지) 클릭
 //        Button myOb = v.findViewById(R.id.myOb);
 //        myOb.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -273,11 +275,11 @@ public class PersonFragment extends Fragment {
 //                myObWishList.setVisibility(View.VISIBLE);
 //                myPostWishList.setVisibility(View.GONE);
 //                myTpWishList.setVisibility(View.GONE);
-//                // 내 찜 관측지 불러오는 get api
+//                // 찜(관측지) 불러오는 get api
 //
 //            }
 //        });
-//        //찜 관측지 클릭 이벤트
+//        //찜(관측지) 클릭 이벤트
 //        myObWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
 //            @Override
 //            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
@@ -286,7 +288,7 @@ public class PersonFragment extends Fragment {
 //        });
 //
 //
-//        //찜 관광지 클릭
+//        //찜(관광지) 클릭
 //        Button myTour = v.findViewById(R.id.myTour);
 //        myTour.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -295,11 +297,11 @@ public class PersonFragment extends Fragment {
 //                myTpWishList.setVisibility(View.VISIBLE);
 //                myPostWishList.setVisibility(View.GONE);
 //                myObWishList.setVisibility(View.GONE);
-//                // 내 찜 관광지 불러오는 get api
+//                // 찜(관광지) 불러오는 get api
 //
 //            }
 //        });
-//        //찜 관광지 클릭 이벤트
+//        //찜(관광지) 클릭 이벤트
 //        myTpWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
 //            @Override
 //            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
