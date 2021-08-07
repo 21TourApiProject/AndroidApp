@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
@@ -57,6 +58,7 @@ public class PostWriteActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String postContent,observeFit,yearDate,time;
     String postImage;
+    PostParams postParams;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -141,7 +143,19 @@ public class PostWriteActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear += 1;
-                datePicker.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
+                String month = Integer.toString(monthOfYear);
+                String day = Integer.toString(dayOfMonth);
+
+                if (monthOfYear < 10){
+                    month = "0"+ Integer.toString(monthOfYear);
+                }
+
+                if(dayOfMonth < 10){
+                    day = "0"+ Integer.toString(dayOfMonth);
+                }
+               datePicker.setText(year + "-" + month + "-" + day);
+               yearDate = datePicker.getText().toString();
+
             }
         };
 
@@ -150,7 +164,8 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod2 = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timePicker.setText(hourOfDay + " : " + minute);
+                timePicker.setText(hourOfDay + ":" + minute+":" + "00" );
+                time = timePicker.getText().toString();
             }
         };
 
@@ -187,29 +202,24 @@ public class PostWriteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                yearDate =((TextView)(findViewById(R.id.datePicker))).getText().toString();
                 if(yearDate.isEmpty()){
                     Toast.makeText(getApplicationContext(), "관측 날짜을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                time=((TextView)(findViewById(R.id.timePicker))).getText().toString();
                 if(time.isEmpty()){
                 Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 return;
                 }
                 Intent intent = getIntent();
-                PostParams postParams = new PostParams();
-                postParams = (PostParams)intent.getSerializableExtra("observeFit");
-                postParams.setPostContent(postContent);
-                postParams.setTime(time);
-                postParams.setYearDate(yearDate);
+                postParams = new PostParams(postContent,observeFit,yearDate,time,1l);
+                postParams.setObserveFit("관광지");
                 Call<Void>call = RetrofitClient.getApiService().postup(postParams);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
                             System.out.println("post 성공");
-                        }
+                        }else{ System.out.println("post 실패");}
                     }
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
