@@ -38,11 +38,12 @@ public class PostParams implements Serializable {
         return observeFit;
     }
 
-    public PostParams(String postContent, String observeFit, String yearDate, String time) {
+    public PostParams(String postContent, String observeFit, String yearDate, String time,Long userId) {
         this.postContent = postContent;
         this.observeFit = observeFit;
         this.yearDate = yearDate;
         this.time = time;
+        this.userId = userId;
     }
 
     public void setPostContent(String postContent) {
