@@ -26,15 +26,26 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PostWriteActivity extends AppCompatActivity {
 
@@ -45,7 +56,7 @@ public class PostWriteActivity extends AppCompatActivity {
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
     String postContent,observeFit,yearDate,time;
-    Bitmap postImage;
+    String postImage;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -167,8 +178,10 @@ public class PostWriteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                if (numOfPicture == 0){
+                    Toast.makeText(getApplicationContext(), "사진을 추가해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 postContent= ((EditText)(findViewById(R.id.postContentText))).getText().toString();
                 if(postContent.isEmpty()){
                     Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -180,12 +193,31 @@ public class PostWriteActivity extends AppCompatActivity {
                     return;
                 }
                 time=((TextView)(findViewById(R.id.timePicker))).getText().toString();
+                if(time.isEmpty()){
                 Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 return;
+                }
+                Intent intent = getIntent();
+                PostParams postParams = new PostParams();
+                postParams = (PostParams)intent.getSerializableExtra("observeFit");
+                postParams.setPostContent(postContent);
+                postParams.setTime(time);
+                postParams.setYearDate(yearDate);
+                Call<Void>call = RetrofitClient.getApiService().postup(postParams);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("post 성공");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("post 실패");
+                    }
+                });
+
             }
-            Intent intent = getIntent();
-            PostHashTagParams postHashTagParams = (PostHashTagParams) intent.getSerializableExtra("PostHashTagParam");
-            PostParams postParams = (PostParams) intent.getSerializableExtra("oberveFit");
         });
     }
 
@@ -209,6 +241,8 @@ public class PostWriteActivity extends AppCompatActivity {
                     Bitmap img = resize(this, uri, 75);
                     System.out.println("img = " + img);
                     addImage(img);
+                    postImage = BitmapToFile(img,"postImage");
+                    System.out.println("file = "+postImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -237,6 +271,25 @@ public class PostWriteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //Bitmap을 File로 변경하는 함수
+    public String BitmapToFile(Bitmap bitmap, String image) {
+        File storage = getFilesDir();
+        String fileName = image + ".jpg";
+        File imgFile = new File(storage, fileName);
+        try {
+            imgFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(imgFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
+        } catch (FileNotFoundException e) {
+            Log.e("saveBitmapToJpg", "FileNotFoundException: "+ e.getMessage());
+        } catch (IOException e) {
+            Log.e("saveBitmapToJpg", "IOException: "+ e.getMessage());
+        }
+        Log.d("imgPath", getFilesDir() + "/" + fileName);
+        //return imgFile;
+        return getFilesDir() + "/" + fileName;
+    }
+
     private void addImage(Bitmap img) {
         numOfPicture ++;
         addPicture.setText(Integer.toString(numOfPicture) + "/10");
@@ -257,6 +310,8 @@ public class PostWriteActivity extends AppCompatActivity {
                 System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(img, numOfPicture));
                 recyclerView.setAdapter(adapter);
+                postImage = BitmapToFile(img,"postImage");
+                System.out.println("file = "+postImage);
 
             } catch (Exception e) {
                 e.printStackTrace();

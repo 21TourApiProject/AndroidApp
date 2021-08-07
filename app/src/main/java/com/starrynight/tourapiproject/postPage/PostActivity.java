@@ -1,11 +1,13 @@
 package com.starrynight.tourapiproject.postPage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +17,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
+import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.POST;
 
 public class PostActivity extends AppCompatActivity{
     private ViewPager2 sliderViewPager;
     private LinearLayout indicator;
+    Post post;
+    ImageView postImage;
+    TextView postTitle;
+    TextView postContent;
 
     private String[] images = new String[] {
             "https://cdn.pixabay.com/photo/2020/09/02/18/03/girl-5539094_1280.jpg",
@@ -31,11 +45,16 @@ public class PostActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        Intent intent = getIntent();
+        PostParams postParams = (PostParams)intent.getSerializableExtra("postParams");
+
+        postTitle =findViewById(R.id.observeSpot);
+        postContent=findViewById(R.id.postContent);
 
         sliderViewPager = findViewById(R.id.slider);
         indicator = findViewById(R.id.indicator);
 
-        sliderViewPager.setOffscreenPageLimit(1);
+        sliderViewPager.setOffscreenPageLimit(3);
         sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
 
         sliderViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -61,10 +80,6 @@ public class PostActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(layoutManager);
 
         RelatePostAdapter adapter = new RelatePostAdapter();
-        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 1"));
-        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 2"));
-        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 3"));
-        adapter.addItem(new RelatePost(R.drawable.backgroundocean, "관련 게시물 4"));
 
         recyclerView.setAdapter(adapter);
 
