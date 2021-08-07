@@ -52,8 +52,19 @@ public class AddHashTagActivity extends AppCompatActivity {
                 PostHashTags = ((TextView)(findViewById(R.id.findHashTag))).getText().toString();
                 PostHashTagParams postHashTagParam= new PostHashTagParams(userId,PostHashTags);
                 postHashTagParams.add(postHashTagParam);
+                Call<Void>call = RetrofitClient.getApiService().createPostHashTag(postHashTagParams);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        System.out.println("해시태그 추가");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("해시태그 추가 실패");
+                    }
+                });
                 Intent intent1 = new Intent(getApplicationContext(), PostWriteActivity.class);
-                intent1.putExtra("postHashTagParams", postHashTagParam);
                 startActivity(intent1);
                 finish();
             }
