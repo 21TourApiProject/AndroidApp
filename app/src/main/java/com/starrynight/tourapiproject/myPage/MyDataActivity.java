@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import retrofit2.Response;
 import static android.graphics.BitmapFactory.decodeFile;
 
 public class MyDataActivity extends AppCompatActivity {
+
     private static final int CHANGE_PROFILE = 101;
     Long userId;
     User user;

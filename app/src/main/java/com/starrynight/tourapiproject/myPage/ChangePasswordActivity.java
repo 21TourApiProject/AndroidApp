@@ -32,7 +32,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     TextView newPwdGuide;
     TextView newPwdCheckGuide;
 
-    String pwd;
+    String pwd = "";
     String pwdCheck = "";
     Boolean isPwd = false; //형식에 맞는 비밀번호인지
     Boolean isSame = false; //같은 비밀번호인지
@@ -100,30 +100,42 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String oriPwd = originPwd.getText().toString();
-                //비밀번호 변경을 위한 put api
-                Call<Boolean> call = RetrofitClient.getApiService().updatePassword(userId, oriPwd, pwd);
-                call.enqueue(new Callback<Boolean>() {
-                    @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful()) {
-                            Boolean result = response.body();
-                            if (result){
-                                //비밀번호 성공적으로 변경되면 이전 페이지로
-                                Intent intent = new Intent(ChangePasswordActivity.this, MyDataActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else{
-                                Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                if (oriPwd.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+                else if (pwd.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+                else if (!isPwd){
+                    Toast.makeText(getApplicationContext(), "비밀번호 형식이 올바르지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+                else if(!isSame){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    //비밀번호 변경을 위한 put api
+                    Call<Boolean> call = RetrofitClient.getApiService().updatePassword(userId, oriPwd, pwd);
+                    call.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if (response.isSuccessful()) {
+                                Boolean result = response.body();
+                                if (result){
+                                    //비밀번호 성공적으로 변경되면 이전 페이지로
+                                    finish();
+                                } else{
+                                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                System.out.println("중복 체크 실패");
                             }
-                        } else {
-                            System.out.println("중복 체크 실패");
                         }
-                    }
-                    @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                }
             }
         });
     }
@@ -131,11 +143,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
     //비밀번호 두개가 맞는지 실시간으로
     private void showPwdCheckGuide(String pwd, String pwdCheck) {
         if (!pwd.equals(pwdCheck)){
-            newPwdCheckGuide.setText("비밀번호가 일치하지 않습니다.");
             isSame = false;
+            newPwdCheckGuide.setText("비밀번호가 일치하지 않습니다.");
         } else {
-            newPwdCheckGuide.setText("");
             isSame = true;
+            newPwdCheckGuide.setText("");
         }
     }
 
