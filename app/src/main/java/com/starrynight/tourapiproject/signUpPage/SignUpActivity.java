@@ -1,24 +1,35 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.kakao.auth.Session;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private SessionCallback sessionCallback = new SessionCallback();
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +53,22 @@ public class SignUpActivity extends AppCompatActivity {
                             if (result != -1L) {
                                 System.out.println("로그인 성공");
 
+                                //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
+                                String fileName = "userId";
+                                String userId = result.toString();
+                                try{
+                                    FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                                    fos.write(userId.getBytes());
+                                    fos.close();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
@@ -90,7 +117,9 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         //카카오 회원가입
-        Button kakaoSignUp = findViewById(R.id.kakaoSignUp);
+        ImageButton kakaoSignUp = findViewById(R.id.kakaoSignUp);
+        session = Session.getCurrentSession();
+        session.addCallback(sessionCallback);
         kakaoSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
