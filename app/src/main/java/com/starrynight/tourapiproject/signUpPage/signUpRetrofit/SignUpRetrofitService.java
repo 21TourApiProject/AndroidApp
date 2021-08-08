@@ -13,6 +13,9 @@ public interface SignUpRetrofitService {
     @POST("user")
     Call<Void> signUp(@Body UserParams params);
 
+    @POST("user/kakao")
+    Call<Void> kakaoSignUp(@Body KakaoUserParams params);
+
     @GET("user/duplicate/email/{email}")
     Call<Boolean> checkDuplicateEmail(@Path("email")String email);
 

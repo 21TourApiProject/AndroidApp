@@ -85,6 +85,14 @@
                 android:layout_marginTop="100dp"
                 android:text="인증완료" />
 
+            <Button
+                android:id="@+id/skip_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나중에 하기"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 
