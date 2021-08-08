@@ -44,5 +44,4 @@ public interface MyPageRetrofitService {
     @DELETE("user/{userId}")
     Call<Void> deleteUser(@Path("userId") Long userId);
 
-
 }

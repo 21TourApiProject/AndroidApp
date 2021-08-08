@@ -170,13 +170,14 @@ public class PersonFragment extends Fragment {
             }
         });
 
+        //내 게시물 리사이클러 뷰
         myPostList = v.findViewById(R.id.myPostList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myPostList.setLayoutManager(layoutManager);
         myPostAdapter= new MyPostAdapter();
         myPostList.setAdapter(myPostAdapter);
 
-        //내 게시물
+        //내 게시물 불러오는 api
         Call<List<MyPost>> call3 = RetrofitClient.getApiService().getMyPost(userId);
         call3.enqueue(new Callback<List<MyPost>>() {
             @Override
@@ -201,6 +202,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
                 Toast.makeText(getActivity().getApplicationContext(), ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
+                //게시물 페이지 띄우기
             }
         });
 
@@ -220,7 +222,7 @@ public class PersonFragment extends Fragment {
         myTpWishList.setLayoutManager(layoutManager3);
 
 
-        //찜(게시물) 클릭
+        //찜(게시물) 버튼 클릭
         Button myPost = v.findViewById(R.id.myPost);
         myPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,7 +264,7 @@ public class PersonFragment extends Fragment {
         });
 
 
-//        //찜(관측지) 클릭
+//        //찜(관측지) 버튼 클릭
 //        Button myOb = v.findViewById(R.id.myOb);
 //        myOb.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -284,7 +286,7 @@ public class PersonFragment extends Fragment {
 //        });
 //
 //
-//        //찜(관광지) 클릭
+//        //찜(관광지) 버튼 클릭
 //        Button myTour = v.findViewById(R.id.myTour);
 //        myTour.setOnClickListener(new View.OnClickListener() {
 //            @Override
