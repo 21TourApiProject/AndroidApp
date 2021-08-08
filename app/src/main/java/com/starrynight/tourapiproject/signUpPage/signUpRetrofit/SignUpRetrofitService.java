@@ -4,6 +4,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -15,6 +16,9 @@ public interface SignUpRetrofitService {
 
     @POST("user/kakao")
     Call<Void> kakaoSignUp(@Body KakaoUserParams params);
+
+    @DELETE("user/nickName/{nickName}")
+    Call<Void> cancelSignUp(@Path("nickName")String nickName);
 
     @GET("user/duplicate/email/{email}")
     Call<Boolean> checkDuplicateEmail(@Path("email")String email);
