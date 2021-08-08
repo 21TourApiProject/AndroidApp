@@ -19,8 +19,8 @@ public interface SignUpRetrofitService {
     @GET("user/duplicate/mobilePhoneNumber/{mobilePhoneNumber}")
     Call<Boolean> checkDuplicateMobilePhoneNumber(@Path("mobilePhoneNumber")String mobilePhoneNumber);
 
-    @POST("myHashTag/{mobilePhoneNumber}")
-    Call<Long> createMyHashTag(@Path("mobilePhoneNumber")String mobilePhoneNumber, @Body List<MyHashTagParams> myHashTagParams);
+    @POST("myHashTag/{email}")
+    Call<Long> createMyHashTag(@Path("email")String email, @Body List<MyHashTagParams> myHashTagParams);
 
     @GET("user/login/{email}/{password}")
     Call<Long> logIn(@Path("email")String email, @Path("password")String password);
