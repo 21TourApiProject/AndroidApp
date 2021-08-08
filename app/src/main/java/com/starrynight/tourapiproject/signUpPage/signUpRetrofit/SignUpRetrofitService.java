@@ -14,6 +14,9 @@ public interface SignUpRetrofitService {
     @POST("user")
     Call<Void> signUp(@Body UserParams params);
 
+    @POST("user/kakao")
+    Call<Void> kakaoSignUp(@Body KakaoUserParams params);
+
     @DELETE("user/nickName/{nickName}")
     Call<Void> cancelSignUp(@Path("nickName")String nickName);
 
