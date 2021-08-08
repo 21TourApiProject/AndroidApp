@@ -37,6 +37,7 @@ public class LeavePopActivity extends AppCompatActivity {
 
     //탈퇴하기
     public void leave(View v){
+        //delete api 호출
         Call<Void> call = RetrofitClient.getApiService().deleteUser(userId);
         call.enqueue(new Callback<Void>() {
             @Override
