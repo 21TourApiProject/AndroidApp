@@ -26,15 +26,27 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PostWriteActivity extends AppCompatActivity {
 
@@ -45,7 +57,8 @@ public class PostWriteActivity extends AppCompatActivity {
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
     String postContent,observeFit,yearDate,time;
-    Bitmap postImage;
+    String postImage;
+    PostParams postParams;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -130,7 +143,19 @@ public class PostWriteActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear += 1;
-                datePicker.setText(year + "/" + monthOfYear + "/" + dayOfMonth);
+                String month = Integer.toString(monthOfYear);
+                String day = Integer.toString(dayOfMonth);
+
+                if (monthOfYear < 10){
+                    month = "0"+ Integer.toString(monthOfYear);
+                }
+
+                if(dayOfMonth < 10){
+                    day = "0"+ Integer.toString(dayOfMonth);
+                }
+               datePicker.setText(year + "-" + month + "-" + day);
+               yearDate = datePicker.getText().toString();
+
             }
         };
 
@@ -139,7 +164,8 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod2 = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timePicker.setText(hourOfDay + " : " + minute);
+                timePicker.setText(hourOfDay + ":" + minute+":" + "00" );
+                time = timePicker.getText().toString();
             }
         };
 
@@ -167,27 +193,41 @@ public class PostWriteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                if (numOfPicture == 0){
+                    Toast.makeText(getApplicationContext(), "사진을 추가해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 postContent= ((EditText)(findViewById(R.id.postContentText))).getText().toString();
                 if(postContent.isEmpty()){
                     Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                yearDate =((TextView)(findViewById(R.id.datePicker))).getText().toString();
                 if(yearDate.isEmpty()){
                     Toast.makeText(getApplicationContext(), "관측 날짜을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                time=((TextView)(findViewById(R.id.timePicker))).getText().toString();
                 if(time.isEmpty()){
                 Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 return;
                 }
+                Intent intent = getIntent();
+                postParams = new PostParams(postContent,observeFit,yearDate,time,1l);
+                postParams.setObserveFit("관광지");
+                Call<Void>call = RetrofitClient.getApiService().postup(postParams);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("post 성공");
+                        }else{ System.out.println("post 실패");}
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("post 실패");
+                    }
+                });
+
             }
-            Intent intent = getIntent();
-            PostHashTagParams postHashTagParams = (PostHashTagParams) intent.getSerializableExtra("PostHashTagParam");
-            PostParams postParams = (PostParams) intent.getSerializableExtra("oberveFit");
         });
     }
 
@@ -211,6 +251,8 @@ public class PostWriteActivity extends AppCompatActivity {
                     Bitmap img = resize(this, uri, 75);
                     System.out.println("img = " + img);
                     addImage(img);
+                    postImage = BitmapToFile(img,"postImage");
+                    System.out.println("file = "+postImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -239,6 +281,25 @@ public class PostWriteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //Bitmap을 File로 변경하는 함수
+    public String BitmapToFile(Bitmap bitmap, String image) {
+        File storage = getFilesDir();
+        String fileName = image + ".jpg";
+        File imgFile = new File(storage, fileName);
+        try {
+            imgFile.createNewFile();
+            FileOutputStream out = new FileOutputStream(imgFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
+        } catch (FileNotFoundException e) {
+            Log.e("saveBitmapToJpg", "FileNotFoundException: "+ e.getMessage());
+        } catch (IOException e) {
+            Log.e("saveBitmapToJpg", "IOException: "+ e.getMessage());
+        }
+        Log.d("imgPath", getFilesDir() + "/" + fileName);
+        //return imgFile;
+        return getFilesDir() + "/" + fileName;
+    }
+
     private void addImage(Bitmap img) {
         numOfPicture ++;
         addPicture.setText(Integer.toString(numOfPicture) + "/10");
@@ -259,6 +320,8 @@ public class PostWriteActivity extends AppCompatActivity {
                 System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(img, numOfPicture));
                 recyclerView.setAdapter(adapter);
+                postImage = BitmapToFile(img,"postImage");
+                System.out.println("file = "+postImage);
 
             } catch (Exception e) {
                 e.printStackTrace();

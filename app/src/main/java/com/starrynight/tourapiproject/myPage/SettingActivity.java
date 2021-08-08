@@ -10,11 +10,15 @@ import android.widget.TextView;
 import com.starrynight.tourapiproject.R;
 
 public class SettingActivity extends AppCompatActivity {
+    Long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        Intent intent = getIntent();
+        userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
 
         //내 정보
         TextView myData = findViewById(R.id.myData);
@@ -22,6 +26,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingActivity.this, MyDataActivity.class);
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });
@@ -82,6 +87,9 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //팝업으로 처리
+                Intent intent = new Intent(SettingActivity.this, LogoutPopActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
             }
         });
 
@@ -91,6 +99,9 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //팝업으로 처리
+                Intent intent = new Intent(SettingActivity.this, LeavePopActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
             }
         });
     }

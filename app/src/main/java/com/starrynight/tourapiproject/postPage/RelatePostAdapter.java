@@ -84,7 +84,7 @@ public class RelatePostAdapter extends RecyclerView.Adapter<RelatePostAdapter.Vi
 
         public void setItem(RelatePost item) {
             postTitle.setText(item.getTitle());
-            postThumbnail.setImageResource(item.getImg());
+            postThumbnail.setImageBitmap(item.getImg());
         }
     }
 
