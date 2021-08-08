@@ -207,7 +207,7 @@ public class PersonFragment extends Fragment {
         });
 
 
-        //찜 관련 리사이클러
+        //찜 관련 리사이클러(게시물, 관측지, 관광지)
         myPostWishList = v.findViewById(R.id.myPostWishList);
         myObWishList = v.findViewById(R.id.myObWishList);
         myTpWishList = v.findViewById(R.id.myTpWishList);
