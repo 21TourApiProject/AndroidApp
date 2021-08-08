@@ -40,7 +40,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
     private static final int GET_GALLERY_IMAGE = 0;
 
-    User user;
+    User2 user;
+    Long userId;
     String beforeNickName; //변경하기전 닉네임
     Boolean isProfileImageChange = false; //프로필 사진을 바꿨는지
     String updateProfileImage; //변경한 프로필 사진
@@ -58,17 +59,20 @@ public class ChangeProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_profile);
 
+        Intent intent = getIntent();
+        userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
+
         profileImage = findViewById(R.id.profileImage3);
         changeNickname = findViewById(R.id.changeNickname);
         changeNicknameGuide = findViewById(R.id.changeNicknameGuide);
 
-        Call<User> call = RetrofitClient.getApiService().getUser(1L);
-        call.enqueue(new Callback<User>() {
+        Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
+        call.enqueue(new Callback<User2>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-
+                    assert user != null;
                     if (user.getProfileImage() != null){
                         profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
                     }
@@ -79,7 +83,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<User2> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
             }
         });
@@ -132,7 +136,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
                     if(!beforeNickName.equals(changeNickname.getText().toString())){
                         //닉네임 변경 put api
-                        Call<Void> call = RetrofitClient.getApiService().updateNickName(user.getUserId(), changeNickname.getText().toString());
+                        Call<Void> call = RetrofitClient.getApiService().updateNickName(userId, changeNickname.getText().toString());
                         call.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -155,7 +159,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     //프로필 사진 변경 put api
                     if (isProfileImageChange){
                         User3 user3 = new User3(updateProfileImage);
-                        Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(user.getUserId(), user3);
+                        Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, user3);
                         call2.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call2, Response<Void> response) {

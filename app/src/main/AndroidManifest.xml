@@ -25,7 +25,7 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="2201411c61cc7086fe639ce660ccb21e" />
 
-        <activity android:name=".myPage.ChangePasswordActivity"></activity>
+        <activity android:name=".myPage.ChangePasswordActivity"/>
         <activity android:name=".myPage.PersonalDataActivity" />
         <activity android:name=".myPage.TermsAndConditionsActivity" />
         <activity android:name=".myPage.CustomerSCActivity" />
@@ -37,7 +37,10 @@
         <activity android:name=".signUpPage.FindEmailActivity" />
         <activity android:name=".signUpPage.SelectMyHashTagActivity" />
         <activity
-            android:name=".myPage.PersonpopActivity"
+            android:name=".myPage.LeavePopActivity"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".myPage.LogoutPopActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".signUpPage.PhoneAuthActivity" />
         <activity android:name=".signUpPage.GeneralSingUpActivity" />

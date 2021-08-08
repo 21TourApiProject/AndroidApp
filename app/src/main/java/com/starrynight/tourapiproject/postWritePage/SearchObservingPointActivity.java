@@ -44,7 +44,6 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), PostWriteActivity.class);
                 intent.putExtra("observeFit", postParam);
                 startActivity(intent);
-                finish();
             }
         });
 

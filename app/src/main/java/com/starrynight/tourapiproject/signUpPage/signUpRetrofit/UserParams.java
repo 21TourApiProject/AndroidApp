@@ -31,4 +31,7 @@ public class UserParams implements Serializable {
         this.mobilePhoneNumber = mobilePhoneNumber;
     }
 
+    public String getEmail() {
+        return email;
+    }
 }

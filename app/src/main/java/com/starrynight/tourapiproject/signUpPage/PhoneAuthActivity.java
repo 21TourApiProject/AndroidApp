@@ -185,7 +185,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
                                         //선호 해시태그 선택 창으로 전환
                                         Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
-                                        intent.putExtra("mobilePhoneNumber", mobilePhoneNumber.getText().toString());
+                                        intent.putExtra("email", userParams.getEmail());
                                         startActivity(intent);
                                     } else{
                                         System.out.println("회원가입 실패");
