@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +10,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kakao.auth.AuthType;
 import com.kakao.auth.Session;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,6 +59,22 @@ public class SignUpActivity extends AppCompatActivity {
                             if (result != -1L) {
                                 System.out.println("로그인 성공");
 
+                                //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
+                                String fileName = "userId";
+                                String userId = result.toString();
+                                try{
+                                    FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                                    fos.write(userId.getBytes());
+                                    fos.close();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
@@ -96,13 +124,66 @@ public class SignUpActivity extends AppCompatActivity {
 
         //카카오 회원가입
         ImageButton kakaoSignUp = findViewById(R.id.kakaoSignUp);
+
         session = Session.getCurrentSession();
         session.addCallback(sessionCallback);
-        kakaoSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        kakaoSignUp.setOnClickListener(v->{
+            if (Session.getCurrentSession().checkAndImplicitOpen()) {
+                Log.d("KakaoLogin", "onClick: 로그인 세션 살아있음");
+                //창이안뜸, 아직 로그인 세션 살아있음
+                Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
+                intent.putExtra("userParams", sessionCallback.requestMe());
+//                startActivity(intent);
+            } else {
+                Log.d("KakaoLogin", "로그인 세션 만료");
+                //카카오 로그인 창 뜸
+                session.open(AuthType.KAKAO_LOGIN_ALL, SignUpActivity.this);
 
             }
         });
+
+        Button logout = findViewById(R.id.logout_tmp);
+
+        logout.setOnClickListener(v -> {
+            Log.d("KakaoLogin", "onCreate:click ");
+            UserManagement.getInstance()
+                    .requestLogout(new LogoutResponseCallback() {
+                        @Override
+                        public void onSessionClosed(ErrorResult errorResult) {
+                            super.onSessionClosed(errorResult);
+                            Log.d("KakaoLogin", "onSessionClosed: "+errorResult.getErrorMessage());
+
+                        }
+                        @Override
+                        public void onCompleteLogout() {
+                            if (sessionCallback != null) {
+                                Session.getCurrentSession().removeCallback(sessionCallback);
+                            }
+                            Log.d("KakaoLogin", "onCompleteLogout:logout ");
+                        }
+                    });
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 세션 콜백 삭제
+        Session.getCurrentSession().removeCallback(sessionCallback);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // 카카오톡|스토리 간편로그인 실행 결과를 받아서 SDK로 전달
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
+            intent.putExtra("userParams", sessionCallback.requestMe());
+//            startActivity(intent);
+            return;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
