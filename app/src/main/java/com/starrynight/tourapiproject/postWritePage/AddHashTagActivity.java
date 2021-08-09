@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.starPage.StarActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,15 +31,11 @@ public class AddHashTagActivity extends AppCompatActivity {
     LinearLayout dynamicLayout2;
     int numOfHT = 0;
     String PostHashTags;
-    Long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hash_tag);
-        Intent intent = getIntent();
-        userId = (Long) intent.getSerializableExtra("userId");
-
         findHashTag = findViewById(R.id.findHashTag);
         dynamicLayout2 = (LinearLayout)findViewById(R.id.dynamicLayout2);
 
@@ -50,42 +47,15 @@ public class AddHashTagActivity extends AppCompatActivity {
                     addHashTag(findHashTag.getText().toString());
                 }
                 PostHashTags = ((TextView)(findViewById(R.id.findHashTag))).getText().toString();
-                PostHashTagParams postHashTagParam= new PostHashTagParams(userId,PostHashTags);
+                PostHashTagParams postHashTagParam= new PostHashTagParams();
+                postHashTagParam.setHashTagName(PostHashTags);
                 postHashTagParams.add(postHashTagParam);
-                Call<Void>call = RetrofitClient.getApiService().createPostHashTag(postHashTagParams);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        System.out.println("해시태그 추가");
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        System.out.println("해시태그 추가 실패");
-                    }
-                });
-                Intent intent1 = new Intent(getApplicationContext(), PostWriteActivity.class);
-                startActivity(intent1);
+                Intent intent = new Intent();
+                intent.putExtra("postHashTagParams",postHashTagParam);
+                setResult(3,intent);
                 finish();
             }
         });
-        Call <Void> call = RetrofitClient.getApiService().createPostHashTag(postHashTagParams);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()){
-                    System.out.println("post 성공");
-                }else{
-                    System.out.println("post 실패");
-                }
-
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("로그 실패",t.getMessage());
-            }
-        });
-
     }
 
     private void addHashTag(String data) {
