@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 public class PostParams implements Serializable {
     private String postContent;
 
-    private String observeFit;
-
     private String yearDate;
 
     private String time;
 
     private Long userId;
+
+    private Long postObservePointId;
 
     public PostParams(){}
 
@@ -34,16 +34,16 @@ public class PostParams implements Serializable {
         return userId;
     }
 
-    public String getObserveFit() {
-        return observeFit;
+    public Long getPostObservePointId() {
+        return postObservePointId;
     }
 
-    public PostParams(String postContent, String observeFit, String yearDate, String time,Long userId) {
+    public PostParams(String postContent, String yearDate, String time, Long userId, Long postObservePointId) {
         this.postContent = postContent;
-        this.observeFit = observeFit;
         this.yearDate = yearDate;
         this.time = time;
         this.userId = userId;
+        this.postObservePointId = postObservePointId;
     }
 
     public void setPostContent(String postContent) {
@@ -58,11 +58,11 @@ public class PostParams implements Serializable {
         this.time = time;
     }
 
-    public void setObserveFit(String observeFit) {
-        this.observeFit = observeFit;
-    }
-
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public void setPostObservePointId(Long postObservePointId) {
+        this.postObservePointId = postObservePointId;
     }
 }
