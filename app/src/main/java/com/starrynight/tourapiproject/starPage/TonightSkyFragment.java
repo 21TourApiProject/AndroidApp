@@ -5,20 +5,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.ortiz.touchview.TouchImageView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
 public class TonightSkyFragment extends Fragment {
+
+    //    private BottomAppBar bottomAppBar;
+    private LinearLayout bottomSheet;
+    private BottomSheetBehavior bottomSheetBehavior;
+
+    private EditText editText;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,8 +36,26 @@ public class TonightSkyFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tonight_sky, container, false);
 
+        // bottomSheet 설정
+        editText = v.findViewById(R.id.edit_search);
+        editText.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        editText.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        bottomSheetBehavior.setPeekHeight(editText.getBottom()+ 50);
+                    }
+                }
+        );
 
-        ImageButton backBtn =(ImageButton) v.findViewById(R.id.star_back_btn);
+        bottomSheet = v.findViewById(R.id.bottom_sheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
+        bottomSheetBehavior.setPeekHeight(editText.getBottom());
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+
+        ImageButton backBtn =(ImageButton) v.findViewById(R.id.star_bacK_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
