@@ -198,7 +198,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 Intent intent = new Intent(getApplicationContext(), PhoneAuthActivity.class);
                 intent.putExtra("userParams", userParams);
                 startActivity(intent);
-
             }
         });
     }
