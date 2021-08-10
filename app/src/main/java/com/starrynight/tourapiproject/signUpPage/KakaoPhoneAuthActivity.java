@@ -35,7 +35,8 @@ import retrofit2.Response;
 
 public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "PhoneAuthActivity";
+    private static final int SELECT_HASH_TAG = 0;
+    private static final String TAG = "KakaoPhoneAuthActivity";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
 
     private FirebaseAuth mAuth;
@@ -61,6 +62,10 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
+
+        Intent intent = getIntent();
+        kakaoUserParams = (KakaoUserParams) intent.getSerializableExtra("userParams");
+
         Button skip_btn = findViewById(R.id.skip_btn);
         skip_btn.setVisibility(View.VISIBLE);
         skip_btn.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +81,8 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
 
                             //선호 해시태그 선택 창으로 전환
                             Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
-//                            intent.putExtra("mobilePhoneNumber", mobilePhoneNumber.getText().toString());
-                            startActivity(intent);
+                            intent.putExtra("email", kakaoUserParams.getEmail());
+                            startActivityForResult(intent, SELECT_HASH_TAG);
                         } else{
                             System.out.println("회원가입 실패");
                         }
@@ -93,8 +98,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
             onRestoreInstanceState(savedInstanceState);
         }
 
-        Intent intent = getIntent();
-        kakaoUserParams = (KakaoUserParams) intent.getSerializableExtra("userParams");
+
 
         mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber); //전화번호
         authCode = findViewById(R.id.authCode); //인증코드
@@ -213,8 +217,8 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
 
                                         //선호 해시태그 선택 창으로 전환
                                         Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
-                                        intent.putExtra("mobilePhoneNumber", mobilePhoneNumber.getText().toString());
-                                        startActivity(intent);
+                                        intent.putExtra("email", kakaoUserParams.getEmail());
+                                        startActivityForResult(intent, SELECT_HASH_TAG);
                                     } else{
                                         System.out.println("회원가입 실패");
                                     }
