@@ -51,7 +51,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                 postHashTagParam.setHashTagName(PostHashTags);
                 postHashTagParams.add(postHashTagParam);
                 Intent intent = new Intent();
-                intent.putExtra("postHashTagParams",postHashTagParam);
+                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
                 setResult(3,intent);
                 finish();
             }

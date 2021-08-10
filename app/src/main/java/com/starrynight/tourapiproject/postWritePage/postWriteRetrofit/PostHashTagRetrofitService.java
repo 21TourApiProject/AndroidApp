@@ -13,8 +13,8 @@ import retrofit2.http.Path;
 
 public interface PostHashTagRetrofitService {
 
-    @POST("post")
-    Call<Void> postup(@Body PostParams params);
+    @POST("post/{observePointName}")
+    Call<Void> postup(@Path("observePointName")String observePointName,@Body PostParams params);
 
     @GET ("post/write/{postImage}")
     Call <Bitmap> addImage(@Path("postImage")String postImage);
