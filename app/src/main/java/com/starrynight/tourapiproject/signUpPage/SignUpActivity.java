@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.signUpPage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kakao.auth.AuthType;
+import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 
 import androidx.annotation.Nullable;
@@ -20,8 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.MeV2ResponseCallback;
+import com.kakao.usermgmt.response.MeV2Response;
+import com.kakao.usermgmt.response.model.Gender;
+import com.kakao.usermgmt.response.model.Profile;
+import com.kakao.usermgmt.response.model.UserAccount;
+import com.kakao.util.OptionalBoolean;
+import com.kakao.util.exception.KakaoException;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.KakaoUserParams;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
 
 import java.io.FileNotFoundException;
@@ -34,8 +44,9 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private static final String TAG2 = "KakaoLoginApi";
     private SessionCallback sessionCallback = new SessionCallback();
-    Session session;
+    KakaoUserParams kakaoUserParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
                                 String fileName = "userId";
                                 String userId = result.toString();
-                                try{
+                                try {
                                     FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
                                     fos.write(userId.getBytes());
                                     fos.close();
@@ -123,27 +134,35 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
         //카카오 회원가입
+
+        Session session;
         ImageButton kakaoSignUp = findViewById(R.id.kakaoSignUp);
+
 
         session = Session.getCurrentSession();
         session.addCallback(sessionCallback);
-        kakaoSignUp.setOnClickListener(v->{
+        kakaoSignUp.setOnClickListener(v -> {
             if (Session.getCurrentSession().checkAndImplicitOpen()) {
                 Log.d("KakaoLogin", "onClick: 로그인 세션 살아있음");
                 //창이안뜸, 아직 로그인 세션 살아있음
-                Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
-                intent.putExtra("userParams", sessionCallback.requestMe());
-//                startActivity(intent);
+                //회원가입 안함
+                sessionCallback.requestMe();
             } else {
                 Log.d("KakaoLogin", "로그인 세션 만료");
                 //카카오 로그인 창 뜸
                 session.open(AuthType.KAKAO_LOGIN_ALL, SignUpActivity.this);
 
+                KakaoLoginAsyncTask task = new KakaoLoginAsyncTask(SignUpActivity.this);
+                task.execute();
+//                kakaoUserParams = sessionCallback.requestMe();
+//                Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
+//                intent.putExtra("userParams", kakaoUserParams);
+//                startActivity(intent);
             }
         });
 
-        Button logout = findViewById(R.id.logout_tmp);
 
+        Button logout = findViewById(R.id.logout_tmp);
         logout.setOnClickListener(v -> {
             Log.d("KakaoLogin", "onCreate:click ");
             UserManagement.getInstance()
@@ -151,9 +170,10 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onSessionClosed(ErrorResult errorResult) {
                             super.onSessionClosed(errorResult);
-                            Log.d("KakaoLogin", "onSessionClosed: "+errorResult.getErrorMessage());
+                            Log.d("KakaoLogin", "onSessionClosed: " + errorResult.getErrorMessage());
 
                         }
+
                         @Override
                         public void onCompleteLogout() {
                             if (sessionCallback != null) {
@@ -178,12 +198,164 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // 카카오톡|스토리 간편로그인 실행 결과를 받아서 SDK로 전달
         if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
-            Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
-            intent.putExtra("userParams", sessionCallback.requestMe());
-//            startActivity(intent);
             return;
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    private class KakaoLoginAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+
+        public KakaoLoginAsyncTask(Context context) {
+            mContext = context.getApplicationContext();
+        }
+
+        @Override
+        protected void onPreExecute(){
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+
+            while (!Session.getCurrentSession().checkAndImplicitOpen()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return (Session.getCurrentSession().checkAndImplicitOpen());
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            sessionCallback.requestMe();
+        }
+    }
+
+
+    public class SessionCallback implements ISessionCallback {
+
+        private static final String TAG = "KakaoLoginApi";
+
+        //로그인 성공
+        @Override
+        public void onSessionOpened() {
+            Log.d(TAG, "session is opened. call request");
+            requestMe();
+        }
+
+
+        //로그인 실패
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            Log.e("SessionCallback :: ", "onSessionOpenFailed : " + exception.getMessage());
+        }
+        public void requestMe() {
+            kakaoUserParams = new KakaoUserParams();
+            UserManagement.getInstance().me(new MeV2ResponseCallback() {
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+                    Log.e(TAG2, "세션이 닫혀 있음: " + errorResult);
+                }
+
+                @Override
+                public void onFailure(ErrorResult errorResult) {
+                    Log.e(TAG2, "사용자 정보 요청 실패: " + errorResult);
+                }
+
+                @Override
+                public void onSuccess(MeV2Response result) {
+                    Log.i(TAG2, "사용자 아이디: " + result.getId());
+                    String id = String.valueOf(result.getId());
+                    UserAccount kakaoAccount = result.getKakaoAccount();
+                    if (kakaoAccount != null) {
+
+                        // 이메일
+                        String email = kakaoAccount.getEmail();
+                        if (email != null) {
+                            Log.d(TAG2, "onSuccess:getEmail " + email);
+                            kakaoUserParams.setEmail(email);
+                        } else {
+                            Log.d(TAG2, "onSuccess:email null ");
+                        }
+                        if (kakaoAccount.getAgeRange() != null) {
+                            Log.d(TAG2, "onSuccess:get ageRange " + kakaoAccount.getAgeRange());
+                            kakaoUserParams.setAgeRange(kakaoAccount.getAgeRange().toString());
+                        }
+                        if (kakaoAccount.getBirthday() != null) {
+                            Log.d(TAG2, "onSuccess:get Birthday " + kakaoAccount.getBirthday());
+                            kakaoUserParams.setBirthDay(kakaoAccount.getBirthday());
+                        }
+                        if (kakaoAccount.getGender()!=null) {
+                            Log.d(TAG2, "onSuccess:get Gender " + kakaoAccount.getGender());
+                            if(kakaoAccount.getGender()== Gender.FEMALE)
+                                kakaoUserParams.setSex(true);
+                            else if (kakaoAccount.getGender()== Gender.MALE)
+                                kakaoUserParams.setSex(false);
+                        }
+
+                        Profile profile = kakaoAccount.getProfile();
+                        if (profile ==null){
+                            Log.d(TAG2, "onSuccess:profile null ");
+                        }else{
+                            Log.d(TAG2, "onSuccess:getProfileImageUrl "+profile.getProfileImageUrl());
+                            kakaoUserParams.setProfileImage(profile.getProfileImageUrl());
+                            Log.d(TAG2, "onSuccess:getNickname "+profile.getNickname());
+                            kakaoUserParams.setNickName(profile.getNickname());
+                        }
+                        if (email != null) {
+
+                            Log.d(TAG2, "onSuccess:email " + email);
+                        } else {
+                            Log.d(TAG2, "onSuccess:email null ");
+                        }
+
+                        // 프로필
+                        Profile _profile = kakaoAccount.getProfile();
+
+                        if (_profile != null) {
+
+                            Log.d(TAG2, "nickname: " + _profile.getNickname());
+                            kakaoUserParams.setNickName(profile.getNickname());
+                            Log.d(TAG2, "profile image: " + _profile.getProfileImageUrl());
+                            kakaoUserParams.setProfileImage(profile.getProfileImageUrl());
+                            Log.d(TAG2, "thumbnail image: " + _profile.getThumbnailImageUrl());
+
+
+                        } else if (kakaoAccount.profileNeedsAgreement() == OptionalBoolean.TRUE) {
+                            // 동의 요청 후 프로필 정보 획득 가능
+
+                        } else {
+                            // 프로필 획득 불가
+                        }
+                    }else{
+                        Log.i(TAG2, "onSuccess: kakaoAccount null");
+                    }
+                    Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
+                    intent.putExtra("userParams", kakaoUserParams);
+                    startActivity(intent);
+
+//                Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(kakaoUserParams);
+//                call.enqueue(new Callback<Void>() {
+//                    @Override
+//                    public void onResponse(Call<Void> call, Response<Void> response) {
+//                        if(response.isSuccessful()){
+//                            System.out.println("회원가입 성공");
+//                        } else{
+//                            System.out.println("회원가입 실패");
+//                        }
+//                    }
+//                    @Override
+//                    public void onFailure(Call<Void> call, Throwable t) {
+//                        Log.e("연결실패", t.getMessage());
+//                    }
+//                });
+                }
+            });
+        }
+    }
+
+
 }
