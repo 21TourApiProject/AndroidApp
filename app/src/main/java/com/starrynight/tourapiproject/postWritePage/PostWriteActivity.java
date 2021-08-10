@@ -51,10 +51,12 @@ public class PostWriteActivity extends AppCompatActivity {
     private Button addPicture;
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
-    String postContent="",observePoint,yearDate,time;
+    String postContent="",yearDate,time;
     String postImage;
-    PostHashTagParams postHashTagParams;
+    List<PostHashTagParams>postHashTagParams = new ArrayList<>();
     PostObservePointParams postObservePointParams;
+    String postObservePointName;
+    Long postObservePointId;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -206,8 +208,13 @@ public class PostWriteActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 return;
                 }
-                PostParams postParams = new PostParams(postContent,yearDate,time,1L,1L);
-                Call<Void>call = RetrofitClient.getApiService().postup(postParams);
+                PostParams postParams = new PostParams();
+                postParams.setPostContent(postContent);
+                postParams.setYearDate(yearDate);
+                postParams.setTime(time);
+                postParams.setUserId(1L);
+                postObservePointName = postObservePointParams.getObservePointName();
+                Call<Void>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -220,20 +227,6 @@ public class PostWriteActivity extends AppCompatActivity {
                         System.out.println("post2 실패");
                     }
                 });
-                postObservePointParams.setPostId(1L);
-                Call<Void>call2 = RetrofitClient.getApiService().createPostObservePoint(postObservePointParams);
-                call2.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){System.out.println("관측지 성공");}
-                        else{System.out.println("관측지 실패");}
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        System.out.println("관측지 실패 2");
-                    }
-                });
             }
         });
     }
@@ -244,12 +237,27 @@ public class PostWriteActivity extends AppCompatActivity {
             if(resultCode == 2){
                 System.out.println("관측지가 넘어왔당");
                 postObservePointParams = (PostObservePointParams)data.getSerializableExtra("postObservePointParams");
+                Call<Void>call2 = RetrofitClient.getApiService().createPostObservePoint(postObservePointParams);
+                call2.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("관측지 생성 성공");
+                        }
+                        else{System.out.println("관측지 실패");}
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("관측지 실패 2");
+                    }
+                });
             }else{System.out.println("관측지가 안 넘어왔당");}
         }
         if(requestCode == 203){
             if(resultCode == 3){
                 System.out.println("해시태그가 넘어왔당");
-                postHashTagParams = (PostHashTagParams)data.getSerializableExtra("postHashTagParams");
+                postHashTagParams = (List<PostHashTagParams>) data.getSerializableExtra("postHashTagParams");
             }else{System.out.println("해시태그가 안 넘어왔당");}
         }
         if (resultCode != RESULT_OK || data == null) {
