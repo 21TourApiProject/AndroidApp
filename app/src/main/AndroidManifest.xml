@@ -43,6 +43,7 @@
             android:name=".myPage.LogoutPopActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".signUpPage.PhoneAuthActivity" />
+        <activity android:name=".signUpPage.KakaoPhoneAuthActivity" />
         <activity android:name=".signUpPage.GeneralSingUpActivity" />
         <activity android:name=".signUpPage.SignUpActivity" />
         <activity android:name=".starPage.StarActivity" />
