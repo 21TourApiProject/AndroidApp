@@ -11,7 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import androidx.core.content.ContextCompat;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,20 +26,15 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postPage.PostActivity;
-import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
-import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
-import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -56,9 +51,12 @@ public class PostWriteActivity extends AppCompatActivity {
     private Button addPicture;
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
-    String postContent,observeFit,yearDate,time;
+    String postContent="",yearDate,time;
     String postImage;
-    PostParams postParams;
+    List<PostHashTagParams>postHashTagParams = new ArrayList<>();
+    PostObservePointParams postObservePointParams;
+    String postObservePointName;
+    Long postObservePointId;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -174,7 +172,7 @@ public class PostWriteActivity extends AppCompatActivity {
         observingPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchObservingPointActivity.class);
+                Intent intent = new Intent(PostWriteActivity.this, SearchObservingPointActivity.class);
                 startActivityForResult(intent, 202);
             }
         });
@@ -184,7 +182,7 @@ public class PostWriteActivity extends AppCompatActivity {
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddHashTagActivity.class);
+                Intent intent = new Intent(PostWriteActivity.this, AddHashTagActivity.class);
                 startActivityForResult(intent, 203);
             }
         });
@@ -193,13 +191,13 @@ public class PostWriteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (numOfPicture == 0){
-                    Toast.makeText(getApplicationContext(), "사진을 추가해주세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                postContent= ((EditText)(findViewById(R.id.postContentText))).getText().toString();
+                postContent = ((EditText)(findViewById(R.id.postContentText))).getText().toString();
                 if(postContent.isEmpty()){
                     Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }else{System.out.println(postContent);}
+                if (numOfPicture == 0){
+                    Toast.makeText(getApplicationContext(), "사진을 추가해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(yearDate.isEmpty()){
@@ -210,10 +208,13 @@ public class PostWriteActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 return;
                 }
-                Intent intent = getIntent();
-                postParams = new PostParams(postContent,observeFit,yearDate,time,1l);
-                postParams.setObserveFit("관광지");
-                Call<Void>call = RetrofitClient.getApiService().postup(postParams);
+                PostParams postParams = new PostParams();
+                postParams.setPostContent(postContent);
+                postParams.setYearDate(yearDate);
+                postParams.setTime(time);
+                postParams.setUserId(1L);
+                postObservePointName = postObservePointParams.getObservePointName();
+                Call<Void>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -223,16 +224,42 @@ public class PostWriteActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
-                        System.out.println("post 실패");
+                        System.out.println("post2 실패");
                     }
                 });
-
             }
         });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 202){
+            if(resultCode == 2){
+                System.out.println("관측지가 넘어왔당");
+                postObservePointParams = (PostObservePointParams)data.getSerializableExtra("postObservePointParams");
+                Call<Void>call2 = RetrofitClient.getApiService().createPostObservePoint(postObservePointParams);
+                call2.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("관측지 생성 성공");
+                        }
+                        else{System.out.println("관측지 실패");}
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("관측지 실패 2");
+                    }
+                });
+            }else{System.out.println("관측지가 안 넘어왔당");}
+        }
+        if(requestCode == 203){
+            if(resultCode == 3){
+                System.out.println("해시태그가 넘어왔당");
+                postHashTagParams = (List<PostHashTagParams>) data.getSerializableExtra("postHashTagParams");
+            }else{System.out.println("해시태그가 안 넘어왔당");}
+        }
         if (resultCode != RESULT_OK || data == null) {
             return;
         }

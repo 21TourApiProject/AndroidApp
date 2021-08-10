@@ -12,16 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
-import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
-
-import java.io.Serializable;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
 
 public class SearchObservingPointActivity extends AppCompatActivity {
     TextView findObservePoint;
     LinearLayout dynamicLayout;
     int numOfOP = 0;
-    String observeFit;
+    String observePoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +35,13 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 if (findObservePoint != null){
                     addObservePoint(findObservePoint.getText().toString());
                 }
-                observeFit = ((TextView)(findViewById(R.id.findObservePoint))).getText().toString();
-                PostParams postParam = new PostParams();
-                postParam.setObserveFit(observeFit);
-                Intent intent = new Intent(getApplicationContext(), PostWriteActivity.class);
-                intent.putExtra("observeFit", postParam);
-                startActivity(intent);
+                observePoint = ((TextView)(findViewById(R.id.findObservePoint))).getText().toString();
+                PostObservePointParams postObservePointParams = new PostObservePointParams();
+                postObservePointParams.setObservePointName(observePoint);
+                Intent intent = new Intent();
+                intent.putExtra("postObservePointParams", postObservePointParams);
+                setResult(2,intent);
+                finish();
             }
         });
 
