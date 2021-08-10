@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,13 +13,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kakao.auth.AuthType;
-import com.kakao.auth.ISessionCallback;
-import com.kakao.auth.Session;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kakao.auth.AuthType;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -204,6 +204,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private class KakaoLoginAsyncTask extends AsyncTask<String, Long, Boolean> {
         private Context mContext = null;
+        ProgressDialog asyncDialog = new ProgressDialog(SignUpActivity.this);
 
         public KakaoLoginAsyncTask(Context context) {
             mContext = context.getApplicationContext();
@@ -211,7 +212,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute(){
-
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("기다려주세요");
+            asyncDialog.show();
+            super.onPreExecute();
         }
 
         @Override
@@ -229,6 +233,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            asyncDialog.dismiss();
             sessionCallback.requestMe();
         }
     }

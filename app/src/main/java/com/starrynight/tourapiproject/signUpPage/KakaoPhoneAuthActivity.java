@@ -30,7 +30,6 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.KakaoUserParams;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
 import java.util.concurrent.TimeUnit;
 
