@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -12,13 +13,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kakao.auth.AuthType;
-import com.kakao.auth.ISessionCallback;
-import com.kakao.auth.Session;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kakao.auth.AuthType;
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
@@ -146,7 +146,6 @@ public class SignUpActivity extends AppCompatActivity {
                 Log.d("KakaoLogin", "onClick: 로그인 세션 살아있음");
                 //창이안뜸, 아직 로그인 세션 살아있음
                 //회원가입 안함
-                sessionCallback.requestMe();
             } else {
                 Log.d("KakaoLogin", "로그인 세션 만료");
                 //카카오 로그인 창 뜸
@@ -205,6 +204,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private class KakaoLoginAsyncTask extends AsyncTask<String, Long, Boolean> {
         private Context mContext = null;
+        ProgressDialog asyncDialog = new ProgressDialog(SignUpActivity.this);
 
         public KakaoLoginAsyncTask(Context context) {
             mContext = context.getApplicationContext();
@@ -212,7 +212,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute(){
-
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("기다려주세요");
+            asyncDialog.show();
+            super.onPreExecute();
         }
 
         @Override
@@ -220,7 +223,7 @@ public class SignUpActivity extends AppCompatActivity {
 
             while (!Session.getCurrentSession().checkAndImplicitOpen()) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -230,6 +233,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            asyncDialog.dismiss();
             sessionCallback.requestMe();
         }
     }
@@ -333,25 +337,33 @@ public class SignUpActivity extends AppCompatActivity {
                     }else{
                         Log.i(TAG2, "onSuccess: kakaoAccount null");
                     }
-                    Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
-                    intent.putExtra("userParams", kakaoUserParams);
-                    startActivity(intent);
 
-//                Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(kakaoUserParams);
-//                call.enqueue(new Callback<Void>() {
-//                    @Override
-//                    public void onResponse(Call<Void> call, Response<Void> response) {
-//                        if(response.isSuccessful()){
-//                            System.out.println("회원가입 성공");
-//                        } else{
-//                            System.out.println("회원가입 실패");
-//                        }
-//                    }
-//                    @Override
-//                    public void onFailure(Call<Void> call, Throwable t) {
-//                        Log.e("연결실패", t.getMessage());
-//                    }
-//                });
+                    Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateEmail(kakaoUserParams.getEmail()) ;
+                    call.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if (response.isSuccessful()) {
+                                Boolean result = response.body();
+                                if (result) {
+                                    Log.d(TAG2, "회원가입 진행");
+                                    Intent intent = new Intent(SignUpActivity.this, KakaoPhoneAuthActivity.class);
+                                    intent.putExtra("userParams", kakaoUserParams);
+                                    startActivity(intent);
+                                } else if (!result) {
+                                    Log.d(TAG2, "회원가입 미진행, 이미가입된 이메일");
+                                }
+                            } else {
+                                Log.e(TAG2, "이메일 중복 체크 실패");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+
+
                 }
             });
         }
