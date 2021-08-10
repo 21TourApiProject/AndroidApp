@@ -40,14 +40,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/star_bacK_btn"
+            android:id="@+id/star_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/star__back_btn"
             android:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="@id/compass"
-            app:layout_constraintTop_toBottomOf="@id/compass"/>
+            app:layout_constraintTop_toBottomOf="@id/compass" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,6 +74,17 @@
             android:layout_marginTop="15dp"
             android:background="@color/purple_500" />
 
+        <include
+            layout="@layout/star__weather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+
+        <include
+            layout="@layout/star__today_cel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
     </LinearLayout>
 
