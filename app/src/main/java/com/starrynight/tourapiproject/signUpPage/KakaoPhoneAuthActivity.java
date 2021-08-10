@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "PhoneAuthActivity";
+    private static final String TAG = "KakaoPhoneAuthActivity";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int SELECT_HASH_TAG = 0;
 
