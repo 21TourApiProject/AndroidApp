@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.myPage.myWish.post;
+package com.starrynight.tourapiproject.myPage.myPost;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -15,22 +15,22 @@ import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
 
-public class MyPostWishAdapter extends RecyclerView.Adapter<MyPostWishAdapter.ViewHolder>{
-    ArrayList<MyPostWish> items = new ArrayList<MyPostWish>();
-    OnMyPostWishItemClickListener listener;
+public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder>{
+    ArrayList<MyPost> items = new ArrayList<MyPost>();
+    OnMyPostItemClickListener listener;
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public MyPostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.custom_my_item, viewGroup, false);
 
-        return new ViewHolder(itemView, listener);
+        return new MyPostAdapter.ViewHolder(itemView, listener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        MyPostWish item = items.get(position);
+    public void onBindViewHolder(@NonNull MyPostAdapter.ViewHolder viewHolder, int position) {
+        MyPost item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -40,23 +40,23 @@ public class MyPostWishAdapter extends RecyclerView.Adapter<MyPostWishAdapter.Vi
     }
 
 
-    public void addItem(MyPostWish item) {
+    public void addItem(MyPost item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<MyPostWish> items) {
+    public void setItems(ArrayList<MyPost> items) {
         this.items = items;
     }
 
-    public MyPostWish getItem(int position) {
+    public MyPost getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, MyPostWish item) {
+    public void setItem(int position, MyPost item) {
         items.set(position, item);
     }
 
-    public void setOnMyPostWishItemClickListener(OnMyPostWishItemClickListener listener){
+    public void setOnMyPostItemClickListener(OnMyPostItemClickListener listener){
         this.listener = listener;
     }
 
@@ -65,7 +65,7 @@ public class MyPostWishAdapter extends RecyclerView.Adapter<MyPostWishAdapter.Vi
         TextView title;
         LinearLayout layout;
 
-        public ViewHolder(View itemView, final OnMyPostWishItemClickListener listener) {
+        public ViewHolder(View itemView, final OnMyPostItemClickListener listener) {
             super(itemView);
 
             thumbnail = itemView.findViewById(R.id.myThumbnail);
@@ -78,13 +78,13 @@ public class MyPostWishAdapter extends RecyclerView.Adapter<MyPostWishAdapter.Vi
                     int position = getAdapterPosition();
 
                     if (listener != null){
-                        listener.onItemClick(MyPostWishAdapter.ViewHolder.this, view, position);
+                        listener.onItemClick(MyPostAdapter.ViewHolder.this, view, position);
                     }
                 }
             });
         }
 
-        public void setItem(MyPostWish item) {
+        public void setItem(MyPost item) {
             //thumbnail.setImageBitmap(decodeFile(item.getThumbnail()));
             thumbnail.setBackgroundColor(Color.BLUE);
             title.setText(item.getTitle());
