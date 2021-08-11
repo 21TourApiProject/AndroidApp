@@ -20,7 +20,7 @@
         android:theme="@style/Theme.TourapiProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".starPage.StarFullActivity"></activity>
+        <activity android:name=".starPage.StarAllActivity"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
