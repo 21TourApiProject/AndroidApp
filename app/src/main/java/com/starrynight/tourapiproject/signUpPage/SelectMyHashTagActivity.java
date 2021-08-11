@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class SelectMyHashTagActivity extends AppCompatActivity {
     List<MyHashTagParams> myHashTagParams = new ArrayList<>();
-    String mobilePhoneNumber;
+    String email;
     String[] clicked = new String[22];
 
     @Override
@@ -43,7 +43,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_my_hash_tag);
 
         Intent intent = getIntent();
-        mobilePhoneNumber = (String) intent.getSerializableExtra("mobilePhoneNumber"); //전 페이지에서 받아온 사용자 전화번호
+        email = (String) intent.getSerializableExtra("email"); //전 페이지에서 받아온 사용자 이메일
 
         for(int i=0; i<22; i++){
             clicked[i]="";
@@ -62,7 +62,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                     }
                 }
                 //선호 해시태그 입력을 위한 post api
-                Call<Long> call = RetrofitClient.getApiService().createMyHashTag(mobilePhoneNumber, myHashTagParams);
+                Call<Long> call = RetrofitClient.getApiService().createMyHashTag(email, myHashTagParams);
                 call.enqueue(new Callback<Long>() {
                     @Override
                     public void onResponse(Call<Long> call, Response<Long> response) {

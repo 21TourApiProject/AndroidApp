@@ -28,8 +28,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.KakaoUserParams;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,9 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhoneAuthActivity extends AppCompatActivity implements
+public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "PhoneAuthActivity";
+    private static final String TAG = "KakaoPhoneAuthActivity";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int SELECT_HASH_TAG = 0;
 
@@ -59,7 +59,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
     String testPhoneNum = "+16505553333";
 
-    UserParams userParams;
+    KakaoUserParams userParams;
     private Boolean isSend = false;
 
     String phoneNumber;
@@ -71,12 +71,42 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
+
+        Button skip_btn = findViewById(R.id.skip_btn);
+        skip_btn.setVisibility(View.VISIBLE);
+        skip_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("회원가입 성공");
+                            signOut();
+
+                            //선호 해시태그 선택 창으로 전환
+                            Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
+                            intent.putExtra("email", userParams.getEmail());
+                            startActivityForResult(intent, SELECT_HASH_TAG);
+                        } else{
+                            System.out.println("회원가입 실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
+            }
+        });
+
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
 
         Intent intent = getIntent();
-        userParams = (UserParams) intent.getSerializableExtra("userParams");
+        userParams = (KakaoUserParams) intent.getSerializableExtra("userParams");
 
         mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber); //전화번호
         phoneGuide = findViewById(R.id.phoneGuide);
@@ -255,7 +285,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
 
                            //회원가입을 위한 post api
                            userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
-                            Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
+                            Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
                             call.enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
@@ -264,7 +294,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         signOut();
 
                                         //선호 해시태그 선택 창으로 전환
-                                        Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
+                                        Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
                                         intent.putExtra("email", userParams.getEmail());
                                         startActivityForResult(intent, SELECT_HASH_TAG);
                                     } else{
