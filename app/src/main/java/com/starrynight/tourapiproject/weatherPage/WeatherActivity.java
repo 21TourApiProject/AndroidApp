@@ -193,7 +193,7 @@ public class WeatherActivity extends AppCompatActivity {
         public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
             if (response.isSuccessful()) {
                 WtMetModel data = response.body();
-                TextView textView = findViewById(R.id.wt_cloud_info);
+                TextView textView = findViewById(R.id.wt_cloud);
                 //textView.setText(data.getResponse().getBody().getTotalCount());
                 Log.d("My Tag", "response= " + response.raw().request().url().url());
             }
@@ -213,7 +213,7 @@ public class WeatherActivity extends AppCompatActivity {
         public void onResponse(Call<WtAppearTimeModel> call, Response<WtAppearTimeModel> response) {
             if (response.isSuccessful()) {
                 WtAppearTimeModel data = response.body();
-                TextView textView1 = findViewById(R.id.wt_cloud_info);
+                TextView textView1 = findViewById(R.id.wt_cloud);
                 textView1.setText(data.getResponse().getBody().getTotalCount());
                 Log.d("AppearTime", "response= " + response.raw().request().url().url());
             }
