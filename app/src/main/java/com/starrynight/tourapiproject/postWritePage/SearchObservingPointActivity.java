@@ -2,6 +2,8 @@ package com.starrynight.tourapiproject.postWritePage;
 
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -10,11 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
 
 public class SearchObservingPointActivity extends AppCompatActivity {
     TextView findObservePoint;
     LinearLayout dynamicLayout;
     int numOfOP = 0;
+    String observePoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,16 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 if (findObservePoint != null){
                     addObservePoint(findObservePoint.getText().toString());
                 }
+                observePoint = ((TextView)(findViewById(R.id.findObservePoint))).getText().toString();
+                PostObservePointParams postObservePointParams = new PostObservePointParams();
+                postObservePointParams.setObservePointName(observePoint);
+                Intent intent = new Intent();
+                intent.putExtra("postObservePointParams", postObservePointParams);
+                setResult(2,intent);
+                finish();
             }
         });
+
     }
 
     public void addObservePoint(String data) {

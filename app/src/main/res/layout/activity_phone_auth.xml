@@ -54,7 +54,20 @@
                     android:layout_weight="3"
                     android:text="인증요청" />
 
+                <Button
+                    android:id="@+id/resendAuth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:visibility="gone"
+                    android:text="인증 재요청" />
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/phoneGuide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -62,27 +75,13 @@
                 android:layout_marginTop="30dp"
                 android:text="인증 번호" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <EditText
-                    android:id="@+id/authCode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="숫자 6자리"
-                    android:inputType="number" />
-
-                <Button
-                    android:id="@+id/resendAuth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:background="@null"
-                    android:text="인증 번호 재전송" />
-
-            </LinearLayout>
+            <EditText
+                android:id="@+id/authCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="숫자 6자리"
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/verify"
@@ -91,6 +90,14 @@
                 android:layout_marginTop="100dp"
                 android:text="인증완료" />
 
+            <Button
+                android:id="@+id/skip_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나중에 하기"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"/>
         </LinearLayout>
     </ScrollView>
 

@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.starrynight.tourapiproject"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -71,7 +71,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-iid:21.1.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'cz.msebera.android:httpclient:4.5.8'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'com.google.android.material:material:1.5.0-alpha01'
+    implementation 'com.github.MikeOrtiz:TouchImageView:1.4.1'
+    implementation 'com.growingio.android:okhttp3:3.2.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha03'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
+    implementation "com.kakao.sdk:v2-user:2.5.2" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.5.2" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-story:2.5.2" // 카카오스토리
+    implementation "com.kakao.sdk:v2-link:2.5.2" // 메시지(카카오링크)
+    implementation "com.kakao.sdk:v2-navi:2.5.2" // 카카오내비
+    implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

@@ -3,7 +3,6 @@ package com.starrynight.tourapiproject.signUpPage;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,12 +17,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.UserParams;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -34,11 +30,19 @@ import retrofit2.Response;
 public class GeneralSingUpActivity extends AppCompatActivity{
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
-    private EditText passwordCheck;
-    private Boolean isIdDuplicate = true;
-    private Boolean isPwdSame = false;
 
-    String realName, birthDay, email, loginId, password;
+    private TextView emailGuide; //이메일 칸 바로 밑에 글칸
+    private Boolean isEmailEmpty = true; //이메일이 비어있는지
+    private Boolean isNotEmail = false; //올바른 이메일 형식이 아닌지
+    private Boolean isEmailDuplicate = true; //이메일이 중복인지
+
+    private TextView pwdGuide;
+    private Boolean isNotPwd = true; //올바른 비밀번호 형식이 아닌지
+    private String passwordCheck;
+
+    private Boolean isError = false; //서버 에러가 발생했는지
+
+    String realName, birthDay, email="", password;
     Boolean sex;
 
     Calendar c = Calendar.getInstance();
@@ -57,108 +61,91 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 monthOfYear += 1;
-                birth.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                String month = Integer.toString(monthOfYear);
+                String day = Integer.toString(dayOfMonth);
+
+                if (monthOfYear < 10){
+                    month = "0"+ Integer.toString(monthOfYear);
+                }
+
+                if(dayOfMonth < 10){
+                    day = "0"+ Integer.toString(dayOfMonth);
+                }
+
+                birth.setText(year + "-" + month + "-" + day);
             }
         };
 
-        //중복 id 체크를 위한 get api
-        Button duplicationCheck = findViewById(R.id.duplicationCheck);
-        duplicationCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        EditText emailEdit = findViewById(R.id.email); //이메일 작성칸
+        emailGuide = findViewById(R.id.emailGuide);
 
-                EditText editText = (EditText) findViewById(R.id.loginId);
-                String loginId = editText.getText().toString();
-                String url0 = "http://172.30.1.16:8080/v1/user/duplicate/"+loginId;
-                System.out.println("url0 = " + url0);
-
-                new Thread() {
-                    public void run() {
-                        String result = null;
-                        TextView isDuplicate = findViewById(R.id.isDuplicate);
-                        try {
-                            URL url = new URL(url0);
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                            conn.setRequestMethod("GET");
-                            InputStream is = conn.getInputStream();
-
-                            StringBuilder builder = new StringBuilder();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                builder.append(line);
-                            }
-
-                            result = builder.toString();
-                            System.out.println("result = " + result);
-
-                            if (result.equals("true")) {
-                                isDuplicate.setText("사용가능한 아이디 입니다.");
-                                isIdDuplicate = false;
-                            }else{
-                                isDuplicate.setText("사용불가능한 아이디 입니다.");
-                            }
-
-                        }
-                        catch (Exception e) {
-                            Log.e("REST_API", "GET method failed: " + e.getMessage());
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-
-            }
-        });
-
-        //비밀번호 확인이 비밀번호랑 같은지
-        EditText editPassword = findViewById(R.id.password);
-        password = editPassword.getText().toString();
-
-        editPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                password = arg0.toString();
-            }
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        });
-
-        passwordCheck = findViewById(R.id.passwordCheck);
-        TextView isPwdCorrect = findViewById(R.id.isPwdCorrect);
-
-        passwordCheck.addTextChangedListener(new TextWatcher() {
+        //이메일 칸에 글씨가 입력됨에 따라 실시간으로 emailGuide 뜨게
+        emailEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // 입력란에 변화가 있을 때
-                if (!password.equals(s)){
-                    isPwdCorrect.setText("일치하지 않는 비밀번호입니다.");}
-                else{isPwdCorrect.setText("일치하는 비밀번호입니다.");
-                    isPwdSame = true;}
+                showEmailGuide(s);
             }
 
             @Override
             public void afterTextChanged(Editable arg0) {
                 // 입력이 끝났을 때
-                if (!password.equals(arg0.toString())){
-                    isPwdCorrect.setText("일치하지 않는 비밀번호입니다.");}
-                else{isPwdCorrect.setText("일치하는 비밀번호입니다.");
-                    isPwdSame = true;}
+                showEmailGuide(arg0);
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
 
+        //비밀번호가 규칙에 맞는지
+        EditText editPassword = findViewById(R.id.password);
+        password = editPassword.getText().toString();
+        pwdGuide = findViewById(R.id.pwdGuide);
 
+        editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력란에 변화가 있을 때
+                password = s.toString();
+                showPwdGuide(password);
+            }
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때
+                password = arg0.toString();
+                showPwdGuide(password);
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        });
+
+        EditText passwordCheckEdit = findViewById(R.id.passwordCheck);
+
+        passwordCheckEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력란에 변화가 있을 때
+                passwordCheck = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때
+                passwordCheck = arg0.toString();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        });
+
+        //다음 버튼 눌렀을 때
         Button next = findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
                 if(realName.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -169,80 +156,120 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 } else if(female.isChecked()){
                     sex = false;
                 } else{
-                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();
                 if(birthDay.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                email = ((EditText) (findViewById(R.id.email))).getText().toString();
-                if(email.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "이메일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                if(isEmailEmpty){
+                    Toast.makeText(getApplicationContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(isNotEmail){
+                    Toast.makeText(getApplicationContext(), "이메일 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if(isEmailDuplicate){
+                    Toast.makeText(getApplicationContext(), "이메일 중복확인이 필요합니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                loginId = ((EditText) (findViewById(R.id.loginId))).getText().toString();
-                if(loginId.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else if(isIdDuplicate){
-                    Toast.makeText(getApplicationContext(), "아이디 중복확인이 필요합니다", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                password = ((EditText) (findViewById(R.id.password))).getText().toString();
+                //password = ((EditText) (findViewById(R.id.password))).getText().toString();
                 if (password.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if (!isCorrectPwdRule(password)) {
-                    Toast.makeText(getApplicationContext(), "규칙에 맞지 않는 비밀번호입니다", Toast.LENGTH_SHORT).show();
+                else if (isNotPwd) {
+                    Toast.makeText(getApplicationContext(), "비밀번호 형식이 올바르지 않습니다. (특수문자, 영문, 숫자 조합해서 8자 이상)", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if(!isPwdSame){
-                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                else if(!password.equals(passwordCheck)){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                UserParams userParams = new UserParams(realName, sex, birthDay, email, loginId, password);
+                //칸에 적힌 데이터 가지고 전화번호 인증 페이지로 이동
+                UserParams userParams = new UserParams(realName, sex, birthDay, email, password);
                 Intent intent = new Intent(getApplicationContext(), PhoneAuthActivity.class);
                 intent.putExtra("userParams", userParams);
                 startActivity(intent);
-
-//                //회원가입 post api
-//                UserParams userParams = new UserParams(realName, sex, birthDay, email, loginId, password);
-//                Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
-//                call.enqueue(new Callback<Void>() {
-//                    @Override
-//                    public void onResponse(Call<Void> call, Response<Void> response) {
-//                        if(response.isSuccessful()){
-//                            System.out.println("회원가입 성공");
-//
-//                            Intent intent = new Intent(GeneralSingUpActivity.this, PhoneAuthActivity.class);
-//                            startActivity(intent);
-//                        } else{
-//                            System.out.println("회원가입 실패");
-//                        }
-//                    }
-//                    @Override
-//                    public void onFailure(Call<Void> call, Throwable t) {
-//                        Log.e("연결실패", t.getMessage());
-//                    }
-//                });
-
             }
         });
+    }
+
+    private void showPwdGuide(String pwd) {
+        if (!isCorrectPwdRule(pwd)) {
+            pwdGuide.setText("비밀번호 형식이 올바르지 않습니다. (특수문자, 영문, 숫자 조합해서 8자 이상)");
+            isNotPwd = true;
+        } else {
+            pwdGuide.setText("");
+            isNotPwd = false;
+        }
+    }
+
+    private void showEmailGuide(CharSequence s) {
+        String text = s.toString();
+
+        if (text.isEmpty()) {
+            emailGuide.setText("이메일을 입력해주세요.");
+            isEmailEmpty = true;
+        } else if (!isCorrectEmailRule(text)) {
+            emailGuide.setText("이메일 형식이 올바르지 않습니다.");
+            isEmailEmpty = false;
+            isNotEmail = true;
+        } else {
+            //이메일이 중복인지 아닌지를 위한 get api
+            emailGuide.setText("");
+            Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateEmail(text);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        Boolean result = response.body();
+                        if (result) {
+                            emailGuide.setText("사용가능한 이메일입니다.");
+                            email = ((EditText) (findViewById(R.id.email))).getText().toString();
+                            isEmailEmpty = false;
+                            isEmailDuplicate = false;
+                            isNotEmail = false;
+                        } else if (!result) {
+                            emailGuide.setText("이미 가입된 이메일입니다.");
+                            isEmailEmpty = false;
+                            isEmailDuplicate = false;
+                            isNotEmail = true;
+                        }
+                    } else {
+                        System.out.println("중복 체크 실패");
+                        emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
+                        isError = true;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("연결실패", t.getMessage());
+                    emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
+                    isError = true;
+                }
+            });
+        }
     }
 
     //비밀번호 규칙 함수
     private Boolean isCorrectPwdRule(String pwd) {
         String pattern = "^.*(?=^.{8,}$)(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!\\\"\\[\\]\\\\\\/#$%&'()*+,.;:<=>?@^_`{|}^`_~-]).*$";
         return Pattern.matches(pattern, pwd);
+    }
+
+    //이메일 규칙 함수
+    private Boolean isCorrectEmailRule(String email) {
+        String pattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        return Pattern.matches(pattern, email);
     }
 
     //생년월일 datePicker

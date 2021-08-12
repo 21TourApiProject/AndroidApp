@@ -194,7 +194,7 @@ public class WeatherActivity extends AppCompatActivity {
             if (response.isSuccessful()) {
                 WtMetModel data = response.body();
                 TextView textView = findViewById(R.id.wt_cloud_info);
-                textView.setText(data.getResponse().getBody().getTotalCount());
+                //textView.setText(data.getResponse().getBody().getTotalCount());
                 Log.d("My Tag", "response= " + response.raw().request().url().url());
             }
 

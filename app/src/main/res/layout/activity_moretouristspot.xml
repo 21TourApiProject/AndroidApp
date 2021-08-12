@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TouristspotPage.MoretouristspotActivity">
+    tools:context=".touristSpotPage.MoretouristspotActivity">
 
     <Button
         android:id="@+id/backbutton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/ic_baseline_chevron_left_24"
+        android:background="@drawable/back_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.008"
@@ -37,7 +37,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="300dp"
         android:layout_marginTop="28dp"
-        android:background="@drawable/ic_baseline_location_on_24"
+        android:background="@drawable/location_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
