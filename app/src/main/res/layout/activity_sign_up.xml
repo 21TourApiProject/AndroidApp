@@ -23,30 +23,66 @@
                 android:text="별헤는 밤"
                 android:textSize="40sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/logInEmail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="45dp"
-                android:layout_marginTop="60dp"
-                android:text="회원가입"
-                android:textSize="20sp" />
+                android:ems="10"
+                android:hint="이메일"
+                android:layout_marginTop="40dp"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/logInPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="비밀번호"
+                android:inputType="textPassword" />
 
             <Button
+                android:id="@+id/logIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="로그인" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/findEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="20dp"
+                    android:text="이메일 찾기" />
+
+                <TextView
+                    android:id="@+id/findPwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:text="비밀번호 찾기" />
+
+            </LinearLayout>
+
+            <ImageButton
                 android:id="@+id/kakaoSignUp"
-                android:layout_width="320dp"
-                android:layout_height="65dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sign_up__kko_sign_up"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:background="#F3E146"
-                android:text="카카오 1초 회원가입"
-                android:textAlignment="center"
-                android:textSize="18sp" />
+                android:layout_marginTop="16dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:text="또는"
                 android:textSize="16sp" />
 
@@ -55,8 +91,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:text="일반 회원가입" />
+
+            <Button
+                android:id="@+id/logout_tmp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="로그아웃 임시"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"/>
         </LinearLayout>
     </ScrollView>
 
