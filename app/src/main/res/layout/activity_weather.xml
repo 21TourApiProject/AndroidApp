@@ -4,503 +4,681 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".weatherPage.WeatherActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/wt_guideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/wt_guideline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.2" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/wt_guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.4" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/wt_guideline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.6" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/wt_guideline8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.8" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/wt_guideline1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.6" />
+                android:paddingVertical="10dp"
+                android:paddingStart="10dp">
 
-            <ImageButton
-                android:id="@+id/wt_back_btn"
-                style="@style/ImageView.size48"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/list_btn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/wt_back_btn"
+                    style="@style/ImageView.size48" />
 
-            <TextView
-                android:id="@+id/wt_datePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="100dp"
-                android:onClick="wtClickDatePicker"
-                android:text="월/일 선택"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:text="날씨"
+                    android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/wt_timePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="100dp"
-                android:onClick="wtClickTimePicker"
-                android:text="시간 선택"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@id/wt_datePicker"
-                app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-            <Spinner
-                android:id="@+id/wt_citySpinner"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="@id/wt_datePicker"
-                app:layout_constraintTop_toBottomOf="@id/wt_datePicker" />
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/wt_provinceSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                app:layout_constraintBottom_toBottomOf="@id/wt_citySpinner"
-                app:layout_constraintStart_toEndOf="@id/wt_citySpinner"
-                app:layout_constraintTop_toTopOf="@id/wt_citySpinner" />
+                <TextView
+                    android:id="@+id/wt_datePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="wtClickDatePicker"
+                    android:text="월/일 선택"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/wt_timePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="wtClickTimePicker"
+                    android:text="시간 선택"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="은/는"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="@id/wt_datePicker"
-                app:layout_constraintStart_toEndOf="@id/wt_timePicker"
-                app:layout_constraintTop_toTopOf="@id/wt_datePicker" />
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/wt_citySpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <Spinner
+                    android:id="@+id/wt_provinceSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="은/는"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/wt_ment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:text="별 보기 아주 좋아요"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_guideline5"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline5"
-                app:layout_constraintTop_toBottomOf="@id/wt_citySpinner" />
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/wt_weather"
-                android:layout_width="120dp"
+                android:layout_width="200dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/wt_star_ob_fit"
-                app:layout_constraintEnd_toEndOf="@id/wt_guideline5"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline5"
-                app:layout_constraintTop_toBottomOf="@id/wt_ment" />
-
-            <TextView
-                android:id="@+id/wt_today_weather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
-                android:text="오늘의 날씨"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@id/wt_star_ob_fit"
-                app:layout_constraintEnd_toStartOf="@id/wt_star_ob_fit"
-                app:layout_constraintTop_toTopOf="@id/wt_star_ob_fit" />
-
-            <TextView
-                android:id="@+id/wt_star_ob_fit_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="맑음"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_today_weather"
-                app:layout_constraintStart_toStartOf="@id/wt_today_weather"
-                app:layout_constraintTop_toBottomOf="@id/wt_today_weather" />
-
-            <TextView
-                android:id="@+id/wt_star_ob_fit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="별 관측 적합도"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_guideline5"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline5"
-                app:layout_constraintTop_toBottomOf="@id/wt_weather" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="100%"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_star_ob_fit"
-                app:layout_constraintStart_toStartOf="@id/wt_star_ob_fit"
-                app:layout_constraintTop_toBottomOf="@id/wt_star_ob_fit" />
-
-            <TextView
-                android:id="@+id/wt_best_ob_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:text="최고의 관측 시간"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@id/wt_star_ob_fit"
-                app:layout_constraintStart_toEndOf="@id/wt_star_ob_fit"
-                app:layout_constraintTop_toTopOf="@id/wt_star_ob_fit" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="23:45"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_best_ob_time"
-                app:layout_constraintStart_toStartOf="@id/wt_best_ob_time"
-                app:layout_constraintTop_toBottomOf="@id/wt_best_ob_time" />
-
-            <ImageView
-                android:id="@+id/wt_sun"
-                style="@style/ImageView.size48"
-                android:layout_marginTop="1dp"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="@id/wt_guideline1"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/wt_star_ob_fit_info" />
-
-            <TextView
-                android:id="@+id/wt_sunrise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="일출"
-                app:layout_constraintStart_toEndOf="@id/wt_sun"
-                app:layout_constraintTop_toTopOf="@id/wt_sun" />
-
-            <TextView
-                android:id="@+id/wt_sunrise_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="05:36"
-                app:layout_constraintStart_toEndOf="@id/wt_sunrise"
-                app:layout_constraintTop_toTopOf="@id/wt_sunrise" />
-
-            <TextView
-                android:id="@+id/wt_sunset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="일몰"
-                app:layout_constraintStart_toStartOf="@id/wt_sunrise"
-                app:layout_constraintTop_toBottomOf="@id/wt_sunrise" />
-
-            <TextView
-                android:id="@+id/wt_sunset_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="05:36"
-                app:layout_constraintStart_toEndOf="@id/wt_sunset"
-                app:layout_constraintTop_toTopOf="@id/wt_sunset" />
-
-            <ImageView
-                android:id="@+id/wt_moon"
-                style="@style/ImageView.size48"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline6"
-                app:layout_constraintTop_toTopOf="@id/wt_sun" />
-
-            <TextView
-                android:id="@+id/wt_moonrise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="월출"
-                app:layout_constraintStart_toEndOf="@id/wt_moon"
-                app:layout_constraintTop_toTopOf="@id/wt_moon" />
-
-            <TextView
-                android:id="@+id/wt_moonrise_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="18:05"
-                app:layout_constraintStart_toEndOf="@id/wt_moonrise"
-                app:layout_constraintTop_toTopOf="@id/wt_moonrise" />
-
-            <TextView
-                android:id="@+id/wt_moonset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="월몰"
-                app:layout_constraintStart_toStartOf="@id/wt_moonrise"
-                app:layout_constraintTop_toBottomOf="@id/wt_moonrise" />
-
-            <TextView
-                android:id="@+id/wt_moonset_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="05:36"
-                app:layout_constraintStart_toEndOf="@id/wt_moonset"
-                app:layout_constraintTop_toTopOf="@id/wt_moonset" />
-
-            <ImageView
-                android:id="@+id/wt_cloud"
-                style="@style/ImageView.size60"
-                android:layout_marginTop="40dp"
-                app:layout_constraintEnd_toEndOf="@id/wt_guideline2"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline2"
-                app:layout_constraintTop_toBottomOf="@id/wt_sun" />
-
-            <TextView
-                android:id="@+id/wt_cloud_txt"
-                style="@style/Wt_climate_txt"
-                android:text="구름량"
-                app:layout_constraintEnd_toEndOf="@id/wt_cloud"
-                app:layout_constraintStart_toStartOf="@id/wt_cloud"
-                app:layout_constraintTop_toBottomOf="@id/wt_cloud" />
-
-            <TextView
-                android:id="@+id/wt_cloud_info"
-                style="@style/Wt_climate_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="적음"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_cloud_txt"
-                app:layout_constraintStart_toStartOf="@id/wt_cloud_txt"
-                app:layout_constraintTop_toBottomOf="@id/wt_cloud_txt" />
-
-            <ImageView
-                android:id="@+id/wt_temp"
-                style="@style/ImageView.size60"
-                app:layout_constraintBottom_toBottomOf="@id/wt_cloud"
-                app:layout_constraintEnd_toEndOf="@id/wt_guideline4"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline4"
-                app:layout_constraintTop_toTopOf="@id/wt_cloud" />
-
-            <TextView
-                android:id="@+id/wt_temp_txt"
-                style="@style/Wt_climate_txt"
-                android:text="온도"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_temp"
-                app:layout_constraintStart_toStartOf="@id/wt_temp"
-                app:layout_constraintTop_toBottomOf="@id/wt_temp" />
-
-            <TextView
-                android:id="@+id/wt_temp_info"
-                style="@style/Wt_climate_info"
-                android:text="26"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@id/wt_temp_txt"
-                app:layout_constraintStart_toStartOf="@id/wt_temp_txt"
-                app:layout_constraintTop_toBottomOf="@id/wt_temp_txt" />
-
-            <ImageView
-                android:id="@+id/wt_moonPhase"
-                style="@style/ImageView.size60"
-                app:layout_constraintBottom_toBottomOf="@id/wt_temp"
-                app:layout_constraintEnd_toEndOf="@id/wt_guideline6"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline6"
-                app:layout_constraintTop_toTopOf="@id/wt_temp" />
-
-            <TextView
-                android:id="@+id/wt_moonPhase_txt"
-                style="@style/Wt_climate_txt"
-                android:text="월령 정보"
-                app:layout_constraintEnd_toEndOf="@id/wt_moonPhase"
-                app:layout_constraintStart_toStartOf="@id/wt_moonPhase"
-                app:layout_constraintTop_toBottomOf="@id/wt_moonPhase" />
-
-            <TextView
-                android:id="@+id/wt_moonPhase_info"
-                style="@style/Wt_climate_info"
-                android:text="적음"
-                app:layout_constraintEnd_toEndOf="@id/wt_moonPhase_txt"
-                app:layout_constraintStart_toStartOf="@id/wt_moonPhase_txt"
-                app:layout_constraintTop_toBottomOf="@id/wt_moonPhase_txt" />
-
-            <ImageView
-                android:id="@+id/wt_visibility"
-                style="@style/ImageView.size60"
-                app:layout_constraintEnd_toEndOf="@id/wt_guideline8"
-                app:layout_constraintStart_toStartOf="@id/wt_guideline8"
-                app:layout_constraintTop_toTopOf="@id/wt_moonPhase" />
-
-            <TextView
-                android:id="@+id/wt_visibility_txt"
-                style="@style/Wt_climate_txt"
-                android:text="가시성"
-                app:layout_constraintEnd_toEndOf="@id/wt_visibility"
-                app:layout_constraintStart_toStartOf="@id/wt_visibility"
-                app:layout_constraintTop_toBottomOf="@id/wt_visibility" />
-
-            <TextView
-                android:id="@+id/wt_visibility_info"
-                style="@style/Wt_climate_info"
-                android:text="적음"
-                app:layout_constraintEnd_toEndOf="@id/wt_visibility_txt"
-                app:layout_constraintStart_toStartOf="@id/wt_visibility_txt"
-                app:layout_constraintTop_toBottomOf="@id/wt_visibility_txt" />
-
-            <ImageView
-                android:id="@+id/wt_wind"
-                style="@style/ImageView.size60"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="@id/wt_cloud"
-                app:layout_constraintStart_toStartOf="@id/wt_cloud"
-                app:layout_constraintTop_toBottomOf="@id/wt_cloud_info" />
+                android:src="@color/purple_200" />
 
-            <TextView
-                android:id="@+id/wt_wind_txt"
-                style="@style/Wt_climate_txt"
-                android:text="풍속"
-                app:layout_constraintEnd_toEndOf="@id/wt_wind"
-                app:layout_constraintStart_toStartOf="@id/wt_wind"
-                app:layout_constraintTop_toBottomOf="@id/wt_wind" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/wt_wind_info"
-                style="@style/Wt_climate_info"
-                android:text="1m/s"
-                app:layout_constraintEnd_toEndOf="@id/wt_wind_txt"
-                app:layout_constraintStart_toStartOf="@id/wt_wind_txt"
-                app:layout_constraintTop_toBottomOf="@id/wt_wind_txt" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/wt_humidity"
-                style="@style/ImageView.size60"
-                app:layout_constraintBottom_toBottomOf="@id/wt_wind"
-                app:layout_constraintEnd_toEndOf="@id/wt_temp"
-                app:layout_constraintStart_toStartOf="@id/wt_temp"
-                app:layout_constraintTop_toTopOf="@id/wt_wind" />
+                    <TextView
+                        android:id="@+id/wt_today_weather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="오늘의 날씨"
+                        android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/wt_humidity_txt"
-                style="@style/Wt_climate_txt"
-                android:text="습도"
-                app:layout_constraintEnd_toEndOf="@id/wt_humidity"
-                app:layout_constraintStart_toStartOf="@id/wt_humidity"
-                app:layout_constraintTop_toBottomOf="@id/wt_humidity" />
+                    <TextView
+                        android:id="@+id/wt_today_weather_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="맑음"
+                        android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/wt_humidity_info"
-                style="@style/Wt_climate_info"
-                android:text="50%"
-                app:layout_constraintEnd_toEndOf="@id/wt_humidity_txt"
-                app:layout_constraintStart_toStartOf="@id/wt_humidity_txt"
-                app:layout_constraintTop_toBottomOf="@id/wt_humidity_txt" />
+                </LinearLayout>
 
-            <ImageView
-                android:id="@+id/wt_dayLength"
-                style="@style/ImageView.size60"
-                app:layout_constraintBottom_toBottomOf="@id/wt_humidity"
-                app:layout_constraintEnd_toEndOf="@id/wt_moonPhase"
-                app:layout_constraintStart_toStartOf="@id/wt_moonPhase"
-                app:layout_constraintTop_toTopOf="@id/wt_humidity" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/wt_dayLength_txt"
-                style="@style/Wt_climate_txt"
-                android:text="낮 길이"
-                app:layout_constraintEnd_toEndOf="@id/wt_dayLength"
-                app:layout_constraintStart_toStartOf="@id/wt_dayLength"
-                app:layout_constraintTop_toBottomOf="@id/wt_dayLength" />
+                    <TextView
+                        android:id="@+id/wt_star_ob_fit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="별 관측 적합도"
+                        android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/wt_dayLength_info"
-                style="@style/Wt_climate_info"
-                android:text="8시간 20분"
-                app:layout_constraintEnd_toEndOf="@id/wt_dayLength_txt"
-                app:layout_constraintStart_toStartOf="@id/wt_dayLength_txt"
-                app:layout_constraintTop_toBottomOf="@id/wt_dayLength_txt" />
+                    <TextView
+                        android:id="@+id/wt_star_ob_fit_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="100%"
+                        android:textSize="20sp" />
+                </LinearLayout>
 
-            <ImageView
-                android:id="@+id/wt_sunAltitude"
-                style="@style/ImageView.size60"
-                app:layout_constraintBottom_toBottomOf="@id/wt_dayLength"
-                app:layout_constraintEnd_toEndOf="@id/wt_visibility"
-                app:layout_constraintStart_toStartOf="@id/wt_visibility"
-                app:layout_constraintTop_toTopOf="@id/wt_dayLength" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/wt_sunAltitude_txt"
-                style="@style/Wt_climate_txt"
-                android:text="태양 고도"
-                app:layout_constraintEnd_toEndOf="@+id/wt_sunAltitude"
-                app:layout_constraintStart_toStartOf="@+id/wt_sunAltitude"
-                app:layout_constraintTop_toBottomOf="@+id/wt_sunAltitude" />
+                    <TextView
+                        android:id="@+id/wt_best_ob_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="최고의 관측 시간"
+                        android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/wt_sunAltitude_info"
-                style="@style/Wt_climate_info"
-                android:text="60"
-                app:layout_constraintEnd_toEndOf="@+id/wt_sunAltitude_txt"
-                app:layout_constraintStart_toStartOf="@+id/wt_sunAltitude_txt"
-                app:layout_constraintTop_toBottomOf="@+id/wt_sunAltitude_txt" />
+                    <TextView
+                        android:id="@+id/wt_best_ob_time_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="23:45"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingVertical="10dp"
+                    android:paddingStart="5dp">
+
+                    <ImageView
+                        android:id="@+id/sun_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star__compass"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/sunrise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="20dp"
+                        android:text="일출"
+                        app:layout_constraintStart_toEndOf="@id/sun_image"
+                        app:layout_constraintTop_toTopOf="@id/sun_image" />
+
+                    <TextView
+                        android:id="@+id/sunrise_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="05:36"
+                        app:layout_constraintStart_toEndOf="@id/sunrise"
+                        app:layout_constraintTop_toTopOf="@id/sunrise" />
+
+                    <TextView
+                        android:id="@+id/sunset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="일몰"
+                        app:layout_constraintBottom_toBottomOf="@id/sun_image"
+                        app:layout_constraintStart_toStartOf="@id/sunrise" />
+
+                    <TextView
+                        android:id="@+id/sunset_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="05:36"
+                        app:layout_constraintStart_toEndOf="@id/sunset"
+                        app:layout_constraintTop_toTopOf="@id/sunset" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingVertical="10dp"
+                    android:paddingEnd="5dp">
+
+                    <ImageView
+                        android:id="@+id/moon_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star__compass"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/moonrise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="월출"
+                        app:layout_constraintStart_toEndOf="@id/moon_image"
+                        app:layout_constraintTop_toTopOf="@id/moon_image" />
+
+                    <TextView
+                        android:id="@+id/moonrise_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="18:05"
+                        app:layout_constraintStart_toEndOf="@id/moonrise"
+                        app:layout_constraintTop_toTopOf="@id/moonrise" />
+
+                    <TextView
+                        android:id="@+id/moonset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="월몰"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/moonrise" />
+
+                    <TextView
+                        android:id="@+id/moonset_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="05:36"
+                        app:layout_constraintStart_toEndOf="@id/moonset"
+                        app:layout_constraintTop_toTopOf="@id/moonset" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/star__card_view_round"
+                android:backgroundTint="@color/teal_200"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/star__card_view_top"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="5dp"
+                    android:text="시간 별 관측 적합도"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/star_ob_fit_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/star__cel_image" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="19-21"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/star_ob_fit_9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/star__cel_image" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="19-21"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/star_ob_fit_0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/star__cel_image" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="19-21"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/star_ob_fit_03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/star__cel_image" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="19-21"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/star__card_view_round"
+                android:backgroundTint="@color/teal_200"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/star__card_view_top"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="5dp"
+                    android:text="상세 날씨 정보"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="구름량" />
+
+                        <TextView
+                            android:id="@+id/wt_cloud"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="기온" />
+
+                        <TextView
+                            android:id="@+id/wt_temp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="월령" />
+
+                        <TextView
+                            android:id="@+id/wt_moon_phase"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="미세먼지" />
+
+                        <TextView
+                            android:id="@+id/wt_find_dust"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="풍속" />
+
+                        <TextView
+                            android:id="@+id/wt_wind"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="습도" />
+
+                        <TextView
+                            android:id="@+id/wt_humidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="강수 확률" />
+
+                        <TextView
+                            android:id="@+id/wt_precipitation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/star__compass" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="낮 길이" />
+
+                        <TextView
+                            android:id="@+id/wt_day_length"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="3dp"
+                            android:text="적음" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/wt_today_cloud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:text="오늘의 구름지도 >"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/wt_sunAltitude_info" />
+                android:layout_marginBottom="20dp"
+                android:text="오늘의 구름지도 >" />
 
-            <TextView
-                android:id="@+id/weather_api"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/wt_today_cloud" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
