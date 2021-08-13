@@ -10,6 +10,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +26,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Task;
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
@@ -35,6 +40,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -54,6 +60,7 @@ public class PostWriteActivity extends AppCompatActivity {
     String postContent="",yearDate,time;
     String postImage;
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
+    List<PostImageParams> postImageParams = new ArrayList<>();
     PostObservePointParams postObservePointParams;
     String postObservePointName;
     Long postObservePointId;
@@ -67,6 +74,78 @@ public class PostWriteActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TextView timePicker;
     private TimePickerDialog.OnTimeSetListener callbackMethod2;
+    private class MyAsyncTask extends AsyncTask<Long,Long,Long>{
+        private Context mContext = null;
+        public MyAsyncTask (Context context){
+            mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Long doInBackground(Long... longs) {
+
+            Call<Long>call =RetrofitClient.getApiService().createPostHashTag(longs[0],postHashTagParams);
+                call.enqueue(new Callback<Long>() {
+                    @Override
+                    public void onResponse(Call<Long> call, Response<Long> response) {
+                        if (response.isSuccessful()) {
+                            Long result =response.body();
+                            if (result != -1L){
+                            System.out.println("해시태그 생성");
+                                //앱 내부 저장소에 postId란 이름으로 사용자 id 저장
+                                String fileName = "postId";
+                                String postId = result.toString();
+                                try{
+                                    FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                                    fos.write(postId.getBytes());
+                                    fos.close();
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }else{System.out.println("시스템 오류");}
+                        }else {System.out.println("해시태그 생성 실패");}
+                    }
+
+                    @Override
+                    public void onFailure(Call<Long> call, Throwable t) {
+                        System.out.println("해시태그 생성 실패2");
+                    }
+                });
+                Call<Void>call1 = RetrofitClient.getApiService().createPostImage(longs[0],postImageParams);
+                call1.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            System.out.println("이미지 업로드 성공");
+                        }else {System.out.println("이미지 업로드 실패");}
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("이미지 업로드 실패 2");
+                    }
+                });
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Long... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Long aLong) {
+            super.onPostExecute(aLong);
+            System.out.println("최종 게시물 작성 완료");
+        }
+
+    }
 
 
     @Override
@@ -186,7 +265,6 @@ public class PostWriteActivity extends AppCompatActivity {
                 startActivityForResult(intent, 203);
             }
         });
-
         Button save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,8 +283,8 @@ public class PostWriteActivity extends AppCompatActivity {
                     return;
                 }
                 if(time.isEmpty()){
-                Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                return;
+                    Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 PostParams postParams = new PostParams();
                 postParams.setPostContent(postContent);
@@ -220,6 +298,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
                             System.out.println("post 성공");
+
                         }else{ System.out.println("post 실패");}
                     }
                     @Override
@@ -227,6 +306,10 @@ public class PostWriteActivity extends AppCompatActivity {
                         System.out.println("post2 실패");
                     }
                 });
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -257,7 +340,7 @@ public class PostWriteActivity extends AppCompatActivity {
         if(requestCode == 203){
             if(resultCode == 3){
                 System.out.println("해시태그가 넘어왔당");
-                postHashTagParams = (List<PostHashTagParams>) data.getSerializableExtra("postHashTagParams");
+                postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
             }else{System.out.println("해시태그가 안 넘어왔당");}
         }
         if (resultCode != RESULT_OK || data == null) {
@@ -278,7 +361,11 @@ public class PostWriteActivity extends AppCompatActivity {
                     Bitmap img = resize(this, uri, 75);
                     System.out.println("img = " + img);
                     addImage(img);
-                    postImage = BitmapToFile(img,"postImage");
+                    String File = BitmapToFile(img,"postImage");
+                    postImage = File;
+                    PostImageParams postImageParam = new PostImageParams();
+                    postImageParam.setImageName(postImage);
+                    postImageParams.add(postImageParam);
                     System.out.println("file = "+postImage);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -347,7 +434,11 @@ public class PostWriteActivity extends AppCompatActivity {
                 System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(img, numOfPicture));
                 recyclerView.setAdapter(adapter);
-                postImage = BitmapToFile(img,"postImage");
+                String File = BitmapToFile(img,"postImage");
+                postImage = File;
+                PostImageParams postImageParam = new PostImageParams();
+                postImageParam.setImageName(postImage);
+                postImageParams.add(postImageParam);
                 System.out.println("file = "+postImage);
 
             } catch (Exception e) {
