@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/star__card_view_round"
+    android:orientation="vertical"
+    android:backgroundTint="@color/teal_200"
+    android:layout_height="wrap_content">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="@drawable/star__card_view_top"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="5dp"
+            android:text="오늘 볼 수 있는 천체"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/constellation_content_example"/>
+</LinearLayout>

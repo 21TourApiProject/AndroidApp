@@ -58,4 +58,8 @@ public class KakaoUserParams implements Serializable {
     public void setAgeRange(String ageRange) {
         this.ageRange = ageRange;
     }
+
+    public String getEmail() {
+        return email;
+    }
 }

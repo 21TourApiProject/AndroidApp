@@ -17,8 +17,8 @@ public interface SignUpRetrofitService {
     @POST("user/kakao")
     Call<Void> kakaoSignUp(@Body KakaoUserParams params);
 
-    @DELETE("user/nickName/{nickName}")
-    Call<Void> cancelSignUp(@Path("nickName")String nickName);
+    @DELETE("user/email/{email}")
+    Call<Void> cancelSignUp(@Path("email")String email);
 
     @GET("user/duplicate/email/{email}")
     Call<Boolean> checkDuplicateEmail(@Path("email")String email);
