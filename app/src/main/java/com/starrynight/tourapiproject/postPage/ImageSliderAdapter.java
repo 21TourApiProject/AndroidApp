@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 
+import static android.graphics.BitmapFactory.decodeFile;
+
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder> {
     private Context context;
     private String[] sliderImage;
@@ -31,7 +33,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bindSliderImage(sliderImage[position]);
+        holder.mImageView.setImageBitmap(decodeFile(sliderImage[position]));
     }
 
     @Override
@@ -46,12 +48,6 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageSlider);
-        }
-
-        public void bindSliderImage(String imageURL) {
-            Glide.with(context)
-                    .load(imageURL)
-                    .into(mImageView);
         }
     }
 }
