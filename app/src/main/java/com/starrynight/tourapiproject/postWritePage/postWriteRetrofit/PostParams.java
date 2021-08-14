@@ -12,6 +12,8 @@ public class PostParams implements Serializable {
 
     private String time;
 
+    private String postTitle;
+
     private Long userId;
 
     private Long postObservePointId;
@@ -20,6 +22,10 @@ public class PostParams implements Serializable {
 
     public String getPostContent() {
         return postContent;
+    }
+
+    public String getPostTitle() {
+        return postTitle;
     }
 
     public String getYearDate() {
@@ -38,10 +44,11 @@ public class PostParams implements Serializable {
         return postObservePointId;
     }
 
-    public PostParams(String postContent, String yearDate, String time, Long userId, Long postObservePointId) {
+    public PostParams(String postContent, String yearDate, String time, String postTitle, Long userId, Long postObservePointId) {
         this.postContent = postContent;
         this.yearDate = yearDate;
         this.time = time;
+        this.postTitle = postTitle;
         this.userId = userId;
         this.postObservePointId = postObservePointId;
     }
@@ -60,6 +67,10 @@ public class PostParams implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public void setPostTitle(String postTitle) {
+        this.postTitle = postTitle;
     }
 
     public void setPostObservePointId(Long postObservePointId) {
