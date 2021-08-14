@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.postWritePage;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
+import com.google.common.primitives.Longs;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
@@ -35,6 +37,7 @@ import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageP
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -57,13 +60,14 @@ public class PostWriteActivity extends AppCompatActivity {
     private Button addPicture;
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
-    String postContent="",yearDate,time;
+    String postContent="",yearDate,time,postTitle;
     String postImage;
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
     List<PostImageParams> postImageParams = new ArrayList<>();
     PostObservePointParams postObservePointParams;
     String postObservePointName;
     Long postObservePointId;
+    Long postId;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -74,77 +78,52 @@ public class PostWriteActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TextView timePicker;
     private TimePickerDialog.OnTimeSetListener callbackMethod2;
-    private class MyAsyncTask extends AsyncTask<Long,Long,Long>{
+    private class MyAsyncTask extends AsyncTask<PostParams,Long,Long>{
+        ProgressDialog asyncDialog = new ProgressDialog(PostWriteActivity.this);
         private Context mContext = null;
         public MyAsyncTask (Context context){
-            mContext = context;
+            mContext = context.getApplicationContext();
         }
 
         @Override
         protected void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("기다려주세요");
+            asyncDialog.show();
             super.onPreExecute();
         }
 
         @Override
-        protected Long doInBackground(Long... longs) {
-
-            Call<Long>call =RetrofitClient.getApiService().createPostHashTag(longs[0],postHashTagParams);
-                call.enqueue(new Callback<Long>() {
-                    @Override
-                    public void onResponse(Call<Long> call, Response<Long> response) {
-                        if (response.isSuccessful()) {
-                            Long result =response.body();
-                            if (result != -1L){
-                            System.out.println("해시태그 생성");
-                                //앱 내부 저장소에 postId란 이름으로 사용자 id 저장
-                                String fileName = "postId";
-                                String postId = result.toString();
-                                try{
-                                    FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
-                                    fos.write(postId.getBytes());
-                                    fos.close();
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }else{System.out.println("시스템 오류");}
-                        }else {System.out.println("해시태그 생성 실패");}
-                    }
-
-                    @Override
-                    public void onFailure(Call<Long> call, Throwable t) {
-                        System.out.println("해시태그 생성 실패2");
-                    }
-                });
-                Call<Void>call1 = RetrofitClient.getApiService().createPostImage(longs[0],postImageParams);
-                call1.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            System.out.println("이미지 업로드 성공");
-                        }else {System.out.println("이미지 업로드 실패");}
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        System.out.println("이미지 업로드 실패 2");
-                    }
-                });
-            return null;
+        protected Long doInBackground(PostParams... PostParams) {
+            PostParams postParams = new PostParams();
+            postParams.setPostContent(postContent);
+            postParams.setYearDate(yearDate);
+            postParams.setTime(time);
+            postParams.setUserId(1L);
+            postParams.setPostTitle(postTitle);
+            postObservePointName = postObservePointParams.getObservePointName();
+            Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
+            call.enqueue(new Callback<Long>() {
+                @Override
+                public void onResponse(Call<Long> call, Response<Long> response) {
+                    if(response.isSuccessful()){
+                        System.out.println("post 성공");
+                        postId = response.body();
+                    }else{ System.out.println("post 실패");}
+                }
+                @Override
+                public void onFailure(Call<Long> call, Throwable t) {
+                    System.out.println("post2 실패");
+                }
+            });
+            return postId;
         }
 
         @Override
-        protected void onProgressUpdate(Long... values) {
-            super.onProgressUpdate(values);
+        protected void onPostExecute(Long result) {
+            asyncDialog.dismiss();
+            System.out.println(result);
         }
-
-        @Override
-        protected void onPostExecute(Long aLong) {
-            super.onPostExecute(aLong);
-            System.out.println("최종 게시물 작성 완료");
-        }
-
     }
 
 
@@ -270,12 +249,17 @@ public class PostWriteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 postContent = ((EditText)(findViewById(R.id.postContentText))).getText().toString();
-                if(postContent.isEmpty()){
+                if(postContent.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
-                }else{System.out.println(postContent);}
+                }
                 if (numOfPicture == 0){
                     Toast.makeText(getApplicationContext(), "사진을 추가해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                postTitle = ((EditText)(findViewById(R.id.postWrite_titleText))).getText().toString();
+                if (postTitle.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "게시물 제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(yearDate.isEmpty()){
@@ -286,26 +270,36 @@ public class PostWriteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                PostParams postParams = new PostParams();
-                postParams.setPostContent(postContent);
-                postParams.setYearDate(yearDate);
-                postParams.setTime(time);
-                postParams.setUserId(1L);
-                postObservePointName = postObservePointParams.getObservePointName();
-                Call<Void>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("post 성공");
-
-                        }else{ System.out.println("post 실패");}
-                    }
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        System.out.println("post2 실패");
-                    }
-                });
+                MyAsyncTask task = new MyAsyncTask(PostWriteActivity.this);
+                task.execute();
+//                Call<Void>call =RetrofitClient.getApiService().createPostHashTag(postId,postHashTagParams);
+//                call.enqueue(new Callback<Void>() {
+//                    @Override
+//                    public void onResponse(Call<Void> call, Response<Void> response) {
+//                        if (response.isSuccessful()) {
+//                            System.out.println("해시태그 생성");
+//                        }else {System.out.println("해시태그 생성 실패");}
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Void> call, Throwable t) {
+//                        System.out.println("해시태그 생성 실패2");
+//                    }
+//                });
+//                Call<Void>call1 = RetrofitClient.getApiService().createPostImage(postId,postImageParams);
+//                call1.enqueue(new Callback<Void>() {
+//                    @Override
+//                    public void onResponse(Call<Void> call, Response<Void> response) {
+//                        if (response.isSuccessful()) {
+//                            System.out.println("이미지 업로드 성공");
+//                        }else {System.out.println("이미지 업로드 실패");}
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Void> call, Throwable t) {
+//                        System.out.println("이미지 업로드 실패 2");
+//                    }
+//                });
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
@@ -320,21 +314,6 @@ public class PostWriteActivity extends AppCompatActivity {
             if(resultCode == 2){
                 System.out.println("관측지가 넘어왔당");
                 postObservePointParams = (PostObservePointParams)data.getSerializableExtra("postObservePointParams");
-                Call<Void>call2 = RetrofitClient.getApiService().createPostObservePoint(postObservePointParams);
-                call2.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("관측지 생성 성공");
-                        }
-                        else{System.out.println("관측지 실패");}
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        System.out.println("관측지 실패 2");
-                    }
-                });
             }else{System.out.println("관측지가 안 넘어왔당");}
         }
         if(requestCode == 203){

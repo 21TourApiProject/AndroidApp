@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.postWritePage.postWriteRetrofit;
 
 import android.graphics.Bitmap;
 
+import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ import retrofit2.http.Path;
 public interface PostHashTagRetrofitService {
 
     @POST("post/{observePointName}")
-    Call<Void> postup(@Path("observePointName")String observePointName,@Body PostParams params);
+    Call<Long> postup(@Path("observePointName")String observePointName,@Body PostParams params);
 
     @POST ("postImage/{postId}")
     Call <Void> createPostImage(@Path("postId")Long postId,@Body List<PostImageParams> postImageParams);
@@ -27,9 +28,12 @@ public interface PostHashTagRetrofitService {
     @GET("postImage/{postImageListId")
     Call<String> getPostImageName(@Path("postImageListId")Long postImageListId);
 
+    @GET("post/{postId}")
+    Call<Post> getPost(@Path("postId") Long postId);
+
     @POST("postObservePoint")
     Call<Void> createPostObservePoint(@Body PostObservePointParams postObservePointParams);
 
     @POST ("postHashTag/{postId}")
-    Call<Long> createPostHashTag(@Path("postId")Long postId,@Body List<PostHashTagParams> postHashTagParams);
+    Call<Void> createPostHashTag(@Path("postId")Long postId,@Body List<PostHashTagParams> postHashTagParams);
 }
