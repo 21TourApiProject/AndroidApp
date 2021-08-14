@@ -6,16 +6,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Post {
+    @SerializedName("postId")
+    private Long postId;
     @SerializedName("postContent")
     private String postContent;
-    @SerializedName("observeFit")
-    private String observeFit;
     @SerializedName("yearDate")
     private LocalDateTime yearDate;
     @SerializedName("time")
     private LocalDateTime time;
     @SerializedName("userId")
     private Long userId;
+    @SerializedName("postObservePointId")
+    private Long postObservePointId;
     @SerializedName("postHashTag")
     List<PostHashTag> postHashTags;
     @SerializedName("postImage")
@@ -27,8 +29,12 @@ public class Post {
         return postContent;
     }
 
-    public String getObserveFit() {
-        return observeFit;
+    public Long getPostId() {
+        return postId;
+    }
+
+    public Long getPostObservePointId() {
+        return postObservePointId;
     }
 
     public LocalDateTime getYearDate() {
