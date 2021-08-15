@@ -19,6 +19,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.myPage.LeavePopActivity;
+import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
@@ -44,7 +46,7 @@ public class TouristPointActivity extends AppCompatActivity {
     private ViewPager2 slider;
     private LinearLayout indicator;
     private String[] images = new String[1];
-    Long contentId = 127480L; //나중에 수정
+    Long contentId = 2360786L; //나중에 수정
     TouristPoint tpData;
     Food foodData;
     Boolean isTp;
@@ -54,6 +56,8 @@ public class TouristPointActivity extends AppCompatActivity {
 
     LinearLayout addressLayout,  telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
+
+    String overviewFull;
 
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
@@ -138,7 +142,10 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     tpTitle.setText(tpData.getTitle());
                                     cat3Name.setText(tpData.getCat3Name());
-                                    overview.setText(tpData.getOverview());
+                                    String cleanOverview = extractOverview(tpData.getOverview());
+                                    overview.setText(cleanOverview);
+                                    overviewFull = cleanOverview;
+
                                     if (!tpData.getAddr1().isEmpty()){
                                         tpAddress.setText(tpData.getAddr1());
                                     }else{
@@ -175,7 +182,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                         chkPetLayout.setVisibility(View.GONE);
                                     }
                                     if (!tpData.getHomePage().isEmpty()){
-                                        tpHomePage.setText(tpData.getHomePage());
+                                        tpHomePage.setText(extractHomePage(tpData.getHomePage()));
                                     }else{
                                         homePageLayout.setVisibility(View.GONE);
                                     }
@@ -203,7 +210,10 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     tpTitle.setText(foodData.getTitle());
                                     cat3Name.setText(foodData.getCat3Name());
-                                    overview.setText(foodData.getOverview());
+                                    String cleanOverview = extractOverview(foodData.getOverview());
+                                    overview.setText(cleanOverview);
+                                    overviewFull = cleanOverview;
+
                                     if (!foodData.getAddr1().isEmpty()){
                                         tpAddress.setText(foodData.getAddr1());
                                     }else{
@@ -282,6 +292,16 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         });
 
+        //자세히 보기 팝업
+        Button overviewPop = findViewById(R.id.overviewPop);
+        overviewPop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TouristPointActivity.this, OverviewPopActivity.class);
+                intent.putExtra("overview", overviewFull);
+                startActivity(intent);
+            }
+        });
 
 
         Post_point_item_Adapter adapter2 =new Post_point_item_Adapter();
@@ -344,7 +364,22 @@ public class TouristPointActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-         }
+    }
+
+    private String extractHomePage(String url){
+        int start = url.indexOf("href=\"");
+        int end = url.indexOf("\"", start+6);
+        return url.substring(start+6, end);
+    }
+
+    private String extractOverview(String overview){
+        overview = overview.replaceAll("<br>","");
+        overview = overview.replaceAll("<br />"," ");
+        overview = overview.replaceAll("<br/>"," ");
+        overview = overview.replaceAll("<strong>","");
+        overview = overview.replaceAll("</strong>","");
+        return overview;
+    }
 
     private void setupIndicators(int count) {
         ImageView[] indicators = new ImageView[count];
