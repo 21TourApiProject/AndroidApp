@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -26,6 +27,9 @@ import com.starrynight.tourapiproject.touristPointPage.search.SearchAdapter;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchData;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchOpenApi;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchRetrofitFactory;
+import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.Food;
+import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.TouristPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +43,11 @@ public class TouristPointActivity extends AppCompatActivity {
 
     private ViewPager2 slider;
     private LinearLayout indicator;
-    private String[] images = new String[5];
+    private String[] images = new String[1];
+    Long contentId = 2360786L; //나중에 수정
+    TouristPoint tpResult;
+    Food foodResult;
+    Boolean isTp;
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
@@ -65,6 +73,89 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         });
         setupIndicators(images.length);
+
+
+        //관광지 정보 불러오기
+        Call<Long> call = RetrofitClient.getApiService().getContentType(contentId);
+        call.enqueue(new Callback<Long>() {
+            @Override
+            public void onResponse(Call<Long> call, Response<Long> response) {
+                if (response.isSuccessful()) {
+                    Long result = response.body();
+                    if (result == 12L){
+                        System.out.println("관광지");
+                        Call<TouristPoint> call2 = RetrofitClient.getApiService().getTouristPointData(contentId);
+                        call2.enqueue(new Callback<TouristPoint>() {
+                            @Override
+                            public void onResponse(Call<TouristPoint> call, Response<TouristPoint> response) {
+                                if (response.isSuccessful()) {
+                                    tpResult = response.body();
+                                    isTp = true;
+
+                                } else {
+                                    System.out.println("tp 정보 불러오기 실패");
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<TouristPoint> call, Throwable t) {
+                                Log.e("연결실패", t.getMessage());
+                            }
+                        });
+                    }
+                    else if(result == 39L){
+                        System.out.println("음식");
+                        Call<Food> call2 = RetrofitClient.getApiService().getFoodData(contentId);
+                        call2.enqueue(new Callback<Food>() {
+                            @Override
+                            public void onResponse(Call<Food> call, Response<Food> response) {
+                                if (response.isSuccessful()) {
+                                    foodResult = response.body();
+                                    isTp = false;
+
+                                } else {
+                                    System.out.println("food 정보 불러오기 실패");
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Food> call, Throwable t) {
+                                Log.e("연결실패", t.getMessage());
+                            }
+                        });
+                    }
+                } else {
+                    System.out.println("관광지 정보 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<Long> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        TextView tpTitle = findViewById(R.id.tpTitle);
+        TextView cat3Name = findViewById(R.id.cat3Name);
+        TextView overview= findViewById(R.id.overview);
+        TextView tpAddress = findViewById(R.id.tpAddress);
+        TextView tpTel = findViewById(R.id.tpTel);
+        TextView tpUseTime = findViewById(R.id.tpUseTime);
+        TextView tpRestDate = findViewById(R.id.tpRestDate);
+        TextView tpOpenTimeFood = findViewById(R.id.tpOpenTimeFood);
+        TextView tpRestDateFood = findViewById(R.id.tpRestDateFood);
+        TextView tpExpGuide = findViewById(R.id.tpExpGuide);
+        TextView tpParking = findViewById(R.id.tpParking);
+        TextView tpChkPet = findViewById(R.id.tpChkPet);
+        TextView tpHomePage = findViewById(R.id.tpHomePage);
+        TextView tpFirstMenu = findViewById(R.id.tpFirstMenu);
+        TextView tpTreatMenu = findViewById(R.id.tpTreatMenu);
+        TextView tpPacking = findViewById(R.id.tpPacking);
+        TextView tpParkingFood = findViewById(R.id.tpParkingFood);
+
+        if(isTp){
+
+        }
+        else{
+
+        }
 
 
 
