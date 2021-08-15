@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
+import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postPage.PostActivity;
@@ -34,7 +34,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         adapter.addItem(new post_point_item("게시글2","https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
         adapter.addItem(new post_point_item("게시글3","https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
 
-        adapter.setOnItemClicklistener(new OnPostItemClickListener() {
+        adapter.setOnItemClicklistener(new OnPostPointItemClickListener() {
             @Override
             public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
                 Intent intent = new Intent(getApplicationContext(), PostActivity.class);
