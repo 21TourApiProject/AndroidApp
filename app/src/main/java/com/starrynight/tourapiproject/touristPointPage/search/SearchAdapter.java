@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.touristSpotPage;
+package com.starrynight.tourapiproject.touristPointPage.search;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +42,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         this.listener = listener;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textView;
         TextView textView2;
         TextView textView3;
