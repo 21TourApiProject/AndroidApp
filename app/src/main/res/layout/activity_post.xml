@@ -59,45 +59,57 @@
                     app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/dateNtime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="2021년 7월 20일 (월) PM 9:00"
-                android:textAlignment="center"
-                android:textSize="20sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/explain"
+                    android:id="@+id/postDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="당시 별 관측 적합도 : "
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="2021년 7월 20일 (월)"
+                    android:textAlignment="center"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/state"
+                    android:id="@+id/postTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="좋음"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:hint="15:30"
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/caution"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="*3년 정도 이전의 관측 정확도는 부정확할 수 있습니다."
-                android:textSize="14sp"
-                android:layout_marginStart="10dp"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/hashTag_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="hashtag1" />
+
+                <Button
+                    android:id="@+id/hashTag_btn2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="hashTag2" />
+
+                <Button
+                    android:id="@+id/hashTag_btn3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="hashTag3" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/postContent"
@@ -120,6 +132,11 @@
                 android:layout_width="322dp"
                 android:layout_height="19dp"
                 android:layout_gravity="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"></LinearLayout>
 
         </LinearLayout>
     </ScrollView>

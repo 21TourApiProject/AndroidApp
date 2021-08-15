@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,18 +22,24 @@
             android:text="날씨" />
 
         <TextView
-            android:id="@+id/textView18"
-            android:layout_width="match_parent"
+            android:id="@+id/starryNightTitle"
+            android:layout_width="288dp"
             android:layout_height="wrap_content"
             android:text="별헤는밤"
             android:textAlignment="center"
             android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/postWrite"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/post_plus__button" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="50dp"
         android:foregroundGravity="center"
         android:orientation="vertical"
@@ -62,26 +69,6 @@
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/postWrite"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/post_plus__button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/post"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="105dp"
-        android:text="게시물"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/testSignUp"
