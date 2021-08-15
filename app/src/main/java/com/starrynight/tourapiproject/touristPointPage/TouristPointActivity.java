@@ -75,6 +75,9 @@ public class TouristPointActivity extends AppCompatActivity {
         setupIndicators(images.length);
 
 
+        LinearLayout tpInfo1 = findViewById(R.id.tpInfo1);
+        LinearLayout foodInfo1 = findViewById(R.id.foodInfo1);
+
         //관광지 정보 불러오기
         Call<Long> call = RetrofitClient.getApiService().getContentType(contentId);
         call.enqueue(new Callback<Long>() {
@@ -83,7 +86,7 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Long result = response.body();
                     if (result == 12L){
-                        System.out.println("관광지");
+                        System.out.println("타입 : 관광지");
                         Call<TouristPoint> call2 = RetrofitClient.getApiService().getTouristPointData(contentId);
                         call2.enqueue(new Callback<TouristPoint>() {
                             @Override
@@ -91,9 +94,10 @@ public class TouristPointActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     tpData = response.body();
                                     isTp = true;
+                                    tpInfo1.setVisibility(View.VISIBLE);
 
                                 } else {
-                                    System.out.println("tp 정보 불러오기 실패");
+                                    System.out.println("관광지 타입 불러오기 실패");
                                 }
                             }
                             @Override
@@ -103,7 +107,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         });
                     }
                     else if(result == 39L){
-                        System.out.println("음식");
+                        System.out.println("타입 : 음식");
                         Call<Food> call2 = RetrofitClient.getApiService().getFoodData(contentId);
                         call2.enqueue(new Callback<Food>() {
                             @Override
@@ -111,9 +115,10 @@ public class TouristPointActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     foodData = response.body();
                                     isTp = false;
+                                    foodInfo1.setVisibility(View.VISIBLE);
 
                                 } else {
-                                    System.out.println("food 정보 불러오기 실패");
+                                    System.out.println("음식 타입 불러오기 실패");
                                 }
                             }
                             @Override
@@ -129,6 +134,22 @@ public class TouristPointActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Long> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        LinearLayout tpInfo2 = findViewById(R.id.tpInfo2);
+        LinearLayout foodInfo2 = findViewById(R.id.foodInfo2);
+
+        //펼치기
+        Button moreInfo = findViewById(R.id.moreInfo);
+        moreInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isTp){
+                    tpInfo2.setVisibility(View.VISIBLE);
+                }else{
+                    foodInfo2.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -150,36 +171,112 @@ public class TouristPointActivity extends AppCompatActivity {
         TextView tpPacking = findViewById(R.id.tpPacking);
         TextView tpParkingFood = findViewById(R.id.tpParkingFood);
 
-        if(isTp){
+        LinearLayout addressLayout = findViewById(R.id.addressLayout);
+        LinearLayout telLayout = findViewById(R.id.telLayout);
+        LinearLayout useTimeLayout = findViewById(R.id.useTimeLayout);
+        LinearLayout restDateLayout = findViewById(R.id.restDateLayout);
+        LinearLayout openTimeFoodLayout = findViewById(R.id.openTimeFoodLayout);
+        LinearLayout restDateFoodLayout = findViewById(R.id.restDateFoodLayout);
+        LinearLayout expGuideLayout = findViewById(R.id.expGuideLayout);
+        LinearLayout parkingLayout = findViewById(R.id.parkingLayout);
+        LinearLayout chkPetLayout = findViewById(R.id.chkPetLayout);
+        LinearLayout homePageLayout = findViewById(R.id.homePageLayout);
+        LinearLayout firstMenuLayout = findViewById(R.id.firstMenuLayout);
+        LinearLayout treatMenuLayout = findViewById(R.id.treatMenuLayout);
+        LinearLayout packingLayout = findViewById(R.id.packingLayout);
+        LinearLayout parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
+
+        if(isTp){ //관광지 타입이면
             tpTitle.setText(tpData.getTitle());
             cat3Name.setText(tpData.getCat3Name());
-            if (!tpData.getOverview().isEmpty()){
-                overview.setText(tpData.getOverview());
-            }
+            overview.setText(tpData.getOverview());
             if (!tpData.getAddr1().isEmpty()){
                 tpAddress.setText(tpData.getAddr1());
+            }else{
+                addressLayout.setVisibility(View.GONE);
             }
-            tpTel.setText(tpData.getTel());
-            tpUseTime.setText(tpData.getUseTime());
-            tpRestDate.setText(tpData.getRestDate());
-            tpExpGuide.setText(tpData.getExpGuide());
-            tpParking.setText(tpData.getParking());
-            tpChkPet.setText(tpData.getChkPet());
-            tpHomePage.setText(tpData.getHomePage());
+            if (!tpData.getTel().isEmpty()){
+                tpTel.setText(tpData.getTel());
+            }else{
+                telLayout.setVisibility(View.GONE);
+            }
+            if (!tpData.getUseTime().isEmpty()){
+                tpUseTime.setText(tpData.getUseTime());
+            }else{
+                useTimeLayout.setVisibility(View.GONE);
+            }
+            if (!tpData.getRestDate().isEmpty()){
+                tpRestDate.setText(tpData.getRestDate());
+            }else{
+                restDateLayout.setVisibility(View.GONE);
+            }
+            if (!tpData.getExpGuide().isEmpty()){
+                tpExpGuide.setText(tpData.getExpGuide());
+            }else{
+                expGuideLayout.setVisibility(View.GONE);
+            }
+            if (!tpData.getParking().isEmpty()){
+                tpParking.setText(tpData.getParking());
+            }else{
+                parkingLayout.setVisibility(View.GONE);
+            }
+            if (!tpData.getChkPet().isEmpty()){
+                tpChkPet.setText(tpData.getChkPet());
+            }else{
+                chkPetLayout.setVisibility(View.GONE);
+            }
+            if (!tpData.getHomePage().isEmpty()){
+                tpHomePage.setText(tpData.getHomePage());
+            }else{
+                homePageLayout.setVisibility(View.GONE);
+            }
         }
-        else{
+        else{ //음식 타입이면
             tpTitle.setText(foodData.getTitle());
             cat3Name.setText(foodData.getCat3Name());
             overview.setText(foodData.getOverview());
-            tpAddress.setText(foodData.getAddr1());
-            tpTel.setText(foodData.getTel());
-            tpOpenTimeFood.setText(foodData.getOpenTimeFood());
-            tpRestDateFood.setText(foodData.getRestDateFood());
-            tpFirstMenu.setText(foodData.getFirstMenu());
-            tpTreatMenu.setText(foodData.getTreatMenu());
-            tpPacking.setText(foodData.getPacking());
-            tpParkingFood.setText(foodData.getParkingFood());
+            if (!foodData.getAddr1().isEmpty()){
+                tpAddress.setText(foodData.getAddr1());
+            }else{
+                addressLayout.setVisibility(View.GONE);
+            }
+            if (!foodData.getTel().isEmpty()){
+                tpTel.setText(foodData.getTel());
+            }else{
+                telLayout.setVisibility(View.GONE);
+            }
+            if (!foodData.getOpenTimeFood().isEmpty()){
+                tpOpenTimeFood.setText(foodData.getOpenTimeFood());
+            }else{
+                openTimeFoodLayout.setVisibility(View.GONE);
+            }
+            if (!foodData.getRestDateFood().isEmpty()){
+                tpRestDateFood.setText(foodData.getRestDateFood());
+            }else{
+                restDateFoodLayout.setVisibility(View.GONE);
+            }
+            if (!foodData.getFirstMenu().isEmpty()){
+                tpFirstMenu.setText(foodData.getFirstMenu());
+            }else{
+                firstMenuLayout.setVisibility(View.GONE);
+            }
+            if (!foodData.getTreatMenu().isEmpty()){
+                tpTreatMenu.setText(foodData.getTreatMenu());
+            }else{
+                treatMenuLayout.setVisibility(View.GONE);
+            }
+            if (!foodData.getPacking().isEmpty()){
+                tpPacking.setText(foodData.getPacking());
+            }else{
+                packingLayout.setVisibility(View.GONE);
+            }
+            if (!foodData.getParkingFood().isEmpty()){
+                tpParkingFood.setText(foodData.getParkingFood());
+            }else{
+                parkingFoodLayout.setVisibility(View.GONE);
+            }
         }
+
 
 
 
