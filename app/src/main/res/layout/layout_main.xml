@@ -16,6 +16,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/mainpost_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="제목"
+        app:layout_constraintStart_toStartOf="@+id/layout_image"
+        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+
+    <TextView
         android:id="@+id/nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,9 +37,8 @@
         android:id="@+id/mainprofileimage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@id/layout_image"
-        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+        app:layout_constraintTop_toBottomOf="@+id/mainpost_title" />
 
     <Button
         android:id="@+id/hash__button"
@@ -47,25 +54,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/mainprofileimage"
         app:layout_constraintTop_toBottomOf="@+id/mainprofileimage" />
-
-    <TextView
-        android:id="@+id/mainpost_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="제목"
-        app:layout_constraintStart_toStartOf="@+id/hash__button2"
-        app:layout_constraintTop_toBottomOf="@+id/hash__button2" />
-
-    <EditText
-        android:id="@+id/reviewText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="13"
-        android:inputType="textPersonName"
-        android:text="댓글"
-        app:layout_constraintStart_toStartOf="@+id/mainpost_title"
-        app:layout_constraintTop_toBottomOf="@+id/mainpost_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

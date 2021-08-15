@@ -11,10 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
+import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 
@@ -59,7 +58,7 @@ public class Touristspot_Activity extends AppCompatActivity {
         adapter2.addItem(new post_point_item("관광지1","https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
         adapter2.addItem(new post_point_item("관광지2","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
         adapter2.addItem(new post_point_item("관광지3","https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
-        adapter2.setOnItemClicklistener(new OnPostItemClickListener() {
+        adapter2.setOnItemClicklistener(new OnPostPointItemClickListener() {
             @Override
             public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
                 Intent intent = new Intent(getApplicationContext(), ObservationsiteActivity.class);
