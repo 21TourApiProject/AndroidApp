@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.ViewHolder>{
     ArrayList<post_item> items = new ArrayList<post_item>();
+    OnPostItemClickListener listener;
 
     public void addItem(post_item item){
         items.add(item);
@@ -33,10 +34,10 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
     }
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Post_item_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.layout_main, parent, false);
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView,listener);
     }
 
     @Override
@@ -56,25 +57,37 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
         return items.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    public void  setOnItemClicklistener(OnPostItemClickListener listener){
+        this.listener = listener;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView Button;
         TextView Button2;
         TextView title;
         TextView nickname;
-        TextView review;
         ImageView mainimage;
         ImageView profileimage;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView,final OnPostItemClickListener listener){
             super(itemView);
 
             Button =itemView.findViewById(R.id.hash__button);
             Button2 = itemView.findViewById(R.id.hash__button2);
             title = itemView.findViewById(R.id.mainpost_title);
             nickname = itemView.findViewById(R.id.nickname);
-            review = itemView.findViewById(R.id.reviewText);
             mainimage =itemView.findViewById(R.id.layout_image);
             profileimage = itemView.findViewById(R.id.mainprofileimage);
+            itemView.setClickable(true);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null){
+                        listener.onItemClick(Post_item_adapter.ViewHolder.this, v, position);
+                    }
+                }
+            });
         }
 
         public void setItem(post_item item){
@@ -82,7 +95,6 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
             Button2.setText(item.getHash2());
             title.setText(item.getTitle());
             nickname.setText(item.getNickname());
-            review.setText(item.getReview());
         }
     }
 }
