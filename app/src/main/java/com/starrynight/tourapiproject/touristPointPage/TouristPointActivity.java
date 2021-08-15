@@ -44,9 +44,9 @@ public class TouristPointActivity extends AppCompatActivity {
     private ViewPager2 slider;
     private LinearLayout indicator;
     private String[] images = new String[1];
-    Long contentId = 2360786L; //나중에 수정
-    TouristPoint tpResult;
-    Food foodResult;
+    Long contentId = 127480L; //나중에 수정
+    TouristPoint tpData;
+    Food foodData;
     Boolean isTp;
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
@@ -56,7 +56,7 @@ public class TouristPointActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView (R.layout.activity_touristspot);
+        setContentView (R.layout.activity_tourist_point);
 
         //이미지 슬라이더
         slider = findViewById(R.id.tpSlider);
@@ -89,7 +89,7 @@ public class TouristPointActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<TouristPoint> call, Response<TouristPoint> response) {
                                 if (response.isSuccessful()) {
-                                    tpResult = response.body();
+                                    tpData = response.body();
                                     isTp = true;
 
                                 } else {
@@ -109,7 +109,7 @@ public class TouristPointActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Food> call, Response<Food> response) {
                                 if (response.isSuccessful()) {
-                                    foodResult = response.body();
+                                    foodData = response.body();
                                     isTp = false;
 
                                 } else {
@@ -151,10 +151,34 @@ public class TouristPointActivity extends AppCompatActivity {
         TextView tpParkingFood = findViewById(R.id.tpParkingFood);
 
         if(isTp){
-
+            tpTitle.setText(tpData.getTitle());
+            cat3Name.setText(tpData.getCat3Name());
+            if (!tpData.getOverview().isEmpty()){
+                overview.setText(tpData.getOverview());
+            }
+            if (!tpData.getAddr1().isEmpty()){
+                tpAddress.setText(tpData.getAddr1());
+            }
+            tpTel.setText(tpData.getTel());
+            tpUseTime.setText(tpData.getUseTime());
+            tpRestDate.setText(tpData.getRestDate());
+            tpExpGuide.setText(tpData.getExpGuide());
+            tpParking.setText(tpData.getParking());
+            tpChkPet.setText(tpData.getChkPet());
+            tpHomePage.setText(tpData.getHomePage());
         }
         else{
-
+            tpTitle.setText(foodData.getTitle());
+            cat3Name.setText(foodData.getCat3Name());
+            overview.setText(foodData.getOverview());
+            tpAddress.setText(foodData.getAddr1());
+            tpTel.setText(foodData.getTel());
+            tpOpenTimeFood.setText(foodData.getOpenTimeFood());
+            tpRestDateFood.setText(foodData.getRestDateFood());
+            tpFirstMenu.setText(foodData.getFirstMenu());
+            tpTreatMenu.setText(foodData.getTreatMenu());
+            tpPacking.setText(foodData.getPacking());
+            tpParkingFood.setText(foodData.getParkingFood());
         }
 
 

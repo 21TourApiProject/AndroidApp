@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="화월루"
+                    android:text="제목"
                     android:textSize="20sp" />
 
                 <Button
@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
-                    android:text="차분한 분위기의 한옥개조카페"
+                    android:text="한줄 개요"
                     android:textSize="16sp" />
 
                 <TextView
@@ -90,7 +90,7 @@
                     android:id="@+id/cat3Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="카페"
+                    android:text="관광지 타입"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -106,15 +106,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="별 보기 좋다고 소문난 곳이다, 별 보기 좋다고 소문난 곳이다, 별 보기 좋다고 소문난 곳이다, 별 보기 좋다고 소문난 곳이다, 별 보기 좋다고 소문난 곳이다, 별 보기 좋다고 소문난 곳이다, 별 보기 좋다고 소문난 곳이다. 별 보기 좋다고 소문난 곳이다" />
+                android:text="개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요개요" />
 
             <Button
-                android:id="@+id/overviewFull"
+                android:id="@+id/overviewPop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="자세히보기" />
 
             <LinearLayout
+                android:id="@+id/addressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -132,6 +133,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/telLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -155,6 +157,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/useTimeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -172,6 +175,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/restDateLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -197,6 +201,7 @@
                 android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/openTimeFoodLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -214,6 +219,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/restDateFoodLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -245,6 +251,7 @@
                 android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/expGuideLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -262,6 +269,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/parkingLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -279,6 +287,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/chkPetLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -296,6 +305,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/homePageLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -321,6 +331,7 @@
                 android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/firstMenuLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -338,6 +349,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/treatMenuLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -355,6 +367,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/packingLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -372,6 +385,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/parkingFoodLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
