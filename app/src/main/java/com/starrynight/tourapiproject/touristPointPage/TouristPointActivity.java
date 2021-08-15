@@ -5,11 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
@@ -32,6 +37,10 @@ import retrofit2.http.Query;
 
 public class TouristPointActivity extends AppCompatActivity {
 
+    private ViewPager2 slider;
+    private LinearLayout indicator;
+    private String[] images = new String[5];
+
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
     private Query query;
@@ -40,6 +49,24 @@ public class TouristPointActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView (R.layout.activity_touristspot);
+
+        //이미지 슬라이더
+        slider = findViewById(R.id.tpSlider);
+        indicator = findViewById(R.id.tpIndicator);
+
+        slider.setOffscreenPageLimit(3);
+        slider.setAdapter(new TpImageSliderAdapter(this, images));
+
+        slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setCurrentIndicator(position);
+            }
+        });
+        setupIndicators(images.length);
+
+
 
         Post_point_item_Adapter adapter2 =new Post_point_item_Adapter();
         RecyclerView recyclerView1 = findViewById(R.id.nearRecyclerview);
@@ -102,4 +129,41 @@ public class TouristPointActivity extends AppCompatActivity {
                 }
             });
          }
+
+    private void setupIndicators(int count) {
+        ImageView[] indicators = new ImageView[count];
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        params.setMargins(16, 8, 16, 8);
+
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i] = new ImageView(this);
+            indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
+                    R.drawable.post__indicator_inactive));
+            indicators[i].setLayoutParams(params);
+            indicator.addView(indicators[i]);
+        }
+        setCurrentIndicator(0);
     }
+
+
+    private void setCurrentIndicator(int position) {
+        int childCount = indicator.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView imageView = (ImageView) indicator.getChildAt(i);
+            if (i == position) {
+                imageView.setImageDrawable(ContextCompat.getDrawable(
+                        this,
+                        R.drawable.post__indicator_active
+                ));
+            } else {
+                imageView.setImageDrawable(ContextCompat.getDrawable(
+                        this,
+                        R.drawable.post__indicator_inactive
+                ));
+            }
+        }
+    }
+
+}
