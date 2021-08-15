@@ -49,6 +49,13 @@ public class TouristPointActivity extends AppCompatActivity {
     Food foodData;
     Boolean isTp;
 
+    TextView tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
+            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood;
+
+    LinearLayout addressLayout,  telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
+            parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
+
+
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
     private Query query;
@@ -57,6 +64,39 @@ public class TouristPointActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView (R.layout.activity_tourist_point);
+
+        tpTitle = findViewById(R.id.tpTitle);
+        cat3Name = findViewById(R.id.cat3Name);
+        overview= findViewById(R.id.overview);
+        tpAddress = findViewById(R.id.tpAddress);
+        tpTel = findViewById(R.id.tpTel);
+        tpUseTime = findViewById(R.id.tpUseTime);
+        tpRestDate = findViewById(R.id.tpRestDate);
+        tpOpenTimeFood = findViewById(R.id.tpOpenTimeFood);
+        tpRestDateFood = findViewById(R.id.tpRestDateFood);
+        tpExpGuide = findViewById(R.id.tpExpGuide);
+        tpParking = findViewById(R.id.tpParking);
+        tpChkPet = findViewById(R.id.tpChkPet);
+        tpHomePage = findViewById(R.id.tpHomePage);
+        tpFirstMenu = findViewById(R.id.tpFirstMenu);
+        tpTreatMenu = findViewById(R.id.tpTreatMenu);
+        tpPacking = findViewById(R.id.tpPacking);
+        tpParkingFood = findViewById(R.id.tpParkingFood);
+
+        addressLayout = findViewById(R.id.addressLayout);
+        telLayout = findViewById(R.id.telLayout);
+        useTimeLayout = findViewById(R.id.useTimeLayout);
+        restDateLayout = findViewById(R.id.restDateLayout);
+        openTimeFoodLayout = findViewById(R.id.openTimeFoodLayout);
+        restDateFoodLayout = findViewById(R.id.restDateFoodLayout);
+        expGuideLayout = findViewById(R.id.expGuideLayout);
+        parkingLayout = findViewById(R.id.parkingLayout);
+        chkPetLayout = findViewById(R.id.chkPetLayout);
+        homePageLayout = findViewById(R.id.homePageLayout);
+        firstMenuLayout = findViewById(R.id.firstMenuLayout);
+        treatMenuLayout = findViewById(R.id.treatMenuLayout);
+        packingLayout = findViewById(R.id.packingLayout);
+        parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
 
         //이미지 슬라이더
         slider = findViewById(R.id.tpSlider);
@@ -96,6 +136,50 @@ public class TouristPointActivity extends AppCompatActivity {
                                     isTp = true;
                                     tpInfo1.setVisibility(View.VISIBLE);
 
+                                    tpTitle.setText(tpData.getTitle());
+                                    cat3Name.setText(tpData.getCat3Name());
+                                    overview.setText(tpData.getOverview());
+                                    if (!tpData.getAddr1().isEmpty()){
+                                        tpAddress.setText(tpData.getAddr1());
+                                    }else{
+                                        addressLayout.setVisibility(View.GONE);
+                                    }
+                                    if (tpData.getTel() != null){
+                                        tpTel.setText(tpData.getTel());
+                                    }else{
+                                        telLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!tpData.getUseTime().isEmpty()){
+                                        tpUseTime.setText(tpData.getUseTime());
+                                    }else{
+                                        useTimeLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!tpData.getRestDate().isEmpty()){
+                                        tpRestDate.setText(tpData.getRestDate());
+                                    }else{
+                                        restDateLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!tpData.getExpGuide().isEmpty()){
+                                        tpExpGuide.setText(tpData.getExpGuide());
+                                    }else{
+                                        expGuideLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!tpData.getParking().isEmpty()){
+                                        tpParking.setText(tpData.getParking());
+                                    }else{
+                                        parkingLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!tpData.getChkPet().isEmpty()){
+                                        tpChkPet.setText(tpData.getChkPet());
+                                    }else{
+                                        chkPetLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!tpData.getHomePage().isEmpty()){
+                                        tpHomePage.setText(tpData.getHomePage());
+                                    }else{
+                                        homePageLayout.setVisibility(View.GONE);
+                                    }
+
                                 } else {
                                     System.out.println("관광지 타입 불러오기 실패");
                                 }
@@ -116,6 +200,50 @@ public class TouristPointActivity extends AppCompatActivity {
                                     foodData = response.body();
                                     isTp = false;
                                     foodInfo1.setVisibility(View.VISIBLE);
+
+                                    tpTitle.setText(foodData.getTitle());
+                                    cat3Name.setText(foodData.getCat3Name());
+                                    overview.setText(foodData.getOverview());
+                                    if (!foodData.getAddr1().isEmpty()){
+                                        tpAddress.setText(foodData.getAddr1());
+                                    }else{
+                                        addressLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getTel().isEmpty()){
+                                        tpTel.setText(foodData.getTel());
+                                    }else{
+                                        telLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getOpenTimeFood().isEmpty()){
+                                        tpOpenTimeFood.setText(foodData.getOpenTimeFood());
+                                    }else{
+                                        openTimeFoodLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getRestDateFood().isEmpty()){
+                                        tpRestDateFood.setText(foodData.getRestDateFood());
+                                    }else{
+                                        restDateFoodLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getFirstMenu().isEmpty()){
+                                        tpFirstMenu.setText(foodData.getFirstMenu());
+                                    }else{
+                                        firstMenuLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getTreatMenu().isEmpty()){
+                                        tpTreatMenu.setText(foodData.getTreatMenu());
+                                    }else{
+                                        treatMenuLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getPacking().isEmpty()){
+                                        tpPacking.setText(foodData.getPacking());
+                                    }else{
+                                        packingLayout.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getParkingFood().isEmpty()){
+                                        tpParkingFood.setText(foodData.getParkingFood());
+                                    }else{
+                                        parkingFoodLayout.setVisibility(View.GONE);
+                                    }
 
                                 } else {
                                     System.out.println("음식 타입 불러오기 실패");
@@ -145,6 +273,7 @@ public class TouristPointActivity extends AppCompatActivity {
         moreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                moreInfo.setVisibility(View.GONE);
                 if (isTp){
                     tpInfo2.setVisibility(View.VISIBLE);
                 }else{
@@ -152,131 +281,6 @@ public class TouristPointActivity extends AppCompatActivity {
                 }
             }
         });
-
-        TextView tpTitle = findViewById(R.id.tpTitle);
-        TextView cat3Name = findViewById(R.id.cat3Name);
-        TextView overview= findViewById(R.id.overview);
-        TextView tpAddress = findViewById(R.id.tpAddress);
-        TextView tpTel = findViewById(R.id.tpTel);
-        TextView tpUseTime = findViewById(R.id.tpUseTime);
-        TextView tpRestDate = findViewById(R.id.tpRestDate);
-        TextView tpOpenTimeFood = findViewById(R.id.tpOpenTimeFood);
-        TextView tpRestDateFood = findViewById(R.id.tpRestDateFood);
-        TextView tpExpGuide = findViewById(R.id.tpExpGuide);
-        TextView tpParking = findViewById(R.id.tpParking);
-        TextView tpChkPet = findViewById(R.id.tpChkPet);
-        TextView tpHomePage = findViewById(R.id.tpHomePage);
-        TextView tpFirstMenu = findViewById(R.id.tpFirstMenu);
-        TextView tpTreatMenu = findViewById(R.id.tpTreatMenu);
-        TextView tpPacking = findViewById(R.id.tpPacking);
-        TextView tpParkingFood = findViewById(R.id.tpParkingFood);
-
-        LinearLayout addressLayout = findViewById(R.id.addressLayout);
-        LinearLayout telLayout = findViewById(R.id.telLayout);
-        LinearLayout useTimeLayout = findViewById(R.id.useTimeLayout);
-        LinearLayout restDateLayout = findViewById(R.id.restDateLayout);
-        LinearLayout openTimeFoodLayout = findViewById(R.id.openTimeFoodLayout);
-        LinearLayout restDateFoodLayout = findViewById(R.id.restDateFoodLayout);
-        LinearLayout expGuideLayout = findViewById(R.id.expGuideLayout);
-        LinearLayout parkingLayout = findViewById(R.id.parkingLayout);
-        LinearLayout chkPetLayout = findViewById(R.id.chkPetLayout);
-        LinearLayout homePageLayout = findViewById(R.id.homePageLayout);
-        LinearLayout firstMenuLayout = findViewById(R.id.firstMenuLayout);
-        LinearLayout treatMenuLayout = findViewById(R.id.treatMenuLayout);
-        LinearLayout packingLayout = findViewById(R.id.packingLayout);
-        LinearLayout parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
-
-        if(isTp){ //관광지 타입이면
-            tpTitle.setText(tpData.getTitle());
-            cat3Name.setText(tpData.getCat3Name());
-            overview.setText(tpData.getOverview());
-            if (!tpData.getAddr1().isEmpty()){
-                tpAddress.setText(tpData.getAddr1());
-            }else{
-                addressLayout.setVisibility(View.GONE);
-            }
-            if (!tpData.getTel().isEmpty()){
-                tpTel.setText(tpData.getTel());
-            }else{
-                telLayout.setVisibility(View.GONE);
-            }
-            if (!tpData.getUseTime().isEmpty()){
-                tpUseTime.setText(tpData.getUseTime());
-            }else{
-                useTimeLayout.setVisibility(View.GONE);
-            }
-            if (!tpData.getRestDate().isEmpty()){
-                tpRestDate.setText(tpData.getRestDate());
-            }else{
-                restDateLayout.setVisibility(View.GONE);
-            }
-            if (!tpData.getExpGuide().isEmpty()){
-                tpExpGuide.setText(tpData.getExpGuide());
-            }else{
-                expGuideLayout.setVisibility(View.GONE);
-            }
-            if (!tpData.getParking().isEmpty()){
-                tpParking.setText(tpData.getParking());
-            }else{
-                parkingLayout.setVisibility(View.GONE);
-            }
-            if (!tpData.getChkPet().isEmpty()){
-                tpChkPet.setText(tpData.getChkPet());
-            }else{
-                chkPetLayout.setVisibility(View.GONE);
-            }
-            if (!tpData.getHomePage().isEmpty()){
-                tpHomePage.setText(tpData.getHomePage());
-            }else{
-                homePageLayout.setVisibility(View.GONE);
-            }
-        }
-        else{ //음식 타입이면
-            tpTitle.setText(foodData.getTitle());
-            cat3Name.setText(foodData.getCat3Name());
-            overview.setText(foodData.getOverview());
-            if (!foodData.getAddr1().isEmpty()){
-                tpAddress.setText(foodData.getAddr1());
-            }else{
-                addressLayout.setVisibility(View.GONE);
-            }
-            if (!foodData.getTel().isEmpty()){
-                tpTel.setText(foodData.getTel());
-            }else{
-                telLayout.setVisibility(View.GONE);
-            }
-            if (!foodData.getOpenTimeFood().isEmpty()){
-                tpOpenTimeFood.setText(foodData.getOpenTimeFood());
-            }else{
-                openTimeFoodLayout.setVisibility(View.GONE);
-            }
-            if (!foodData.getRestDateFood().isEmpty()){
-                tpRestDateFood.setText(foodData.getRestDateFood());
-            }else{
-                restDateFoodLayout.setVisibility(View.GONE);
-            }
-            if (!foodData.getFirstMenu().isEmpty()){
-                tpFirstMenu.setText(foodData.getFirstMenu());
-            }else{
-                firstMenuLayout.setVisibility(View.GONE);
-            }
-            if (!foodData.getTreatMenu().isEmpty()){
-                tpTreatMenu.setText(foodData.getTreatMenu());
-            }else{
-                treatMenuLayout.setVisibility(View.GONE);
-            }
-            if (!foodData.getPacking().isEmpty()){
-                tpPacking.setText(foodData.getPacking());
-            }else{
-                packingLayout.setVisibility(View.GONE);
-            }
-            if (!foodData.getParkingFood().isEmpty()){
-                tpParkingFood.setText(foodData.getParkingFood());
-            }else{
-                parkingFoodLayout.setVisibility(View.GONE);
-            }
-        }
-
 
 
 
