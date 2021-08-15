@@ -1,6 +1,8 @@
-package com.starrynight.tourapiproject.touristSpotPage;
+package com.starrynight.tourapiproject.touristPointPage.search;
+
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
+
 public class SearchData {
     @SerializedName("documents")
     public List<Document>Searchdocuments;
