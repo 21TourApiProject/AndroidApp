@@ -31,6 +31,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.common.primitives.Longs;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
+import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
@@ -38,6 +40,8 @@ import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObserv
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -297,12 +301,25 @@ public class PostWriteActivity extends AppCompatActivity {
             if(resultCode == 2){
                 System.out.println("관측지가 넘어왔당");
                 postObservePointParams = (PostObservePointParams)data.getSerializableExtra("postObservePointParams");
+                TextView postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
+                postObservePointItem.setText(postObservePointParams.getObservePointName());
             }else{System.out.println("관측지가 안 넘어왔당");}
         }
         if(requestCode == 203){
             if(resultCode == 3){
                 System.out.println("해시태그가 넘어왔당");
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
+                String[] hashTagList = (String[]) data.getSerializableExtra("hashTagList");
+                System.out.println(hashTagList[0]+hashTagList[1]+hashTagList[2]+hashTagList[3]);
+                RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                recyclerView.setLayoutManager(layoutManager);
+                PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
+                for (int i=0;i<hashTagList.length;i++){
+                    adapter.addItem(new PostHashTagItem(hashTagList[i]));
+                    System.out.println(hashTagList[i]);
+                }
+                recyclerView.setAdapter(adapter);
             }else{System.out.println("해시태그가 안 넘어왔당");}
         }
         if (resultCode != RESULT_OK || data == null) {

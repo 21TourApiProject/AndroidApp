@@ -15,6 +15,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/plusHashTag"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:hint="저장" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
