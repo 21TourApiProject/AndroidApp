@@ -144,32 +144,68 @@
                     android:hint="제목을 입력해주세요"
                     android:inputType="textPersonName" />
 
-                <TextView
-                    android:id="@+id/postWrite_observePoint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="관측지" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
 
-                <Button
-                    android:id="@+id/observingPoint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_horizontal"
-                    android:text="관측 지점 검색"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    <TextView
+                        android:id="@+id/postWrite_observePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="관측 위치" />
 
-                <TextView
-                    android:id="@+id/postWrite_hashTag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="해시태그" />
+                    <TextView
+                        android:id="@+id/postObservationItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="10dp"
+                        android:background="#D083DD"
+                        android:hint="관측지역"
+                        android:textSize="18sp" />
 
-                <Button
-                    android:id="@+id/hashTag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_horizontal"
-                    android:text="해시태그 추가" />
+                    <Button
+                        android:id="@+id/observingPoint"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right|center_horizontal"
+                        android:hint=">"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:id="@+id/postWrite_hashTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="해시태그" />
+
+                    <Button
+                        android:id="@+id/hashTag"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right|center_horizontal"
+                        android:hint=">" />
+
+                    <LinearLayout
+                        android:id="@+id/postHashTagLinearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:orientation="horizontal">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/postHashTagrecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            tools:itemCount="5" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <EditText
                     android:id="@+id/postContentText"
