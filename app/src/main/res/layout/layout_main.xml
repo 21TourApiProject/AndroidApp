@@ -7,52 +7,78 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal">
 
-    <ImageView
-        android:id="@+id/layout_image"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/mainpost_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="제목"
-        app:layout_constraintStart_toStartOf="@+id/layout_image"
-        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/mainslider"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
 
-    <TextView
-        android:id="@+id/nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="닉네임"
-        app:layout_constraintBottom_toBottomOf="@id/mainprofileimage"
-        app:layout_constraintStart_toEndOf="@+id/mainprofileimage"
-        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+        </androidx.viewpager2.widget.ViewPager2>
 
-    <ImageView
-        android:id="@+id/mainprofileimage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="@id/layout_image"
-        app:layout_constraintTop_toBottomOf="@+id/mainpost_title" />
+        <LinearLayout
+            android:id="@+id/mainindicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
 
-    <Button
-        android:id="@+id/hash__button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/hash__button2"
-        app:layout_constraintTop_toBottomOf="@+id/mainprofileimage" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/hash__button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/mainprofileimage"
-        app:layout_constraintTop_toBottomOf="@+id/mainprofileimage" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2">
+
+        <TextView
+            android:id="@+id/mainpost_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="제목" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mainprofileimage"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="닉네임" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/hash__button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp" />
+
+            <Button
+                android:id="@+id/hash__button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
