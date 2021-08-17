@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 public class Layout_main extends RelativeLayout {
 
-    ImageView imageView;
     TextView Button;
     TextView Button2;
 
@@ -26,13 +25,10 @@ public class Layout_main extends RelativeLayout {
     public void init (Context context){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.layout_main, this,true);
-        imageView = findViewById(R.id.layout_image);
         Button =findViewById(R.id.hash__button);
         Button2 = findViewById(R.id.hash__button2);
     }
-    public void setImage( int resId){
-        imageView.setImageResource(resId);
-    }
+
     public void setbutton(String hash){
         Button.setText(hash);
     }

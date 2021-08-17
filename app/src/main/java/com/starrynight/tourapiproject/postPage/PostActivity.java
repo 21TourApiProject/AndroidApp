@@ -55,7 +55,7 @@ public class PostActivity extends AppCompatActivity{
         Intent intent = getIntent();
         PostParams postParams = (PostParams)intent.getSerializableExtra("postParams");
         for (int i =0;i<images.length;i++){
-            images[i]="";
+            images[i]="https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg";
         }
 //      앱 내부저장소에 저장된 게시글 아이디 가져오기
         String fileName = "postId";
