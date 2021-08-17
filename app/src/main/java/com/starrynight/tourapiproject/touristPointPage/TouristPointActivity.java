@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
@@ -54,7 +53,7 @@ public class TouristPointActivity extends AppCompatActivity {
     private LinearLayout indicator;
     private String[] images = new String[1];
 
-    Long contentId = 128111L; //일단 하드코딩
+    Long contentId = 127480L; //일단 하드코딩
     String todayDate; //오늘 날짜
 
     TouristPoint tpData;
@@ -206,7 +205,15 @@ public class TouristPointActivity extends AppCompatActivity {
                                         chkPetLayout.setVisibility(View.GONE);
                                     }
                                     if (!tpData.getHomePage().isEmpty()){
-                                        tpHomePage.setText(extractHomePage(tpData.getHomePage()));
+                                        String cleanHomepage = extractHomePage(tpData.getHomePage());
+                                        tpHomePage.setText(cleanHomepage);
+                                        tpHomePage.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(cleanHomepage));
+                                                startActivity(intent);
+                                            }
+                                        });
                                     }else{
                                         homePageLayout.setVisibility(View.GONE);
                                     }
@@ -476,7 +483,7 @@ public class TouristPointActivity extends AppCompatActivity {
                 Long count = (Long)body.get("totalCount");
 
                 if (count == 0){
-                    System.out.println("혼잡도 없음");
+                    System.out.println("혼잡도 데이터 없음");
                 }
                 else {
                     JSONObject items = (JSONObject) body.get("items");
