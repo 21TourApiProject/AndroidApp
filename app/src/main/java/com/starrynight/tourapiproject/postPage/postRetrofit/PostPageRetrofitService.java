@@ -1,7 +1,5 @@
 package com.starrynight.tourapiproject.postPage.postRetrofit;
 
-import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
-
 import java.util.List;
 
 import retrofit2.Call;

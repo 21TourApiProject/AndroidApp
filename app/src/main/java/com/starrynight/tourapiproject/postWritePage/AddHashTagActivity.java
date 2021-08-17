@@ -38,7 +38,7 @@ public class AddHashTagActivity extends AppCompatActivity {
     LinearLayout dynamicLayout2;
     int numOfHT = 0;
     String PostHashTags;
-    String postContent;
+    String[] hashTaglist =new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,19 @@ public class AddHashTagActivity extends AppCompatActivity {
         findHashTag = findViewById(R.id.findHashTag);
         dynamicLayout2 = (LinearLayout)findViewById(R.id.dynamicLayout2);
         Intent intent= getIntent();
-        postContent = (String) intent.getSerializableExtra("postContent");
-        List<PostImageParams>postImageParams = (List<PostImageParams>)intent.getSerializableExtra("postImageParams");
-
+        for (int i = 0;i<hashTaglist.length;i++){
+            hashTaglist[i]="";
+        }
+        Button plusHashTag = findViewById(R.id.plusHashTag);
+        plusHashTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
+                intent.putExtra("hashTagList", (Serializable) hashTaglist);
+                setResult(3,intent);
+                finish();
+            }
+        });
         Button addHashTag = findViewById(R.id.addHashTag);
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,55 +68,18 @@ public class AddHashTagActivity extends AppCompatActivity {
                     addHashTag(findHashTag.getText().toString());
                 }
                 PostHashTags = ((TextView)(findViewById(R.id.findHashTag))).getText().toString();
+                    for (int i=0;i<hashTaglist.length;i++){
+                        if (PostHashTags!=null){
+                            if (hashTaglist[i]==""){
+                            hashTaglist[i]=PostHashTags;
+                            System.out.println(hashTaglist[0]+hashTaglist[1]+hashTaglist[2]+hashTaglist[3]);
+                            break;
+                            }
+                        }
+                    }
                 PostHashTagParams postHashTagParam= new PostHashTagParams();
                 postHashTagParam.setHashTagName(PostHashTags);
                 postHashTagParams.add(postHashTagParam);
-//                Call<Long>call =RetrofitClient.getApiService().createPostHashTag(,postHashTagParams);
-//                call.enqueue(new Callback<Long>() {
-//                    @Override
-//                    public void onResponse(Call<Long> call, Response<Long> response) {
-//                        if (response.isSuccessful()) {
-//                            Long result =response.body();
-//                            if (result != -1L){
-//                            System.out.println("해시태그 생성");
-//                                //앱 내부 저장소에 postId란 이름으로 사용자 id 저장
-//                                String fileName = "postId";
-//                                String postId = result.toString();
-//                                try{
-//                                    FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
-//                                    fos.write(postId.getBytes());
-//                                    fos.close();
-//                                } catch (FileNotFoundException e) {
-//                                    e.printStackTrace();
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }else{System.out.println("시스템 오류");}
-//                        }else {System.out.println("해시태그 생성 실패");}
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Long> call, Throwable t) {
-//                        System.out.println("해시태그 생성 실패2");
-//                    }
-//                });
-//                Call<Void>call1 = RetrofitClient.getApiService().createPostImage(,postImageParams);
-//                call1.enqueue(new Callback<Void>() {
-//                    @Override
-//                    public void onResponse(Call<Void> call, Response<Void> response) {
-//                        if (response.isSuccessful()) {
-//                            System.out.println("이미지 업로드 성공");
-//                        }else {System.out.println("이미지 업로드 실패");}
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Void> call, Throwable t) {
-//                        System.out.println("이미지 업로드 실패 2");
-//                    }
-//                });
-                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
-                setResult(3,intent);
-                finish();
             }
         });
     }

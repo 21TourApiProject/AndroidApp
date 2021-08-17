@@ -2,28 +2,36 @@ package com.starrynight.tourapiproject.postPage.postRetrofit;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class Post {
     @SerializedName("postId")
-    private Long postId;
+    Long postId;
     @SerializedName("postContent")
-    private String postContent;
+    String postContent;
+    @SerializedName("postTitle")
+    String postTitle;
     @SerializedName("yearDate")
-    private LocalDateTime yearDate;
+    String yearDate;
     @SerializedName("time")
-    private LocalDateTime time;
-    @SerializedName("userId")
-    private Long userId;
-    @SerializedName("postObservePointId")
-    private Long postObservePointId;
+    String time;
     @SerializedName("postHashTag")
     List<PostHashTag> postHashTags;
     @SerializedName("postImage")
     List<PostImage> postImages;
+    @SerializedName("userId")
+    Long userId;
+    @SerializedName("postObservePointId")
+    Long postObservePointId;
 
     public Post(){}
+
+    public String getPostTitle() {
+        return postTitle;
+    }
 
     public String getPostContent() {
         return postContent;
@@ -37,12 +45,16 @@ public class Post {
         return postObservePointId;
     }
 
-    public LocalDateTime getYearDate() {
+    public String getYearDate() {
         return yearDate;
     }
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
+    }
+
+    public List<PostImage> getPostImages() {
+        return postImages;
     }
 
     public Long getUserId() {
