@@ -10,8 +10,6 @@ public class TouristPoint {
     private String firstImage; //대표이미지 원본
     @SerializedName("title")
     private String title; //제목
-    //@SerializedName("overviewSimple")
-    //private String overviewSimple; //개요 1줄
     @SerializedName("cat3Name")
     private String cat3Name; //소분류 이름
     @SerializedName("overview")

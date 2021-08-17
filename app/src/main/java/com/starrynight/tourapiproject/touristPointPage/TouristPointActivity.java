@@ -19,8 +19,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.myPage.LeavePopActivity;
-import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
@@ -33,7 +31,15 @@ import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.Food
 import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.TouristPoint;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -46,19 +52,21 @@ public class TouristPointActivity extends AppCompatActivity {
     private ViewPager2 slider;
     private LinearLayout indicator;
     private String[] images = new String[1];
-    Long contentId = 2360786L; //나중에 수정
+
+    Long contentId = 2360786L; //일단 하드코딩
+    String date; //오늘 날짜
+
     TouristPoint tpData;
     Food foodData;
     Boolean isTp;
 
-    TextView tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
+    TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
             tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood;
 
-    LinearLayout addressLayout,  telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
+    LinearLayout congestionLayout, addressLayout,  telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
 
-    String overviewFull;
-
+    String overviewFull; //개요 전체
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
@@ -69,6 +77,16 @@ public class TouristPointActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView (R.layout.activity_tourist_point);
 
+        //오늘 날짜
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        date = sdf.format(cal.getTime());
+        System.out.println(date);
+
+        CongestionThread thread = new CongestionThread();
+        thread.start();
+
+        tpCongestion = findViewById(R.id.tpCongestion);
         tpTitle = findViewById(R.id.tpTitle);
         cat3Name = findViewById(R.id.cat3Name);
         overview= findViewById(R.id.overview);
@@ -87,6 +105,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpPacking = findViewById(R.id.tpPacking);
         tpParkingFood = findViewById(R.id.tpParkingFood);
 
+        congestionLayout = findViewById(R.id.congestionLayout);
         addressLayout = findViewById(R.id.addressLayout);
         telLayout = findViewById(R.id.telLayout);
         useTimeLayout = findViewById(R.id.useTimeLayout);
@@ -105,24 +124,12 @@ public class TouristPointActivity extends AppCompatActivity {
         //이미지 슬라이더
         slider = findViewById(R.id.tpSlider);
         indicator = findViewById(R.id.tpIndicator);
+        slider.setOffscreenPageLimit(images.length);
 
-        slider.setOffscreenPageLimit(3);
-        slider.setAdapter(new TpImageSliderAdapter(this, images));
-
-        slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                setCurrentIndicator(position);
-            }
-        });
-        setupIndicators(images.length);
-
-
+        //관광지 정보 불러오기
         LinearLayout tpInfo1 = findViewById(R.id.tpInfo1);
         LinearLayout foodInfo1 = findViewById(R.id.foodInfo1);
 
-        //관광지 정보 불러오기
         Call<Long> call = RetrofitClient.getApiService().getContentType(contentId);
         call.enqueue(new Callback<Long>() {
             @Override
@@ -140,10 +147,24 @@ public class TouristPointActivity extends AppCompatActivity {
                                     isTp = true;
                                     tpInfo1.setVisibility(View.VISIBLE);
 
+                                    //이미지
+                                    if (tpData.getFirstImage() != null){
+                                        images[0] = tpData.getFirstImage();
+                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, images));
+
+                                        slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                                            @Override
+                                            public void onPageSelected(int position) {
+                                                super.onPageSelected(position);
+                                                setCurrentIndicator(position);
+                                            }
+                                        });
+                                        setupIndicators(images.length);
+                                    }
                                     tpTitle.setText(tpData.getTitle());
                                     cat3Name.setText(tpData.getCat3Name());
                                     String cleanOverview = extractOverview(tpData.getOverview());
-                                    overview.setText(cleanOverview);
+                                    overview.setText(cleanOverview.substring(0,100)+"...");
                                     overviewFull = cleanOverview;
 
                                     if (!tpData.getAddr1().isEmpty()){
@@ -208,10 +229,24 @@ public class TouristPointActivity extends AppCompatActivity {
                                     isTp = false;
                                     foodInfo1.setVisibility(View.VISIBLE);
 
+                                    //이미지
+                                    if (tpData.getFirstImage() != null){
+                                        images[0] = tpData.getFirstImage();
+                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, images));
+
+                                        slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                                            @Override
+                                            public void onPageSelected(int position) {
+                                                super.onPageSelected(position);
+                                                setCurrentIndicator(position);
+                                            }
+                                        });
+                                        setupIndicators(images.length);
+                                    }
                                     tpTitle.setText(foodData.getTitle());
                                     cat3Name.setText(foodData.getCat3Name());
                                     String cleanOverview = extractOverview(foodData.getOverview());
-                                    overview.setText(cleanOverview);
+                                    overview.setText(cleanOverview.substring(0,100)+"...");
                                     overviewFull = cleanOverview;
 
                                     if (!foodData.getAddr1().isEmpty()){
@@ -275,10 +310,12 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout tpInfo2 = findViewById(R.id.tpInfo2);
-        LinearLayout foodInfo2 = findViewById(R.id.foodInfo2);
+
+
 
         //펼치기
+        LinearLayout tpInfo2 = findViewById(R.id.tpInfo2);
+        LinearLayout foodInfo2 = findViewById(R.id.foodInfo2);
         Button moreInfo = findViewById(R.id.moreInfo);
         moreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -416,5 +453,74 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         }
     }
+
+    //예측혼잡도구분코드를 얻기 위한 open api 호출 함수
+    private class CongestionThread extends Thread {
+        private static final String TAG = "CongestionThread";
+        public CongestionThread() {}
+        public void run() {
+            String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
+            String result;
+
+            try {
+                URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/DataLabService/tarDecoList" + key + "&startYmd=" + date + "&endYmd=" + date + "&contentId=" + contentId + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
+                BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
+                bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+                result = bf.readLine(); //api로 받아온 결과
+
+                JSONParser jsonParser = new JSONParser();
+                JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+                JSONObject response = (JSONObject) jsonObject.get("response");
+                JSONObject body = (JSONObject) response.get("body");
+                Long count = (Long)body.get("totalCount");
+
+                if (count == 0){
+                    System.out.println("혼잡도 없음");
+                    congestionLayout.setVisibility(View.GONE);
+                }
+                else {
+                    JSONObject items = (JSONObject) body.get("items");
+                    JSONObject item = (JSONObject) items.get("item");
+                    System.out.println(item.get("estiDecoDivCd"));
+                    String code = (String) item.get("estiDecoDivCd");
+                    bf.close();
+                    congestionLayout.setVisibility(View.VISIBLE);
+                    tpCongestion.setText(code);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+//    //예측혼잡도구분코드를 얻기 위한 open api 호출 함수
+//    public String getCongestion(String date, Long contentId) {
+//
+//        String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
+//        String result = "";
+//
+//        try {
+//            URL url = new URL("http://api.visitkorea.or.kr/openapi/service/DataLabService/tarDecoList" + key + "&startYmd=" + date + "&endYmd=" + date + "&contentId=" + contentId + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
+//            BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
+//            bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+//            result = bf.readLine(); //api로 받아온 결과
+//
+//            JSONParser jsonParser = new JSONParser();
+//            JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+//            JSONObject response = (JSONObject) jsonObject.get("response");
+//            JSONObject body = (JSONObject) response.get("body");
+//            JSONObject items = (JSONObject) body.get("items");
+//            JSONObject item = (JSONObject) items.get("item");
+//            System.out.println(item.get("estiDecoDivCd"));
+//            String code = (String) item.get("estiDecoDivCd") ;
+//            bf.close();
+//            return code;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
 }
