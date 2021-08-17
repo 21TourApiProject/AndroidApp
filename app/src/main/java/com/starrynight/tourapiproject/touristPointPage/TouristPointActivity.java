@@ -54,7 +54,7 @@ public class TouristPointActivity extends AppCompatActivity {
     private String[] images = new String[1];
 
     Long contentId = 2360786L; //일단 하드코딩
-    String date; //오늘 날짜
+    String todayDate; //오늘 날짜
 
     TouristPoint tpData;
     Food foodData;
@@ -80,9 +80,10 @@ public class TouristPointActivity extends AppCompatActivity {
         //오늘 날짜
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        date = sdf.format(cal.getTime());
-        System.out.println(date);
+        todayDate = sdf.format(cal.getTime());
+        System.out.println(todayDate);
 
+        //혼잡도 구하기
         CongestionThread thread = new CongestionThread();
         thread.start();
 
@@ -311,8 +312,6 @@ public class TouristPointActivity extends AppCompatActivity {
         });
 
 
-
-
         //펼치기
         LinearLayout tpInfo2 = findViewById(R.id.tpInfo2);
         LinearLayout foodInfo2 = findViewById(R.id.foodInfo2);
@@ -463,7 +462,7 @@ public class TouristPointActivity extends AppCompatActivity {
             String result;
 
             try {
-                URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/DataLabService/tarDecoList" + key + "&startYmd=" + date + "&endYmd=" + date + "&contentId=" + contentId + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
+                URL url = new URL("http://api.visitkorea.or.kr/openapi/service/rest/DataLabService/tarDecoList" + key + "&startYmd=" + todayDate + "&endYmd=" + todayDate + "&contentId=" + contentId + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
                 BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
                 bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 result = bf.readLine(); //api로 받아온 결과
@@ -493,34 +492,4 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         }
     }
-
-//    //예측혼잡도구분코드를 얻기 위한 open api 호출 함수
-//    public String getCongestion(String date, Long contentId) {
-//
-//        String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
-//        String result = "";
-//
-//        try {
-//            URL url = new URL("http://api.visitkorea.or.kr/openapi/service/DataLabService/tarDecoList" + key + "&startYmd=" + date + "&endYmd=" + date + "&contentId=" + contentId + "&MobileOS=AND&MobileApp=tourApiProject&_type=json");
-//            BufferedReader bf; //빠른 속도로 데이터를 처리하기 위해
-//            bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-//            result = bf.readLine(); //api로 받아온 결과
-//
-//            JSONParser jsonParser = new JSONParser();
-//            JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
-//            JSONObject response = (JSONObject) jsonObject.get("response");
-//            JSONObject body = (JSONObject) response.get("body");
-//            JSONObject items = (JSONObject) body.get("items");
-//            JSONObject item = (JSONObject) items.get("item");
-//            System.out.println(item.get("estiDecoDivCd"));
-//            String code = (String) item.get("estiDecoDivCd") ;
-//            bf.close();
-//            return code;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
 }
