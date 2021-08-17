@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
@@ -53,7 +54,7 @@ public class TouristPointActivity extends AppCompatActivity {
     private LinearLayout indicator;
     private String[] images = new String[1];
 
-    Long contentId = 2360786L; //일단 하드코딩
+    Long contentId = 128111L; //일단 하드코딩
     String todayDate; //오늘 날짜
 
     TouristPoint tpData;
@@ -121,6 +122,7 @@ public class TouristPointActivity extends AppCompatActivity {
         treatMenuLayout = findViewById(R.id.treatMenuLayout);
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
+
 
         //이미지 슬라이더
         slider = findViewById(R.id.tpSlider);
@@ -453,7 +455,7 @@ public class TouristPointActivity extends AppCompatActivity {
         }
     }
 
-    //예측혼잡도구분코드를 얻기 위한 open api 호출 함수
+    //예측혼잡도구분코드를 얻기 위한 open api 호출
     private class CongestionThread extends Thread {
         private static final String TAG = "CongestionThread";
         public CongestionThread() {}
@@ -475,16 +477,20 @@ public class TouristPointActivity extends AppCompatActivity {
 
                 if (count == 0){
                     System.out.println("혼잡도 없음");
-                    congestionLayout.setVisibility(View.GONE);
                 }
                 else {
                     JSONObject items = (JSONObject) body.get("items");
                     JSONObject item = (JSONObject) items.get("item");
-                    System.out.println(item.get("estiDecoDivCd"));
-                    String code = (String) item.get("estiDecoDivCd");
+                    Long code = (Long) item.get("estiDecoDivCd");
                     bf.close();
-                    congestionLayout.setVisibility(View.VISIBLE);
-                    tpCongestion.setText(code);
+                    System.out.println("code = " + code);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            congestionLayout.setVisibility(View.VISIBLE);
+                            tpCongestion.setText(Long.toString(code));
+                        }
+                    });
                 }
 
             } catch (Exception e) {
