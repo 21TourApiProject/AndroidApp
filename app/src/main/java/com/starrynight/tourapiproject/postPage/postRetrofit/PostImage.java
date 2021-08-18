@@ -9,8 +9,6 @@ public class PostImage {
     private Post post;
     @SerializedName("postId")
     private Long postId;
-    @SerializedName("imageId")
-    private Long imageId;
     @SerializedName("imageName")
     private String imageName;
     public PostImage(){}

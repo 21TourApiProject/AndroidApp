@@ -49,11 +49,10 @@
         <activity android:name=".signUpPage.SignUpActivity" />
         <activity android:name=".starPage.StarActivity" />
         <activity android:name=".ObservationsiteActivity" />
-        <activity android:name=".touristSpotPage.TouristreviewActivity" />
-        <activity android:name=".touristSpotPage.MoretouristspotActivity" />
+        <activity android:name=".touristPointPage.TPReviewActivity" />
         <activity android:name=".weatherPage.WeatherActivity" />
         <activity android:name=".myPage.ChangeProfileActivity" />
-        <activity android:name=".touristSpotPage.Touristspot_Activity" />
+        <activity android:name=".touristPointPage.TouristPointActivity" />
         <activity android:name=".postPage.PostActivity" />
         <activity android:name=".postWritePage.PostWriteActivity" />
         <activity android:name=".postWritePage.SearchObservingPointActivity" />

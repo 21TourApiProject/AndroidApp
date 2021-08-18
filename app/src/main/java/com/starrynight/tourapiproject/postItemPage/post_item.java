@@ -7,26 +7,24 @@ public class post_item {
     String hash2;
     String title;
     String nickname;
-    String review;
-    String image;
+    String[] images;
     String image2;
 
-    public post_item(String hash, String hash2, String title, String nickname, String review,String image, String image2) {
+    public post_item(String hash, String hash2, String title, String nickname,String[] images, String image2) {
         this.hash = hash;
         this.hash2 = hash2;
         this.title = title;
         this.nickname = nickname;
-        this.review = review;
-        this.image = image;
+        this.images = images;
         this.image2= image2;
     }
 
-    public String getImage() {
-        return image;
+    public String[] getImages() {
+        return images;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImages(String[] images) {
+        this.images = images;
     }
 
     public String getImage2() {
@@ -51,14 +49,6 @@ public class post_item {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 
     public String getHash() {
