@@ -1,42 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7" />
+
+            <Button
+                android:id="@+id/test_map"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:hint="지도" />
+
+            <Button
+                android:id="@+id/filter_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:hint="필터" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/txt_test"
+            android:id="@+id/nightpointText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hello_search_fragment" />
-        <Button
-            android:id="@+id/test_map"
-            android:text="지도"
+            android:hint="요즘 핫한 밤하늘 명소" />
+
+        <LinearLayout
+            android:id="@+id/nightpointLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nightpointRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="10" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/distancepointText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_below="@+id/txt_test"/>
+            android:hint="나와 가까운 밤하늘 명소" />
 
-        <Button
-            android:id="@+id/Touristspot_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/distancepointLinear"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/test_map"
-            android:text="관광지" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/observation_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Touristspot_button"
-            android:text="관측지" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/distancepointRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="10">
 
-    </RelativeLayout>
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
 
-</FrameLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

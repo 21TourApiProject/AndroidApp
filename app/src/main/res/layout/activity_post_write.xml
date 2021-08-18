@@ -21,7 +21,29 @@
 <!--                android:layout_height="150dp"-->
 <!--                android:layout_marginTop="40dp">-->
 
-                <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/postWrite_back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/back_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:text="저장"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
                     android:id="@+id/dynamicLayout"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
@@ -64,7 +86,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="300dp"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal">
 
                 <TextView
@@ -102,48 +124,100 @@
                 android:text="당시 별 관측 적합도 : 좋음/나쁨으로 표시"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/postContentText"
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="1dp"
-                android:background="@drawable/post_write__edge"
-                android:ems="0"
-                android:hint="내용을 입력해주세요."
-                android:inputType="textLongMessage" />
-
-            <Button
-                android:id="@+id/observingPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:text="관측 지점 검색"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/observeFit_text"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/hashTag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:text="해시태그 추가" />
+                <TextView
+                    android:id="@+id/postWriteTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="제목" />
 
-            <Button
-                android:id="@+id/save"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="60dp"
-                android:text="저장" />
+                <EditText
+                    android:id="@+id/postWrite_titleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ems="20"
+                    android:hint="제목을 입력해주세요"
+                    android:inputType="textPersonName" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:id="@+id/postWrite_observePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="관측 위치" />
+
+                    <TextView
+                        android:id="@+id/postObservationItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginStart="10dp"
+                        android:background="#D083DD"
+                        android:hint="관측지역"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/observingPoint"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right|center_horizontal"
+                        android:hint=">"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:id="@+id/postWrite_hashTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="해시태그" />
+
+                    <Button
+                        android:id="@+id/hashTag"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right|center_horizontal"
+                        android:hint=">" />
+
+                    <LinearLayout
+                        android:id="@+id/postHashTagLinearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:orientation="horizontal">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/postHashTagrecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            tools:itemCount="5" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/postContentText"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="1dp"
+                    android:background="@drawable/post_write__edge"
+                    android:ems="0"
+                    android:hint="내용을 입력해주세요."
+                    android:inputType="textLongMessage" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -18,38 +18,103 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.POST;
+
+import static android.graphics.BitmapFactory.decodeFile;
 
 public class PostActivity extends AppCompatActivity{
     private ViewPager2 sliderViewPager;
     private LinearLayout indicator;
     Post post;
-    ImageView postImage;
+    Long postId;
     TextView postTitle;
     TextView postContent;
+    TextView postTime;
+    TextView postDate;
+    List<PostImage>postImages;
+    ImageView postImage;
 
-    private String[] images = new String[] {
-            "https://cdn.pixabay.com/photo/2020/09/02/18/03/girl-5539094_1280.jpg",
-            "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg",
-            "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg",
-            "https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg"
-    };
-
+    private String[] images = new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         Intent intent = getIntent();
         PostParams postParams = (PostParams)intent.getSerializableExtra("postParams");
+        for (int i =0;i<images.length;i++){
+            images[i]="https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg";
+        }
+//      앱 내부저장소에 저장된 게시글 아이디 가져오기
+        String fileName = "postId";
+        try{
+            FileInputStream fis = openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            postId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("postId = " + postId);
+        //게시물 이미지 가져오는 get api
+        Call<List<String>>call = RetrofitClient.getApiService().getPostImage(postId);
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("이미지 업로드 성공"+response.body());
+                    List<String> result = response.body();
+                    for (int i=0; i< images.length;i++){
+                            for (String name :result){
+                                images[i]=name;
+                            }
+                    }
+                }else{System.out.println("이미지 업로드 실패");}
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                System.out.println("이미지 업로드 실패 2");
+            }
+        });
 
         postTitle =findViewById(R.id.observeSpot);
         postContent=findViewById(R.id.postContent);
+        postTime = findViewById(R.id.postTime);
+        postDate = findViewById(R.id.postDate);
+        //게시물 정보가져오는 get api
+        Call<Post>call1 = RetrofitClient.getApiService().getPost(postId);
+        call1.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (response.isSuccessful()){
+                    System.out.println("게시물 정보 가져옴");
+                    post = response.body();
+                    postTitle.setText(post.getPostTitle());
+                    postContent.setText(post.getPostContent());
+                    postTime.setText(post.getTime());
+                    postDate.setText(post.getYearDate());
+                }else{System.out.println("게시물 실패");}
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                System.out.println("게시물 실패 2");
+            }
+        });
 
         sliderViewPager = findViewById(R.id.slider);
         indicator = findViewById(R.id.indicator);
