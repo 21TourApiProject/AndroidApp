@@ -11,15 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.touristPointPage.search.SearchData;
 import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.Near;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
-    ArrayList<Near> items = new ArrayList<Near>();
+    private static List<Near> items;
     OnNearItemClickListener listener;
 
-    //아래는 NearAdapter.ViewHolder를 상속했을 때 필수 구현해야하는 3개의 함수
+    public NearAdapter(List<Near> items){
+        this.items = items;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -39,7 +44,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items == null ? 0 :items.size();
     }
 
 
