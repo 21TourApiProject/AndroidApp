@@ -364,7 +364,14 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     System.out.println("주변 관광지 불러오기 성공");
                     nearResult = response.body();
-                    NearAdapter nearAdapter = new NearAdapter(nearResult);
+                    int len = nearResult.size();
+                    System.out.println("len = " + len);
+                    String[] nearImages = new String[len];
+                    for(int i=0; i<len; i++){
+                        nearImages[i] = nearResult.get(i).getFirstImage();
+                    }
+
+                    NearAdapter nearAdapter = new NearAdapter(nearResult, nearImages,TouristPointActivity.this);
                     nearRecyclerview.setAdapter(nearAdapter);
                     nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener(){
                         @Override

@@ -7,10 +7,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -22,9 +20,9 @@
                 android:id="@+id/nearImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="5"
-                app:srcCompat="@android:drawable/sym_def_app_icon" />
+                android:layout_margin="5dp"
+                android:layout_weight="6"
+                android:scaleType="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:text="제목"
                     android:textColor="#0000FF"
-                    android:textSize="15sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
