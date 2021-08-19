@@ -25,6 +25,7 @@ import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
  */
 public class MainFragment extends Fragment {
     Layout_main layout_main;
+    private String[] image = new String[10];
 
     public MainFragment() {
         // Required empty public constructor
@@ -50,6 +51,9 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
+        for (int i =0;i<image.length;i++){
+            image[i]="/data/user/0/com.starrynight.tourapiproject/files/postImage.jpg";
+        }
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -57,16 +61,15 @@ public class MainFragment extends Fragment {
         Post_item_adapter adapter = new Post_item_adapter();
         recyclerView.setAdapter(adapter);
 
-        adapter.addItem(new post_item(" #hash","#hash2","제목1","닉네임1","https://cdn.pixabay.com/photo/2017/05/27/06/18/starry-sky-2347801_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash3","#hash4","제목2","닉네임2","https://cdn.pixabay.com/photo/2017/10/09/09/26/the-atacama-desert-2832866_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash5","#hash6","제목3","닉네임3","https://cdn.pixabay.com/photo/2018/12/06/02/00/the-milky-way-3859013_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash7.","#hash8","제목4","닉네임4","https://cdn.pixabay.com/photo/2017/02/14/11/47/natural-2065714_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+        adapter.addItem(new post_item(" #hash","#hash2","제목1","닉네임1", image ,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+        adapter.addItem(new post_item(" #hash3","#hash4","제목2","닉네임2",image,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+        adapter.addItem(new post_item(" #hash5","#hash6","제목3","닉네임3",image,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+        adapter.addItem(new post_item(" #hash7.","#hash8","제목4","닉네임4",image,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
         adapter.setOnItemClicklistener(new OnPostItemClickListener() {
             @Override
             public void onItemClick(Post_item_adapter.ViewHolder holder, View view, int position) {
                 Intent intent = new Intent(getActivity(), PostActivity.class);
                 startActivity(intent);
-                getActivity().finish();
             }
         });
         recyclerView.setAdapter((adapter));
