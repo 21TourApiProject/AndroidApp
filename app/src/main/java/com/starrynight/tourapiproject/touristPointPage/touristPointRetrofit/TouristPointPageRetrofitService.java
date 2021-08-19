@@ -1,5 +1,7 @@
 package com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -14,4 +16,8 @@ public interface TouristPointPageRetrofitService {
 
     @GET("touristData/food/{contentId}")
     Call<Food> getFoodData(@Path("contentId") Long contentId);
+
+    @GET("nearTouristData/{contentId}")
+    Call<List<Near>> getNearTouristPointData(@Path("contentId") Long contentId);
+
 }
