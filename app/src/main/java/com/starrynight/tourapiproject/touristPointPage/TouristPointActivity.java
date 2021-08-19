@@ -58,7 +58,7 @@ public class TouristPointActivity extends AppCompatActivity {
     Food foodData;
     Boolean isTp;
 
-    TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
+    TextView tpCongestion, tpTitle, tpOverviewSimple, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
             tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood;
 
     LinearLayout congestionLayout, addressLayout,  telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
@@ -66,7 +66,7 @@ public class TouristPointActivity extends AppCompatActivity {
 
     String overviewFull; //개요 전체
 
-    List<Near> nearResult = new ArrayList<>();
+    List<Near> nearResult;
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
@@ -89,6 +89,7 @@ public class TouristPointActivity extends AppCompatActivity {
 
         tpCongestion = findViewById(R.id.tpCongestion);
         tpTitle = findViewById(R.id.tpTitle);
+        tpOverviewSimple = findViewById(R.id.tpOverviewSimple);
         cat3Name = findViewById(R.id.cat3Name);
         overview= findViewById(R.id.overview);
         tpAddress = findViewById(R.id.tpAddress);
@@ -128,6 +129,7 @@ public class TouristPointActivity extends AppCompatActivity {
         indicator = findViewById(R.id.tpIndicator);
         slider.setOffscreenPageLimit(images.length);
 
+
         //관광지 정보 불러오기
         LinearLayout tpInfo1 = findViewById(R.id.tpInfo1);
         LinearLayout foodInfo1 = findViewById(R.id.foodInfo1);
@@ -164,10 +166,10 @@ public class TouristPointActivity extends AppCompatActivity {
                                         setupIndicators(images.length);
                                     }
                                     tpTitle.setText(tpData.getTitle());
+                                    tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
                                     cat3Name.setText(tpData.getCat3Name());
-                                    String cleanOverview = extractOverview(tpData.getOverview());
-                                    overview.setText(cleanOverview.substring(0,100)+"...");
-                                    overviewFull = cleanOverview;
+                                    overview.setText(tpData.getOverview().substring(0,100) + "...");
+                                    overviewFull = tpData.getOverview();
 
                                     if (!tpData.getAddr1().isEmpty()){
                                         tpAddress.setText(tpData.getAddr1());
@@ -205,7 +207,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                         chkPetLayout.setVisibility(View.GONE);
                                     }
                                     if (!tpData.getHomePage().isEmpty()){
-                                        String cleanHomepage = extractHomePage(tpData.getHomePage());
+                                        String cleanHomepage = tpData.getHomePage();
                                         tpHomePage.setText(cleanHomepage);
                                         tpHomePage.setOnClickListener(new View.OnClickListener() {
                                             @Override
@@ -254,10 +256,10 @@ public class TouristPointActivity extends AppCompatActivity {
                                         setupIndicators(images.length);
                                     }
                                     tpTitle.setText(foodData.getTitle());
+                                    tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
                                     cat3Name.setText(foodData.getCat3Name());
-                                    String cleanOverview = extractOverview(foodData.getOverview());
-                                    overview.setText(cleanOverview.substring(0,100)+"...");
-                                    overviewFull = cleanOverview;
+                                    overview.setText(foodData.getOverview().substring(0,100) + "...");
+                                    overviewFull = foodData.getOverview();
 
                                     if (!foodData.getAddr1().isEmpty()){
                                         tpAddress.setText(foodData.getAddr1());
@@ -349,12 +351,28 @@ public class TouristPointActivity extends AppCompatActivity {
         });
 
         //주변에 가볼만한 곳
+        RecyclerView nearRecyclerview = findViewById(R.id.nearRecyclerview);
+        LinearLayoutManager nearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        nearRecyclerview.setLayoutManager(nearLayoutManager);
+        nearRecyclerview.setHasFixedSize(true);
+        nearResult = new ArrayList<>();
+
         Call<List<Near>> call2 = RetrofitClient.getApiService().getNearTouristPointData(contentId);
         call2.enqueue(new Callback<List<Near>>() {
             @Override
             public void onResponse(Call<List<Near>> call, Response<List<Near>> response) {
                 if (response.isSuccessful()) {
+                    System.out.println("주변 관광지 불러오기 성공");
                     nearResult = response.body();
+                    NearAdapter nearAdapter = new NearAdapter(nearResult);
+                    nearRecyclerview.setAdapter(nearAdapter);
+                    nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener(){
+                        @Override
+                        public void onItemClick(NearAdapter.ViewHolder holder, View view, int position) {
+                            Near item = nearAdapter.getItem(position);
+                            Toast.makeText(getApplicationContext(), "아이템 선택됨 : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } else {
                     System.out.println("주변 관광지 불러오기 실패");
                 }
@@ -362,26 +380,6 @@ public class TouristPointActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Near>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
-            }
-        });
-
-        RecyclerView nearRecyclerview = findViewById(R.id.nearRecyclerview);
-        LinearLayoutManager nearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        nearRecyclerview.setLayoutManager(nearLayoutManager);
-
-        NearAdapter nearAdapter = new NearAdapter();
-
-        for (Near near : nearResult){
-            nearAdapter.addItem(near);
-        }
-
-        nearRecyclerview.setAdapter(nearAdapter);
-
-        nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener(){
-            @Override
-            public void onItemClick(NearAdapter.ViewHolder holder, View view, int position) {
-                Near item = nearAdapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "아이템 선택됨 : " + item.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -426,21 +424,6 @@ public class TouristPointActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-    }
-
-    private String extractHomePage(String url){
-        int start = url.indexOf("href=\"");
-        int end = url.indexOf("\"", start+6);
-        return url.substring(start+6, end);
-    }
-
-    private String extractOverview(String overview){
-        overview = overview.replaceAll("<br>","");
-        overview = overview.replaceAll("<br />"," ");
-        overview = overview.replaceAll("<br/>"," ");
-        overview = overview.replaceAll("<strong>","");
-        overview = overview.replaceAll("</strong>","");
-        return overview;
     }
 
     private void setupIndicators(int count) {
