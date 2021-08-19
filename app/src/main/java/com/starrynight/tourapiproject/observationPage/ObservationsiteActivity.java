@@ -1,8 +1,9 @@
-package com.starrynight.tourapiproject;
+package com.starrynight.tourapiproject.observationPage;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,17 +13,51 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ObservationsiteActivity extends AppCompatActivity {
+
+    private static final String TAG = "observation ";
+    Observation observation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observationsite);
+
+
+        long observationId = 1;
+
+        Call<Observation> call = RetrofitClient.getApiService().getObservation(observationId);
+        call.enqueue(new Callback<Observation>() {
+            @Override
+            public void onResponse(Call<Observation> call, Response<Observation> response) {
+                if(response.isSuccessful()){
+                    Log.d(TAG, "광측지 호출 성공");
+                    observation = response.body();
+
+                } else{
+                    Log.e(TAG, "관측지 호출 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Observation> call, Throwable t) {
+                Log.e(TAG, "연결실패"+t.getMessage());
+            }
+
+        });
 
         RecyclerView recyclerView = findViewById(R.id.obv_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
