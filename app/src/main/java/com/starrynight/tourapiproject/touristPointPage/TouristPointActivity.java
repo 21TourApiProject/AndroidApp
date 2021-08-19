@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -17,17 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.starrynight.tourapiproject.ObservationsiteActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
-import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
-import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.touristPointPage.search.OnSearchItemClickListener;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchAdapter;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchData;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchOpenApi;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchRetrofitFactory;
 import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.Food;
+import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.Near;
 import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.TouristPoint;
 
@@ -67,6 +65,8 @@ public class TouristPointActivity extends AppCompatActivity {
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
 
     String overviewFull; //개요 전체
+
+    List<Near> nearResult = new ArrayList<>();
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
@@ -348,28 +348,45 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         });
 
-
-        Post_point_item_Adapter adapter2 =new Post_point_item_Adapter();
-        RecyclerView recyclerView1 = findViewById(R.id.nearRecyclerview);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView1.setLayoutManager(layoutManager1);
-
-        recyclerView1.setAdapter(adapter2);
-
-        adapter2.addItem(new post_point_item("관광지1","https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
-        adapter2.addItem(new post_point_item("관광지2","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
-        adapter2.addItem(new post_point_item("관광지3","https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
-        adapter2.setOnItemClicklistener(new OnPostPointItemClickListener() {
+        //주변에 가볼만한 곳
+        Call<List<Near>> call2 = RetrofitClient.getApiService().getNearTouristPointData(contentId);
+        call2.enqueue(new Callback<List<Near>>() {
             @Override
-            public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
-                Intent intent = new Intent(getApplicationContext(), ObservationsiteActivity.class);
-                startActivity(intent);
-                finish();
+            public void onResponse(Call<List<Near>> call, Response<List<Near>> response) {
+                if (response.isSuccessful()) {
+                    nearResult = response.body();
+                } else {
+                    System.out.println("주변 관광지 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Near>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
             }
         });
 
-        recyclerView1.setAdapter((adapter2));
+        RecyclerView nearRecyclerview = findViewById(R.id.nearRecyclerview);
+        LinearLayoutManager nearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        nearRecyclerview.setLayoutManager(nearLayoutManager);
 
+        NearAdapter nearAdapter = new NearAdapter();
+
+        for (Near near : nearResult){
+            nearAdapter.addItem(near);
+        }
+
+        nearRecyclerview.setAdapter(nearAdapter);
+
+        nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener(){
+            @Override
+            public void onItemClick(NearAdapter.ViewHolder holder, View view, int position) {
+                Near item = nearAdapter.getItem(position);
+                Toast.makeText(getApplicationContext(), "아이템 선택됨 : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        //다음 블로그 검색결과
         RecyclerView recyclerView2 = findViewById(R.id.daumRecyclerview);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView2.setLayoutManager(layoutManager2);
