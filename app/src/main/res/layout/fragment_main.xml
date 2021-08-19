@@ -17,22 +17,32 @@
 
         <Button
             android:id="@+id/weather_button"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="날씨" />
+            android:layout_weight="1"
+            android:hint="날씨" />
 
         <TextView
             android:id="@+id/starryNightTitle"
-            android:layout_width="288dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="7"
             android:text="별헤는밤"
             android:textAlignment="center"
             android:textSize="24sp" />
 
         <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="알림" />
+
+        <Button
             android:id="@+id/postWrite"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/post_plus__button" />
     </LinearLayout>
 
