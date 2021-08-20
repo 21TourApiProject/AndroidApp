@@ -1,7 +1,6 @@
 package com.starrynight.tourapiproject.postWritePage;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
@@ -10,14 +9,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,27 +23,26 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Task;
-import com.google.common.primitives.Longs;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
-import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -295,6 +290,7 @@ public class PostWriteActivity extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 202){
@@ -401,6 +397,7 @@ public class PostWriteActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addImages(ArrayList<Uri> uris) {
         for (Uri uri : uris){
             numOfPicture ++;
@@ -408,12 +405,12 @@ public class PostWriteActivity extends AppCompatActivity {
 //                InputStream in = getContentResolver().openInputStream(uri);
 //                Bitmap img = BitmapFactory.decodeStream(in);
 //                in.close();
-
                 Bitmap img = resize(this, uri, 75); //해상도 최대로 하고싶으면 100으로
+                Bitmap roateImage1 = rotateImage(uri,img);
                 System.out.println("img = " + img);
-                adapter.addItem(new SelectImage(img, numOfPicture));
+                adapter.addItem(new SelectImage(roateImage1, numOfPicture));
                 recyclerView.setAdapter(adapter);
-                String File = BitmapToFile(img,"postImage");
+                String File = BitmapToFile(roateImage1,"postImage");
                 postImage = File;
                 PostImageParams postImageParam = new PostImageParams();
                 postImageParam.setImageName(postImage);
@@ -438,6 +435,24 @@ public class PostWriteActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod2, 15, 24, false);
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
+    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private Bitmap rotateImage(Uri uri,Bitmap bitmap)throws IOException{
+        InputStream in = getContentResolver().openInputStream(uri);
+        ExifInterface exif = new ExifInterface(in);
+        in.close();
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL);
+        Matrix matrix = new Matrix();
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90){
+            matrix.postRotate(90);
+        }
+        else if (orientation == ExifInterface.ORIENTATION_ROTATE_180){
+            matrix.postRotate(180);
+        }
+        else if (orientation == ExifInterface.ORIENTATION_ROTATE_270){
+            matrix.postRotate(270);
+        }
+        return Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
     }
 
     private Bitmap resize(Context context, Uri uri, int resize){
