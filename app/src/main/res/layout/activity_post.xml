@@ -85,30 +85,24 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/postObserveLinear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/hashTag_btn"
+                    android:id="@+id/postObservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="hashtag1" />
+                    android:hint="관측지" />
 
-                <Button
-                    android:id="@+id/hashTag_btn2"
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hashTagRecyclerView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="hashTag2" />
+                    android:orientation="horizontal"
+                    tools:itemCount="4" />
 
-                <Button
-                    android:id="@+id/hashTag_btn3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="hashTag3" />
             </LinearLayout>
 
             <TextView
