@@ -34,6 +34,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.mImageView.setImageBitmap(decodeFile(sliderImage[position]));
+        holder.mImageView.setAdjustViewBounds(true);
     }
 
     @Override
