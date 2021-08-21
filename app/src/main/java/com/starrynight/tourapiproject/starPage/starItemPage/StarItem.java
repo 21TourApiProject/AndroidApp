@@ -12,9 +12,6 @@ public class StarItem {
     @SerializedName("constImage")
     private String constImage;
 
-    public StarItem() {
-    }
-
     public StarItem(Long constId, String constName, String constImage) {
         this.constId = constId;
         this.constName = constName;

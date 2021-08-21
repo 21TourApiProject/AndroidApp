@@ -44,7 +44,6 @@ public class Constellation {
     public Constellation() {
     }
 
-    ;
 
 //    public Constellation(Long constId, String constName, String constImage){
 //        this.constId = constId;
