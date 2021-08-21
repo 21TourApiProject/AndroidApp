@@ -20,6 +20,30 @@ public class StarViewAdapter extends RecyclerView.Adapter<StarViewAdapter.ViewHo
     ArrayList<StarItem> items = new ArrayList<>();
     OnStarItemClickListener listener;
 
+    @NotNull
+    @Override
+    public StarViewAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.star__custom_grid_layout, parent, false);
+
+        return new ViewHolder(view, listener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull @NotNull ViewHolder viewHolder, int position) {
+        StarItem item = items.get(position);
+        viewHolder.setItem(item);
+        Glide.with(viewHolder.itemView.getContext())
+                .load(item.getConstImage())
+                .into(viewHolder.constImage);
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
     public void addItem(StarItem item) {
         items.add(item);
     }
@@ -32,43 +56,19 @@ public class StarViewAdapter extends RecyclerView.Adapter<StarViewAdapter.ViewHo
         return items.get(position);
     }
 
-    @NonNull
-    @NotNull
-    @Override
-
-    public StarViewAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.star__custom_grid_layout, parent, false);
-        return new ViewHolder(view, listener);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder viewHolder, int position) {
-        StarItem item = items.get(position);
-        viewHolder.setItem(item);
-        Glide.with(viewHolder.itemView.getContext())
-                .load(item.getCelImage())
-                .into(viewHolder.celImage);
-    }
-
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
     public void setOnItemClickListener(OnStarItemClickListener listener) {
         this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView celTxt;
-        ImageView celImage;
+        TextView constName;
+        ImageView constImage;
 
         public ViewHolder(View itemView, final OnStarItemClickListener listener) {
             super(itemView);
 
-            celImage = itemView.findViewById(R.id.cel_image);
-            celTxt = itemView.findViewById(R.id.cel_txt);
+            constImage = itemView.findViewById(R.id.const_image);
+            constName = itemView.findViewById(R.id.const_name);
 
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +84,7 @@ public class StarViewAdapter extends RecyclerView.Adapter<StarViewAdapter.ViewHo
         }
 
         public void setItem(StarItem item) {
-            celTxt.setText(item.getCelName());
+            constName.setText(item.getConstName());
         }
     }
 }
