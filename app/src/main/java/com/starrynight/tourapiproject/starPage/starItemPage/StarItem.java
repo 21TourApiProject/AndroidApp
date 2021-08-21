@@ -1,27 +1,44 @@
 package com.starrynight.tourapiproject.starPage.starItemPage;
 
+import com.google.gson.annotations.SerializedName;
+
 public class StarItem {
-    String celName;
-    String celImage;
+    @SerializedName("constId")
+    private Long constId;
 
-    public StarItem(String celName,String celImage) {
-        this.celName = celName;
-        this.celImage= celImage;
+    @SerializedName("constName")
+    private String constName;
+
+    @SerializedName("constImage")
+    private String constImage;
+
+    public StarItem(Long constId, String constName, String constImage) {
+        this.constId = constId;
+        this.constName = constName;
+        this.constImage = constImage;
     }
 
-    public String getCelName() {
-        return celName;
+    public void setConstId(Long constId) {
+        this.constId = constId;
     }
 
-    public void setCelName(String celName) {
-        this.celName = celName;
+    public Long getConstId() {
+        return constId;
     }
 
-    public String getCelImage() {
-        return celImage;
+    public void setConstName(String constName) {
+        this.constName = constName;
     }
 
-    public void setCelImage(String celImage) {
-        this.celImage = celImage;
+    public String getConstName() {
+        return constName;
+    }
+
+    public void setConstImage(String constImage) {
+        this.constImage = constImage;
+    }
+
+    public String getConstImage() {
+        return constImage;
     }
 }
