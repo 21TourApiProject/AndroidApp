@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -14,6 +15,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +27,20 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferNetworkLossHandler;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
@@ -66,6 +79,8 @@ public class PostWriteActivity extends AppCompatActivity {
     PostObservePointParams postObservePointParams;
     String postObservePointName;
     Long postId;
+    File file;
+    ArrayList<File> files = new ArrayList<>();
 
 
     Calendar c = Calendar.getInstance();
@@ -199,6 +214,7 @@ public class PostWriteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploadfiles(files);
                 postContent = ((EditText)(findViewById(R.id.postContentText))).getText().toString();
                 if(postContent.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -247,20 +263,6 @@ public class PostWriteActivity extends AppCompatActivity {
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            Call<Void>call2 =RetrofitClient.getApiService().createPostHashTag(result,postHashTagParams);
-                            call2.enqueue(new Callback<Void>() {
-                                @Override
-                                public void onResponse(Call<Void> call, Response<Void> response) {
-                                    if (response.isSuccessful()) {
-                                        System.out.println("해시태그 생성");
-                                    }else {System.out.println("해시태그 생성 실패");}
-                                }
-
-                                @Override
-                                public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("해시태그 생성 실패2");
-                                }
-                            });
                             Call<Void>call1 = RetrofitClient.getApiService().createPostImage(result,postImageParams);
                             call1.enqueue(new Callback<Void>() {
                                 @Override
@@ -273,6 +275,20 @@ public class PostWriteActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     System.out.println("이미지 업로드 실패 2");
+                                }
+                            });
+                            Call<Void>call2 =RetrofitClient.getApiService().createPostHashTag(result,postHashTagParams);
+                            call2.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if (response.isSuccessful()) {
+                                        System.out.println("해시태그 생성");
+                                    }else {System.out.println("해시태그 생성 실패");}
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    System.out.println("해시태그 생성 실패2");
                                 }
                             });
                         }else{ System.out.println("post 실패");}
@@ -336,12 +352,10 @@ public class PostWriteActivity extends AppCompatActivity {
                     Bitmap img = resize(this, uri, 75);
                     System.out.println("img = " + img);
                     addImage(img);
-                    String File = BitmapToFile(img,"postImage");
-                    postImage = File;
+                    file = new File(getRealPathFromURI(uri));
                     PostImageParams postImageParam = new PostImageParams();
-                    postImageParam.setImageName(postImage);
+                    postImageParam.setImageName(file.getName());
                     postImageParams.add(postImageParam);
-                    System.out.println("file = "+postImage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -359,6 +373,11 @@ public class PostWriteActivity extends AppCompatActivity {
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             ClipData.Item item = clipData.getItemAt(i);
                             Uri uri = item.getUri();
+                            file = new File(getRealPathFromURI(uri));
+                            files.add(file);
+                            PostImageParams postImageParam = new PostImageParams();
+                            postImageParam.setImageName(file.getName());
+                            postImageParams.add(postImageParam);
                             Log.e("FAT=", "일반폰/다중 : "+uri.toString());
                             uris.add(uri);
                         }
@@ -369,24 +388,67 @@ public class PostWriteActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+// 이미지 uri 경로 함수
+public String getRealPathFromURI(Uri contentUri) {
 
-    //Bitmap을 File로 변경하는 함수
-    public String BitmapToFile(Bitmap bitmap, String image) {
-        File storage = getFilesDir();
-        String fileName = image + ".jpg";
-        File imgFile = new File(storage, fileName);
-        try {
-            imgFile.createNewFile();
-            FileOutputStream out = new FileOutputStream(imgFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
-        } catch (FileNotFoundException e) {
-            Log.e("saveBitmapToJpg", "FileNotFoundException: "+ e.getMessage());
-        } catch (IOException e) {
-            Log.e("saveBitmapToJpg", "IOException: "+ e.getMessage());
-        }
-        Log.d("imgPath", getFilesDir() + "/" + fileName);
-        //return imgFile;
-        return getFilesDir() + "/" + fileName;
+    // can post image
+    String [] proj={MediaStore.Images.Media.DATA};
+    CursorLoader cursorLoader = new CursorLoader(this, contentUri, proj, null, null, null);
+    Cursor cursor = cursorLoader.loadInBackground();
+    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+    cursor.moveToFirst();
+    return cursor.getString(column_index);
+}
+
+
+//    //Bitmap을 File로 변경하는 함수
+//    public String BitmapToFile(Bitmap bitmap, String image) {
+//        File storage = getFilesDir();
+//        String fileName = image + ".jpg";
+//        File imgFile = new File(storage, fileName);
+//        try {
+//            imgFile.createNewFile();
+//            FileOutputStream out = new FileOutputStream(imgFile);
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
+//        } catch (FileNotFoundException e) {
+//            Log.e("saveBitmapToJpg", "FileNotFoundException: "+ e.getMessage());
+//        } catch (IOException e) {
+//            Log.e("saveBitmapToJpg", "IOException: "+ e.getMessage());
+//        }
+//        Log.d("imgPath", getFilesDir() + "/" + fileName);
+//        //return imgFile;
+//        return getFilesDir() + "/" + fileName;
+//    }
+
+    public void uploadWithTransferUtilty(String fileName, File file) {
+
+        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
+        AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
+
+        TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
+        TransferNetworkLossHandler.getInstance(getApplicationContext());
+
+        TransferObserver uploadObserver = transferUtility.upload("starry-night", fileName, file);    // (bucket api, file이름, file객체)
+
+        uploadObserver.setTransferListener(new TransferListener() {
+            @Override
+            public void onStateChanged(int id, TransferState state) {
+                if (state == TransferState.COMPLETED) {
+                    Log.d("TAG", "onStateChanged: " + id + ", " + state.toString());
+                }
+            }
+
+            @Override
+            public void onProgressChanged(int id, long current, long total) {
+                int done = (int) (((double) current / total) * 100.0);
+                Log.d("MYTAG", "UPLOAD - - ID: $id, percent done = $done");
+            }
+
+            @Override
+            public void onError(int id, Exception ex) {
+                Log.d("MYTAG", "UPLOAD ERROR - - ID: $id - - EX:" + ex.toString());
+            }
+        });
     }
 
     private void addImage(Bitmap img) {
@@ -410,18 +472,17 @@ public class PostWriteActivity extends AppCompatActivity {
                 System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(roateImage1, numOfPicture));
                 recyclerView.setAdapter(adapter);
-                String File = BitmapToFile(roateImage1,"postImage");
-                postImage = File;
-                PostImageParams postImageParam = new PostImageParams();
-                postImageParam.setImageName(postImage);
-                postImageParams.add(postImageParam);
-                System.out.println("file = "+postImage);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         addPicture.setText(Integer.toString(numOfPicture) + "/10");
+    }
+
+    public void uploadfiles(ArrayList<File> files){
+        for (File file : files){
+            uploadWithTransferUtilty(file.getName(), file);
+        }
     }
 
     public void onClickDatePicker(View view){
