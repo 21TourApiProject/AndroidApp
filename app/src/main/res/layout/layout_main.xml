@@ -19,7 +19,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainslider"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="300dp">
 
         </androidx.viewpager2.widget.ViewPager2>
 

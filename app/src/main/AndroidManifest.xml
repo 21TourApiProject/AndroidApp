@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -79,6 +81,9 @@
                     android:scheme="{@string/kakao_app_key}" />
             </intent-filter>
         </activity>
+
+        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
     </application>
 
 </manifest>
