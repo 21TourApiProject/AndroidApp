@@ -21,24 +21,23 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
-import com.starrynight.tourapiproject.postPage.postRetrofit.PostHashTag;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostObservePoint;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.graphics.BitmapFactory.decodeFile;
 
 public class PostActivity extends AppCompatActivity{
     private ViewPager2 sliderViewPager;
@@ -53,17 +52,14 @@ public class PostActivity extends AppCompatActivity{
     List<PostImage>postImages;
     List<String>postHashTags;
     ImageView postImage;
-
-    private String[] images = new String[10];
+    String[] filename2= new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         Intent intent = getIntent();
         PostParams postParams = (PostParams)intent.getSerializableExtra("postParams");
-        for (int i =0;i<images.length;i++){
-            images[i]="";
-        }
+
 //      앱 내부저장소에 저장된 게시글 아이디 가져오기
         String fileName = "postId";
         try{
@@ -76,6 +72,9 @@ public class PostActivity extends AppCompatActivity{
         } catch (IOException e) {
             e.printStackTrace();
         } System.out.println("postId = " + postId);
+
+        sliderViewPager = findViewById(R.id.slider);
+        indicator = findViewById(R.id.indicator);
         //게시물 이미지 가져오는 get api
         Call<List<String>>call = RetrofitClient.getApiService().getPostImage(postId);
         call.enqueue(new Callback<List<String>>() {
@@ -84,11 +83,27 @@ public class PostActivity extends AppCompatActivity{
                 if (response.isSuccessful()) {
                     System.out.println("이미지 업로드 성공"+response.body());
                     List<String> result = response.body();
-                    for (int i=0; i< images.length;i++){
-                            for (String name :result){
-                                images[i]=name;
-                            }
+                    ArrayList<String> FileName = new ArrayList<>();
+                    for (int i=0;i<result.size();i++){
+                        filename2[i]=result.get(i);
+                        System.out.println(filename2[i]);
                     }
+                    for (int i = 0; i <filename2.length;i++){
+                        if(filename2[i] != null) {
+                            System.out.println("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
+                            FileName.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
+                        }
+                    }
+                    sliderViewPager.setAdapter(new ImageSliderAdapter(getApplicationContext(),FileName));
+
+                    sliderViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            super.onPageSelected(position);
+                            setCurrentIndicator(position);
+                        }
+                    });
+                    setupIndicators(FileName.size());
                 }else{System.out.println("이미지 업로드 실패");}
             }
 
@@ -151,7 +166,7 @@ public class PostActivity extends AppCompatActivity{
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
                     hashTagRecyclerView.setLayoutManager(linearLayoutManager);
                     PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
-                    for (int i=0;i<4;i++){
+                    for (int i=0;i<postHashTags.size();i++){
                     adapter2.addItem(new PostHashTagItem(postHashTags.get(i)));
                     }
                     hashTagRecyclerView.setAdapter(adapter2);
@@ -163,22 +178,6 @@ public class PostActivity extends AppCompatActivity{
                 System.out.println("게시물 해시태그 실패 2");
             }
         });
-
-        sliderViewPager = findViewById(R.id.slider);
-        indicator = findViewById(R.id.indicator);
-
-        sliderViewPager.setOffscreenPageLimit(3);
-        sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
-
-        sliderViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                setCurrentIndicator(position);
-            }
-        });
-
-        setupIndicators(images.length);
 
         Button button = findViewById(R.id.like);
         button.setOnClickListener(new View.OnClickListener() {

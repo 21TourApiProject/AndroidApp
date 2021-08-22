@@ -32,7 +32,7 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
     @Override
     public PostHashTagItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.item_posthashtag, parent, false);
+        View itemView = inflater.inflate(R.layout.hashtags, parent, false);
         return new ViewHolder (itemView);
     }
     @Override
@@ -51,7 +51,7 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
 
         public ViewHolder(View itemView){
             super(itemView);
-            postHashTagName =itemView.findViewById(R.id.postHashTagName);
+            postHashTagName =itemView.findViewById(R.id.recycler_hashTagName);
         }
 
         public void setItem(PostHashTagItem item){
