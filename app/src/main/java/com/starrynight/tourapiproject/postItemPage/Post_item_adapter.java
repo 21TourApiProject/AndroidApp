@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.ViewHolder>{
     ArrayList<post_item> items = new ArrayList<post_item>();
-    ArrayList<String>imageslider = new ArrayList<>();
     OnPostItemClickListener listener;
 
     public void addItem(post_item item){
