@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:text="#해쉬태그"
         android:textColor="@color/purple_200"
-        android:background="@drawable/observation__hashtags"/>
+        android:background="@drawable/observation__hashtags"
+        android:layout_marginRight="6dp"/>
 
 </LinearLayout>
