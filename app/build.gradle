@@ -90,6 +90,9 @@ dependencies {
     implementation "com.kakao.sdk:v2-link:2.5.2" // 메시지(카카오링크)
     implementation "com.kakao.sdk:v2-navi:2.5.2" // 카카오내비
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    implementation files('..\\libs\\json-simple-1.1.1.jar')
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.bumptech.glide:compiler:4.12.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
