@@ -10,15 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.starrynight.tourapiproject.R;
 
-import static android.graphics.BitmapFactory.decodeFile;
+import java.util.ArrayList;
 
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder> {
     private Context context;
-    private String[] sliderImage;
+    private ArrayList<String> sliderImage;
 
-    public ImageSliderAdapter(Context context, String[] sliderImage) {
+    public ImageSliderAdapter(Context context, ArrayList<String> sliderImage) {
         this.context = context;
         this.sliderImage = sliderImage;
     }
@@ -33,12 +34,12 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.mImageView.setImageBitmap(decodeFile(sliderImage[position]));
+        holder.bindSliderImage(sliderImage.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return sliderImage.length;
+        return sliderImage.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -48,6 +49,12 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageSlider);
+        }
+        public void bindSliderImage(String imageURL) {
+            Glide.with(context)
+                    .load(imageURL)
+                    .into(mImageView);
+
         }
     }
 }
