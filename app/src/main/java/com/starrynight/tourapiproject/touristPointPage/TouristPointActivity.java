@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -51,7 +50,7 @@ public class TouristPointActivity extends AppCompatActivity {
     private LinearLayout indicator;
     private String[] images = new String[1];
 
-    Long contentId = 127480L; //일단 하드코딩
+    Long contentId;
     String todayDate; //오늘 날짜
 
     TouristPoint tpData;
@@ -67,6 +66,7 @@ public class TouristPointActivity extends AppCompatActivity {
     String overviewFull; //개요 전체
 
     List<Near> nearResult;
+    String daumSearchWord;
 
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
@@ -76,6 +76,9 @@ public class TouristPointActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView (R.layout.activity_tourist_point);
+
+        Intent intent = getIntent();
+        contentId = (Long) intent.getSerializableExtra("contentId"); //전 페이지에서 받아온 contentId
 
         //오늘 날짜
         Calendar cal = Calendar.getInstance();
@@ -166,12 +169,13 @@ public class TouristPointActivity extends AppCompatActivity {
                                         setupIndicators(images.length);
                                     }
                                     tpTitle.setText(tpData.getTitle());
+                                    daumSearchWord = tpData.getTitle();
                                     tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
                                     cat3Name.setText(tpData.getCat3Name());
                                     overview.setText(tpData.getOverview().substring(0,100) + "...");
                                     overviewFull = tpData.getOverview();
 
-                                    if (!tpData.getAddr1().isEmpty()){
+                                    if (tpData.getAddr1() != null){
                                         tpAddress.setText(tpData.getAddr1());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
@@ -181,32 +185,32 @@ public class TouristPointActivity extends AppCompatActivity {
                                     }else{
                                         telLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getUseTime().isEmpty()){
+                                    if (tpData.getUseTime() != null){
                                         tpUseTime.setText(tpData.getUseTime());
                                     }else{
                                         useTimeLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getRestDate().isEmpty()){
+                                    if (tpData.getRestDate() != null){
                                         tpRestDate.setText(tpData.getRestDate());
                                     }else{
                                         restDateLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getExpGuide().isEmpty()){
+                                    if (tpData.getExpGuide() != null){
                                         tpExpGuide.setText(tpData.getExpGuide());
                                     }else{
                                         expGuideLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getParking().isEmpty()){
+                                    if (tpData.getParking() != null){
                                         tpParking.setText(tpData.getParking());
                                     }else{
                                         parkingLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getChkPet().isEmpty()){
+                                    if (tpData.getChkPet() != null){
                                         tpChkPet.setText(tpData.getChkPet());
                                     }else{
                                         chkPetLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getHomePage().isEmpty()){
+                                    if (tpData.getHomePage() != null){
                                         String cleanHomepage = tpData.getHomePage();
                                         tpHomePage.setText(cleanHomepage);
                                         tpHomePage.setOnClickListener(new View.OnClickListener() {
@@ -256,12 +260,13 @@ public class TouristPointActivity extends AppCompatActivity {
                                         setupIndicators(images.length);
                                     }
                                     tpTitle.setText(foodData.getTitle());
+                                    daumSearchWord = tpData.getTitle();
                                     tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
                                     cat3Name.setText(foodData.getCat3Name());
                                     overview.setText(foodData.getOverview().substring(0,100) + "...");
                                     overviewFull = foodData.getOverview();
 
-                                    if (!foodData.getAddr1().isEmpty()){
+                                    if (tpData.getAddr1() != null){
                                         tpAddress.setText(foodData.getAddr1());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
@@ -362,10 +367,8 @@ public class TouristPointActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Near>> call, Response<List<Near>> response) {
                 if (response.isSuccessful()) {
-                    System.out.println("주변 관광지 불러오기 성공");
                     nearResult = response.body();
                     int len = nearResult.size();
-                    System.out.println("len = " + len);
                     String[] nearImages = new String[len];
                     for(int i=0; i<len; i++){
                         nearImages[i] = nearResult.get(i).getFirstImage();
@@ -377,7 +380,9 @@ public class TouristPointActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(NearAdapter.ViewHolder holder, View view, int position) {
                             Near item = nearAdapter.getItem(position);
-                            Toast.makeText(getApplicationContext(), "아이템 선택됨 : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(TouristPointActivity.this, TouristPointActivity.class);
+                            intent.putExtra("contentId", item.getContentId());
+                            startActivity(intent);
                         }
                     });
                 } else {
@@ -392,21 +397,21 @@ public class TouristPointActivity extends AppCompatActivity {
 
 
         //다음 블로그 검색결과
-        RecyclerView recyclerView2 = findViewById(R.id.daumRecyclerview);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView2.setLayoutManager(layoutManager2);
-        recyclerView2.setHasFixedSize(true);
+        RecyclerView daumRecyclerview = findViewById(R.id.daumRecyclerview);
+        LinearLayoutManager daumLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        daumRecyclerview.setLayoutManager(daumLayoutManager);
+        daumRecyclerview.setHasFixedSize(true);
         Listdocument = new ArrayList<>();
 
         SearchOpenApi openApi= SearchRetrofitFactory.create();
-        openApi.getData("일산 카페","accuracy",1,3,API_KEY)
+        openApi.getData("카페","accuracy",1,3,API_KEY)
                 .enqueue(new Callback<SearchData>() {
                     @Override
                     public void onResponse(Call<SearchData> call, Response<SearchData> response) {
                         Log.d("my tag","성공");
                         Listdocument = response.body().Searchdocuments;
                             SearchAdapter adapter1 = new SearchAdapter(Listdocument);
-                            recyclerView2.setAdapter(adapter1);
+                        daumRecyclerview.setAdapter(adapter1);
                             adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
                                 @Override
                                 public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
@@ -427,7 +432,7 @@ public class TouristPointActivity extends AppCompatActivity {
             daum_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://map.kakao.com/"+query));
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.daum.net/"+query));
                     startActivity(intent);
                 }
             });
