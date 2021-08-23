@@ -15,4 +15,8 @@ public class PostHashTag {
     @SerializedName("hashTagName")
     private String hashTagName;
     public PostHashTag(){}
+
+    public String getHashTagName() {
+        return hashTagName;
+    }
 }

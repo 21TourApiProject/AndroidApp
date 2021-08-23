@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
 
+
+
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
@@ -51,7 +53,8 @@
         <activity android:name=".signUpPage.GeneralSingUpActivity" />
         <activity android:name=".signUpPage.SignUpActivity" />
         <activity android:name=".starPage.StarActivity" />
-        <activity android:name=".ObservationsiteActivity" />
+        <activity android:name=".observationPage.ObservationsiteActivity" />
+        <activity android:name=".touristPointPage.TPReviewActivity" />
         <activity
             android:name=".touristPointPage.OverviewPopActivity"
             android:theme="@style/Theme.AppCompat.Dialog" />
@@ -84,6 +87,9 @@
                     android:scheme="{@string/kakao_app_key}" />
             </intent-filter>
         </activity>
+
+        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
     </application>
 
 </manifest>

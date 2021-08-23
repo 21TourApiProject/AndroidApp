@@ -107,7 +107,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
                     setCurrentIndicator(position);
                 }
             });
-            setupIndicators(item.getImages().length);
+            setupIndicators(item.getImages().size());
         }
         private void setupIndicators(int count) {
             ImageView[] indicators = new ImageView[count];

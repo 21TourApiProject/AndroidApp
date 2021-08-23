@@ -1,16 +1,19 @@
 package com.starrynight.tourapiproject.postItemPage;
 
 import android.media.Image;
+import android.net.Uri;
+
+import java.util.ArrayList;
 
 public class post_item {
     String hash;
     String hash2;
     String title;
     String nickname;
-    String[] images;
+    ArrayList<String> images;
     String image2;
 
-    public post_item(String hash, String hash2, String title, String nickname,String[] images, String image2) {
+    public post_item(String hash, String hash2, String title, String nickname,ArrayList<String> images, String image2) {
         this.hash = hash;
         this.hash2 = hash2;
         this.title = title;
@@ -19,11 +22,11 @@ public class post_item {
         this.image2= image2;
     }
 
-    public String[] getImages() {
+    public ArrayList<String> getImages() {
         return images;
     }
 
-    public void setImages(String[] images) {
+    public void setImages(ArrayList<String>images) {
         this.images = images;
     }
 

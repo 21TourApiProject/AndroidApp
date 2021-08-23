@@ -61,6 +61,7 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 });
                 Intent intent = new Intent();
                 intent.putExtra("postObservePointParams", postObservePointParams);
+                intent.putExtra("postObservePointName",observePoint);
                 setResult(2,intent);
                 finish();
             }

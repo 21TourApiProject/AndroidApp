@@ -2,21 +2,35 @@ package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
 import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +39,9 @@ import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
  */
 public class MainFragment extends Fragment {
     Layout_main layout_main;
-    private String[] image = new String[10];
+    Long postId;
+    String[] filename2= new String[10];
+    private ArrayList<String> urls = new ArrayList<>();
 
     public MainFragment() {
         // Required empty public constructor
@@ -51,28 +67,61 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-        for (int i =0;i<image.length;i++){
-            image[i]="/data/user/0/com.starrynight.tourapiproject/files/postImage.jpg";
-        }
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        Post_item_adapter adapter = new Post_item_adapter();
-        recyclerView.setAdapter(adapter);
-
-        adapter.addItem(new post_item(" #hash","#hash2","제목1","닉네임1", image ,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash3","#hash4","제목2","닉네임2",image,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash5","#hash6","제목3","닉네임3",image,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash7.","#hash8","제목4","닉네임4",image,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.setOnItemClicklistener(new OnPostItemClickListener() {
+        String fileName = "postId";
+        try{
+            FileInputStream fis = getActivity().openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            postId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("postId = " + postId);
+        Call<List<String>>call = RetrofitClient.getApiService().getPostImage(postId);
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onItemClick(Post_item_adapter.ViewHolder holder, View view, int position) {
-                Intent intent = new Intent(getActivity(), PostActivity.class);
-                startActivity(intent);
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful()){
+                    System.out.println("이미지 업로드 성공"+response.body());
+                    List<String> result = response.body();
+                    ArrayList<String> FileName = new ArrayList<>();
+                    for (int i=0;i<result.size();i++){
+                        filename2[i]=result.get(i);
+                        System.out.println(filename2[i]);
+                    }
+                    for (int i = 0; i <filename2.length;i++){
+                        if(filename2[i] != null) {
+                            System.out.println("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
+                            FileName.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
+                        }
+                    }
+                    RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                    recyclerView.setLayoutManager(layoutManager);
+
+                    Post_item_adapter adapter = new Post_item_adapter();
+                    recyclerView.setAdapter(adapter);
+
+                    adapter.addItem(new post_item(" #hash","#hash2","제목1","닉네임1", FileName ,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                    adapter.addItem(new post_item(" #hash3","#hash4","제목2","닉네임2",FileName,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                    adapter.addItem(new post_item(" #hash5","#hash6","제목3","닉네임3",FileName,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                    adapter.addItem(new post_item(" #hash7.","#hash8","제목4","닉네임4",FileName,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                    adapter.setOnItemClicklistener(new OnPostItemClickListener() {
+                        @Override
+                        public void onItemClick(Post_item_adapter.ViewHolder holder, View view, int position) {
+                            Intent intent = new Intent(getActivity(), PostActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                }else {System.out.println("이미지 업로드 실패");}
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                System.out.println("이미지 업로드 실패2");
             }
         });
-        recyclerView.setAdapter((adapter));
 
         Button button =(Button) v.findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {

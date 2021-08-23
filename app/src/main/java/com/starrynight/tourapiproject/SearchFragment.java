@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
-import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
 
