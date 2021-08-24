@@ -26,10 +26,6 @@ public class Observation {
     String entranceFee;
     @SerializedName("parking")
     String parking;
-    @SerializedName("parkingImg")
-    String parkingImg;
-    @SerializedName("intro")
-    String intro;
     @SerializedName("observeType")
     String observeType;
     @SerializedName("outline")
@@ -97,14 +93,6 @@ public class Observation {
 
     public String getParking() {
         return parking;
-    }
-
-    public String getParkingImg() {
-        return parkingImg;
-    }
-
-    public String getIntro() {
-        return intro;
     }
 
     public String getObserveType() {
