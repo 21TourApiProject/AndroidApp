@@ -44,7 +44,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Observation> call, Response<Observation> response) {
                 if(response.isSuccessful()){
-                    Log.d(TAG, "광측지 호출 성공");
+                    Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
 
                 } else{

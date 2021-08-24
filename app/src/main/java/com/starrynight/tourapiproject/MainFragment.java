@@ -15,6 +15,7 @@ import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
 import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostObservePoint;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
@@ -38,7 +39,6 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
-    Layout_main layout_main;
     Long postId;
     String[] filename2= new String[10];
     private ArrayList<String> urls = new ArrayList<>();
@@ -96,22 +96,53 @@ public class MainFragment extends Fragment {
                             FileName.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
                         }
                     }
-                    RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                    recyclerView.setLayoutManager(layoutManager);
-
-                    Post_item_adapter adapter = new Post_item_adapter();
-                    recyclerView.setAdapter(adapter);
-
-                    adapter.addItem(new post_item(" #hash","#hash2","제목1","닉네임1", FileName ,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-                    adapter.addItem(new post_item(" #hash3","#hash4","제목2","닉네임2",FileName,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-                    adapter.addItem(new post_item(" #hash5","#hash6","제목3","닉네임3",FileName,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-                    adapter.addItem(new post_item(" #hash7.","#hash8","제목4","닉네임4",FileName,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-                    adapter.setOnItemClicklistener(new OnPostItemClickListener() {
+                    Call<List<String>>call1 = RetrofitClient.getApiService().getPostHashTagName(postId);
+                    call1.enqueue(new Callback<List<String>>() {
                         @Override
-                        public void onItemClick(Post_item_adapter.ViewHolder holder, View view, int position) {
-                            Intent intent = new Intent(getActivity(), PostActivity.class);
-                            startActivity(intent);
+                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                            if (response.isSuccessful()){
+                                System.out.println("해시태그 가져옴");
+                                List<String> result2 = response.body();
+                                Call<PostObservePoint>call2 = RetrofitClient.getApiService().getPostObservePoint(postId);
+                                call2.enqueue(new Callback<PostObservePoint>() {
+                                    @Override
+                                    public void onResponse(Call<PostObservePoint> call, Response<PostObservePoint> response) {
+                                        if (response.isSuccessful()){
+                                            System.out.println("관측지도 가져왔네?!");
+                                            PostObservePoint postObservePoint = response.body();
+                                            String observePoint = postObservePoint.getObservePointName();
+                                            RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+                                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                                            recyclerView.setLayoutManager(layoutManager);
+
+                                            Post_item_adapter adapter = new Post_item_adapter();
+                                            recyclerView.setAdapter(adapter);
+
+                                            adapter.addItem(new post_item(observePoint,"제목1","닉네임1", FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                                            adapter.addItem(new post_item(observePoint,"제목2","닉네임2",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                                            adapter.addItem(new post_item(observePoint,"제목3","닉네임3",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                                            adapter.addItem(new post_item(observePoint,"제목4","닉네임4",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                                            adapter.setOnItemClicklistener(new OnPostItemClickListener() {
+                                                @Override
+                                                public void onItemClick(Post_item_adapter.ViewHolder holder, View view, int position) {
+                                                    Intent intent = new Intent(getActivity(), PostActivity.class);
+                                                    startActivity(intent);
+                                                }
+                                            });
+                                        }else {System.out.println("관측지 못 가져옴");}
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<PostObservePoint> call, Throwable t) {
+                                        System.out.println("관측지 못 가져옴 2");
+                                    }
+                                });
+                            }else {System.out.println("해시태그 못 가져옴");}
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<String>> call, Throwable t) {
+                            System.out.println("해시태그 못 가져옴 2");
                         }
                     });
                 }else {System.out.println("이미지 업로드 실패");}

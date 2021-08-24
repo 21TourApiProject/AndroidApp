@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.postItemPage;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -63,8 +64,8 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView Button;
-        TextView Button2;
+        TextView observation;
+        RecyclerView hashTagRecyclerView;
         TextView title;
         TextView nickname;
         ImageView profileimage;
@@ -74,8 +75,8 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
         public ViewHolder(View itemView,final OnPostItemClickListener listener){
             super(itemView);
 
-            Button =itemView.findViewById(R.id.hash__button);
-            Button2 = itemView.findViewById(R.id.hash__button2);
+            observation = itemView.findViewById(R.id.mainobservepoint);
+            hashTagRecyclerView = itemView.findViewById(R.id.mainRecyclerView);
             title = itemView.findViewById(R.id.mainpost_title);
             nickname = itemView.findViewById(R.id.nickname);
             profileimage = itemView.findViewById(R.id.mainprofileimage);
@@ -94,8 +95,13 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
         }
 
         public void setItem(post_item item){
-            Button.setText(item.getHash());
-            Button2.setText(item.getHash2());
+            LinearLayoutManager layoutManager = new LinearLayoutManager(hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+            hashTagRecyclerView.setLayoutManager(layoutManager);
+            PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
+            for (int i=0;i<item.hashTags.size();i++)
+            { adapter.addItem(new PostHashTagItem(item.getHashTags().get(i)));}
+            hashTagRecyclerView.setAdapter(adapter);
+            observation.setText(item.getObservation());
             title.setText(item.getTitle());
             nickname.setText(item.getNickname());
             mainslider.setOffscreenPageLimit(3);
