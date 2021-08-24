@@ -84,6 +84,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
                 Intent intent = new Intent(getActivity(), TouristPointActivity.class);
+                intent.putExtra("contentId", 126273L);
                 startActivity(intent);
             }
         });

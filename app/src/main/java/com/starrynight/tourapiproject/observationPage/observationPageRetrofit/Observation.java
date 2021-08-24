@@ -38,14 +38,24 @@ public class Observation {
     String guide;
     @SerializedName("closedDay")
     String closedDay;
+    @SerializedName("light")
+    double light;
+    @SerializedName("nature")
+    boolean nature;
     @SerializedName("myHashTags")
     List<ObserveHashTag> observeHashTags;
 
     public Observation(){};
 
+    public double getLight() {
+        return light;
+    }
 
+    public boolean getNature() {
+        return nature;
+    }
 
-    public List<ObserveHashTag> getMyHashTags() {
+    public List<ObserveHashTag> getObserveHashTag() {
         return observeHashTags;
     }
 
