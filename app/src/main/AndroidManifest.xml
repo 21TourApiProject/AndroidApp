@@ -54,6 +54,9 @@
         <activity android:name=".signUpPage.SignUpActivity" />
         <activity android:name=".starPage.StarActivity" />
         <activity android:name=".observationPage.ObservationsiteActivity" />
+        <activity
+            android:name=".observationPage.OutlinePopActivity"
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity android:name=".touristPointPage.TPReviewActivity" />
         <activity
             android:name=".touristPointPage.OverviewPopActivity"
