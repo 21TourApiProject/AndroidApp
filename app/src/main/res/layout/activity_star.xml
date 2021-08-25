@@ -41,8 +41,7 @@
                 android:id="@+id/detail_const_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/star__cel_image" />
+                android:adjustViewBounds="true"/>
 
             <ImageView
                 android:layout_width="match_parent"

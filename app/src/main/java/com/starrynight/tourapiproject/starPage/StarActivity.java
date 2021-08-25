@@ -1,6 +1,9 @@
 package com.starrynight.tourapiproject.starPage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,15 +13,24 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Url;
+
+import static android.graphics.BitmapFactory.decodeFile;
 
 public class StarActivity extends AppCompatActivity {
+    Context context;
 
     TextView constName, constStory, constObInfo, constBestMonth, constPersonality;
     View constStoryTv, constObInfoTv, constBestMonthTv, constPersonalityTv;
@@ -60,9 +72,8 @@ public class StarActivity extends AppCompatActivity {
             public void onResponse(Call<Constellation> call, Response<Constellation> response) {
                 if (response.isSuccessful()) {
                     constData = response.body();
-
+                    Glide.with(StarActivity.this).load(constData.getConstImage()).into(constImage);
                     constName.setText(constData.getConstName());
-                    //constImage.setImageResource(constData.getConstImage());
                     constStory.setText(constData.getConstStory());
                     constObInfo.setText(constData.getSpringConstMtd());
                     constBestMonth.setText(constData.getConstBestMonth());
