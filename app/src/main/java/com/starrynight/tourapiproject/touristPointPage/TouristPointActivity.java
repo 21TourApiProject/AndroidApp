@@ -67,8 +67,8 @@ public class TouristPointActivity extends AppCompatActivity {
     String overviewFull; //개요 전체
 
     List<Near> nearResult;
-    String daumSearchWord;
 
+    public String daumSearchWord;
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
     private Query query;
@@ -169,6 +169,48 @@ public class TouristPointActivity extends AppCompatActivity {
                                     }
                                     tpTitle.setText(tpData.getTitle());
                                     daumSearchWord = tpData.getTitle();
+
+                                    //다음 블로그 검색결과
+                                    RecyclerView daumRecyclerview = findViewById(R.id.daumRecyclerview);
+                                    LinearLayoutManager daumLayoutManager = new LinearLayoutManager(TouristPointActivity.this, LinearLayoutManager.VERTICAL, false);
+                                    daumRecyclerview.setLayoutManager(daumLayoutManager);
+                                    daumRecyclerview.setHasFixedSize(true);
+                                    Listdocument = new ArrayList<>();
+
+                                    SearchOpenApi openApi= SearchRetrofitFactory.create();
+                                    openApi.getData(daumSearchWord,"accuracy",1, 3, API_KEY)
+                                            .enqueue(new Callback<SearchData>() {
+                                                @Override
+                                                public void onResponse(Call<SearchData> call, Response<SearchData> response) {
+                                                    Log.d("my tag","성공");
+                                                    Listdocument = response.body().Searchdocuments;
+                                                    SearchAdapter adapter1 = new SearchAdapter(Listdocument);
+                                                    daumRecyclerview.setAdapter(adapter1);
+                                                    adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
+                                                        @Override
+                                                        public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
+                                                            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<SearchData> call, Throwable t) {
+                                                    Log.e("my tag","에러");
+                                                }
+                                            });
+
+
+                                    Button daum_btn=findViewById(R.id.daumMore);
+                                    daum_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.daum.net/"+query));
+                                            startActivity(intent);
+                                        }
+                                    });
+
                                     cat3Name.setText(tpData.getCat3Name());
 
                                     if (!tpData.getOverview().equals("null")){
@@ -262,6 +304,47 @@ public class TouristPointActivity extends AppCompatActivity {
                                     }
                                     tpTitle.setText(foodData.getTitle());
                                     daumSearchWord = foodData.getTitle();
+                                    //다음 블로그 검색결과
+                                    RecyclerView daumRecyclerview = findViewById(R.id.daumRecyclerview);
+                                    LinearLayoutManager daumLayoutManager = new LinearLayoutManager(TouristPointActivity.this, LinearLayoutManager.VERTICAL, false);
+                                    daumRecyclerview.setLayoutManager(daumLayoutManager);
+                                    daumRecyclerview.setHasFixedSize(true);
+                                    Listdocument = new ArrayList<>();
+
+                                    SearchOpenApi openApi= SearchRetrofitFactory.create();
+                                    openApi.getData(daumSearchWord,"accuracy",1, 3, API_KEY)
+                                            .enqueue(new Callback<SearchData>() {
+                                                @Override
+                                                public void onResponse(Call<SearchData> call, Response<SearchData> response) {
+                                                    Log.d("my tag","성공");
+                                                    Listdocument = response.body().Searchdocuments;
+                                                    SearchAdapter adapter1 = new SearchAdapter(Listdocument);
+                                                    daumRecyclerview.setAdapter(adapter1);
+                                                    adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
+                                                        @Override
+                                                        public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
+                                                            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<SearchData> call, Throwable t) {
+                                                    Log.e("my tag","에러");
+                                                }
+                                            });
+
+
+                                    Button daum_btn=findViewById(R.id.daumMore);
+                                    daum_btn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.daum.net/"+query));
+                                            startActivity(intent);
+                                        }
+                                    });
+
                                     cat3Name.setText(foodData.getCat3Name());
 
                                     if (!foodData.getOverview().equals("null")){
@@ -404,47 +487,47 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         });
 
-
-        //다음 블로그 검색결과
-        RecyclerView daumRecyclerview = findViewById(R.id.daumRecyclerview);
-        LinearLayoutManager daumLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        daumRecyclerview.setLayoutManager(daumLayoutManager);
-        daumRecyclerview.setHasFixedSize(true);
-        Listdocument = new ArrayList<>();
-
-        SearchOpenApi openApi= SearchRetrofitFactory.create();
-        openApi.getData("카페","accuracy",1,3,API_KEY)
-                .enqueue(new Callback<SearchData>() {
-                    @Override
-                    public void onResponse(Call<SearchData> call, Response<SearchData> response) {
-                        Log.d("my tag","성공");
-                        Listdocument = response.body().Searchdocuments;
-                            SearchAdapter adapter1 = new SearchAdapter(Listdocument);
-                        daumRecyclerview.setAdapter(adapter1);
-                            adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
-                                @Override
-                                public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
-                                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
-                                    startActivity(intent);
-                                }
-                            });
-                    }
-
-                    @Override
-                    public void onFailure(Call<SearchData> call, Throwable t) {
-                        Log.e("my tag","에러");
-                    }
-                });
-
-
-            Button daum_btn=findViewById(R.id.daumMore);
-            daum_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.daum.net/"+query));
-                    startActivity(intent);
-                }
-            });
+        System.out.println("daumSearchWord = " + daumSearchWord);
+//        //다음 블로그 검색결과
+//        RecyclerView daumRecyclerview = findViewById(R.id.daumRecyclerview);
+//        LinearLayoutManager daumLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//        daumRecyclerview.setLayoutManager(daumLayoutManager);
+//        daumRecyclerview.setHasFixedSize(true);
+//        Listdocument = new ArrayList<>();
+//
+//        SearchOpenApi openApi= SearchRetrofitFactory.create();
+//        openApi.getData(daumSearchWord,"accuracy",1, 3, API_KEY)
+//                .enqueue(new Callback<SearchData>() {
+//                    @Override
+//                    public void onResponse(Call<SearchData> call, Response<SearchData> response) {
+//                        Log.d("my tag","성공");
+//                        Listdocument = response.body().Searchdocuments;
+//                            SearchAdapter adapter1 = new SearchAdapter(Listdocument);
+//                            daumRecyclerview.setAdapter(adapter1);
+//                            adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
+//                                @Override
+//                                public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
+//                                    Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
+//                                    startActivity(intent);
+//                                }
+//                            });
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<SearchData> call, Throwable t) {
+//                        Log.e("my tag","에러");
+//                    }
+//                });
+//
+//
+//            Button daum_btn=findViewById(R.id.daumMore);
+//            daum_btn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.daum.net/"+query));
+//                    startActivity(intent);
+//                }
+//            });
     }
 
     @Override
