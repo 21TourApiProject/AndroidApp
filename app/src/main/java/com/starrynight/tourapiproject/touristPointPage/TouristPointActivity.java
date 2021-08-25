@@ -59,8 +59,8 @@ public class TouristPointActivity extends AppCompatActivity {
     Food foodData;
     Boolean isTp;
 
-    TextView tpCongestion, tpTitle, tpOverviewSimple, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
-            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood;
+    TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
+            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText;
 
     Button overviewPop;
 
@@ -96,7 +96,6 @@ public class TouristPointActivity extends AppCompatActivity {
 
         tpCongestion = findViewById(R.id.tpCongestion);
         tpTitle = findViewById(R.id.tpTitle);
-        tpOverviewSimple = findViewById(R.id.tpOverviewSimple);
         cat3Name = findViewById(R.id.cat3Name);
         overview= findViewById(R.id.overview);
         overviewPop = findViewById(R.id.overviewPop);
@@ -114,6 +113,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpTreatMenu = findViewById(R.id.tpTreatMenu);
         tpPacking = findViewById(R.id.tpPacking);
         tpParkingFood = findViewById(R.id.tpParkingFood);
+        nearText = findViewById(R.id.nearText);
 
         congestionLayout = findViewById(R.id.congestionLayout);
         addressLayout = findViewById(R.id.addressLayout);
@@ -176,12 +176,10 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     if (!tpData.getOverview().equals("null")){
                                         overview.setText(tpData.getOverview().substring(0,120) + "...");
-                                        tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
                                         overviewFull = tpData.getOverview();
                                     }else{
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
-                                        tpOverviewSimple.setVisibility(View.GONE);
                                     }
                                     if (!tpData.getAddr1().equals("null")){
                                         tpAddress.setText(tpData.getAddr1());
@@ -271,12 +269,10 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     if (!foodData.getOverview().equals("null")){
                                         overview.setText(foodData.getOverview().substring(0,120) + "...");
-                                        tpOverviewSimple.setText(foodData.getOverview().substring(0,15) + "...");
                                         overviewFull = foodData.getOverview();
                                     }else{
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
-                                        tpOverviewSimple.setVisibility(View.GONE);
                                     }
                                     if (!foodData.getAddr1().equals("null")){
                                         tpAddress.setText(foodData.getAddr1());
@@ -381,6 +377,10 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     nearResult = response.body();
                     int len = nearResult.size();
+                    if (len == 0){
+                        nearText.setVisibility(View.GONE);
+                        return;
+                    }
                     String[] nearImages = new String[len];
                     for(int i=0; i<len; i++){
                         nearImages[i] = nearResult.get(i).getFirstImage();
