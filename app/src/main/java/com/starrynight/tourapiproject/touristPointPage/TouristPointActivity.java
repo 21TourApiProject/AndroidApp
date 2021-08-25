@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject.touristPointPage;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +32,9 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -205,7 +208,13 @@ public class TouristPointActivity extends AppCompatActivity {
                                     daumMore.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.daum.net/"+query));
+                                            String encode = null;
+                                            try {
+                                                encode = URLEncoder.encode(daumSearchWord, "UTF-8");
+                                            } catch (UnsupportedEncodingException e) {
+                                                e.printStackTrace();
+                                            }
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://search.daum.net/search?w=blog&f=section&m=&SA=daumsec&lpp=10&nil_profile=vsearch&nil_src=blog&q=" + encode));
                                             startActivity(intent);
                                         }
                                     });
@@ -334,12 +343,17 @@ public class TouristPointActivity extends AppCompatActivity {
                                                 }
                                             });
 
-
                                     Button daumMore=findViewById(R.id.daumMore);
                                     daumMore.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.daum.net/"+query));
+                                            String encode = null;
+                                            try {
+                                                encode = URLEncoder.encode(daumSearchWord, "UTF-8");
+                                            } catch (UnsupportedEncodingException e) {
+                                                e.printStackTrace();
+                                            }
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://search.daum.net/search?w=blog&f=section&m=&SA=daumsec&lpp=10&nil_profile=vsearch&nil_src=blog&q="+encode));
                                             startActivity(intent);
                                         }
                                     });
