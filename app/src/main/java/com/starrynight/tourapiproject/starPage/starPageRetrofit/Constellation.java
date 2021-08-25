@@ -2,8 +2,6 @@ package com.starrynight.tourapiproject.starPage.starPageRetrofit;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDate;
-
 public class Constellation {
     @SerializedName("constId")
     private Long constId;
@@ -36,20 +34,13 @@ public class Constellation {
     private String constPersonality;
 
     @SerializedName("startDate")
-    private LocalDate startDate;
+    private String startDate;
 
     @SerializedName("endDate")
-    private LocalDate endDate;
+    private String endDate;
 
     public Constellation() {
     }
-
-
-//    public Constellation(Long constId, String constName, String constImage){
-//        this.constId = constId;
-//        this.constName = constName;
-//        this.constImage = constImage;
-//    };
 
     public Long getConstId() {
         return constId;
@@ -131,19 +122,19 @@ public class Constellation {
         this.constPersonality = constPersonality;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 }
