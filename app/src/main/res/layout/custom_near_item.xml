@@ -22,6 +22,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 android:layout_weight="6"
+                android:background="@drawable/ic_launcher_foreground"
                 android:scaleType="center" />
 
             <LinearLayout
@@ -65,7 +66,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/nearOverviewSimple"
+                    android:id="@+id/nearOverviewSim"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="짧은 개요" />

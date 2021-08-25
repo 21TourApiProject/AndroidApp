@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,9 +47,10 @@ import retrofit2.http.Query;
 
 public class TouristPointActivity extends AppCompatActivity {
 
+    private static final int NEAR = 101;
+
     private ViewPager2 slider;
-    private LinearLayout indicator;
-    private String[] images = new String[1];
+    private String[] image = new String[1];
 
     Long contentId;
     String todayDate; //오늘 날짜
@@ -60,7 +62,9 @@ public class TouristPointActivity extends AppCompatActivity {
     TextView tpCongestion, tpTitle, tpOverviewSimple, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
             tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood;
 
-    LinearLayout congestionLayout, addressLayout,  telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
+    Button overviewPop;
+
+    LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
 
     String overviewFull; //개요 전체
@@ -95,6 +99,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpOverviewSimple = findViewById(R.id.tpOverviewSimple);
         cat3Name = findViewById(R.id.cat3Name);
         overview= findViewById(R.id.overview);
+        overviewPop = findViewById(R.id.overviewPop);
         tpAddress = findViewById(R.id.tpAddress);
         tpTel = findViewById(R.id.tpTel);
         tpUseTime = findViewById(R.id.tpUseTime);
@@ -129,8 +134,7 @@ public class TouristPointActivity extends AppCompatActivity {
 
         //이미지 슬라이더
         slider = findViewById(R.id.tpSlider);
-        indicator = findViewById(R.id.tpIndicator);
-        slider.setOffscreenPageLimit(images.length);
+        slider.setOffscreenPageLimit(image.length);
 
 
         //관광지 정보 불러오기
@@ -155,62 +159,66 @@ public class TouristPointActivity extends AppCompatActivity {
                                     tpInfo1.setVisibility(View.VISIBLE);
 
                                     //이미지
-                                    if (tpData.getFirstImage() != null){
-                                        images[0] = tpData.getFirstImage();
-                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, images));
+                                    if (!tpData.getFirstImage().equals("null")){
+                                        image[0] = tpData.getFirstImage();
+                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
 
                                         slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                                             @Override
                                             public void onPageSelected(int position) {
                                                 super.onPageSelected(position);
-                                                setCurrentIndicator(position);
                                             }
                                         });
-                                        setupIndicators(images.length);
                                     }
                                     tpTitle.setText(tpData.getTitle());
                                     daumSearchWord = tpData.getTitle();
-                                    tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
                                     cat3Name.setText(tpData.getCat3Name());
-                                    overview.setText(tpData.getOverview().substring(0,100) + "...");
-                                    overviewFull = tpData.getOverview();
 
-                                    if (tpData.getAddr1() != null){
+                                    if (!tpData.getOverview().equals("null")){
+                                        overview.setText(tpData.getOverview().substring(0,120) + "...");
+                                        tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
+                                        overviewFull = tpData.getOverview();
+                                    }else{
+                                        overview.setVisibility(View.GONE);
+                                        overviewPop.setVisibility(View.GONE);
+                                        tpOverviewSimple.setVisibility(View.GONE);
+                                    }
+                                    if (!tpData.getAddr1().equals("null")){
                                         tpAddress.setText(tpData.getAddr1());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getTel() != null){
+                                    if (!tpData.getTel().equals("null")){
                                         tpTel.setText(tpData.getTel());
                                     }else{
                                         telLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getUseTime() != null){
+                                    if (!tpData.getUseTime().equals("null")){
                                         tpUseTime.setText(tpData.getUseTime());
                                     }else{
                                         useTimeLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getRestDate() != null){
+                                    if (!tpData.getRestDate().equals("null")){
                                         tpRestDate.setText(tpData.getRestDate());
                                     }else{
                                         restDateLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getExpGuide() != null){
+                                    if (!tpData.getExpGuide().equals("null")){
                                         tpExpGuide.setText(tpData.getExpGuide());
                                     }else{
                                         expGuideLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getParking() != null){
+                                    if (!tpData.getParking().equals("null")){
                                         tpParking.setText(tpData.getParking());
                                     }else{
                                         parkingLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getChkPet() != null){
+                                    if (!tpData.getChkPet().equals("null")){
                                         tpChkPet.setText(tpData.getChkPet());
                                     }else{
                                         chkPetLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getHomePage() != null){
+                                    if (!tpData.getHomePage().equals("null")){
                                         String cleanHomepage = tpData.getHomePage();
                                         tpHomePage.setText(cleanHomepage);
                                         tpHomePage.setOnClickListener(new View.OnClickListener() {
@@ -246,62 +254,66 @@ public class TouristPointActivity extends AppCompatActivity {
                                     foodInfo1.setVisibility(View.VISIBLE);
 
                                     //이미지
-                                    if (tpData.getFirstImage() != null){
-                                        images[0] = tpData.getFirstImage();
-                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, images));
+                                    if (!foodData.getFirstImage().equals("null")){
+                                        image[0] = foodData.getFirstImage();
+                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
 
                                         slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                                             @Override
                                             public void onPageSelected(int position) {
                                                 super.onPageSelected(position);
-                                                setCurrentIndicator(position);
                                             }
                                         });
-                                        setupIndicators(images.length);
                                     }
                                     tpTitle.setText(foodData.getTitle());
-                                    daumSearchWord = tpData.getTitle();
-                                    tpOverviewSimple.setText(tpData.getOverview().substring(0,15) + "...");
+                                    daumSearchWord = foodData.getTitle();
                                     cat3Name.setText(foodData.getCat3Name());
-                                    overview.setText(foodData.getOverview().substring(0,100) + "...");
-                                    overviewFull = foodData.getOverview();
 
-                                    if (tpData.getAddr1() != null){
+                                    if (!foodData.getOverview().equals("null")){
+                                        overview.setText(foodData.getOverview().substring(0,120) + "...");
+                                        tpOverviewSimple.setText(foodData.getOverview().substring(0,15) + "...");
+                                        overviewFull = foodData.getOverview();
+                                    }else{
+                                        overview.setVisibility(View.GONE);
+                                        overviewPop.setVisibility(View.GONE);
+                                        tpOverviewSimple.setVisibility(View.GONE);
+                                    }
+                                    if (!foodData.getAddr1().equals("null")){
                                         tpAddress.setText(foodData.getAddr1());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getTel().isEmpty()){
+                                    if (!foodData.getTel().equals("null")){
                                         tpTel.setText(foodData.getTel());
                                     }else{
                                         telLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getOpenTimeFood().isEmpty()){
+                                    if (!foodData.getOpenTimeFood().equals("null")){
                                         tpOpenTimeFood.setText(foodData.getOpenTimeFood());
                                     }else{
                                         openTimeFoodLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getRestDateFood().isEmpty()){
+                                    if (!foodData.getRestDateFood().equals("null")){
                                         tpRestDateFood.setText(foodData.getRestDateFood());
                                     }else{
                                         restDateFoodLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getFirstMenu().isEmpty()){
+                                    if (!foodData.getFirstMenu().equals("null")){
                                         tpFirstMenu.setText(foodData.getFirstMenu());
                                     }else{
                                         firstMenuLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getTreatMenu().isEmpty()){
+                                    if (!foodData.getTreatMenu().equals("null")){
                                         tpTreatMenu.setText(foodData.getTreatMenu());
                                     }else{
                                         treatMenuLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getPacking().isEmpty()){
+                                    if (!foodData.getPacking().equals("null")){
                                         tpPacking.setText(foodData.getPacking());
                                     }else{
                                         packingLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getParkingFood().isEmpty()){
+                                    if (!foodData.getParkingFood().equals("null")){
                                         tpParkingFood.setText(foodData.getParkingFood());
                                     }else{
                                         parkingFoodLayout.setVisibility(View.GONE);
@@ -362,7 +374,7 @@ public class TouristPointActivity extends AppCompatActivity {
         nearRecyclerview.setHasFixedSize(true);
         nearResult = new ArrayList<>();
 
-        Call<List<Near>> call2 = RetrofitClient.getApiService().getNearTouristPointData(contentId);
+        Call<List<Near>> call2 = RetrofitClient.getApiService().getNearTouristData(contentId);
         call2.enqueue(new Callback<List<Near>>() {
             @Override
             public void onResponse(Call<List<Near>> call, Response<List<Near>> response) {
@@ -382,7 +394,7 @@ public class TouristPointActivity extends AppCompatActivity {
                             Near item = nearAdapter.getItem(position);
                             Intent intent = new Intent(TouristPointActivity.this, TouristPointActivity.class);
                             intent.putExtra("contentId", item.getContentId());
-                            startActivity(intent);
+                            startActivityForResult(intent, NEAR);
                         }
                     });
                 } else {
@@ -438,39 +450,14 @@ public class TouristPointActivity extends AppCompatActivity {
             });
     }
 
-    private void setupIndicators(int count) {
-        ImageView[] indicators = new ImageView[count];
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        params.setMargins(16, 8, 16, 8);
-
-        for (int i = 0; i < indicators.length; i++) {
-            indicators[i] = new ImageView(this);
-            indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
-                    R.drawable.post__indicator_inactive));
-            indicators[i].setLayoutParams(params);
-            indicator.addView(indicators[i]);
-        }
-        setCurrentIndicator(0);
-    }
-
-
-    private void setCurrentIndicator(int position) {
-        int childCount = indicator.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ImageView imageView = (ImageView) indicator.getChildAt(i);
-            if (i == position) {
-                imageView.setImageDrawable(ContextCompat.getDrawable(
-                        this,
-                        R.drawable.post__indicator_active
-                ));
-            } else {
-                imageView.setImageDrawable(ContextCompat.getDrawable(
-                        this,
-                        R.drawable.post__indicator_inactive
-                ));
-            }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == NEAR){
+            //새로고침
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         }
     }
 
