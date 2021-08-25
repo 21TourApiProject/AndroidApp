@@ -20,12 +20,11 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/all_star_back_btn"
+                    android:id="@+id/detail_star_back_btn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="start"
                     android:src="@drawable/back_btn" />
-
 
                 <TextView
                     android:id="@+id/detail_const_name"
@@ -41,7 +40,7 @@
                 android:id="@+id/detail_const_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"/>
+                android:adjustViewBounds="true" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -73,7 +72,7 @@
 
             <include
                 android:id="@+id/const_personality_textView"
-                layout="@layout/star__detail_view"
+                layout="@layout/star_detail_personality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp" />
