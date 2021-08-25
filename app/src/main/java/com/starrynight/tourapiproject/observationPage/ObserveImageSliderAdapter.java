@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.postPage;
+package com.starrynight.tourapiproject.observationPage;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,16 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 import com.starrynight.tourapiproject.R;
 
-import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
 
-public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder> {
+public class ObserveImageSliderAdapter extends RecyclerView.Adapter<ObserveImageSliderAdapter.MyViewHolder>{
     private Context context;
-    private ArrayList<String> sliderImage;
+    private String[] sliderImage;
 
-    public ImageSliderAdapter(Context context, ArrayList<String> sliderImage) {
+    public ObserveImageSliderAdapter(Context context, String[] sliderImage) {
         this.context = context;
         this.sliderImage = sliderImage;
     }
@@ -28,18 +27,18 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.custom_post_image_slider, parent, false);
+                .inflate(R.layout.custom_tp_image_slider, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bindSliderImage(sliderImage.get(position));
+    public void onBindViewHolder(@NonNull @NotNull ObserveImageSliderAdapter.MyViewHolder holder, int position) {
+        holder.bindSliderImage(sliderImage[position]);
     }
 
     @Override
     public int getItemCount() {
-        return sliderImage.size();
+        return sliderImage.length;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -50,11 +49,11 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageSlider);
         }
+
         public void bindSliderImage(String imageURL) {
             Glide.with(context)
                     .load(imageURL)
                     .into(mImageView);
-
         }
     }
 }

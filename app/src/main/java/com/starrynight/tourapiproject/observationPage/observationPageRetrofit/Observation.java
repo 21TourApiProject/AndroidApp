@@ -26,10 +26,6 @@ public class Observation {
     String entranceFee;
     @SerializedName("parking")
     String parking;
-    @SerializedName("parkingImg")
-    String parkingImg;
-    @SerializedName("intro")
-    String intro;
     @SerializedName("observeType")
     String observeType;
     @SerializedName("outline")
@@ -38,14 +34,24 @@ public class Observation {
     String guide;
     @SerializedName("closedDay")
     String closedDay;
+    @SerializedName("light")
+    double light;
+    @SerializedName("nature")
+    boolean nature;
     @SerializedName("myHashTags")
     List<ObserveHashTag> observeHashTags;
 
     public Observation(){};
 
+    public double getLight() {
+        return light;
+    }
 
+    public boolean getNature() {
+        return nature;
+    }
 
-    public List<ObserveHashTag> getMyHashTags() {
+    public List<ObserveHashTag> getObserveHashTag() {
         return observeHashTags;
     }
 
@@ -87,14 +93,6 @@ public class Observation {
 
     public String getParking() {
         return parking;
-    }
-
-    public String getParkingImg() {
-        return parkingImg;
-    }
-
-    public String getIntro() {
-        return intro;
     }
 
     public String getObserveType() {
