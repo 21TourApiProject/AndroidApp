@@ -26,7 +26,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.layout_blog, parent, false);
+        View itemView = inflater.inflate(R.layout.custom_daum_item, parent, false);
         return new ViewHolder(itemView, listener);
     }
     @Override
@@ -50,10 +50,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         public ViewHolder(View itemView, final OnSearchItemClickListener listener){
             super(itemView);
-            textView =itemView.findViewById(R.id.blog_text);
-            textView2=itemView.findViewById(R.id.blog_text2);
-            textView3=itemView.findViewById(R.id.blog_text3);
-            imageView=itemView.findViewById(R.id.blogimage);
+            textView =itemView.findViewById(R.id.blogWriter);
+            textView2=itemView.findViewById(R.id.blogContent);
+            textView3=itemView.findViewById(R.id.blogTitle);
+            imageView=itemView.findViewById(R.id.blogImage);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
