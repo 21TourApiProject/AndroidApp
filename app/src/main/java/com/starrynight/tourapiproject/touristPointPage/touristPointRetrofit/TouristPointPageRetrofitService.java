@@ -18,6 +18,6 @@ public interface TouristPointPageRetrofitService {
     Call<Food> getFoodData(@Path("contentId") Long contentId);
 
     @GET("nearTouristData/{contentId}")
-    Call<List<Near>> getNearTouristPointData(@Path("contentId") Long contentId);
+    Call<List<Near>> getNearTouristData(@Path("contentId") Long contentId);
 
 }
