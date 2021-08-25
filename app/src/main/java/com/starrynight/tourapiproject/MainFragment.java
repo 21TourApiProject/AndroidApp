@@ -122,13 +122,6 @@ public class MainFragment extends Fragment {
                                             adapter.addItem(new post_item(observePoint,"제목2","닉네임2",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목3","닉네임3",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목4","닉네임4",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-                                            adapter.setOnItemClicklistener(new OnPostItemClickListener() {
-                                                @Override
-                                                public void onItemClick(Post_item_adapter.ViewHolder holder, View view, int position) {
-                                                    Intent intent = new Intent(getActivity(), PostActivity.class);
-                                                    startActivity(intent);
-                                                }
-                                            });
                                         }else {System.out.println("관측지 못 가져옴");}
                                     }
 
