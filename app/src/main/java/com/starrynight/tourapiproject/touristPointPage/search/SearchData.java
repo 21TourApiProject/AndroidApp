@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.touristPointPage.search;
 
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class SearchData {

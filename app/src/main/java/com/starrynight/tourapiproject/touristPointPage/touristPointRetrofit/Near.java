@@ -14,19 +14,18 @@ public class Near {
     private String addr; //주소
     @SerializedName("cat3Name")
     private String cat3Name; //소분류 이름
-    @SerializedName("overviewSimple")
-    private String overviewSimple; //개요 한줄
+    @SerializedName("overviewSim")
+    private String overviewSim; //개요 한줄
 
     public Near(){};
 
-    public Near(Long contentId, String firstImage, String title, String addr, String cat3Name, String overviewSimple) {
+    public Near(Long contentId, String firstImage, String title, String addr, String cat3Name, String overviewSim) {
         this.contentId = contentId;
         this.firstImage = firstImage;
         this.title = title;
         this.addr = addr;
         this.cat3Name = cat3Name;
-        this.overviewSimple = overviewSimple;
-
+        this.overviewSim = overviewSim;
     }
 
     public Long getContentId() {
@@ -49,7 +48,7 @@ public class Near {
         return cat3Name;
     }
 
-    public String getOverviewSimple() {
-        return overviewSimple;
+    public String getOverviewSim() {
+        return overviewSim;
     }
 }
