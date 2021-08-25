@@ -34,13 +34,13 @@
                     android:id="@+id/tpTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:text="제목"
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:text="/" />
 
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:text="관광지 타입"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <Button
                     android:id="@+id/tpGps"
@@ -69,21 +69,6 @@
                         android:layout_gravity="end"
                         android:text="저장" />
                 </FrameLayout>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tpOverviewSimple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="한줄 개요"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
 
             </LinearLayout>
 
@@ -131,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
-                    
+
                     android:text="주소" />
 
                 <TextView
@@ -440,6 +425,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/nearText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="주변에 가볼만한 곳"
