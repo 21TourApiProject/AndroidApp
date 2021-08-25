@@ -24,7 +24,7 @@
             android:id="@+id/blogTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="제목" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                 android:id="@+id/blogWriter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="작성자" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -49,14 +49,13 @@
                 android:id="@+id/blogDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="작성일" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/blogContent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
