@@ -24,14 +24,14 @@ public class StarActivity extends AppCompatActivity {
     Context context;
 
     // 별자리 상세정보 제목
-    TextView constStoryTl, constObInfoTl, constBestMonthTl, constPersonalityTl;
+    TextView constStoryTl, constObInfoTl, constBestMonthTl, constPersonalityName, constPersonalityPeriod;
 
     // 별자리 상세정보 내용
-    TextView constName, constStory, constObInfo, constBestMonth, constPersonality, constPersonalityName, constPersonalityPeriod;
+    TextView constName, constStory, constObInfo, constBestMonth, constPersonality;
 
     // 별자리 상세정보 뷰
     View constStoryTv, constObInfoTv, constBestMonthTv, constPersonalityTv;
-    ImageView constImage;
+    ImageView constImage, constFeature;
 
     Long constId;
     Constellation constData;
@@ -48,6 +48,7 @@ public class StarActivity extends AppCompatActivity {
 
         constName = findViewById(R.id.detail_const_name);
         constImage = findViewById(R.id.detail_const_image);
+        constFeature = findViewById(R.id.const_feature);
 
         constStoryTv = findViewById(R.id.const_story_textView);
         constStory = constStoryTv.findViewById(R.id.content_text);
@@ -79,18 +80,24 @@ public class StarActivity extends AppCompatActivity {
             public void onResponse(Call<Constellation> call, Response<Constellation> response) {
                 if (response.isSuccessful()) {
                     constData = response.body();
-                    Glide.with(StarActivity.this).load(constData.getConstImage()).into(constImage);
+                    Glide.with(StarActivity.this).load(constData.getConstImage()).fitCenter().into(constImage);
                     constName.setText(constData.getConstName());
                     constStory.setText(constData.getConstStory());
                     constObInfo.setText(constData.getSpringConstMtd());
                     constBestMonth.setText(constData.getConstBestMonth());
 
                     if (constData.getConstPersonality() == null) {
-                        constPersonalityTv.setVisibility(View.INVISIBLE);
+                        constPersonalityTv.setVisibility(View.GONE);
                     }
                     constPersonality.setText(constData.getConstPersonality());
                     constPersonalityName.setText(constData.getConstName());
                     constPersonalityPeriod.setText(constData.getConstPeriod());
+
+                    if(constData.getConstFeature() == null){
+                        constFeature.setVisibility(View.GONE);
+                    }
+                    Glide.with(StarActivity.this).load(constData.getConstFeature()).fitCenter().into(constFeature);
+
                 } else {
                     System.out.println("별자리 정보 불러오기 실패");
                 }
