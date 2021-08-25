@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postPage.ImageSliderAdapter;
+import com.starrynight.tourapiproject.postPage.ImageSliderItemClickListener;
+import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postWritePage.AddHashTagActivity;
+import com.starrynight.tourapiproject.starPage.StarActivity;
 
 import java.util.ArrayList;
 
@@ -52,6 +59,13 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
         Glide.with(viewHolder.itemView.getContext())
                 .load(item.getImage2())
                 .into(viewHolder.profileimage);
+        viewHolder.observation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ObservationsiteActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -83,15 +97,15 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
             mainslider = itemView.findViewById(R.id.mainslider);
             indicator = itemView.findViewById(R.id.mainindicator);
             itemView.setClickable(true);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (listener != null){
-                        listener.onItemClick(Post_item_adapter.ViewHolder.this, v, position);
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = getAdapterPosition();
+//                    if (listener != null){
+//                        listener.onItemClick(Post_item_adapter.ViewHolder.this, v, position);
+//                    }
+//                }
+//            });
         }
 
         public void setItem(post_item item){
@@ -101,11 +115,27 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
             for (int i=0;i<item.hashTags.size();i++)
             { adapter.addItem(new PostHashTagItem(item.getHashTags().get(i)));}
             hashTagRecyclerView.setAdapter(adapter);
+            adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
+                @Override
+                public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
+                    Intent intent = new Intent(view.getContext(), AddHashTagActivity.class);
+                    view.getContext().startActivity(intent);
+                }
+            });
             observation.setText(item.getObservation());
             title.setText(item.getTitle());
             nickname.setText(item.getNickname());
             mainslider.setOffscreenPageLimit(3);
-            mainslider.setAdapter(new ImageSliderAdapter(mainslider.getContext(), item.getImages()));
+            ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());
+            mainslider.setAdapter(imageSliderAdapter);
+            imageSliderAdapter.OnItemClicklistener(new ImageSliderItemClickListener() {
+                @Override
+                public void onItemClick(ImageSliderAdapter.MyViewHolder holder, View view, int position) {
+                    Intent intent = new Intent(view.getContext(), PostActivity.class);
+                    view.getContext().startActivity(intent);
+                }
+            });
+
             mainslider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageSelected(int position) {

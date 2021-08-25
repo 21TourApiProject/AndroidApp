@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 
 import java.util.ArrayList;
 
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<String> sliderImage;
+    ImageSliderItemClickListener listener;
 
     public ImageSliderAdapter(Context context, ArrayList<String> sliderImage) {
         this.context = context;
@@ -29,7 +31,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_post_image_slider, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,listener);
     }
 
     @Override
@@ -42,13 +44,26 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         return sliderImage.size();
     }
 
+    public void OnItemClicklistener(ImageSliderItemClickListener listener){
+        this.listener = listener;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mImageView;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, final ImageSliderItemClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageSlider);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null){
+                        listener.onItemClick(ImageSliderAdapter.MyViewHolder.this, v, position);
+                    }
+                }
+            });
         }
         public void bindSliderImage(String imageURL) {
             Glide.with(context)
