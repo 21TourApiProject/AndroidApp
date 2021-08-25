@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItemAdapter.ViewHolder> {
     ArrayList<PostHashTagItem>items = new ArrayList<PostHashTagItem>();
+    OnPostHashTagClickListener listener;
 
     public void addItem(PostHashTagItem item){
         items.add(item);
@@ -33,12 +34,15 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
     public PostHashTagItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.hashtags, parent, false);
-        return new ViewHolder (itemView);
+        return new ViewHolder (itemView, listener);
     }
     @Override
     public void onBindViewHolder(@NonNull PostHashTagItemAdapter.ViewHolder viewHolder, int position) {
         PostHashTagItem item = items.get(position);
         viewHolder.setItem(item);
+    }
+    public void  setOnItemClicklistener(OnPostHashTagClickListener listener){
+        this.listener = listener;
     }
 
     @Override
@@ -49,9 +53,19 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView postHashTagName;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView, final OnPostHashTagClickListener listener){
             super(itemView);
             postHashTagName =itemView.findViewById(R.id.recycler_hashTagName);
+            itemView.setClickable(true);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null){
+                        listener.onItemClick(PostHashTagItemAdapter.ViewHolder.this, v, position);
+                    }
+                }
+            });
         }
 
         public void setItem(PostHashTagItem item){
