@@ -2,8 +2,6 @@ package com.starrynight.tourapiproject.starPage;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,21 +16,20 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Url;
-
-import static android.graphics.BitmapFactory.decodeFile;
 
 public class StarActivity extends AppCompatActivity {
     Context context;
 
-    TextView constName, constStory, constObInfo, constBestMonth, constPersonality;
+    // 별자리 상세정보 제목
+    TextView constStoryTl, constObInfoTl, constBestMonthTl, constPersonalityTl;
+
+    // 별자리 상세정보 내용
+    TextView constName, constStory, constObInfo, constBestMonth, constPersonality, constPersonalityName, constPersonalityPeriod;
+
+    // 별자리 상세정보 뷰
     View constStoryTv, constObInfoTv, constBestMonthTv, constPersonalityTv;
     ImageView constImage;
 
@@ -62,8 +59,18 @@ public class StarActivity extends AppCompatActivity {
         constBestMonth = constBestMonthTv.findViewById(R.id.content_text);
 
         constPersonalityTv = findViewById(R.id.const_personality_textView);
-        constPersonality = constPersonalityTv.findViewById(R.id.content_text);
+        constPersonality = constPersonalityTv.findViewById(R.id.content_per_text);
+        constPersonalityName = constPersonalityTv.findViewById(R.id.const_per_text);
+        constPersonalityPeriod = constPersonalityTv.findViewById(R.id.period_per_text);
 
+        constStoryTl = constStoryTv.findViewById(R.id.title_text);
+        constStoryTl.setText("별자리 이야기");
+
+        constObInfoTl = constObInfoTv.findViewById(R.id.title_text);
+        constObInfoTl.setText("별자리 관측 정보");
+
+        constBestMonthTl = constBestMonthTv.findViewById(R.id.title_text);
+        constObInfoTl.setText("가장 보기 좋은 달");
 
         // 별자리 클릭 후 상세 정보 불러오는 api
         Call<Constellation> detailConstCall = RetrofitClient.getApiService().getDetailConst(constId);
@@ -77,7 +84,13 @@ public class StarActivity extends AppCompatActivity {
                     constStory.setText(constData.getConstStory());
                     constObInfo.setText(constData.getSpringConstMtd());
                     constBestMonth.setText(constData.getConstBestMonth());
+
+                    if (constData.getConstPersonality() == null) {
+                        constPersonalityTv.setVisibility(View.INVISIBLE);
+                    }
                     constPersonality.setText(constData.getConstPersonality());
+                    constPersonalityName.setText(constData.getConstName());
+                    constPersonalityPeriod.setText(constData.getConstPeriod());
                 } else {
                     System.out.println("별자리 정보 불러오기 실패");
                 }
@@ -90,7 +103,7 @@ public class StarActivity extends AppCompatActivity {
         });
 
         // 뒤로 가기 버튼 이벤트
-        ImageButton backBtn = findViewById(R.id.all_star_back_btn);
+        ImageButton backBtn = findViewById(R.id.detail_star_back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

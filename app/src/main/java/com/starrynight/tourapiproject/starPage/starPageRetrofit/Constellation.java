@@ -33,6 +33,9 @@ public class Constellation {
     @SerializedName("constPersonality")
     private String constPersonality;
 
+    @SerializedName("constPeriod")
+    private String constPeriod;
+
     @SerializedName("startDate")
     private String startDate;
 
@@ -120,6 +123,14 @@ public class Constellation {
 
     public void setConstPersonality(String constPersonality) {
         this.constPersonality = constPersonality;
+    }
+
+    public String getConstPeriod() {
+        return constPeriod;
+    }
+
+    public void setConstPeriod(String constPeriod) {
+        this.constPeriod = constPeriod;
     }
 
     public String getStartDate() {
