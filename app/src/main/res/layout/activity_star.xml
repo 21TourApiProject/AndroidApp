@@ -28,6 +28,7 @@
 
 
                 <TextView
+                    android:id="@+id/detail_const_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -37,7 +38,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/StarImage"
+                android:id="@+id/detail_const_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -51,28 +52,28 @@
                 android:src="@color/purple_500" />
 
             <include
-                android:id="@+id/cel_story"
+                android:id="@+id/const_story_textView"
                 layout="@layout/star__detail_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp" />
 
             <include
-                android:id="@+id/cel_ob_info"
+                android:id="@+id/const_ob_info_textView"
                 layout="@layout/star__detail_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp" />
 
             <include
-                android:id="@+id/best_month"
+                android:id="@+id/const_best_month_textView"
                 layout="@layout/star__detail_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp" />
 
             <include
-                android:id="@+id/cel_feature"
+                android:id="@+id/const_personality_textView"
                 layout="@layout/star__detail_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
