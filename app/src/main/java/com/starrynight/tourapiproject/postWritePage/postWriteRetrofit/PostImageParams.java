@@ -8,12 +8,12 @@ public class PostImageParams implements Serializable {
 
     public PostImageParams(){}
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
-    }
-
     public String getImageName() {
         return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public PostImageParams(String imageName) {

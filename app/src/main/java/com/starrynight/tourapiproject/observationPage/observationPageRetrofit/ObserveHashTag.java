@@ -12,9 +12,15 @@ public class ObserveHashTag {
     private Long observationId;
     @SerializedName("hashTagId")
     private Long hashTagId;
+
+
+
     @SerializedName("hashTagName")
     private String hashTagName;
 
     public ObserveHashTag(){};
 
+    public String getHashTagName() {
+        return hashTagName;
+    }
 }
