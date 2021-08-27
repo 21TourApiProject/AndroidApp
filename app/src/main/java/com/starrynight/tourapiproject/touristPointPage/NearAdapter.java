@@ -80,7 +80,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
         TextView nearTitle;
         TextView nearAddr;
         TextView nearCat3Name;
-        TextView nearOverviewSimple;
+        TextView nearOverviewSim;
 
         public ViewHolder(View itemView, final OnNearItemClickListener listener) {
             super(itemView);
@@ -89,7 +89,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             nearTitle = itemView.findViewById(R.id.nearTitle);
             nearAddr = itemView.findViewById(R.id.nearAddr);
             nearCat3Name = itemView.findViewById(R.id.nearCat3Name);
-            nearOverviewSimple = itemView.findViewById(R.id.nearOverviewSimple);
+            nearOverviewSim = itemView.findViewById(R.id.nearOverviewSim);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,8 +113,9 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             nearTitle.setText(item.getTitle());
             nearAddr.setText(item.getAddr());
             nearCat3Name.setText(item.getCat3Name());
-            nearOverviewSimple.setText(item.getOverviewSimple());
+            nearOverviewSim.setText(item.getOverviewSim());
         }
+
     }
 
 }

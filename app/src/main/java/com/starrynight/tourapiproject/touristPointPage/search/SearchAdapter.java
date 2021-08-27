@@ -26,7 +26,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.layout_blog, parent, false);
+        View itemView = inflater.inflate(R.layout.custom_daum_item, parent, false);
         return new ViewHolder(itemView, listener);
     }
     @Override
@@ -43,17 +43,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textView;
-        TextView textView2;
-        TextView textView3;
-        ImageView imageView;
+        TextView blogTitle;
+        TextView blogWriter;
+        TextView blogDate;
+        ImageView blogImage;
 
         public ViewHolder(View itemView, final OnSearchItemClickListener listener){
             super(itemView);
-            textView =itemView.findViewById(R.id.blog_text);
-            textView2=itemView.findViewById(R.id.blog_text2);
-            textView3=itemView.findViewById(R.id.blog_text3);
-            imageView=itemView.findViewById(R.id.blogimage);
+            blogTitle=itemView.findViewById(R.id.blogTitle);
+            blogWriter =itemView.findViewById(R.id.blogWriter);
+            blogDate=itemView.findViewById(R.id.blogDate);
+            blogImage=itemView.findViewById(R.id.blogImage);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,10 +69,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         }
 
         public void setItem(SearchData.Document data){
-            textView.setText(data.getBlogname());
-            textView2.setText(data.getContents());
-            textView3.setText(data.getTitle());
-            Glide.with(itemView.getContext()).load(data.getThumbnail()).override(100,100).into(imageView);
+            blogTitle.setText(data.getTitle());
+            blogWriter.setText(data.getBlogname());
+            blogDate.setText(data.getDatetime().substring(0,10));
+            Glide.with(itemView.getContext()).load(data.getThumbnail()).override(100,100).into(blogImage);
 
         }
     }
