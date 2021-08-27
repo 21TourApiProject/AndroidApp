@@ -38,15 +38,6 @@ public class StarAllActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
         constAdapter = new StarViewAdapter();
         recyclerView.setAdapter(constAdapter);
-//
-//        constAdapter.addItem(new StarItem(0L,"별자리1", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
-//        constAdapter.addItem(new StarItem(1L,"별자리2", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
-//        constAdapter.addItem(new StarItem(2L,"별자리3", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
-//        constAdapter.addItem(new StarItem(3L,"별자리4", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
-//        constAdapter.addItem(new StarItem(4L,"별자리5", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
-//        constAdapter.addItem(new StarItem(5L,"별자리6", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
-//        constAdapter.addItem(new StarItem(6L,"별자리7", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
-//        constAdapter.addItem(new StarItem(7L,"별자리8", "https://cdn.pixabay.com/photo/2015/02/17/08/25/horoscope-639127_960_720.jpg"));
 
         // 이름, 이미지를 불러오기 위한 get api
         Call<List<StarItem>> starItemCall = RetrofitClient.getApiService().getConstellation();
@@ -70,10 +61,14 @@ public class StarAllActivity extends AppCompatActivity {
             }
         });
 
+        // item 클릭 시 해당 아이템 constId 넘겨주기
         constAdapter.setOnItemClickListener(new OnStarItemClickListener() {
             @Override
             public void onItemClick(StarViewAdapter.ViewHolder holder, View view, int position) {
+                StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getApplicationContext(), StarActivity.class);
+                intent.putExtra("constId", item.getConstId());
+                //Log.d("constId출력", item.getConstId().toString());
                 startActivity(intent);
             }
         });
