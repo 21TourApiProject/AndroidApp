@@ -2,8 +2,6 @@ package com.starrynight.tourapiproject.starPage.starPageRetrofit;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDate;
-
 public class Constellation {
     @SerializedName("constId")
     private Long constId;
@@ -23,11 +21,11 @@ public class Constellation {
     @SerializedName("summerConstMtd")
     private String summerConstMtd;
 
-    @SerializedName("fallConstId")
-    private String fallConstId;
+    @SerializedName("fallConstMtd")
+    private String fallConstMtd;
 
-    @SerializedName("winterConstId")
-    private String winterConstId;
+    @SerializedName("winterConstMtd")
+    private String winterConstMtd;
 
     @SerializedName("constBestMonth")
     private String constBestMonth;
@@ -35,21 +33,20 @@ public class Constellation {
     @SerializedName("constPersonality")
     private String constPersonality;
 
+    @SerializedName("constPeriod")
+    private String constPeriod;
+
+    @SerializedName("constFeature")
+    private String constFeature;
+
     @SerializedName("startDate")
-    private LocalDate startDate;
+    private String startDate;
 
     @SerializedName("endDate")
-    private LocalDate endDate;
+    private String endDate;
 
     public Constellation() {
     }
-
-
-//    public Constellation(Long constId, String constName, String constImage){
-//        this.constId = constId;
-//        this.constName = constName;
-//        this.constImage = constImage;
-//    };
 
     public Long getConstId() {
         return constId;
@@ -99,20 +96,20 @@ public class Constellation {
         this.summerConstMtd = summerConstMtd;
     }
 
-    public String getFallConstId() {
-        return fallConstId;
+    public String getFallConstMtd() {
+        return fallConstMtd;
     }
 
-    public void setFallConstId(String fallConstId) {
-        this.fallConstId = fallConstId;
+    public void setFallConstMtd(String fallConstMtd) {
+        this.fallConstMtd = fallConstMtd;
     }
 
-    public String getWinterConstId() {
-        return winterConstId;
+    public String getWinterConstMtd() {
+        return winterConstMtd;
     }
 
-    public void setWinterConstId(String winterConstId) {
-        this.winterConstId = winterConstId;
+    public void setWinterConstMtd(String winterConstMtd) {
+        this.winterConstMtd = winterConstMtd;
     }
 
     public String getConstBestMonth() {
@@ -131,19 +128,35 @@ public class Constellation {
         this.constPersonality = constPersonality;
     }
 
-    public LocalDate getStartDate() {
+    public String getConstPeriod() {
+        return constPeriod;
+    }
+
+    public void setConstPeriod(String constPeriod) {
+        this.constPeriod = constPeriod;
+    }
+
+    public String getConstFeature() {
+        return constFeature;
+    }
+
+    public void setConstFeature(String constFeature) {
+        this.constFeature = constFeature;
+    }
+
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 }

@@ -46,6 +46,7 @@ public class TonightSkyFragment extends Fragment {
     TextView allConstBtn;
 
     Long constId;
+    Constellation constellation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,8 +83,8 @@ public class TonightSkyFragment extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -108,17 +109,18 @@ public class TonightSkyFragment extends Fragment {
         constAdapter = new StarViewAdapter();
         constList.setAdapter(constAdapter);
 
-        // 전체 별자리 리스트 불러오는 api
+
+        // 오늘의 별자리 리스트 불러오는 api
         Call<List<StarItem>> todayConstCall = RetrofitClient.getApiService().getTodayConst();
         todayConstCall.enqueue(new Callback<List<StarItem>>() {
             @Override
             public void onResponse(Call<List<StarItem>> call, Response<List<StarItem>> response) {
                 if (response.isSuccessful()) {
                     List<StarItem> result = response.body();
-                    for (StarItem si: result){
+                    for (StarItem si : result) {
                         constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstImage()));
                     }
-                     constList.setAdapter(constAdapter);
+                    constList.setAdapter(constAdapter);
                 } else {
                     System.out.println("오늘의 별자리 불러오기 실패");
                 }
@@ -130,10 +132,14 @@ public class TonightSkyFragment extends Fragment {
             }
         });
 
+        // item 클릭 시 해당 아이템 constId 넘겨주기
         constAdapter.setOnItemClickListener(new OnStarItemClickListener() {
             @Override
             public void onItemClick(StarViewAdapter.ViewHolder holder, View view, int position) {
+                StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
+                intent.putExtra("constId", item.getConstId());
+                //Log.d("constId출력", item.getConstId().toString());
                 startActivity(intent);
             }
         });
