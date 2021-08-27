@@ -21,11 +21,11 @@ public class Constellation {
     @SerializedName("summerConstMtd")
     private String summerConstMtd;
 
-    @SerializedName("fallConstId")
-    private String fallConstId;
+    @SerializedName("fallConstMtd")
+    private String fallConstMtd;
 
-    @SerializedName("winterConstId")
-    private String winterConstId;
+    @SerializedName("winterConstMtd")
+    private String winterConstMtd;
 
     @SerializedName("constBestMonth")
     private String constBestMonth;
@@ -96,20 +96,20 @@ public class Constellation {
         this.summerConstMtd = summerConstMtd;
     }
 
-    public String getFallConstId() {
-        return fallConstId;
+    public String getFallConstMtd() {
+        return fallConstMtd;
     }
 
-    public void setFallConstId(String fallConstId) {
-        this.fallConstId = fallConstId;
+    public void setFallConstMtd(String fallConstMtd) {
+        this.fallConstMtd = fallConstMtd;
     }
 
-    public String getWinterConstId() {
-        return winterConstId;
+    public String getWinterConstMtd() {
+        return winterConstMtd;
     }
 
-    public void setWinterConstId(String winterConstId) {
-        this.winterConstId = winterConstId;
+    public void setWinterConstMtd(String winterConstMtd) {
+        this.winterConstMtd = winterConstMtd;
     }
 
     public String getConstBestMonth() {

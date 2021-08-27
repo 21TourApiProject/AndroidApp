@@ -85,7 +85,6 @@ public class TonightSkyFragment extends Fragment {
             public void onClick(View v) {
 //                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
 //                startActivity(intent);
-                
             }
         });
 
