@@ -25,6 +25,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveFee;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 
 import java.util.List;
@@ -45,6 +47,10 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private ViewPager2 obs_slider;
     private LinearLayout obs_indicator;
     private String[] obs_images;
+    private List<ObserveImage> obs_images_list;
+
+    private RecyclerFeeAdapter recyclerFeeAdapter;
+    private List<ObserveFee> obs_fee_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
 
 
-        long observationId = 2;
+        long observationId = 1;
 
         Call<Observation> call1 = RetrofitClient.getApiService().getObservation(observationId);
         call1.enqueue(new Callback<Observation>() {
@@ -62,6 +68,11 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
+
+                    obs_images_list=observation.getObserveImages();
+                    obs_images_list.get(0).getImageSource();
+
+                    obs_fee_list = observation.getObserveFees();
 
                     Call<List<String>> call3 = RetrofitClient.getApiService().getObserveImagePath(observationId);
                     call3.enqueue(new Callback<List<String>>(){
@@ -137,8 +148,38 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         operatinghour.setText(observation.getOperatingHour());
                         TextView closedday = findViewById(R.id.obs_closedday_txt);
                         closedday.setText(observation.getClosedDay());
-                        TextView entrancefee = findViewById(R.id.obs_entrancefee_txt);
-                        entrancefee.setText(observation.getEntranceFee());
+
+                        //이용요금 리사이클러 설정
+                        initFeeRecycler();
+                        Call<List<ObserveFee>> call4 = RetrofitClient.getApiService().getObserveFeeList(observationId);
+                        call4.enqueue(new Callback<List<ObserveFee>>(){
+
+                            @Override
+                            public void onResponse(Call<List<ObserveFee>> call, Response<List<ObserveFee>> response) {
+                                if (response.isSuccessful()) {
+                                    Log.d(TAG, "관측지 이용요금 호출 성공");
+                                    obs_fee_list = response.body();
+
+                                    for (ObserveFee p : obs_fee_list) {
+                                        RecyclerFeeItem item = new RecyclerFeeItem();
+                                        item.setEntranceFee(p.getEntranceFee());
+                                        item.setFeeName(p.getFeeName());
+
+                                        recyclerFeeAdapter.addItem(item);
+                                    }
+                                    recyclerFeeAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    Log.e(TAG, "관측지 이용요금 호출 실패");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<ObserveFee>> call, Throwable t) {
+                                Log.e(TAG, "연결실패" + t.getMessage());
+                            }
+                        });
+
                         TextView guide = findViewById(R.id.obs_guide_txt);
                         guide.setText(observation.getGuide());
                         TextView parking = findViewById(R.id.obs_parking_txt);
@@ -322,6 +363,17 @@ public class ObservationsiteActivity extends AppCompatActivity {
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }
 
+    private void initFeeRecycler(){
+        //이용요금 리사이클러 초기화
+        RecyclerView feeRecyclerView = findViewById(R.id.obs_entrancefee_layout);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        feeRecyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerFeeAdapter = new RecyclerFeeAdapter();
+        feeRecyclerView.setAdapter(recyclerFeeAdapter);
+    }
+
     private void setOutlineButton() {
         TextView outline_btn = findViewById(R.id.obs_outline_btn);
         Layout l= outline.getLayout();
@@ -367,6 +419,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
     }
 
     private void setupObserveIndicators(int count) {
+        //이비지 슬라이더 인디케이터 걸정
         ImageView[] indicators = new ImageView[count];
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
