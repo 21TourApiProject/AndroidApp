@@ -18,8 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
+import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
+import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
+import com.starrynight.tourapiproject.postItemPage.post_item;
+import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostObservePoint;
@@ -130,6 +135,46 @@ public class PostActivity extends AppCompatActivity{
                     postContent.setText(post.getPostContent());
                     postTime.setText(post.getTime());
                     postDate.setText(post.getYearDate());
+
+                    //관련 게시물
+                    Call<List<String>>call2 = RetrofitClient.getApiService().getRelatePostImageList(post.getPostObservePointId());
+                    call2.enqueue(new Callback<List<String>>() {
+                        @Override
+                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                            if (response.isSuccessful()) {
+                                System.out.println("관련 게시물 이미지 업로드");
+                                List<String> relateImageList = response.body();
+                                RecyclerView recyclerView = findViewById(R.id.relatePost);
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
+                                recyclerView.setLayoutManager(linearLayoutManager);
+                                Post_point_item_Adapter adapter = new Post_point_item_Adapter();
+                                for (int i=0;i<relateImageList.size();i++){
+                                    filename2[i]=relateImageList.get(i);
+                                    System.out.println(filename2[i]);
+                                }
+                                for (int i = 0; i <filename2.length;i++){
+                                    if(filename2[i] != null) {
+                                        adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]));
+                                    }
+                                }
+                                recyclerView.setAdapter(adapter);
+                                adapter.setOnItemClicklistener(new OnPostPointItemClickListener() {
+                                    @Override
+                                    public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
+                                        post_point_item item = adapter.getItem(position);
+                                        Intent intent1 = new Intent(PostActivity.this,PostActivity.class);
+                                        startActivity(intent1);
+                                    }
+                                });
+
+                            }else{System.out.println("관련 게시물 이미지 실패");}
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<String>> call, Throwable t) {
+                            System.out.println("관련 게시물 이미지 업로드 실패2");
+                        }
+                    });
                 }else{System.out.println("게시물 실패");}
             }
 
