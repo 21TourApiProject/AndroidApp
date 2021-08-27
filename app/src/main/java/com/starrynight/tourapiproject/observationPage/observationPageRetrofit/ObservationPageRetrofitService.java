@@ -19,9 +19,12 @@ public interface ObservationPageRetrofitService {
     @GET("observation/{observationId}")
     Call<Observation> getObservation(@Path("observationId") Long observationId);
 
-    @GET("observeHashTag/{observationId}/observeHashTag")
+    @GET("observation/{observationId}/observeHashTag")
     Call<List<String>> getObserveHashTags(@Path("observationId") Long observationId);
 
     @GET("observation/{observationId}/observeImage")
     Call<List<String>> getObserveImagePath(@Path("observationId") Long observationId);
+
+    @GET("observation/{observationId}/observeFee")
+    Call<List<ObserveFee>> getObserveFeeList(@Path("observationId") Long observationId);
 }
