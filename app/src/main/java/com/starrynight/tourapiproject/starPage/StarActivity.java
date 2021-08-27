@@ -54,12 +54,10 @@ public class StarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star);
 
-
-        //Log.d("compare", String.valueOf(date1.compareTo(date2)));
-
+        // 넘겨준 constId 받기
         Intent intent = getIntent();
         constId = (Long) intent.getSerializableExtra("constId");
-        Log.d("cosntId받아오기", constId.toString());
+        //Log.d("constId받아오기", constId.toString());
 
         constName = findViewById(R.id.detail_const_name);
         constImage = findViewById(R.id.detail_const_image);
