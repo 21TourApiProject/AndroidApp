@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/star__card_view_round">
+
+    <TextView
+        android:id="@+id/today_horoscope"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/star__card_view_top"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="5dp"
+        android:text="오늘의 별자리 운세"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/first_horoscope"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아아아아아아아앙"/>
+
+
+<!--    <androidx.viewpager2.widget.ViewPager2-->
+<!--        android:id="@+id/star_viewpager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp">-->
+
+<!--    </androidx.viewpager2.widget.ViewPager2>-->
+
+
+</LinearLayout>
