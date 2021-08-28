@@ -58,6 +58,7 @@ public class PostActivity extends AppCompatActivity{
     List<String>postHashTags;
     ImageView postImage;
     String[] filename2= new String[10];
+    String[] relatefilename = new String[4];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +119,7 @@ public class PostActivity extends AppCompatActivity{
             }
         });
 
-        postTitle =findViewById(R.id.observeSpot);
+        postTitle =findViewById(R.id.postTitleText);
         postContent=findViewById(R.id.postContent);
         postTime = findViewById(R.id.postTime);
         postDate = findViewById(R.id.postDate);
@@ -149,12 +150,13 @@ public class PostActivity extends AppCompatActivity{
                                 recyclerView.setLayoutManager(linearLayoutManager);
                                 Post_point_item_Adapter adapter = new Post_point_item_Adapter();
                                 for (int i=0;i<relateImageList.size();i++){
-                                    filename2[i]=relateImageList.get(i);
-                                    System.out.println(filename2[i]);
+                                    relatefilename[i]=relateImageList.get(i);
+                                    System.out.println(relatefilename[i]);
                                 }
-                                for (int i = 0; i <filename2.length;i++){
-                                    if(filename2[i] != null) {
-                                        adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]));
+                                for (int i = 0; i <relatefilename.length;i++){
+                                    if(relatefilename[i] != null) {
+                                        System.out.println(relatefilename[i]);
+                                        adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/" + relatefilename[i]));
                                     }
                                 }
                                 recyclerView.setAdapter(adapter);

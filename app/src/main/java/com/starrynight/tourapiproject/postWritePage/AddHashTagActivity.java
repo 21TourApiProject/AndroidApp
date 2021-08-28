@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,6 +55,11 @@ public class AddHashTagActivity extends AppCompatActivity {
         plusHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for (int i=3;i>0;i--){
+                    if (hashTaglist[i]==""){
+                        hashTaglist = Arrays.copyOf(hashTaglist, hashTaglist.length-1);
+                    }
+                }
                 intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
                 intent.putExtra("hashTagList", (Serializable) hashTaglist);
                 setResult(3,intent);
@@ -72,7 +78,6 @@ public class AddHashTagActivity extends AppCompatActivity {
                         if (PostHashTags!=null){
                             if (hashTaglist[i]==""){
                             hashTaglist[i]=PostHashTags;
-                            System.out.println(hashTaglist[0]+hashTaglist[1]+hashTaglist[2]+hashTaglist[3]);
                             break;
                             }
                         }

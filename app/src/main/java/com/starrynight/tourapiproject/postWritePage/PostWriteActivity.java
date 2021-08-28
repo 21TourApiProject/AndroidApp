@@ -322,14 +322,13 @@ public class PostWriteActivity extends AppCompatActivity {
                 System.out.println("해시태그가 넘어왔당");
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
                 String[] hashTagList = (String[]) data.getSerializableExtra("hashTagList");
-                System.out.println(hashTagList[0]+hashTagList[1]+hashTagList[2]+hashTagList[3]);
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);
                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
                 for (int i=0;i<hashTagList.length;i++){
                     adapter.addItem(new PostHashTagItem(hashTagList[i]));
-                    System.out.println(hashTagList[i]);
+                    System.out.println(hashTagList[i]+hashTagList.length);
                 }
                 recyclerView.setAdapter(adapter);
             }else{System.out.println("해시태그가 안 넘어왔당");}
