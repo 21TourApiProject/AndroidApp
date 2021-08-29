@@ -55,6 +55,14 @@ public class WishActivity extends AppCompatActivity {
         myWishTp = findViewById(R.id.myWishTp);
         myWishPost = findViewById(R.id.myWishPost);
 
+        //뒤로 가기
+        Button myWishBack = findViewById(R.id.myWishBack);
+        myWishBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         RecyclerView myWishsRecyclerview = findViewById(R.id.myWishs);
         LinearLayoutManager myWishsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
