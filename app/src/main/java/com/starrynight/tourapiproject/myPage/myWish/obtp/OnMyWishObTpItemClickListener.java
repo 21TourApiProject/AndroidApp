@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.myPage.myWish.obTp;
+package com.starrynight.tourapiproject.myPage.myWish.obtp;
 
 import android.view.View;
 

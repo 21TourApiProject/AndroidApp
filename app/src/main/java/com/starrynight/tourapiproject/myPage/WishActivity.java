@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.myPage;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.myPage.myWish.obTp.MyWishObTp;
-import com.starrynight.tourapiproject.myPage.myWish.obTp.MyWishObTpAdapter;
+import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
+import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTpAdapter;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyWishPost;
-import com.starrynight.tourapiproject.myPage.myWish.obTp.OnMyWishObTpItemClickListener;
+import com.starrynight.tourapiproject.myPage.myWish.obtp.OnMyWishObTpItemClickListener;
 import com.starrynight.tourapiproject.myPage.myWish.post.OnMyWishPostItemClickListener;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyWishPostAdapter;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
