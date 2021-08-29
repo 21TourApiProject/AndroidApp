@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
+import com.starrynight.tourapiproject.myPage.WishActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 import com.starrynight.tourapiproject.myPage.myPost.MyPost;
@@ -163,6 +164,46 @@ public class PersonFragment extends Fragment {
             }
         });
 
+
+        //내 찜 리사이클러 뷰
+        RecyclerView myWishRecyclerView = v.findViewById(R.id.myWishList);
+        LinearLayoutManager myWishLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myWishRecyclerView.setLayoutManager(myWishLayoutManager);
+        myWishRecyclerView.setHasFixedSize(true);
+        wishResult = new ArrayList<>();
+
+        //내 찜 불러오는 api
+        Call<List<MyWish>> call3 = RetrofitClient.getApiService().getMyWish(userId);
+        call3.enqueue(new Callback<List<MyWish>>() {
+            @Override
+            public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
+                if (response.isSuccessful()) {
+                    wishResult = response.body();
+
+                    MyWishAdapter myWishAdapter = new MyWishAdapter(wishResult, getContext());
+                    myWishRecyclerView.setAdapter(myWishAdapter);
+                } else {
+                    System.out.println("내 찜 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<MyWish>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+
+        //나의 여행 버킷리스트 페이지로 이동
+        myWishRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WishActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, 101);
+            }
+        });
+
+
         //내 게시물 리사이클러 뷰
         myPostList = v.findViewById(R.id.myPostList);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -171,8 +212,8 @@ public class PersonFragment extends Fragment {
         myPostList.setAdapter(myPostAdapter);
 
         //내 게시물 불러오는 api
-        Call<List<MyPost>> call3 = RetrofitClient.getApiService().getMyPost(userId);
-        call3.enqueue(new Callback<List<MyPost>>() {
+        Call<List<MyPost>> call4 = RetrofitClient.getApiService().getMyPost(userId);
+        call4.enqueue(new Callback<List<MyPost>>() {
             @Override
             public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                 if (response.isSuccessful()) {
@@ -198,34 +239,6 @@ public class PersonFragment extends Fragment {
                 //게시물 페이지 띄우기
             }
         });
-
-
-        //찜 관련 리사이클러 뷰
-        RecyclerView myWishRecyclerView = v.findViewById(R.id.myWishList);
-        LinearLayoutManager myWishLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myWishRecyclerView.setLayoutManager(myWishLayoutManager);
-        myWishRecyclerView.setHasFixedSize(true);
-        wishResult = new ArrayList<>();
-
-        Call<List<MyWish>> call4 = RetrofitClient.getApiService().getMyWish(userId);
-        call4.enqueue(new Callback<List<MyWish>>() {
-            @Override
-            public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
-                if (response.isSuccessful()) {
-                    wishResult = response.body();
-
-                    MyWishAdapter myWishAdapter = new MyWishAdapter(wishResult, getContext());
-                    myWishRecyclerView.setAdapter(myWishAdapter);
-                } else {
-                    System.out.println("내 찜 불러오기 실패");
-                }
-            }
-            @Override
-            public void onFailure(Call<List<MyWish>> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
-            }
-        });
-
 
         return v;
     }
