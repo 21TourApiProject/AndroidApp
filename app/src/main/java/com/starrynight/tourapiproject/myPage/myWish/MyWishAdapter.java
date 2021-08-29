@@ -30,7 +30,7 @@ public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder
     @Override
     public MyWishAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.custom_my_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.custom_my_wish_item, viewGroup, false);
 
         return new MyWishAdapter.ViewHolder(itemView);
     }
