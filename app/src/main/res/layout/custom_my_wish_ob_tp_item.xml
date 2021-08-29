@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="100dp"
+    android:layout_marginBottom="10dp">
 
     <ImageView
         android:id="@+id/myWishObTpImage"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_launcher_foreground" />
+        android:background="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,11 +32,13 @@
             <TextView
                 android:id="@+id/myWishObTpAddress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:text="/" />
 
             <TextView

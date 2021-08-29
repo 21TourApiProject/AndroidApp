@@ -64,6 +64,35 @@ public class WishActivity extends AppCompatActivity {
         tpResult = new ArrayList<>();
         postResult = new ArrayList<>();
 
+        Call<List<MyWishObTp>> call = RetrofitClient.getApiService().getMyWishObservation(userId);
+        call.enqueue(new Callback<List<MyWishObTp>>() {
+            @Override
+            public void onResponse(Call<List<MyWishObTp>> call, Response<List<MyWishObTp>> response) {
+                if (response.isSuccessful()) {
+                    tpResult = response.body();
+
+                    MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, WishActivity.this);
+                    myWishsRecyclerview.setAdapter(myWishObAdapter);
+                    myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
+                        @Override
+                        public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
+                            MyWishObTp item = myWishObAdapter.getItem(position);
+                            Intent intent = new Intent(WishActivity.this, ObservationsiteActivity.class);
+                            intent.putExtra("observationId", item.getItemId());
+                            startActivityForResult(intent, WISH);
+                        }
+                    });
+                } else {
+                    System.out.println("내 찜 관측지 불러오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MyWishObTp>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
 
         //내 찜 관측지
         myWishOb.setOnClickListener(new View.OnClickListener() {
