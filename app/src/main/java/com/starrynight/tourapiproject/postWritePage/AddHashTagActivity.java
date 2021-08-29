@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject.postWritePage;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,13 +13,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.signUpPage.SelectMyHashTagActivity;
 import com.starrynight.tourapiproject.starPage.StarActivity;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,6 +39,7 @@ public class AddHashTagActivity extends AppCompatActivity {
     LinearLayout dynamicLayout2;
     int numOfHT = 0;
     String PostHashTags;
+    String[] hashTaglist =new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +47,25 @@ public class AddHashTagActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_hash_tag);
         findHashTag = findViewById(R.id.findHashTag);
         dynamicLayout2 = (LinearLayout)findViewById(R.id.dynamicLayout2);
-
+        Intent intent= getIntent();
+        for (int i = 0;i<hashTaglist.length;i++){
+            hashTaglist[i]="";
+        }
+        Button plusHashTag = findViewById(R.id.plusHashTag);
+        plusHashTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i=3;i>0;i--){
+                    if (hashTaglist[i]==""){
+                        hashTaglist = Arrays.copyOf(hashTaglist, hashTaglist.length-1);
+                    }
+                }
+                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
+                intent.putExtra("hashTagList", (Serializable) hashTaglist);
+                setResult(3,intent);
+                finish();
+            }
+        });
         Button addHashTag = findViewById(R.id.addHashTag);
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,13 +74,17 @@ public class AddHashTagActivity extends AppCompatActivity {
                     addHashTag(findHashTag.getText().toString());
                 }
                 PostHashTags = ((TextView)(findViewById(R.id.findHashTag))).getText().toString();
+                    for (int i=0;i<hashTaglist.length;i++){
+                        if (PostHashTags!=null){
+                            if (hashTaglist[i]==""){
+                            hashTaglist[i]=PostHashTags;
+                            break;
+                            }
+                        }
+                    }
                 PostHashTagParams postHashTagParam= new PostHashTagParams();
                 postHashTagParam.setHashTagName(PostHashTags);
                 postHashTagParams.add(postHashTagParam);
-                Intent intent = new Intent();
-                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
-                setResult(3,intent);
-                finish();
             }
         });
     }

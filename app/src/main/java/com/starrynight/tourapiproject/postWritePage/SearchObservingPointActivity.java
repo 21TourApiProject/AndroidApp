@@ -8,11 +8,17 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchObservingPointActivity extends AppCompatActivity {
     TextView findObservePoint;
@@ -35,11 +41,27 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 if (findObservePoint != null){
                     addObservePoint(findObservePoint.getText().toString());
                 }
-                observePoint = ((TextView)(findViewById(R.id.findObservePoint))).getText().toString();
+                observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
                 PostObservePointParams postObservePointParams = new PostObservePointParams();
                 postObservePointParams.setObservePointName(observePoint);
+                Call<Void> call = RetrofitClient.getApiService().createPostObservePoint(postObservePointParams);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("관측지 생성 성공");
+                        }
+                        else{System.out.println("관측지 실패");}
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        System.out.println("관측지 실패 2");
+                    }
+                });
                 Intent intent = new Intent();
                 intent.putExtra("postObservePointParams", postObservePointParams);
+                intent.putExtra("postObservePointName",observePoint);
                 setResult(2,intent);
                 finish();
             }

@@ -1,9 +1,12 @@
-package com.starrynight.tourapiproject.touristSpotPage;
+package com.starrynight.tourapiproject.touristPointPage.search;
+
 import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
+
 public class SearchData {
     @SerializedName("documents")
-    public List<Document>Searchdocuments;
+    public List<Document> Searchdocuments;
     @SerializedName("meta")
     public  Meta meta;
  public static class Meta{

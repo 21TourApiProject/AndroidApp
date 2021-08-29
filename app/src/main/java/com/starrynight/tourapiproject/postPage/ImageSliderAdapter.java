@@ -10,13 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
+
+import java.util.ArrayList;
 
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder> {
     private Context context;
-    private String[] sliderImage;
+    private ArrayList<String> sliderImage;
+    ImageSliderItemClickListener listener;
 
-    public ImageSliderAdapter(Context context, String[] sliderImage) {
+    public ImageSliderAdapter(Context context, ArrayList<String> sliderImage) {
         this.context = context;
         this.sliderImage = sliderImage;
     }
@@ -26,32 +31,45 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_post_image_slider, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewHolder(view,listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.bindSliderImage(sliderImage[position]);
+        holder.bindSliderImage(sliderImage.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return sliderImage.length;
+        return sliderImage.size();
+    }
+
+    public void OnItemClicklistener(ImageSliderItemClickListener listener){
+        this.listener = listener;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mImageView;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, final ImageSliderItemClickListener listener) {
             super(itemView);
             mImageView = itemView.findViewById(R.id.imageSlider);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null){
+                        listener.onItemClick(ImageSliderAdapter.MyViewHolder.this, v, position);
+                    }
+                }
+            });
         }
-
         public void bindSliderImage(String imageURL) {
             Glide.with(context)
                     .load(imageURL)
                     .into(mImageView);
+
         }
     }
 }
