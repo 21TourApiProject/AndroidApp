@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.myPage.WishActivity;
@@ -52,7 +53,14 @@ public class PersonFragment extends Fragment {
     TextView nickName;
     TextView hashTagNameList;
 
-    List<MyWish> wishResult;
+    ImageView myWishImage1;
+    TextView myWishTitle1;
+    ImageView myWishImage2;
+    TextView myWishTitle2;
+    ImageView myWishImage3;
+    TextView myWishTitle3;
+
+    List<MyWish> myWishes = new ArrayList<>();
 
     RecyclerView myPostList;
     MyPostAdapter myPostAdapter;
@@ -77,6 +85,12 @@ public class PersonFragment extends Fragment {
         nickName = v.findViewById(R.id.nickName);
         profileImage = v.findViewById(R.id.profileImage);
         hashTagNameList = v.findViewById(R.id.hashTagNameList);
+        myWishImage1 = v.findViewById(R.id.myWishImage1);
+        myWishTitle1 = v.findViewById(R.id.myWishTitle1);
+        myWishImage2 = v.findViewById(R.id.myWishImage2);
+        myWishTitle2 = v.findViewById(R.id.myWishTitle2);
+        myWishImage3 = v.findViewById(R.id.myWishImage3);
+        myWishTitle3 = v.findViewById(R.id.myWishTitle3);
 
         //닉네임, 프로필 사진을 불러오기 위한 get api
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
@@ -165,23 +179,30 @@ public class PersonFragment extends Fragment {
         });
 
 
-        //내 찜 리사이클러 뷰
-        RecyclerView myWishRecyclerView = v.findViewById(R.id.myWishList);
-        LinearLayoutManager myWishLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myWishRecyclerView.setLayoutManager(myWishLayoutManager);
-        myWishRecyclerView.setHasFixedSize(true);
-        wishResult = new ArrayList<>();
-
         //내 찜 불러오는 api
         Call<List<MyWish>> call3 = RetrofitClient.getApiService().getMyWish(userId);
         call3.enqueue(new Callback<List<MyWish>>() {
             @Override
             public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
                 if (response.isSuccessful()) {
-                    wishResult = response.body();
+                    myWishes = response.body();
+                    int size = myWishes.size();
+                    int i = 0;
+                    if (size > 0){
+                        Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage1);
+                        myWishTitle1.setText(myWishes.get(i).getTitle());
+                        i++;
+                        if (size > 1){
+                            Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage2);
+                            myWishTitle2.setText(myWishes.get(i).getTitle());
+                            i++;
+                            if (size > 2){
+                                Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage3);
+                                myWishTitle3.setText(myWishes.get(i).getTitle());
+                            }
+                        }
+                    }
 
-                    MyWishAdapter myWishAdapter = new MyWishAdapter(wishResult, getContext());
-                    myWishRecyclerView.setAdapter(myWishAdapter);
                 } else {
                     System.out.println("내 찜 불러오기 실패");
                 }
@@ -192,9 +213,9 @@ public class PersonFragment extends Fragment {
             }
         });
 
-
         //나의 여행 버킷리스트 페이지로 이동
-        myWishRecyclerView.setOnClickListener(new View.OnClickListener() {
+        View myWishLayout = v.findViewById(R.id.myWishLayout);
+        myWishLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WishActivity.class);

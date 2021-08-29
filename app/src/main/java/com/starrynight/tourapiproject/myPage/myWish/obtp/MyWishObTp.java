@@ -13,7 +13,7 @@ public class MyWishObTp {
     private String title;
     @SerializedName("address")
     private String address;
-    @SerializedName("cat3")
+    @SerializedName("cat3Name")
     private String cat3;
     @SerializedName("overviewSim")
     private String overviewSim;
