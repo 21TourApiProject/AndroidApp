@@ -2,7 +2,7 @@ package com.starrynight.tourapiproject.myPage.myPageRetrofit;
 
 import com.starrynight.tourapiproject.myPage.myPost.MyPost;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
-import com.starrynight.tourapiproject.myPage.myWish.obTp.MyWishObTp;
+import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyWishPost;
 
 import java.util.List;
