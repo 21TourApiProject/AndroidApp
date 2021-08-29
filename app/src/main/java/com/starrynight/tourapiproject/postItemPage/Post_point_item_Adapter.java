@@ -19,7 +19,7 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
     ArrayList<post_point_item> items = new ArrayList<post_point_item>();
     private Intent intent;
     private ArrayList<post_point_item> itemList;
-    OnPostItemClickListener listener;
+    OnPostPointItemClickListener listener;
 
     public void addItem(post_point_item item){ items.add(item); }
     public void setItems(ArrayList<post_point_item> items){ this.items = items; }
@@ -48,7 +48,7 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
     @Override
     public int getItemCount() { return items.size(); }
 
-    public void  setOnItemClicklistener(OnPostItemClickListener listener){
+    public void  setOnItemClicklistener(OnPostPointItemClickListener listener){
         this.listener = listener;
     }
 
@@ -56,7 +56,7 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
         TextView textView;
         ImageView imageView;
 
-        public ViewHolder(View itemView, final OnPostItemClickListener listener){
+        public ViewHolder(View itemView, final OnPostPointItemClickListener listener){
             super(itemView);
             textView =itemView.findViewById(R.id.PostText);
             imageView = itemView.findViewById(R.id.postimage);
@@ -71,7 +71,6 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
                     }
                 }
             });
-
 
         }
         public void setItem(post_point_item item){

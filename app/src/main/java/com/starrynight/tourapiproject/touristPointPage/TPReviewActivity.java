@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.touristSpotPage;
+package com.starrynight.tourapiproject.touristPointPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,12 +8,12 @@ import android.widget.LinearLayout;
 
 import com.starrynight.tourapiproject.R;
 
-public class TouristreviewActivity extends AppCompatActivity {
+public class TPReviewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_touristreview);
+        setContentView(R.layout.activity_tourist_point_review);
 
         Button button= findViewById(R.id.morebutton);
         LinearLayout linearLayout = findViewById(R.id.LinearLayout2);

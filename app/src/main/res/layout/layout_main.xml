@@ -2,70 +2,103 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_main"
+    android:id="@+id/mainobservation"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal">
 
-    <ImageView
-        android:id="@+id/layout_image"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="닉네임"
-        app:layout_constraintBottom_toBottomOf="@id/mainprofileimage"
-        app:layout_constraintStart_toEndOf="@+id/mainprofileimage"
-        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/mainslider"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
 
-    <ImageView
-        android:id="@+id/mainprofileimage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@id/layout_image"
-        app:layout_constraintTop_toBottomOf="@+id/layout_image" />
+        </androidx.viewpager2.widget.ViewPager2>
 
-    <Button
-        android:id="@+id/hash__button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/hash__button2"
-        app:layout_constraintTop_toBottomOf="@+id/mainprofileimage" />
+        <LinearLayout
+            android:id="@+id/mainindicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
 
-    <Button
-        android:id="@+id/hash__button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/mainprofileimage"
-        app:layout_constraintTop_toBottomOf="@+id/mainprofileimage" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/mainpost_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="제목"
-        app:layout_constraintStart_toStartOf="@+id/hash__button2"
-        app:layout_constraintTop_toBottomOf="@+id/hash__button2" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2">
 
-    <EditText
-        android:id="@+id/reviewText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="13"
-        android:inputType="textPersonName"
-        android:text="댓글"
-        app:layout_constraintStart_toStartOf="@+id/mainpost_title"
-        app:layout_constraintTop_toBottomOf="@+id/mainpost_title" />
+        <TextView
+            android:id="@+id/mainpost_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="제목" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/mainprofileimage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="닉네임" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/mainplus_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/observation__save" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/mainobservepoint"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/observation__hashtags"
+                android:hint="관측지"
+                android:textColor="@color/purple_200" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mainRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="4" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
