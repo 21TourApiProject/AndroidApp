@@ -159,7 +159,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     tpInfo1.setVisibility(View.VISIBLE);
 
                                     //이미지
-                                    if (!tpData.getFirstImage().equals("null")){
+                                    if (tpData.getFirstImage() != null){
                                         image[0] = tpData.getFirstImage();
                                         slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
 
@@ -221,49 +221,49 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     cat3Name.setText(tpData.getCat3Name());
 
-                                    if (!tpData.getOverview().equals("null")){
+                                    if (tpData.getOverview() != null){
                                         overview.setText(tpData.getOverview().substring(0,120) + "...");
                                         overviewFull = tpData.getOverview();
                                     }else{
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getAddr1().equals("null")){
+                                    if (tpData.getAddr1() != null){
                                         tpAddress.setText(tpData.getAddr1());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getTel().equals("null")){
+                                    if (tpData.getTel() != null){
                                         tpTel.setText(tpData.getTel());
                                     }else{
                                         telLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getUseTime().equals("null")){
+                                    if (tpData.getUseTime() != null){
                                         tpUseTime.setText(tpData.getUseTime());
                                     }else{
                                         useTimeLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getRestDate().equals("null")){
+                                    if (tpData.getRestDate() != null){
                                         tpRestDate.setText(tpData.getRestDate());
                                     }else{
                                         restDateLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getExpGuide().equals("null")){
+                                    if (tpData.getExpGuide() != null){
                                         tpExpGuide.setText(tpData.getExpGuide());
                                     }else{
                                         expGuideLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getParking().equals("null")){
+                                    if (tpData.getParking() != null){
                                         tpParking.setText(tpData.getParking());
                                     }else{
                                         parkingLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getChkPet().equals("null")){
+                                    if (tpData.getChkPet() != null){
                                         tpChkPet.setText(tpData.getChkPet());
                                     }else{
                                         chkPetLayout.setVisibility(View.GONE);
                                     }
-                                    if (!tpData.getHomePage().equals("null")){
+                                    if (tpData.getHomePage() != null){
                                         String cleanHomepage = tpData.getHomePage();
                                         tpHomePage.setText(cleanHomepage);
                                         tpHomePage.setOnClickListener(new View.OnClickListener() {
@@ -299,7 +299,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     foodInfo1.setVisibility(View.VISIBLE);
 
                                     //이미지
-                                    if (!foodData.getFirstImage().equals("null")){
+                                    if (foodData.getFirstImage() != null){
                                         image[0] = foodData.getFirstImage();
                                         slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
 
@@ -360,49 +360,49 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     cat3Name.setText(foodData.getCat3Name());
 
-                                    if (!foodData.getOverview().equals("null")){
+                                    if (foodData.getOverview() != null){
                                         overview.setText(foodData.getOverview().substring(0,120) + "...");
                                         overviewFull = foodData.getOverview();
                                     }else{
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getAddr1().equals("null")){
+                                    if (foodData.getAddr1() != null){
                                         tpAddress.setText(foodData.getAddr1());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getTel().equals("null")){
+                                    if (foodData.getTel() != null){
                                         tpTel.setText(foodData.getTel());
                                     }else{
                                         telLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getOpenTimeFood().equals("null")){
+                                    if (foodData.getOpenTimeFood() != null){
                                         tpOpenTimeFood.setText(foodData.getOpenTimeFood());
                                     }else{
                                         openTimeFoodLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getRestDateFood().equals("null")){
+                                    if (foodData.getRestDateFood() != null){
                                         tpRestDateFood.setText(foodData.getRestDateFood());
                                     }else{
                                         restDateFoodLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getFirstMenu().equals("null")){
+                                    if (foodData.getFirstMenu() != null){
                                         tpFirstMenu.setText(foodData.getFirstMenu());
                                     }else{
                                         firstMenuLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getTreatMenu().equals("null")){
+                                    if (foodData.getTreatMenu() != null){
                                         tpTreatMenu.setText(foodData.getTreatMenu());
                                     }else{
                                         treatMenuLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getPacking().equals("null")){
+                                    if (foodData.getPacking() != null){
                                         tpPacking.setText(foodData.getPacking());
                                     }else{
                                         packingLayout.setVisibility(View.GONE);
                                     }
-                                    if (!foodData.getParkingFood().equals("null")){
+                                    if (foodData.getParkingFood() != null){
                                         tpParkingFood.setText(foodData.getParkingFood());
                                     }else{
                                         parkingFoodLayout.setVisibility(View.GONE);

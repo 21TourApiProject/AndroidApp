@@ -23,7 +23,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
     @Override
     public MyPostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.custom_my_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.custom_my_wish_item, viewGroup, false);
 
         return new MyPostAdapter.ViewHolder(itemView, listener);
     }
@@ -68,9 +68,9 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         public ViewHolder(View itemView, final OnMyPostItemClickListener listener) {
             super(itemView);
 
-            thumbnail = itemView.findViewById(R.id.myThumbnail);
-            title = itemView.findViewById(R.id.myTitle);
-            layout = itemView.findViewById(R.id.myLayout);
+            thumbnail = itemView.findViewById(R.id.myWishThumbnail);
+            title = itemView.findViewById(R.id.myWishTitle);
+            layout = itemView.findViewById(R.id.myWishLayout);
 
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
