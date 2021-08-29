@@ -24,11 +24,8 @@ import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 import com.starrynight.tourapiproject.myPage.myPost.MyPost;
 import com.starrynight.tourapiproject.myPage.myPost.MyPostAdapter;
 import com.starrynight.tourapiproject.myPage.myPost.OnMyPostItemClickListener;
-import com.starrynight.tourapiproject.myPage.myWish.observation.MyObWishAdapter;
-import com.starrynight.tourapiproject.myPage.myWish.post.MyPostWish;
-import com.starrynight.tourapiproject.myPage.myWish.post.MyPostWishAdapter;
-import com.starrynight.tourapiproject.myPage.myWish.post.OnMyPostWishItemClickListener;
-import com.starrynight.tourapiproject.myPage.myWish.touristPoint.MyTpWishAdapter;
+import com.starrynight.tourapiproject.myPage.myWish.MyWish;
+import com.starrynight.tourapiproject.myPage.myWish.MyWishAdapter;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
 import java.io.BufferedReader;
@@ -36,6 +33,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,12 +51,7 @@ public class PersonFragment extends Fragment {
     TextView nickName;
     TextView hashTagNameList;
 
-    RecyclerView myPostWishList;
-    RecyclerView myObWishList;
-    RecyclerView myTpWishList;
-    MyPostWishAdapter myPostWishAdapter;
-    MyTpWishAdapter myTpWishAdapter;
-    MyObWishAdapter myObWishAdapter;
+    List<MyWish> wishResult;
 
     RecyclerView myPostList;
     MyPostAdapter myPostAdapter;
@@ -172,8 +165,8 @@ public class PersonFragment extends Fragment {
 
         //내 게시물 리사이클러 뷰
         myPostList = v.findViewById(R.id.myPostList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myPostList.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myPostList.setLayoutManager(layoutManager2);
         myPostAdapter= new MyPostAdapter();
         myPostList.setAdapter(myPostAdapter);
 
@@ -207,73 +200,31 @@ public class PersonFragment extends Fragment {
         });
 
 
-        //찜 관련 리사이클러(게시물, 관측지, 관광지)
-        myPostWishList = v.findViewById(R.id.myWishList);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myPostWishList.setLayoutManager(layoutManager1);
+        //찜 관련 리사이클러 뷰
+        RecyclerView myWishRecyclerView = v.findViewById(R.id.myWishList);
+        LinearLayoutManager myWishLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myWishRecyclerView.setLayoutManager(myWishLayoutManager);
+        myWishRecyclerView.setHasFixedSize(true);
+        wishResult = new ArrayList<>();
 
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myObWishList.setLayoutManager(layoutManager2);
+        Call<List<MyWish>> call4 = RetrofitClient.getApiService().getMyWish(userId);
+        call4.enqueue(new Callback<List<MyWish>>() {
+            @Override
+            public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
+                if (response.isSuccessful()) {
+                    wishResult = response.body();
 
-        LinearLayoutManager layoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myTpWishList.setLayoutManager(layoutManager3);
-
-
-
-
-
-//        //찜(관측지) 버튼 클릭
-//        Button myOb = v.findViewById(R.id.myOb);
-//        myOb.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                myObWishAdapter = new MyObWishAdapter();
-//                myObWishList.setVisibility(View.VISIBLE);
-//                myPostWishList.setVisibility(View.GONE);
-//                myTpWishList.setVisibility(View.GONE);
-//                // 찜(관측지) 불러오는 get api
-//
-//            }
-//        });
-//        //찜(관측지) 클릭 이벤트
-//        myObWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
-//            @Override
-//            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
-//                Toast.makeText(getActivity().getApplicationContext(), ""+"번 관측지 클릭", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//
-//        //찜(관광지) 버튼 클릭
-//        Button myTour = v.findViewById(R.id.myTour);
-//        myTour.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                myTpWishAdapter = new MyTpWishAdapter();
-//                myTpWishList.setVisibility(View.VISIBLE);
-//                myPostWishList.setVisibility(View.GONE);
-//                myObWishList.setVisibility(View.GONE);
-//                // 찜(관광지) 불러오는 get api
-//
-//            }
-//        });
-//        //찜(관광지) 클릭 이벤트
-//        myTpWishAdapter.setOnMyWishItemClickListener(new OnMyPostWishItemClickListener() {
-//            @Override
-//            public void onItemClick(MyPostWishAdapter.ViewHolder holder, View view, int position) {
-//                Toast.makeText(getActivity().getApplicationContext(), ""+"번 관광지 클릭", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-//        RecyclerView recyclerView = v.findViewById(R.id.personrecyclerview);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
-//        recyclerView.setAdapter(adapter);
-//
-//        adapter.addItem(new post_point_item("내 게시물","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
+                    MyWishAdapter myWishAdapter = new MyWishAdapter(wishResult, getContext());
+                    myWishRecyclerView.setAdapter(myWishAdapter);
+                } else {
+                    System.out.println("내 찜 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<MyWish>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
 
 
         return v;

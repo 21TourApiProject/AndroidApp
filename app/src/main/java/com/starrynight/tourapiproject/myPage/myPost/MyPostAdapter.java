@@ -68,9 +68,9 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         public ViewHolder(View itemView, final OnMyPostItemClickListener listener) {
             super(itemView);
 
-            thumbnail = itemView.findViewById(R.id.myThumbnail);
-            title = itemView.findViewById(R.id.myTitle);
-            layout = itemView.findViewById(R.id.myLayout);
+            thumbnail = itemView.findViewById(R.id.myWishThumbnail);
+            title = itemView.findViewById(R.id.myWishTitle);
+            layout = itemView.findViewById(R.id.myWishLayout);
 
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
