@@ -3,15 +3,16 @@ package com.starrynight.tourapiproject.touristPointPage;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -31,6 +32,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -46,6 +50,8 @@ import retrofit2.Response;
 import retrofit2.http.Query;
 
 public class TouristPointActivity extends AppCompatActivity {
+    Long userId;
+    Boolean isWish;
 
     private static final int NEAR = 101;
 
@@ -62,7 +68,7 @@ public class TouristPointActivity extends AppCompatActivity {
     TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
             tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText;
 
-    Button overviewPop;
+    Button overviewPop, tpWish;
 
     LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
@@ -94,6 +100,7 @@ public class TouristPointActivity extends AppCompatActivity {
         CongestionThread thread = new CongestionThread();
         thread.start();
 
+        tpWish = findViewById(R.id.tpWish);
         tpCongestion = findViewById(R.id.tpCongestion);
         tpTitle = findViewById(R.id.tpTitle);
         cat3Name = findViewById(R.id.cat3Name);
@@ -130,6 +137,95 @@ public class TouristPointActivity extends AppCompatActivity {
         treatMenuLayout = findViewById(R.id.treatMenuLayout);
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
+
+        //앱 내부 저장소의 userId 데이터 읽기
+        String fileName = "userId";
+        try{
+            FileInputStream fis = this.openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
+
+        //이미 찜한건지 확인
+        Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, contentId, 1);
+        call0.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (response.body()){
+                        isWish = true;
+                        tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                    } else{
+                        isWish = false;
+                    }
+                } else {
+                    System.out.println("내 찜 조회하기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        //저장 버튼
+        tpWish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isWish){ //찜 안한 상태일때
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, contentId, 1);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                //버튼 디자인 바뀌게 구현하기
+                                isWish = true;
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                } else{
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, contentId, 1);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                isWish = false;
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_wish_button));
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 삭제 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                }
+            }
+        });
+
+        //지도 버튼
+        Button tpGps = findViewById(R.id.tpGps);
+        tpGps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //구현하기
+            }
+        });
 
 
         //이미지 슬라이더
