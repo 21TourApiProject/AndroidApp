@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -36,6 +37,15 @@ public interface MyPageRetrofitService {
 
     @GET("user/{userId}/myHashTag")
     Call<List<String>> getMyHashTag(@Path("userId") Long userId);
+
+    @GET("myWish/{userId}/{itemId}/{wishType}")
+    Call<Boolean> isThereMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
+
+    @POST("myWish/{userId}/{itemId}/{wishType}")
+    Call<Void> createMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
+
+    @DELETE("myWish/{userId}/{itemId}/{wishType}")
+    Call<Void> deleteMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
 
     @GET("myWish/{userId}")
     Call<List<MyWish>> getMyWish(@Path("userId") Long userId);
