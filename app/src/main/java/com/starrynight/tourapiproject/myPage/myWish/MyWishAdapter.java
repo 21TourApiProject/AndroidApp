@@ -80,9 +80,13 @@ public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder
 
         public void setItem(MyWish item) {
             if (item.getWishType() == 0 || item.getWishType() == 1){
-                Glide.with(context).load(item.getThumbnail()).into(thumbnail);
+                if (item.getThumbnail() != null)
+                    System.out.println("item = " + item.getThumbnail());
+                    Glide.with(context).load(item.getThumbnail()).into(thumbnail);
             }else if (item.getWishType() == 2){
-                //s3
+                if (item.getThumbnail() != null){
+                    //s3
+                }
             }
             title.setText(item.getTitle());
         }

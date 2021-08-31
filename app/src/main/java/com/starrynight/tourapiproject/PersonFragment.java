@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
+import com.starrynight.tourapiproject.myPage.MyHashTagAdapter;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.myPage.WishActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
@@ -27,8 +28,8 @@ import com.starrynight.tourapiproject.myPage.myPost.MyPost;
 import com.starrynight.tourapiproject.myPage.myPost.MyPostAdapter;
 import com.starrynight.tourapiproject.myPage.myPost.OnMyPostItemClickListener;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
-import com.starrynight.tourapiproject.myPage.myWish.MyWishAdapter;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -48,10 +49,9 @@ public class PersonFragment extends Fragment {
 
     Long userId;
     User2 user;
-
+    List<String> myHashTagResult;
     ImageView profileImage;
     TextView nickName;
-    TextView hashTagNameList;
 
     ImageView myWishImage1;
     TextView myWishTitle1;
@@ -84,7 +84,6 @@ public class PersonFragment extends Fragment {
 
         nickName = v.findViewById(R.id.nickName);
         profileImage = v.findViewById(R.id.profileImage);
-        hashTagNameList = v.findViewById(R.id.hashTagNameList);
         myWishImage1 = v.findViewById(R.id.myWishImage1);
         myWishTitle1 = v.findViewById(R.id.myWishTitle1);
         myWishImage2 = v.findViewById(R.id.myWishImage2);
@@ -114,6 +113,13 @@ public class PersonFragment extends Fragment {
             }
         });
 
+        //해시태그 리사이클러 뷰
+        RecyclerView myHashTagRecyclerview = v.findViewById(R.id.myHashTag);
+        LinearLayoutManager myHashTagLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myHashTagRecyclerview.setLayoutManager(myHashTagLayoutManager);
+        myHashTagRecyclerview.setHasFixedSize(true);
+        myHashTagResult = new ArrayList<>();
+
         //해시태그 목록을 불러오기 위한 get api
         Call<List<String>> call2 = RetrofitClient.getApiService().getMyHashTag(userId);
         call2.enqueue(new Callback<List<String>>() {
@@ -121,14 +127,10 @@ public class PersonFragment extends Fragment {
             public void onResponse(Call<List<String>> call, Response <List<String>> response) {
                 if (response.isSuccessful()) {
                     List<String> result = response.body();
-                    String names = "";
-                    for (String name : result){
-                        names += "#" + name + " ";
-                    }
-                    int len = names.length();
-                    hashTagNameList.setText(names.substring(0 , len-1));
+                    MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(myHashTagResult);
+                    myHashTagRecyclerview.setAdapter(hashTagAdapter);
                 } else {
-                    System.out.println("사용자 정보 불러오기 실패");
+                    System.out.println("사용자 해시태그 불러오기 실패");
                 }
             }
             @Override
