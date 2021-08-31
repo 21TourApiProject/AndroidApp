@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.MyHashTagAdapter;
+import com.starrynight.tourapiproject.myPage.MyPostActivity;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
 import com.starrynight.tourapiproject.myPage.MyWishActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
@@ -204,15 +207,24 @@ public class PersonFragment extends Fragment {
                     int size = myWishes.size();
                     int i = 0;
                     if (size > 0){
-                        Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage1);
+                        if (myWishes.get(i).getThumbnail() != null)
+                            Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage1);
+                        else
+                            myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
                         myWishTitle1.setText(myWishes.get(i).getTitle());
                         i++;
                         if (size > 1){
-                            Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage2);
+                            if (myWishes.get(i).getThumbnail() != null)
+                                Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage2);
+                            else
+                                myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
                             myWishTitle2.setText(myWishes.get(i).getTitle());
                             i++;
                             if (size > 2){
-                                Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage3);
+                                if (myWishes.get(i).getThumbnail() != null)
+                                    Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage3);
+                                else
+                                    myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
                                 myWishTitle3.setText(myWishes.get(i).getTitle());
                             }
                         }
@@ -248,19 +260,25 @@ public class PersonFragment extends Fragment {
                 if (response.isSuccessful()) {
                     myPost3s = response.body();
                     int size = myPost3s.size();
+                    System.out.println("size = " + size);
                     int i = 0;
                     if (size > 0){
-                        Glide.with(getContext()).load(myPost3s.get(i).getThumbnail()).into(myPostImage1);
                         myPostTitle1.setText(myPost3s.get(i).getTitle());
+                        if (myPost3s.get(i).getThumbnail() != null)
+                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
+                        else myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
                         i++;
                         if (size > 1){
-                            Glide.with(getContext()).load(myPost3s.get(i).getThumbnail()).into(myPostImage2);
                             myPostTitle2.setText(myPost3s.get(i).getTitle());
+                            if (myPost3s.get(i).getThumbnail() != null)
+                                Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
+                            else myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
                             i++;
                             if (size > 2){
-                                Glide.with(getContext()).load(myPost3s.get(i).getThumbnail()).into(myPostImage3);
                                 myPostTitle3.setText(myPost3s.get(i).getTitle());
-                            }
+                                if (myPost3s.get(i).getThumbnail() != null)
+                                    Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
+                            }   else myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
                         }
                     }
 
@@ -279,7 +297,7 @@ public class PersonFragment extends Fragment {
         myPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyWishActivity.class); //수정
+                Intent intent = new Intent(getActivity(), MyPostActivity.class);
                intent.putExtra("userId", userId);
                 startActivityForResult(intent, 101);
             }

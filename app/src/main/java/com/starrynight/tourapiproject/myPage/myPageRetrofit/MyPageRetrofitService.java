@@ -48,7 +48,7 @@ public interface MyPageRetrofitService {
     @DELETE("myWish/{userId}/{itemId}/{wishType}")
     Call<Void> deleteMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
 
-    @GET("myWish/{userId}")
+    @GET("myWish/3/{userId}")
     Call<List<MyWish>> getMyWish3(@Path("userId") Long userId);
 
     @GET("myWish/observation/{userId}")
@@ -60,7 +60,7 @@ public interface MyPageRetrofitService {
     @GET("myWish/post/{userId}")
     Call<List<MyWishPost>> getMyWishPost(@Path("userId") Long userId);
 
-    @GET("post/user/{userId}")
+    @GET("post/3/{userId}")
     Call<List<MyPost3>> getMyPost3(@Path("userId") Long userId);
 
     @GET("post/user/{userId}")
