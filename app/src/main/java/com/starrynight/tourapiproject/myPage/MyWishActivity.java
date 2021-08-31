@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class WishActivity extends AppCompatActivity {
+public class MyWishActivity extends AppCompatActivity {
 
     private static final int WISH = 102;
 
@@ -46,7 +46,7 @@ public class WishActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wish);
+        setContentView(R.layout.activity_my_wish);
 
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
@@ -79,13 +79,13 @@ public class WishActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     tpResult = response.body();
 
-                    MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, WishActivity.this);
+                    MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, MyWishActivity.this);
                     myWishsRecyclerview.setAdapter(myWishObAdapter);
                     myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
                         @Override
                         public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
                             MyWishObTp item = myWishObAdapter.getItem(position);
-                            Intent intent = new Intent(WishActivity.this, ObservationsiteActivity.class);
+                            Intent intent = new Intent(MyWishActivity.this, ObservationsiteActivity.class);
                             intent.putExtra("observationId", item.getItemId());
                             startActivityForResult(intent, WISH);
                         }
@@ -113,13 +113,13 @@ public class WishActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             tpResult = response.body();
 
-                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, WishActivity.this);
+                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, MyWishActivity.this);
                             myWishsRecyclerview.setAdapter(myWishObAdapter);
                             myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
                                 @Override
                                 public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
                                     MyWishObTp item = myWishObAdapter.getItem(position);
-                                    Intent intent = new Intent(WishActivity.this, ObservationsiteActivity.class);
+                                    Intent intent = new Intent(MyWishActivity.this, ObservationsiteActivity.class);
                                     intent.putExtra("observationId", item.getItemId());
                                     startActivityForResult(intent, WISH);
                                 }
@@ -149,13 +149,13 @@ public class WishActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             obResult = response.body();
 
-                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(obResult, WishActivity.this);
+                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(obResult, MyWishActivity.this);
                             myWishsRecyclerview.setAdapter(myWishObAdapter);
                             myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
                                 @Override
                                 public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
                                     MyWishObTp item = myWishObAdapter.getItem(position);
-                                    Intent intent = new Intent(WishActivity.this, TouristPointActivity.class);
+                                    Intent intent = new Intent(MyWishActivity.this, TouristPointActivity.class);
                                     intent.putExtra("contentId", item.getItemId());
                                     startActivityForResult(intent, WISH);
                                 }
@@ -185,13 +185,13 @@ public class WishActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             postResult = response.body();
 
-                            MyWishPostAdapter myWishPostAdapter = new MyWishPostAdapter(postResult, WishActivity.this);
+                            MyWishPostAdapter myWishPostAdapter = new MyWishPostAdapter(postResult, MyWishActivity.this);
                             myWishsRecyclerview.setAdapter(myWishPostAdapter);
                             myWishPostAdapter.setOnMyWishPostItemClickListener(new OnMyWishPostItemClickListener() {
                                 @Override
                                 public void onItemClick(MyWishPostAdapter.ViewHolder holder, View view, int position) {
                                     MyWishPost item = myWishPostAdapter.getItem(position);
-                                    Intent intent = new Intent(WishActivity.this, PostActivity.class);
+                                    Intent intent = new Intent(MyWishActivity.this, PostActivity.class);
                                     intent.putExtra("postId", item.getItemId());
                                     startActivityForResult(intent, WISH);
                                 }
