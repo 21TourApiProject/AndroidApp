@@ -55,7 +55,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/myHashTag"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center|center_horizontal" />
 
             <LinearLayout
@@ -196,7 +196,7 @@
                     <ImageView
                         android:id="@+id/myPostImage1"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp" />
+                        android:layout_height="120dp"/>
 
                     <TextView
                         android:id="@+id/myPostTitle1"
@@ -242,6 +242,12 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+            </FrameLayout>
 
         </LinearLayout>
     </ScrollView>
