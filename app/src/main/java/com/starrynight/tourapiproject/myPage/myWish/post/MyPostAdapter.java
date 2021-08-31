@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
@@ -93,8 +94,14 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         }
 
         public void setItem(MyPost item) {
+            if (item.getThumbnail() != null){
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getThumbnail()).into(myWishPostImage);
+            }
+            if (item.getProfileImage() != null){
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getProfileImage()).into(myWishPostProfileImage);
+            }
             myWishPostTitle.setText(item.getTitle());
-            myWishPostWriter.setText(item.getWriter());
+            myWishPostWriter.setText(item.getNickName());
         }
     }
 }

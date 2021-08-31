@@ -60,7 +60,8 @@ public class MyPostActivity extends AppCompatActivity {
             public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                 if (response.isSuccessful()) {
                     postResult = response.body();
-
+                    System.out.println("postResult.get(0).getNickName() = " + postResult.get(0).getTitle());
+                    System.out.println("postResult.get(0).getNickName() = " + postResult.get(0).getNickName());
                     MyPostAdapter myPostAdapter = new MyPostAdapter(postResult, MyPostActivity.this);
                     myPostRecyclerview.setAdapter(myPostAdapter);
                     myPostAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
