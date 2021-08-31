@@ -13,19 +13,19 @@ public class MyPost {
     @SerializedName("title")
     private String title;
     @SerializedName("nickName")
-    private String writer;
+    private String nickName;
     @SerializedName("profileImage")
     private String profileImage;
-    @SerializedName("hashTagNames")
-    private List<String> hashTagNames;
+    @SerializedName("hashTagName")
+    private List<String> hashTagName;
 
-    public MyPost(Long itemId, String thumbnail, String title, String writer, String profileImage, List<String> hashTagNames) {
+    public MyPost(Long itemId, String thumbnail, String title, String nickName, String profileImage, List<String> hashTagName) {
         this.itemId = itemId;
         this.thumbnail = thumbnail;
         this.title = title;
-        this.writer = writer;
+        this.nickName = nickName;
         this.profileImage = profileImage;
-        this.hashTagNames = hashTagNames;
+        this.hashTagName = hashTagName;
     }
 
     public Long getItemId() {
@@ -52,12 +52,12 @@ public class MyPost {
         this.title = title;
     }
 
-    public String getWriter() {
-        return writer;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setWriter(String writer) {
-        this.writer = writer;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getProfileImage() {
@@ -68,11 +68,11 @@ public class MyPost {
         this.profileImage = profileImage;
     }
 
-    public List<String> getHashTagNames() {
-        return hashTagNames;
+    public List<String> getHashTagName() {
+        return hashTagName;
     }
 
-    public void setHashTagNames(List<String> hashTagNames) {
-        this.hashTagNames = hashTagNames;
+    public void setHashTagName(List<String> hashTagName) {
+        this.hashTagName = hashTagName;
     }
 }
