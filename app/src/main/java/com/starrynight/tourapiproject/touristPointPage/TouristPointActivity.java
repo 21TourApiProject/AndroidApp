@@ -538,7 +538,6 @@ public class TouristPointActivity extends AppCompatActivity {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     hashTagResult = response.body();
-
                     HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
                     hashTagRecyclerview.setAdapter(hashTagAdapter);
 

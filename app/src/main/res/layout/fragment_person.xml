@@ -54,12 +54,13 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/myHashTag"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|center_horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
@@ -105,7 +106,7 @@
                         android:id="@+id/myWishImage1"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/myWishTitle1"
@@ -125,7 +126,7 @@
                         android:id="@+id/myWishImage2"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/myWishTitle2"
@@ -145,7 +146,7 @@
                         android:id="@+id/myWishImage3"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/myWishTitle3"
@@ -157,7 +158,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
@@ -179,10 +180,68 @@
                     android:background="@drawable/back_btn" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/myPostList"
+            <LinearLayout
+                android:id="@+id/myPostLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="140dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/myPostImage1"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <TextView
+                        android:id="@+id/myPostTitle1"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/myPostImage2"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <TextView
+                        android:id="@+id/myPostTitle2"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/myPostImage3"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <TextView
+                        android:id="@+id/myPostTitle3"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

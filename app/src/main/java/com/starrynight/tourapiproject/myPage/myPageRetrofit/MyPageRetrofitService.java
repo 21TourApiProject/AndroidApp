@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.myPage.myPageRetrofit;
 
 import com.starrynight.tourapiproject.myPage.myPost.MyPost;
+import com.starrynight.tourapiproject.myPage.myPost.MyPost3;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyWishPost;
@@ -48,7 +49,7 @@ public interface MyPageRetrofitService {
     Call<Void> deleteMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
 
     @GET("myWish/{userId}")
-    Call<List<MyWish>> getMyWish(@Path("userId") Long userId);
+    Call<List<MyWish>> getMyWish3(@Path("userId") Long userId);
 
     @GET("myWish/observation/{userId}")
     Call<List<MyWishObTp>> getMyWishObservation(@Path("userId") Long userId);
@@ -58,6 +59,9 @@ public interface MyPageRetrofitService {
 
     @GET("myWish/post/{userId}")
     Call<List<MyWishPost>> getMyWishPost(@Path("userId") Long userId);
+
+    @GET("post/user/{userId}")
+    Call<List<MyPost3>> getMyPost3(@Path("userId") Long userId);
 
     @GET("post/user/{userId}")
     Call<List<MyPost>> getMyPost(@Path("userId") Long userId);

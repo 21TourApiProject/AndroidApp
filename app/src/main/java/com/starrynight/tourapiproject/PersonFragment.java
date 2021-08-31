@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -21,15 +20,12 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
 import com.starrynight.tourapiproject.myPage.MyHashTagAdapter;
 import com.starrynight.tourapiproject.myPage.SettingActivity;
-import com.starrynight.tourapiproject.myPage.WishActivity;
+import com.starrynight.tourapiproject.myPage.MyWishActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
-import com.starrynight.tourapiproject.myPage.myPost.MyPost;
-import com.starrynight.tourapiproject.myPage.myPost.MyPostAdapter;
-import com.starrynight.tourapiproject.myPage.myPost.OnMyPostItemClickListener;
+import com.starrynight.tourapiproject.myPage.myPost.MyPost3;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
-import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -60,14 +56,37 @@ public class PersonFragment extends Fragment {
     ImageView myWishImage3;
     TextView myWishTitle3;
 
-    List<MyWish> myWishes = new ArrayList<>();
+    ImageView myPostImage1;
+    TextView myPostTitle1;
+    ImageView myPostImage2;
+    TextView myPostTitle2;
+    ImageView myPostImage3;
+    TextView myPostTitle3;
 
-    RecyclerView myPostList;
-    MyPostAdapter myPostAdapter;
+    List<MyWish> myWishes = new ArrayList<>();
+    List<MyPost3> myPost3s = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_person, container, false);
+
+        nickName = v.findViewById(R.id.nickName);
+        profileImage = v.findViewById(R.id.profileImage);
+
+        myWishImage1 = v.findViewById(R.id.myWishImage1);
+        myWishTitle1 = v.findViewById(R.id.myWishTitle1);
+        myWishImage2 = v.findViewById(R.id.myWishImage2);
+        myWishTitle2 = v.findViewById(R.id.myWishTitle2);
+        myWishImage3 = v.findViewById(R.id.myWishImage3);
+        myWishTitle3 = v.findViewById(R.id.myWishTitle3);
+
+        myPostImage1 = v.findViewById(R.id.myPostImage1);
+        myPostTitle1 = v.findViewById(R.id.myPostTitle1);
+        myPostImage2 = v.findViewById(R.id.myPostImage2);
+        myPostTitle2 = v.findViewById(R.id.myPostTitle2);
+        myPostImage3 = v.findViewById(R.id.myPostImage3);
+        myPostTitle3 = v.findViewById(R.id.myPostTitle3);
+
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
@@ -82,14 +101,6 @@ public class PersonFragment extends Fragment {
             e.printStackTrace();
         } System.out.println("userId = " + userId);
 
-        nickName = v.findViewById(R.id.nickName);
-        profileImage = v.findViewById(R.id.profileImage);
-        myWishImage1 = v.findViewById(R.id.myWishImage1);
-        myWishTitle1 = v.findViewById(R.id.myWishTitle1);
-        myWishImage2 = v.findViewById(R.id.myWishImage2);
-        myWishTitle2 = v.findViewById(R.id.myWishTitle2);
-        myWishImage3 = v.findViewById(R.id.myWishImage3);
-        myWishTitle3 = v.findViewById(R.id.myWishTitle3);
 
         //닉네임, 프로필 사진을 불러오기 위한 get api
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
@@ -113,20 +124,21 @@ public class PersonFragment extends Fragment {
             }
         });
 
-        //해시태그 리사이클러 뷰
+
+        //사용자 해시태그 리사이클러 뷰
         RecyclerView myHashTagRecyclerview = v.findViewById(R.id.myHashTag);
         LinearLayoutManager myHashTagLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myHashTagRecyclerview.setLayoutManager(myHashTagLayoutManager);
         myHashTagRecyclerview.setHasFixedSize(true);
         myHashTagResult = new ArrayList<>();
 
-        //해시태그 목록을 불러오기 위한 get api
+        //사용자 해시태그를 불러오기 위한 get api
         Call<List<String>> call2 = RetrofitClient.getApiService().getMyHashTag(userId);
         call2.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response <List<String>> response) {
                 if (response.isSuccessful()) {
-                    List<String> result = response.body();
+                    myHashTagResult = response.body();
                     MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(myHashTagResult);
                     myHashTagRecyclerview.setAdapter(hashTagAdapter);
                 } else {
@@ -138,6 +150,7 @@ public class PersonFragment extends Fragment {
                 Log.e("연결실패", t.getMessage());
             }
         });
+
 
         //게시물 작성 페이지로 이동
         Button goPostWrite = v.findViewById(R.id.goPostWrite);
@@ -182,7 +195,7 @@ public class PersonFragment extends Fragment {
 
 
         //내 찜 불러오는 api
-        Call<List<MyWish>> call3 = RetrofitClient.getApiService().getMyWish(userId);
+        Call<List<MyWish>> call3 = RetrofitClient.getApiService().getMyWish3(userId);
         call3.enqueue(new Callback<List<MyWish>>() {
             @Override
             public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
@@ -220,48 +233,94 @@ public class PersonFragment extends Fragment {
         myWishLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WishActivity.class);
+                Intent intent = new Intent(getActivity(), MyWishActivity.class);
                 intent.putExtra("userId", userId);
                 startActivityForResult(intent, 101);
             }
         });
 
 
-        //내 게시물 리사이클러 뷰
-        myPostList = v.findViewById(R.id.myPostList);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myPostList.setLayoutManager(layoutManager2);
-        myPostAdapter= new MyPostAdapter();
-        myPostList.setAdapter(myPostAdapter);
-
         //내 게시물 불러오는 api
-        Call<List<MyPost>> call4 = RetrofitClient.getApiService().getMyPost(userId);
-        call4.enqueue(new Callback<List<MyPost>>() {
+        Call<List<MyPost3>> call4 = RetrofitClient.getApiService().getMyPost3(userId);
+        call4.enqueue(new Callback<List<MyPost3>>() {
             @Override
-            public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
+            public void onResponse(Call<List<MyPost3>> call, Response<List<MyPost3>> response) {
                 if (response.isSuccessful()) {
-                    List<MyPost> result = response.body();
-                    for (MyPost wp: result){
-                        myPostAdapter.addItem(new MyPost(wp.getThumbnail(), wp.getTitle(), wp.getPostId()));
+                    myPost3s = response.body();
+                    int size = myPost3s.size();
+                    int i = 0;
+                    if (size > 0){
+                        Glide.with(getContext()).load(myPost3s.get(i).getThumbnail()).into(myPostImage1);
+                        myPostTitle1.setText(myPost3s.get(i).getTitle());
+                        i++;
+                        if (size > 1){
+                            Glide.with(getContext()).load(myPost3s.get(i).getThumbnail()).into(myPostImage2);
+                            myPostTitle2.setText(myPost3s.get(i).getTitle());
+                            i++;
+                            if (size > 2){
+                                Glide.with(getContext()).load(myPost3s.get(i).getThumbnail()).into(myPostImage3);
+                                myPostTitle3.setText(myPost3s.get(i).getTitle());
+                            }
+                        }
                     }
-                    myPostList.setAdapter(myPostAdapter);
+
                 } else {
                     System.out.println("내 게시물 불러오기 실패");
                 }
             }
             @Override
-            public void onFailure(Call<List<MyPost>> call, Throwable t) {
+            public void onFailure(Call<List<MyPost3>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
             }
         });
-        //내 게시물 클릭 이벤트
-        myPostAdapter.setOnMyPostItemClickListener(new OnMyPostItemClickListener() {
+
+        //내 게시물 페이지로 이동
+        View myPostLayout = v.findViewById(R.id.myPostLayout);
+        myPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
-                Toast.makeText(getActivity().getApplicationContext(), ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
-                //게시물 페이지 띄우기
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyWishActivity.class); //수정
+               intent.putExtra("userId", userId);
+                startActivityForResult(intent, 101);
             }
         });
+
+
+//        //내 게시물 리사이클러 뷰
+//        myPostList = v.findViewById(R.id.myPostList);
+//        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+//        myPostList.setLayoutManager(layoutManager2);
+//        myPostAdapter= new MyPostAdapter();
+//        myPostList.setAdapter(myPostAdapter);
+//
+//        //내 게시물 불러오는 api
+//        Call<List<MyPost>> call4 = RetrofitClient.getApiService().getMyPost(userId);
+//        call4.enqueue(new Callback<List<MyPost>>() {
+//            @Override
+//            public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
+//                if (response.isSuccessful()) {
+//                    List<MyPost> result = response.body();
+//                    for (MyPost wp: result){
+//                        myPostAdapter.addItem(new MyPost(wp.getThumbnail(), wp.getTitle(), wp.getPostId()));
+//                    }
+//                    myPostList.setAdapter(myPostAdapter);
+//                } else {
+//                    System.out.println("내 게시물 불러오기 실패");
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<List<MyPost>> call, Throwable t) {
+//                Log.e("연결실패", t.getMessage());
+//            }
+//        });
+//        //내 게시물 클릭 이벤트
+//        myPostAdapter.setOnMyPostItemClickListener(new OnMyPostItemClickListener() {
+//            @Override
+//            public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
+//                Toast.makeText(getActivity().getApplicationContext(), ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
+//                //게시물 페이지 띄우기
+//            }
+//        });
 
         return v;
     }
