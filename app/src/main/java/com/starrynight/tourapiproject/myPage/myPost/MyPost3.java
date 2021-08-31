@@ -2,18 +2,15 @@ package com.starrynight.tourapiproject.myPage.myPost;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MyPost {
+public class MyPost3 {
     @SerializedName("thumbnail")
     String thumbnail;
     @SerializedName("title")
     String title;
-    @SerializedName("postId")
-    Long postId;
 
-    public MyPost(String thumbnail, String title, Long postId) {
+    public MyPost3(String thumbnail, String title) {
         this.thumbnail = thumbnail;
         this.title = title;
-        this.postId = postId;
     }
 
     public String getThumbnail() {
@@ -31,14 +28,5 @@ public class MyPost {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public Long getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
-
 
 }
