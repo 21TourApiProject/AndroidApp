@@ -47,7 +47,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Query;
 
 public class TouristPointActivity extends AppCompatActivity {
     Long userId;
@@ -75,12 +74,12 @@ public class TouristPointActivity extends AppCompatActivity {
 
     String overviewFull; //개요 전체
 
+    List<String> hashTagResult;
     List<Near> nearResult;
 
     public String daumSearchWord;
     private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
-    private Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,8 +244,8 @@ public class TouristPointActivity extends AppCompatActivity {
                     Long result = response.body();
                     if (result == 12L){
                         System.out.println("타입 : 관광지");
-                        Call<TouristPoint> call2 = RetrofitClient.getApiService().getTouristPointData(contentId);
-                        call2.enqueue(new Callback<TouristPoint>() {
+                        Call<TouristPoint> call1 = RetrofitClient.getApiService().getTouristPointData(contentId);
+                        call1.enqueue(new Callback<TouristPoint>() {
                             @Override
                             public void onResponse(Call<TouristPoint> call, Response<TouristPoint> response) {
                                 if (response.isSuccessful()) {
@@ -525,6 +524,35 @@ public class TouristPointActivity extends AppCompatActivity {
         });
 
 
+        //관광지 해시태그 리사이클러 뷰
+        RecyclerView hashTagRecyclerview = findViewById(R.id.tpHashTag);
+        LinearLayoutManager hashTagLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        hashTagRecyclerview.setLayoutManager(hashTagLayoutManager);
+        hashTagRecyclerview.setHasFixedSize(true);
+        hashTagResult = new ArrayList<>();
+
+        //관광지 해시태그 불러오기
+        Call<List<String>> call2 = RetrofitClient.getApiService().getTouristDataHashTag(contentId);
+        call2.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful()) {
+                    hashTagResult = response.body();
+
+                    HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
+                    hashTagRecyclerview.setAdapter(hashTagAdapter);
+
+                } else {
+                    System.out.println("관광지 해시태그 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+
         //펼치기
         LinearLayout tpInfo2 = findViewById(R.id.tpInfo2);
         LinearLayout foodInfo2 = findViewById(R.id.foodInfo2);
@@ -559,8 +587,8 @@ public class TouristPointActivity extends AppCompatActivity {
         nearRecyclerview.setHasFixedSize(true);
         nearResult = new ArrayList<>();
 
-        Call<List<Near>> call2 = RetrofitClient.getApiService().getNearTouristData(contentId);
-        call2.enqueue(new Callback<List<Near>>() {
+        Call<List<Near>> call3 = RetrofitClient.getApiService().getNearTouristData(contentId);
+        call3.enqueue(new Callback<List<Near>>() {
             @Override
             public void onResponse(Call<List<Near>> call, Response<List<Near>> response) {
                 if (response.isSuccessful()) {
