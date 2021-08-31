@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MyWishPost {
+public class MyPost {
 
     @SerializedName("itemId")
     private Long itemId;
@@ -12,14 +12,14 @@ public class MyWishPost {
     private String thumbnail;
     @SerializedName("title")
     private String title;
-    @SerializedName("writer")
+    @SerializedName("nickName")
     private String writer;
     @SerializedName("profileImage")
     private String profileImage;
     @SerializedName("hashTagNames")
     private List<String> hashTagNames;
 
-    public MyWishPost(Long itemId, String thumbnail, String title, String writer, String profileImage, List<String> hashTagNames) {
+    public MyPost(Long itemId, String thumbnail, String title, String writer, String profileImage, List<String> hashTagNames) {
         this.itemId = itemId;
         this.thumbnail = thumbnail;
         this.title = title;
