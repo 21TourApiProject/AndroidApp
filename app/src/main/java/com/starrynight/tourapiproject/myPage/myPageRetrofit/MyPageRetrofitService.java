@@ -1,9 +1,9 @@
 package com.starrynight.tourapiproject.myPage.myPageRetrofit;
 
-import com.starrynight.tourapiproject.myPage.myPost.MyPost;
+import com.starrynight.tourapiproject.myPage.myPost.MyPost3;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
-import com.starrynight.tourapiproject.myPage.myWish.post.MyWishPost;
+import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
@@ -37,8 +38,17 @@ public interface MyPageRetrofitService {
     @GET("user/{userId}/myHashTag")
     Call<List<String>> getMyHashTag(@Path("userId") Long userId);
 
-    @GET("myWish/{userId}")
-    Call<List<MyWish>> getMyWish(@Path("userId") Long userId);
+    @GET("myWish/{userId}/{itemId}/{wishType}")
+    Call<Boolean> isThereMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
+
+    @POST("myWish/{userId}/{itemId}/{wishType}")
+    Call<Void> createMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
+
+    @DELETE("myWish/{userId}/{itemId}/{wishType}")
+    Call<Void> deleteMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
+
+    @GET("myWish/3/{userId}")
+    Call<List<MyWish>> getMyWish3(@Path("userId") Long userId);
 
     @GET("myWish/observation/{userId}")
     Call<List<MyWishObTp>> getMyWishObservation(@Path("userId") Long userId);
@@ -47,7 +57,10 @@ public interface MyPageRetrofitService {
     Call<List<MyWishObTp>> getMyWishTouristPoint(@Path("userId") Long userId);
 
     @GET("myWish/post/{userId}")
-    Call<List<MyWishPost>> getMyWishPost(@Path("userId") Long userId);
+    Call<List<MyPost>> getMyWishPost(@Path("userId") Long userId);
+
+    @GET("post/3/{userId}")
+    Call<List<MyPost3>> getMyPost3(@Path("userId") Long userId);
 
     @GET("post/user/{userId}")
     Call<List<MyPost>> getMyPost(@Path("userId") Long userId);

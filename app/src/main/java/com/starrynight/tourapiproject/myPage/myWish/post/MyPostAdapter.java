@@ -10,33 +10,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.ViewHolder>{
-    private static List<MyWishPost> items;
-    OnMyWishPostItemClickListener listener;
+public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder>{
+    private static List<MyPost> items;
+    OnMyPostItemClickListener listener;
     private Context context;
 
-    public MyWishPostAdapter(List<MyWishPost> items, Context context){
+    public MyPostAdapter(List<MyPost> items, Context context){
         this.items = items;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public MyWishPostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public MyPostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.custom_my_wish_post_item, viewGroup, false);
 
-        return new MyWishPostAdapter.ViewHolder(itemView, listener);
+        return new MyPostAdapter.ViewHolder(itemView, listener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyWishPostAdapter.ViewHolder viewHolder, int position) {
-        MyWishPost item = items.get(position);
+    public void onBindViewHolder(@NonNull MyPostAdapter.ViewHolder viewHolder, int position) {
+        MyPost item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -46,23 +47,23 @@ public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.Vi
     }
 
 
-    public void addItem(MyWishPost item) {
+    public void addItem(MyPost item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<MyWishPost> items) {
+    public void setItems(ArrayList<MyPost> items) {
         this.items = items;
     }
 
-    public MyWishPost getItem(int position) {
+    public MyPost getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, MyWishPost item) {
+    public void setItem(int position, MyPost item) {
         items.set(position, item);
     }
 
-    public void setOnMyWishPostItemClickListener(OnMyWishPostItemClickListener listener) {
+    public void setOnMyWishPostItemClickListener(OnMyPostItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -72,7 +73,7 @@ public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.Vi
         ImageView myWishPostProfileImage;
         TextView myWishPostWriter;
 
-        public ViewHolder(View itemView, final OnMyWishPostItemClickListener listener) {
+        public ViewHolder(View itemView, final OnMyPostItemClickListener listener) {
             super(itemView);
 
             myWishPostImage = itemView.findViewById(R.id.myWishPostImage);
@@ -86,15 +87,21 @@ public class MyWishPostAdapter extends RecyclerView.Adapter<MyWishPostAdapter.Vi
                     int position = getAdapterPosition();
 
                     if (listener != null) {
-                        listener.onItemClick(MyWishPostAdapter.ViewHolder.this, view, position);
+                        listener.onItemClick(MyPostAdapter.ViewHolder.this, view, position);
                     }
                 }
             });
         }
 
-        public void setItem(MyWishPost item) {
+        public void setItem(MyPost item) {
+            if (item.getThumbnail() != null){
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getThumbnail()).into(myWishPostImage);
+            }
+            if (item.getProfileImage() != null){
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getProfileImage()).into(myWishPostProfileImage);
+            }
             myWishPostTitle.setText(item.getTitle());
-            myWishPostWriter.setText(item.getWriter());
+            myWishPostWriter.setText(item.getNickName());
         }
     }
 }

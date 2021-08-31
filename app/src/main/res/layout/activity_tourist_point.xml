@@ -54,23 +54,29 @@
 
                 <Button
                     android:id="@+id/tpGps"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:text="지도" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/location_btn" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp">
 
                     <Button
                         android:id="@+id/tpWish"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_gravity="end"
-                        android:text="저장" />
+                        android:background="@drawable/non_wish_button" />
                 </FrameLayout>
 
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tpHashTag"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/overview"

@@ -15,10 +15,10 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTpAdapter;
-import com.starrynight.tourapiproject.myPage.myWish.post.MyWishPost;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.OnMyWishObTpItemClickListener;
-import com.starrynight.tourapiproject.myPage.myWish.post.OnMyWishPostItemClickListener;
-import com.starrynight.tourapiproject.myPage.myWish.post.MyWishPostAdapter;
+import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
+import com.starrynight.tourapiproject.myPage.myWish.post.MyPostAdapter;
+import com.starrynight.tourapiproject.myPage.myWish.post.OnMyPostItemClickListener;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class WishActivity extends AppCompatActivity {
+public class MyWishActivity extends AppCompatActivity {
 
     private static final int WISH = 102;
 
@@ -41,12 +41,12 @@ public class WishActivity extends AppCompatActivity {
     Button myWishPost;
     List<MyWishObTp> obResult;
     List<MyWishObTp> tpResult;
-    List<MyWishPost> postResult;
+    List<MyPost> postResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wish);
+        setContentView(R.layout.activity_my_wish);
 
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
@@ -64,10 +64,10 @@ public class WishActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView myWishsRecyclerview = findViewById(R.id.myWishs);
-        LinearLayoutManager myWishsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        myWishsRecyclerview.setLayoutManager(myWishsLayoutManager);
-        myWishsRecyclerview.setHasFixedSize(true);
+        RecyclerView myWishRecyclerview = findViewById(R.id.myWishs);
+        LinearLayoutManager myWishLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        myWishRecyclerview.setLayoutManager(myWishLayoutManager);
+        myWishRecyclerview.setHasFixedSize(true);
         obResult = new ArrayList<>();
         tpResult = new ArrayList<>();
         postResult = new ArrayList<>();
@@ -79,13 +79,13 @@ public class WishActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     tpResult = response.body();
 
-                    MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, WishActivity.this);
-                    myWishsRecyclerview.setAdapter(myWishObAdapter);
+                    MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, MyWishActivity.this);
+                    myWishRecyclerview.setAdapter(myWishObAdapter);
                     myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
                         @Override
                         public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
                             MyWishObTp item = myWishObAdapter.getItem(position);
-                            Intent intent = new Intent(WishActivity.this, ObservationsiteActivity.class);
+                            Intent intent = new Intent(MyWishActivity.this, ObservationsiteActivity.class);
                             intent.putExtra("observationId", item.getItemId());
                             startActivityForResult(intent, WISH);
                         }
@@ -113,13 +113,13 @@ public class WishActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             tpResult = response.body();
 
-                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, WishActivity.this);
-                            myWishsRecyclerview.setAdapter(myWishObAdapter);
+                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, MyWishActivity.this);
+                            myWishRecyclerview.setAdapter(myWishObAdapter);
                             myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
                                 @Override
                                 public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
                                     MyWishObTp item = myWishObAdapter.getItem(position);
-                                    Intent intent = new Intent(WishActivity.this, ObservationsiteActivity.class);
+                                    Intent intent = new Intent(MyWishActivity.this, ObservationsiteActivity.class);
                                     intent.putExtra("observationId", item.getItemId());
                                     startActivityForResult(intent, WISH);
                                 }
@@ -149,13 +149,13 @@ public class WishActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             obResult = response.body();
 
-                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(obResult, WishActivity.this);
-                            myWishsRecyclerview.setAdapter(myWishObAdapter);
+                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(obResult, MyWishActivity.this);
+                            myWishRecyclerview.setAdapter(myWishObAdapter);
                             myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
                                 @Override
                                 public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
                                     MyWishObTp item = myWishObAdapter.getItem(position);
-                                    Intent intent = new Intent(WishActivity.this, TouristPointActivity.class);
+                                    Intent intent = new Intent(MyWishActivity.this, TouristPointActivity.class);
                                     intent.putExtra("contentId", item.getItemId());
                                     startActivityForResult(intent, WISH);
                                 }
@@ -178,20 +178,20 @@ public class WishActivity extends AppCompatActivity {
         myWishPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<List<MyWishPost>> call = RetrofitClient.getApiService().getMyWishPost(userId);
-                call.enqueue(new Callback<List<MyWishPost>>() {
+                Call<List<MyPost>> call = RetrofitClient.getApiService().getMyWishPost(userId);
+                call.enqueue(new Callback<List<MyPost>>() {
                     @Override
-                    public void onResponse(Call<List<MyWishPost>> call, Response<List<MyWishPost>> response) {
+                    public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                         if (response.isSuccessful()) {
                             postResult = response.body();
 
-                            MyWishPostAdapter myWishPostAdapter = new MyWishPostAdapter(postResult, WishActivity.this);
-                            myWishsRecyclerview.setAdapter(myWishPostAdapter);
-                            myWishPostAdapter.setOnMyWishPostItemClickListener(new OnMyWishPostItemClickListener() {
+                            MyPostAdapter myPostAdapter = new MyPostAdapter(postResult, MyWishActivity.this);
+                            myWishRecyclerview.setAdapter(myPostAdapter);
+                            myPostAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                                 @Override
-                                public void onItemClick(MyWishPostAdapter.ViewHolder holder, View view, int position) {
-                                    MyWishPost item = myWishPostAdapter.getItem(position);
-                                    Intent intent = new Intent(WishActivity.this, PostActivity.class);
+                                public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
+                                    MyPost item = myPostAdapter.getItem(position);
+                                    Intent intent = new Intent(MyWishActivity.this, PostActivity.class);
                                     intent.putExtra("postId", item.getItemId());
                                     startActivityForResult(intent, WISH);
                                 }
@@ -202,7 +202,7 @@ public class WishActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<List<MyWishPost>> call, Throwable t) {
+                    public void onFailure(Call<List<MyPost>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
