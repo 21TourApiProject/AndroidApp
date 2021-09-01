@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.myPage.myPost;
+package com.starrynight.tourapiproject.myPage.myWish.post;
 
 import android.view.View;
 

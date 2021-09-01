@@ -46,6 +46,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         TextView blogTitle;
         TextView blogWriter;
         TextView blogDate;
+        TextView blogUrl;
         ImageView blogImage;
 
         public ViewHolder(View itemView, final OnSearchItemClickListener listener){
@@ -53,6 +54,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             blogTitle=itemView.findViewById(R.id.blogTitle);
             blogWriter =itemView.findViewById(R.id.blogWriter);
             blogDate=itemView.findViewById(R.id.blogDate);
+            blogUrl=itemView.findViewById(R.id.blogUrl);
             blogImage=itemView.findViewById(R.id.blogImage);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +74,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             blogTitle.setText(data.getTitle());
             blogWriter.setText(data.getBlogname());
             blogDate.setText(data.getDatetime().substring(0,10));
+            blogUrl.setText(data.getUrl().substring(8));
             Glide.with(itemView.getContext()).load(data.getThumbnail()).override(100,100).into(blogImage);
 
         }

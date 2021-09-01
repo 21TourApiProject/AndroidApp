@@ -1,29 +1,36 @@
-package com.starrynight.tourapiproject.myPage.myPost;
+package com.starrynight.tourapiproject.myPage.myWish.post;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder>{
-    ArrayList<MyPost> items = new ArrayList<MyPost>();
+    private static List<MyPost> items;
     OnMyPostItemClickListener listener;
+    private Context context;
+
+    public MyPostAdapter(List<MyPost> items, Context context){
+        this.items = items;
+        this.context = context;
+    }
 
     @NonNull
     @Override
     public MyPostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.custom_my_item, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.custom_my_wish_post_item, viewGroup, false);
 
         return new MyPostAdapter.ViewHolder(itemView, listener);
     }
@@ -56,28 +63,30 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         items.set(position, item);
     }
 
-    public void setOnMyPostItemClickListener(OnMyPostItemClickListener listener){
+    public void setOnMyWishPostItemClickListener(OnMyPostItemClickListener listener) {
         this.listener = listener;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView thumbnail;
-        TextView title;
-        LinearLayout layout;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView myWishPostImage;
+        TextView myWishPostTitle;
+        ImageView myWishPostProfileImage;
+        TextView myWishPostWriter;
 
         public ViewHolder(View itemView, final OnMyPostItemClickListener listener) {
             super(itemView);
 
-            thumbnail = itemView.findViewById(R.id.myThumbnail);
-            title = itemView.findViewById(R.id.myTitle);
-            layout = itemView.findViewById(R.id.myLayout);
+            myWishPostImage = itemView.findViewById(R.id.myWishPostImage);
+            myWishPostTitle = itemView.findViewById(R.id.myWishPostTitle);
+            myWishPostProfileImage = itemView.findViewById(R.id.myWishPostProfileImage);
+            myWishPostWriter = itemView.findViewById(R.id.myWishPostWriter);
 
-            layout.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
 
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onItemClick(MyPostAdapter.ViewHolder.this, view, position);
                     }
                 }
@@ -85,9 +94,14 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         }
 
         public void setItem(MyPost item) {
-            //thumbnail.setImageBitmap(decodeFile(item.getThumbnail()));
-            thumbnail.setBackgroundColor(Color.BLUE);
-            title.setText(item.getTitle());
+            if (item.getThumbnail() != null){
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getThumbnail()).into(myWishPostImage);
+            }
+            if (item.getProfileImage() != null){
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getProfileImage()).into(myWishPostProfileImage);
+            }
+            myWishPostTitle.setText(item.getTitle());
+            myWishPostWriter.setText(item.getNickName());
         }
     }
 }

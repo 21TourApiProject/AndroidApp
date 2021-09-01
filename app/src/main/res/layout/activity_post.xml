@@ -17,6 +17,26 @@
             android:orientation="vertical" >
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/post_back_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/back_btn" />
+
+                <TextView
+                    android:id="@+id/post_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="게시물 상세 보기"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
@@ -39,16 +59,23 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/observeSpot"
+                <TextView
+                    android:id="@+id/postTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="관측지점" />
+                    android:hint="게시물 제목" />
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/delete_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/post_delete"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/like"
@@ -57,6 +84,7 @@
                     android:layout_gravity="right"
                     android:background="@drawable/observation__save"
                     app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -94,6 +122,7 @@
                     android:id="@+id/postObservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/observation__hashtags"
                     android:hint="관측지" />
 
                 <androidx.recyclerview.widget.RecyclerView

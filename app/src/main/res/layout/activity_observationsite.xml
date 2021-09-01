@@ -327,24 +327,75 @@
                     android:layout_alignLeft="@id/obs_nature_address_txt"/>
 
 
-
-
             </RelativeLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_marginBottom="16dp">
 
+
                 <TextView
+                    android:id="@+id/postImageText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="방문자 사진"
-                    android:textSize="17sp"/>
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </RelativeLayout>
+                <Button
+                    android:id="@+id/writePost_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/relatePostGridView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:columnCount="3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/writePost_btn"
+                    app:rowCount="2" >
+
+                    <ImageButton
+                        android:id="@+id/relateImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:id="@+id/relateImage2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:id="@+id/relateImage3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:id="@+id/relateImage4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:id="@+id/relateImage5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:id="@+id/relateImage6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </androidx.gridlayout.widget.GridLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

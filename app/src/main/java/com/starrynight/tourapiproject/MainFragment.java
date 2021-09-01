@@ -6,15 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
+import com.starrynight.tourapiproject.alarmPage.AlarmActivity;
 import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
-import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostObservePoint;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
@@ -42,6 +43,8 @@ public class MainFragment extends Fragment {
     Long postId;
     String[] filename2= new String[10];
     private ArrayList<String> urls = new ArrayList<>();
+    SwipeRefreshLayout swipeRefreshLayout;
+    ScrollView scrollView;
 
     public MainFragment() {
         // Required empty public constructor
@@ -66,7 +69,7 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-
+        swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         String fileName = "postId";
         try{
             FileInputStream fis = getActivity().openFileInput(fileName);
@@ -122,6 +125,13 @@ public class MainFragment extends Fragment {
                                             adapter.addItem(new post_item(observePoint,"제목2","닉네임2",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목3","닉네임3",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목4","닉네임4",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
+                                            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                                                @Override
+                                                public void onRefresh() {
+                                                    adapter.notifyDataSetChanged();
+                                                    swipeRefreshLayout.setRefreshing(false);
+                                                }
+                                            });
                                         }else {System.out.println("관측지 못 가져옴");}
                                     }
 
@@ -173,6 +183,17 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), SignUpActivity.class);
                 startActivityForResult(intent, 103);
+            }
+        });
+
+        // 알림 페이지로 넘어가는 이벤트
+
+        Button alarm = (Button)v.findViewById(R.id.main_alarm);
+        alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), AlarmActivity.class);
+                startActivityForResult(intent, 104);
             }
         });
         return v;

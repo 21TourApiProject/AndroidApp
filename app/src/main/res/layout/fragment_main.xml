@@ -32,7 +32,7 @@
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/main_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,7 +46,8 @@
             android:background="@drawable/post_plus__button" />
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
@@ -58,6 +59,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
+            android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foregroundGravity="center">
@@ -69,6 +71,12 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/todayEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher_background" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
@@ -78,7 +86,7 @@
             </LinearLayout>
         </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/testSignUp"
