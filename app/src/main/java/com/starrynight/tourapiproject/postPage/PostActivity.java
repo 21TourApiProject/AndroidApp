@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
@@ -49,6 +50,7 @@ public class PostActivity extends AppCompatActivity{
     private LinearLayout indicator;
     Post post;
     Long postId;
+    Long userId;
     TextView postTitle;
     TextView postContent;
     TextView postTime;
@@ -58,17 +60,30 @@ public class PostActivity extends AppCompatActivity{
     List<String>postHashTags;
     ImageView postImage;
     String[] filename2= new String[10];
+    String[] relatefilename = new String[4];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         Intent intent = getIntent();
         PostParams postParams = (PostParams)intent.getSerializableExtra("postParams");
-
-//      앱 내부저장소에 저장된 게시글 아이디 가져오기
-        String fileName = "postId";
+        //앱 내부저장소에서 저장된 유저 아이디 가져오기
+        String fileName = "userId";
         try{
             FileInputStream fis = openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
+
+//      앱 내부저장소에 저장된 게시글 아이디 가져오기
+        String fileName3 = "postId";
+        try{
+            FileInputStream fis = openFileInput(fileName3);
             String line = new BufferedReader(new InputStreamReader(fis)).readLine();
             postId = Long.parseLong(line);
             fis.close();
@@ -118,7 +133,7 @@ public class PostActivity extends AppCompatActivity{
             }
         });
 
-        postTitle =findViewById(R.id.observeSpot);
+        postTitle =findViewById(R.id.postTitleText);
         postContent=findViewById(R.id.postContent);
         postTime = findViewById(R.id.postTime);
         postDate = findViewById(R.id.postDate);
@@ -136,6 +151,45 @@ public class PostActivity extends AppCompatActivity{
                     postTime.setText(post.getTime());
                     postDate.setText(post.getYearDate());
 
+                    //삭제 버튼
+                    Button deleteBtn = findViewById(R.id.delete_btn);
+                    if(post.getUserId()==userId){deleteBtn.setVisibility(View.VISIBLE);}
+                    else if(post.getUserId()!=userId){deleteBtn.setVisibility(View.GONE);}
+                    deleteBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Call<Void>call8 = RetrofitClient.getApiService().deletePost(userId);
+                            call8.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if (response.isSuccessful()){System.out.println("게시물 삭제 완료");
+                                    Call<Void> call7  = RetrofitClient.getApiService().deletePostObservePoint(post.getPostObservePointId());
+                                    call7.enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call, Response<Void> response) {
+                                            if (response.isSuccessful()){
+                                                System.out.println("게시물 관측지 삭제 완료");
+                                            }else{System.out.println("게시물 관측지 삭제 실패");}
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Void> call, Throwable t) {
+                                            System.out.println("게시물 관측지 삭제 실패 2");
+                                        }
+                                    });
+                                    Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(intent1);
+                                    } else{ System.out.println("게시물 삭제 실패");}
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    System.out.println("게시물 삭제 실패 2");
+                                }
+                            });
+                        }
+                    });
+
                     //관련 게시물
                     Call<List<String>>call2 = RetrofitClient.getApiService().getRelatePostImageList(post.getPostObservePointId());
                     call2.enqueue(new Callback<List<String>>() {
@@ -149,12 +203,13 @@ public class PostActivity extends AppCompatActivity{
                                 recyclerView.setLayoutManager(linearLayoutManager);
                                 Post_point_item_Adapter adapter = new Post_point_item_Adapter();
                                 for (int i=0;i<relateImageList.size();i++){
-                                    filename2[i]=relateImageList.get(i);
-                                    System.out.println(filename2[i]);
+                                    relatefilename[i]=relateImageList.get(i);
+                                    System.out.println(relatefilename[i]);
                                 }
-                                for (int i = 0; i <filename2.length;i++){
-                                    if(filename2[i] != null) {
-                                        adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]));
+                                for (int i = 0; i <relatefilename.length;i++){
+                                    if(relatefilename[i] != null) {
+                                        System.out.println(relatefilename[i]);
+                                        adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/" + relatefilename[i]));
                                     }
                                 }
                                 recyclerView.setAdapter(adapter);
@@ -231,6 +286,7 @@ public class PostActivity extends AppCompatActivity{
                 v.setSelected(!v.isSelected());
             }
         });
+
 
         RecyclerView recyclerView = findViewById(R.id.relatePost);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
