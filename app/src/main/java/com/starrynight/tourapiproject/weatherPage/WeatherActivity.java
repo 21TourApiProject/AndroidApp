@@ -21,16 +21,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.weatherPage.wtAppearTimeModel.WtAppearTimeModel;
-import com.starrynight.tourapiproject.weatherPage.wtAppearTimeModel.WtAppearTimeRetrofit;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +37,8 @@ public class WeatherActivity extends AppCompatActivity {
 
     //Picker 관련
     Calendar c = Calendar.getInstance();
+    Calendar today = Calendar.getInstance();
+
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
     int mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -59,20 +58,23 @@ public class WeatherActivity extends AppCompatActivity {
     String choice_do = "";
     String choice_se = "";
 
+    String hourString;
+
+
     {
         try {
-            WT_MET_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
+            WT_MET_API_KEY = URLDecoder.decode("7c7ba4d9df15258ce566f6592d875413", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
 
     {
-        try {
-            WT_APPEAR_TIME_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            WT_APPEAR_TIME_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +90,9 @@ public class WeatherActivity extends AppCompatActivity {
         connectMetApi();
 
         //출몰시각 API 연결
-        Call<WtAppearTimeModel> getAppearTimeInstance = WtAppearTimeRetrofit.wtAppearTimeInterface()
-                .getAppearTimeData(WT_APPEAR_TIME_API_KEY, "고양", "20210730");
-        getAppearTimeInstance.enqueue(appearTimeModelCallback);
+//        Call<WtAppearTimeModel> getAppearTimeInstance = WtAppearTimeRetrofit.wtAppearTimeInterface()
+//                .getAppearTimeData(WT_APPEAR_TIME_API_KEY, "고양", "20210730");
+//        getAppearTimeInstance.enqueue(appearTimeModelCallback);
 
         //지역 선택 Spinner
         onSetAreaSpinner();
@@ -102,8 +104,8 @@ public class WeatherActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+               Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+               startActivity(intent);
             }
         });
     }
@@ -126,7 +128,7 @@ public class WeatherActivity extends AppCompatActivity {
         datePicker = (TextView) findViewById(R.id.wt_datePicker);
         //mMonth += 1;
         // datePicker.setText(mYear + "." + mMonth + "." + mDay);
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
         strDate = formatDate.format(c.getTime());
         datePicker.setText(strDate);
         dateListener = new DatePickerDialog.OnDateSetListener() {
@@ -135,7 +137,6 @@ public class WeatherActivity extends AppCompatActivity {
                 //monthOfYear += 1;
                 c.set(year, monthOfYear, dayOfMonth);
                 strDate = formatDate.format(c.getTime());
-                //datePicker.setText(year + "." + monthOfYear + "." + dayOfMonth);
                 datePicker.setText(strDate);
             }
         };
@@ -144,46 +145,42 @@ public class WeatherActivity extends AppCompatActivity {
     //날짜 선택 이벤트
     public void wtClickDatePicker(View view) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateListener, mYear, mMonth, mDay);
-        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
+        today.add(Calendar.DAY_OF_MONTH, 8);
+        datePickerDialog.getDatePicker().setMaxDate(today.getTimeInMillis());
         datePickerDialog.show();
+        today.add(Calendar.DAY_OF_MONTH, -8);
     }
 
-    //시간 설정
-    public void onSetTimePicker() {
-        timePicker = (TextView) findViewById(R.id.wt_timePicker);
+    public void onSetTimePicker(){
 
-        SimpleDateFormat formatTime = new SimpleDateFormat("HHmm");
+        timePicker = findViewById(R.id.wt_timePicker);
+        SimpleDateFormat formatTime = new SimpleDateFormat("HH");
         strTime = formatTime.format(c.getTime());
-        timePicker.setText(strTime);
+        timePicker.setText(strTime + "시");
+        Log.d("strTime", strTime);
 
         timeListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String time = String.valueOf(hourOfDay) + String.valueOf(minute);
-                Date date = null;
-                try {
-                    date = formatTime.parse(time);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                // c.set(hourOfDay,minute);
-                strTime = formatTime.format(date.getTime());
-                timePicker.setText(strTime);
-                //timePicker.setText(hourOfDay + " : " + minute);
+                Log.d("hourOfDay", String.valueOf(hourOfDay));
+                timePicker.setText(String.format("%02d시", hourOfDay));
             }
         };
     }
 
     //시간 선택 이벤트
     public void wtClickTimePicker(View view) {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, timeListener, 15, 0, false);
-        timePickerDialog.show();
+        WtDatePickerDialog pd = new WtDatePickerDialog();
+        pd.setListenerT(timeListener);
+        pd.show(getFragmentManager(), "test");
     }
 
     public void connectMetApi() {
         //기상청 API 연결
         Call<WtMetModel> getWeatherInstance = WtMetRetrofit.wtMetInterface()
-                .getMetData(WT_MET_API_KEY, "50", "1", "JSON", strDate, "0500", "59", "127");
+                //.getMetData(WT_MET_API_KEY, "50", "1", "JSON", strDate, "0500", "59", "127");
+        .getMetData(37.56666,126.9015, "minutely,current", WT_MET_API_KEY, "metric");
         getWeatherInstance.enqueue(weatherMetCallback);
     }
 
@@ -194,7 +191,7 @@ public class WeatherActivity extends AppCompatActivity {
             if (response.isSuccessful()) {
                 WtMetModel data = response.body();
                 TextView textView = findViewById(R.id.wt_cloud);
-                //textView.setText(data.getResponse().getBody().getTotalCount());
+                textView.setText(data.getTimezone());
                 Log.d("My Tag", "response= " + response.raw().request().url().url());
             }
 
