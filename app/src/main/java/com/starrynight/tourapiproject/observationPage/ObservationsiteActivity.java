@@ -1,7 +1,10 @@
 package com.starrynight.tourapiproject.observationPage;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
@@ -24,11 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.CourseTouristPoint;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveFee;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,6 +53,10 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private LinearLayout obs_indicator;
     private String[] obs_images;
     private List<ObserveImage> obs_images_list;
+
+    private ViewPager2 course_slider;
+    private LinearLayout course_indicator;
+    private List<CourseTouristPoint> touristPointList;
 
     private RecyclerFeeAdapter recyclerFeeAdapter;
     private List<ObserveFee> obs_fee_list;
@@ -69,18 +78,18 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
 
-                    obs_images_list=observation.getObserveImages();
+                    obs_images_list = observation.getObserveImages();
                     obs_images_list.get(0).getImageSource();
 
                     obs_fee_list = observation.getObserveFees();
 
                     Call<List<String>> call3 = RetrofitClient.getApiService().getObserveImagePath(observationId);
-                    call3.enqueue(new Callback<List<String>>(){
+                    call3.enqueue(new Callback<List<String>>() {
                         @Override
                         public void onResponse(Call<List<String>> call, Response<List<String>> response) {
 
                             if (response.isSuccessful()) {
-                                if (response != null){
+                                if (response != null) {
                                     Log.d(TAG, "관측지 이미지 호출 성공");
                                     List<String> imageList = response.body();
                                     obs_images = imageList.toArray(new String[imageList.size()]);
@@ -111,7 +120,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
                         }
                     });
-
 
 
                     TextView name = findViewById(R.id.obs_name_txt);
@@ -152,7 +160,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         //이용요금 리사이클러 설정
                         initFeeRecycler();
                         Call<List<ObserveFee>> call4 = RetrofitClient.getApiService().getObserveFeeList(observationId);
-                        call4.enqueue(new Callback<List<ObserveFee>>(){
+                        call4.enqueue(new Callback<List<ObserveFee>>() {
 
                             @Override
                             public void onResponse(Call<List<ObserveFee>> call, Response<List<ObserveFee>> response) {
@@ -207,40 +215,74 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     initHashtagRecycler();
 
                     Call<List<String>> call2 = RetrofitClient.getApiService().getObserveHashTags(observationId);
-                    call2.enqueue(new Callback<List<String>>(){
+                    call2.enqueue(new Callback<List<String>>() {
 
-                                     @Override
-                                     public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                                         if (response.isSuccessful()) {
-                                             Log.d(TAG, "관측지 해쉬태그 호출 성공");
-                                             observeHashTags = response.body();
+                        @Override
+                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                            if (response.isSuccessful()) {
+                                Log.d(TAG, "관측지 해쉬태그 호출 성공");
+                                observeHashTags = response.body();
 
-                                             for (String p : observeHashTags) {
-                                                 RecyclerHashTagItem item = new RecyclerHashTagItem();
-                                                 item.setHashtagName(p);
+                                for (String p : observeHashTags) {
+                                    RecyclerHashTagItem item = new RecyclerHashTagItem();
+                                    item.setHashtagName(p);
 
-                                                 recyclerHashTagAdapter.addItem(item);
-                                             }
-                                             recyclerHashTagAdapter.notifyDataSetChanged();
+                                    recyclerHashTagAdapter.addItem(item);
+                                }
+                                recyclerHashTagAdapter.notifyDataSetChanged();
 
-                                         } else {
-                                             Log.e(TAG, "관측지 해쉬태그 호출 실패");
-                                         }
-                                     }
+                            } else {
+                                Log.e(TAG, "관측지 해쉬태그 호출 실패");
+                            }
+                        }
 
-                                     @Override
-                                     public void onFailure(Call<List<String>> call, Throwable t) {
-                                         Log.e(TAG, "연결실패" + t.getMessage());
+                        @Override
+                        public void onFailure(Call<List<String>> call, Throwable t) {
+                            Log.e(TAG, "연결실패" + t.getMessage());
 
-                                     }
-                                 });
+                        }
+                    });
 
+                    //코스설정
+                    course_slider = findViewById(R.id.obs_course_slider);
+                    course_indicator = findViewById(R.id.obs_course_indicator);
+                        Call<List<CourseTouristPoint>> call5 = RetrofitClient.getApiService().getCourseTouristPointList(observationId);
+                        call5.enqueue(new Callback<List<CourseTouristPoint>>(){
+                            @Override
+                            public void onResponse(Call<List<CourseTouristPoint>> call, Response<List<CourseTouristPoint>> response) {
+                                if (response.isSuccessful()) {
+                                    if (response != null) {
+                                        Log.d(TAG, "관측지 코스 관광지 호출 성공");
+                                        touristPointList=response.body();
+
+                                        course_slider.setAdapter(new ObserveCourseViewAdapter(ObservationsiteActivity.this, touristPointList));
+                                        course_slider.setOffscreenPageLimit(1);
+
+                                        course_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                                            @Override
+                                            public void onPageSelected(int position) {
+                                                super.onPageSelected(position);
+//                            setObserveCurrentIndicator(position);
+                                            }
+                                        });
+//                    setupObserveIndicators(obs_images.length);
+                                    }
+
+                                } else {
+                                    Log.e(TAG, "관측지 코스 호출 실패");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<CourseTouristPoint>> call, Throwable t) {
+                                Log.e(TAG, "관측지 코스 연결실패");
+                            }
+                        });
 
                 } else {
                     Log.e(TAG, "관측지 호출 실패");
                 }
             }
-
             @Override
             public void onFailure(Call<Observation> call, Throwable t) {
                 Log.e(TAG, "연결실패" + t.getMessage());
@@ -278,73 +320,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-
-
-        ImageView obv_btn = findViewById(R.id.obvimagebutton);
-        ImageView obv_btn2 = findViewById(R.id.obvimagebutton2);
-        ImageView obv_btn3 = findViewById(R.id.obvimagebutton3);
-        ImageView obv_btn4 = findViewById(R.id.obvimagebutton4);
-        LinearLayout linearLayout = findViewById(R.id.obvlayout);
-        LinearLayout linearLayout2 = findViewById(R.id.obvlayout2);
-        LinearLayout linearLayout3 = findViewById(R.id.obvlayout3);
-        LinearLayout linearLayout4 = findViewById(R.id.obvlayout4);
-
-        obv_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-                linearLayout.setVisibility(View.VISIBLE);
-                linearLayout2.setVisibility(View.INVISIBLE);
-                linearLayout3.setVisibility(View.INVISIBLE);
-                linearLayout4.setVisibility(View.INVISIBLE);
-                obv_btn.setSelected(true);
-                obv_btn2.setSelected(false);
-                obv_btn3.setSelected(false);
-                obv_btn4.setSelected(false);
-            }
-        });
-        obv_btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-                linearLayout.setVisibility(View.INVISIBLE);
-                linearLayout2.setVisibility(View.VISIBLE);
-                linearLayout3.setVisibility(View.INVISIBLE);
-                linearLayout4.setVisibility(View.INVISIBLE);
-                obv_btn.setSelected(false);
-                obv_btn2.setSelected(true);
-                obv_btn3.setSelected(false);
-                obv_btn4.setSelected(false);
-            }
-        });
-        obv_btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-                linearLayout.setVisibility(View.INVISIBLE);
-                linearLayout2.setVisibility(View.INVISIBLE);
-                linearLayout3.setVisibility(View.VISIBLE);
-                linearLayout4.setVisibility(View.INVISIBLE);
-                obv_btn.setSelected(false);
-                obv_btn2.setSelected(false);
-                obv_btn3.setSelected(true);
-                obv_btn4.setSelected(false);
-            }
-        });
-        obv_btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-                linearLayout.setVisibility(View.INVISIBLE);
-                linearLayout2.setVisibility(View.INVISIBLE);
-                linearLayout3.setVisibility(View.INVISIBLE);
-                linearLayout4.setVisibility(View.VISIBLE);
-                obv_btn.setSelected(false);
-                obv_btn2.setSelected(false);
-                obv_btn3.setSelected(false);
-                obv_btn4.setSelected(true);
             }
         });
 

@@ -331,7 +331,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginBottom="16dp">
+
 
                 <TextView
                     android:id="@+id/postImageText"
@@ -393,108 +397,49 @@
                 </androidx.gridlayout.widget.GridLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
-                <ImageView
-                    android:id="@+id/obvimagebutton"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/heart__button" />
+                <TextView
+                    android:id="@+id/obs_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="추천코스"
+                    android:textSize="17sp"/>
 
-                <ImageView
-                    android:id="@+id/obvimagebutton2"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/heart__button" />
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/obvimagebutton3"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/heart__button" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"
+                        android:layout_centerVertical="true"/>
 
-                <ImageView
-                    android:id="@+id/obvimagebutton4"
+                    <LinearLayout
+                        android:id="@+id/obs_course_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal" />
+
+                </RelativeLayout>
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/obs_course_slider"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/heart__button" />
+                    android:layout_height="wrap_content"
+                    android:padding="13dp"/>
+
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/obvlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView22"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="10"
-                        android:text="초저녁 북동쪽 하늘의 북두칠성은 누구나 찾기 쉬워 봄철 별자리의 길잡이로 알맞다. 아크투루스는 밤하늘에서 네 번째로 밝은 별로 붉은색이다. 스피카는 보리 이삭이라는 뜻을 담고 있다.
-여름철에 은하수 주위로 흩뿌려진 별은 가장 아름다운 밤하늘을 보여준다. 밤 10시 무렵 동남쪽 하늘을 보면 1등성 세 개가 여름철 대삼각형을 만든다. 이 별들은 여름철 별자리를 쉽게 찾는 길잡이 별이다.
-북쪽 하늘에는 W모양의 카시오페이아자리가 있고, 남쪽 지평선 위로는 남쪽물고기 자리의 포말하우트가 홀로 빛나고 있다. 포말하우트는 가을철의 유일한 일등성이다. 카시오페이아자리 옆에는 네 개의 2등성이 사가형을 이룬다. 이 사각형을 페가수스 사각형이라고 하며, 가을철 별자리를 찾는 길잡이 역할을 한다.
-겨울철 별자리를 찾는 길잡이는 오리온자리이다. 오리온자리는 가운데 밝은 세 별로 쉽게 찾을 수 있다. 이 세 별을 이어 오른쪽 위로 올라가면 황소자리의 알데바란을 찾을 수 있다." />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/obvlayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/textView23"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="관광지 2번 코스" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/obvlayout3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/textView24"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="관광지 3번 코스" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/obvlayout4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/textView25"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="관광지 4번 코스" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
