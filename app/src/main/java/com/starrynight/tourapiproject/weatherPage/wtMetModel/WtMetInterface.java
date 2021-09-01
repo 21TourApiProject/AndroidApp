@@ -13,7 +13,6 @@ public interface WtMetInterface {
             @Query("lon") Double lon,
             @Query("exclude") String exclude,
             @Query("appid") String appid,
-            @Query("units") String units,
-            @Query("lan") String lan
+            @Query("units") String units
     );
 }
