@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class MyPostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
+        System.out.println("내 게시물 userId = " + userId);
 
         //뒤로 가기
         Button myPostBack = findViewById(R.id.myPostBack);
@@ -54,14 +56,12 @@ public class MyPostActivity extends AppCompatActivity {
         myPostRecyclerview.setHasFixedSize(true);
         postResult = new ArrayList<>();
 
-        Call<List<MyPost>> call = RetrofitClient.getApiService().getMyWishPost(userId);
+        Call<List<MyPost>> call = RetrofitClient.getApiService().getMyPost(userId);
         call.enqueue(new Callback<List<MyPost>>() {
             @Override
             public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                 if (response.isSuccessful()) {
                     postResult = response.body();
-                    System.out.println("postResult.get(0).getNickName() = " + postResult.get(0).getTitle());
-                    System.out.println("postResult.get(0).getNickName() = " + postResult.get(0).getNickName());
                     MyPostAdapter myPostAdapter = new MyPostAdapter(postResult, MyPostActivity.this);
                     myPostRecyclerview.setAdapter(myPostAdapter);
                     myPostAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
@@ -83,5 +83,18 @@ public class MyPostActivity extends AppCompatActivity {
                 Log.e("연결실패", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == POST){
+            //액티비티 새로고침
+            Intent intent = getIntent();
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        }
     }
 }
