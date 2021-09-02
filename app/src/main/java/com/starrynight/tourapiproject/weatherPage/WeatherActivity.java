@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.weatherPage;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -16,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,19 +28,26 @@ import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class WeatherActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
+public class WeatherActivity extends AppCompatActivity {
 
     //Picker 관련
     Calendar c = Calendar.getInstance();
+    Calendar cal = Calendar.getInstance();
     Calendar today = Calendar.getInstance();
+
+    SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyyMMdd");
 
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
@@ -55,7 +62,7 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
     String WT_APPEAR_TIME_API_KEY;
 
     String strDate;
-    String strTime;
+
 
     ArrayAdapter<CharSequence> cityAdSpin, provAdSpin;
     String choice_do = "";
@@ -71,19 +78,19 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
     String todayDate;
     String todayTime;
 
-    TextView wtTimePicker;
-
-    private static final int MAX_HOUR = 23;
-    private static final int MIN_HOUR = 00;
+    String plusTwoDay;
 
     private String hour[] = {"00", "01", "02", "03", "04", "05"
             , "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"
             , "16", "17", "18", "19", "20", "21", "22", "23"};
 
+    ArrayList<String> list1 = new ArrayList<>(Arrays.asList(hour));
+    ArrayList<String> list2 = new ArrayList<>(Arrays.asList(hour));
 
-    public void setTimeListener(TimePickerDialog.OnTimeSetListener timeListener) {
-        this.timeListener = timeListener;
-    }
+    private String hourChange[];
+
+    public NumberPicker numberPicker;
+
 
     private Button btnConfirm;
     private Button btnCancel;
@@ -162,15 +169,14 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
     //날짜 설정
     public void onSetDatePicker() {
 
-        SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyyMMdd");
-        selectDate = formatDate2.format(c.getTime());
-        todayDate = formatDate2.format(c.getTime());
+        selectDate = formatDate2.format(cal.getTime());
+        todayDate = formatDate2.format(cal.getTime());
         Log.d("todayDate", todayDate);
 
         datePicker = (TextView) findViewById(R.id.wt_datePicker);
 
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
-        strDate = formatDate.format(c.getTime());
+        strDate = formatDate.format(cal.getTime());
         Log.d("selectDate", selectDate);
 
         datePicker.setText(strDate);
@@ -178,8 +184,8 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 //monthOfYear += 1;
-                c.set(year, monthOfYear, dayOfMonth);
-                strDate = formatDate.format(c.getTime());
+                cal.set(year, monthOfYear, dayOfMonth);
+                strDate = formatDate.format(cal.getTime());
                 Log.d("strDate", strDate);
                 datePicker.setText(strDate);
                 //20210901
@@ -206,38 +212,40 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
     public void onSetTimePicker() {
         timePicker = findViewById(R.id.wt_timePicker);
 
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyyMMddHH");
-        todayDateTime = formatDateTime.format(c.getTime());
-        //Log.d("todayDateTime", todayDateTime);
+        todayDateTime = formatDateTime.format(cal.getTime());
+        Log.d("todayDateTime", todayDateTime);
 
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat formatTime = new SimpleDateFormat("HH");
-        strTime = formatTime.format(c.getTime());
-        selectTime = strTime;
+
+        todayTime = formatTime.format(cal.getTime());
+        selectTime = todayTime;
         Log.d("selectTime", selectTime);
 
-        timePicker.setText(strTime + "시");
-        Log.d("strTime", strTime);
+        timePicker.setText(todayTime + "시");
+        Log.d("strTime", todayTime);
 
-        timeListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                Log.d("hourOfDay", String.valueOf(hourOfDay));
-                timePicker.setText(String.format("%02d시", hourOfDay));
-                selectTime = String.format("%02d", hourOfDay);
-                Log.d("selectTime", selectTime);
-
-                selectDateTime = selectDate + selectTime;
-                Log.d("selectDateTime", selectDateTime);
-            }
-        };
+//        timeListener = new TimePickerDialog.OnTimeSetListener() {
+//            @Override
+//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//
+//                Log.d("hourOfDay", String.valueOf(hourOfDay));
+//                timePicker.setText(String.format("%02d시", hourOfDay));
+//                selectTime = String.format("%02d", hourOfDay);
+//                Log.d("selectTime", selectTime);
+//
+//                selectDateTime = selectDate + selectTime;
+//                Log.d("selectDateTime", selectDateTime);
+//            }
+//        };
     }
 
     //시간 선택 이벤트
     public void wtClickTimePicker(View view) {
-        //  WtDatePickerDialog wtDatePickerDialog = new WtDatePickerDialog();
-        //   wtDatePickerDialog.setListenerT(timeListener);
-//        wtDatePickerDialog.show(getFragmentManager(), "test");
+        timePicker = findViewById(R.id.wt_timePicker);
+
         View dialogView = getLayoutInflater().inflate(R.layout.wt_dialog_timepicker, null);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -246,7 +254,67 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        final NumberPicker numberPicker = (NumberPicker) alertDialog.findViewById(R.id.hourPicker);
+        numberPicker = (NumberPicker) alertDialog.findViewById(R.id.hourPicker);
+
+        try {
+            cal.setTime(Objects.requireNonNull(formatDate2.parse(selectDate)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        cal.add(Calendar.DATE, 2);
+        plusTwoDay = formatDate2.format(cal.getTime());
+        plusTwoDay += selectTime;
+        Log.d("plusTwoDay", plusTwoDay);
+
+        if (todayDate.equals(selectDate)) {
+            if (todayTime.equals("01")) {
+                setMinHour(0);
+            } else if (todayTime.equals("02")) {
+                setMinHour(1);
+            } else if (todayTime.equals("03")) {
+                setMinHour(2);
+            } else if (todayTime.equals("04")) {
+                setMinHour(3);
+            } else if (todayTime.equals("05")) {
+                setMinHour(4);
+            } else if (todayTime.equals("06")) {
+                setMinHour(5);
+            } else if (todayTime.equals("07")) {
+                setMinHour(6);
+            } else if (todayTime.equals("08")) {
+                setMinHour(7);
+            } else if (todayTime.equals("09")) {
+                setMinHour(8);
+            } else if (todayTime.equals("10")) {
+                setMinHour(9);
+            } else if (todayTime.equals("11")) {
+                setMinHour(10);
+            } else if (todayTime.equals("12")) {
+                setMinHour(11);
+            } else if (todayTime.equals("13")) {
+                setMinHour(12);
+            } else if (todayTime.equals("14")) {
+                setMinHour(13);
+            } else if (todayTime.equals("15")) {
+                setMinHour(14);
+            } else if (todayTime.equals("16")) {
+                setMinHour(15);
+            } else if (todayTime.equals("17")) {
+                setMinHour(16);
+            } else if (todayTime.equals("18")) {
+                setMinHour(17);
+            } else if (todayTime.equals("19")) {
+                setMinHour(18);
+            } else if (todayTime.equals("20")) {
+                setMinHour(19);
+            } else if (todayTime.equals("21")) {
+                setMinHour(20);
+            } else if (todayTime.equals("22")) {
+                setMinHour(21);
+            } else if (todayTime.equals("23")) {
+                setMinHour(22);
+            }
+        }
 
         Button btnConfirm = dialogView.findViewById(R.id.wt_btn_confirm);
         Button btnCancel = dialogView.findViewById(R.id.wt_btn_cancel);
@@ -261,16 +329,26 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timeListener.onTimeSet(null, numberPicker.getValue(), 0);
+                String text1 = hourChange[numberPicker.getValue()] + "시";
+                timePicker.setText(text1);
+
+                selectTime = String.valueOf(hour[numberPicker.getValue()]);
+                Log.d("selectTime", selectTime);
+
+                selectDateTime = selectDate + selectTime;
+                Log.d("selectDateTime", selectDateTime);
                 alertDialog.dismiss();
             }
         });
 
-        setTimeListener(timeListener);
-        numberPicker.setMinValue(0);
-        numberPicker.setMaxValue(hour.length - 1);
-        numberPicker.setDisplayedValues(hour);
-        numberPicker.setValue(c.get(Calendar.HOUR_OF_DAY));
+//        hourChange = list1.toArray(new String[0]);
+//
+//        Log.d("dkdk", list1.toString());
+
+//        numberPicker.setMinValue(0);
+//        numberPicker.setMaxValue(hourChange.length - 1);
+//        numberPicker.setDisplayedValues(hourChange);
+//        numberPicker.setValue(cal.get(Calendar.HOUR_OF_DAY));
 
     }
 
@@ -536,8 +614,18 @@ public class WeatherActivity extends AppCompatActivity implements NumberPicker.O
         });
     }
 
-    @Override
-    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+    public void setMinHour(int num) {
+        for (int i = 0; i < num + 1; i++) {
+            String remove = list2.remove(0);
+            Log.d("remove", remove);
+        }
+        hourChange = list2.toArray(new String[0]);
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(hourChange.length - 1);
+        numberPicker.setDisplayedValues(hourChange);
 
+        for (int i = 0; i < num + 1; i++) {
+            list2.add(i, hour[i]);
+        }
     }
 }
