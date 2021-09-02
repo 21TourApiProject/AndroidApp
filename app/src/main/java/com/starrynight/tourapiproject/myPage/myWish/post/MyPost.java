@@ -16,16 +16,16 @@ public class MyPost {
     private String nickName;
     @SerializedName("profileImage")
     private String profileImage;
-    @SerializedName("hashTagName")
-    private List<String> hashTagName;
+    @SerializedName("hashTagNames")
+    private List<String> hashTagNames;
 
-    public MyPost(Long itemId, String thumbnail, String title, String nickName, String profileImage, List<String> hashTagName) {
+    public MyPost(Long itemId, String thumbnail, String title, String nickName, String profileImage, List<String> hashTagNames) {
         this.itemId = itemId;
         this.thumbnail = thumbnail;
         this.title = title;
         this.nickName = nickName;
         this.profileImage = profileImage;
-        this.hashTagName = hashTagName;
+        this.hashTagNames = hashTagNames;
     }
 
     public Long getItemId() {
@@ -68,11 +68,11 @@ public class MyPost {
         this.profileImage = profileImage;
     }
 
-    public List<String> getHashTagName() {
-        return hashTagName;
+    public List<String> getHashTagNames() {
+        return hashTagNames;
     }
 
-    public void setHashTagName(List<String> hashTagName) {
-        this.hashTagName = hashTagName;
+    public void setHashTagNames(List<String> hashTagNames) {
+        this.hashTagNames = hashTagNames;
     }
 }
