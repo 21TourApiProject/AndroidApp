@@ -51,11 +51,14 @@ import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObserv
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -79,6 +82,7 @@ public class PostWriteActivity extends AppCompatActivity {
     PostObservePointParams postObservePointParams;
     String postObservePointName;
     Long postId;
+    Long userId;
     File file;
     ArrayList<File> files = new ArrayList<>();
 
@@ -97,6 +101,18 @@ public class PostWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_write);
+//      앱 내부저장소에서 userId 가져오기
+        String fileName = "userId";
+        try{
+            FileInputStream fis = openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
 
         // + 버튼 클릭 이벤트
         addPicture = findViewById(R.id.addPicture);
@@ -241,7 +257,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 postParams.setPostContent(postContent);
                 postParams.setYearDate(yearDate);
                 postParams.setTime(time);
-                postParams.setUserId(1L);
+                postParams.setUserId(userId);
                 postParams.setPostTitle(postTitle);
                 postObservePointName = postObservePointParams.getObservePointName();
                 Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
