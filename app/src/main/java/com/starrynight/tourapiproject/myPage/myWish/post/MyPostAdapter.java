@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -72,6 +74,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         TextView myWishPostTitle;
         ImageView myWishPostProfileImage;
         TextView myWishPostWriter;
+        LinearLayout myWishPostHashTag;
 
         public ViewHolder(View itemView, final OnMyPostItemClickListener listener) {
             super(itemView);
@@ -80,6 +83,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             myWishPostTitle = itemView.findViewById(R.id.myWishPostTitle);
             myWishPostProfileImage = itemView.findViewById(R.id.myWishPostProfileImage);
             myWishPostWriter = itemView.findViewById(R.id.myWishPostWriter);
+            myWishPostHashTag = itemView.findViewById(R.id.myWishPostHashTag);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,6 +106,15 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             }
             myWishPostTitle.setText(item.getTitle());
             myWishPostWriter.setText(item.getNickName());
+
+            List<String> hashTagName = item.getHashTagNames();
+            for (String ht : hashTagName){
+                TextView textView = new TextView(context);
+                textView.setText("#"+ht);
+                textView.setTextColor(ContextCompat.getColor(context, R.color.purple_200));
+                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.observation__hashtags));
+                myWishPostHashTag.addView(textView);
+            }
         }
     }
 }

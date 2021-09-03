@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -77,6 +79,7 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
         TextView opTpAddress;
         TextView obTpCat3Name;
         TextView obTpOverviewSim;
+        LinearLayout obTpHashTag;
 
         public ViewHolder(View itemView, final OnMyWishObTpItemClickListener listener) {
             super(itemView);
@@ -86,6 +89,7 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
             opTpAddress = itemView.findViewById(R.id.myWishObTpAddress);
             obTpCat3Name = itemView.findViewById(R.id.myWishObTpCat3Name);
             obTpOverviewSim = itemView.findViewById(R.id.myWishObTpOverviewSim);
+            obTpHashTag = itemView.findViewById(R.id.myWishObTpHashTag);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,11 +104,21 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
         }
 
         public void setItem(MyWishObTp item) {
-            Glide.with(context).load(item.getThumbnail()).into(obTpImage);
+            if(item.getThumbnail() != null)
+                Glide.with(context).load(item.getThumbnail()).into(obTpImage);
             obTpTitle.setText(item.getTitle());
             opTpAddress.setText(item.getAddress());
             obTpCat3Name.setText(item.getCat3());
             obTpOverviewSim.setText(item.getOverviewSim());
+
+            List<String> hashTagName = item.getHashTagNames();
+            for (String ht : hashTagName){
+                TextView textView = new TextView(context);
+                textView.setText("#"+ht);
+                textView.setTextColor(ContextCompat.getColor(context, R.color.purple_200));
+                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.observation__hashtags));
+                obTpHashTag.addView(textView);
+            }
         }
 
     }
