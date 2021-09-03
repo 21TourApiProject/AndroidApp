@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.postPage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -158,37 +160,55 @@ public class PostActivity extends AppCompatActivity{
                     deleteBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Call<Void>call8 = RetrofitClient.getApiService().deletePost(userId);
-                            call8.enqueue(new Callback<Void>() {
+                            AlertDialog.Builder ad = new AlertDialog.Builder(PostActivity.this);
+                            ad.setMessage("정말로 게시물을 삭제하시겠습니까?");
+                            ad.setTitle("알림");
+                            ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onResponse(Call<Void> call, Response<Void> response) {
-                                    if (response.isSuccessful()){System.out.println("게시물 삭제 완료");
-                                    Call<Void> call7  = RetrofitClient.getApiService().deletePostObservePoint(post.getPostObservePointId());
-                                    call7.enqueue(new Callback<Void>() {
-                                        @Override
-                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                            if (response.isSuccessful()){
-                                                System.out.println("게시물 관측지 삭제 완료");
-                                            }else{System.out.println("게시물 관측지 삭제 실패");}
-                                        }
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Call<Void>call8 = RetrofitClient.getApiService().deletePost(userId);
+                                                                call8.enqueue(new Callback<Void>() {
+                                                                    @Override
+                                                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                                                        if (response.isSuccessful()){System.out.println("게시물 삭제 완료");
+                                                                        Call<Void> call7  = RetrofitClient.getApiService().deletePostObservePoint(post.getPostObservePointId());
+                                                                        call7.enqueue(new Callback<Void>() {
+                                                                            @Override
+                                                                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                                                                if (response.isSuccessful()){
+                                                                                    System.out.println("게시물 관측지 삭제 완료");
+                                                                                }else{System.out.println("게시물 관측지 삭제 실패");}
+                                                                            }
 
-                                        @Override
-                                        public void onFailure(Call<Void> call, Throwable t) {
-                                            System.out.println("게시물 관측지 삭제 실패 2");
-                                        }
-                                    });
-                                    Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent1);
-                                    } else{ System.out.println("게시물 삭제 실패");}
-                                }
+                                                                            @Override
+                                                                            public void onFailure(Call<Void> call, Throwable t) {
+                                                                                System.out.println("게시물 관측지 삭제 실패 2");
+                                                                            }
+                                                                        });
+                                                                        Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
+                                                                        startActivity(intent1);
+                                                                        finish();
+                                                                        } else{ System.out.println("게시물 삭제 실패");}
+                                                                    }
 
-                                @Override
-                                public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("게시물 삭제 실패 2");
+                                                                    @Override
+                                                                    public void onFailure(Call<Void> call, Throwable t) {
+                                                                        System.out.println("게시물 삭제 실패 2");
+                                                                    }
+                                                                });
+                                                                dialog.dismiss();
                                 }
                             });
+                            ad.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            ad.show();
                         }
                     });
+
 
                     //관련 게시물
                     Call<List<String>>call2 = RetrofitClient.getApiService().getRelatePostImageList(post.getPostObservePointId());
