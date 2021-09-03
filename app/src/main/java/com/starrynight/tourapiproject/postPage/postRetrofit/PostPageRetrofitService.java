@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject.postPage.postRetrofit;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -21,4 +22,10 @@ public interface PostPageRetrofitService {
 
     @GET("postImage/{postObservePointId}")
     Call<List<String>> getRelatePostImageList(@Path("postObservePointId")Long postObservePointId);
+
+    @DELETE("post/{userId}")
+    Call<Void> deletePost(@Path("userId")Long userId);
+
+    @DELETE("postObservePoint/{postObservePointId}")
+    Call<Void> deletePostObservePoint(@Path("postObservePointId")Long postObservePointId);
 }
