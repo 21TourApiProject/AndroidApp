@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="자세히 보기 >"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:visibility="visible"
             android:layout_below="@id/course_outline_txt"
             android:layout_alignParentRight="true"/>
