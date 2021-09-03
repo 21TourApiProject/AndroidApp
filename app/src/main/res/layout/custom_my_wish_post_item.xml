@@ -45,9 +45,10 @@
                 android:layout_marginLeft="5dp" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:id="@+id/myWishPostHashTag"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
     </LinearLayout>
 </LinearLayout>

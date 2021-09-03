@@ -39,9 +39,9 @@ public class MyWishActivity extends AppCompatActivity {
     Button myWishOb;
     Button myWishTp;
     Button myWishPost;
-    List<MyWishObTp> obResult;
-    List<MyWishObTp> tpResult;
-    List<MyPost> postResult;
+    List<MyWishObTp> obResult; //찜 관측지
+    List<MyWishObTp> tpResult; //찜 관관지
+    List<MyPost> postResult; //찜 게시물
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,6 @@ public class MyWishActivity extends AppCompatActivity {
             public void onResponse(Call<List<MyWishObTp>> call, Response<List<MyWishObTp>> response) {
                 if (response.isSuccessful()) {
                     tpResult = response.body();
-
                     MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, MyWishActivity.this);
                     myWishRecyclerview.setAdapter(myWishObAdapter);
                     myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
@@ -215,7 +214,11 @@ public class MyWishActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == WISH){
             //액티비티 새로고침
-
+            Intent intent = getIntent();
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         }
     }
 }
