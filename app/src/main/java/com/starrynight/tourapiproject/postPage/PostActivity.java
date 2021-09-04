@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject.postPage;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -50,6 +51,8 @@ import retrofit2.Response;
 public class PostActivity extends AppCompatActivity{
     private ViewPager2 sliderViewPager;
     private LinearLayout indicator;
+    boolean isWish;
+    Button like_btn;
     Post post;
     Long postId;
     Long userId;
@@ -298,12 +301,70 @@ public class PostActivity extends AppCompatActivity{
                 System.out.println("게시물 해시태그 실패 2");
             }
         });
+        //이미 찜한건지 확인
+        Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, postId, 2);
+        call0.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (response.body()){
+                        isWish = true;
+                        like_btn.setSelected(!like_btn.isSelected());
+                    } else{
+                        isWish = false;
+                    }
+                } else {
+                    System.out.println("내 찜 조회하기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
 
-        Button button = findViewById(R.id.like);
-        button.setOnClickListener(new View.OnClickListener() {
+        like_btn= findViewById(R.id.like);
+        like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setSelected(!v.isSelected());
+                if (!isWish){ //찜 안한 상태일때
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, postId, 2);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                //버튼 디자인 바뀌게 구현하기
+                                isWish = true;
+                                v.setSelected(!v.isSelected());
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                } else{
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, postId, 2);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                isWish = false;
+                                v.setSelected(!v.isSelected());
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 삭제 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                }
             }
         });
 
@@ -335,7 +396,7 @@ public class PostActivity extends AppCompatActivity{
         for (int i = 0; i < indicators.length; i++) {
             indicators[i] = new ImageView(this);
             indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
-                    R.drawable.post__indicator_inactive));
+                    R.drawable.mainpage_postimage));
             indicators[i].setLayoutParams(params);
             indicator.addView(indicators[i]);
         }
@@ -349,12 +410,12 @@ public class PostActivity extends AppCompatActivity{
             if (i == position) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_active
+                        R.drawable.mainpage_postimage
                 ));
             } else {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_inactive
+                        R.drawable.mainpage_postimage_non
                 ));
             }
         }
