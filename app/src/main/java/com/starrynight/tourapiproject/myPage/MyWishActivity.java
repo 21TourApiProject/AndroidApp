@@ -40,7 +40,7 @@ public class MyWishActivity extends AppCompatActivity {
     Button myWishTp;
     Button myWishPost;
     List<MyWishObTp> obResult; //찜 관측지
-    List<MyWishObTp> tpResult; //찜 관관지
+    List<MyWishObTp> tpResult; //찜 관광지
     List<MyPost> postResult; //찜 게시물
 
     @Override
