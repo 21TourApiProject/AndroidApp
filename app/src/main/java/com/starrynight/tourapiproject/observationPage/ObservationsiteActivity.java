@@ -8,8 +8,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +36,11 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Ob
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +49,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ObservationsiteActivity extends AppCompatActivity {
+    Long userId;
+    Boolean isWish;
 
     private static final String TAG = "observation page";
     Observation observation;
@@ -55,7 +65,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private List<ObserveImage> obs_images_list;
 
     private ViewPager2 course_slider;
-    private LinearLayout course_indicator;
+    private LinearLayout course_circle_indicator;
+    private LinearLayout course_txt_indicator;
     private List<CourseTouristPoint> touristPointList;
 
     private RecyclerFeeAdapter recyclerFeeAdapter;
@@ -66,9 +77,9 @@ public class ObservationsiteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observationsite);
 
-
-
-        long observationId = 1;
+        Intent intent = getIntent();
+        Long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
+//        long observationId = 2;
 
         Call<Observation> call1 = RetrofitClient.getApiService().getObservation(observationId);
         call1.enqueue(new Callback<Observation>() {
@@ -98,7 +109,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                     obs_slider = findViewById(R.id.obs_Img_slider);
                                     obs_indicator = findViewById(R.id.obs_Img_indicator);
                                     obs_slider.setAdapter(new ObserveImageSliderAdapter(ObservationsiteActivity.this, obs_images));
-                                    obs_slider.setOffscreenPageLimit(1);
+                                    obs_slider.setOffscreenPageLimit(10);
 
                                     obs_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                                         @Override
@@ -245,39 +256,70 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
                     //코스설정
                     course_slider = findViewById(R.id.obs_course_slider);
-                    course_indicator = findViewById(R.id.obs_course_indicator);
-                        Call<List<CourseTouristPoint>> call5 = RetrofitClient.getApiService().getCourseTouristPointList(observationId);
-                        call5.enqueue(new Callback<List<CourseTouristPoint>>(){
-                            @Override
-                            public void onResponse(Call<List<CourseTouristPoint>> call, Response<List<CourseTouristPoint>> response) {
-                                if (response.isSuccessful()) {
-                                    if (response != null) {
-                                        Log.d(TAG, "관측지 코스 관광지 호출 성공");
-                                        touristPointList=response.body();
+                    course_circle_indicator = findViewById(R.id.obs_course_circle_indicator);
+                    course_txt_indicator = findViewById(R.id.obs_course_name_indicator);
+                    Call<List<String>> call6 = RetrofitClient.getApiService().getCourseNameList(observationId);
+                    call6.enqueue(new Callback<List<String>>() {
+                        @Override
+                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                            if (response.isSuccessful()) {
+                                //코스 인디케이터에 넣을 코스 이름 받아오기
+                                List<String> course_name_list = response.body();
 
-                                        course_slider.setAdapter(new ObserveCourseViewAdapter(ObservationsiteActivity.this, touristPointList));
-                                        course_slider.setOffscreenPageLimit(1);
+                                Call<List<CourseTouristPoint>> call5 = RetrofitClient.getApiService().getCourseTouristPointList(observationId);
+                                call5.enqueue(new Callback<List<CourseTouristPoint>>(){
+                                    @Override
+                                    public void onResponse(Call<List<CourseTouristPoint>> call, Response<List<CourseTouristPoint>> response) {
+                                        if (response.isSuccessful()) {
+                                            //코스 viewpager에 적용할 관광지 정보 가져오기
+                                            if (response != null) {
+                                                Log.d(TAG, "관측지 코스 관광지 호출 성공");
+                                                touristPointList=response.body();
 
-                                        course_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                                            @Override
-                                            public void onPageSelected(int position) {
-                                                super.onPageSelected(position);
-//                            setObserveCurrentIndicator(position);
+                                                List<String> course_names = new ArrayList<>();
+                                                for (CourseTouristPoint p : touristPointList) {
+                                                    course_names.add(p.getTitle());
+                                                }
+
+                                                course_slider.setAdapter(new ObserveCourseViewAdapter(ObservationsiteActivity.this, touristPointList));
+                                                course_slider.setOffscreenPageLimit(1);
+
+                                                course_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                                                    @Override
+                                                    public void onPageSelected(int position) {
+                                                        super.onPageSelected(position);
+                                                        //관측지 빠고 나머지만 선택가능하게 설정
+                                                        if (position < observation.getCourseOrder()) {
+                                                            setCourseCurrentIndicator(position);
+                                                        } else {
+                                                            setCourseCurrentIndicator(position+1);
+                                                        }
+                                                    }
+                                                });
+                                                setupCourseIndicators(touristPointList.size(), course_name_list);
                                             }
-                                        });
-//                    setupObserveIndicators(obs_images.length);
+
+                                        } else {
+                                            Log.e(TAG, "관측지 코스 호출 실패");
+                                        }
                                     }
 
-                                } else {
-                                    Log.e(TAG, "관측지 코스 호출 실패");
-                                }
+                                    @Override
+                                    public void onFailure(Call<List<CourseTouristPoint>> call, Throwable t) {
+                                        Log.e(TAG, "관측지 코스 연결실패");
+                                    }
+                                });
+                            } else {
+                                Log.e(TAG, "관측지 코스이름 호출 실패");
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<List<CourseTouristPoint>> call, Throwable t) {
-                                Log.e(TAG, "관측지 코스 연결실패");
-                            }
-                        });
+                        @Override
+                        public void onFailure(Call<List<String>> call, Throwable t) {
+                            Log.e(TAG, "관측지 코스 이름 연결 실패");
+                        }
+                    });
+
 
                 } else {
                     Log.e(TAG, "관측지 호출 실패");
@@ -308,11 +350,85 @@ public class ObservationsiteActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Button heart_btn = findViewById(R.id.obs_save_btn);
-        heart_btn.setOnClickListener(new View.OnClickListener() {
+        //찜버튼 설정
+        Button save_btn = findViewById(R.id.obs_save_btn);
+
+        //앱 내부 저장소의 userId 데이터 읽기
+        String fileName = "userId";
+        try{
+            FileInputStream fis = this.openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
+
+        //이미 찜한건지 확인
+        Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, observationId, 0);
+        call0.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (response.body()){
+                        isWish = true;
+                        save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                    } else{
+                        isWish = false;
+                    }
+                } else {
+                    System.out.println("내 찜 조회하기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setSelected(!v.isSelected());
+                if (!isWish){ //찜 안한 상태일때
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, observationId, 0);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                //버튼 디자인 바뀌게 구현하기
+                                isWish = true;
+                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                } else{
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, observationId, 0);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                isWish = false;
+                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_wish_button));
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 삭제 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                }
             }
         });
         Button back_btn = findViewById(R.id.obs_back_btn);
@@ -415,6 +531,60 @@ public class ObservationsiteActivity extends AppCompatActivity {
         int childCount = obs_indicator.getChildCount();
         for (int i = 0; i < childCount; i++) {
             ImageView imageView = (ImageView) obs_indicator.getChildAt(i);
+            if (i == position) {
+                imageView.setImageDrawable(ContextCompat.getDrawable(
+                        this,
+                        R.drawable.post__indicator_active
+                ));
+            } else {
+                imageView.setImageDrawable(ContextCompat.getDrawable(
+                        this,
+                        R.drawable.post__indicator_inactive
+                ));
+            }
+        }
+    }
+
+    private void setupCourseIndicators(int count, List<String> names) {
+        //코스 인디케이터 걸정
+        ImageView[] img_indicators = new ImageView[count+1];
+        TextView[] txt_indicators = new TextView[count+1];
+        LinearLayout.LayoutParams img_params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+        LinearLayout.LayoutParams txt_params = new LinearLayout.LayoutParams(
+                30, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+
+        ViewGroup.LayoutParams test_params = new ViewGroup.LayoutParams(30, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+
+//        img_params.setMargins(16, 8, 16, 8);
+
+        for (int i = 0; i < img_indicators.length; i++) {
+            img_indicators[i] = new ImageView(this);
+            img_indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
+                    R.drawable.post__indicator_inactive));
+            img_indicators[i].setLayoutParams(img_params);
+            course_circle_indicator.addView(img_indicators[i]);
+
+            txt_indicators[i] = new TextView(this);
+            txt_indicators[i].setText(names.get(i));
+            txt_indicators[i].setLayoutParams(txt_params);
+            txt_indicators[i].setEllipsize(TextUtils.TruncateAt.END);
+            txt_indicators[i].setTextSize(10);
+            txt_indicators[i].setMaxLines(2);
+            txt_indicators[i].setGravity(Gravity.CENTER_HORIZONTAL);
+            course_txt_indicator.addView(txt_indicators[i]);
+
+        }
+        setCourseCurrentIndicator(0);
+    }
+
+    private void setCourseCurrentIndicator(int position) {
+        //코스 동그라미 인디케이터 설정
+        int childCount = course_circle_indicator.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView imageView = (ImageView) course_circle_indicator.getChildAt(i);
             if (i == position) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
