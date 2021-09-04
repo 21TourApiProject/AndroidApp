@@ -302,43 +302,6 @@ public class PersonFragment extends Fragment {
             }
         });
 
-
-//        //내 게시물 리사이클러 뷰
-//        myPostList = v.findViewById(R.id.myPostList);
-//        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-//        myPostList.setLayoutManager(layoutManager2);
-//        myPostAdapter= new MyPostAdapter();
-//        myPostList.setAdapter(myPostAdapter);
-//
-//        //내 게시물 불러오는 api
-//        Call<List<MyPost>> call4 = RetrofitClient.getApiService().getMyPost(userId);
-//        call4.enqueue(new Callback<List<MyPost>>() {
-//            @Override
-//            public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
-//                if (response.isSuccessful()) {
-//                    List<MyPost> result = response.body();
-//                    for (MyPost wp: result){
-//                        myPostAdapter.addItem(new MyPost(wp.getThumbnail(), wp.getTitle(), wp.getPostId()));
-//                    }
-//                    myPostList.setAdapter(myPostAdapter);
-//                } else {
-//                    System.out.println("내 게시물 불러오기 실패");
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<List<MyPost>> call, Throwable t) {
-//                Log.e("연결실패", t.getMessage());
-//            }
-//        });
-//        //내 게시물 클릭 이벤트
-//        myPostAdapter.setOnMyPostItemClickListener(new OnMyPostItemClickListener() {
-//            @Override
-//            public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
-//                Toast.makeText(getActivity().getApplicationContext(), ""+"번 게시물 클릭", Toast.LENGTH_SHORT).show();
-//                //게시물 페이지 띄우기
-//            }
-//        });
-
         return v;
     }
 
