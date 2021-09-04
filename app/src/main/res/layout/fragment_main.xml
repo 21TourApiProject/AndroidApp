@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#313063"
     tools:context=".MainFragment">
 
     <LinearLayout
@@ -17,33 +18,32 @@
 
         <Button
             android:id="@+id/weather_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="날씨" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/mainpage_weather" />
 
-        <TextView
+        <ImageView
             android:id="@+id/starryNightTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="별헤는밤"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="@drawable/mainpage_logo"
             android:textAlignment="center"
-            android:textSize="24sp" />
+            android:layout_marginStart="112dp" />
 
         <Button
             android:id="@+id/main_alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="알림" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/mainpage_alarm" />
 
         <Button
             android:id="@+id/postWrite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/post_plus__button" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/mainpage_postwrite" />
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
