@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -89,17 +90,23 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
 
         private void setOutlineButton(int position) {
             TextView outline_btn = itemView.findViewById(R.id.course_outline_btn);
-            Layout l = overview_txt.getLayout();
 
-            //개요가 4줄 이상일 경우만 자세히 보기 버튼 생성
-            if (l != null) {
-                int lines = l.getLineCount();
-                if (lines > 0)
-                    if (l.getEllipsisCount(lines - 1) > 0) {
-                        outline_btn.setVisibility(View.VISIBLE);
-                        Log.d("course layout", "텍스트 줄넘침");
+            ViewTreeObserver vto = overview_txt.getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    Layout l = overview_txt.getLayout();
+                    if ( l != null){
+                        int lines = l.getLineCount();
+                        if ( lines > 0)
+                            if ( l.getEllipsisCount(lines-1) > 0) {
+                                outline_btn.setVisibility(View.VISIBLE);
+                                Log.d(TAG, "텍스트 줄넘침");
+                            }
                     }
-            }
+                }
+            });
+
             //개요 더보기 버튼 클릭시 팝업띄움
             outline_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,7 +126,7 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
 
         public void bindText(CourseTouristPoint courseTouristPoint) {
             name_txt.setText(courseTouristPoint.getTitle());
-            tp_type_txt.setText(courseTouristPoint.getCat3Name());  //수정필요 12관광지 39음식점
+            tp_type_txt.setText(courseTouristPoint.getCat3Name());
             overview_txt.setText(courseTouristPoint.getOverview());
             address_txt.setText(courseTouristPoint.getAddr1());
             operating_txt.setText(courseTouristPoint.getUseTime());

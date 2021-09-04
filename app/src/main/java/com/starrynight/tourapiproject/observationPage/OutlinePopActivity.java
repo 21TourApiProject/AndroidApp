@@ -23,7 +23,7 @@ public class OutlinePopActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         outline = (String) intent.getSerializableExtra("outline"); //전 페이지에서 받아온 개요
-        Log.e("observation_ouytline", "popup started");
+        Log.d("observation_ouytline", "popup started");
 
         TextView overviewFull = findViewById(R.id.overviewFull);
         overviewFull.setText(outline);

@@ -77,7 +77,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
                 Intent intent = new Intent(getActivity(), ObservationsiteActivity.class);
-                intent.putExtra("observationId", 1);
+                intent.putExtra("observationId", 1L);
                 startActivity(intent);
             }
         });
