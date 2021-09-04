@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,11 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Ob
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +49,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ObservationsiteActivity extends AppCompatActivity {
+    Long userId;
+    Boolean isWish;
 
     private static final String TAG = "observation page";
     Observation observation;
@@ -70,7 +78,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_observationsite);
 
         Intent intent = getIntent();
-        long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
+        Long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
 //        long observationId = 2;
 
         Call<Observation> call1 = RetrofitClient.getApiService().getObservation(observationId);
@@ -101,7 +109,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                     obs_slider = findViewById(R.id.obs_Img_slider);
                                     obs_indicator = findViewById(R.id.obs_Img_indicator);
                                     obs_slider.setAdapter(new ObserveImageSliderAdapter(ObservationsiteActivity.this, obs_images));
-                                    obs_slider.setOffscreenPageLimit(1);
+                                    obs_slider.setOffscreenPageLimit(10);
 
                                     obs_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                                         @Override
@@ -342,11 +350,85 @@ public class ObservationsiteActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Button heart_btn = findViewById(R.id.obs_save_btn);
-        heart_btn.setOnClickListener(new View.OnClickListener() {
+        //찜버튼 설정
+        Button save_btn = findViewById(R.id.obs_save_btn);
+
+        //앱 내부 저장소의 userId 데이터 읽기
+        String fileName = "userId";
+        try{
+            FileInputStream fis = this.openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
+
+        //이미 찜한건지 확인
+        Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, observationId, 0);
+        call0.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (response.body()){
+                        isWish = true;
+                        save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                    } else{
+                        isWish = false;
+                    }
+                } else {
+                    System.out.println("내 찜 조회하기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setSelected(!v.isSelected());
+                if (!isWish){ //찜 안한 상태일때
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, observationId, 0);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                //버튼 디자인 바뀌게 구현하기
+                                isWish = true;
+                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                } else{
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, observationId, 0);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                isWish = false;
+                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_wish_button));
+                                Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                System.out.println("관광지 찜 삭제 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                }
             }
         });
         Button back_btn = findViewById(R.id.obs_back_btn);
