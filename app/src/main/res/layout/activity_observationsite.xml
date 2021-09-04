@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:id="@+id/obs_image_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/obs_Img_slider"
@@ -409,23 +409,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="추천코스"
-                    android:textSize="17sp"/>
+                    android:textSize="17sp"
+                    android:layout_marginBottom="10dp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <TextView
+<!--배경으로 직선 깔아줘야 함-->
+                    <LinearLayout
+                        android:id="@+id/obs_course_circle_indicator"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black"
-                        android:layout_centerVertical="true"/>
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal" />
 
                     <LinearLayout
-                        android:id="@+id/obs_course_indicator"
+                        android:id="@+id/obs_course_name_indicator"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:layout_below="@id/obs_course_circle_indicator"
                         android:orientation="horizontal" />
 
                 </RelativeLayout>

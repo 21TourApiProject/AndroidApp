@@ -90,17 +90,6 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
 
         private void setOutlineButton(int position) {
             TextView outline_btn = itemView.findViewById(R.id.course_outline_btn);
-//            Layout l = overview_txt.getLayout();
-            //개요가 4줄 이상일 경우만 자세히 보기 버튼 생성
-//            if (l != null) {
-////                Log.d("course layout", "들어왔나?");
-//                int lines = l.getLineCount();
-//                if (lines > 0)
-//                    if (l.getEllipsisCount(lines - 1) > 0) {
-//                        outline_btn.setVisibility(View.VISIBLE);
-//                        Log.d("course layout", "텍스트 줄넘침");
-//                    }
-//            }
 
             ViewTreeObserver vto = overview_txt.getViewTreeObserver();
             vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -110,8 +99,10 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
                     if ( l != null){
                         int lines = l.getLineCount();
                         if ( lines > 0)
-                            if ( l.getEllipsisCount(lines-1) > 0)
+                            if ( l.getEllipsisCount(lines-1) > 0) {
+                                outline_btn.setVisibility(View.VISIBLE);
                                 Log.d(TAG, "텍스트 줄넘침");
+                            }
                     }
                 }
             });
