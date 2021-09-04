@@ -47,6 +47,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#52528B"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -74,13 +75,14 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/observation__save" />
+                android:background="@drawable/main_bookmark" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#52528B"
             android:orientation="horizontal">
 
             <TextView
