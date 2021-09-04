@@ -8,12 +8,15 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
@@ -25,11 +28,23 @@ import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.AddHashTagActivity;
 import com.starrynight.tourapiproject.starPage.StarActivity;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.ViewHolder>{
     ArrayList<post_item> items = new ArrayList<post_item>();
     OnPostItemClickListener listener;
+   private static boolean isWish;
+   private static Long userId;
+   private static Long postId;
 
     public void addItem(post_item item){
         items.add(item);
@@ -49,6 +64,30 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
     public Post_item_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.layout_main, parent, false);
+        //앱 내부저장소에서 저장된 유저 아이디 가져오기
+        String fileName = "userId";
+        try{
+            FileInputStream fis = itemView.getContext().openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
+        //앱 내부저장소에 저장된 게시글 아이디 가져오기
+        String fileName3 = "postId";
+        try{
+            FileInputStream fis = itemView.getContext().openFileInput(fileName3);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            postId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("postId = " + postId);
         return new ViewHolder(itemView,listener);
     }
 
@@ -85,6 +124,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
         ImageView profileimage;
         ViewPager2 mainslider;
         LinearLayout indicator;
+        Button bookmark;
 
         public ViewHolder(View itemView,final OnPostItemClickListener listener){
             super(itemView);
@@ -96,6 +136,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
             profileimage = itemView.findViewById(R.id.mainprofileimage);
             mainslider = itemView.findViewById(R.id.mainslider);
             indicator = itemView.findViewById(R.id.mainindicator);
+            bookmark = itemView.findViewById(R.id.mainplus_btn);
             itemView.setClickable(true);
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -120,6 +161,70 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
                 public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
                     Intent intent = new Intent(view.getContext(), AddHashTagActivity.class);
                     view.getContext().startActivity(intent);
+                }
+            });
+            //이미 찜한건지 확인
+            Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, postId, 2);
+            call0.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body()){
+                            isWish = true;
+                            bookmark.setSelected(!bookmark.isSelected());
+                        } else{
+                            isWish = false;
+                        }
+                    } else {
+                        System.out.println("내 찜 조회하기 실패");
+                    }
+                }
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("연결실패", t.getMessage());
+                }
+            });
+            bookmark.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isWish){ //찜 안한 상태일때
+                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, postId, 2);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    //버튼 디자인 바뀌게 구현하기
+                                    isWish = true;
+                                    v.setSelected(!v.isSelected());
+                                    Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    System.out.println("관광지 찜 실패");
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("연결실패", t.getMessage());
+                            }
+                        });
+                    } else{
+                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, postId, 2);
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.isSuccessful()) {
+                                    isWish = false;
+                                    v.setSelected(!v.isSelected());
+                                    Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    System.out.println("관광지 찜 삭제 실패");
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e("연결실패", t.getMessage());
+                            }
+                        });
+                    }
                 }
             });
             observation.setText(item.getObservation());
