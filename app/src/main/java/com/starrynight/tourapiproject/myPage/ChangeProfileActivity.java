@@ -244,7 +244,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
     //닉네임 규칙 함수
     private Boolean isCorrectNickName(String nickName) {
-        String pattern = "^[[가-힣]*[0-9]*[a-zA-z]*[ ]*]{1,15}$";
+        String pattern = "^[[ㄱ-ㅎㅏ-ㅢ가-힣0-9a-zA-z]*]{1,15}$";
         return Pattern.matches(pattern, nickName);
     }
 
