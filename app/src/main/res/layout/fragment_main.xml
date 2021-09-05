@@ -20,13 +20,13 @@
             android:id="@+id/weather_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/mainpage_weather" />
+            android:background="@drawable/main__weather" />
 
         <ImageView
             android:id="@+id/starryNightTitle"
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:background="@drawable/mainpage_logo"
+            android:background="@drawable/main__logo"
             android:textAlignment="center"
             android:layout_marginStart="112dp" />
 
@@ -36,7 +36,7 @@
             android:layout_height="40dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/mainpage_alarm" />
+            android:background="@drawable/main__alarm" />
 
         <Button
             android:id="@+id/postWrite"

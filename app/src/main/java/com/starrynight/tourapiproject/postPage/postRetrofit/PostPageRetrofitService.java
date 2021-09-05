@@ -14,8 +14,8 @@ public interface PostPageRetrofitService {
     @GET("post/{postId}/postImage")
     Call<List<String>> getPostImage(@Path("postId")Long postId);
 
-    @GET("post/{postId}/postObservePoint")
-    Call<PostObservePoint> getPostObservePoint(@Path("postId")Long postId);
+    @GET("post/{postObservePointId}/postObservePoint")
+    Call<PostObservePoint> getPostObservePoint(@Path("postObservePointId")Long postObservePointId);
 
     @GET("postHashTagName/{postId}")
     Call<List<String>> getPostHashTagName(@Path("postId")Long postId);
