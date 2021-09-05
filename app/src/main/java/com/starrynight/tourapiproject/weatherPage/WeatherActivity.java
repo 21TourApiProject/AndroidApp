@@ -47,7 +47,14 @@ public class WeatherActivity extends AppCompatActivity {
     Calendar cal = Calendar.getInstance();
     Calendar today = Calendar.getInstance();
 
+    @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyyMMdd");
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatTime = new SimpleDateFormat("HH");
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
 
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
@@ -62,7 +69,9 @@ public class WeatherActivity extends AppCompatActivity {
     String WT_APPEAR_TIME_API_KEY;
 
     String strDate;
+    String strTime;
 
+    String timePickerTxt;
 
     ArrayAdapter<CharSequence> cityAdSpin, provAdSpin;
     String choice_do = "";
@@ -78,7 +87,12 @@ public class WeatherActivity extends AppCompatActivity {
     String todayDate;
     String todayTime;
 
+    String plusDay;
     String plusTwoDay;
+
+    String setTime = "00시";
+    String setTimeNo = "선택 불가";
+    String todayTimeTxt;
 
     private String hour[] = {"00", "01", "02", "03", "04", "05"
             , "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"
@@ -168,18 +182,27 @@ public class WeatherActivity extends AppCompatActivity {
 
     //날짜 설정
     public void onSetDatePicker() {
+        //        cal.add(Calendar.DATE, 2);
+//        plusDay = formatDate2.format(cal.getTime());
+//        plusDay += selectTime;
+//        Log.d("plusTwoDay", plusDay);
+
 
         selectDate = formatDate2.format(cal.getTime());
         todayDate = formatDate2.format(cal.getTime());
         Log.d("todayDate", todayDate);
 
         datePicker = (TextView) findViewById(R.id.wt_datePicker);
+        timePicker = findViewById(R.id.wt_timePicker);
 
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
         strDate = formatDate.format(cal.getTime());
         Log.d("selectDate", selectDate);
-
         datePicker.setText(strDate);
+
+        todayTime = formatTime.format(cal.getTime());
+        todayTimeTxt = todayTime + "시";
+        timePicker.setText(todayTimeTxt);
+
         dateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -194,6 +217,19 @@ public class WeatherActivity extends AppCompatActivity {
 
                 selectDateTime = selectDate + selectTime;
                 Log.d("selectDateTime", selectDateTime);
+                ;
+                if (selectDate.equals(plusDay)) {
+                    timePicker.setText(setTime);
+                } else if (selectDate.equals(plusTwoDay)) {
+                    timePicker.setText(setTime);
+                } else if (selectDate.equals(todayDate)) {
+                    todayTimeTxt = todayTime + "시";
+                    Log.d("todayTime1", todayTime);
+                    timePicker.setText(todayTimeTxt);
+                } else {
+                    timePicker.setText(setTimeNo);
+                }
+
             }
         };
     }
@@ -202,10 +238,10 @@ public class WeatherActivity extends AppCompatActivity {
     public void wtClickDatePicker(View view) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateListener, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
-        today.add(Calendar.DAY_OF_MONTH, 8);
+        today.add(Calendar.DAY_OF_MONTH, 7);
         datePickerDialog.getDatePicker().setMaxDate(today.getTimeInMillis());
         datePickerDialog.show();
-        today.add(Calendar.DAY_OF_MONTH, -8);
+        today.add(Calendar.DAY_OF_MONTH, -7);
     }
 
     // 시간 설정
@@ -217,15 +253,18 @@ public class WeatherActivity extends AppCompatActivity {
         todayDateTime = formatDateTime.format(cal.getTime());
         Log.d("todayDateTime", todayDateTime);
 
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat formatTime = new SimpleDateFormat("HH");
-
-        todayTime = formatTime.format(cal.getTime());
         selectTime = todayTime;
         Log.d("selectTime", selectTime);
 
-        timePicker.setText(todayTime + "시");
-        Log.d("strTime", todayTime);
+        c.add(Calendar.DATE, 1);
+        plusDay = formatDate2.format(c.getTime());
+        c.add(Calendar.DATE, 1);
+        plusTwoDay = formatDate2.format(c.getTime());
+        Log.d("plusDay", plusDay);
+        Log.d("plusTwoDay", plusTwoDay);
+        c.add(Calendar.DATE, -2);
+
+//        timePicker.setText(todayTime);
 
 //        timeListener = new TimePickerDialog.OnTimeSetListener() {
 //            @Override
@@ -255,64 +294,174 @@ public class WeatherActivity extends AppCompatActivity {
         alertDialog.show();
 
         numberPicker = (NumberPicker) alertDialog.findViewById(R.id.hourPicker);
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(0);
 
         try {
             cal.setTime(Objects.requireNonNull(formatDate2.parse(selectDate)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        cal.add(Calendar.DATE, 2);
-        plusTwoDay = formatDate2.format(cal.getTime());
-        plusTwoDay += selectTime;
-        Log.d("plusTwoDay", plusTwoDay);
 
+        // 오늘 날짜에서 현재 시간 전으로 선택 불가
         if (todayDate.equals(selectDate)) {
-            if (todayTime.equals("01")) {
-                setMinHour(0);
-            } else if (todayTime.equals("02")) {
-                setMinHour(1);
-            } else if (todayTime.equals("03")) {
-                setMinHour(2);
-            } else if (todayTime.equals("04")) {
-                setMinHour(3);
-            } else if (todayTime.equals("05")) {
-                setMinHour(4);
-            } else if (todayTime.equals("06")) {
-                setMinHour(5);
-            } else if (todayTime.equals("07")) {
-                setMinHour(6);
-            } else if (todayTime.equals("08")) {
-                setMinHour(7);
-            } else if (todayTime.equals("09")) {
-                setMinHour(8);
-            } else if (todayTime.equals("10")) {
-                setMinHour(9);
-            } else if (todayTime.equals("11")) {
-                setMinHour(10);
-            } else if (todayTime.equals("12")) {
-                setMinHour(11);
-            } else if (todayTime.equals("13")) {
-                setMinHour(12);
-            } else if (todayTime.equals("14")) {
-                setMinHour(13);
-            } else if (todayTime.equals("15")) {
-                setMinHour(14);
-            } else if (todayTime.equals("16")) {
-                setMinHour(15);
-            } else if (todayTime.equals("17")) {
-                setMinHour(16);
-            } else if (todayTime.equals("18")) {
-                setMinHour(17);
-            } else if (todayTime.equals("19")) {
-                setMinHour(18);
-            } else if (todayTime.equals("20")) {
-                setMinHour(19);
-            } else if (todayTime.equals("21")) {
-                setMinHour(20);
-            } else if (todayTime.equals("22")) {
-                setMinHour(21);
-            } else if (todayTime.equals("23")) {
-                setMinHour(22);
+            switch (todayTime) {
+                case "00":
+                    setMinHour(-1);
+                    break;
+                case "01":
+                    setMinHour(0);
+                    break;
+                case "02":
+                    setMinHour(1);
+                    break;
+                case "03":
+                    setMinHour(2);
+                    break;
+                case "04":
+                    setMinHour(3);
+                    break;
+                case "05":
+                    setMinHour(4);
+                    break;
+                case "06":
+                    setMinHour(5);
+                    break;
+                case "07":
+                    setMinHour(6);
+                    break;
+                case "08":
+                    setMinHour(7);
+                    break;
+                case "09":
+                    setMinHour(8);
+                    break;
+                case "10":
+                    setMinHour(9);
+                    break;
+                case "11":
+                    setMinHour(10);
+                    break;
+                case "12":
+                    setMinHour(11);
+                    break;
+                case "13":
+                    setMinHour(12);
+                    break;
+                case "14":
+                    setMinHour(13);
+                    break;
+                case "15":
+                    setMinHour(14);
+                    break;
+                case "16":
+                    setMinHour(15);
+                    break;
+                case "17":
+                    setMinHour(16);
+                    break;
+                case "18":
+                    setMinHour(17);
+                    break;
+                case "19":
+                    setMinHour(18);
+                    break;
+                case "20":
+                    setMinHour(19);
+                    break;
+                case "21":
+                    setMinHour(20);
+                    break;
+                case "22":
+                    setMinHour(21);
+                    break;
+                case "23":
+                    setMinHour(22);
+                    break;
+            }
+            // 48시간 내에만 시간 선택 가능
+        } else {
+            if (selectDate.equals(plusDay)) {
+                setLimitHour(1);
+            } else {
+                if (selectDate.equals(plusTwoDay)) {
+                    switch (todayTime) {
+                        case "00":
+                            numberPicker.setEnabled(false);
+                            break;
+                        case "01":
+                            setLimitHour(24);
+                            break;
+                        case "02":
+                            setLimitHour(23);
+                            break;
+                        case "03":
+                            setLimitHour(22);
+                            break;
+                        case "04":
+                            setLimitHour(21);
+                            break;
+                        case "05":
+                            setLimitHour(20);
+                            break;
+                        case "06":
+                            setLimitHour(19);
+                            break;
+                        case "07":
+                            setLimitHour(18);
+                            break;
+                        case "08":
+                            setLimitHour(17);
+                            break;
+                        case "09":
+                            setLimitHour(16);
+                            break;
+                        case "10":
+                            setLimitHour(15);
+                            break;
+                        case "11":
+                            setLimitHour(14);
+                            break;
+                        case "12":
+                            setLimitHour(13);
+                            break;
+                        case "13":
+                            setLimitHour(12);
+                            break;
+                        case "14":
+                            setLimitHour(11);
+                            break;
+                        case "15":
+                            setLimitHour(10);
+                            break;
+                        case "16":
+                            setLimitHour(9);
+                            break;
+                        case "17":
+                            setLimitHour(8);
+                            break;
+                        case "18":
+                            setLimitHour(7);
+                            break;
+                        case "19":
+                            setLimitHour(6);
+                            break;
+                        case "20":
+                            setLimitHour(5);
+                            break;
+                        case "21":
+                            setLimitHour(4);
+                            break;
+                        case "22":
+                            setLimitHour(3);
+                            break;
+                        case "23":
+                            setLimitHour(2);
+                            break;
+                    }
+                } else {
+                    numberPicker.setEnabled(false);
+                }
             }
         }
 
@@ -329,10 +478,10 @@ public class WeatherActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text1 = hourChange[numberPicker.getValue()] + "시";
-                timePicker.setText(text1);
+                timePickerTxt = hourChange[numberPicker.getValue()] + "시";
+                timePicker.setText(timePickerTxt);
 
-                selectTime = String.valueOf(hour[numberPicker.getValue()]);
+                selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
                 Log.d("selectTime", selectTime);
 
                 selectDateTime = selectDate + selectTime;
@@ -340,16 +489,6 @@ public class WeatherActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
-
-//        hourChange = list1.toArray(new String[0]);
-//
-//        Log.d("dkdk", list1.toString());
-
-//        numberPicker.setMinValue(0);
-//        numberPicker.setMaxValue(hourChange.length - 1);
-//        numberPicker.setDisplayedValues(hourChange);
-//        numberPicker.setValue(cal.get(Calendar.HOUR_OF_DAY));
-
     }
 
 
@@ -618,6 +757,7 @@ public class WeatherActivity extends AppCompatActivity {
         for (int i = 0; i < num + 1; i++) {
             String remove = list2.remove(0);
             Log.d("remove", remove);
+            Log.d("number", String.valueOf(num));
         }
         hourChange = list2.toArray(new String[0]);
         numberPicker.setMinValue(0);
@@ -627,5 +767,13 @@ public class WeatherActivity extends AppCompatActivity {
         for (int i = 0; i < num + 1; i++) {
             list2.add(i, hour[i]);
         }
+        // hourChange = list2.toArray(new String[0]);
+    }
+
+    public void setLimitHour(int num) {
+        hourChange = list2.toArray(new String[0]);
+        numberPicker.setMinValue(0);
+        numberPicker.setMaxValue(hourChange.length - num);
+        numberPicker.setDisplayedValues(hourChange);
     }
 }
