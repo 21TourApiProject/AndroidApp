@@ -51,12 +51,16 @@ import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObserv
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -73,14 +77,16 @@ public class PostWriteActivity extends AppCompatActivity {
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
     String postContent="",yearDate="",time="",postTitle;
-    String postImage;
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
     List<PostImageParams> postImageParams = new ArrayList<>();
     PostObservePointParams postObservePointParams;
-    String postObservePointName;
+    String postObservePointName="";
+    String[] hashTagList= new String[10];
     Long postId;
+    Long userId;
     File file;
     ArrayList<File> files = new ArrayList<>();
+    private TextView postObservePointItem;
 
 
     Calendar c = Calendar.getInstance();
@@ -97,6 +103,19 @@ public class PostWriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_write);
+        postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
+//      앱 내부저장소에서 userId 가져오기
+        String fileName = "userId";
+        try{
+            FileInputStream fis = openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("userId = " + userId);
 
         // + 버튼 클릭 이벤트
         addPicture = findViewById(R.id.addPicture);
@@ -202,6 +221,7 @@ public class PostWriteActivity extends AppCompatActivity {
         });
 
         //해시태그추가 버튼 클릭 이벤트
+        Arrays.fill(hashTagList, "");
         Button addHashTag = findViewById(R.id.hashTag);
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,11 +257,19 @@ public class PostWriteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(hashTagList[0].isEmpty()){
+                    Toast.makeText(getApplicationContext(), "해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(postObservePointName.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "관측지를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 PostParams postParams = new PostParams();
                 postParams.setPostContent(postContent);
                 postParams.setYearDate(yearDate);
                 postParams.setTime(time);
-                postParams.setUserId(1L);
+                postParams.setUserId(userId);
                 postParams.setPostTitle(postTitle);
                 postObservePointName = postObservePointParams.getObservePointName();
                 Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
@@ -298,9 +326,6 @@ public class PostWriteActivity extends AppCompatActivity {
                         System.out.println("post2 실패");
                     }
                 });
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -313,15 +338,15 @@ public class PostWriteActivity extends AppCompatActivity {
             if(resultCode == 2){
                 System.out.println("관측지가 넘어왔당");
                 postObservePointParams = (PostObservePointParams)data.getSerializableExtra("postObservePointParams");
-                TextView postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
                 postObservePointItem.setText(postObservePointParams.getObservePointName());
+                postObservePointName=postObservePointParams.getObservePointName();
             }else{System.out.println("관측지가 안 넘어왔당");}
         }
         if(requestCode == 203){
             if(resultCode == 3){
                 System.out.println("해시태그가 넘어왔당");
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
-                String[] hashTagList = (String[]) data.getSerializableExtra("hashTagList");
+                hashTagList = (String[]) data.getSerializableExtra("hashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);

@@ -20,4 +20,7 @@ public interface TouristPointPageRetrofitService {
     @GET("nearTouristData/{contentId}")
     Call<List<Near>> getNearTouristData(@Path("contentId") Long contentId);
 
+    @GET("touristDataHashTag/{contentId}")
+    Call<List<String>> getTouristDataHashTag(@Path("contentId") Long contentId);
+
 }

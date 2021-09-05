@@ -59,6 +59,22 @@ public class WeatherActivity extends AppCompatActivity {
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
     int mDay = c.get(Calendar.DAY_OF_MONTH);
+    double observationalFitDegree;
+    double cloudVolume;
+    double cloudVolumeValue;
+    double temperature;
+    double humidity;
+    double temperatureAndhumidityValue;
+    double moonAge;
+    double moonAgeValue;
+    String fineDust;
+    double fineDustValue;
+    double windSpeed;
+    double windSpeedValue;
+    double precipitationProbability;
+    double precipitationProbabilityValue;
+    double lightPollution;
+    double lightPollutionValue;
 
     private TextView datePicker;
     private DatePickerDialog.OnDateSetListener dateListener;
@@ -538,6 +554,48 @@ public class WeatherActivity extends AppCompatActivity {
             Log.v("AppearTime", "responseError= " + call.request().url());
         }
     };
+
+    //관측적합도
+    public double setObservationalFitDegree(){
+        cloudVolumeValue = -cloudVolume*4/5;
+        if (-((double)10/3)*temperature+((double)370/3)-humidity>0){
+            temperatureAndhumidityValue = Math.round(-3*Math.log10(Math.pow(-(double)(10/3)*temperature+(double)(370/3)-humidity,2))-2);
+            System.out.println("기온"+temperatureAndhumidityValue);
+        }else if (-((double)10/3)*temperature+((double)370/3)-humidity==0){
+            temperatureAndhumidityValue = 0;
+        }else if (-((double)10/3)*temperature+((double)370/3)-humidity<0){
+            temperatureAndhumidityValue=Math.round(-3*Math.log10(Math.pow(-((double)10/3)*temperature+((double)370/3)-humidity,2))-2);
+            System.out.println("기온"+temperatureAndhumidityValue);
+        }
+        if (moonAge <= 0.5) {
+            moonAgeValue= Math.round((-8*Math.pow(moonAge,3.46))/0.727*100);
+        }else if (moonAge>0.5&&moonAge<=0.5609){
+            moonAgeValue=Math.round((-75*Math.pow(moonAge-0.5,2)+0.727)/0.727*100);
+        }else if (moonAge>0.5609){
+            moonAgeValue=Math.round((-1/(5.6*Math.pow(moonAge+0.3493,10)))/0.727*100);
+        }
+
+        if (fineDust=="good"){
+            fineDustValue = 0;
+        }else if (fineDust =="normal"){
+            fineDustValue = -5;
+        }
+        else if (fineDust == "bad"){
+            fineDustValue = -20;
+        }
+        if(windSpeed <9.5){
+            windSpeedValue=Math.round(-(100*(1/(-(1.9)*(windSpeed-10))-0.053)));
+        }else if (windSpeed >= 9.5){
+            windSpeedValue=-100;
+        }
+        precipitationProbabilityValue = Math.round(100*(-(1/(-(2.6)*(precipitationProbability/100-1.25))-0.31)));
+
+        lightPollutionValue = Math.round(100*(-(1/(-(0.08)*(lightPollution/10-15.7))-0.8)));
+
+        observationalFitDegree = 100 + cloudVolumeValue + temperatureAndhumidityValue+moonAgeValue+fineDustValue+windSpeedValue+precipitationProbabilityValue+lightPollutionValue;
+
+        return observationalFitDegree;
+    }
 
     //시,도 Spinner 동작
     public void onSetAreaSpinner() {

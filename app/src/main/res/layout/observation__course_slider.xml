@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/course_tpname_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="관광지이름"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/course_tptype_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="타입"
+            android:layout_marginLeft="10dp"
+            android:layout_alignBaseline="@id/course_tpname_txt"
+            android:layout_toRightOf="@id/course_tpname_txt"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/course_tp_img"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/backgroundocean"
+        android:layout_marginBottom="16dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/course_outline_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="개요"
+            android:maxLines="4"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/course_outline_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자세히 보기 >"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_below="@id/course_outline_txt"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주소" />
+
+        <TextView
+            android:id="@+id/course_tpaddress_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:text="00시 00동 000길" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용시간"
+            android:layout_alignTop="@id/course_tpoperating_txt"/>
+
+        <TextView
+            android:id="@+id/course_tpoperating_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00시~00시"
+            android:layout_below="@id/course_tpaddress_txt"
+            android:layout_alignLeft="@id/course_tpaddress_txt"/>
+
+        <TextView
+            android:id="@+id/course_tpmenu_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메뉴"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_alignTop="@id/course_tpmenu_txt"/>
+
+        <TextView
+            android:id="@+id/course_tpmenu_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메뉴1/메뉴2/메뉴3"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_below="@id/course_tpoperating_txt"
+            android:layout_alignLeft="@id/course_tpaddress_txt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주차시설"
+            android:layout_alignTop="@id/course_tpparking_txt"/>
+
+        <TextView
+            android:id="@+id/course_tpparking_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주차가능"
+            android:layout_alignLeft="@id/course_tpaddress_txt"
+            android:layout_below="@id/course_tpmenu_txt"/>
+
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>
