@@ -36,12 +36,18 @@ public class Observation {
     double light;
     @SerializedName("nature")
     boolean nature;
+    @SerializedName("courseOrder")
+    int courseOrder;
     @SerializedName("observeHashTags")
     List<ObserveHashTag> observeHashTags;
     @SerializedName("observeImages")
     List<ObserveImage> observeImages;
     @SerializedName("observeFee")
     List<ObserveFee> observeFees;
+
+    public int getCourseOrder() {
+        return courseOrder;
+    }
 
     public List<ObserveFee> getObserveFees() {
         return observeFees;

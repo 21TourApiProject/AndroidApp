@@ -6,16 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.starrynight.tourapiproject.alarmPage.AlarmActivity;
-import com.starrynight.tourapiproject.postItemPage.OnPostItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
-import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostObservePoint;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
@@ -39,10 +42,12 @@ import retrofit2.Response;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     Long postId;
     String[] filename2= new String[10];
     private ArrayList<String> urls = new ArrayList<>();
+    SwipeRefreshLayout swipeRefreshLayout;
+    ScrollView scrollView;
 
     public MainFragment() {
         // Required empty public constructor
@@ -67,7 +72,8 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-
+        swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
         String fileName = "postId";
         try{
             FileInputStream fis = getActivity().openFileInput(fileName);
@@ -104,31 +110,46 @@ public class MainFragment extends Fragment {
                             if (response.isSuccessful()){
                                 System.out.println("해시태그 가져옴");
                                 List<String> result2 = response.body();
-                                Call<PostObservePoint>call2 = RetrofitClient.getApiService().getPostObservePoint(postId);
-                                call2.enqueue(new Callback<PostObservePoint>() {
+                                Call<Post>call2 = RetrofitClient.getApiService().getPost(postId);
+                                call2.enqueue(new Callback<Post>() {
                                     @Override
-                                    public void onResponse(Call<PostObservePoint> call, Response<PostObservePoint> response) {
+                                    public void onResponse(Call<Post> call, Response<Post> response) {
                                         if (response.isSuccessful()){
-                                            System.out.println("관측지도 가져왔네?!");
-                                            PostObservePoint postObservePoint = response.body();
-                                            String observePoint = postObservePoint.getObservePointName();
-                                            RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-                                            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                                            recyclerView.setLayoutManager(layoutManager);
+                                            System.out.println("게시물 정보 가져옴");
+                                            Post post =response.body();
+                                            Call<PostObservePoint>call3 = RetrofitClient.getApiService().getPostObservePoint(post.getPostObservePointId());
+                                            call3.enqueue(new Callback<PostObservePoint>() {
+                                                @Override
+                                                public void onResponse(Call<PostObservePoint> call, Response<PostObservePoint> response) {
+                                                    if (response.isSuccessful()){
+                                                        System.out.println("관측지도 가져왔네?!");
+                                                        PostObservePoint postObservePoint = response.body();
+                                                        String observePoint = postObservePoint.getObservePointName();
+                                                        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+                                                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                                                        recyclerView.setLayoutManager(layoutManager);
 
-                                            Post_item_adapter adapter = new Post_item_adapter();
-                                            recyclerView.setAdapter(adapter);
+                                                        Post_item_adapter adapter = new Post_item_adapter();
+                                                        recyclerView.setAdapter(adapter);
 
                                             adapter.addItem(new post_item(observePoint,"제목1","닉네임1", FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목2","닉네임2",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목3","닉네임3",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목4","닉네임4",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-                                        }else {System.out.println("관측지 못 가져옴");}
+                                                    }else {System.out.println("관측지 못 가져옴");}
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<PostObservePoint> call, Throwable t) {
+                                                    System.out.println("관측지 못 가져옴 2");
+                                                }
+                                            });
+                                        }
                                     }
 
                                     @Override
-                                    public void onFailure(Call<PostObservePoint> call, Throwable t) {
-                                        System.out.println("관측지 못 가져옴 2");
+                                    public void onFailure(Call<Post> call, Throwable t) {
+
                                     }
                                 });
                             }else {System.out.println("해시태그 못 가져옴");}
@@ -187,11 +208,28 @@ public class MainFragment extends Fragment {
                 startActivityForResult(intent, 104);
             }
         });
+
         return v;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 101){
+            //프래그먼트 새로고침
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onRefresh() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

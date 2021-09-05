@@ -23,8 +23,7 @@
         <TextView
             android:id="@+id/blogTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="제목" />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -34,8 +33,7 @@
             <TextView
                 android:id="@+id/blogWriter"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="작성자" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,12 +46,11 @@
             <TextView
                 android:id="@+id/blogDate"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="작성일" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/blogContent"
+            android:id="@+id/blogUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

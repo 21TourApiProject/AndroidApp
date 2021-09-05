@@ -34,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:hint="게시물 상세 보기"
                     android:textSize="18sp" />
+
             </LinearLayout>
 
             <androidx.viewpager2.widget.ViewPager2
@@ -70,12 +71,20 @@
                     android:layout_weight="1" />
 
                 <Button
+                    android:id="@+id/delete_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/post_delete"
+                    android:visibility="gone" />
+
+                <Button
                     android:id="@+id/like"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
-                    android:background="@drawable/observation__save"
+                    android:background="@drawable/main__bookmark"
                     app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
+
             </LinearLayout>
 
             <LinearLayout
