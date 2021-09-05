@@ -82,7 +82,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
-                    android:background="@drawable/main_bookmark"
+                    android:background="@drawable/main__bookmark"
                     app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
 
             </LinearLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#313063"
     android:textAlignment="textEnd"
     tools:context=".postWritePage.PostWriteActivity">
 
@@ -16,10 +17,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-<!--            <HorizontalScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="150dp"-->
-<!--                android:layout_marginTop="40dp">-->
+            <!--            <HorizontalScrollView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="150dp"-->
+            <!--                android:layout_marginTop="40dp">-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -44,45 +45,42 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                    android:id="@+id/dynamicLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="40dp">
+                android:id="@+id/dynamicLayout"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal">
 
-                    <RelativeLayout
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:background="@drawable/post_write__edge">
+                <RelativeLayout
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/post_write__edge">
 
-                        <Button
-                            android:id="@+id/addPicture"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/post_write__edge"
-                            android:gravity="bottom|center_horizontal"
-                            android:text="0/10" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="20dp"
-                            app:srcCompat="@drawable/post_write__add_button"
-                            tools:ignore="VectorDrawableCompat" />
-
-                    </RelativeLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                    <Button
+                        android:id="@+id/addPicture"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/post_write__edge"
+                        android:gravity="bottom|center_horizontal" />
 
-                </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/postwrite__imageplus"
+                        tools:ignore="VectorDrawableCompat" />
 
-<!--            </HorizontalScrollView>-->
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <!--            </HorizontalScrollView>-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="300dp"
@@ -94,9 +92,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="60dp"
-                    android:background="#D083DD"
+                    android:background="@drawable/postwrite__date"
                     android:onClick="onClickDatePicker"
                     android:text="년/월/일"
+                    android:textAlignment="center"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -107,9 +106,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="76dp"
-                    android:background="#CE91D8"
+                    android:background="@drawable/postwrite__date"
                     android:onClick="onClickTimePicker"
                     android:text="시간"
+                    android:textAlignment="center"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -144,59 +144,65 @@
                     android:hint="제목을 입력해주세요"
                     android:inputType="textPersonName" />
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/postWrite_observePoint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="관측 위치" />
+                        android:hint="관측 위치"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/postObservationItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginStart="10dp"
-                        android:background="#D083DD"
+                        android:background="@drawable/finalhashtag"
                         android:hint="관측지역"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/postWrite_observePoint" />
 
                     <Button
                         android:id="@+id/observingPoint"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_gravity="right|center_horizontal"
                         android:hint=">"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.cardview.widget.CardView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:background="#313063">
 
                     <TextView
                         android:id="@+id/postWrite_hashTag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="해시태그" />
+                        android:hint="해시태그"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
                         android:id="@+id/hashTag"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_gravity="right|center_horizontal"
-                        android:hint=">" />
+                        android:hint=">"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
                         android:id="@+id/postHashTagLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/hashTag">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/postHashTagrecyclerView"
@@ -205,7 +211,7 @@
                             android:orientation="horizontal"
                             tools:itemCount="5" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <EditText
                     android:id="@+id/postContentText"
