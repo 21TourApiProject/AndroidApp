@@ -113,7 +113,7 @@ public class PersonFragment extends Fragment {
                     user = response.body();
                     assert user != null;
                     if (user.getProfileImage() != null){
-                        profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
+                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + user.getProfileImage()).into(profileImage);
                     }
                     nickName.setText(user.getNickName());
                 } else {
