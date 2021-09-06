@@ -158,6 +158,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
                 //프로필 사진 변경 put api
                 if (isProfileImageChange){
+                    System.out.println("파일 이름 = " + file.getName());
                     uploadWithTransferUtility(file.getName(), file); //s3 사진 업로드
 
                     Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, file.getName());
@@ -205,6 +206,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     profileImage.setImageBitmap(img);
+                    System.out.println("사진 미리보기");
 
                     Uri uri = data.getData();
                     file = new File(getRealPathFromURI(uri));
