@@ -17,26 +17,7 @@ import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
-
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchFragment extends Fragment {
-
-    public SearchFragment() {
-        // Required empty public constructor
-    }
-
-
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
-
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,18 +26,27 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
-        Button maptest_btn = (Button) v.findViewById(R.id.test_map);
-        maptest_btn.setOnClickListener(new View.OnClickListener() {
+        Button map_btn = (Button) v.findViewById(R.id.map_btn);
+        map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
             }
         });
+
+        //필터 페이지로 이동
+        Button filter_btn = (Button) v.findViewById(R.id.filter_btn);
+        filter_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FilterActivity.class);
+                startActivityForResult(intent, 101);
+            }
+        });
+
         RecyclerView recyclerView = v.findViewById(R.id.nightpointRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);

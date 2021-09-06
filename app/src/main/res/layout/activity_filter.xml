@@ -1,0 +1,944 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FilterActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/backFilter"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/postwrite__imagedelete" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="필터"
+                    android:textAlignment="gravity"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/submitFilter"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:text="완료" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="지역"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/areaBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/heart_btn2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/areaLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/area1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="서울"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="경기"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="인천"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area4"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="강원"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area5"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="충북"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn5"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="충남"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn6"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area7"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="대전"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn7"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area8"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="세종"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn8"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area9"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="전북"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn9"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area10"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="광주"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn10"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area11"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="전남"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn11"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area12"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="경북"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn12"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area13"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="대구"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn13"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area14"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="경남"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn14"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area15"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="부산"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn15"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area16"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="울산"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn16"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/area17"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="제주"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/areaBtn17"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="여행 테마"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/hashTagBtn"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/heart_btn2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hashTagLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/hashTag1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="공기 좋은"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="깔끔한"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="감성적인"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag4"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="이색적인"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag5"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="인생샷"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn5"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="전문적인"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn6"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag7"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="캠핑"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn7"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag8"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="차박"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn8"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag9"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="뚜벅이"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn9"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag10"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="드라이브"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn10"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag11"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="반려동물"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn11"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag12"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="한적한"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn12"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag13"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="근교"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn13"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag14"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="도심 속"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn14"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag15"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="연인"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn15"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag16"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="가족"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn16"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag17"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="친구"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn17"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag18"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="혼자"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn18"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag19"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="가성비"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn19"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag20"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="소확행"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn20"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/hashTag21"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="럭셔리한"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/hashTagBtn21"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bookmark_non" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

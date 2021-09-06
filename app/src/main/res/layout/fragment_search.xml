@@ -24,7 +24,7 @@
                 android:layout_weight="7" />
 
             <Button
-                android:id="@+id/test_map"
+                android:id="@+id/map_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
