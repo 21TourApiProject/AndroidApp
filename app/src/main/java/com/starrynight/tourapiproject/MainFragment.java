@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
@@ -169,7 +170,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-        Button button =(Button) v.findViewById(R.id.weather_button);
+        ImageButton button =(ImageButton) v.findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
