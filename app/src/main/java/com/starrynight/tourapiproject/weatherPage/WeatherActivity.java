@@ -517,6 +517,7 @@ public class WeatherActivity extends AppCompatActivity {
         Call<WtMetModel> getWeatherInstance = WtMetRetrofit.wtMetInterface()
                 .getMetData(37.56666, 126.9015, "minutely,current", WT_MET_API_KEY, "metric");
         getWeatherInstance.enqueue(weatherMetCallback);
+        Log.d("openWeatherApi", "불러진다");
     }
 
     //기상청 API 연결
