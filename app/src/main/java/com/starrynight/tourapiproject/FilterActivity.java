@@ -75,18 +75,12 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
+        //완료
         Button submitFilter = findViewById(R.id.submitFilter);
         submitFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=0; i<17; i++){
-                    if (area[i] == 1)
-                        System.out.println(i+1 + " ");
-                }
-                for(int i=0; i<21; i++){
-                    if (hashTag[i] == 1)
-                        System.out.println(i+1 + " ");
-                }
+
             }
         });
 
@@ -586,6 +580,5 @@ public class FilterActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
