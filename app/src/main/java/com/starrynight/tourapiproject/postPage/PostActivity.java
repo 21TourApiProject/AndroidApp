@@ -61,9 +61,7 @@ public class PostActivity extends AppCompatActivity{
     TextView postTime;
     TextView postDate;
     TextView postObservePoint;
-    List<PostImage>postImages;
     List<String>postHashTags;
-    ImageView postImage;
     String[] filename2= new String[10];
     String[] relatefilename = new String[4];
     @Override
@@ -156,6 +154,24 @@ public class PostActivity extends AppCompatActivity{
                     postTime.setText(post.getTime());
                     postDate.setText(post.getYearDate());
 
+                    //관측지
+                    Call<PostObservePoint>call2 = RetrofitClient.getApiService().getPostObservePoint(post.getPostObservePointId());
+                    call2.enqueue(new Callback<PostObservePoint>() {
+                        @Override
+                        public void onResponse(Call<PostObservePoint> call, Response<PostObservePoint> response) {
+                            if (response.isSuccessful()){
+                                System.out.println("게시물 관측지 가져옴");
+                                PostObservePoint postObservePoint1 = response.body();
+                                postObservePoint.setText(postObservePoint1.getObservePointName());
+                            }else{System.out.println("게시물 관측지 실패");}
+                        }
+
+                        @Override
+                        public void onFailure(Call<PostObservePoint> call, Throwable t) {
+                            System.out.println("게시물 관측지 실패2");
+                        }
+                    });
+
                     //삭제 버튼
                     Button deleteBtn = findViewById(R.id.delete_btn);
                     if(post.getUserId()==userId){deleteBtn.setVisibility(View.VISIBLE);}
@@ -214,8 +230,8 @@ public class PostActivity extends AppCompatActivity{
 
 
                     //관련 게시물
-                    Call<List<String>>call2 = RetrofitClient.getApiService().getRelatePostImageList(post.getPostObservePointId());
-                    call2.enqueue(new Callback<List<String>>() {
+                    Call<List<String>>call5 = RetrofitClient.getApiService().getRelatePostImageList(post.getPostObservePointId());
+                    call5.enqueue(new Callback<List<String>>() {
                         @Override
                         public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                             if (response.isSuccessful()) {
@@ -261,22 +277,7 @@ public class PostActivity extends AppCompatActivity{
                 System.out.println("게시물 실패 2");
             }
         });
-        Call<PostObservePoint>call2 = RetrofitClient.getApiService().getPostObservePoint(postId);
-        call2.enqueue(new Callback<PostObservePoint>() {
-            @Override
-            public void onResponse(Call<PostObservePoint> call, Response<PostObservePoint> response) {
-                if (response.isSuccessful()){
-                    System.out.println("게시물 관측지 가져옴");
-                    PostObservePoint postObservePoint1 = response.body();
-                    postObservePoint.setText(postObservePoint1.getObservePointName());
-                }else{System.out.println("게시물 관측지 실패");}
-            }
 
-            @Override
-            public void onFailure(Call<PostObservePoint> call, Throwable t) {
-                System.out.println("게시물 관측지 실패2");
-            }
-        });
 
         Call<List<String>>call3 = RetrofitClient.getApiService().getPostHashTagName(postId);
         call3.enqueue(new Callback<List<String>>() {

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_purple"
     tools:context=".postWritePage.SearchObservingPointActivity">
 
     <ScrollView
@@ -27,7 +28,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
-                android:background="@drawable/post_write__edge">
+                android:background="@drawable/post_write__edge"
+                tools:background="@color/name_purple">
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
