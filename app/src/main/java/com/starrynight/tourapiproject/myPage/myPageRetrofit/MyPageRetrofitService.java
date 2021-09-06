@@ -30,7 +30,7 @@ public interface MyPageRetrofitService {
     Call<Void> updateNickName(@Path("userId") Long userId, @Path("nickName") String nickName);
 
     @PUT("user/{userId}/profileImage")
-    Call<Void> updateProfileImage(@Path("userId") Long userId, @Body User3 profileImage);
+    Call<Void> updateProfileImage(@Path("userId") Long userId, @Body String profileImageName);
 
     @PUT("user/{userId}/password/{originPwd}/{newPwd}")
     Call<Boolean> updatePassword(@Path("userId") Long userId, @Path("originPwd") String originPwd, @Path("newPwd") String newPwd);
