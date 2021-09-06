@@ -494,8 +494,12 @@ public class WeatherActivity extends AppCompatActivity {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timePickerTxt = hourChange[numberPicker.getValue()] + "시";
-                timePicker.setText(timePickerTxt);
+                if ((selectDate.equals(todayDate)) || (selectDate.equals(plusDay)) || (selectDate.equals(plusTwoDay))) {
+                    timePickerTxt = hourChange[numberPicker.getValue()] + "시";
+                    timePicker.setText(timePickerTxt);
+                }else{
+                    timePicker.setText(setTimeNo);
+                }
 
                 selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
                 Log.d("selectTime", selectTime);
@@ -556,43 +560,42 @@ public class WeatherActivity extends AppCompatActivity {
     };
 
     //관측적합도
-    public double setObservationalFitDegree(){
-        cloudVolumeValue = -cloudVolume*4/5;
-        if (-((double)10/3)*temperature+((double)370/3)-humidity>0){
-            temperatureAndhumidityValue = Math.round(-3*Math.log10(Math.pow(-(double)(10/3)*temperature+(double)(370/3)-humidity,2))-2);
-            System.out.println("기온"+temperatureAndhumidityValue);
-        }else if (-((double)10/3)*temperature+((double)370/3)-humidity==0){
+    public double setObservationalFitDegree() {
+        cloudVolumeValue = -cloudVolume * 4 / 5;
+        if (-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity > 0) {
+            temperatureAndhumidityValue = Math.round(-3 * Math.log10(Math.pow(-(double) (10 / 3) * temperature + (double) (370 / 3) - humidity, 2)) - 2);
+            System.out.println("기온" + temperatureAndhumidityValue);
+        } else if (-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity == 0) {
             temperatureAndhumidityValue = 0;
-        }else if (-((double)10/3)*temperature+((double)370/3)-humidity<0){
-            temperatureAndhumidityValue=Math.round(-3*Math.log10(Math.pow(-((double)10/3)*temperature+((double)370/3)-humidity,2))-2);
-            System.out.println("기온"+temperatureAndhumidityValue);
+        } else if (-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity < 0) {
+            temperatureAndhumidityValue = Math.round(-3 * Math.log10(Math.pow(-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity, 2)) - 2);
+            System.out.println("기온" + temperatureAndhumidityValue);
         }
         if (moonAge <= 0.5) {
-            moonAgeValue= Math.round((-8*Math.pow(moonAge,3.46))/0.727*100);
-        }else if (moonAge>0.5&&moonAge<=0.5609){
-            moonAgeValue=Math.round((-75*Math.pow(moonAge-0.5,2)+0.727)/0.727*100);
-        }else if (moonAge>0.5609){
-            moonAgeValue=Math.round((-1/(5.6*Math.pow(moonAge+0.3493,10)))/0.727*100);
+            moonAgeValue = Math.round((-8 * Math.pow(moonAge, 3.46)) / 0.727 * 100);
+        } else if (moonAge > 0.5 && moonAge <= 0.5609) {
+            moonAgeValue = Math.round((-75 * Math.pow(moonAge - 0.5, 2) + 0.727) / 0.727 * 100);
+        } else if (moonAge > 0.5609) {
+            moonAgeValue = Math.round((-1 / (5.6 * Math.pow(moonAge + 0.3493, 10))) / 0.727 * 100);
         }
 
-        if (fineDust=="good"){
+        if (fineDust == "good") {
             fineDustValue = 0;
-        }else if (fineDust =="normal"){
+        } else if (fineDust == "normal") {
             fineDustValue = -5;
-        }
-        else if (fineDust == "bad"){
+        } else if (fineDust == "bad") {
             fineDustValue = -20;
         }
-        if(windSpeed <9.5){
-            windSpeedValue=Math.round(-(100*(1/(-(1.9)*(windSpeed-10))-0.053)));
-        }else if (windSpeed >= 9.5){
-            windSpeedValue=-100;
+        if (windSpeed < 9.5) {
+            windSpeedValue = Math.round(-(100 * (1 / (-(1.9) * (windSpeed - 10)) - 0.053)));
+        } else if (windSpeed >= 9.5) {
+            windSpeedValue = -100;
         }
-        precipitationProbabilityValue = Math.round(100*(-(1/(-(2.6)*(precipitationProbability/100-1.25))-0.31)));
+        precipitationProbabilityValue = Math.round(100 * (-(1 / (-(2.6) * (precipitationProbability / 100 - 1.25)) - 0.31)));
 
-        lightPollutionValue = Math.round(100*(-(1/(-(0.08)*(lightPollution/10-15.7))-0.8)));
+        lightPollutionValue = Math.round(100 * (-(1 / (-(0.08) * (lightPollution / 10 - 15.7)) - 0.8)));
 
-        observationalFitDegree = 100 + cloudVolumeValue + temperatureAndhumidityValue+moonAgeValue+fineDustValue+windSpeedValue+precipitationProbabilityValue+lightPollutionValue;
+        observationalFitDegree = 100 + cloudVolumeValue + temperatureAndhumidityValue + moonAgeValue + fineDustValue + windSpeedValue + precipitationProbabilityValue + lightPollutionValue;
 
         return observationalFitDegree;
     }
