@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
@@ -108,8 +109,8 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener{
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
