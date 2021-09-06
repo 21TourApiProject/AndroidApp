@@ -26,11 +26,25 @@ public class FilterActivity extends AppCompatActivity {
             hashTag[i] = 0;
         }
 
+        //뒤로 가기
+        Button backFilter = findViewById(R.id.backFilter);
+        backFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        LinearLayout areaLayout = findViewById(R.id.areaLayout);
+        LinearLayout hashTagLayout = findViewById(R.id.hashTagLayout);
+        areaLayout.setVisibility(View.GONE);
+        hashTagLayout.setVisibility(View.GONE);
+
+        //지역
         Button areaBtn = findViewById(R.id.areaBtn);
         areaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout areaLayout = findViewById(R.id.areaLayout);
                 if (filter[0] == 0) {
                     filter[0] = 1;
                     areaBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.heart_btn1));
@@ -43,6 +57,7 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
+        //여행 테마
         Button hashTagBtn = findViewById(R.id.hashTagBtn);
         hashTagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
