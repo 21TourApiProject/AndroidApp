@@ -71,8 +71,7 @@
                 android:id="@+id/areaLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:visibility="gone">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/area1"
@@ -473,8 +472,7 @@
                 android:id="@+id/hashTagLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:visibility="gone">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/hashTag1"
