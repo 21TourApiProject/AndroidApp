@@ -356,44 +356,50 @@
 
                 <androidx.gridlayout.widget.GridLayout
                     android:id="@+id/relatePostGridView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:columnCount="3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/writePost_btn"
-                    app:rowCount="2" >
+                    app:rowCount="2">
 
                     <ImageButton
                         android:id="@+id/relateImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:adjustViewBounds="true" />
 
                     <ImageButton
                         android:id="@+id/relateImage2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:visibility="gone" />
 
                     <ImageButton
                         android:id="@+id/relateImage3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:visibility="gone" />
 
                     <ImageButton
                         android:id="@+id/relateImage4"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
 
                     <ImageButton
                         android:id="@+id/relateImage5"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
 
                     <ImageButton
                         android:id="@+id/relateImage6"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
                 </androidx.gridlayout.widget.GridLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
