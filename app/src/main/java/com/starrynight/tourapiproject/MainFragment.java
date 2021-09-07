@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
@@ -72,19 +74,23 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+        scrollView = v.findViewById(R.id.scroll_layout);
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
-        String fileName = "postId";
-        try{
-            FileInputStream fis = getActivity().openFileInput(fileName);
-            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
-            postId = Long.parseLong(line);
-            fis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } System.out.println("postId = " + postId);
+        postId=1L;
+
+//        String fileName = "postId";
+//        try{
+//            FileInputStream fis = getActivity().openFileInput(fileName);
+//            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+//            postId = Long.parseLong(line);
+//            fis.close();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } System.out.println("postId = " + postId);
+
         Call<List<String>>call = RetrofitClient.getApiService().getPostImage(postId);
         call.enqueue(new Callback<List<String>>() {
             @Override
@@ -169,7 +175,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-        Button button =(Button) v.findViewById(R.id.weather_button);
+        ImageButton button =(ImageButton) v.findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,6 +215,15 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (scrollView.getScrollY()==0){
+                    swipeRefreshLayout.isEnabled();
+                }
+            }
+        });
+
         return v;
     }
     @Override
@@ -232,4 +247,5 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         ft.detach(this).attach(this).commit();
         swipeRefreshLayout.setRefreshing(false);
     }
+
 }
