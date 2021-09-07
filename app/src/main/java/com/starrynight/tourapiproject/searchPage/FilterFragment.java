@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -34,7 +35,7 @@ public class FilterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_filter, container, false);
 
-        //뒤로 가기
+        //x버튼
         Button backFilter = v.findViewById(R.id.backFilter);
         backFilter.setOnClickListener(new View.OnClickListener() {
             @Override
