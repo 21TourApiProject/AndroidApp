@@ -18,6 +18,12 @@ import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +31,7 @@ import com.starrynight.tourapiproject.mapPage.MapFragment;
  * create an instance of this fragment.
  */
 public class SearchFragment extends Fragment {
+    Long postId;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -49,6 +56,18 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_search, container, false);
+        //앱 내부저장소에서 postId 가져오기
+        String fileName = "postId";
+        try{
+            FileInputStream fis = getActivity().openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            postId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } System.out.println("postId = " + postId);
 
         Button maptest_btn = (Button) v.findViewById(R.id.test_map);
         maptest_btn.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +97,7 @@ public class SearchFragment extends Fragment {
             public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
                 Intent intent = new Intent(getActivity(), ObservationsiteActivity.class);
                 intent.putExtra("observationId", 1L);
+                intent.putExtra("postId", postId);
                 startActivity(intent);
             }
         });
