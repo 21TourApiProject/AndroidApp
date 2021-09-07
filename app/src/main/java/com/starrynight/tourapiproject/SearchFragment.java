@@ -39,6 +39,7 @@ public class SearchFragment extends Fragment {
 
     private static final int FILTER = 101;
     Long[] areaCode = {1L, 31L, 2L, 32L, 33L, 34L, 3L, 8L, 37L, 5L, 38L, 35L, 4L, 36L, 6L, 7L, 39L}; //관광지 지역코드
+    String[] areaName = {"서울", "경기", "인천", "강원", "충북", "충남", "대전", "세종", "전북", "광주", "전남", "경북", "대구", "경남", "부산", "울산", "제주"};
     String[] hashTagName = {"공기 좋은", "깔끔한", "감성적인", "이색적인", "인생샷", "전문적인", "캠핑", "차박", "뚜벅이", "드라이브",
             "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
 
@@ -113,10 +114,20 @@ public class SearchFragment extends Fragment {
                 ArrayList<Integer> area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
                 ArrayList<Integer> hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
 
+                for(int i=0; i<17; i++){
+                    if(hashTag.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText("#" + areaName[i]);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.observation__hashtags));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+
                 for(int i=0; i<22; i++){
                     if(hashTag.get(i) == 1){
                         TextView textView = new TextView(getContext());
-                        textView.setText("#"+hashTagName[i]);
+                        textView.setText("#" + hashTagName[i]);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.observation__hashtags));
                         selectFilterItem.addView(textView);
