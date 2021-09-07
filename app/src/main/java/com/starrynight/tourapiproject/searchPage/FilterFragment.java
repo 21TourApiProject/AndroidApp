@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.SearchFragment;
@@ -17,12 +18,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class FilterFragment extends Fragment {
-    
-    SearchFragment searchFragment;
 
     int[] filter = {0,0};
     ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
     ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+
+    LinearLayout areaLayout;
+    LinearLayout hashTagLayout;
+
+    public static FilterFragment newInstance() {
+        return new FilterFragment();
+    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,13 +39,19 @@ public class FilterFragment extends Fragment {
         backFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 0);
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                SearchFragment searchFragment = new SearchFragment();
+                searchFragment.setArguments(bundle);
+                transaction.replace(R.id.main_view, searchFragment);
+                transaction.commit();
             }
         });
 
-        LinearLayout areaLayout = v.findViewById(R.id.areaLayout);
-        LinearLayout hashTagLayout = v.findViewById(R.id.hashTagLayout);
-        areaLayout.setVisibility(View.GONE);
-        hashTagLayout.setVisibility(View.GONE);
+        areaLayout = v.findViewById(R.id.areaLayout);
+        hashTagLayout = v.findViewById(R.id.hashTagLayout);
 
         //지역
         Button areaBtn = v.findViewById(R.id.areaBtn);
@@ -63,7 +75,6 @@ public class FilterFragment extends Fragment {
         hashTagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LinearLayout hashTagLayout = v.findViewById(R.id.hashTagLayout);
                 if (filter[1] == 0) {
                     filter[1] = 1;
                     hashTagBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.heart_btn1));
@@ -81,14 +92,16 @@ public class FilterFragment extends Fragment {
         submitFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                searchFragment = new SearchFragment();
-//                getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("type", 1);
-//                bundle.putIntegerArrayList("area",area);
-//                bundle.putIntegerArrayList("hashTag",hashTag);
-//                searchFragment.setArguments(bundle);
-//                finish();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 1);
+                bundle.putIntegerArrayList("area",area);
+                bundle.putIntegerArrayList("hashTag",hashTag);
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                SearchFragment searchFragment = new SearchFragment();
+                searchFragment.setArguments(bundle);
+                transaction.replace(R.id.main_view, searchFragment);
+                transaction.commit();
             }
         });
 

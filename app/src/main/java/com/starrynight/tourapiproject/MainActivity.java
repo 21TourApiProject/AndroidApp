@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     SearchFragment searchFragment;
     TonightSkyFragment tonightSkyFragment;
     PersonFragment personFragment;
-    private long backkeyPressTime=0;
+    private long backKeyPressTime=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         tonightSkyFragment = new TonightSkyFragment();
         personFragment = new PersonFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,mainFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
 
@@ -42,17 +42,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.navigation_main:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,mainFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
                         return true;
                     case R.id.navigation_search:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,searchFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                         return true;
                     case R.id.navigation_star:
                         setBottomNavVisibility(View.GONE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, tonightSkyFragment).commit();
                         return true;
                     case R.id.navigation_person:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view,personFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, personFragment).commit();
                         return true;
                 }
                 return false;
@@ -67,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if(System.currentTimeMillis()>backkeyPressTime+2000){
-            backkeyPressTime=System.currentTimeMillis();
+        if(System.currentTimeMillis()>backKeyPressTime+2000){
+            backKeyPressTime=System.currentTimeMillis();
             Toast.makeText(this,"한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
             return;
         }
-        if (System.currentTimeMillis()<=backkeyPressTime+2000){
+        if (System.currentTimeMillis()<=backKeyPressTime+2000){
             finish();
         }
     }
