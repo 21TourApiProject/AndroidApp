@@ -83,18 +83,7 @@ public class PostActivity extends AppCompatActivity{
             e.printStackTrace();
         } System.out.println("userId = " + userId);
 
-//      앱 내부저장소에 저장된 게시글 아이디 가져오기
-        String fileName3 = "postId";
-        try{
-            FileInputStream fis = openFileInput(fileName3);
-            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
-            postId = Long.parseLong(line);
-            fis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } System.out.println("postId = " + postId);
+        postId=(Long) intent.getSerializableExtra("postId");
 
         sliderViewPager = findViewById(R.id.slider);
         indicator = findViewById(R.id.indicator);
