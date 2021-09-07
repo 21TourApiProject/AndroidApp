@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.starrynight.tourapiproject.myPage.MyWishActivity;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTpAdapter;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.OnMyWishObTpItemClickListener;
@@ -25,7 +24,7 @@ import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
-import com.starrynight.tourapiproject.searchPage.FilterActivity;
+import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
@@ -58,6 +57,10 @@ public class SearchFragment extends Fragment {
     RecyclerView obSearchResult; //관측지 필터 결과 리사이클러뷰
     RecyclerView tpSearchResult; //관광지 필터 결과 리사이클러뷰
     RecyclerView postSearchResult; //게시물 필터 결과 리사이클러뷰
+
+    public static SearchFragment newInstance() {
+        return new SearchFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,10 +99,97 @@ public class SearchFragment extends Fragment {
         filter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FilterActivity.class);
-                startActivityForResult(intent, FILTER);
+                ((MainActivity)getActivity()).replaceFragment(FilterFragment.newInstance());
             }
         });
+
+        if (getArguments() != null)
+        {
+            int type = getArguments().getInt("type");
+            if (type == 1){
+                firstContent.setVisibility(View.GONE); //이건 사라지고
+                searchResult.setVisibility(View.VISIBLE); //이건 보이게
+
+                ArrayList<Integer> area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
+                ArrayList<Integer> hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
+
+                for(int i=0; i<22; i++){
+                    if(hashTag.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText("#"+hashTagName[i]);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.observation__hashtags));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+
+                //처음에 아무 버튼 안눌러도 관측지 필터 결과 보이게 구현
+
+
+                //관측지 필터 결과 구현
+                obBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+                //게시물 필터 결과 구현
+                postBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+                //관광지 필터 결과
+                tpBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        List<Long> areaCodeList = new ArrayList<>();
+                        List<Long> hashTagIdList = new ArrayList<>();
+
+                        for(int i=0; i<17; i++){
+                            if (area.get(i) == 1){ //선택했으면
+                                areaCodeList.add(areaCode[i]);
+                            }
+                        }
+                        for(int i=0; i<22; i++){
+                            if (hashTag.get(i) == 1){ //선택했으면
+                                hashTagIdList.add((long)(i+1));
+                            }
+                        }
+                        Call<List<MyWishObTp>> call = RetrofitClient.getApiService().getTouristDataWithFilter(areaCodeList, hashTagIdList);
+                        call.enqueue(new Callback<List<MyWishObTp>>() {
+                            @Override
+                            public void onResponse(Call<List<MyWishObTp>> call, Response<List<MyWishObTp>> response) {
+                                if (response.isSuccessful()) {
+                                    tpResult = response.body();
+
+                                    MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, getContext());
+                                    tpSearchResult.setAdapter(myWishObAdapter);
+                                    myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
+                                        @Override
+                                        public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
+                                            MyWishObTp item = myWishObAdapter.getItem(position);
+                                            Intent intent = new Intent(getContext(), TouristPointActivity.class);
+                                            intent.putExtra("contentId", item.getItemId());
+                                            startActivity(intent);
+                                        }
+                                    });
+                                } else {
+                                    System.out.println("관광지 필터 검색 실패");
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<List<MyWishObTp>> call, Throwable t) {
+                                Log.e("연결실패", t.getMessage());
+                            }
+                        });
+                    }
+                });
+            }
+        }
 
 
         //요즘 핫한 밤하늘 명소

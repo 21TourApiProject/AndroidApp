@@ -8,6 +8,7 @@
     tools:context=".searchPage.FilterActivity">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -71,7 +72,8 @@
                 android:id="@+id/areaLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/area1"
@@ -472,7 +474,8 @@
                 android:id="@+id/hashTagLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/hashTag1"
@@ -958,6 +961,12 @@
                         android:background="@drawable/bookmark_non" />
                 </LinearLayout>
             </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 
