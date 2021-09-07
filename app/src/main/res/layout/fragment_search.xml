@@ -19,19 +19,20 @@
             android:weightSum="7">
 
             <SearchView
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="7" />
 
             <Button
-                android:id="@+id/map_btn"
+                android:id="@+id/mapBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:hint="지도" />
 
             <Button
-                android:id="@+id/filter_btn"
+                android:id="@+id/filterBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
@@ -39,44 +40,143 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/nightpointText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="요즘 핫한 밤하늘 명소" />
-
         <LinearLayout
-            android:id="@+id/nightpointLinear"
+            android:id="@+id/selectFilterItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"></LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/nightpointRecyclerView"
+        <LinearLayout
+            android:id="@+id/firstContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="요즘 핫한 밤하늘 명소" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:itemCount="10" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hotpointRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="10" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="나와 가까운 밤하늘 명소" />
+
+            <LinearLayout
+                android:id="@+id/nearPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/nearPointRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:itemCount="10">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/distancepointText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="나와 가까운 밤하늘 명소" />
-
         <LinearLayout
-            android:id="@+id/distancepointLinear"
+            android:id="@+id/searchResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/distancepointRecyclerView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:itemCount="10">
+                android:orientation="horizontal">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <Button
+                    android:id="@+id/obBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="관측지" />
+
+                <Button
+                    android:id="@+id/tpBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="관광지" />
+
+                <Button
+                    android:id="@+id/postBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="게시물" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/obTap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="관측지 검색결과" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/obSearchResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tpTap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="관광지 검색결과" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/tpSearchResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/postTap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="게시물 검색결과" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/postSearchResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
