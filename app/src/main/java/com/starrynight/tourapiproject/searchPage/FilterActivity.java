@@ -12,32 +12,31 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.SearchFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FilterActivity extends AppCompatActivity {
 
     SearchFragment searchFragment;
 
     int[] filter = {0,0};
-    ArrayList<Integer> area = new ArrayList<Integer>(17);
-    ArrayList<Integer> hashTag = new ArrayList<Integer>(22);
+    ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
+    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter);
-
-        for(int i=0; i<17; i++){
-            area.set(i, 0);
-        }
-        for(int i=0; i<22; i++){
-            hashTag.set(i, 0);
-        }
+        setContentView(R.layout.fragment_filter);
 
         //뒤로 가기
         Button backFilter = findViewById(R.id.backFilter);
         backFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                searchFragment = new SearchFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 0);
+                searchFragment.setArguments(bundle);
                 finish();
             }
         });
@@ -88,8 +87,9 @@ public class FilterActivity extends AppCompatActivity {
             @Override
                 public void onClick(View v) {
                 searchFragment = new SearchFragment();
-                //getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                 Bundle bundle = new Bundle();
+                bundle.putInt("type", 1);
                 bundle.putIntegerArrayList("area",area);
                 bundle.putIntegerArrayList("hashTag",hashTag);
                 searchFragment.setArguments(bundle);
