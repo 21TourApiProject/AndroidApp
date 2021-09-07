@@ -228,18 +228,27 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
                 }
             });
             observation.setText(item.getObservation());
+            observation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ObservationsiteActivity.class);
+                    intent.putExtra("postId",postId);
+                    v.getContext().startActivity(intent);
+                }
+            });
             title.setText(item.getTitle());
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), PostActivity.class);
+                    intent.putExtra("postId",postId);
+                    v.getContext().startActivity(intent);
+                }
+            });
             nickname.setText(item.getNickname());
             mainslider.setOffscreenPageLimit(3);
             ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());
             mainslider.setAdapter(imageSliderAdapter);
-            imageSliderAdapter.OnItemClicklistener(new ImageSliderItemClickListener() {
-                @Override
-                public void onItemClick(ImageSliderAdapter.MyViewHolder holder, View view, int position) {
-                    Intent intent = new Intent(view.getContext(), PostActivity.class);
-                    view.getContext().startActivity(intent);
-                }
-            });
 
             mainslider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
