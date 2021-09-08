@@ -29,12 +29,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.CourseTouristPoint;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveFee;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostPageRetrofitService;
+import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -50,6 +54,7 @@ import retrofit2.Response;
 
 public class ObservationsiteActivity extends AppCompatActivity {
     Long userId;
+    Long postId;
     Boolean isWish;
 
     private static final String TAG = "observation page";
@@ -58,6 +63,9 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private RecyclerHashTagAdapter recyclerHashTagAdapter;
     TextView outline;
     TextView link;
+    ImageView relateImage1;
+    ImageView relateImage2;
+    ImageView relateImage3;
 
     private ViewPager2 obs_slider;
     private LinearLayout obs_indicator;
@@ -71,14 +79,19 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
     private RecyclerFeeAdapter recyclerFeeAdapter;
     private List<ObserveFee> obs_fee_list;
+    private String[] relatefilename = new String[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observationsite);
+        relateImage1=findViewById(R.id.relateImage);
+        relateImage2=findViewById(R.id.relateImage2);
+        relateImage3=findViewById(R.id.relateImage3);
 
         Intent intent = getIntent();
         Long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
+        postId = (Long) intent.getSerializableExtra("postId");
 //        long observationId = 2;
 
         Call<Observation> call1 = RetrofitClient.getApiService().getObservation(observationId);
@@ -439,6 +452,78 @@ public class ObservationsiteActivity extends AppCompatActivity {
             }
         });
 
+        Button postwrite_btn = findViewById(R.id.writePost_btn);
+        postwrite_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), PostWriteActivity.class);
+                startActivity(intent1);
+                finish();
+            }
+        });
+
+        //게시물 이미지 가져오기
+        Call<List<String>>call= com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient.getApiService().getRelatePostImageList(observationId);
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful()){
+                    Log.d("myTag","관련 게시물 이미지 업로드");
+                    List<String> relateImageList = response.body();
+                    for (int i=0;i<relateImageList.size();i++){
+                        relatefilename[i]=relateImageList.get(i);
+                        System.out.println(relatefilename[i]);
+                    }
+                    if (relatefilename[0]!=null){
+                        Glide.with(getApplicationContext())
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[0])
+                                .into(relateImage1);
+                    }
+                    if (relatefilename[1]!=null){
+                        relateImage2.setVisibility(View.VISIBLE);
+                        Glide.with(getApplicationContext())
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[1])
+                                .into(relateImage2);
+                    }
+                    if (relatefilename[2]!=null){
+                        relateImage3.setVisibility(View.VISIBLE);
+                        Glide.with(getApplicationContext())
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[2])
+                                .into(relateImage3);
+                    }
+                }else{Log.d("myTag","관련 게시물 이미지 업로드 실패");}
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+               Log.d("myTag","관련 게시물 이미지 업로드 실패2");
+            }
+        });
+
+        relateImage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
+                intent1.putExtra("postId",postId);
+                startActivity(intent1);
+            }
+        });
+        relateImage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
+                intent1.putExtra("postId",postId);
+                startActivity(intent1);
+            }
+        });
+        relateImage3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
+                intent1.putExtra("postId",postId);
+                startActivity(intent1);
+            }
+        });
     }
 
 

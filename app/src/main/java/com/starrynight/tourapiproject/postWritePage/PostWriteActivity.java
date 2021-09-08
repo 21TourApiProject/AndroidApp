@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.postWritePage;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
@@ -25,8 +26,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,10 +45,10 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
+import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
@@ -87,7 +91,11 @@ public class PostWriteActivity extends AppCompatActivity {
     File file;
     ArrayList<File> files = new ArrayList<>();
     private TextView postObservePointItem;
+    String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+    String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
 
+    int PERMISSIONS_REQUEST_CODE = 100;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -104,6 +112,7 @@ public class PostWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_write);
         postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
+
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
         try{
@@ -126,6 +135,23 @@ public class PostWriteActivity extends AppCompatActivity {
                     Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
+                //권한 설정
+                int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
+
+                Log.d("test", "onClick: location clicked");
+                if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
+                    Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+
+                } else if (permission == PackageManager.PERMISSION_DENIED){
+                    Log.d("test", "permission denied");
+                    Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions(PostWriteActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(PostWriteActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(PostWriteActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                }
+
                 Intent intent = new Intent("android.intent.action.MULTIPLE_PICK");
                 intent.setType("image/*");
                 PackageManager manager = getApplicationContext().getPackageManager();
@@ -329,8 +355,19 @@ public class PostWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
+
+//    private void requestPermission(){
+//        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
+//            requestPermissions(new String[]{
+//                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE}
+//                    ,REQUEST_WRITE_PERMISSION);
+//        }else{
+//            openFilePicker();
+//        }
+//    }
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -566,4 +603,5 @@ public String getRealPathFromURI(Uri contentUri) {
         }
         return resizeBitmap;
     }
+
 }
