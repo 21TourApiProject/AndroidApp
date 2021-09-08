@@ -19,66 +19,62 @@
             android:weightSum="7">
 
             <SearchView
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="7" />
 
             <Button
-                android:id="@+id/test_map"
+                android:id="@+id/mapBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:hint="지도" />
 
             <Button
-                android:id="@+id/filter_btn"
+                android:id="@+id/filterBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:hint="필터" />
 
         </LinearLayout>
-
         <TextView
-            android:id="@+id/nightpointText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="요즘 핫한 밤하늘 명소" />
 
         <LinearLayout
-            android:id="@+id/nightpointLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/nightpointRecyclerView"
+                android:id="@+id/hotpointRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:itemCount="10" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/distancepointText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="나와 가까운 밤하늘 명소" />
 
         <LinearLayout
-            android:id="@+id/distancepointLinear"
+            android:id="@+id/nearPoint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/distancepointRecyclerView"
+                android:id="@+id/nearPointRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:itemCount="10">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
