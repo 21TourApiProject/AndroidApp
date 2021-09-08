@@ -34,6 +34,8 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
+        ((MainActivity)getActivity()).showBottom();
+
         //지도 페이지로
         Button map_btn = (Button) v.findViewById(R.id.mapBtn);
         map_btn.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +51,10 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment filterFragment = new FilterFragment();
-                ((MainActivity) getActivity()).changeFragment(filterFragment);
-                //activity.getSupportFragmentManager().beginTransaction().replace(R.id.main_view, filterFragment).addToBackStack(null).commit();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, filterFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 

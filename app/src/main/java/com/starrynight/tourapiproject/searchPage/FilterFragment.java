@@ -43,13 +43,9 @@ public class FilterFragment extends Fragment {
         backFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("type", 0);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                SearchFragment searchFragment = new SearchFragment();
-                searchFragment.setArguments(bundle);
-                transaction.replace(R.id.main_view, searchFragment);
-                transaction.commit();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().remove(FilterFragment.this).commit();
+                fragmentManager.popBackStack();
             }
         });
 
