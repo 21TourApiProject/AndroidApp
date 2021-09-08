@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.starrynight.tourapiproject.searchPage.FilterFragment;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -77,18 +79,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        if (getFragmentManager().getBackStackEntryCount() > 0 ){
-            getFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-        if(System.currentTimeMillis()>backKeyPressTime+2000){
-            backKeyPressTime=System.currentTimeMillis();
-            Toast.makeText(this,"한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (System.currentTimeMillis()<=backKeyPressTime+2000){
-            finish();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
+        if(!(fragment instanceof FilterFragment)) {
+            if(System.currentTimeMillis() > backKeyPressTime+2000){
+                backKeyPressTime = System.currentTimeMillis();
+                Toast.makeText(this,"한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (System.currentTimeMillis() <= backKeyPressTime+2000){
+                finish();
+            }
+        } else{
+            if (getFragmentManager().getBackStackEntryCount() > 0 ){
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 

@@ -53,8 +53,9 @@ public class SearchResultFragment extends Fragment {
     List<MyWishObTp> tpResult; //관광지 필터 결과
     List<MyPost> postResult; //게시물 필터 결과
 
-    ArrayList<Integer> area;
-    ArrayList<Integer> hashTag;
+    ArrayList<Integer> area; //어떤 지역필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
+    ArrayList<Integer> hashTag; //어떤 해시태그필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
+
     List<Long> areaCodeList;
     List<Long> hashTagIdList;
 
@@ -107,7 +108,6 @@ public class SearchResultFragment extends Fragment {
                 transaction.replace(R.id.main_view, filterFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                ((MainActivity)getActivity()).showOffBottom();
             }
         });
 
@@ -115,7 +115,7 @@ public class SearchResultFragment extends Fragment {
 
 
 
-        //관측지 필터 결과 구현
+        //관측지 필터 결과 구현 - 채형
         obBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +127,7 @@ public class SearchResultFragment extends Fragment {
             }
         });
 
-        //게시물 필터 결과 구현
+        //게시물 필터 결과 구현 - 진혁
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
