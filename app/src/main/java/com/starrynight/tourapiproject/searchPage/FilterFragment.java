@@ -6,12 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.SearchFragment;
 
@@ -35,6 +36,8 @@ public class FilterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_filter, container, false);
 
+        ((MainActivity)getActivity()).showOffBottom();
+
         //x버튼
         Button backFilter = v.findViewById(R.id.backFilter);
         backFilter.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +45,6 @@ public class FilterFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 0);
-
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 SearchFragment searchFragment = new SearchFragment();
                 searchFragment.setArguments(bundle);
@@ -99,9 +101,9 @@ public class FilterFragment extends Fragment {
                 bundle.putIntegerArrayList("hashTag",hashTag);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                SearchFragment searchFragment = new SearchFragment();
-                searchFragment.setArguments(bundle);
-                transaction.replace(R.id.main_view, searchFragment);
+                Fragment searchResultFragment = new SearchResultFragment();
+                searchResultFragment.setArguments(bundle);
+                transaction.replace(R.id.main_view, searchResultFragment);
                 transaction.commit();
             }
         });
