@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
-import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                         return true;
                     case R.id.navigation_star:
-                        setBottomNavVisibility(View.GONE);
+                        showOffBottom();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, tonightSkyFragment).commit();
                         return true;
                     case R.id.navigation_person:
@@ -62,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.add(R.id.nav_host_fragment_activity_main, SearchFragment.newInstance()).commit();
 
     }
 
@@ -102,10 +98,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_view, fragment).commit();
-    }
-
-    public void setBottomNavVisibility(int visibility){
-        findViewById(R.id.bottom_nav_view).setVisibility(visibility);
     }
 
     public void showOffBottom(){
