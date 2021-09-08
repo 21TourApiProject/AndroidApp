@@ -282,12 +282,12 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);    //denied면 -1
 
-                Log.e("test", "onClick: location clicked");
+                Log.d("test", "onClick: location clicked");
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                     getMyLocaiton();
 
                 } else if (permissionCheck == PackageManager.PERMISSION_DENIED){
-                    Log.e("test", "permission denied");
+                    Log.d("test", "permission denied");
                     Toast.makeText(getContext(), "위치권한이 없습니다.", Toast.LENGTH_SHORT).show();
                     ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
                 }
