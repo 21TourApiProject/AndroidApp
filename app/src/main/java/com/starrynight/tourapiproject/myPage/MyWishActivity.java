@@ -72,6 +72,7 @@ public class MyWishActivity extends AppCompatActivity {
         tpResult = new ArrayList<>();
         postResult = new ArrayList<>();
 
+
         Call<List<MyWishObTp>> call = RetrofitClient.getApiService().getMyWishObservation(userId);
         call.enqueue(new Callback<List<MyWishObTp>>() {
             @Override
