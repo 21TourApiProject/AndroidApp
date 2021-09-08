@@ -16,9 +16,9 @@
         // Attributes from android framework
         <item name="android:windowBackground">@color/bg_dark_indigo</item>
         // font_style
-        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
-        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
-        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+<!--        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>-->
+<!--        <item name="android:buttonStyle">@style/customButtonFontStyle</item>-->
+<!--        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>-->
 
     </style>
 
