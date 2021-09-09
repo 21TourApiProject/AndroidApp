@@ -12,6 +12,8 @@ public class Observation {
     String observationName;
     @SerializedName("link")
     String link;
+    @SerializedName("intro")
+    String intro;
     @SerializedName("latitude")
     double latitude;
     @SerializedName("longitude")
@@ -56,6 +58,9 @@ public class Observation {
         return observeImages;
     }
 
+    public String getIntro() {
+        return intro;
+    }
     public Observation(){};
 
     public double getLight() {

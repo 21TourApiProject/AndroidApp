@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
@@ -41,7 +42,7 @@ public class SearchFragment extends Fragment {
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
+                ((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
             }
         });
 
