@@ -1,20 +1,61 @@
 package com.starrynight.tourapiproject.mapPage;
 
-public class BalloonObject {
-    private String  name;
-    private String content;
-    private String id;
-    private int tag;
-    private double longitude;
-    private double latitude;
+import java.io.Serializable;
 
+public class BalloonObject implements Serializable {
 
+    private String kakaoId; //카카오 맵으로 이동 할 id(안쓸수도)
+    private int tag;    //1관측지, 2관광지
+    private double longitude;   //경도
+    private double latitude;    //위도
+
+    //말풍선 속 내용
+    private Long id;    //관측지나 관광지 id
+    private String name;
+    private String address;
+    private String point_type;  //관광지, 관측지타입
+    private String intro;   //한줄소개
+
+    public BalloonObject(Long id, int tag, double longitude, double latitude, String name, String address, String point_type, String intro) {
+        this.id = id;
+        this.tag = tag;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.name = name;
+        this.address = address;
+        this.point_type = point_type;
+        this.intro = intro;
+    }
 
     //말풍선 안에 들어갈 정보 클래스
-    public BalloonObject(String name, String content, String id) {
-        this.name = name;
-        this.content = content; //상세정보
-        this.id = id;//카카오맵 연결 id
+
+
+    public String getKakaoId() {
+        return kakaoId;
+    }
+
+    public void setKakaoId(String kakaoId) {
+        this.kakaoId = kakaoId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPoint_type() {
+        return point_type;
+    }
+
+    public void setPoint_type(String point_type) {
+        this.point_type = point_type;
     }
 
     public BalloonObject(){
@@ -25,12 +66,8 @@ public class BalloonObject {
         this.name = name;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public void setTag(int tag) {
@@ -61,11 +98,11 @@ public class BalloonObject {
         return name;
     }
 
-    public String getContent() {
-        return content;
+    public String getIntro() {
+        return intro;
     }
 
     public String getId() {
-        return id;
+        return kakaoId;
     }
 }

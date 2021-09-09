@@ -33,8 +33,13 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MapFragment extends Fragment {
+
+    private static final String TAG = "map page";
 
     private MapView mapView;
 
@@ -52,10 +57,8 @@ public class MapFragment extends Fragment {
     private MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304);
     private MapPoint MY_POINT;
 
-    private MapPOIItem[] tourPOIItems = new MapPOIItem[10];
-    private MapPOIItem[] observePOIItems = new MapPOIItem[10];
-    private int tourPOIIdx = 0;
-    private int observePOIIdx = 0;
+    private List<MapPOIItem> tourPOIItems = new ArrayList<>();
+    private List<MapPOIItem> observePOIItems = new ArrayList<>();
 
 
     private MarkereventListner markereventListner= new MarkereventListner();
@@ -111,7 +114,7 @@ public class MapFragment extends Fragment {
             //상세정보 레이아웃 등장 설정
             BalloonObject bobject = (BalloonObject) mapPOIItem.getUserObject();
             detailsName_Text.setText(bobject.getName());
-            detailsContent_Text.setText(bobject.getContent());
+            detailsContent_Text.setText(bobject.getIntro());
             details.setVisibility(View.VISIBLE);
             String url ="kakaomap://look?p="+bobject.getLatitude()+","+bobject.getLongitude();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -208,27 +211,28 @@ public class MapFragment extends Fragment {
             //여기서 위치값이 갱신되면 이벤트가 발생한다.
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
-            Log.e("test", "onLocationChanged, location:" + location);
+            Log.e(TAG, "onLocationChanged, location:" + location);
 
-            MY_POINT= MapPoint.mapPointWithGeoCoord(location.getLatitude(),location.getLongitude());
-            mapView.setMapCenterPoint(MY_POINT, true);
+            //센터 포인트를 첫 관광지로 수정 아예 없애도 됨
+//            MY_POINT= MapPoint.mapPointWithGeoCoord(location.getLatitude(),location.getLongitude());
+//            mapView.setMapCenterPoint(MY_POINT, true);
             lm.removeUpdates(mLocationListener);  //  미수신할때는 반드시 자원해체를 해주어야 한다.
 
         }
 
         public void onProviderDisabled(String provider) {
             // Disabled시
-            Log.e("test", "onProviderDisabled, provider:" + provider);
+            Log.e(TAG, "onProviderDisabled, provider:" + provider);
         }
 
         public void onProviderEnabled(String provider) {
             // Enabled시
-            Log.e("test", "onProviderEnabled, provider:" + provider);
+            Log.e(TAG, "onProviderEnabled, provider:" + provider);
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
             // 변경시
-            Log.e("test", "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+            Log.e(TAG, "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
 
@@ -269,11 +273,32 @@ public class MapFragment extends Fragment {
         mapView.setPOIItemEventListener(markereventListner);
         mapView.setMapViewEventListener(mapeventListner);
 
-        BalloonObject balloonObject1= setupMaker (1,"관측지1", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
-        createObserveMarker(mapView, balloonObject1);
+        List<BalloonObject> observationBalloonObjects = new ArrayList<>();
+        List<BalloonObject> tourBalloonObjects = new ArrayList<>();
 
-        BalloonObject balloonObject2 = setupMaker(2,"관광지1", "강릉에 있는 관광지", 37.53737528, 127.00557633);
-        createTourMarker(mapView, balloonObject2);
+        if (getArguments() != null) {
+            Activities fromWhere = (Activities) getArguments().getSerializable("FromWhere");
+            if (fromWhere == Activities.OBSERVATION || fromWhere == Activities.TOURISTPOINT || fromWhere == Activities.POST || fromWhere == Activities.MAINPOST) {
+                BalloonObject singleBalloonObject = (BalloonObject) getArguments().getSerializable("BalloonObject");
+                if (singleBalloonObject != null) {
+                    if (singleBalloonObject.getTag() == 1) {
+                        observationBalloonObjects.add(singleBalloonObject);
+                        createObserveMarker(mapView, singleBalloonObject);
+                    } else if (singleBalloonObject.getTag() == 2) {
+                        tourBalloonObjects.add(singleBalloonObject);
+                        createTourMarker(mapView, singleBalloonObject);
+                    }
+                } else {
+                    Log.e(TAG, "번들에 balloon 없음");
+                }
+            }
+        }
+    //더미데이터 참고용
+//        BalloonObject balloonObject1= setupMaker (1,"관측지1", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
+//        createObserveMarker(mapView, balloonObject1);
+//
+//        BalloonObject balloonObject2 = setupMaker(2,"관광지1", "강릉에 있는 관광지", 37.53737528, 127.00557633);
+//        createTourMarker(mapView, balloonObject2);
 
         //내위치로 정렬
         setMyLocation();
@@ -282,12 +307,12 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);    //denied면 -1
 
-                Log.d("test", "onClick: location clicked");
+                Log.d(TAG, "onClick: location clicked");
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                     getMyLocaiton();
 
                 } else if (permissionCheck == PackageManager.PERMISSION_DENIED){
-                    Log.d("test", "permission denied");
+                    Log.d(TAG, "permission denied");
                     Toast.makeText(getContext(), "위치권한이 없습니다.", Toast.LENGTH_SHORT).show();
                     ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
                 }
@@ -298,14 +323,16 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(observe_ckb.isChecked()){
-
-                    BalloonObject balloonObject1= setupMaker (1,"관측지1", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
-                    createObserveMarker(mapView, balloonObject1);
+                    //관측지필터 체크시
+                    for (BalloonObject p : observationBalloonObjects) {
+                        createObserveMarker(mapView,p);
+                    }
+//                    BalloonObject balloonObject1= setupMaker (1,"관측지1", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
+//                    createObserveMarker(mapView, balloonObject1);
                 }else {
-                    if(observePOIIdx!=0)
-                        for(int i=0;i<observePOIIdx;i++)
-                            mapView.removePOIItem(observePOIItems[i]);
-                    observePOIIdx = 0;
+                    for(MapPOIItem p : observePOIItems)
+                        mapView.removePOIItem(p);
+                    observePOIItems.clear();
                 }
             }
         });
@@ -315,13 +342,16 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(tour_ckb.isChecked()) {
-                    BalloonObject balloonObject2 = setupMaker(2,"관광지1", "강릉에 있는 관광지", 37.53737528, 127.00557633);
-                    createTourMarker(mapView, balloonObject2);
+                    //관광지 필터 체크시
+                    for (BalloonObject p : tourBalloonObjects) {
+                        createTourMarker(mapView,p);
+                    }
+//                    BalloonObject balloonObject2 = setupMaker(2,"관광지1", "강릉에 있는 관광지", 37.53737528, 127.00557633);
+//                    createTourMarker(mapView, balloonObject2);
                 } else {
-                    if(tourPOIIdx!=0)
-                        for(int i=0;i<tourPOIIdx;i++)
-                            mapView.removePOIItem(tourPOIItems[i]);
-                    tourPOIIdx = 0;
+                    for(MapPOIItem p : tourPOIItems)
+                        mapView.removePOIItem(p);
+                    tourPOIItems.clear();
                 }
             }
         });
@@ -373,8 +403,7 @@ public class MapFragment extends Fragment {
 //        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red); //마커타입을 커스텀으로 지정 후 이용
 //        mCustomMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
 //        mCustomMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
-        observePOIItems[observePOIIdx]=mMarker;
-        observePOIIdx++;
+        observePOIItems.add(mMarker);
 
         mapView.addPOIItem(mMarker);
         mapView.selectPOIItem(mMarker, true);
@@ -395,8 +424,7 @@ public class MapFragment extends Fragment {
 //        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red); //마커타입을 커스텀으로 지정 후 이용
 //        mCustomMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
 //        mCustomMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
-        tourPOIItems[tourPOIIdx] = mMarker;
-        tourPOIIdx++;
+        tourPOIItems.add(mMarker);
 
         mapView.addPOIItem(mMarker);
         mapView.selectPOIItem(mMarker, true);
@@ -409,7 +437,7 @@ public class MapFragment extends Fragment {
         //마커 기본정보 object 생성 및 setup
         BalloonObject balloon_Object = new BalloonObject();
         balloon_Object.setName(name);
-        balloon_Object.setContent(content);
+        balloon_Object.setIntro(content);
         balloon_Object.setTag(tag);
         balloon_Object.setLatitude(latitude);
         balloon_Object.setLongitude(longitude);
