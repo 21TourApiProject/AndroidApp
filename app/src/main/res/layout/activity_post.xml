@@ -122,7 +122,7 @@
                     android:id="@+id/postObservation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/observation__hashtags"
+                    android:background="@drawable/hashtags_empty"
                     android:hint="관측지" />
 
                 <androidx.recyclerview.widget.RecyclerView
