@@ -4,35 +4,35 @@ import com.google.gson.annotations.SerializedName;
 
 public class Temp {
     @SerializedName("day")
-    private Double day;
+    private String day;
 
     @SerializedName("min")
-    private Double min;
+    private String min;
 
     @SerializedName("max")
-    private Double max;
+    private String max;
 
-    public Double getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(Double day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
-    public Double getMin() {
+    public String getMin() {
         return min;
     }
 
-    public void setMin(Double min) {
+    public void setMin(String min) {
         this.min = min;
     }
 
-    public Double getMax() {
+    public String getMax() {
         return max;
     }
 
-    public void setMax(Double max) {
+    public void setMax(String max) {
         this.max = max;
     }
 }
