@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.mapPage;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class BalloonObject implements Serializable {
     public BalloonObject() {
@@ -17,6 +18,24 @@ public class BalloonObject implements Serializable {
     private String point_type;  //관광지, 관측지타입
     private String intro;   //한줄소개
     private Long id;    //관측지나 관광지 id
+    private String image;
+    private List<String> hashtags;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public List<String> getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(List<String> hashtags) {
+        this.hashtags = hashtags;
+    }
 
     public String getKakaoId() {
         return kakaoId;
