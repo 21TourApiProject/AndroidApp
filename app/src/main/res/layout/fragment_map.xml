@@ -50,22 +50,44 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/blank"
             android:padding="16dp"
-            android:background="@color/white"
+            android:background="@color/bg_dark_indigo"
             android:visibility="gone"
             tools:visibility="visible">
             <TextView
                 android:id="@+id/name_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="테스트제목"
+                android:text="이름"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
             <TextView
-                android:id="@+id/content_txt"
+                android:id="@+id/address_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="테스트 세부사항 어쩌구 저쩌구"
-                android:layout_below="@+id/name_txt"
+                android:layout_below="@id/name_txt"
+                android:text="주소"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="."
+                android:paddingBottom="4dp"
+                android:paddingLeft="2dp"
+                android:layout_toRightOf="@id/address_txt"
+                android:layout_alignBottom="@id/address_txt"/>
+            <TextView
+                android:id="@+id/type_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/address_txt"
+                android:layout_alignTop="@id/address_txt"
+                android:layout_marginLeft="8dp"
+                android:text="타입"/>
+            <TextView
+                android:id="@+id/intro_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="테스트 한줄개요"
+                android:layout_below="@+id/address_txt"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="10dp"/>
             <Button
@@ -74,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="카카오맵"
                 android:layout_alignParentRight="true"
-                android:layout_alignBottom="@+id/content_txt"/>
+                android:layout_alignBottom="@+id/intro_txt"/>
 
         </RelativeLayout>
 
@@ -82,7 +104,7 @@
             android:id="@+id/blank"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="50dp"/>
+            android:layout_height="79dp"/>
 
     </RelativeLayout>
 
