@@ -12,6 +12,7 @@
         <item name="colorAccent">@color/point_skyblue</item>
         <item name="colorSurface">@color/point_skyblue</item>
         <item name="titleTextColor">@color/white</item>
+        <item name="android:textColor">@color/white</item>
 
         // Attributes from android framework
         <item name="android:windowBackground">@color/bg_dark_indigo</item>
