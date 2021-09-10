@@ -183,7 +183,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         address.setText(observation.getAddress());
                         TextView phonenumber = findViewById(R.id.obs_phonenumber_txt);
                         phonenumber.setText(observation.getPhoneNumber());
-                        TextView operatinghour = findViewById(R.id.obs_address_txt);
+                        TextView operatinghour = findViewById(R.id.obs_operatinghour_txt);
                         operatinghour.setText(observation.getOperatingHour());
                         TextView closedday = findViewById(R.id.obs_closedday_txt);
                         closedday.setText(observation.getClosedDay());

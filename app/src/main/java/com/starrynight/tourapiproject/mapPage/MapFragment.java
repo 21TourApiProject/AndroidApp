@@ -66,8 +66,10 @@ public class MapFragment extends Fragment {
 
 
     RelativeLayout details;
-    TextView detailsName_Text;
-    TextView detailsContent_Text;
+    TextView detailsName_txt;
+    TextView detailsIntro_txt;
+    TextView detailsAddress_txt;
+    TextView detailsType_txt;
     Button kmap_btn;
     CheckBox tour_ckb;
     CheckBox observe_ckb;
@@ -113,8 +115,10 @@ public class MapFragment extends Fragment {
         public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
             //상세정보 레이아웃 등장 설정
             BalloonObject bobject = (BalloonObject) mapPOIItem.getUserObject();
-            detailsName_Text.setText(bobject.getName());
-            detailsContent_Text.setText(bobject.getIntro());
+            detailsName_txt.setText(bobject.getName());
+            detailsIntro_txt.setText(bobject.getIntro());
+            detailsAddress_txt.setText(bobject.getAddress());
+            detailsType_txt.setText(bobject.getPoint_type());
             details.setVisibility(View.VISIBLE);
             String url ="kakaomap://look?p="+bobject.getLatitude()+","+bobject.getLongitude();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -256,8 +260,10 @@ public class MapFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
         details = view.findViewById(R.id.detail_layout);
-        detailsName_Text = view.findViewById(R.id.name_txt);
-        detailsContent_Text = view.findViewById(R.id.content_txt);
+        detailsName_txt = view.findViewById(R.id.name_txt);
+        detailsIntro_txt = view.findViewById(R.id.intro_txt);
+        detailsAddress_txt = view.findViewById(R.id.address_txt);
+        detailsType_txt = view.findViewById(R.id.type_txt);
         kmap_btn = view.findViewById(R.id.kmap_btn);
         observe_ckb = view.findViewById(R.id.observe_ck);
         tour_ckb = view.findViewById(R.id.tour_ck);
@@ -279,7 +285,9 @@ public class MapFragment extends Fragment {
         if (getArguments() != null) {
             Activities fromWhere = (Activities) getArguments().getSerializable("FromWhere");
             if (fromWhere == Activities.OBSERVATION || fromWhere == Activities.TOURISTPOINT || fromWhere == Activities.POST || fromWhere == Activities.MAINPOST) {
+                //주소가 하나만 넘어올 때
                 BalloonObject singleBalloonObject = (BalloonObject) getArguments().getSerializable("BalloonObject");
+
                 if (singleBalloonObject != null) {
                     if (singleBalloonObject.getTag() == 1) {
                         observationBalloonObjects.add(singleBalloonObject);
@@ -398,8 +406,7 @@ public class MapFragment extends Fragment {
         mMarker.setMapPoint(MARKER_POINT);
         mMarker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 마커타입을 지정
         mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        mMarker.setUserObject(balloonObject);   //
-
+        mMarker.setUserObject(balloonObject);
 //        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red); //마커타입을 커스텀으로 지정 후 이용
 //        mCustomMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
 //        mCustomMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
