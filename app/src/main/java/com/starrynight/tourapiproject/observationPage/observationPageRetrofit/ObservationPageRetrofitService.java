@@ -26,4 +26,6 @@ public interface ObservationPageRetrofitService {
     @GET("observation/{observationId}/courseNames")
     Call<List<String>> getCourseNameList(@Path("observationId") Long observationId);
 
+    @GET("observations")
+    Call<List<Observation>> getAllObservation();
 }

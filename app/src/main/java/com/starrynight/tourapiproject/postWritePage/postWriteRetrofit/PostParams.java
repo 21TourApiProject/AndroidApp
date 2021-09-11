@@ -14,11 +14,21 @@ public class PostParams implements Serializable {
 
     private String postTitle;
 
+    private String optionHashTag;
+
+    private String optionObservation;
+
     private Long userId;
 
-    private Long postObservePointId;
-
     public PostParams(){}
+
+    public String getOptionHashTag() {
+        return optionHashTag;
+    }
+
+    public String getOptionObservation() {
+        return optionObservation;
+    }
 
     public String getPostContent() {
         return postContent;
@@ -40,17 +50,23 @@ public class PostParams implements Serializable {
         return userId;
     }
 
-    public Long getPostObservePointId() {
-        return postObservePointId;
-    }
 
-    public PostParams(String postContent, String yearDate, String time, String postTitle, Long userId, Long postObservePointId) {
+    public PostParams(String postContent, String yearDate, String time, String postTitle, String optionHashTag, String optionObservation, Long userId) {
         this.postContent = postContent;
         this.yearDate = yearDate;
         this.time = time;
         this.postTitle = postTitle;
+        this.optionHashTag = optionHashTag;
+        this.optionObservation = optionObservation;
         this.userId = userId;
-        this.postObservePointId = postObservePointId;
+    }
+
+    public void setOptionHashTag(String optionHashTag) {
+        this.optionHashTag = optionHashTag;
+    }
+
+    public void setOptionObservation(String optionObservation) {
+        this.optionObservation = optionObservation;
     }
 
     public void setPostContent(String postContent) {
@@ -73,7 +89,4 @@ public class PostParams implements Serializable {
         this.postTitle = postTitle;
     }
 
-    public void setPostObservePointId(Long postObservePointId) {
-        this.postObservePointId = postObservePointId;
     }
-}
