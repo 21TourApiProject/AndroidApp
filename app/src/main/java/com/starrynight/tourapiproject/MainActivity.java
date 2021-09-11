@@ -1,6 +1,9 @@
 package com.starrynight.tourapiproject;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -13,10 +16,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.starrynight.tourapiproject.mapPage.Activities;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static Context mContext;
 
     MainFragment mainFragment;
     SearchFragment searchFragment;
@@ -29,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this;
 
         mainFragment = new MainFragment();
         searchFragment = new SearchFragment();
@@ -97,8 +106,9 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_view, fragment).commit();
+        fragmentTransaction.replace(R.id.main_view, fragment).commitAllowingStateLoss();
     }
+
 
     public void showOffBottom(){
         bottom.setVisibility(View.GONE);

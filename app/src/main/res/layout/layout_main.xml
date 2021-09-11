@@ -122,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/observation__hashtags"
+                android:background="@drawable/hashtags_empty"
                 android:hint="관측지"
                 android:textColor="@color/purple_200" />
 

@@ -25,12 +25,19 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.Activities;
+import com.starrynight.tourapiproject.mapPage.BalloonObject;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.CourseTouristPoint;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveFee;
@@ -81,6 +88,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private List<ObserveFee> obs_fee_list;
     private String[] relatefilename = new String[3];
 
+    private BalloonObject balloonObject= new BalloonObject();   //mapfragment bundle
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +126,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                     Log.d(TAG, "관측지 이미지 호출 성공");
                                     List<String> imageList = response.body();
                                     obs_images = imageList.toArray(new String[imageList.size()]);
+                                    balloonObject.setImage(imageList.get(0));   //map위한 bundle
 
                                     //관측지 이미지 슬라이더 설정
                                     obs_slider = findViewById(R.id.obs_Img_slider);
@@ -176,7 +186,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         address.setText(observation.getAddress());
                         TextView phonenumber = findViewById(R.id.obs_phonenumber_txt);
                         phonenumber.setText(observation.getPhoneNumber());
-                        TextView operatinghour = findViewById(R.id.obs_address_txt);
+                        TextView operatinghour = findViewById(R.id.obs_operatinghour_txt);
                         operatinghour.setText(observation.getOperatingHour());
                         TextView closedday = findViewById(R.id.obs_closedday_txt);
                         closedday.setText(observation.getClosedDay());
@@ -246,7 +256,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Log.d(TAG, "관측지 해쉬태그 호출 성공");
                                 observeHashTags = response.body();
-
+                                balloonObject.setHashtags(observeHashTags); //지도에 넣을 bundle
                                 for (String p : observeHashTags) {
                                     RecyclerHashTagItem item = new RecyclerHashTagItem();
                                     item.setHashtagName(p);
@@ -264,6 +274,39 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         public void onFailure(Call<List<String>> call, Throwable t) {
                             Log.e(TAG, "연결실패" + t.getMessage());
 
+                        }
+                    });
+
+                    //지도버튼 설정
+                    Button map_btn = findViewById(R.id.obs_location_btn);
+                    //Long id, int tag, double longitude, double latitude, String name, String address, String point_type, String intro
+                    //BallonObject에 내용넣음
+
+                    balloonObject.setId(observationId);
+                    balloonObject.setTag(1);    //1관측지 2관광지
+                    balloonObject.setLongitude(observation.getLongitude());
+                    balloonObject.setLatitude(observation.getLatitude());
+                    balloonObject.setName(observation.getObservationName());
+                    balloonObject.setAddress(observation.getAddress());
+                    balloonObject.setPoint_type(observation.getObserveType());
+                    balloonObject.setIntro(observation.getIntro());
+                    //사진이랑 해쉬태그는 따로 불러와서 그거 각자 call에서 추가해야함 (아래두줄참고)
+//                    balloonObject.setHashtags(observeHashTags);   //259에 구현현
+//                    balloonObjec.setImage(이미지); //이미지지한장 129에 구현
+                   map_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 중간에 있던 액티비티들 삭제
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
+                            startActivity(intent);
+
+                            Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                            bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
+                            bundle.putSerializable("BalloonObject", balloonObject);    //지도에 필요한 내용
+                            MapFragment mapFragment = new MapFragment();
+                            mapFragment.setArguments(bundle);
+                            ((MainActivity)MainActivity.mContext).replaceFragment(mapFragment);
                         }
                     });
 
