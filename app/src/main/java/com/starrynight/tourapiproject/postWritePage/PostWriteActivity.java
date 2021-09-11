@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -48,10 +47,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
-import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
-import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostObservePointParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
@@ -80,10 +77,9 @@ public class PostWriteActivity extends AppCompatActivity {
     private Button addPicture;
     SelectImageAdapter adapter;
     RecyclerView recyclerView;
-    String postContent="",yearDate="",time="",postTitle;
+    String postContent="",yearDate="",time="",postTitle,observationName,optionobservationName;
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
     List<PostImageParams> postImageParams = new ArrayList<>();
-    PostObservePointParams postObservePointParams;
     String postObservePointName="";
     String[] hashTagList= new String[10];
     Long postId;
@@ -297,7 +293,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 postParams.setTime(time);
                 postParams.setUserId(userId);
                 postParams.setPostTitle(postTitle);
-                postObservePointName = postObservePointParams.getObservePointName();
+                postParams.setOptionObservation(optionobservationName);
                 Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
                 call.enqueue(new Callback<Long>() {
                     @Override
@@ -374,9 +370,14 @@ public class PostWriteActivity extends AppCompatActivity {
         if(requestCode == 202){
             if(resultCode == 2){
                 System.out.println("관측지가 넘어왔당");
-                postObservePointParams = (PostObservePointParams)data.getSerializableExtra("postObservePointParams");
-                postObservePointItem.setText(postObservePointParams.getObservePointName());
-                postObservePointName=postObservePointParams.getObservePointName();
+                observationName = (String)data.getSerializableExtra("observationName");
+                optionobservationName = (String)data.getSerializableExtra("optionObservationName");
+                if (observationName != null){
+                postObservePointItem.setText(observationName);
+                postObservePointName=observationName;
+                }else{postObservePointItem.setText(optionobservationName);
+                postObservePointName = "나만의 관측지";}
+
             }else{System.out.println("관측지가 안 넘어왔당");}
         }
         if(requestCode == 203){
