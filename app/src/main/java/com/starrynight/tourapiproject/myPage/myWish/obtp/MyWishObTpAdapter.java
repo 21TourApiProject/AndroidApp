@@ -116,7 +116,7 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
                 TextView textView = new TextView(context);
                 textView.setText("#"+ht);
                 textView.setTextColor(ContextCompat.getColor(context, R.color.purple_200));
-                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.observation__hashtags));
+                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.hashtags_empty));
                 obTpHashTag.addView(textView);
             }
         }

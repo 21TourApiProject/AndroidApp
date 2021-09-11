@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,13 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.observationPage.RecyclerHashTagAdapter;
+import com.starrynight.tourapiproject.observationPage.RecyclerHashTagItem;
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.MapPOIItem;
@@ -64,6 +70,8 @@ public class MapFragment extends Fragment {
     private MarkereventListner markereventListner= new MarkereventListner();
     private MapeventListner mapeventListner=new MapeventListner();
 
+    List<String> observeHashTags;
+    private RecyclerHashTagAdapter recyclerHashTagAdapter;
 
     RelativeLayout details;
     TextView detailsName_txt;
@@ -74,6 +82,8 @@ public class MapFragment extends Fragment {
     CheckBox tour_ckb;
     CheckBox observe_ckb;
     ImageButton myLocation_btn;
+    RecyclerView hashTagsrecyclerView;
+    ImageView main_img;
 
     public MapFragment() {
         // Required empty public constructor
@@ -122,6 +132,29 @@ public class MapFragment extends Fragment {
             details.setVisibility(View.VISIBLE);
             String url ="kakaomap://look?p="+bobject.getLatitude()+","+bobject.getLongitude();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+            initHashtagRecycler();
+            observeHashTags = bobject.getHashtags();
+            if (observeHashTags != null) {
+                for (String p : observeHashTags) {
+                    RecyclerHashTagItem item = new RecyclerHashTagItem();
+                    item.setHashtagName(p);
+
+                    recyclerHashTagAdapter.addItem(item);
+                }
+                recyclerHashTagAdapter.notifyDataSetChanged();
+            } else {
+                Log.e(TAG, "해쉬태그 비었음");
+            }
+
+            if (bobject.getImage() != null) {
+                Glide.with(getContext())
+                        .load(bobject.getImage())
+                        .into(main_img);
+            } else {
+                Log.e(TAG, "이미지 비었음");
+            }
+
 
             kmap_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -268,6 +301,8 @@ public class MapFragment extends Fragment {
         observe_ckb = view.findViewById(R.id.observe_ck);
         tour_ckb = view.findViewById(R.id.tour_ck);
         myLocation_btn = view.findViewById(R.id.myLocation_btn);
+        hashTagsrecyclerView = view.findViewById(R.id.hashtags_layout);
+        main_img = view.findViewById(R.id.main_img);
         //지도 띄우기
 //        MapView mapView = new MapView(getActivity());
         mapView = new MapView(getActivity());
@@ -452,5 +487,16 @@ public class MapFragment extends Fragment {
         MARKER_POINT= MapPoint.mapPointWithGeoCoord(latitude, longitude);
 
         return  balloon_Object;
+    }
+
+    private void initHashtagRecycler(){
+        //해쉬태그 리사이클러 초기화
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerHashTagAdapter = new RecyclerHashTagAdapter();
+        hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }
 }

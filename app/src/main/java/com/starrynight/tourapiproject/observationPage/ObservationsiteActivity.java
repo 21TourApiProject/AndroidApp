@@ -88,6 +88,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private List<ObserveFee> obs_fee_list;
     private String[] relatefilename = new String[3];
 
+    private BalloonObject balloonObject= new BalloonObject();   //mapfragment bundle
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +126,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                     Log.d(TAG, "관측지 이미지 호출 성공");
                                     List<String> imageList = response.body();
                                     obs_images = imageList.toArray(new String[imageList.size()]);
+                                    balloonObject.setImage(imageList.get(0));   //map위한 bundle
 
                                     //관측지 이미지 슬라이더 설정
                                     obs_slider = findViewById(R.id.obs_Img_slider);
@@ -253,7 +256,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Log.d(TAG, "관측지 해쉬태그 호출 성공");
                                 observeHashTags = response.body();
-
+                                balloonObject.setHashtags(observeHashTags); //지도에 넣을 bundle
                                 for (String p : observeHashTags) {
                                     RecyclerHashTagItem item = new RecyclerHashTagItem();
                                     item.setHashtagName(p);
@@ -278,7 +281,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     Button map_btn = findViewById(R.id.obs_location_btn);
                     //Long id, int tag, double longitude, double latitude, String name, String address, String point_type, String intro
                     //BallonObject에 내용넣음
-                    BalloonObject balloonObject= new BalloonObject();
+
                     balloonObject.setId(observationId);
                     balloonObject.setTag(1);    //1관측지 2관광지
                     balloonObject.setLongitude(observation.getLongitude());
@@ -287,8 +290,10 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     balloonObject.setAddress(observation.getAddress());
                     balloonObject.setPoint_type(observation.getObserveType());
                     balloonObject.setIntro(observation.getIntro());
-
-                    map_btn.setOnClickListener(new View.OnClickListener() {
+                    //사진이랑 해쉬태그는 따로 불러와서 그거 각자 call에서 추가해야함 (아래두줄참고)
+//                    balloonObject.setHashtags(observeHashTags);   //259에 구현현
+//                    balloonObjec.setImage(이미지); //이미지지한장 129에 구현
+                   map_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
