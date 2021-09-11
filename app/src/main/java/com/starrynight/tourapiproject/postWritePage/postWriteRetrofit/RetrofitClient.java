@@ -11,6 +11,7 @@ public class RetrofitClient {
 
     private static final String BASE_URL = "http://192.168.35.114:8080/v1/";
 
+
     public static PostHashTagRetrofitService getApiService(){return getInstance().create(PostHashTagRetrofitService.class);}
 
     private static Retrofit getInstance(){
