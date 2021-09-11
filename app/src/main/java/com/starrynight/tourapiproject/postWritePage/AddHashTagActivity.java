@@ -37,7 +37,6 @@ public class AddHashTagActivity extends AppCompatActivity {
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
     TextView findHashTag;
     LinearLayout dynamicLayout2;
-    int numOfHT = 0;
     String PostHashTags;
     String[] hashTaglist =new String[4];
 
@@ -70,9 +69,6 @@ public class AddHashTagActivity extends AppCompatActivity {
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (findHashTag != null){
-                    addHashTag(findHashTag.getText().toString());
-                }
                 PostHashTags = ((TextView)(findViewById(R.id.findHashTag))).getText().toString();
                     for (int i=0;i<hashTaglist.length;i++){
                         if (PostHashTags!=null){
@@ -87,18 +83,5 @@ public class AddHashTagActivity extends AppCompatActivity {
                 postHashTagParams.add(postHashTagParam);
             }
         });
-    }
-
-    private void addHashTag(String data) {
-        numOfHT ++;
-        TextView textView = new TextView(this);
-        textView.setText(data);
-        //String id = "@+id/hashTag"+ String.valueOf(numOfHT);
-        textView.setId(numOfHT);
-        textView.setBackground(ContextCompat.getDrawable(this, R.drawable.post_write__edge));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-
-        final int height = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
-        dynamicLayout2.addView(textView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
     }
 }

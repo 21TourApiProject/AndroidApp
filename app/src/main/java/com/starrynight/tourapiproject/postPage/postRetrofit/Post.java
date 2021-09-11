@@ -14,6 +14,10 @@ public class Post {
     String postContent;
     @SerializedName("postTitle")
     String postTitle;
+    @SerializedName("optionHashTag")
+    String optionHashTag;
+    @SerializedName("optionObservation")
+    String optionObservation;
     @SerializedName("yearDate")
     String yearDate;
     @SerializedName("time")
@@ -24,10 +28,18 @@ public class Post {
     List<PostImage> postImages;
     @SerializedName("userId")
     Long userId;
-    @SerializedName("postObservePointId")
-    Long postObservePointId;
+    @SerializedName("observationId")
+    Long observationId;
 
     public Post(){}
+
+    public String getOptionHashTag() {
+        return optionHashTag;
+    }
+
+    public String getOptionObservation() {
+        return optionObservation;
+    }
 
     public String getPostTitle() {
         return postTitle;
@@ -41,8 +53,8 @@ public class Post {
         return postId;
     }
 
-    public Long getPostObservePointId() {
-        return postObservePointId;
+    public Long getObservationId() {
+        return observationId;
     }
 
     public String getYearDate() {
