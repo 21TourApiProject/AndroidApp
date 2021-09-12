@@ -182,7 +182,8 @@ public class WeatherActivity extends AppCompatActivity {
     TextView windTv;
     TextView humidityTv;
     TextView precipitationTv;
-    TextView dayLengthTv;
+    TextView minLightPolTv;
+    TextView maxLightPolTv;
 
     String cloudText;
     String tempText;
@@ -200,6 +201,12 @@ public class WeatherActivity extends AppCompatActivity {
     String provName;
     Double latitude;
     Double longitude;
+
+    //광공해
+    Double minLightPol;
+    Double maxLightPol;
+    String minLightPolVal;
+    String maxLightPolVal;
 
     {
         try {
@@ -260,7 +267,8 @@ public class WeatherActivity extends AppCompatActivity {
         windTv = findViewById(R.id.wt_wind);
         humidityTv = findViewById(R.id.wt_humidity);
         precipitationTv = findViewById(R.id.wt_precipitation);
-        dayLengthTv = findViewById(R.id.wt_day_length);
+        minLightPolTv = findViewById(R.id.wt_min_light_pol);
+        maxLightPolTv = findViewById(R.id.wt_max_light_pol);
 
         minTempTv = findViewById(R.id.wt_min_temp);
         maxTempTv = findViewById(R.id.wt_max_temp);
@@ -663,34 +671,33 @@ public class WeatherActivity extends AppCompatActivity {
                             moonsetTv.setText(unixToHourMin);
 
                             //낮 길이
-                            unixChange(unixSunrise);
-                            sunriseSt = unixToHourMin;
-                            Log.d("sunriseTime", sunriseSt);
-                            unixChange(unixSunset);
-                            sunsetSt = unixToHourMin;
-                            Log.d("date2", sunsetSt);
-
-                            try {
-                                sunriseTime = formatHourMin.parse(sunriseSt);
-                                sunsetTime = formatHourMin.parse(sunsetSt);
-
-                                assert sunsetTime != null;
-                                assert sunriseTime != null;
-
-                                dayLength = sunsetTime.getTime() - sunriseTime.getTime();
-                                hourValue = (int) (dayLength / (1000 * 60 * 60));
-                                minValue = (int) ((dayLength / (1000 * 60)) % 60);
-
-                                diff = hourValue + "시간 " + minValue + "분";
-                                Log.d("dayLength", diff);
-                            } catch (ParseException ignored) {
-
-                            }
-
-                            dayLengthTv.setText(diff);
+//                            unixChange(unixSunrise);
+//                            sunriseSt = unixToHourMin;
+//                            Log.d("sunriseTime", sunriseSt);
+//                            unixChange(unixSunset);
+//                            sunsetSt = unixToHourMin;
+//                            Log.d("date2", sunsetSt);
+//
+//                            try {
+//                                sunriseTime = formatHourMin.parse(sunriseSt);
+//                                sunsetTime = formatHourMin.parse(sunsetSt);
+//
+//                                assert sunsetTime != null;
+//                                assert sunriseTime != null;
+//
+//                                dayLength = sunsetTime.getTime() - sunriseTime.getTime();
+//                                hourValue = (int) (dayLength / (1000 * 60 * 60));
+//                                minValue = (int) ((dayLength / (1000 * 60)) % 60);
+//
+//                                diff = hourValue + "시간 " + minValue + "분";
+//                                Log.d("dayLength", diff);
+//                            } catch (ParseException ignored) {
+//
+//                            }
+//
+//                            dayLengthTv.setText(diff);
                         }
                     }
-
 
                     if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
                         for (int i = 0; i < 48; i++) {
@@ -752,7 +759,6 @@ public class WeatherActivity extends AppCompatActivity {
                                 humidityTv.setText(humidityText);
                                 precipitationTv.setText(stringPrecip);
                                 Log.d("getIDaily", String.valueOf(i));
-
                             }
                         }
                     }
@@ -1006,8 +1012,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("충남/대전/세종")) {
-                    choice_do = "충남/대전/세종";
+                } else if (cityAdSpin.getItem(position).equals("충남·대전·세종")) {
+                    choice_do = "충남·대전·세종";
                     cityName = choice_do;
 
                     choice_se = "계룡시";
@@ -1030,8 +1036,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("광주/전북")) {
-                    choice_do = "광주/전북";
+                } else if (cityAdSpin.getItem(position).equals("광주·전북")) {
+                    choice_do = "광주·전북";
                     cityName = choice_do;
 
                     choice_se = "광산구";
@@ -1078,8 +1084,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("대구/경북")) {
-                    choice_do = "대구/경북";
+                } else if (cityAdSpin.getItem(position).equals("대구·경북")) {
+                    choice_do = "대구·경북";
                     cityName = choice_do;
 
                     choice_se = "중가";
@@ -1126,8 +1132,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("부산/울산")) {
-                    choice_do = "부산/울산";
+                } else if (cityAdSpin.getItem(position).equals("부산·울산")) {
+                    choice_do = "부산·울산";
                     cityName = choice_do;
 
                     choice_se = "강서구";
@@ -1191,7 +1197,7 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("cityName1", cityName);
         Log.d("provName1", provName);
 
-        //지역명으로 경도, 위도 받아오기
+        //지역명으로 경도, 위도, 광공해 받아오기
         Call<WtAreaParams> areaInfoCall = RetrofitClient.getApiService().getAreaInfo(cityName, provName);
         areaInfoCall.enqueue(new Callback<WtAreaParams>() {
             @Override
@@ -1200,6 +1206,15 @@ public class WeatherActivity extends AppCompatActivity {
                     WtAreaParams result = response.body();
                     latitude = result.getLatitude();
                     longitude = result.getLongitude();
+
+                    minLightPol = result.getMinLightPol();
+                    maxLightPol = result.getMaxLightPol();
+
+                    minLightPolVal = minLightPol.toString();
+                    maxLightPolVal = maxLightPol.toString();
+
+                    minLightPolTv.setText(minLightPolVal);
+                    maxLightPolTv.setText(maxLightPolVal);
 
                     connectMetApi();
                     Log.d("latitude", String.valueOf(latitude));

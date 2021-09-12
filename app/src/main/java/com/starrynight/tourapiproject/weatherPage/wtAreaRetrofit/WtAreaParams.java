@@ -10,6 +10,12 @@ public class WtAreaParams {
     @SerializedName("longitude")
     private Double longitude;
 
+    @SerializedName("minLightPol")
+    private Double minLightPol;
+
+    @SerializedName("maxLightPol")
+    private Double maxLightPol;
+
     public WtAreaParams(){}
 
     public Double getLatitude() {
@@ -18,5 +24,13 @@ public class WtAreaParams {
 
     public Double getLongitude() {
         return longitude;
+    }
+
+    public Double getMaxLightPol() {
+        return maxLightPol;
+    }
+
+    public Double getMinLightPol() {
+        return minLightPol;
     }
 }

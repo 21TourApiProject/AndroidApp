@@ -9,7 +9,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-64dp"
+        tools:layout_editor_absoluteY="-108dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -688,15 +690,32 @@
                             android:layout_height="wrap_content"
                             android:text="광공해" />
 
-                        <TextView
-                            android:id="@+id/wt_day_length"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginVertical="3dp"
-                            android:text="적음" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/wt_min_light_pol"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="최저광공해" />
+
+                            <TextView
+                                android:id="@+id/wt_light_slash"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="3dp"
+                                android:text="/" />
+
+                            <TextView
+                                android:id="@+id/wt_max_light_pol"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="최고광공해" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
 
             <Button
