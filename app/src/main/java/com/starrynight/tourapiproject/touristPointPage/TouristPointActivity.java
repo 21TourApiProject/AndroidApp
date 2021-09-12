@@ -70,9 +70,9 @@ public class TouristPointActivity extends AppCompatActivity {
     Boolean isTp;
 
     TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
-            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText;
+            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText, overviewPop;
 
-    Button overviewPop, tpWish;
+    Button tpWish;
 
     LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
@@ -163,7 +163,7 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body()){
                         isWish = true;
-                        tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                        tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                     } else{
                         isWish = false;
                     }
@@ -189,7 +189,7 @@ public class TouristPointActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 //버튼 디자인 바뀌게 구현하기
                                 isWish = true;
-                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 실패");
@@ -207,7 +207,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 isWish = false;
-                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_wish_button));
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 삭제 실패");
@@ -572,21 +572,29 @@ public class TouristPointActivity extends AppCompatActivity {
         //펼치기
         LinearLayout tpInfo2 = findViewById(R.id.tpInfo2);
         LinearLayout foodInfo2 = findViewById(R.id.foodInfo2);
-        Button moreInfo = findViewById(R.id.moreInfo);
+        TextView moreInfo = findViewById(R.id.moreInfo);
         moreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moreInfo.setVisibility(View.GONE);
-                if (isTp){
-                    tpInfo2.setVisibility(View.VISIBLE);
-                }else{
-                    foodInfo2.setVisibility(View.VISIBLE);
+                if(moreInfo.getText() == "+ 더보기"){
+                    moreInfo.setText("- 축소하기");
+                    if (isTp){
+                        tpInfo2.setVisibility(View.VISIBLE);
+                    }else{
+                        foodInfo2.setVisibility(View.VISIBLE);
+                    }
+                } else{
+                    moreInfo.setText("+ 더보기");
+                    if (isTp){
+                        tpInfo2.setVisibility(View.GONE);
+                    }else{
+                        foodInfo2.setVisibility(View.GONE);
+                    }
                 }
             }
         });
 
         //자세히 보기 팝업
-        Button overviewPop = findViewById(R.id.overviewPop);
         overviewPop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

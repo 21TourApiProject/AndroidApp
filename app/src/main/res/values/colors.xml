@@ -16,7 +16,7 @@
 
 
     <color name="bg_dark_indigo">#313063</color>
-    <color name="point_skyblue">#AAB2FF</color>
+    <color name="point">#AAB2FF</color>
     <color name="content_blue">#52528B</color>
     <color name="sub_blue">#6363D3</color>
     <color name="bg_deepdark_blue">#1E1D38</color>
