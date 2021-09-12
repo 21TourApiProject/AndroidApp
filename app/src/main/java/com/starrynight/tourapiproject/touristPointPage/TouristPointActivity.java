@@ -17,7 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.Activities;
+import com.starrynight.tourapiproject.mapPage.BalloonObject;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.touristPointPage.search.OnSearchItemClickListener;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchAdapter;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchData;
@@ -51,6 +55,7 @@ import retrofit2.Response;
 public class TouristPointActivity extends AppCompatActivity {
     Long userId;
     Boolean isWish;
+    BalloonObject balloonObject= new BalloonObject();
 
     private static final int NEAR = 101;
 
@@ -217,15 +222,8 @@ public class TouristPointActivity extends AppCompatActivity {
             }
         });
 
-        //지도 버튼
-        Button tpGps = findViewById(R.id.tpGps);
-        tpGps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //구현하기
-            }
-        });
-
+        balloonObject.setId(contentId);
+        balloonObject.setTag(2);
 
         //이미지 슬라이더
         slider = findViewById(R.id.tpSlider);
@@ -253,8 +251,17 @@ public class TouristPointActivity extends AppCompatActivity {
                                     isTp = true;
                                     tpInfo1.setVisibility(View.VISIBLE);
 
+                                    balloonObject.setLongitude(tpData.getMapX());
+                                    balloonObject.setLatitude(tpData.getMapY());
+                                    balloonObject.setName(tpData.getTitle());
+                                    balloonObject.setAddress(tpData.getAddr1());
+                                    balloonObject.setPoint_type(tpData.getCat3Name());
+                                    balloonObject.setIntro(tpData.getOverviewSim());
+
                                     //이미지
                                     if (tpData.getFirstImage() != null){
+                                        balloonObject.setImage(tpData.getFirstImage());
+
                                         image[0] = tpData.getFirstImage();
                                         slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
 
@@ -393,8 +400,17 @@ public class TouristPointActivity extends AppCompatActivity {
                                     isTp = false;
                                     foodInfo1.setVisibility(View.VISIBLE);
 
+                                    balloonObject.setLongitude(foodData.getMapX());
+                                    balloonObject.setLatitude(foodData.getMapY());
+                                    balloonObject.setName(foodData.getTitle());
+                                    balloonObject.setAddress(foodData.getAddr1());
+                                    balloonObject.setPoint_type(foodData.getCat3Name());
+                                    balloonObject.setIntro(foodData.getOverviewSim());
+
                                     //이미지
                                     if (foodData.getFirstImage() != null){
+                                        balloonObject.setImage(foodData.getFirstImage());
+
                                         image[0] = foodData.getFirstImage();
                                         slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
 
@@ -538,6 +554,7 @@ public class TouristPointActivity extends AppCompatActivity {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     hashTagResult = response.body();
+                    balloonObject.setHashtags(hashTagResult);
                     HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
                     hashTagRecyclerview.setAdapter(hashTagAdapter);
 
@@ -620,6 +637,26 @@ public class TouristPointActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Near>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
+            }
+        });
+
+
+        //지도 버튼
+        Button tpGps = findViewById(R.id.tpGps);
+        tpGps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 중간에 있던 액티비티들 삭제
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
+                startActivity(intent);
+
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putSerializable("FromWhere", Activities.TOURISTPOINT);//번들에 넘길 값 저장
+                bundle.putSerializable("BalloonObject", balloonObject);    //지도에 필요한 내용
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.setArguments(bundle);
+                ((MainActivity)MainActivity.mContext).replaceFragment(mapFragment);
             }
         });
     }
