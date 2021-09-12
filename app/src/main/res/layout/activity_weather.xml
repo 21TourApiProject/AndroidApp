@@ -686,7 +686,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="낮 길이" />
+                            android:text="광공해" />
 
                         <TextView
                             android:id="@+id/wt_day_length"
