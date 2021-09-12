@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.starrynight.tourapiproject.alarmPage.AlarmActivity;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.post_item;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
@@ -123,20 +125,20 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                         if (response.isSuccessful()){
                                             System.out.println("게시물 정보 가져옴");
                                             Post post =response.body();
-                                            Call<PostObservePoint>call3 = RetrofitClient.getApiService().getPostObservePoint(post.getPostObservePointId());
-                                            call3.enqueue(new Callback<PostObservePoint>() {
+                                            Call<Observation>call3 = RetrofitClient.getApiService().getObservation(post.getObservationId());
+                                            call3.enqueue(new Callback<Observation>() {
                                                 @Override
-                                                public void onResponse(Call<PostObservePoint> call, Response<PostObservePoint> response) {
+                                                public void onResponse(Call<Observation> call, Response<Observation> response) {
                                                     if (response.isSuccessful()){
                                                         System.out.println("관측지도 가져왔네?!");
-                                                        PostObservePoint postObservePoint = response.body();
-                                                        String observePoint = postObservePoint.getObservePointName();
+                                                        Observation observation = response.body();
+                                                        String observePoint = observation.getObservationName();
                                                         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
                                                         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                                                         recyclerView.setLayoutManager(layoutManager);
 
                                                         Post_item_adapter adapter = new Post_item_adapter();
-                                                        recyclerView.setAdapter(adapter);
+                                                        recyclerView.setAdapter(adapter);;
 
                                             adapter.addItem(new post_item(observePoint,"제목1","닉네임1", FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
                                             adapter.addItem(new post_item(observePoint,"제목2","닉네임2",FileName,result2,"https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
@@ -146,16 +148,17 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                                                 }
 
                                                 @Override
-                                                public void onFailure(Call<PostObservePoint> call, Throwable t) {
+                                                public void onFailure(Call<Observation> call, Throwable t) {
                                                     System.out.println("관측지 못 가져옴 2");
                                                 }
                                             });
-                                        }
+                                        }else{
+                                            Log.d("postPage","게시물 정보 못 가져옴");}
                                     }
 
                                     @Override
                                     public void onFailure(Call<Post> call, Throwable t) {
-
+                                        Log.d("postPage","게시물 정보 인터넷 실패");
                                     }
                                 });
                             }else {System.out.println("해시태그 못 가져옴");}

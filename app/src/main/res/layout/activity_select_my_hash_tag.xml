@@ -52,8 +52,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="5"
-                            android:onClick="clickEvent"
                             android:background="@drawable/select_hash_tag_unclicked"
+                            android:onClick="clickEvent"
                             android:text="공기 좋은" />
 
                         <Button

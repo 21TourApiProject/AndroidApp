@@ -22,6 +22,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
@@ -144,19 +145,19 @@ public class PostActivity extends AppCompatActivity{
                     postDate.setText(post.getYearDate());
 
                     //관측지
-                    Call<PostObservePoint>call2 = RetrofitClient.getApiService().getPostObservePoint(post.getPostObservePointId());
-                    call2.enqueue(new Callback<PostObservePoint>() {
+                    Call<Observation>call2 = RetrofitClient.getApiService().getObservation(post.getObservationId());
+                    call2.enqueue(new Callback<Observation>() {
                         @Override
-                        public void onResponse(Call<PostObservePoint> call, Response<PostObservePoint> response) {
+                        public void onResponse(Call<Observation> call, Response<Observation> response) {
                             if (response.isSuccessful()){
                                 System.out.println("게시물 관측지 가져옴");
-                                PostObservePoint postObservePoint1 = response.body();
-                                postObservePoint.setText(postObservePoint1.getObservePointName());
+                                Observation observation = response.body();
+                                postObservePoint.setText(observation.getObservationName());
                             }else{System.out.println("게시물 관측지 실패");}
                         }
 
                         @Override
-                        public void onFailure(Call<PostObservePoint> call, Throwable t) {
+                        public void onFailure(Call<Observation> call, Throwable t) {
                             System.out.println("게시물 관측지 실패2");
                         }
                     });
@@ -179,20 +180,6 @@ public class PostActivity extends AppCompatActivity{
                                                                     @Override
                                                                     public void onResponse(Call<Void> call, Response<Void> response) {
                                                                         if (response.isSuccessful()){System.out.println("게시물 삭제 완료");
-                                                                        Call<Void> call7  = RetrofitClient.getApiService().deletePostObservePoint(post.getPostObservePointId());
-                                                                        call7.enqueue(new Callback<Void>() {
-                                                                            @Override
-                                                                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                                                                if (response.isSuccessful()){
-                                                                                    System.out.println("게시물 관측지 삭제 완료");
-                                                                                }else{System.out.println("게시물 관측지 삭제 실패");}
-                                                                            }
-
-                                                                            @Override
-                                                                            public void onFailure(Call<Void> call, Throwable t) {
-                                                                                System.out.println("게시물 관측지 삭제 실패 2");
-                                                                            }
-                                                                        });
                                                                         Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                                                                         startActivity(intent1);
                                                                         finish();
@@ -219,7 +206,7 @@ public class PostActivity extends AppCompatActivity{
 
 
                     //관련 게시물
-                    Call<List<String>>call5 = RetrofitClient.getApiService().getRelatePostImageList(post.getPostObservePointId());
+                    Call<List<String>>call5 = RetrofitClient.getApiService().getRelatePostImageList(post.getObservationId());
                     call5.enqueue(new Callback<List<String>>() {
                         @Override
                         public void onResponse(Call<List<String>> call, Response<List<String>> response) {
