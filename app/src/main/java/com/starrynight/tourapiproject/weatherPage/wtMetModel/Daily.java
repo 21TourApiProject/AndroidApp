@@ -7,87 +7,87 @@ import java.util.List;
 
 public class Daily {
     @SerializedName("dt")
-    private Integer dt;
+    private String dt;
 
     @SerializedName("sunrise")
-    private Integer sunrise;
+    private String sunrise;
 
     @SerializedName("sunset")
-    private Integer sunset;
+    private String sunset;
 
     @SerializedName("moonrise")
-    private Integer moonrise;
+    private String moonrise;
 
     @SerializedName("moonset")
-    private Integer moonset;
+    private String moonset;
 
     @SerializedName("moon_phase")
-    private Double moonPhase;
+    private String moonPhase;
 
     @SerializedName("temp")
     private Temp temp;
 
     @SerializedName("humidity")
-    private Integer humidity;
+    private String humidity;
 
     @SerializedName("wind_speed")
-    private Double windSpeed;
+    private String windSpeed;
 
     @SerializedName("weather")
     @Expose
     private List<Weather> weather = null;
 
     @SerializedName("clouds")
-    private Integer clouds;
+    private String clouds;
 
     @SerializedName("pop")
-    private Double pop;
+    private String pop;
 
-    public Integer getDt() {
+    public String getDt() {
         return dt;
     }
 
-    public void setDt(Integer dt) {
+    public void setDt(String dt) {
         this.dt = dt;
     }
 
-    public Integer getSunrise() {
+    public String getSunrise() {
         return sunrise;
     }
 
-    public void setSunrise(Integer sunrise) {
+    public void setSunrise(String sunrise) {
         this.sunrise = sunrise;
     }
 
-    public Integer getSunset() {
+    public String getSunset() {
         return sunset;
     }
 
-    public void setSunset(Integer sunset) {
+    public void setSunset(String sunset) {
         this.sunset = sunset;
     }
 
-    public Integer getMoonrise() {
+    public String getMoonrise() {
         return moonrise;
     }
 
-    public void setMoonrise(Integer moonrise) {
+    public void setMoonrise(String moonrise) {
         this.moonrise = moonrise;
     }
 
-    public Integer getMoonset() {
+    public String getMoonset() {
         return moonset;
     }
 
-    public void setMoonset(Integer moonset) {
+    public void setMoonset(String moonset) {
         this.moonset = moonset;
     }
 
-    public Double getMoonPhase() {
+    public String getMoonPhase() {
         return moonPhase;
     }
 
-    public void setMoonPhase(Double moonPhase) {
+    public void setMoonPhase(String moonPhase) {
         this.moonPhase = moonPhase;
     }
 
@@ -99,19 +99,19 @@ public class Daily {
         this.temp = temp;
     }
 
-    public Integer getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(Integer humidity) {
+    public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
 
-    public Double getWindSpeed() {
+    public String getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(Double windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -123,19 +123,19 @@ public class Daily {
         this.weather = weather;
     }
 
-    public Integer getClouds() {
+    public String getClouds() {
         return clouds;
     }
 
-    public void setClouds(Integer clouds) {
+    public void setClouds(String clouds) {
         this.clouds = clouds;
     }
 
-    public Double getPop() {
+    public String getPop() {
         return pop;
     }
 
-    public void setPop(Double pop) {
+    public void setPop(String pop) {
         this.pop = pop;
     }
 }
