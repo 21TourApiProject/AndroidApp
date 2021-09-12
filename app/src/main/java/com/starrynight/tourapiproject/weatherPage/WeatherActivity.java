@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.weatherPage.wtAppearTimeModel.WtAppearTimeModel;
+import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.WtAreaParams;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
 
@@ -193,6 +195,12 @@ public class WeatherActivity extends AppCompatActivity {
     TextView maxTempTv;
     TextView tempSlashTv;
 
+    //날씨 지역 관련
+    String cityName;
+    String provName;
+    Double latitude;
+    Double longitude;
+
     {
         try {
             WT_MET_API_KEY = URLDecoder.decode("7c7ba4d9df15258ce566f6592d875413", "UTF-8");
@@ -217,13 +225,15 @@ public class WeatherActivity extends AppCompatActivity {
         onClickBackBtn();
         onClickCloudInfo();
 
+        //지역 선택 Spinner
+        onSetAreaSpinner();
+
         onSetDatePicker();
         onSetTimePicker();
 
         selectDateTime = selectDate + selectTime;
         Log.d("selectDateTime", selectDateTime);
 
-        connectMetApi();
         //detailWeatherClickEvent();
 
         //출몰시각 API 연결
@@ -231,8 +241,6 @@ public class WeatherActivity extends AppCompatActivity {
 //                .getAppearTimeData(WT_APPEAR_TIME_API_KEY, "고양", "20210730");
 //        getAppearTimeInstance.enqueue(appearTimeModelCallback);
 
-        //지역 선택 Spinner
-        onSetAreaSpinner();
     }
 
     public void setTextView() {
@@ -610,8 +618,13 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     public void connectMetApi() {
-        //기상청 API 연결
-        Callback<WtMetModel> weatherMetCallback = new Callback<WtMetModel>() {
+        Log.d("latitude1`", String.valueOf(latitude));
+        Log.d("longitude1", String.valueOf(longitude));
+
+        Call<WtMetModel> getWeatherInstance = WtMetRetrofit.wtMetInterface()
+                .getMetData(latitude, longitude, "minutely,current", WT_MET_API_KEY, "metric");
+
+        getWeatherInstance.enqueue(new Callback<WtMetModel>() {
             @Override
             public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
 
@@ -743,7 +756,6 @@ public class WeatherActivity extends AppCompatActivity {
                             }
                         }
                     }
-
                 }
             }
 
@@ -752,12 +764,7 @@ public class WeatherActivity extends AppCompatActivity {
                 t.printStackTrace();
                 Log.v("My Tag", "responseError= " + call.request().url());
             }
-        };
-
-        // 서울시 강남구
-        Call<WtMetModel> getWeatherInstance = WtMetRetrofit.wtMetInterface()
-                .getMetData(37.5006, 127.0508, "minutely,current", WT_MET_API_KEY, "metric");
-        getWeatherInstance.enqueue(weatherMetCallback);
+        });
         Log.d("openWeatherApi", "불러진다");
     }
 
@@ -864,11 +871,25 @@ public class WeatherActivity extends AppCompatActivity {
         cityAdSpin = ArrayAdapter.createFromResource(this, R.array.wt_cityList, android.R.layout.simple_spinner_dropdown_item);
         cityAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         citySpinner.setAdapter(cityAdSpin);
+
+        choice_do = "서울";
+        choice_se = "강남구";
+
+        cityName = choice_do;
+        provName = choice_se;
+
+        latitude = 37.5006;
+        longitude = 127.0508;
+
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (cityAdSpin.getItem(position).equals("서울")) {
                     choice_do = "서울";
+                    cityName = choice_do;
+
+                    choice_se = "강남구";
+                    provName = choice_se;
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Seoul, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -876,6 +897,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -885,6 +909,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("경기")) {
                     choice_do = "경기";
+                    cityName = choice_do;
+
+                    choice_se = "가평군";
+                    cityName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gyeonggi, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -892,6 +921,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -901,6 +933,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("인천")) {
                     choice_do = "인천";
+                    cityName = choice_do;
+
+                    choice_se = "강화군";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Incheon, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -908,6 +945,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -917,6 +957,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("강원")) {
                     choice_do = "강원";
+                    cityName = choice_do;
+
+                    choice_se = "강릉시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gangwon, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -924,15 +969,26 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
+
                     });
+                    Log.d("cityName", cityName);
+                    Log.d("provName", provName);
                 } else if (cityAdSpin.getItem(position).equals("충북")) {
                     choice_do = "충북";
+                    cityName = choice_do;
+
+                    choice_se = "괴산군";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Chungbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -940,6 +996,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -949,6 +1008,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("충남/대전/세종")) {
                     choice_do = "충남/대전/세종";
+                    cityName = choice_do;
+
+                    choice_se = "계룡시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_ChungnamDaejeonSejong, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -956,6 +1020,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -965,6 +1032,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("광주/전북")) {
                     choice_do = "광주/전북";
+                    cityName = choice_do;
+
+                    choice_se = "광산구";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_GwangjuJeonbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -972,6 +1044,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -981,6 +1056,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("전남")) {
                     choice_do = "전남";
+                    cityName = choice_do;
+
+                    choice_se = "강진군";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Jeonnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -988,6 +1068,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -997,6 +1080,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("대구/경북")) {
                     choice_do = "대구/경북";
+                    cityName = choice_do;
+
+                    choice_se = "중가";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_DaeguGyeongbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -1004,6 +1092,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -1013,6 +1104,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("경남")) {
                     choice_do = "경남";
+                    cityName = choice_do;
+
+                    choice_se = "거제시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gyeongnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -1020,6 +1116,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -1029,6 +1128,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("부산/울산")) {
                     choice_do = "부산/울산";
+                    cityName = choice_do;
+
+                    choice_se = "강서구";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_BusanUlsan, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -1036,6 +1140,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -1045,6 +1152,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("제주")) {
                     choice_do = "제주";
+                    cityName = choice_do;
+
+                    choice_se = "제주시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Jeju, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -1052,6 +1164,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -1066,6 +1181,37 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        connectWtArea();
+    }
+
+    public void connectWtArea() {
+        Log.d("cityName1", cityName);
+        Log.d("provName1", provName);
+
+        //지역명으로 경도, 위도 받아오기
+        Call<WtAreaParams> areaInfoCall = RetrofitClient.getApiService().getAreaInfo(cityName, provName);
+        areaInfoCall.enqueue(new Callback<WtAreaParams>() {
+            @Override
+            public void onResponse(Call<WtAreaParams> call, Response<WtAreaParams> response) {
+                if (response.isSuccessful()) {
+                    WtAreaParams result = response.body();
+                    latitude = result.getLatitude();
+                    longitude = result.getLongitude();
+
+                    connectMetApi();
+                    Log.d("latitude", String.valueOf(latitude));
+                    Log.d("longitude", String.valueOf(longitude));
+                } else {
+                    System.out.println("지역명으로 경도, 위도 받아오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WtAreaParams> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
             }
         });
     }
