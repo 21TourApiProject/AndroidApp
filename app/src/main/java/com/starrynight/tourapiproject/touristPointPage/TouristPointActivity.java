@@ -70,7 +70,7 @@ public class TouristPointActivity extends AppCompatActivity {
     Boolean isTp;
 
     TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
-            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText, overviewPop;
+            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText, overviewPop, daumMore;
 
     Button tpWish;
 
@@ -125,7 +125,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpPacking = findViewById(R.id.tpPacking);
         tpParkingFood = findViewById(R.id.tpParkingFood);
         nearText = findViewById(R.id.nearText);
-
+        daumMore=findViewById(R.id.daumMore);
         congestionLayout = findViewById(R.id.congestionLayout);
         addressLayout = findViewById(R.id.addressLayout);
         telLayout = findViewById(R.id.telLayout);
@@ -306,7 +306,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                                 }
                                             });
 
-                                    Button daumMore=findViewById(R.id.daumMore);
                                     daumMore.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -454,7 +453,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                                 }
                                             });
 
-                                    Button daumMore=findViewById(R.id.daumMore);
                                     daumMore.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
