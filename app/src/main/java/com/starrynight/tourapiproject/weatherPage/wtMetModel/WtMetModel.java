@@ -6,16 +6,16 @@ import java.util.List;
 
 public class WtMetModel {
     @SerializedName("lat")
-    private Double lat;
+    private String lat;
 
     @SerializedName("lon")
-    private Double lon;
+    private String lon;
 
     @SerializedName("timezone")
     private String timezone;
 
     @SerializedName("timezone_offset")
-    private Integer timezoneOffset;
+    private String timezoneOffset;
 
     @SerializedName("hourly")
     private List<Hourly> hourly;
@@ -23,19 +23,19 @@ public class WtMetModel {
     @SerializedName("daily")
     private List<Daily> daily;
 
-    public Double getLat() {
+    public String getLat() {
         return lat;
     }
 
-    public void setLat(Double lat) {
+    public void setLat(String lat) {
         this.lat = lat;
     }
 
-    public Double getLon() {
+    public String getLon() {
         return lon;
     }
 
-    public void setLon(Double lon) {
+    public void setLon(String lon) {
         this.lon = lon;
     }
 
@@ -47,11 +47,11 @@ public class WtMetModel {
         this.timezone = timezone;
     }
 
-    public Integer getTimezoneOffset() {
+    public String getTimezoneOffset() {
         return timezoneOffset;
     }
 
-    public void setTimezoneOffset(Integer timezoneOffset) {
+    public void setTimezoneOffset(String timezoneOffset) {
         this.timezoneOffset = timezoneOffset;
     }
 
