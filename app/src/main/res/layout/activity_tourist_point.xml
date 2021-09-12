@@ -37,21 +37,6 @@
                     android:text="제목"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:text="/" />
-
-                <TextView
-                    android:id="@+id/cat3Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:text="관광지 타입"
-                    android:textSize="14sp" />
-
                 <Button
                     android:id="@+id/tpGps"
                     android:layout_width="30dp"
@@ -68,10 +53,16 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="end"
-                        android:background="@drawable/main__bookmark" />
+                        android:background="@drawable/bookmark_non" />
                 </FrameLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/cat3Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="관광지 타입" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/tpHashTag"
@@ -84,12 +75,12 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible" />
 
-            <Button
+            <TextView
                 android:id="@+id/overviewPop"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="자세히보기"
-                android:visibility="visible" />
+                android:textColor="@color/point"
+                android:text="자세히 보기" />
 
             <LinearLayout
                 android:id="@+id/congestionLayout"
@@ -97,6 +88,11 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/tp_congestion" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -128,14 +124,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
-                    android:textColor="@color/purple_200"
-                    android:text="주소" />
+                    android:text="주소"
+                    android:textColor="@color/point" />
 
                 <TextView
                     android:id="@+id/tpAddress"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                     />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
-                    
+                    android:textColor="@color/point"
                     android:text="문의" />
 
                 <TextView
@@ -186,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="이용시간" />
 
                     <TextView
@@ -211,7 +206,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="휴무일" />
 
                     <TextView
@@ -244,7 +239,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="영업시간" />
 
                     <TextView
@@ -269,7 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="휴무일" />
 
                     <TextView
@@ -280,11 +275,13 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/moreInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="펼치기" />
+                android:layout_gravity="center"
+                android:textColor="@color/point"
+                android:text="+ 더보기" />
 
             <LinearLayout
                 android:id="@+id/tpInfo2"
@@ -303,7 +300,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="체험안내" />
 
                     <TextView
@@ -328,7 +325,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="주차시설" />
 
                     <TextView
@@ -344,11 +341,16 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/tp_pet" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="반려동물 동반가능 여부" />
 
                     <TextView
@@ -364,11 +366,16 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/tp_homepage" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="홈페이지" />
 
                     <TextView
@@ -401,7 +408,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="대표메뉴" />
 
                     <TextView
@@ -426,7 +433,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="취급메뉴" />
 
                     <TextView
@@ -451,7 +458,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="포장" />
 
                     <TextView
@@ -476,7 +483,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        
+                        android:textColor="@color/point"
                         android:text="주차시설" />
 
                     <TextView
