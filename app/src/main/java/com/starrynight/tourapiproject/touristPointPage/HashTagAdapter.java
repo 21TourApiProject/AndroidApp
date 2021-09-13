@@ -25,7 +25,7 @@ public class HashTagAdapter extends RecyclerView.Adapter<HashTagAdapter.ViewHold
     public HashTagAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         //viewHolder 처음 만드는 함수
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.hashtags_full, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.hashtags_empty, viewGroup, false);
 
         return new HashTagAdapter.ViewHolder(itemView);
     }
