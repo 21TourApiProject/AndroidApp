@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.weatherPage.wtAppearTimeModel.WtAppearTimeModel;
+import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.WtAreaParams;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
 
@@ -51,10 +53,17 @@ public class WeatherActivity extends AppCompatActivity {
     SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyyMMdd");
 
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat formatTime = new SimpleDateFormat("HH");
+    SimpleDateFormat formatHourMin = new SimpleDateFormat("HH:mm");
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatHour = new SimpleDateFormat("HH");
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
+
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyyMMddHH");
 
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
@@ -85,7 +94,6 @@ public class WeatherActivity extends AppCompatActivity {
     String WT_APPEAR_TIME_API_KEY;
 
     String strDate;
-    String strTime;
 
     String timePickerTxt;
 
@@ -107,6 +115,8 @@ public class WeatherActivity extends AppCompatActivity {
     String plusTwoDay;
 
     String setTime = "00시";
+    String timeZero = "00";
+    String timeNoon = "12";
     String setTimeNo = "선택 불가";
     String todayTimeTxt;
 
@@ -125,9 +135,78 @@ public class WeatherActivity extends AppCompatActivity {
     private Button btnConfirm;
     private Button btnCancel;
 
-    Date sDate;
-    Date tDate;
+    // unix 시간 관련
+    String unixTime;
+    String unixSunMoon;
+    String unixSunrise;
+    String unixSunset;
+    String unixToDate;
+    String unixToDay;
+    String unixToHourMin;
 
+    Date unixDate;
+    Date unixDay;
+    Date unixHourMin;
+
+    //낮 길이
+    String sunriseSt;
+    String sunsetSt;
+
+    Date sunriseTime;
+    Date sunsetTime;
+
+    long dayLength;
+    int hourValue;
+    int minValue;
+    String diff;
+
+    //강수량
+    double doublePrecip;
+    int intPrecip;
+    String stringPrecip;
+
+    // 날씨 TextView
+    TextView commentTv;
+    TextView todayWeatherTv;
+    TextView starObFitTv;
+    TextView bestObTimeTv;
+    TextView sunriseTv;
+    TextView sunsetTv;
+    TextView moonriseTv;
+    TextView moonsetTv;
+
+    TextView cloudTv;
+    TextView tempTv;
+    TextView moonPhaseTv;
+    TextView findDustTv;
+    TextView windTv;
+    TextView humidityTv;
+    TextView precipitationTv;
+    TextView minLightPolTv;
+    TextView maxLightPolTv;
+
+    String cloudText;
+    String tempText;
+    String tempText1;
+    String windText;
+    String humidityText;
+    String precipitationText;
+
+    TextView minTempTv;
+    TextView maxTempTv;
+    TextView tempSlashTv;
+
+    //날씨 지역 관련
+    String cityName;
+    String provName;
+    Double latitude;
+    Double longitude;
+
+    //광공해
+    Double minLightPol;
+    Double maxLightPol;
+    String minLightPolVal;
+    String maxLightPolVal;
 
     {
         try {
@@ -149,26 +228,51 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+        setTextView();
         onClickBackBtn();
         onClickCloudInfo();
+
+        //지역 선택 Spinner
+        onSetAreaSpinner();
 
         onSetDatePicker();
         onSetTimePicker();
 
-
         selectDateTime = selectDate + selectTime;
-        Log.d("todayDateTime", selectDateTime);
+        Log.d("selectDateTime", selectDateTime);
 
-        connectMetApi();
-
+        //detailWeatherClickEvent();
 
         //출몰시각 API 연결
 //        Call<WtAppearTimeModel> getAppearTimeInstance = WtAppearTimeRetrofit.wtAppearTimeInterface()
 //                .getAppearTimeData(WT_APPEAR_TIME_API_KEY, "고양", "20210730");
 //        getAppearTimeInstance.enqueue(appearTimeModelCallback);
 
-        //지역 선택 Spinner
-        onSetAreaSpinner();
+    }
+
+    public void setTextView() {
+        commentTv = findViewById(R.id.wt_comment);
+        todayWeatherTv = findViewById(R.id.wt_today_weather_info);
+        starObFitTv = findViewById(R.id.wt_star_ob_fit_info);
+        bestObTimeTv = findViewById(R.id.wt_best_ob_time_info);
+        sunriseTv = findViewById(R.id.sunrise_info);
+        sunsetTv = findViewById(R.id.sunset_info);
+        moonriseTv = findViewById(R.id.moonrise_info);
+        moonsetTv = findViewById(R.id.moonset_info);
+
+        cloudTv = findViewById(R.id.wt_cloud);
+        tempTv = findViewById(R.id.wt_temp);
+        moonPhaseTv = findViewById(R.id.wt_moon_phase);
+        findDustTv = findViewById(R.id.wt_find_dust);
+        windTv = findViewById(R.id.wt_wind);
+        humidityTv = findViewById(R.id.wt_humidity);
+        precipitationTv = findViewById(R.id.wt_precipitation);
+        minLightPolTv = findViewById(R.id.wt_min_light_pol);
+        maxLightPolTv = findViewById(R.id.wt_max_light_pol);
+
+        minTempTv = findViewById(R.id.wt_min_temp);
+        maxTempTv = findViewById(R.id.wt_max_temp);
+        tempSlashTv = findViewById(R.id.wt_temp_slash);
     }
 
     //뒤로가기 버튼 이벤트
@@ -203,7 +307,6 @@ public class WeatherActivity extends AppCompatActivity {
 //        plusDay += selectTime;
 //        Log.d("plusTwoDay", plusDay);
 
-
         selectDate = formatDate2.format(cal.getTime());
         todayDate = formatDate2.format(cal.getTime());
         Log.d("todayDate", todayDate);
@@ -215,11 +318,12 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("selectDate", selectDate);
         datePicker.setText(strDate);
 
-        todayTime = formatTime.format(cal.getTime());
+        todayTime = formatHour.format(cal.getTime());
         todayTimeTxt = todayTime + "시";
         timePicker.setText(todayTimeTxt);
 
         dateListener = new DatePickerDialog.OnDateSetListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 //monthOfYear += 1;
@@ -228,24 +332,31 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.d("strDate", strDate);
                 datePicker.setText(strDate);
                 //20210901
-                selectDate = String.valueOf(year) + String.valueOf(String.format("%02d", (monthOfYear + 1))) + String.valueOf(String.format("%02d", (dayOfMonth)));
+                selectDate = year + String.format("%02d", (monthOfYear + 1)) + String.format("%02d", (dayOfMonth));
                 Log.d("selectDate", selectDate);
 
-                selectDateTime = selectDate + selectTime;
-                Log.d("selectDateTime", selectDateTime);
-                ;
                 if (selectDate.equals(plusDay)) {
                     timePicker.setText(setTime);
+                    selectTime = timeZero;
+                    Log.d("selectTime1", selectTime);
                 } else if (selectDate.equals(plusTwoDay)) {
                     timePicker.setText(setTime);
+                    selectTime = timeZero;
+                    Log.d("selectTime2", selectTime);
                 } else if (selectDate.equals(todayDate)) {
                     todayTimeTxt = todayTime + "시";
-                    Log.d("todayTime1", todayTime);
+                    Log.d("todayTime3", todayTime);
                     timePicker.setText(todayTimeTxt);
                 } else {
                     timePicker.setText(setTimeNo);
+                    selectTime = timeNoon;
+                    Log.d("selectTime4", selectTime);
                 }
 
+                selectDateTime = selectDate + selectTime;
+                Log.d("selectDateTime", selectDateTime);
+
+                connectMetApi();
             }
         };
     }
@@ -270,7 +381,7 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("todayDateTime", todayDateTime);
 
         selectTime = todayTime;
-        Log.d("selectTime", selectTime);
+        Log.d("selectTime5", selectTime);
 
         c.add(Calendar.DATE, 1);
         plusDay = formatDate2.format(c.getTime());
@@ -481,8 +592,8 @@ public class WeatherActivity extends AppCompatActivity {
             }
         }
 
-        Button btnConfirm = dialogView.findViewById(R.id.wt_btn_confirm);
-        Button btnCancel = dialogView.findViewById(R.id.wt_btn_cancel);
+        btnConfirm = dialogView.findViewById(R.id.wt_btn_confirm);
+        btnCancel = dialogView.findViewById(R.id.wt_btn_cancel);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -497,48 +608,205 @@ public class WeatherActivity extends AppCompatActivity {
                 if ((selectDate.equals(todayDate)) || (selectDate.equals(plusDay)) || (selectDate.equals(plusTwoDay))) {
                     timePickerTxt = hourChange[numberPicker.getValue()] + "시";
                     timePicker.setText(timePickerTxt);
-                }else{
+                    selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
+                } else {
                     timePicker.setText(setTimeNo);
+                    selectTime = timeNoon;
                 }
 
-                selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
-                Log.d("selectTime", selectTime);
+                Log.d("selectTime6", selectTime);
 
                 selectDateTime = selectDate + selectTime;
                 Log.d("selectDateTime", selectDateTime);
+
+                connectMetApi();
                 alertDialog.dismiss();
             }
         });
     }
 
-
     public void connectMetApi() {
-        //기상청 API 연결
+        Log.d("latitude1`", String.valueOf(latitude));
+        Log.d("longitude1", String.valueOf(longitude));
+
         Call<WtMetModel> getWeatherInstance = WtMetRetrofit.wtMetInterface()
-                .getMetData(37.56666, 126.9015, "minutely,current", WT_MET_API_KEY, "metric");
-        getWeatherInstance.enqueue(weatherMetCallback);
+                .getMetData(latitude, longitude, "minutely,current", WT_MET_API_KEY, "metric");
+
+        getWeatherInstance.enqueue(new Callback<WtMetModel>() {
+            @Override
+            public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
+
+                if (response.isSuccessful()) {
+                    WtMetModel data = response.body();
+
+                    for (int i = 0; i < 8; i++) {
+                        unixTime = data.getDaily().get(i).getDt();
+                        unixChange(unixTime);
+                        Log.d("unixToDay", unixToDay);
+
+                        if (selectDate.equals(unixToDay)) {
+                            //월령 정보
+                            moonPhaseTv.setText(data.getDaily().get(i).getMoonPhase());
+
+                            //일출
+                            unixSunMoon = data.getDaily().get(i).getSunrise();
+                            unixSunrise = unixSunMoon;
+                            unixChange(unixSunMoon);
+                            sunriseTv.setText(unixToHourMin);
+
+                            //일몰
+                            unixSunMoon = data.getDaily().get(i).getSunset();
+                            unixSunset = unixSunMoon;
+                            unixChange(unixSunMoon);
+                            sunsetTv.setText(unixToHourMin);
+
+                            //월출
+                            unixSunMoon = data.getDaily().get(i).getMoonrise();
+                            unixChange(unixSunMoon);
+                            moonriseTv.setText(unixToHourMin);
+
+                            //월몰
+                            unixSunMoon = data.getDaily().get(i).getMoonset();
+                            unixChange(unixSunMoon);
+                            moonsetTv.setText(unixToHourMin);
+
+                            //낮 길이
+//                            unixChange(unixSunrise);
+//                            sunriseSt = unixToHourMin;
+//                            Log.d("sunriseTime", sunriseSt);
+//                            unixChange(unixSunset);
+//                            sunsetSt = unixToHourMin;
+//                            Log.d("date2", sunsetSt);
+//
+//                            try {
+//                                sunriseTime = formatHourMin.parse(sunriseSt);
+//                                sunsetTime = formatHourMin.parse(sunsetSt);
+//
+//                                assert sunsetTime != null;
+//                                assert sunriseTime != null;
+//
+//                                dayLength = sunsetTime.getTime() - sunriseTime.getTime();
+//                                hourValue = (int) (dayLength / (1000 * 60 * 60));
+//                                minValue = (int) ((dayLength / (1000 * 60)) % 60);
+//
+//                                diff = hourValue + "시간 " + minValue + "분";
+//                                Log.d("dayLength", diff);
+//                            } catch (ParseException ignored) {
+//
+//                            }
+//
+//                            dayLengthTv.setText(diff);
+                        }
+                    }
+
+                    if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
+                        for (int i = 0; i < 48; i++) {
+                            unixTime = data.getHourly().get(i).getDt();
+                            unixChange(unixTime);
+                            Log.d("unixToDate", unixToDate);
+
+                            if (selectDateTime.equals(unixToDate)) {
+                                tempTv.setVisibility(View.VISIBLE);
+                                maxTempTv.setVisibility(View.GONE);
+                                minTempTv.setVisibility(View.GONE);
+                                tempSlashTv.setVisibility(View.GONE);
+
+                                cloudText = data.getHourly().get(i).getClouds() + "%";
+                                tempText = data.getHourly().get(i).getTemp() + "°C";
+                                windText = data.getHourly().get(i).getWindSpeed() + "m/s";
+                                humidityText = data.getHourly().get(i).getHumidity() + "%";
+                                precipitationText = data.getHourly().get(i).getPop();
+
+                                doublePrecip = Double.parseDouble(precipitationText) * 100;
+                                intPrecip = (int) doublePrecip;
+                                stringPrecip = intPrecip + "%";
+
+                                cloudTv.setText(cloudText);
+                                tempTv.setText(tempText);
+                                windTv.setText(windText);
+                                humidityTv.setText(humidityText);
+                                precipitationTv.setText(stringPrecip);
+                                Log.d("getI", String.valueOf(i));
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < 8; i++) {
+                            unixTime = data.getDaily().get(i).getDt();
+                            unixChange(unixTime);
+                            Log.d("unixToDateDaily", unixToDate);
+
+                            if (selectDateTime.equals(unixToDate)) {
+                                tempTv.setVisibility(View.GONE);
+                                maxTempTv.setVisibility(View.VISIBLE);
+                                minTempTv.setVisibility(View.VISIBLE);
+                                tempSlashTv.setVisibility(View.VISIBLE);
+
+                                cloudText = data.getDaily().get(i).getClouds() + "%";
+                                tempText = data.getDaily().get(i).getTemp().getMin() + "°C";
+                                tempText1 = data.getDaily().get(i).getTemp().getMax() + "°C";
+                                windText = data.getDaily().get(i).getWindSpeed() + "m/s";
+                                humidityText = data.getDaily().get(i).getHumidity() + "%";
+                                precipitationText = data.getDaily().get(i).getPop();
+
+                                doublePrecip = Double.parseDouble(precipitationText) * 100;
+                                intPrecip = (int) doublePrecip;
+                                stringPrecip = intPrecip + "%";
+
+                                cloudTv.setText(cloudText);
+                                minTempTv.setText(tempText);
+                                maxTempTv.setText(tempText1);
+                                windTv.setText(windText);
+                                humidityTv.setText(humidityText);
+                                precipitationTv.setText(stringPrecip);
+                                Log.d("getIDaily", String.valueOf(i));
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WtMetModel> call, Throwable t) {
+                t.printStackTrace();
+                Log.v("My Tag", "responseError= " + call.request().url());
+            }
+        });
         Log.d("openWeatherApi", "불러진다");
     }
 
-    //기상청 API 연결
-    private Callback<WtMetModel> weatherMetCallback = new Callback<WtMetModel>() {
-        @Override
-        public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
-            if (response.isSuccessful()) {
-                WtMetModel data = response.body();
-                TextView textView = findViewById(R.id.wt_cloud);
-                textView.setText(data.getTimezone());
-                Log.d("My Tag", "response= " + response.raw().request().url().url());
-            }
+    //unix 시간 변환
+    public void unixChange(String unixTime) {
+        //yyyyMMddHH
+        unixDate = new java.util.Date(Long.parseLong(unixTime) * 1000L);
+        formatDateTime.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+        unixToDate = formatDateTime.format(unixDate);
 
-        }
+        //yyyyMMdd
+        unixDay = new java.util.Date(Long.parseLong(unixTime) * 1000L);
+        formatDate2.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+        unixToDay = formatDate2.format(unixDay);
 
-        @Override
-        public void onFailure(Call<WtMetModel> call, Throwable t) {
-            t.printStackTrace();
-            Log.v("My Tag", "responseError= " + call.request().url());
-        }
-    };
+        //HH:mm
+        unixHourMin = new java.util.Date(Long.parseLong(unixTime) * 1000L);
+        formatHourMin.setTimeZone(java.util.TimeZone.getTimeZone("GMT+9"));
+        unixToHourMin = formatHourMin.format(unixHourMin);
+    }
+
+
+//    public void detailWeatherClickEvent(){
+//        LinearLayout detailWeather;
+//        detailWeather = findViewById(R.id.detail_weather);
+//        detailWeather.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                tempTv.setVisibility(View.GONE);
+//                maxTempTv.setVisibility(View.VISIBLE);
+//                minTempTv.setVisibility(View.VISIBLE);
+//                tempSlashTv.setVisibility(View.VISIBLE);
+//                return false;
+//            }
+//        });
+//    }
 
     //출몰시각 API 연결
     private Callback<WtAppearTimeModel> appearTimeModelCallback = new Callback<WtAppearTimeModel>() {
@@ -609,11 +877,25 @@ public class WeatherActivity extends AppCompatActivity {
         cityAdSpin = ArrayAdapter.createFromResource(this, R.array.wt_cityList, android.R.layout.simple_spinner_dropdown_item);
         cityAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         citySpinner.setAdapter(cityAdSpin);
+
+        choice_do = "서울";
+        choice_se = "강남구";
+
+        cityName = choice_do;
+        provName = choice_se;
+
+        latitude = 37.5006;
+        longitude = 127.0508;
+
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (cityAdSpin.getItem(position).equals("서울")) {
                     choice_do = "서울";
+                    cityName = choice_do;
+
+                    choice_se = "강남구";
+                    provName = choice_se;
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Seoul, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -621,6 +903,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -630,6 +915,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("경기")) {
                     choice_do = "경기";
+                    cityName = choice_do;
+
+                    choice_se = "가평군";
+                    cityName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gyeonggi, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -637,6 +927,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -646,6 +939,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("인천")) {
                     choice_do = "인천";
+                    cityName = choice_do;
+
+                    choice_se = "강화군";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Incheon, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -653,6 +951,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -662,6 +963,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("강원")) {
                     choice_do = "강원";
+                    cityName = choice_do;
+
+                    choice_se = "강릉시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gangwon, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -669,15 +975,26 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
+
                     });
+                    Log.d("cityName", cityName);
+                    Log.d("provName", provName);
                 } else if (cityAdSpin.getItem(position).equals("충북")) {
                     choice_do = "충북";
+                    cityName = choice_do;
+
+                    choice_se = "괴산군";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Chungbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -685,6 +1002,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -692,8 +1012,13 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("충남/대전/세종")) {
-                    choice_do = "충남/대전/세종";
+                } else if (cityAdSpin.getItem(position).equals("충남·대전·세종")) {
+                    choice_do = "충남·대전·세종";
+                    cityName = choice_do;
+
+                    choice_se = "계룡시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_ChungnamDaejeonSejong, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -701,6 +1026,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -708,8 +1036,13 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("광주/전북")) {
-                    choice_do = "광주/전북";
+                } else if (cityAdSpin.getItem(position).equals("광주·전북")) {
+                    choice_do = "광주·전북";
+                    cityName = choice_do;
+
+                    choice_se = "광산구";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_GwangjuJeonbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -717,6 +1050,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -726,6 +1062,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("전남")) {
                     choice_do = "전남";
+                    cityName = choice_do;
+
+                    choice_se = "강진군";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Jeonnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -733,6 +1074,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -740,8 +1084,13 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("대구/경북")) {
-                    choice_do = "대구/경북";
+                } else if (cityAdSpin.getItem(position).equals("대구·경북")) {
+                    choice_do = "대구·경북";
+                    cityName = choice_do;
+
+                    choice_se = "중가";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_DaeguGyeongbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -749,6 +1098,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -758,6 +1110,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("경남")) {
                     choice_do = "경남";
+                    cityName = choice_do;
+
+                    choice_se = "거제시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gyeongnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -765,6 +1122,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -772,8 +1132,13 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("부산/울산")) {
-                    choice_do = "부산/울산";
+                } else if (cityAdSpin.getItem(position).equals("부산·울산")) {
+                    choice_do = "부산·울산";
+                    cityName = choice_do;
+
+                    choice_se = "강서구";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_BusanUlsan, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -781,6 +1146,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -790,6 +1158,11 @@ public class WeatherActivity extends AppCompatActivity {
                     });
                 } else if (cityAdSpin.getItem(position).equals("제주")) {
                     choice_do = "제주";
+                    cityName = choice_do;
+
+                    choice_se = "제주시";
+                    provName = choice_se;
+
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Jeju, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
@@ -797,6 +1170,9 @@ public class WeatherActivity extends AppCompatActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
                         }
 
                         @Override
@@ -811,6 +1187,46 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        connectWtArea();
+    }
+
+    public void connectWtArea() {
+        Log.d("cityName1", cityName);
+        Log.d("provName1", provName);
+
+        //지역명으로 경도, 위도, 광공해 받아오기
+        Call<WtAreaParams> areaInfoCall = RetrofitClient.getApiService().getAreaInfo(cityName, provName);
+        areaInfoCall.enqueue(new Callback<WtAreaParams>() {
+            @Override
+            public void onResponse(Call<WtAreaParams> call, Response<WtAreaParams> response) {
+                if (response.isSuccessful()) {
+                    WtAreaParams result = response.body();
+                    latitude = result.getLatitude();
+                    longitude = result.getLongitude();
+
+                    minLightPol = result.getMinLightPol();
+                    maxLightPol = result.getMaxLightPol();
+
+                    minLightPolVal = minLightPol.toString();
+                    maxLightPolVal = maxLightPol.toString();
+
+                    minLightPolTv.setText(minLightPolVal);
+                    maxLightPolTv.setText(maxLightPolVal);
+
+                    connectMetApi();
+                    Log.d("latitude", String.valueOf(latitude));
+                    Log.d("longitude", String.valueOf(longitude));
+                } else {
+                    System.out.println("지역명으로 경도, 위도 받아오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WtAreaParams> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
             }
         });
     }

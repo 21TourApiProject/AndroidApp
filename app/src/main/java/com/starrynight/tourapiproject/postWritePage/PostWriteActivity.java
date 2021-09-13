@@ -81,7 +81,8 @@ public class PostWriteActivity extends AppCompatActivity {
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
     List<PostImageParams> postImageParams = new ArrayList<>();
     String postObservePointName="";
-    String[] hashTagList= new String[10];
+    List<String> hashTagList= new ArrayList<>();
+    String[] optionhashTagList= new String[10];
     Long postId;
     Long userId;
     File file;
@@ -243,7 +244,6 @@ public class PostWriteActivity extends AppCompatActivity {
         });
 
         //해시태그추가 버튼 클릭 이벤트
-        Arrays.fill(hashTagList, "");
         Button addHashTag = findViewById(R.id.hashTag);
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,7 +279,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(hashTagList[0].isEmpty()){
+                if(hashTagList.isEmpty()&&optionhashTagList[0]==null){
                     Toast.makeText(getApplicationContext(), "해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -294,6 +294,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 postParams.setUserId(userId);
                 postParams.setPostTitle(postTitle);
                 postParams.setOptionObservation(optionobservationName);
+                postParams.setOptionHashTag(optionhashTagList[0]);
                 Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
                 call.enqueue(new Callback<Long>() {
                     @Override
@@ -333,7 +334,7 @@ public class PostWriteActivity extends AppCompatActivity {
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
                                         System.out.println("해시태그 생성");
-                                    }else {System.out.println("해시태그 생성 실패");}
+                                    }else {System.out.println("해시태그 생성 실패,임시 해시태그 생성");}
                                 }
 
                                 @Override
@@ -382,16 +383,25 @@ public class PostWriteActivity extends AppCompatActivity {
         }
         if(requestCode == 203){
             if(resultCode == 3){
-                System.out.println("해시태그가 넘어왔당");
+                Log.d("postHashTag","게시물 해시태그 넘어옴");
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
-                hashTagList = (String[]) data.getSerializableExtra("hashTagList");
+                hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
+                optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);
                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
-                for (int i=0;i<hashTagList.length;i++){
-                    adapter.addItem(new PostHashTagItem(hashTagList[i]));
-                    System.out.println(hashTagList[i]+hashTagList.length);
+                if (hashTagList.size()!=0){
+                for (int i=0;i<hashTagList.size();i++){
+                    adapter.addItem(new PostHashTagItem(hashTagList.get(i)));
+                    System.out.println("기존"+hashTagList.get(i)+hashTagList.size());
+                    }
+                }else{
+                    for (int i=0;i<optionhashTagList.length;i++){
+                    adapter.addItem(new PostHashTagItem(optionhashTagList[i]));
+                    System.out.println("임의"+optionhashTagList[i]+optionhashTagList.length);
+                }
+
                 }
                 recyclerView.setAdapter(adapter);
             }else{System.out.println("해시태그가 안 넘어왔당");}
