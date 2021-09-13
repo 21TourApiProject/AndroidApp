@@ -47,6 +47,8 @@ import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostPageRetrofitService;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -260,7 +262,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                 for (String p : observeHashTags) {
                                     RecyclerHashTagItem item = new RecyclerHashTagItem();
                                     item.setHashtagName(p);
-
                                     recyclerHashTagAdapter.addItem(item);
                                 }
                                 recyclerHashTagAdapter.notifyDataSetChanged();
@@ -495,7 +496,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
             }
         });
 
-        Button postwrite_btn = findViewById(R.id.writePost_btn);
+        TextView postwrite_btn = findViewById(R.id.writePost_btn);
         postwrite_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -45,26 +45,26 @@ public class AddHashTagActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hash_tag);
         findHashTag = findViewById(R.id.findHashTag);
-        dynamicLayout2 = (LinearLayout)findViewById(R.id.dynamicLayout2);
+        dynamicLayout2 = (LinearLayout)findViewById(R.id.dynamicLayout);
         Intent intent= getIntent();
         for (int i = 0;i<hashTaglist.length;i++){
             hashTaglist[i]="";
         }
-        Button plusHashTag = findViewById(R.id.plusHashTag);
-        plusHashTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i=3;i>0;i--){
-                    if (hashTaglist[i]==""){
-                        hashTaglist = Arrays.copyOf(hashTaglist, hashTaglist.length-1);
-                    }
-                }
-                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
-                intent.putExtra("hashTagList", (Serializable) hashTaglist);
-                setResult(3,intent);
-                finish();
-            }
-        });
+//        Button plusHashTag = findViewById(R.id.plusHashTag);
+//        plusHashTag.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                for (int i=3;i>0;i--){
+//                    if (hashTaglist[i]==""){
+//                        hashTaglist = Arrays.copyOf(hashTaglist, hashTaglist.length-1);
+//                    }
+//                }
+//                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
+//                intent.putExtra("hashTagList", (Serializable) hashTaglist);
+//                setResult(3,intent);
+//                finish();
+//            }
+//        });
         Button addHashTag = findViewById(R.id.addHashTag);
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
