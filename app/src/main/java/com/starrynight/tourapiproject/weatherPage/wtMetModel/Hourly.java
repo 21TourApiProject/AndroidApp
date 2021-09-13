@@ -7,75 +7,75 @@ import java.util.List;
 
 public class Hourly {
     @SerializedName("dt")
-    private Integer dt;
+    private String dt;
 
     @SerializedName("temp")
-    private Double temp;
+    private String temp;
 
     @SerializedName("humidity")
-    private Integer humidity;
+    private String humidity;
 
     @SerializedName("clouds")
-    private Integer clouds;
+    private String clouds;
 
     @SerializedName("visibility")
     @Expose
-    private Integer visibility;
+    private String visibility;
 
     @SerializedName("wind_speed")
-    private Double windSpeed;
+    private String windSpeed;
 
     @SerializedName("weather")
     private List<Weather> weather;
 
     @SerializedName("pop")
-    private Double pop;
+    private String pop;
 
-    public Integer getDt() {
+    public String getDt() {
         return dt;
     }
 
-    public void setDt(Integer dt) {
+    public void setDt(String dt) {
         this.dt = dt;
     }
 
-    public Double getTemp() {
+    public String getTemp() {
         return temp;
     }
 
-    public void setTemp(Double temp) {
+    public void setTemp(String temp) {
         this.temp = temp;
     }
 
-    public Integer getHumidity() {
+    public String getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(Integer humidity) {
+    public void setHumidity(String humidity) {
         this.humidity = humidity;
     }
 
-    public Integer getClouds() {
+    public String getClouds() {
         return clouds;
     }
 
-    public void setClouds(Integer clouds) {
+    public void setClouds(String clouds) {
         this.clouds = clouds;
     }
 
-    public Integer getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(Integer visibility) {
+    public void setVisibility(String visibility) {
         this.visibility = visibility;
     }
 
-    public Double getWindSpeed() {
+    public String getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(Double windSpeed) {
+    public void setWindSpeed(String windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -87,11 +87,11 @@ public class Hourly {
         this.weather = weather;
     }
 
-    public Double getPop() {
+    public String getPop() {
         return pop;
     }
 
-    public void setPop(Double pop) {
+    public void setPop(String pop) {
         this.pop = pop;
     }
 
