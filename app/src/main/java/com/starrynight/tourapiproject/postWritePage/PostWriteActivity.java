@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -294,7 +295,70 @@ public class PostWriteActivity extends AppCompatActivity {
                 postParams.setUserId(userId);
                 postParams.setPostTitle(postTitle);
                 postParams.setOptionObservation(optionobservationName);
-                postParams.setOptionHashTag(optionhashTagList[0]);
+                if (optionhashTagList.length==1){postParams.setOptionHashTag(optionhashTagList[0]);}
+                if (optionhashTagList.length==2){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);}
+                if (optionhashTagList.length==3){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);}
+                if (optionhashTagList.length==4){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);
+                    postParams.setOptionHashTag4(optionhashTagList[3]);}
+                if (optionhashTagList.length==5){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);
+                    postParams.setOptionHashTag4(optionhashTagList[3]);
+                    postParams.setOptionHashTag5(optionhashTagList[4]);}
+                if (optionhashTagList.length==6){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);
+                    postParams.setOptionHashTag4(optionhashTagList[3]);
+                    postParams.setOptionHashTag5(optionhashTagList[4]);
+                    postParams.setOptionHashTag6(optionhashTagList[5]);}
+                if (optionhashTagList.length==7){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);
+                    postParams.setOptionHashTag4(optionhashTagList[3]);
+                    postParams.setOptionHashTag5(optionhashTagList[4]);
+                    postParams.setOptionHashTag6(optionhashTagList[5]);
+                    postParams.setOptionHashTag7(optionhashTagList[6]);}
+                if (optionhashTagList.length==8){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);
+                    postParams.setOptionHashTag4(optionhashTagList[3]);
+                    postParams.setOptionHashTag5(optionhashTagList[4]);
+                    postParams.setOptionHashTag6(optionhashTagList[5]);
+                    postParams.setOptionHashTag7(optionhashTagList[6]);
+                    postParams.setOptionHashTag8(optionhashTagList[7]);}
+                if (optionhashTagList.length==9){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);
+                    postParams.setOptionHashTag4(optionhashTagList[3]);
+                    postParams.setOptionHashTag5(optionhashTagList[4]);
+                    postParams.setOptionHashTag6(optionhashTagList[5]);
+                    postParams.setOptionHashTag7(optionhashTagList[6]);
+                    postParams.setOptionHashTag8(optionhashTagList[7]);
+                    postParams.setOptionHashTag9(optionhashTagList[8]);}
+                if (optionhashTagList.length==10){
+                    postParams.setOptionHashTag(optionhashTagList[0]);
+                    postParams.setOptionHashTag2(optionhashTagList[1]);
+                    postParams.setOptionHashTag3(optionhashTagList[2]);
+                    postParams.setOptionHashTag4(optionhashTagList[3]);
+                    postParams.setOptionHashTag5(optionhashTagList[4]);
+                    postParams.setOptionHashTag6(optionhashTagList[5]);
+                    postParams.setOptionHashTag7(optionhashTagList[6]);
+                    postParams.setOptionHashTag8(optionhashTagList[7]);
+                    postParams.setOptionHashTag9(optionhashTagList[8]);
+                    postParams.setOptionHashTag10(optionhashTagList[9]);}
                 Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
                 call.enqueue(new Callback<Long>() {
                     @Override
@@ -388,7 +452,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
                 optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+                GridLayoutManager layoutManager = new GridLayoutManager(this, 2,GridLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);
                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
                 if (hashTagList.size()!=0){
@@ -500,7 +564,7 @@ public String getRealPathFromURI(Uri contentUri) {
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
-        TransferObserver uploadObserver = transferUtility.upload("starry-night", fileName, file);    // (bucket api, file이름, file객체)
+        TransferObserver uploadObserver = transferUtility.upload("starry-night",userId+fileName, file);    // (bucket api, file이름, file객체)
 
         uploadObserver.setTransferListener(new TransferListener() {
             @Override

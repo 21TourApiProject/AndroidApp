@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.postItemPage;
+package com.starrynight.tourapiproject.postPage.postRetrofit;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
+import com.starrynight.tourapiproject.postItemPage.OnPostHashTagClickListener;
+import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
+import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.ImageSliderAdapter;
-import com.starrynight.tourapiproject.postPage.ImageSliderItemClickListener;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.AddHashTagActivity;
-import com.starrynight.tourapiproject.starPage.StarActivity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -34,34 +35,41 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.ViewHolder>{
-    ArrayList<post_item> items = new ArrayList<post_item>();
-    OnPostItemClickListener listener;
+public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.ViewHolder>{
+    List<MainPost> items = new ArrayList<MainPost>();
+    OnMainPostClickListener listener;
    private static boolean isWish;
    private static Long userId;
    private static Long postId;
+    private Context context;
 
-    public void addItem(post_item item){
+    public MainPost_adapter(List<MainPost> items, Context context){
+        this.items = items;
+        this.context = context;
+    }
+
+    public void addItem(MainPost item){
         items.add(item);
     }
-    public void setItems(ArrayList<post_item>items){
+    public void setItems(ArrayList<MainPost>items){
         this.items = items;
     }
-    public post_item getItem(int position){
+    public MainPost getItem(int position){
         return items.get(position);
     }
 
-    public void setItem(int position, post_item item){
+    public void setItem(int position, MainPost item){
         items.set(position,item);
     }
     @NonNull
     @Override
-    public Post_item_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MainPost_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.layout_main, parent, false);
         //앱 내부저장소에서 저장된 유저 아이디 가져오기
@@ -92,11 +100,11 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Post_item_adapter.ViewHolder viewHolder, int position) {
-        post_item item = items.get(position);
+    public void onBindViewHolder(@NonNull MainPost_adapter.ViewHolder viewHolder, int position) {
+        MainPost item = items.get(position);
         viewHolder.setItem(item);
         Glide.with(viewHolder.itemView.getContext())
-                .load(item.getImage2())
+                .load(item.getProfileImage())
                 .into(viewHolder.profileimage);
         viewHolder.observation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +120,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
         return items.size();
     }
 
-    public void  setOnItemClicklistener(OnPostItemClickListener listener){
+    public void  setOnItemClicklistener(OnMainPostClickListener listener){
         this.listener = listener;
     }
 
@@ -126,7 +134,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
         LinearLayout indicator;
         Button bookmark;
 
-        public ViewHolder(View itemView,final OnPostItemClickListener listener){
+        public ViewHolder(View itemView,final OnMainPostClickListener listener){
             super(itemView);
 
             observation = itemView.findViewById(R.id.mainobservepoint);
@@ -149,11 +157,11 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
 //            });
         }
 
-        public void setItem(post_item item){
+        public void setItem(MainPost item){
             LinearLayoutManager layoutManager = new LinearLayoutManager(hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
             hashTagRecyclerView.setLayoutManager(layoutManager);
             PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
-            for (int i=0;i<item.hashTags.size();i++)
+            for (int i=0;i<item.getHashTags().size();i++)
             { adapter.addItem(new PostHashTagItem(item.getHashTags().get(i)));}
             hashTagRecyclerView.setAdapter(adapter);
             adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
@@ -227,7 +235,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
                     }
                 }
             });
-            observation.setText(item.getObservation());
+            observation.setText(item.getMainObservation());
             observation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -236,7 +244,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
                     v.getContext().startActivity(intent);
                 }
             });
-            title.setText(item.getTitle());
+            title.setText(item.getMainTitle());
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -245,7 +253,7 @@ public class Post_item_adapter extends RecyclerView.Adapter<Post_item_adapter.Vi
                     v.getContext().startActivity(intent);
                 }
             });
-            nickname.setText(item.getNickname());
+            nickname.setText(item.getMainNickName());
             mainslider.setOffscreenPageLimit(3);
             ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());
             mainslider.setAdapter(imageSliderAdapter);

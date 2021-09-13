@@ -27,4 +27,7 @@ public interface PostPageRetrofitService {
 
     @DELETE("post/{userId}")
     Call<Void> deletePost(@Path("userId")Long userId);
+
+    @GET("post/")
+    Call<List<MainPost>> getMainPosts();
 }
