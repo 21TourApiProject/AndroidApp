@@ -81,7 +81,7 @@
                 android:id="@+id/overviewPop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/point"
+                android:textColor="@color/point_purple"
                 android:text="자세히 보기" />
 
             <LinearLayout
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
-                    android:textColor="@color/point"
+                    android:textColor="@color/point_purple"
                     android:text="혼잡도" />
 
                 <TextView
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
                     android:text="주소"
-                    android:textColor="@color/point" />
+                    android:textColor="@color/point_purple" />
 
                 <TextView
                     android:id="@+id/tpAddress"
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
-                    android:textColor="@color/point"
+                    android:textColor="@color/point_purple"
                     android:text="문의" />
 
                 <TextView
@@ -183,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="이용시간" />
 
                     <TextView
@@ -208,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="휴무일" />
 
                     <TextView
@@ -241,7 +241,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="영업시간" />
 
                     <TextView
@@ -266,7 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="휴무일" />
 
                     <TextView
@@ -299,7 +299,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="체험안내" />
 
                     <TextView
@@ -324,7 +324,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="주차시설" />
 
                     <TextView
@@ -349,7 +349,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="반려동물 동반가능 여부" />
 
                     <TextView
@@ -374,7 +374,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="홈페이지" />
 
                     <TextView
@@ -407,7 +407,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="대표메뉴" />
 
                     <TextView
@@ -432,7 +432,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="취급메뉴" />
 
                     <TextView
@@ -457,7 +457,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="포장" />
 
                     <TextView
@@ -482,7 +482,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="30dp"
-                        android:textColor="@color/point"
+                        android:textColor="@color/point_purple"
                         android:text="주차시설" />
 
                     <TextView
@@ -499,7 +499,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="+ 더 보기"
-                android:textColor="@color/point" />
+                android:textColor="@color/point_purple" />
 
             <TextView
                 android:id="@+id/nearText"
@@ -535,7 +535,7 @@
                         android:layout_gravity="center|end"
                         android:layout_marginEnd="5dp"
                         android:text="+ 더 보기"
-                        android:textColor="@color/point" />
+                        android:textColor="@color/point_purple" />
                 </FrameLayout>
 
             </LinearLayout>
