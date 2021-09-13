@@ -72,7 +72,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                         finallist.remove(i);
                     }
                 }
-                for (int i=9;i>0;i--){
+                for (int i=9;i>=0;i--){
                     if (optionHashTagList[i]==""){
                         optionHashTagList = Arrays.copyOf(optionHashTagList, optionHashTagList.length-1);
                     }
