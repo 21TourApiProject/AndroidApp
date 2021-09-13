@@ -26,18 +26,13 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Ob
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
-import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
-import com.starrynight.tourapiproject.postItemPage.post_item;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
-import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
-import com.starrynight.tourapiproject.postPage.postRetrofit.PostObservePoint;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -263,8 +258,8 @@ public class PostActivity extends AppCompatActivity{
                     System.out.println("게시물 해시태그 가져옴"+response.body());
                     postHashTags = response.body();
                     RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
-                    hashTagRecyclerView.setLayoutManager(linearLayoutManager);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.HORIZONTAL,false);
+                    hashTagRecyclerView.setLayoutManager(gridLayoutManager);
                     PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
                     for (int i=0;i<postHashTags.size();i++){
                     adapter2.addItem(new PostHashTagItem(postHashTags.get(i)));

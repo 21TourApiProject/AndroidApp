@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.postItemPage;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,8 +69,9 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
             });
         }
 
+        @SuppressLint("SetTextI18n")
         public void setItem(PostHashTagItem item){
-            postHashTagName.setText(item.getHashTagname());
+            postHashTagName.setText("#"+item.getHashTagname());
         }
     }
 }

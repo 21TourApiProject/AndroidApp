@@ -16,6 +16,24 @@ public class Post {
     String postTitle;
     @SerializedName("optionHashTag")
     String optionHashTag;
+    @SerializedName("optionHashTag2")
+    String optionHashTag2;
+    @SerializedName("optionHashTag3")
+    String optionHashTag3;
+    @SerializedName("optionHashTag4")
+    String optionHashTag4;
+    @SerializedName("optionHashTag5")
+    String optionHashTag5;
+    @SerializedName("optionHashTag6")
+    String optionHashTag6;
+    @SerializedName("optionHashTag7")
+    String optionHashTag7;
+    @SerializedName("optionHashTag8")
+    String optionHashTag8;
+    @SerializedName("optionHashTag9")
+    String optionHashTag9;
+    @SerializedName("optionHashTag10")
+    String optionHashTag10;
     @SerializedName("optionObservation")
     String optionObservation;
     @SerializedName("yearDate")
@@ -39,6 +57,42 @@ public class Post {
 
     public String getOptionObservation() {
         return optionObservation;
+    }
+
+    public String getOptionHashTag2() {
+        return optionHashTag2;
+    }
+
+    public String getOptionHashTag3() {
+        return optionHashTag3;
+    }
+
+    public String getOptionHashTag4() {
+        return optionHashTag4;
+    }
+
+    public String getOptionHashTag5() {
+        return optionHashTag5;
+    }
+
+    public String getOptionHashTag6() {
+        return optionHashTag6;
+    }
+
+    public String getOptionHashTag7() {
+        return optionHashTag7;
+    }
+
+    public String getOptionHashTag8() {
+        return optionHashTag8;
+    }
+
+    public String getOptionHashTag9() {
+        return optionHashTag9;
+    }
+
+    public String getOptionHashTag10() {
+        return optionHashTag10;
     }
 
     public String getPostTitle() {
