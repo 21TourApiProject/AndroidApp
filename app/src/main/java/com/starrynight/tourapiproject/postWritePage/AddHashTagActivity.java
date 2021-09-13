@@ -36,10 +36,12 @@ public class AddHashTagActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hash_tag);
         findHashTag = findViewById(R.id.findHashTag);
+
         Intent intent= getIntent();
         for(int i=0; i<22; i++){
             clicked[i]="";
         }
+
         Arrays.fill(hashTaglist, "");
         Arrays.fill(optionHashTagList, "");
         final List<String> finallist= new ArrayList<>();
