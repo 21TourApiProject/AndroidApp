@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="20dp"
     tools:context=".observationPage.ObservationsiteActivity">
 
     <ScrollView
@@ -52,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/obs_image_layout"
-                android:paddingLeft="24dp"
+                android:paddingHorizontal="24dp"
                 android:paddingTop="19dp"
                 android:paddingBottom="10dp">
 
@@ -78,7 +79,7 @@
                         android:layout_height="24dp"
                         android:background="@drawable/bookmark_non"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="29dp"
+                        android:layout_marginRight="5dp"
                         android:layout_alignBaseline="@id/obs_name_txt"/>
 
                     <TextView
@@ -113,6 +114,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="자세히 보기 >"
+                        android:textSize="11sp"
                         android:visibility="gone"
                         tools:visibility="visible"
                         android:layout_below="@id/obs_outline_txt"
@@ -144,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="주소"
-                            style="@style/Textview_observation_details"
+                            style="@style/Textview_observation_details_title"
                             android:layout_alignParentTop="true" />
                     </LinearLayout>
                     <TextView
@@ -165,11 +167,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5.33dp"
-                            android:src="@drawable/observation__address"/>
+                            android:src="@drawable/observation__call"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Textview_observation_details"
+                            style="@style/Textview_observation_details_title"
                             android:text="문의" />
                     </LinearLayout>
                     <TextView
@@ -190,11 +192,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5.33dp"
-                            android:src="@drawable/observation__address"/>
+                            android:src="@drawable/observation__time"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Textview_observation_details"
+                            style="@style/Textview_observation_details_title"
                             android:text="이용시간" />
                     </LinearLayout>
                     <TextView
@@ -215,11 +217,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5.33dp"
-                            android:src="@drawable/observation__address"/>
+                            android:src="@drawable/observation__dayoff"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Textview_observation_details"
+                            style="@style/Textview_observation_details_title"
                             android:text="휴무일" />
                     </LinearLayout>
                     <TextView
@@ -240,11 +242,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5.33dp"
-                            android:src="@drawable/observation__address"/>
+                            android:src="@drawable/observation__fee"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Textview_observation_details"
+                            style="@style/Textview_observation_details_title"
                             android:text="이용요금" />
                     </LinearLayout>
 
@@ -278,7 +280,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Textview_observation_details"
+                        style="@style/Textview_observation_details_title"
                         android:text="이용안내" />
                     </LinearLayout>
                     <TextView
@@ -299,11 +301,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5.33dp"
-                            android:src="@drawable/observation__address"/>
+                            android:src="@drawable/observation__parking"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Textview_observation_details"
+                            style="@style/Textview_observation_details_title"
                             android:text="주차" />
                     </LinearLayout>
                     <TextView
@@ -324,11 +326,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5.33dp"
-                            android:src="@drawable/observation__address"/>
+                            android:src="@drawable/observation__homepage"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            style="@style/Textview_observation_details"
+                            style="@style/Textview_observation_details_title"
                             android:text="홈페이지" />
                     </LinearLayout>
                     <TextView
@@ -383,7 +385,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Textview_observation_details"
+                        style="@style/Textview_observation_details_title"
                         android:text="주소" />
                 </LinearLayout>
                 <TextView
@@ -404,11 +406,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5.33dp"
-                        android:src="@drawable/observation__address"/>
+                        android:src="@drawable/observation__parking"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Textview_observation_details"
+                        style="@style/Textview_observation_details_title"
                         android:text="주차" />
                 </LinearLayout>
                 <TextView
@@ -430,12 +432,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5.33dp"
-                    android:src="@drawable/observation__address"/>
+                    android:src="@drawable/observation__tourtip"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Textview_observation_details"
-                    android:text="이용안내" />
+                    style="@style/Textview_observation_details_title"
+                    android:text="여행팁" />
                 </LinearLayout>
                 <TextView
                     android:id="@+id/obs_nature_guide_txt"
@@ -467,7 +469,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="방문자 사진"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -541,8 +543,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp">
 
                 <TextView
                     android:id="@+id/obs_course"
@@ -555,12 +557,19 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-<!--배경으로 직선 깔아줘야 함-->
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="22dp"
+                        android:paddingHorizontal="23dp"
+                        android:src="@drawable/observation__course_line"/>
+
                     <LinearLayout
                         android:id="@+id/obs_course_circle_indicator"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="24dp"
                         android:gravity="center"
                         android:orientation="horizontal" />
 
@@ -577,8 +586,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/obs_course_slider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="13dp"/>
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
