@@ -552,10 +552,10 @@ public class TouristPointActivity extends AppCompatActivity {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     hashTagResult = response.body();
-                    balloonObject.setHashtags(hashTagResult);
+                    System.out.println("hashTagResult.size() = " + hashTagResult.size());
                     HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
                     hashTagRecyclerview.setAdapter(hashTagAdapter);
-
+                    balloonObject.setHashtags(hashTagResult);
                 } else {
                     System.out.println("관광지 해시태그 불러오기 실패");
                 }
