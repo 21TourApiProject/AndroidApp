@@ -30,6 +30,12 @@ public class Food {
     private String packing; //포장(음식)
     @SerializedName("parkingFood")
     private String parkingFood; //주차시설(음식)
+    @SerializedName("mapX")
+    private Double mapX; //경도
+    @SerializedName("mapY")
+    private Double mapY; //위도
+    @SerializedName("overviewSim")
+    private String overviewSim; //한줄개요
 
     public Food(){};
 
@@ -83,5 +89,17 @@ public class Food {
 
     public String getParkingFood() {
         return parkingFood;
+    }
+
+    public Double getMapX() {
+        return mapX;
+    }
+
+    public Double getMapY() {
+        return mapY;
+    }
+
+    public String getOverviewSim() {
+        return overviewSim;
     }
 }
