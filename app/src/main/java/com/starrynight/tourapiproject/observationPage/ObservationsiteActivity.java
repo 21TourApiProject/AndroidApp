@@ -101,9 +101,10 @@ public class ObservationsiteActivity extends AppCompatActivity {
         relateImage3=findViewById(R.id.relateImage3);
 
         Intent intent = getIntent();
-        Long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
+        Long observationId = 2L;
+//                (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
         postId = (Long) intent.getSerializableExtra("postId");
-//        long observationId = 2;
+
 
         Call<Observation> call1 = RetrofitClient.getApiService().getObservation(observationId);
         call1.enqueue(new Callback<Observation>() {
@@ -644,7 +645,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-//        params.setMargins(16, 8, 16, 8);
+        params.setMargins(5, 0, 5, 0);
 
         for (int i = 0; i < indicators.length; i++) {
             indicators[i] = new ImageView(this);
@@ -692,7 +693,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         for (int i = 0; i < img_indicators.length; i++) {
             img_indicators[i] = new ImageView(this);
             img_indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
-                    R.drawable.post__indicator_inactive));
+                    R.drawable.observation__course_inactive));
             img_indicators[i].setLayoutParams(img_params);
             course_circle_indicator.addView(img_indicators[i]);
 
@@ -700,7 +701,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
             txt_indicators[i].setText(names.get(i));
             txt_indicators[i].setLayoutParams(txt_params);
             txt_indicators[i].setEllipsize(TextUtils.TruncateAt.END);
-            txt_indicators[i].setTextSize(10);
+            txt_indicators[i].setTextSize(9);
             txt_indicators[i].setMaxLines(2);
             txt_indicators[i].setGravity(Gravity.CENTER_HORIZONTAL);
             course_txt_indicator.addView(txt_indicators[i]);
@@ -717,12 +718,12 @@ public class ObservationsiteActivity extends AppCompatActivity {
             if (i == position) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_active
+                        R.drawable.observation__course_active
                 ));
             } else {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_inactive
+                        R.drawable.observation__course_inactive
                 ));
             }
         }
