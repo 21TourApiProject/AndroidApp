@@ -29,6 +29,7 @@ import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 
@@ -66,6 +67,7 @@ public class PostActivity extends AppCompatActivity{
         setContentView(R.layout.activity_post);
         Intent intent = getIntent();
         PostParams postParams = (PostParams)intent.getSerializableExtra("postParams");
+        postId=(Long) intent.getSerializableExtra("postId");
         //앱 내부저장소에서 저장된 유저 아이디 가져오기
         String fileName = "userId";
         try{
@@ -79,8 +81,6 @@ public class PostActivity extends AppCompatActivity{
             e.printStackTrace();
         } System.out.println("userId = " + userId);
 
-        postId=(Long) intent.getSerializableExtra("postId");
-
         sliderViewPager = findViewById(R.id.slider);
         indicator = findViewById(R.id.indicator);
         //게시물 이미지 가져오는 get api
@@ -89,7 +89,7 @@ public class PostActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
-                    System.out.println("이미지 업로드 성공"+response.body());
+                    Log.d("postImageList","이미지 업로드 성공"+response.body());
                     List<String> result = response.body();
                     ArrayList<String> FileName = new ArrayList<>();
                     for (int i=0;i<result.size();i++){
@@ -98,7 +98,6 @@ public class PostActivity extends AppCompatActivity{
                     }
                     for (int i = 0; i <filename2.length;i++){
                         if(filename2[i] != null) {
-                            System.out.println("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
                             FileName.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
                         }
                     }
@@ -112,12 +111,12 @@ public class PostActivity extends AppCompatActivity{
                         }
                     });
                     setupIndicators(FileName.size());
-                }else{System.out.println("이미지 업로드 실패");}
+                }else{Log.d("postImageList","이미지 업로드 실패");}
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                System.out.println("이미지 업로드 실패 2");
+                Log.d("postImageList","이미지 업로드 인터넷 오류");
             }
         });
 
@@ -132,7 +131,7 @@ public class PostActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if (response.isSuccessful()){
-                    System.out.println("게시물 정보 가져옴");
+                    Log.d("post","게시물 정보 가져옴");
                     post = response.body();
                     postTitle.setText(post.getPostTitle());
                     postContent.setText(post.getPostContent());
@@ -145,15 +144,15 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onResponse(Call<Observation> call, Response<Observation> response) {
                             if (response.isSuccessful()){
-                                System.out.println("게시물 관측지 가져옴");
+                                Log.d("postObservation","게시물 관측지 가져옴");
                                 Observation observation = response.body();
                                 postObservePoint.setText(observation.getObservationName());
-                            }else{System.out.println("게시물 관측지 실패");}
+                            }else{Log.d("postObservation","게시물 관측지 실패");}
                         }
 
                         @Override
                         public void onFailure(Call<Observation> call, Throwable t) {
-                            System.out.println("게시물 관측지 실패2");
+                            Log.d("postObservation","게시물 관측지 인터넷 오류");
                         }
                     });
 
@@ -174,16 +173,16 @@ public class PostActivity extends AppCompatActivity{
                                                                 call8.enqueue(new Callback<Void>() {
                                                                     @Override
                                                                     public void onResponse(Call<Void> call, Response<Void> response) {
-                                                                        if (response.isSuccessful()){System.out.println("게시물 삭제 완료");
+                                                                        if (response.isSuccessful()){Log.d("deletePost","게시물 삭제 완료");
                                                                         Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                                                                         startActivity(intent1);
                                                                         finish();
-                                                                        } else{ System.out.println("게시물 삭제 실패");}
+                                                                        } else{ Log.d("deletePost","게시물 삭제 실패");}
                                                                     }
 
                                                                     @Override
                                                                     public void onFailure(Call<Void> call, Throwable t) {
-                                                                        System.out.println("게시물 삭제 실패 2");
+                                                                        Log.d("deletePost","게시물 삭제 실패 2");
                                                                     }
                                                                 });
                                                                 dialog.dismiss();
@@ -201,24 +200,22 @@ public class PostActivity extends AppCompatActivity{
 
 
                     //관련 게시물
-                    Call<List<String>>call5 = RetrofitClient.getApiService().getRelatePostImageList(post.getObservationId());
-                    call5.enqueue(new Callback<List<String>>() {
+                    Call<List<PostImage>>call5 = RetrofitClient.getApiService().getRelatePostImageList(post.getObservationId());
+                    call5.enqueue(new Callback<List<PostImage>>() {
                         @Override
-                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                        public void onResponse(Call<List<PostImage>> call, Response<List<PostImage>> response) {
                             if (response.isSuccessful()) {
-                                System.out.println("관련 게시물 이미지 업로드");
-                                List<String> relateImageList = response.body();
+                                Log.d("relatePostImage","관련 게시물 이미지 업로드");
+                                List<PostImage> relateImageList = response.body();
                                 RecyclerView recyclerView = findViewById(R.id.relatePost);
                                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
                                 recyclerView.setLayoutManager(linearLayoutManager);
                                 Post_point_item_Adapter adapter = new Post_point_item_Adapter();
                                 for (int i=0;i<relateImageList.size();i++){
-                                    relatefilename[i]=relateImageList.get(i);
-                                    System.out.println(relatefilename[i]);
+                                    relatefilename[i]=relateImageList.get(i).getImageName();
                                 }
                                 for (int i = 0; i <relatefilename.length;i++){
                                     if(relatefilename[i] != null) {
-                                        System.out.println(relatefilename[i]);
                                         adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/" + relatefilename[i]));
                                     }
                                 }
@@ -227,25 +224,27 @@ public class PostActivity extends AppCompatActivity{
                                     @Override
                                     public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
                                         post_point_item item = adapter.getItem(position);
+
                                         Intent intent1 = new Intent(PostActivity.this,PostActivity.class);
+                                        intent1.putExtra("postId",relateImageList.get(position).getPostId());
                                         startActivity(intent1);
                                     }
                                 });
 
-                            }else{System.out.println("관련 게시물 이미지 실패");}
+                            }else{Log.d("relatePostImage","관련 게시물 이미지 실패");}
                         }
 
                         @Override
-                        public void onFailure(Call<List<String>> call, Throwable t) {
-                            System.out.println("관련 게시물 이미지 업로드 실패2");
+                        public void onFailure(Call<List<PostImage>> call, Throwable t) {
+                            Log.d("relatePostImage","관련 게시물 이미지 업로드 인터넷 오류");
                         }
                     });
-                }else{System.out.println("게시물 실패");}
+                }else{Log.d("post","게시물 정보 업로드 실패");}
             }
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
-                System.out.println("게시물 실패 2");
+                Log.d("post","게시물 인터넷 오류");
             }
         });
 
@@ -255,7 +254,8 @@ public class PostActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()){
-                    System.out.println("게시물 해시태그 가져옴"+response.body());
+                    if (!response.body().isEmpty()){
+                    Log.d("postHashTag","게시물 해시태그 가져옴"+response.body());
                     postHashTags = response.body();
                     RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
                     GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.HORIZONTAL,false);
@@ -265,12 +265,31 @@ public class PostActivity extends AppCompatActivity{
                     adapter2.addItem(new PostHashTagItem(postHashTags.get(i)));
                     }
                     hashTagRecyclerView.setAdapter(adapter2);
-                }else {System.out.println("게시물 해시태그 실패");}
+                }else{
+                        Log.d("optionHashTag","메인 해시태그 없음. 임의 해시태그 가져옴");
+                        RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.HORIZONTAL,false);
+                        hashTagRecyclerView.setLayoutManager(gridLayoutManager);
+                        PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
+                        adapter.addItem(new PostHashTagItem(post.getOptionHashTag()));
+                        if (post.getOptionHashTag2()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag2()));}
+                        if (post.getOptionHashTag3()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag3()));}
+                        if (post.getOptionHashTag4()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag4()));}
+                        if (post.getOptionHashTag5()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag5()));}
+                        if (post.getOptionHashTag6()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag6()));}
+                        if (post.getOptionHashTag7()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag7()));}
+                        if (post.getOptionHashTag8()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag8()));}
+                        if (post.getOptionHashTag9()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag9()));}
+                        if (post.getOptionHashTag10()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag10()));}
+                        hashTagRecyclerView.setAdapter(adapter);
+                    }
+                }else {Log.d("postHashTag","메인 해시태그 오류");
+                }
             }
 
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
-                System.out.println("게시물 해시태그 실패 2");
+                Log.d("postHashTag","해시태그 인터넷 오류");
             }
         });
         //이미 찜한건지 확인
@@ -286,12 +305,12 @@ public class PostActivity extends AppCompatActivity{
                         isWish = false;
                     }
                 } else {
-                    System.out.println("내 찜 조회하기 실패");
+                    Log.d("isWish","내 찜 조회하기 실패");
                 }
             }
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
+                Log.d("isWish","인터넷 연결실패");
             }
         });
 
@@ -310,12 +329,12 @@ public class PostActivity extends AppCompatActivity{
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 실패");
+                                Log.d("myWish","관광지 찜 실패");
                             }
                         }
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e("연결실패", t.getMessage());
+                            Log.d("myWish","연결실패");
                         }
                     });
                 } else{
@@ -328,12 +347,12 @@ public class PostActivity extends AppCompatActivity{
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 삭제 실패");
+                                Log.d("deleteMyWish","관광지 찜 삭제 실패");
                             }
                         }
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
-                            Log.e("연결실패", t.getMessage());
+                            Log.d("delteMyWish","인터넷 연결실패");
                         }
                     });
                 }

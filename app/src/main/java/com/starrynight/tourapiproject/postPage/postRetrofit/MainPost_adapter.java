@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.SearchFragment;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostHashTagClickListener;
@@ -84,18 +85,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         } catch (IOException e) {
             e.printStackTrace();
         } System.out.println("userId = " + userId);
-        //앱 내부저장소에 저장된 게시글 아이디 가져오기
-        String fileName3 = "postId";
-        try{
-            FileInputStream fis = itemView.getContext().openFileInput(fileName3);
-            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
-            postId = Long.parseLong(line);
-            fis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } System.out.println("postId = " + postId);
+
         return new ViewHolder(itemView,listener);
     }
 
@@ -146,28 +136,25 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             indicator = itemView.findViewById(R.id.mainindicator);
             bookmark = itemView.findViewById(R.id.mainplus_btn);
             itemView.setClickable(true);
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position = getAdapterPosition();
-//                    if (listener != null){
-//                        listener.onItemClick(Post_item_adapter.ViewHolder.this, v, position);
-//                    }
-//                }
-//            });
         }
 
         public void setItem(MainPost item){
             LinearLayoutManager layoutManager = new LinearLayoutManager(hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
             hashTagRecyclerView.setLayoutManager(layoutManager);
             PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
-            for (int i=0;i<item.getHashTags().size();i++)
-            { adapter.addItem(new PostHashTagItem(item.getHashTags().get(i)));}
+            if (item.getHashTags()!=null){
+                for (int i=0;i<item.getHashTags().size();i++){
+                    adapter.addItem(new PostHashTagItem(item.getHashTags().get(i)));}
+            }else{
+                adapter.addItem(new PostHashTagItem(item.getOptionHashTag()));
+                if (item.getOptionHashTag2()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag2()));}
+                if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3()));}
+            }
             hashTagRecyclerView.setAdapter(adapter);
             adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
                 @Override
                 public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
-                    Intent intent = new Intent(view.getContext(), AddHashTagActivity.class);
+                    Intent intent = new Intent(view.getContext(), SearchFragment.class);
                     view.getContext().startActivity(intent);
                 }
             });
@@ -184,12 +171,12 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                             isWish = false;
                         }
                     } else {
-                        System.out.println("내 찜 조회하기 실패");
+                        Log.d("isWish","내 찜 조회하기 실패");
                     }
                 }
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.e("연결실패", t.getMessage());
+                    Log.d("isWish","연결실패");
                 }
             });
             bookmark.setOnClickListener(new View.OnClickListener() {
@@ -206,12 +193,12 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                     v.setSelected(!v.isSelected());
                                     Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    System.out.println("관광지 찜 실패");
+                                    Log.d("myWish","관광지 찜 실패");
                                 }
                             }
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
-                                Log.e("연결실패", t.getMessage());
+                                Log.d("myWish","인터넷 오류");
                             }
                         });
                     } else{
@@ -224,12 +211,12 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                     v.setSelected(!v.isSelected());
                                     Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    System.out.println("관광지 찜 삭제 실패");
+                                    Log.d("myWish","관광지 찜 삭제 실패");
                                 }
                             }
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
-                                Log.e("연결실패", t.getMessage());
+                                Log.d("my wish","인터넷 오류");
                             }
                         });
                     }
@@ -240,7 +227,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), ObservationsiteActivity.class);
-                    intent.putExtra("postId",postId);
+                    intent.putExtra("observationId",item.getObservationId());
                     v.getContext().startActivity(intent);
                 }
             });
@@ -249,7 +236,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PostActivity.class);
-                    intent.putExtra("postId",postId);
+                    intent.putExtra("postId",item.getPostId());
                     v.getContext().startActivity(intent);
                 }
             });
