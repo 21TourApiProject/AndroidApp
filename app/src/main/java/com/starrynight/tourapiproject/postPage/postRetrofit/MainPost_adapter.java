@@ -1,13 +1,19 @@
 package com.starrynight.tourapiproject.postPage.postRetrofit;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +35,7 @@ import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.ImageSliderAdapter;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postWritePage.AddHashTagActivity;
+import com.starrynight.tourapiproject.searchPage.FilterFragment;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -48,7 +55,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
    private static boolean isWish;
    private static Long userId;
    private static Long postId;
-    private Context context;
+    private static Context context;
 
     public MainPost_adapter(List<MainPost> items, Context context){
         this.items = items;
@@ -154,8 +161,13 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
                 @Override
                 public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
-                    Intent intent = new Intent(view.getContext(), SearchFragment.class);
-                    view.getContext().startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    Fragment searchFragment = new SearchFragment();
+                    FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.main_view, searchFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
                 }
             });
             //이미 찜한건지 확인
