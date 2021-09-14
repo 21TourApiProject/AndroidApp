@@ -60,7 +60,7 @@ public class MapFragment extends Fragment {
 
     //마커, 위치, 오브젝트 생성
     private MapPOIItem mMarker;
-    private MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304);
+//    private MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304);
     private MapPoint MY_POINT;
 
     private List<MapPOIItem> tourPOIItems = new ArrayList<>();
@@ -438,6 +438,7 @@ public class MapFragment extends Fragment {
         mMarker = new MapPOIItem();
         mMarker.setItemName(balloonObject.getName());
         mMarker.setTag(1);
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(balloonObject.getLatitude(), balloonObject.getLongitude());
         mMarker.setMapPoint(MARKER_POINT);
         mMarker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 마커타입을 지정
         mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
@@ -458,6 +459,7 @@ public class MapFragment extends Fragment {
         mMarker = new MapPOIItem();
         mMarker.setItemName(balloonObject.getName());
         mMarker.setTag(2);
+        MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(balloonObject.getLatitude(), balloonObject.getLongitude());
         mMarker.setMapPoint(MARKER_POINT);
         mMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커타입을 지정
         mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
@@ -483,7 +485,7 @@ public class MapFragment extends Fragment {
         balloon_Object.setTag(tag);
         balloon_Object.setLatitude(latitude);
         balloon_Object.setLongitude(longitude);
-
+        MapPoint MARKER_POINT;
         MARKER_POINT= MapPoint.mapPointWithGeoCoord(latitude, longitude);
 
         return  balloon_Object;
