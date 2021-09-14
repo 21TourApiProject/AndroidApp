@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainPost {
+    @SerializedName("observationId")
+    private Long observationId;
+    @SerializedName("postId")
+    private Long postId;
     @SerializedName("mainObservation")
     private String mainObservation;
     @SerializedName("optionObservation")
@@ -20,6 +24,10 @@ public class MainPost {
     private List<String> hashTags;
     @SerializedName("optionHashTag")
     private String optionHashTag;
+    @SerializedName("optionHashTag2")
+    private String optionHashTag2;
+    @SerializedName("optionHashTag3")
+    private String optionHashTag3;
     @SerializedName("profileImage")
     private String profileImage;
 
@@ -32,6 +40,38 @@ public class MainPost {
         this.hashTags = hashTags;
         this.optionHashTag = optionHashTag;
         this.profileImage = profileImage;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
+    public Long getObservationId() {
+        return observationId;
+    }
+
+    public void setObservationId(Long observationId) {
+        this.observationId = observationId;
+    }
+
+    public String getOptionHashTag2() {
+        return optionHashTag2;
+    }
+
+    public void setOptionHashTag2(String optionHashTag2) {
+        this.optionHashTag2 = optionHashTag2;
+    }
+
+    public String getOptionHashTag3() {
+        return optionHashTag3;
+    }
+
+    public void setOptionHashTag3(String optionHashTag3) {
+        this.optionHashTag3 = optionHashTag3;
     }
 
     public String getMainObservation() {
