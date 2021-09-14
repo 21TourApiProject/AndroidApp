@@ -160,7 +160,7 @@
                         android:id="@+id/postObservationItem"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/finalhashtag"
+                        android:background="@drawable/hashtag_background"
                         android:hint="관측지역"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"

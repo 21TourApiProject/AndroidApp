@@ -23,8 +23,11 @@ public interface PostPageRetrofitService {
     Call<List<String>> getPostHashTagName(@Path("postId")Long postId);
 
     @GET("postImage/{postObservePointId}")
-    Call<List<String>> getRelatePostImageList(@Path("postObservePointId")Long postObservePointId);
+    Call<List<PostImage>> getRelatePostImageList(@Path("postObservePointId")Long postObservePointId);
 
     @DELETE("post/{userId}")
     Call<Void> deletePost(@Path("userId")Long userId);
+
+    @GET("post/")
+    Call<List<MainPost>> getMainPosts();
 }

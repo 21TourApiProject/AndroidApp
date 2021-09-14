@@ -30,6 +30,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
@@ -41,8 +42,6 @@ import java.util.regex.Pattern;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.graphics.BitmapFactory.decodeFile;
 
 public class ChangeProfileActivity extends AppCompatActivity {
 
@@ -62,6 +61,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private Boolean isNickNameDuplicate = false; //닉네임이 중복인지
 
     File file; //이미지 파일
+    String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +81,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
             public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                    assert user != null;
                     if (user.getProfileImage() != null){
-                        profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
+                        String fileName = user.getProfileImage();
+                        fileName = fileName.substring(1,fileName.length()-1);
+                        Glide.with(ChangeProfileActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
                     }
                     changeNickname.setText(user.getNickName());
                     beforeNickName = user.getNickName();
@@ -158,10 +159,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
                 //프로필 사진 변경 put api
                 if (isProfileImageChange){
-                    System.out.println("파일 이름 = " + file.getName());
-                    uploadWithTransferUtility(file.getName(), file); //s3 사진 업로드
+                    System.out.println("파일 이름 = " + fileName);
+                    uploadWithTransferUtility(fileName, file); //s3 사진 업로드
 
-                    Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, file.getName());
+                    Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
                     call2.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call2, Response<Void> response) {
@@ -210,6 +211,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
                     Uri uri = data.getData();
                     file = new File(getRealPathFromURI(uri));
+                    System.out.println("file = " + file.getName());
+                    fileName = "PI" + userId + "_" + file.getName();
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -239,7 +242,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
-        TransferObserver uploadObserver = transferUtility.upload("starry-night", fileName, file);    // (bucket api, file이름, file객체)
+        TransferObserver uploadObserver = transferUtility.upload("starry-night/profileImage", fileName, file);    // (bucket api, file이름, file객체)
 
         uploadObserver.setTransferListener(new TransferListener() {
             @Override

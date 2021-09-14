@@ -44,6 +44,7 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Ob
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostPageRetrofitService;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
@@ -101,7 +102,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
         relateImage3=findViewById(R.id.relateImage3);
 
         Intent intent = getIntent();
-        Long observationId = 62L;
+        Long observationId = 1L;
+
 //                (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
         postId = (Long) intent.getSerializableExtra("postId");
 
@@ -503,15 +505,15 @@ public class ObservationsiteActivity extends AppCompatActivity {
         });
 
         //게시물 이미지 가져오기
-        Call<List<String>>call= com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient.getApiService().getRelatePostImageList(observationId);
-        call.enqueue(new Callback<List<String>>() {
+        Call<List<PostImage>>call= com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient.getApiService().getRelatePostImageList(observationId);
+        call.enqueue(new Callback<List<PostImage>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(Call<List<PostImage>> call, Response<List<PostImage>> response) {
                 if (response.isSuccessful()){
-                    Log.d("myTag","관련 게시물 이미지 업로드");
-                    List<String> relateImageList = response.body();
+                    Log.d("relatePostImage","관련 게시물 이미지 업로드");
+                    List<PostImage> relateImageList = response.body();
                     for (int i=0;i<relateImageList.size();i++){
-                        relatefilename[i]=relateImageList.get(i);
+                        relatefilename[i]=relateImageList.get(i).getImageName();
                         System.out.println(relatefilename[i]);
                     }
                     if (relatefilename[0]!=null){
@@ -530,40 +532,42 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         Glide.with(getApplicationContext())
                                 .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[2])
                                 .into(relateImage3);
+
+                        relateImage1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
+                                intent1.putExtra("postId",relateImageList.get(0).getPostId());
+                                startActivity(intent1);
+                            }
+                        });
+                        relateImage2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
+                                intent1.putExtra("postId",relateImageList.get(1).getPostId());
+                                startActivity(intent1);
+                            }
+                        });
+                        relateImage3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
+                                intent1.putExtra("postId",relateImageList.get(2).getPostId());
+                                startActivity(intent1);
+                            }
+                        });
+
                     }
-                }else{Log.d("myTag","관련 게시물 이미지 업로드 실패");}
+                }else{Log.d("relatePostImage","관련 게시물 이미지 업로드 실패");}
             }
 
             @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-               Log.d("myTag","관련 게시물 이미지 업로드 실패2");
+            public void onFailure(Call<List<PostImage>> call, Throwable t) {
+               Log.d("relatePostImage","관련 게시물 이미지 업로드 인터넷 오류");
             }
         });
 
-        relateImage1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                intent1.putExtra("postId",postId);
-                startActivity(intent1);
-            }
-        });
-        relateImage2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                intent1.putExtra("postId",postId);
-                startActivity(intent1);
-            }
-        });
-        relateImage3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                intent1.putExtra("postId",postId);
-                startActivity(intent1);
-            }
-        });
     }
 
 
