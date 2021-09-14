@@ -101,7 +101,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         relateImage3=findViewById(R.id.relateImage3);
 
         Intent intent = getIntent();
-        Long observationId = 2L;
+        Long observationId = 62L;
 //                (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
         postId = (Long) intent.getSerializableExtra("postId");
 
@@ -113,11 +113,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
-
-                    obs_images_list = observation.getObserveImages();
-                    obs_images_list.get(0).getImageSource();
-
-                    obs_fee_list = observation.getObserveFees();
 
                     Call<List<String>> call3 = RetrofitClient.getApiService().getObserveImagePath(observationId);
                     call3.enqueue(new Callback<List<String>>() {
