@@ -30,6 +30,12 @@ public class TouristPoint {
     private String chkPet; //반려동물(관광지)
     @SerializedName("homePage")
     private String homePage; //홈페이지(관광지)
+    @SerializedName("mapX")
+    private Double mapX; //경도
+    @SerializedName("mapY")
+    private Double mapY; //위도
+    @SerializedName("overviewSim")
+    private String overviewSim; //한줄개요
 
     public TouristPoint(){};
 
@@ -83,5 +89,17 @@ public class TouristPoint {
 
     public String getHomePage() {
         return homePage;
+    }
+
+    public Double getMapX() {
+        return mapX;
+    }
+
+    public Double getMapY() {
+        return mapY;
+    }
+
+    public String getOverviewSim() {
+        return overviewSim;
     }
 }
