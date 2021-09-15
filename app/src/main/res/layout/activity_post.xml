@@ -57,13 +57,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp">
 
                 <TextView
                     android:id="@+id/postTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="게시물 제목" />
+                    android:hint="게시물 제목"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="20sp"></TextView>
 
                 <View
                     android:layout_width="0dp"
@@ -72,18 +81,10 @@
 
                 <Button
                     android:id="@+id/delete_btn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/post_delete"
                     android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/like"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:background="@drawable/main__bookmark"
-                    app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
 
             </LinearLayout>
 
@@ -113,25 +114,84 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/postObserveLinear"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:background="@color/content_blue"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp">
 
-                <Button
-                    android:id="@+id/postObservation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/hashtags_empty"
-                    android:hint="관측지" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/hashTagRecyclerView"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/main__empty_profile" />
+
+                        <TextView
+                            android:id="@+id/post_nickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="닉네임"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/like"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right"
+                        android:background="@drawable/main__bookmark"
+                        app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/postObserveLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:itemCount="4" />
+                    android:orientation="horizontal">
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hashtag_background"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="16dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/mainpage_observationpin" />
+
+                        <TextView
+                            android:id="@+id/postObservation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="관측지" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/hashTagRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:itemCount="4" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
