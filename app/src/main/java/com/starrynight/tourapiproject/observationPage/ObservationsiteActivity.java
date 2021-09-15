@@ -104,6 +104,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Long observationId = 1L;
 
+//        test
 //                (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
         postId = (Long) intent.getSerializableExtra("postId");
 
