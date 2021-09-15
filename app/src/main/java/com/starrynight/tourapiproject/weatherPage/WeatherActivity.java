@@ -22,9 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.weatherPage.wtAppearTimeModel.WtAppearTimeModel;
 import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.WtAreaParams;
+import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustModel;
+import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustRetrofit;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
 
@@ -68,6 +69,7 @@ public class WeatherActivity extends AppCompatActivity {
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
     int mDay = c.get(Calendar.DAY_OF_MONTH);
+
     double observationalFitDegree;
     double cloudVolume;
     double cloudVolumeValue;
@@ -91,7 +93,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener timeListener;
 
     String WT_MET_API_KEY;
-    String WT_APPEAR_TIME_API_KEY;
+    String WT_FINE_DUST_API_KEY;
 
     String strDate;
 
@@ -217,11 +219,11 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     {
-//        try {
-//            WT_APPEAR_TIME_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            WT_FINE_DUST_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,16 +240,12 @@ public class WeatherActivity extends AppCompatActivity {
         onSetDatePicker();
         onSetTimePicker();
 
+        connectFineDustApi();
+
         selectDateTime = selectDate + selectTime;
         Log.d("selectDateTime", selectDateTime);
 
         //detailWeatherClickEvent();
-
-        //출몰시각 API 연결
-//        Call<WtAppearTimeModel> getAppearTimeInstance = WtAppearTimeRetrofit.wtAppearTimeInterface()
-//                .getAppearTimeData(WT_APPEAR_TIME_API_KEY, "고양", "20210730");
-//        getAppearTimeInstance.enqueue(appearTimeModelCallback);
-
     }
 
     public void setTextView() {
@@ -792,6 +790,29 @@ public class WeatherActivity extends AppCompatActivity {
         unixToHourMin = formatHourMin.format(unixHourMin);
     }
 
+    //미세머지 API 연결
+    public void connectFineDustApi(){
+        Call<WtFineDustModel> getFineDustInstance = WtFineDustRetrofit.wtFineDustInterface()
+                .getFineDustData(WT_FINE_DUST_API_KEY, "JSON", "2021-09-15", "PM10");
+        getFineDustInstance.enqueue(new Callback<WtFineDustModel>() {
+            @Override
+            public void onResponse(Call<WtFineDustModel> call, Response<WtFineDustModel> response) {
+                if (response.isSuccessful()) {
+                    WtFineDustModel data = response.body();
+                    TextView textView1 = findViewById(R.id.wt_find_dust);
+                    textView1.setText(data.getResponse().getBody().getItems().get(0).getInformCode());
+                    Log.d("FineDust", "response= " + response.raw().request().url().url());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<WtFineDustModel> call, Throwable t) {
+                t.printStackTrace();
+                Log.v("FineDust", "responseError= " + call.request().url());
+            }
+        });
+    }
 
 //    public void detailWeatherClickEvent(){
 //        LinearLayout detailWeather;
@@ -808,25 +829,6 @@ public class WeatherActivity extends AppCompatActivity {
 //        });
 //    }
 
-    //출몰시각 API 연결
-    private Callback<WtAppearTimeModel> appearTimeModelCallback = new Callback<WtAppearTimeModel>() {
-        @Override
-        public void onResponse(Call<WtAppearTimeModel> call, Response<WtAppearTimeModel> response) {
-            if (response.isSuccessful()) {
-                WtAppearTimeModel data = response.body();
-                TextView textView1 = findViewById(R.id.wt_cloud);
-                textView1.setText(data.getResponse().getBody().getTotalCount());
-                Log.d("AppearTime", "response= " + response.raw().request().url().url());
-            }
-
-        }
-
-        @Override
-        public void onFailure(Call<WtAppearTimeModel> call, Throwable t) {
-            t.printStackTrace();
-            Log.v("AppearTime", "responseError= " + call.request().url());
-        }
-    };
 
     //관측적합도
     public double setObservationalFitDegree() {
