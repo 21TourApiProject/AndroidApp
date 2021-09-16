@@ -12,6 +12,9 @@ public class Item {
     @SerializedName("informGrade")
     private String informGrade;
 
+    @SerializedName("dataTime")
+    private String dataTime;
+
     public String getInformCode() {
         return informCode;
     }
@@ -34,5 +37,13 @@ public class Item {
 
     public void setInformGrade(String informGrade) {
         this.informGrade = informGrade;
+    }
+
+    public String getDataTime() {
+        return dataTime;
+    }
+
+    public void setDataTime(String dataTime) {
+        this.dataTime = dataTime;
     }
 }
