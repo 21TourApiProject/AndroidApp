@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,10 +70,11 @@ public class TouristPointActivity extends AppCompatActivity {
     Food foodData;
     Boolean isTp;
 
-    TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
+    TextView tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
             tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText, overviewPop, daumMore;
 
     Button tpWish;
+    ImageView tpCongestion;
 
     LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
@@ -704,14 +706,30 @@ public class TouristPointActivity extends AppCompatActivity {
                 else {
                     JSONObject items = (JSONObject) body.get("items");
                     JSONObject item = (JSONObject) items.get("item");
-                    Long code = (Long) item.get("estiDecoDivCd");
+                    Integer code = (Integer) item.get("estiDecoDivCd");
                     bf.close();
                     System.out.println("code = " + code);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             congestionLayout.setVisibility(View.VISIBLE);
-                            tpCongestion.setText(Long.toString(code));
+                            switch (code) {
+                                case 1:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
+                                    break;
+                                case 2:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con2));
+                                    break;
+                                case 3:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con3));
+                                    break;
+                                case 4:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con4));
+                                    break;
+                                case 5:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con5));
+                                    break;
+                            }
                         }
                     });
                 }
