@@ -2,6 +2,8 @@ package com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Near {
 
     @SerializedName("contentId")
@@ -10,22 +12,23 @@ public class Near {
     private String firstImage; //대표이미지 원본
     @SerializedName("title")
     private String title; //제목
-    @SerializedName("addr1")
+    @SerializedName("addr")
     private String addr; //주소
     @SerializedName("cat3Name")
     private String cat3Name; //소분류 이름
     @SerializedName("overviewSim")
     private String overviewSim; //개요 한줄
+    @SerializedName("hashTagNames")
+    private List<String> hashTagNames; //개요 한줄
 
-    public Near(){};
-
-    public Near(Long contentId, String firstImage, String title, String addr, String cat3Name, String overviewSim) {
+    public Near(Long contentId, String firstImage, String title, String addr, String cat3Name, String overviewSim, List<String> hashTagNames) {
         this.contentId = contentId;
         this.firstImage = firstImage;
         this.title = title;
         this.addr = addr;
         this.cat3Name = cat3Name;
         this.overviewSim = overviewSim;
+        this.hashTagNames = hashTagNames;
     }
 
     public Long getContentId() {
@@ -50,5 +53,9 @@ public class Near {
 
     public String getOverviewSim() {
         return overviewSim;
+    }
+
+    public List<String> getHashTagNames() {
+        return hashTagNames;
     }
 }
