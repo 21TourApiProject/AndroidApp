@@ -253,6 +253,16 @@ public class PostWriteActivity extends AppCompatActivity {
                 startActivityForResult(intent, 203);
             }
         });
+
+        //뒤로가기 버튼
+        Button back = findViewById(R.id.postWrite_back_btn);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         Button save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override

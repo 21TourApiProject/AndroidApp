@@ -40,7 +40,7 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="wrap_content">
 
             </androidx.viewpager2.widget.ViewPager2>
 
@@ -91,31 +91,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/postDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="2021년 7월 20일 (월)"
-                    android:textAlignment="center"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/postTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:hint="15:30"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:background="@color/content_blue"
                 android:orientation="vertical"
                 android:paddingHorizontal="24dp"
@@ -135,6 +110,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/post_profileImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             app:srcCompat="@drawable/main__empty_profile" />
@@ -173,7 +149,7 @@
 
                         <ImageView
                             android:layout_width="20dp"
-                            android:layout_height="16dp"
+                            android:layout_height="14sp"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/mainpage_observationpin" />
 
@@ -181,7 +157,8 @@
                             android:id="@+id/postObservation"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="관측지" />
+                            android:hint="관측지"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -201,6 +178,31 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/post_write__edge"
                 android:text="게시물 내용" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/postDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="2021년 7월 20일 (월)"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/postTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:hint="15:30"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

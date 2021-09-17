@@ -1,5 +1,7 @@
 package com.starrynight.tourapiproject.postPage.postRetrofit;
 
+import com.starrynight.tourapiproject.alarmPage.Alarm;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 
 import java.util.List;
@@ -30,4 +32,7 @@ public interface PostPageRetrofitService {
 
     @GET("post/")
     Call<List<MainPost>> getMainPosts();
+
+    @GET("user/{userId}")
+    Call<User> getUser(@Path("userId")Long userId);
 }
