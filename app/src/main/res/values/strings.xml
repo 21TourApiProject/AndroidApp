@@ -15,5 +15,7 @@
     <string name="kakao_app_key">2201411c61cc7086fe639ce660ccb21e</string>
     <string name="constellation_content_example"><![CDATA[별자리(constellation)는 천구(celestial sphere)에 투영된 별을 이어 사물이나 인물, 동물을 연상하도록 이름을 붙인 것이다. 따라서 별자리는 문화권과 시대마다 모양이 달랐고, 다른 이름으로 불렸다. 현재는 1930년 국제천문연맹(International Astronomical Union, IAU)에서 천구 전체를 채우도록 정한 88개의 별자리가 공식적인 별자리로 인정받고 있다./> </LinearLayout>]]></string>
     <string name="tp_overview_detail"><u>자세히 보기</u></string>
+    <string name="signup_birthDay"><u>선택하기</u></string>
+    <string name="signup_marketInfo"><u>보기</u></string>
 
 </resources>
