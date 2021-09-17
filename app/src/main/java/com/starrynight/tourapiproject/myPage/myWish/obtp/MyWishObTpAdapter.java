@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +81,7 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
         TextView opTpAddress;
         TextView obTpCat3Name;
         TextView obTpOverviewSim;
-        LinearLayout obTpHashTag;
+        RecyclerView obTpHashTag;
 
         public ViewHolder(View itemView, final OnMyWishObTpItemClickListener listener) {
             super(itemView);
@@ -110,15 +112,9 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
             opTpAddress.setText(item.getAddress());
             obTpCat3Name.setText(item.getCat3());
             obTpOverviewSim.setText(item.getOverviewSim());
-
-            List<String> hashTagName = item.getHashTagNames();
-            for (String ht : hashTagName){
-                TextView textView = new TextView(context);
-                textView.setText("#"+ht);
-                textView.setTextColor(ContextCompat.getColor(context, R.color.purple_200));
-                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.observation__hashtags));
-                obTpHashTag.addView(textView);
-            }
+            obTpHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
+            obTpHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            obTpHashTag.setHasFixedSize(true);
         }
 
     }

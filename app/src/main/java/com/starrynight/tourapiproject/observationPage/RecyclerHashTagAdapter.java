@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.observationPage;
 
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,7 @@ public class RecyclerHashTagAdapter extends RecyclerView.Adapter<RecyclerHashTag
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hashtags, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hashtags_empty, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +52,7 @@ public class RecyclerHashTagAdapter extends RecyclerView.Adapter<RecyclerHashTag
         return listHashtags.size();
     }
 
-    void addItem(RecyclerHashTagItem item) {
+    public void addItem(RecyclerHashTagItem item) {
         listHashtags.add(item);
     }
 }

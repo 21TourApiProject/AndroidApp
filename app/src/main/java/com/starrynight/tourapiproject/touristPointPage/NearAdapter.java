@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -81,6 +83,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
         TextView nearAddr;
         TextView nearCat3Name;
         TextView nearOverviewSim;
+        RecyclerView nearHashTag;
 
         public ViewHolder(View itemView, final OnNearItemClickListener listener) {
             super(itemView);
@@ -90,6 +93,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             nearAddr = itemView.findViewById(R.id.nearAddr);
             nearCat3Name = itemView.findViewById(R.id.nearCat3Name);
             nearOverviewSim = itemView.findViewById(R.id.nearOverviewSim);
+            nearHashTag = itemView.findViewById(R.id.nearHashTag);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -114,8 +118,10 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             nearAddr.setText(item.getAddr());
             nearCat3Name.setText(item.getCat3Name());
             nearOverviewSim.setText(item.getOverviewSim());
+            nearHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
+            nearHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            nearHashTag.setHasFixedSize(true);
         }
 
     }
-
 }
