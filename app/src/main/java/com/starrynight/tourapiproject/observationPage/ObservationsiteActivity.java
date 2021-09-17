@@ -25,20 +25,30 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.Activities;
+import com.starrynight.tourapiproject.mapPage.BalloonObject;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.CourseTouristPoint;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveFee;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostPageRetrofitService;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -81,6 +91,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private List<ObserveFee> obs_fee_list;
     private String[] relatefilename = new String[3];
 
+    private BalloonObject balloonObject= new BalloonObject();   //mapfragment bundle
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,9 +102,11 @@ public class ObservationsiteActivity extends AppCompatActivity {
         relateImage3=findViewById(R.id.relateImage3);
 
         Intent intent = getIntent();
-        Long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
+        Long observationId = 1L;
+
+//                (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
         postId = (Long) intent.getSerializableExtra("postId");
-//        long observationId = 2;
+
 
         Call<Observation> call1 = RetrofitClient.getApiService().getObservation(observationId);
         call1.enqueue(new Callback<Observation>() {
@@ -101,11 +115,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
-
-                    obs_images_list = observation.getObserveImages();
-                    obs_images_list.get(0).getImageSource();
-
-                    obs_fee_list = observation.getObserveFees();
 
                     Call<List<String>> call3 = RetrofitClient.getApiService().getObserveImagePath(observationId);
                     call3.enqueue(new Callback<List<String>>() {
@@ -117,6 +126,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                     Log.d(TAG, "관측지 이미지 호출 성공");
                                     List<String> imageList = response.body();
                                     obs_images = imageList.toArray(new String[imageList.size()]);
+                                    balloonObject.setImage(imageList.get(0));   //map위한 bundle
 
                                     //관측지 이미지 슬라이더 설정
                                     obs_slider = findViewById(R.id.obs_Img_slider);
@@ -176,7 +186,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         address.setText(observation.getAddress());
                         TextView phonenumber = findViewById(R.id.obs_phonenumber_txt);
                         phonenumber.setText(observation.getPhoneNumber());
-                        TextView operatinghour = findViewById(R.id.obs_address_txt);
+                        TextView operatinghour = findViewById(R.id.obs_operatinghour_txt);
                         operatinghour.setText(observation.getOperatingHour());
                         TextView closedday = findViewById(R.id.obs_closedday_txt);
                         closedday.setText(observation.getClosedDay());
@@ -246,11 +256,10 @@ public class ObservationsiteActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Log.d(TAG, "관측지 해쉬태그 호출 성공");
                                 observeHashTags = response.body();
-
+                                balloonObject.setHashtags(observeHashTags); //지도에 넣을 bundle
                                 for (String p : observeHashTags) {
                                     RecyclerHashTagItem item = new RecyclerHashTagItem();
                                     item.setHashtagName(p);
-
                                     recyclerHashTagAdapter.addItem(item);
                                 }
                                 recyclerHashTagAdapter.notifyDataSetChanged();
@@ -264,6 +273,39 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         public void onFailure(Call<List<String>> call, Throwable t) {
                             Log.e(TAG, "연결실패" + t.getMessage());
 
+                        }
+                    });
+
+                    //지도버튼 설정
+                    Button map_btn = findViewById(R.id.obs_location_btn);
+                    //Long id, int tag, double longitude, double latitude, String name, String address, String point_type, String intro
+                    //BallonObject에 내용넣음
+
+                    balloonObject.setId(observationId);
+                    balloonObject.setTag(1);    //1관측지 2관광지
+                    balloonObject.setLongitude(observation.getLongitude());
+                    balloonObject.setLatitude(observation.getLatitude());
+                    balloonObject.setName(observation.getObservationName());
+                    balloonObject.setAddress(observation.getAddress());
+                    balloonObject.setPoint_type(observation.getObserveType());
+                    balloonObject.setIntro(observation.getIntro());
+                    //사진이랑 해쉬태그는 따로 불러와서 그거 각자 call에서 추가해야함 (아래두줄참고)
+//                    balloonObject.setHashtags(observeHashTags);   //259에 구현현
+//                    balloonObjec.setImage(이미지); //이미지지한장 129에 구현
+                   map_btn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 중간에 있던 액티비티들 삭제
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
+                            startActivity(intent);
+
+                            Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                            bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
+                            bundle.putSerializable("BalloonObject", balloonObject);    //지도에 필요한 내용
+                            MapFragment mapFragment = new MapFragment();
+                            mapFragment.setArguments(bundle);
+                            ((MainActivity)MainActivity.mContext).replaceFragment(mapFragment);
                         }
                     });
 
@@ -452,7 +494,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
             }
         });
 
-        Button postwrite_btn = findViewById(R.id.writePost_btn);
+        TextView postwrite_btn = findViewById(R.id.writePost_btn);
         postwrite_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -463,67 +505,67 @@ public class ObservationsiteActivity extends AppCompatActivity {
         });
 
         //게시물 이미지 가져오기
-        Call<List<String>>call= com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient.getApiService().getRelatePostImageList(observationId);
-        call.enqueue(new Callback<List<String>>() {
+        Call<List<PostImage>>call= com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient.getApiService().getRelatePostImageList(observationId);
+        call.enqueue(new Callback<List<PostImage>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(Call<List<PostImage>> call, Response<List<PostImage>> response) {
                 if (response.isSuccessful()){
-                    Log.d("myTag","관련 게시물 이미지 업로드");
-                    List<String> relateImageList = response.body();
+                    Log.d("relatePostImage","관련 게시물 이미지 업로드");
+                    List<PostImage> relateImageList = response.body();
                     for (int i=0;i<relateImageList.size();i++){
-                        relatefilename[i]=relateImageList.get(i);
+                        relatefilename[i]=relateImageList.get(i).getImageName();
                         System.out.println(relatefilename[i]);
                     }
                     if (relatefilename[0]!=null){
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[0])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[0])
                                 .into(relateImage1);
                     }
                     if (relatefilename[1]!=null){
                         relateImage2.setVisibility(View.VISIBLE);
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[1])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[1])
                                 .into(relateImage2);
                     }
                     if (relatefilename[2]!=null){
                         relateImage3.setVisibility(View.VISIBLE);
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[2])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[2])
                                 .into(relateImage3);
                     }
-                }else{Log.d("myTag","관련 게시물 이미지 업로드 실패");}
+                    relateImage1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent01 = new Intent(getApplicationContext(), PostActivity.class);
+                            intent01.putExtra("postId",relateImageList.get(0).getPostId());
+                            startActivity(intent01);
+                        }
+                    });
+                    relateImage2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent2 = new Intent(getApplicationContext(), PostActivity.class);
+                            intent2.putExtra("postId",relateImageList.get(1).getPostId());
+                            startActivity(intent2);
+                        }
+                    });
+                    relateImage3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent3 = new Intent(getApplicationContext(), PostActivity.class);
+                            intent3.putExtra("postId",relateImageList.get(2).getPostId());
+                            startActivity(intent3);
+                        }
+                    });
+                }else{Log.d("relatePostImage","관련 게시물 이미지 업로드 실패");}
             }
 
             @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-               Log.d("myTag","관련 게시물 이미지 업로드 실패2");
+            public void onFailure(Call<List<PostImage>> call, Throwable t) {
+               Log.d("relatePostImage","관련 게시물 이미지 업로드 인터넷 오류");
             }
         });
 
-        relateImage1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                intent1.putExtra("postId",postId);
-                startActivity(intent1);
-            }
-        });
-        relateImage2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                intent1.putExtra("postId",postId);
-                startActivity(intent1);
-            }
-        });
-        relateImage3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                intent1.putExtra("postId",postId);
-                startActivity(intent1);
-            }
-        });
     }
 
 
@@ -600,7 +642,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-//        params.setMargins(16, 8, 16, 8);
+        params.setMargins(5, 0, 5, 0);
 
         for (int i = 0; i < indicators.length; i++) {
             indicators[i] = new ImageView(this);
@@ -648,7 +690,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         for (int i = 0; i < img_indicators.length; i++) {
             img_indicators[i] = new ImageView(this);
             img_indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
-                    R.drawable.post__indicator_inactive));
+                    R.drawable.observation__course_inactive));
             img_indicators[i].setLayoutParams(img_params);
             course_circle_indicator.addView(img_indicators[i]);
 
@@ -656,7 +698,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
             txt_indicators[i].setText(names.get(i));
             txt_indicators[i].setLayoutParams(txt_params);
             txt_indicators[i].setEllipsize(TextUtils.TruncateAt.END);
-            txt_indicators[i].setTextSize(10);
+            txt_indicators[i].setTextSize(9);
             txt_indicators[i].setMaxLines(2);
             txt_indicators[i].setGravity(Gravity.CENTER_HORIZONTAL);
             course_txt_indicator.addView(txt_indicators[i]);
@@ -673,12 +715,12 @@ public class ObservationsiteActivity extends AppCompatActivity {
             if (i == position) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_active
+                        R.drawable.observation__course_active
                 ));
             } else {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_inactive
+                        R.drawable.observation__course_inactive
                 ));
             }
         }

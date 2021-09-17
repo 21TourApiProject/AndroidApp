@@ -210,7 +210,7 @@ public class SearchResultFragment extends Fragment {
                         TextView textView = new TextView(getContext());
                         textView.setText(" "+ areaName[i] + " ");
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.observation__hashtags));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
                         selectFilterItem.addView(textView);
                     }
                 }
@@ -219,7 +219,7 @@ public class SearchResultFragment extends Fragment {
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.observation__hashtags));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
                         selectFilterItem.addView(textView);
                     }
                 }

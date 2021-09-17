@@ -77,15 +77,12 @@ public class WeatherActivity extends AppCompatActivity {
     double observationalFitDegree;
     double cloudVolume;
     double cloudVolumeValue;
-    double temperature;
-    double humidity;
-    double temperatureAndhumidityValue;
+    double feel_like;
+    double feel_likeValue;
     double moonAge;
     double moonAgeValue;
     String fineDust;
     double fineDustValue;
-    double windSpeed;
-    double windSpeedValue;
     double precipitationProbability;
     double precipitationProbabilityValue;
     double lightPollution;
@@ -1178,22 +1175,19 @@ public class WeatherActivity extends AppCompatActivity {
 
     //관측적합도
     public double setObservationalFitDegree() {
-        cloudVolumeValue = -cloudVolume * 4 / 5;
-        if (-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity > 0) {
-            temperatureAndhumidityValue = Math.round(-3 * Math.log10(Math.pow(-(double) (10 / 3) * temperature + (double) (370 / 3) - humidity, 2)) - 2);
-            System.out.println("기온" + temperatureAndhumidityValue);
-        } else if (-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity == 0) {
-            temperatureAndhumidityValue = 0;
-        } else if (-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity < 0) {
-            temperatureAndhumidityValue = Math.round(-3 * Math.log10(Math.pow(-((double) 10 / 3) * temperature + ((double) 370 / 3) - humidity, 2)) - 2);
-            System.out.println("기온" + temperatureAndhumidityValue);
-        }
+        cloudVolumeValue = -100*(-(1/(-(0.25)*(cloudVolume/100-2.7))-1.48148));
+
         if (moonAge <= 0.5) {
             moonAgeValue = Math.round((-8 * Math.pow(moonAge, 3.46)) / 0.727 * 100);
         } else if (moonAge > 0.5 && moonAge <= 0.5609) {
             moonAgeValue = Math.round((-75 * Math.pow(moonAge - 0.5, 2) + 0.727) / 0.727 * 100);
         } else if (moonAge > 0.5609) {
-            moonAgeValue = Math.round((-1 / (5.6 * Math.pow(moonAge + 0.3493, 10))) / 0.727 * 100);
+            moonAgeValue = Math.round((-1 / (5.6 * Math.pow(moonAge + 0.3493, 10))-0.0089) / 0.727 * 100);
+        }
+        if (feel_like<18){
+            feel_likeValue=-0.008*Math.pow((feel_like-18),2);
+        }else{
+            feel_likeValue=-0.09*Math.pow((feel_like-18),2);
         }
 
         if (fineDust == "good") {
@@ -1203,16 +1197,19 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (fineDust == "bad") {
             fineDustValue = -20;
         }
-        if (windSpeed < 9.5) {
-            windSpeedValue = Math.round(-(100 * (1 / (-(1.9) * (windSpeed - 10)) - 0.053)));
-        } else if (windSpeed >= 9.5) {
-            windSpeedValue = -100;
+        precipitationProbabilityValue = 100*(-(1/(-(1.2)*(precipitationProbability/100-1.5))-0.55556));
+
+        if (lightPollution<28.928){
+            lightPollutionValue=-(1/(-(0.001)*(lightPollution-48))-20.833);
+        }else if (lightPollution>=28.928 && lightPollution<77.53){
+            lightPollutionValue=-(1/(-(0.0001)*(lightPollution+52))+155);
+        }else if (lightPollution>=77.53 && lightPollution<88.674){
+            lightPollutionValue = -(1/(-(0.001)*(lightPollution-110))+47);
+        }else{
+            lightPollutionValue= -(1/(-(0.01)*(lightPollution-71))+100);
         }
-        precipitationProbabilityValue = Math.round(100 * (-(1 / (-(2.6) * (precipitationProbability / 100 - 1.25)) - 0.31)));
 
-        lightPollutionValue = Math.round(100 * (-(1 / (-(0.08) * (lightPollution / 10 - 15.7)) - 0.8)));
-
-        observationalFitDegree = 100 + cloudVolumeValue + temperatureAndhumidityValue + moonAgeValue + fineDustValue + windSpeedValue + precipitationProbabilityValue + lightPollutionValue;
+        observationalFitDegree = 100 + cloudVolumeValue + feel_likeValue + moonAgeValue + fineDustValue + precipitationProbabilityValue + lightPollutionValue;
 
         return observationalFitDegree;
     }

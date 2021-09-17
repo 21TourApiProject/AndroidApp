@@ -41,8 +41,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.graphics.BitmapFactory.decodeFile;
-
 public class PersonFragment extends Fragment {
 
     Long userId;
@@ -111,9 +109,11 @@ public class PersonFragment extends Fragment {
             public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                    assert user != null;
+
                     if (user.getProfileImage() != null){
-                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + user.getProfileImage()).into(profileImage);
+                        String fileName = user.getProfileImage();
+                        fileName = fileName.substring(1,fileName.length()-1);
+                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
                     }
                     nickName.setText(user.getNickName());
                 } else {
