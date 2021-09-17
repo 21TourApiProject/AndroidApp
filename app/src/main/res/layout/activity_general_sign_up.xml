@@ -193,10 +193,11 @@
                         android:id="@+id/birthDay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginLeft="31dp"
                         android:onClick="onClickBirthPicker"
                         android:text="@string/signup_birthDay"
-                        android:textSize="14sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -209,24 +210,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="마케팅 정보 수신 동의 :"
+                        android:text="마케팅 정보 수신 동의 "
                         android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/marketing"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_marketing_non" />
 
                     <TextView
                         android:id="@+id/marketInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center"
                         android:text="@string/signup_marketInfo"
                         android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text=" :" />
+
+                    <Button
+                        android:id="@+id/marketing"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="53dp"
+                        android:background="@drawable/signup_marketing_non" />
+
                 </LinearLayout>
 
                 <Button

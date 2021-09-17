@@ -46,11 +46,11 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private Button marketing;
+    int sex2;
 
     String realName, birthDay, email="", password;
     Boolean sex;
     Boolean isMarketing;
-    int sex2 = 0;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -61,16 +61,21 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_sign_up);
+        sex2 = 0;
+        isMarketing = false;
 
         //성별
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
         male.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                if(male.getBackground() == getResources().getDrawable(R.drawable.signup_male_non)){
+                if(sex2 == 0){
                     System.out.println("남 비어있는거 클릭");
+                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                    sex2 = 1;
+                }
+                else if(sex2 == 2){
                     male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
                     female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
                     sex2 = 1;
@@ -78,11 +83,14 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             }
         });
         female.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                if(female.getBackground() == getResources().getDrawable(R.drawable.signup_female_non)){
+                if(sex2 == 0){
                     System.out.println("여 비어있는거 클릭");
+                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                    sex2 = 2;
+                }
+                else if(sex2 == 1){
                     female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
                     male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
                     sex2 = 2;
@@ -93,10 +101,9 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         //마케팅 정보 수신 동의
         marketing = findViewById(R.id.marketing);
         marketing.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                if(marketing.getBackground() == getResources().getDrawable(R.drawable.signup_marketing_non)){
+                if(!isMarketing){
                     marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_marketing));
                     isMarketing = true;
                 } else{
@@ -250,7 +257,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 }
 
                 //칸에 적힌 데이터 가지고 전화번호 인증 페이지로 이동
-                UserParams userParams = new UserParams(realName, sex, birthDay, email, password);
+                UserParams userParams = new UserParams(realName, sex, birthDay, email, password, isMarketing);
                 Intent intent = new Intent(getApplicationContext(), PhoneAuthActivity.class);
                 intent.putExtra("userParams", userParams);
                 startActivity(intent);
