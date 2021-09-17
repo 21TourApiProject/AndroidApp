@@ -53,7 +53,8 @@
         <activity android:name=".signUpPage.PhoneAuthActivity" />
         <activity android:name=".signUpPage.KakaoPhoneAuthActivity" />
         <activity android:name=".signUpPage.GeneralSingUpActivity" />
-        <activity android:name=".signUpPage.SignUpActivity" />
+        <activity android:name=".signUpPage.SignUpActivity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".starPage.StarActivity" />
         <activity android:name=".observationPage.ObservationsiteActivity" />
         <activity

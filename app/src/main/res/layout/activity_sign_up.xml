@@ -8,43 +8,59 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/signup_star15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="69dp"
+                app:srcCompat="@drawable/signup_logo" />
+
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
-                android:text="별헤는 밤"
-                android:textSize="40sp" />
+                android:layout_marginTop="48dp"
+                app:srcCompat="@drawable/signup_text" />
 
             <EditText
                 android:id="@+id/logInEmail"
-                android:layout_width="match_parent"
+                android:layout_width="251dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:focusable="true"
                 android:hint="이메일"
-                android:layout_marginTop="40dp"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textSize="12sp" />
 
             <EditText
                 android:id="@+id/logInPwd"
-                android:layout_width="match_parent"
+                android:layout_width="251dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:layout_gravity="center"
+                android:layout_marginTop="23dp"
+                android:focusable="true"
                 android:hint="비밀번호"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/logIn"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="로그인" />
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/signup_login" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -56,17 +72,20 @@
                     android:id="@+id/findEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="43dp"
                     android:layout_weight="1"
-                    android:layout_marginRight="20dp"
-                    android:text="이메일 찾기" />
+                    android:text="이메일 찾기"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/findPwd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="20dp"
-                    android:text="비밀번호 찾기" />
+                    android:text="비밀번호 찾기"
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -74,33 +93,34 @@
                 android:id="@+id/kakaoSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/sign_up__kko_sign_up"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="58dp"
+                android:background="@drawable/signup_kakaologin" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:text="또는"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/generalSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="일반 회원가입" />
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="52dp"
+                android:background="@drawable/signup_emailsignup" />
 
             <Button
                 android:id="@+id/logout_tmp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="로그아웃 임시"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="16dp"/>
+                android:layout_gravity="center"
+                android:text="로그아웃 임시" />
+
         </LinearLayout>
     </ScrollView>
 

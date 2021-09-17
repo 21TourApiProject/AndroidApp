@@ -165,7 +165,7 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body()){
                         isWish = true;
-                        tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
+                        tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                     } else{
                         isWish = false;
                     }
@@ -191,7 +191,7 @@ public class TouristPointActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 //버튼 디자인 바뀌게 구현하기
                                 isWish = true;
-                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 실패");
@@ -209,7 +209,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 isWish = false;
-                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 삭제 실패");
@@ -256,7 +256,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setLongitude(tpData.getMapX());
                                     balloonObject.setLatitude(tpData.getMapY());
                                     balloonObject.setName(tpData.getTitle());
-                                    balloonObject.setAddress(tpData.getAddr1());
+                                    balloonObject.setAddress(tpData.getAddr());
                                     balloonObject.setPoint_type(tpData.getCat3Name());
                                     balloonObject.setIntro(tpData.getOverviewSim());
 
@@ -331,8 +331,8 @@ public class TouristPointActivity extends AppCompatActivity {
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getAddr1() != null){
-                                        tpAddress.setText(tpData.getAddr1());
+                                    if (tpData.getAddr() != null){
+                                        tpAddress.setText(tpData.getAddr());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
                                     }
