@@ -10,9 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 
 import java.util.ArrayList;
 
@@ -32,6 +30,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_post_image_slider, parent, false);
         return new MyViewHolder(view,listener);
+
     }
 
     @Override
@@ -54,7 +53,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
         public MyViewHolder(@NonNull View itemView, final ImageSliderItemClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.imageSlider);
+            mImageView = itemView.findViewById(R.id.custom_post_Image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

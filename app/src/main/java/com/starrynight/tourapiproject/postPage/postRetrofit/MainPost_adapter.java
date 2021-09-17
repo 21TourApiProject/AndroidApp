@@ -102,7 +102,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         MainPost item = items.get(position);
         viewHolder.setItem(item);
         Glide.with(viewHolder.itemView.getContext())
-                .load(item.getProfileImage())
+                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+item.getProfileImage()).circleCrop()
                 .into(viewHolder.profileimage);
         viewHolder.observation.setOnClickListener(new View.OnClickListener() {
             @Override
