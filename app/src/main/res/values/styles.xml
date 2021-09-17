@@ -5,4 +5,23 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
+    <style name="StarryNight" parent="Theme.AppCompat.NoActionBar">
+        // Attributes from material theme
+        <item name="colorPrimary">@color/content_blue</item>
+        <item name="colorSecondary">@color/sub_blue</item>
+        <item name="colorAccent">@color/point_purple</item>
+        <item name="colorSurface">@color/point_purple</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+
+        // Attributes from android framework
+        <item name="android:windowBackground">@color/bg_dark_indigo</item>
+        // font_style
+<!--        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>-->
+<!--        <item name="android:buttonStyle">@style/customButtonFontStyle</item>-->
+<!--        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>-->
+
+    </style>
+
+
 </resources>

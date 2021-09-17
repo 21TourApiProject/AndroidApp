@@ -1,8 +1,10 @@
 package com.starrynight.tourapiproject.observationPage;
 
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ public class RecyclerFeeAdapter extends RecyclerView.Adapter<RecyclerFeeAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView fee_name;
         TextView entrance_fee;
+        ImageView line;
 
 
         ViewHolder(@NonNull View itemView) {
@@ -28,10 +31,13 @@ public class RecyclerFeeAdapter extends RecyclerView.Adapter<RecyclerFeeAdapter.
 
             fee_name = (TextView) itemView.findViewById(R.id.feename_txt);
             entrance_fee = (TextView) itemView.findViewById(R.id.entrancefee_txt);
+            line = (ImageView) itemView.findViewById(R.id.fee_line);
         }
 
         void onBind(RecyclerFeeItem item) {
             fee_name.setText(item.getFeeName());
+            if(item.getEntranceFee()==null)
+                line.setVisibility(View.GONE);
             entrance_fee.setText(item.getEntranceFee());
         }
     }

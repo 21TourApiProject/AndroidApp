@@ -52,8 +52,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="5"
-                            android:onClick="clickEvent"
                             android:background="@drawable/select_hash_tag_unclicked"
+                            android:onClick="clickEvent"
                             android:text="공기 좋은" />
 
                         <Button
@@ -201,10 +201,10 @@
                             android:id="@+id/ht12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:onClick="clickEvent"
+                            android:layout_weight="4"
                             android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="자전거" />
+                            android:onClick="clickEvent"
+                            android:text="반려동물" />
 
                         <TextView
                             android:layout_width="wrap_content"

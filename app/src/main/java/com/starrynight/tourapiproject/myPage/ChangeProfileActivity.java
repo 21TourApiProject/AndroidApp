@@ -1,8 +1,10 @@
 package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -16,25 +18,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferNetworkLossHandler;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
-import com.starrynight.tourapiproject.myPage.myPageRetrofit.User3;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.graphics.BitmapFactory.decodeFile;
 
 public class ChangeProfileActivity extends AppCompatActivity {
 
@@ -44,7 +51,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
     Long userId;
     String beforeNickName; //변경하기전 닉네임
     Boolean isProfileImageChange = false; //프로필 사진을 바꿨는지
-    String updateProfileImage; //변경한 프로필 사진
 
     ImageView profileImage;
     EditText changeNickname;
@@ -53,7 +59,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private Boolean isNickNameEmpty = false; //닉네임이 비어있는지
     private Boolean isNotNickName = false; //올바른 닉네임 형식이 아닌지
     private Boolean isNickNameDuplicate = false; //닉네임이 중복인지
-    
+
+    File file; //이미지 파일
+    String fileName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +81,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
             public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                    assert user != null;
                     if (user.getProfileImage() != null){
-                        profileImage.setImageBitmap(decodeFile(user.getProfileImage()));
+                        String fileName = user.getProfileImage();
+                        fileName = fileName.substring(1,fileName.length()-1);
+                        Glide.with(ChangeProfileActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
                     }
                     changeNickname.setText(user.getNickName());
                     beforeNickName = user.getNickName();
@@ -121,20 +131,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isNickNameEmpty){
-                    changeNicknameGuide.setText("닉네임을 입력해주세요.");
-                }
-                else if(isNotNickName){
-                    changeNicknameGuide.setText("사용할 수 없는 닉네임입니다. (한글/영문/숫자 조합 15자 이내)");
-                }
-                else if(isNickNameDuplicate){
-                    changeNicknameGuide.setText("닉네임 중복확인이 필요합니다.");
-                }
-                else{
-                    User2 user2 = new User2();
+                if (!isNickNameEmpty && !isNotNickName && !isNickNameDuplicate) {
                     changeNicknameGuide.setText("");
 
-                    if(!beforeNickName.equals(changeNickname.getText().toString())){
+                    if (!beforeNickName.equals(changeNickname.getText().toString())) {
                         //닉네임 변경 put api
                         Call<Void> call = RetrofitClient.getApiService().updateNickName(userId, changeNickname.getText().toString());
                         call.enqueue(new Callback<Void>() {
@@ -142,12 +142,12 @@ public class ChangeProfileActivity extends AppCompatActivity {
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {
                                     System.out.println("닉네임 변경 성공");
-                                    user2.setNickName(changeNickname.getText().toString());
                                 } else {
                                     System.out.println("닉네임 변경 실패");
                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 Log.e("연결실패", t.getMessage());
@@ -155,35 +155,32 @@ public class ChangeProfileActivity extends AppCompatActivity {
                             }
                         });
                     }
+                }
 
-                    //프로필 사진 변경 put api
-                    if (isProfileImageChange){
-                        User3 user3 = new User3(updateProfileImage);
-                        Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, user3);
-                        call2.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call2, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    System.out.println("프사 변경 성공");
-                                    user2.setProfileImage(updateProfileImage);
-                                } else {
-                                    System.out.println("프사 변경 실패");
-                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            @Override
-                            public void onFailure(Call<Void> call2, Throwable t) {
-                                Log.e("연결실패", t.getMessage());
+                //프로필 사진 변경 put api
+                if (isProfileImageChange){
+                    System.out.println("파일 이름 = " + fileName);
+                    uploadWithTransferUtility(fileName, file); //s3 사진 업로드
+
+                    Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
+                    call2.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call2, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                System.out.println("프로필 사진 변경 성공");
+                            } else {
+                                System.out.println("프로필 사진 변경 실패");
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                             }
-                        });
-                    }
-
-                    Intent intent = new Intent();
-                    intent.putExtra("result", user2);
-                    setResult(1, intent);
-                    finish();
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call2, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                            Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
+                finish();
             }
         });
 
@@ -210,9 +207,12 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     profileImage.setImageBitmap(img);
-                    String file = BitmapToFile(img, "profileImage");
-                    System.out.println("file = " + file);
-                    updateProfileImage = file;
+                    System.out.println("사진 미리보기");
+
+                    Uri uri = data.getData();
+                    file = new File(getRealPathFromURI(uri));
+                    System.out.println("file = " + file.getName());
+                    fileName = "PI" + userId + "_" + file.getName();
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -223,35 +223,60 @@ public class ChangeProfileActivity extends AppCompatActivity {
         }
     }
 
-    //Bitmap을 File로 변경하는 함수
-    public String BitmapToFile(Bitmap bitmap, String name) {
-        File storage = getFilesDir();
-        String fileName = name + ".jpg";
-        File imgFile = new File(storage, fileName);
-        try {
-            imgFile.createNewFile();
-            FileOutputStream out = new FileOutputStream(imgFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
-        } catch (FileNotFoundException e) {
-            Log.e("saveBitmapToJpg", "FileNotFoundException: "+ e.getMessage());
-        } catch (IOException e) {
-            Log.e("saveBitmapToJpg", "IOException: "+ e.getMessage());
-        }
-        Log.d("imgPath", getFilesDir() + "/" + fileName);
-        //return imgFile;
-        return getFilesDir() + "/" + fileName;
+    // 이미지 uri 경로 함수
+    public String getRealPathFromURI(Uri contentUri) {
+        String [] proj={MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this, contentUri, proj, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    //s3에 사진업로드 하는 함수
+    public void uploadWithTransferUtility(String fileName, File file) {
+
+        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
+        AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
+
+        TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
+        TransferNetworkLossHandler.getInstance(getApplicationContext());
+
+        TransferObserver uploadObserver = transferUtility.upload("starry-night/profileImage", fileName, file);    // (bucket api, file이름, file객체)
+
+        uploadObserver.setTransferListener(new TransferListener() {
+            @Override
+            public void onStateChanged(int id, TransferState state) {
+                if (state == TransferState.COMPLETED) {
+                    Log.d("TAG", "onStateChanged: " + id + ", " + state.toString());
+                }
+            }
+
+            @Override
+            public void onProgressChanged(int id, long current, long total) {
+                int done = (int) (((double) current / total) * 100.0);
+                Log.d("MYTAG", "UPLOAD - - ID: $id, percent done = $done");
+            }
+
+            @Override
+            public void onError(int id, Exception ex) {
+                Log.d("MYTAG", "UPLOAD ERROR - - ID: $id - - EX:" + ex.toString());
+            }
+        });
     }
 
     //닉네임 규칙 함수
     private Boolean isCorrectNickName(String nickName) {
-        String pattern = "^[[가-힣]*[0-9]*[a-zA-z]*[ ]*]{1,15}$";
+        String pattern = "^[[ㄱ-ㅎㅏ-ㅢ가-힣0-9a-zA-z]*]{1,15}$";
         return Pattern.matches(pattern, nickName);
     }
 
+    //닉네임 가이드 함수
     private void showNickNameGuide(CharSequence s) {
         String text = s.toString();
         if (text.isEmpty()) {
             isNickNameEmpty = true;
+            changeNicknameGuide.setText("닉네임을 입력해주세요.");
         } else if (!isCorrectNickName(text)) {
             changeNicknameGuide.setText("사용할 수 없는 닉네임입니다. (한글/영문/숫자 조합 15자 이내)");
             isNickNameEmpty = false;
@@ -266,15 +291,15 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         Boolean result = response.body();
                         if (result) {
-                            changeNicknameGuide.setText("사용가능한 닉네임입니다.");
+                            //changeNicknameGuide.setText("사용가능한 닉네임입니다.");
                             isNickNameEmpty = false;
-                            isNickNameDuplicate = false;
                             isNotNickName = false;
+                            isNickNameDuplicate = false;
                         } else if (!result) {
                             changeNicknameGuide.setText("중복된 닉네임입니다.");
                             isNickNameEmpty = false;
-                            isNickNameDuplicate = false;
-                            isNotNickName = true;
+                            isNotNickName = false;
+                            isNickNameDuplicate = true;
                         }
                     } else {
                         System.out.println("중복 체크 실패");
