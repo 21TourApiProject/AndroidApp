@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
@@ -44,6 +45,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
     String realName, birthDay, email="", password;
     Boolean sex;
+    int sex2 = 0;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -53,7 +55,33 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_general_sing_up);
+        setContentView(R.layout.activity_general_sign_up);
+
+        //성별
+        Button male = findViewById(R.id.male);
+        Button female = findViewById(R.id.female);
+        male.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onClick(View v) {
+                if(male.getBackground() == getResources().getDrawable(R.drawable.signup_male_non, null)){
+                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                    sex2 = 1;
+                }
+            }
+        });
+        female.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onClick(View v) {
+                if(female.getBackground() == getResources().getDrawable(R.drawable.signup_female_non, null)){
+                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                    sex2 = 2;
+                }
+            }
+        });
 
         //생년월일
         birth = (TextView)findViewById(R.id.birthDay);
@@ -149,11 +177,9 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     return;
                 }
 
-                RadioButton male = findViewById(R.id.male);
-                RadioButton female = findViewById(R.id.female);
-                if (male.isChecked()){
+                if (sex2 == 1){
                     sex = true;
-                } else if(female.isChecked()){
+                } else if(sex2 == 2){
                     sex = false;
                 } else{
                     Toast.makeText(getApplicationContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show();
