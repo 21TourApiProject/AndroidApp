@@ -42,4 +42,14 @@
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
+
+    <style name="Textview_observation_details" parent="">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="Textview_observation_details_title" parent="">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/point_purple</item>
+    </style>
 </resources>

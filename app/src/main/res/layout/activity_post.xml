@@ -17,10 +17,30 @@
             android:orientation="vertical" >
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/post_back_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/back_btn" />
+
+                <TextView
+                    android:id="@+id/post_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="게시물 상세 보기"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="wrap_content">
 
             </androidx.viewpager2.widget.ViewPager2>
 
@@ -37,13 +57,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="24dp">
 
-                <Button
-                    android:id="@+id/observeSpot"
+                <TextView
+                    android:id="@+id/postTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="관측지점" />
+                    android:hint="게시물 제목"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=">"
+                    android:textSize="20sp"></TextView>
 
                 <View
                     android:layout_width="0dp"
@@ -51,13 +80,104 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/like"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="right"
-                    android:background="@drawable/observation__save"
-                    app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
+                    android:id="@+id/delete_btn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/post_delete"
+                    android:visibility="gone" />
+
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/content_blue"
+                android:orientation="vertical"
+                android:paddingHorizontal="24dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="15"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/post_profileImage"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:srcCompat="@drawable/main__empty_profile" />
+
+                        <TextView
+                            android:id="@+id/post_nickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="닉네임"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/like"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right"
+                        android:background="@drawable/main__bookmark"
+                        app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/postObserveLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/hashtag_background"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="14sp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/mainpage_observationpin" />
+
+                        <TextView
+                            android:id="@+id/postObservation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="관측지"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/hashTagRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:itemCount="4" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/postContent"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/post_write__edge"
+                android:text="게시물 내용" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +192,7 @@
                     android:layout_marginTop="10dp"
                     android:hint="2021년 7월 20일 (월)"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/postTime"
@@ -81,37 +201,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:hint="15:30"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/postObserveLinear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/postObservation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="관측지" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/hashTagRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:itemCount="4" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/postContent"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/post_write__edge"
-                android:text="게시물 내용" />
 
             <TextView
                 android:layout_width="match_parent"

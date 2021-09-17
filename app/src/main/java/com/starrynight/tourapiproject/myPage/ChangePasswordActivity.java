@@ -1,7 +1,5 @@
 package com.starrynight.tourapiproject.myPage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,9 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
-import com.starrynight.tourapiproject.myPage.myWish.observation.MyObWish;
 
 import java.util.regex.Pattern;
 

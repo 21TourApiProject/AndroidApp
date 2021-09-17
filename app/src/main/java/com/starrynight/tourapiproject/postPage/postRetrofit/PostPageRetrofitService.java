@@ -1,8 +1,13 @@
 package com.starrynight.tourapiproject.postPage.postRetrofit;
 
+import com.starrynight.tourapiproject.alarmPage.Alarm;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
+
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
@@ -13,12 +18,21 @@ public interface PostPageRetrofitService {
     @GET("post/{postId}/postImage")
     Call<List<String>> getPostImage(@Path("postId")Long postId);
 
-    @GET("post/{postId}/postObservePoint")
-    Call<PostObservePoint> getPostObservePoint(@Path("postId")Long postId);
+    @GET("post/{observationId}/observation")
+    Call<Observation> getObservation(@Path("observationId")Long observationId);
 
     @GET("postHashTagName/{postId}")
     Call<List<String>> getPostHashTagName(@Path("postId")Long postId);
 
     @GET("postImage/{postObservePointId}")
-    Call<List<String>> getRelatePostImageList(@Path("postObservePointId")Long postObservePointId);
+    Call<List<PostImage>> getRelatePostImageList(@Path("postObservePointId")Long postObservePointId);
+
+    @DELETE("post/{userId}")
+    Call<Void> deletePost(@Path("userId")Long userId);
+
+    @GET("post/")
+    Call<List<MainPost>> getMainPosts();
+
+    @GET("user/{userId}")
+    Call<User> getUser(@Path("userId")Long userId);
 }

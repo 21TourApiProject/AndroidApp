@@ -6,47 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".MainFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <ImageButton
             android:id="@+id/weather_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="날씨" />
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/empty"
+            android:src="@drawable/main__weather" />
 
-        <TextView
+        <ImageView
             android:id="@+id/starryNightTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="별헤는밤"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/main__logo" />
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="알림" />
+            android:id="@+id/main_alarm"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_toLeftOf="@+id/postWrite"
+            android:background="@drawable/main__alarm" />
 
         <Button
             android:id="@+id/postWrite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/post_plus__button" />
-    </LinearLayout>
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/mainpage_postwrite" />
+    </RelativeLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
@@ -58,16 +60,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
+            android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foregroundGravity="center">
 
             <LinearLayout
-                android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/todayEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher_background"
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
@@ -78,7 +87,7 @@
             </LinearLayout>
         </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/testSignUp"

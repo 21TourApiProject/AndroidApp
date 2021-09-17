@@ -12,6 +12,8 @@ public class Observation {
     String observationName;
     @SerializedName("link")
     String link;
+    @SerializedName("intro")
+    String intro;
     @SerializedName("latitude")
     double latitude;
     @SerializedName("longitude")
@@ -36,12 +38,18 @@ public class Observation {
     double light;
     @SerializedName("nature")
     boolean nature;
+    @SerializedName("courseOrder")
+    int courseOrder;
     @SerializedName("observeHashTags")
     List<ObserveHashTag> observeHashTags;
     @SerializedName("observeImages")
     List<ObserveImage> observeImages;
     @SerializedName("observeFee")
     List<ObserveFee> observeFees;
+
+    public int getCourseOrder() {
+        return courseOrder;
+    }
 
     public List<ObserveFee> getObserveFees() {
         return observeFees;
@@ -50,6 +58,9 @@ public class Observation {
         return observeImages;
     }
 
+    public String getIntro() {
+        return intro;
+    }
     public Observation(){};
 
     public double getLight() {
