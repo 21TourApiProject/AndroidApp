@@ -59,7 +59,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:background="@drawable/signup_box1"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/emailGuide"
@@ -83,7 +84,7 @@
                     android:background="@drawable/signup_box1"
                     android:hint="   특수문자, 영문, 숫자 조합해서 8자 이상"
                     android:inputType="textPassword"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/pwdGuide"
@@ -105,7 +106,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:background="@drawable/signup_box1"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -141,7 +143,8 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="52dp"
                         android:background="@drawable/signup_box2"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -193,7 +196,7 @@
                         android:layout_marginLeft="31dp"
                         android:onClick="onClickBirthPicker"
                         android:text="@string/signup_birthDay"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
