@@ -29,8 +29,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GeneralSingUpActivity extends AppCompatActivity{
-    private TextView birth;
-    private DatePickerDialog.OnDateSetListener callbackMethod;
 
     private TextView emailGuide; //이메일 칸 바로 밑에 글칸
     private Boolean isEmailEmpty = true; //이메일이 비어있는지
@@ -43,8 +41,15 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
     private Boolean isError = false; //서버 에러가 발생했는지
 
+    private Button male;
+    private Button female;
+    private TextView birth;
+    private DatePickerDialog.OnDateSetListener callbackMethod;
+    private Button marketing;
+
     String realName, birthDay, email="", password;
     Boolean sex;
+    Boolean isMarketing;
     int sex2 = 0;
 
     Calendar c = Calendar.getInstance();
@@ -58,13 +63,14 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         setContentView(R.layout.activity_general_sign_up);
 
         //성별
-        Button male = findViewById(R.id.male);
-        Button female = findViewById(R.id.female);
+        male = findViewById(R.id.male);
+        female = findViewById(R.id.female);
         male.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                if(male.getBackground() == getResources().getDrawable(R.drawable.signup_male_non, null)){
+                if(male.getBackground() == getResources().getDrawable(R.drawable.signup_male_non)){
+                    System.out.println("남 비어있는거 클릭");
                     male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
                     female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
                     sex2 = 1;
@@ -75,11 +81,35 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                if(female.getBackground() == getResources().getDrawable(R.drawable.signup_female_non, null)){
+                if(female.getBackground() == getResources().getDrawable(R.drawable.signup_female_non)){
+                    System.out.println("여 비어있는거 클릭");
                     female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
                     male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
                     sex2 = 2;
                 }
+            }
+        });
+
+        //마케팅 정보 수신 동의
+        marketing = findViewById(R.id.marketing);
+        marketing.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onClick(View v) {
+                if(marketing.getBackground() == getResources().getDrawable(R.drawable.signup_marketing_non)){
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_marketing));
+                    isMarketing = true;
+                } else{
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_marketing_non));
+                    isMarketing = false;
+                }
+            }
+        });
+        TextView marketInfo = findViewById(R.id.marketInfo);
+        marketInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //마케팅 페이지로 이동
             }
         });
 
