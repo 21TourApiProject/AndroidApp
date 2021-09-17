@@ -26,6 +26,8 @@ import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -79,6 +81,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     List<MainPost> result = response.body();
                     RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                    layoutManager.setReverseLayout(true);
+                    layoutManager.setStackFromEnd(true);
                     recyclerView.setLayoutManager(layoutManager);
                     MainPost_adapter adapter = new MainPost_adapter(result,getContext());
                     recyclerView.setAdapter(adapter);
