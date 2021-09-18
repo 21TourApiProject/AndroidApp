@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.signUpPage;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,14 +42,21 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
     private Button male;
     private Button female;
+    int sex2;
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
+
+    private Button service;
+    private Button personal;
+    private Button locationService;
     private Button marketing;
-    int sex2;
+    Boolean isService;
+    Boolean isPersonal;
+    Boolean isLocationService;
+    Boolean isMarketing;
 
     String realName, birthDay, email="", password;
     Boolean sex;
-    Boolean isMarketing;
 
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
@@ -62,6 +68,9 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_sign_up);
         sex2 = 0;
+        isService = false;
+        isPersonal = false;
+        isLocationService = false;
         isMarketing = false;
 
         //성별
@@ -71,11 +80,14 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 if(sex2 == 0){
-                    System.out.println("남 비어있는거 클릭");
                     male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
                     sex2 = 1;
                 }
-                else if(sex2 == 2){
+                if(sex2 == 1){
+                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                    sex2 = 0;
+                }
+                if(sex2 == 2){
                     male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
                     female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
                     sex2 = 1;
@@ -86,15 +98,87 @@ public class GeneralSingUpActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 if(sex2 == 0){
-                    System.out.println("여 비어있는거 클릭");
                     female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
                     sex2 = 2;
                 }
-                else if(sex2 == 1){
+                if(sex2 == 1){
                     female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
                     male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
                     sex2 = 2;
                 }
+                if(sex2 == 2){
+                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                    sex2 = 0;
+                }
+            }
+        });
+
+        //서비스 동의
+        service = findViewById(R.id.service);
+        service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isService){
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isService = false;
+                } else{
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isService = true;
+                }
+            }
+        });
+        TextView serviceInfo = findViewById(R.id.serviceInfo);
+        serviceInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ServiceInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //개인정보 동의
+        personal = findViewById(R.id.personal);
+        personal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isPersonal){
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isPersonal = false;
+                } else{
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isPersonal = true;
+                }
+            }
+        });
+        TextView personalInfo = findViewById(R.id.personalInfo);
+        personalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //위치정보 동의
+        locationService = findViewById(R.id.locationService);
+        locationService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isLocationService){
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isLocationService = false;
+                } else{
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isLocationService = true;
+                }
+            }
+        });
+        TextView locationServiceInfo = findViewById(R.id.locationServiceInfo);
+        locationServiceInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LocationInfoActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -103,12 +187,12 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         marketing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isMarketing){
-                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_marketing));
-                    isMarketing = true;
-                } else{
-                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_marketing_non));
+                if(isMarketing){
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
                     isMarketing = false;
+                } else{
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isMarketing = true;
                 }
             }
         });
@@ -116,7 +200,8 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         marketInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //마케팅 페이지로 이동
+                Intent intent = new Intent(getApplicationContext(), MarketingInfoActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -208,27 +293,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
-                if(realName.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (sex2 == 1){
-                    sex = true;
-                } else if(sex2 == 2){
-                    sex = false;
-                } else{
-                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();
-                if(birthDay.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 if(isEmailEmpty){
                     Toast.makeText(getApplicationContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
@@ -253,6 +317,39 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 }
                 else if(!password.equals(passwordCheck)){
                     Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
+                if(realName.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (sex2 == 1){
+                    sex = true;
+                } else if(sex2 == 2){
+                    sex = false;
+                } else{
+                    sex = null;
+                }
+
+                birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();
+                if(birthDay.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(!isService){
+                    Toast.makeText(getApplicationContext(), "서비스 이용약관 동의는 필수입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!isPersonal){
+                    Toast.makeText(getApplicationContext(), "개인정보 수집 및 이용동의는 필수입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!isLocationService){
+                    Toast.makeText(getApplicationContext(), "위치서비스 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

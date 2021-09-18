@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.starrynight.tourapiproject" >
+    package="com.starrynight.tourapiproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -22,8 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/StarryNight"
         android:usesCleartextTraffic="true"
-        tools:targetApi="n" >
-      
+        tools:targetApi="n">
+        <activity android:name=".signUpPage.MarketingInfoActivity"></activity>
+        <activity android:name=".signUpPage.PersonalInfoActivity" />
+        <activity android:name=".signUpPage.LocationInfoActivity" />
+        <activity android:name=".signUpPage.ServiceInfoActivity" />
         <activity android:name=".myPage.MyPostActivity" />
         <activity android:name=".myPage.MyWishActivity" />
         <activity android:name=".alarmPage.AlarmActivity" />
@@ -53,8 +56,9 @@
         <activity android:name=".signUpPage.PhoneAuthActivity" />
         <activity android:name=".signUpPage.KakaoPhoneAuthActivity" />
         <activity android:name=".signUpPage.GeneralSingUpActivity" />
-        <activity android:name=".signUpPage.SignUpActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".signUpPage.SignUpActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".starPage.StarActivity" />
         <activity android:name=".observationPage.ObservationsiteActivity" />
         <activity
@@ -73,14 +77,14 @@
         <activity android:name=".postWritePage.AddHashTagActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity" >
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
