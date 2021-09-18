@@ -519,47 +519,45 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     }
                     if (relatefilename[0]!=null){
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[0])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[0])
                                 .into(relateImage1);
                     }
                     if (relatefilename[1]!=null){
                         relateImage2.setVisibility(View.VISIBLE);
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[1])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[1])
                                 .into(relateImage2);
                     }
                     if (relatefilename[2]!=null){
                         relateImage3.setVisibility(View.VISIBLE);
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/"+relatefilename[2])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[2])
                                 .into(relateImage3);
-
-                        relateImage1.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                                intent1.putExtra("postId",relateImageList.get(0).getPostId());
-                                startActivity(intent1);
-                            }
-                        });
-                        relateImage2.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                                intent1.putExtra("postId",relateImageList.get(1).getPostId());
-                                startActivity(intent1);
-                            }
-                        });
-                        relateImage3.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent1 = new Intent(getApplicationContext(), PostActivity.class);
-                                intent1.putExtra("postId",relateImageList.get(2).getPostId());
-                                startActivity(intent1);
-                            }
-                        });
-
                     }
+                    relateImage1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent01 = new Intent(getApplicationContext(), PostActivity.class);
+                            intent01.putExtra("postId",relateImageList.get(0).getPostId());
+                            startActivity(intent01);
+                        }
+                    });
+                    relateImage2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent2 = new Intent(getApplicationContext(), PostActivity.class);
+                            intent2.putExtra("postId",relateImageList.get(1).getPostId());
+                            startActivity(intent2);
+                        }
+                    });
+                    relateImage3.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent3 = new Intent(getApplicationContext(), PostActivity.class);
+                            intent3.putExtra("postId",relateImageList.get(2).getPostId());
+                            startActivity(intent3);
+                        }
+                    });
                 }else{Log.d("relatePostImage","관련 게시물 이미지 업로드 실패");}
             }
 
