@@ -197,12 +197,12 @@
                         android:id="@+id/birthDay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginLeft="31dp"
                         android:background="@drawable/signup_box2"
-                        android:gravity="center"
-                        android:paddingLeft="10dp"
+                        android:gravity="center|left"
                         android:onClick="onClickBirthPicker"
+                        android:paddingLeft="10dp"
+                        android:textAlignment="inherit"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -216,14 +216,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="만 14세 이상입니다 (필수)"
+                        android:text="만 14세 이상입니다 (필수) :"
                         android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text=" :" />
 
                     <Button
                         android:id="@+id/ageLimit"
@@ -259,7 +253,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text=") :" />
+                        android:text=") :"
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/service"
@@ -295,6 +290,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:textSize="12sp"
                         android:text=") :" />
 
                     <Button
@@ -331,6 +327,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:textSize="12sp"
                         android:text=") :" />
 
                     <Button
@@ -367,6 +364,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:textSize="12sp"
                         android:text=") :" />
 
                     <Button

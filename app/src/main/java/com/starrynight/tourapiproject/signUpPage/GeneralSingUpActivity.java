@@ -46,10 +46,12 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
 
+    private Button ageLimit;
     private Button service;
     private Button personal;
     private Button locationService;
     private Button marketing;
+    Boolean isAge;
     Boolean isService;
     Boolean isPersonal;
     Boolean isLocationService;
@@ -68,6 +70,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_sign_up);
         sex2 = 0;
+        isAge = false;
         isService = false;
         isPersonal = false;
         isLocationService = false;
@@ -79,36 +82,55 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sex2 == 0){
-                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
-                    sex2 = 1;
-                }
-                if(sex2 == 1){
-                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
-                    sex2 = 0;
-                }
-                if(sex2 == 2){
-                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
-                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
-                    sex2 = 1;
+                switch (sex2){
+                    case(0):
+                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                        sex2 = 1;
+                        break;
+                    case(1):
+                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                        sex2 = 0;
+                        break;
+                    case(2):
+                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                        sex2 = 1;
+                        break;
                 }
             }
         });
         female.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(sex2 == 0){
-                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
-                    sex2 = 2;
+                switch (sex2) {
+                    case (0):
+                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                        sex2 = 2;
+                        break;
+                    case (1):
+                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                        sex2 = 2;
+                        break;
+                    case (2):
+                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                        sex2 = 0;
+                        break;
                 }
-                if(sex2 == 1){
-                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
-                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
-                    sex2 = 2;
-                }
-                if(sex2 == 2){
-                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
-                    sex2 = 0;
+            }
+        });
+
+        //만 14세 이상
+        ageLimit = findViewById(R.id.ageLimit);
+        ageLimit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAge){
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAge = false;
+                } else{
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isAge = true;
                 }
             }
         });
@@ -340,6 +362,10 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     return;
                 }
 
+                if(!isAge){
+                    Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(!isService){
                     Toast.makeText(getApplicationContext(), "서비스 이용약관 동의는 필수입니다.", Toast.LENGTH_SHORT).show();
                     return;
