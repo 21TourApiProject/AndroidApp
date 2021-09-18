@@ -39,6 +39,7 @@
                     android:id="@+id/finish_add_hashTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/hashtag_background"
                     android:text="완료" />
             </LinearLayout>
 
@@ -62,16 +63,19 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10sp"
+                        android:gravity="center"
                         android:text="여행태마" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
 
                         <Button
                             android:id="@+id/ht1"
@@ -106,7 +110,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
 
                         <Button
                             android:id="@+id/ht4"
@@ -141,7 +148,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
 
                         <Button
                             android:id="@+id/ht7"
@@ -157,6 +167,7 @@
                             android:id="@+id/ht8"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/hashtags_empty"
                             android:onClick="ClickEvent"
@@ -180,17 +191,25 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/post_write__line" />
+
                     <TextView
-                        android:id="@+id/textView6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10sp"
+                        android:gravity="center"
                         android:text="이동 수단" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
 
                         <Button
                             android:id="@+id/ht9"
@@ -229,17 +248,26 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/post_write__line" />
+
                     <TextView
-                        android:id="@+id/textView7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10sp"
+                        android:gravity="center"
                         android:text="분위기" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
 
                         <Button
                             android:id="@+id/ht12"
@@ -269,6 +297,7 @@
                             android:background="@drawable/hashtags_empty"
                             android:onClick="ClickEvent"
                             android:text="도심 속" />
+
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -277,17 +306,25 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/post_write__line" />
+
                     <TextView
-                        android:id="@+id/textView8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10sp"
+                        android:gravity="center"
                         android:text="함께하는 사람" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
 
                         <Button
                             android:id="@+id/ht15"
@@ -335,17 +372,25 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/post_write__line" />
+
                     <TextView
-                        android:id="@+id/textView9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10sp"
+                        android:gravity="center"
                         android:text="여행 예산" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="16dp">
 
                         <Button
                             android:id="@+id/ht19"

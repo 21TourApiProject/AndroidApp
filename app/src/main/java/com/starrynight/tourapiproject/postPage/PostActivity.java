@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
@@ -53,11 +55,13 @@ public class PostActivity extends AppCompatActivity{
     Post post;
     Long postId;
     Long userId;
+    TextView nickname;
     TextView postTitle;
     TextView postContent;
     TextView postTime;
     TextView postDate;
     TextView postObservePoint;
+    ImageView profileImage;
     List<String>postHashTags;
     String[] filename2= new String[10];
     String[] relatefilename = new String[4];
@@ -98,7 +102,7 @@ public class PostActivity extends AppCompatActivity{
                     }
                     for (int i = 0; i <filename2.length;i++){
                         if(filename2[i] != null) {
-                            FileName.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + filename2[i]);
+                            FileName.add("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + filename2[i]);
                         }
                     }
                     sliderViewPager.setAdapter(new ImageSliderAdapter(getApplicationContext(),FileName));
@@ -125,6 +129,8 @@ public class PostActivity extends AppCompatActivity{
         postTime = findViewById(R.id.postTime);
         postDate = findViewById(R.id.postDate);
         postObservePoint = findViewById(R.id.postObservation);
+        profileImage = findViewById(R.id.post_profileImage);
+        nickname = findViewById(R.id.post_nickname);
         //게시물 정보가져오는 get api
         Call<Post>call1 = RetrofitClient.getApiService().getPost(postId);
         call1.enqueue(new Callback<Post>() {
@@ -137,7 +143,6 @@ public class PostActivity extends AppCompatActivity{
                     postContent.setText(post.getPostContent());
                     postTime.setText(post.getTime());
                     postDate.setText(post.getYearDate());
-
                     //관측지
                     Call<Observation>call2 = RetrofitClient.getApiService().getObservation(post.getObservationId());
                     call2.enqueue(new Callback<Observation>() {
@@ -153,6 +158,34 @@ public class PostActivity extends AppCompatActivity{
                         @Override
                         public void onFailure(Call<Observation> call, Throwable t) {
                             Log.d("postObservation","게시물 관측지 인터넷 오류");
+                        }
+                    });
+                    //게시물 작성자 정보 가져오기
+                    Call<User>call3 = RetrofitClient.getApiService().getUser(post.getUserId());
+                    call3.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (response.isSuccessful()){
+                                Log.d("user","게시물 유저정보 업로드");
+                                User user = response.body();
+                                Glide.with(getApplicationContext())
+                                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+user.getProfileImage()).circleCrop()
+                                        .into(profileImage);
+                                nickname.setText(user.getNickName());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+
+                        }
+                    });
+                    //뒤로 버튼
+                    Button back = findViewById(R.id.post_back_btn);
+                    back.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
                         }
                     });
 
@@ -216,7 +249,7 @@ public class PostActivity extends AppCompatActivity{
                                 }
                                 for (int i = 0; i <relatefilename.length;i++){
                                     if(relatefilename[i] != null) {
-                                        adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/" + relatefilename[i]));
+                                        adapter.addItem(new post_point_item("","https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + relatefilename[i]));
                                     }
                                 }
                                 recyclerView.setAdapter(adapter);

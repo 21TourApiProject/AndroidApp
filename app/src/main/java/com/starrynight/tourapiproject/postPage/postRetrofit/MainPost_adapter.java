@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -101,7 +102,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         MainPost item = items.get(position);
         viewHolder.setItem(item);
         Glide.with(viewHolder.itemView.getContext())
-                .load(item.getProfileImage())
+                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+item.getProfileImage()).circleCrop()
                 .into(viewHolder.profileimage);
         viewHolder.observation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,6 +159,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3()));}
             }
             hashTagRecyclerView.setAdapter(adapter);
+            hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20));
             adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
                 @Override
                 public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
@@ -170,8 +172,10 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
 
                 }
             });
+
+
             //이미 찜한건지 확인
-            Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, postId, 2);
+            Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId,item.getPostId(), 2);
             call0.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -195,7 +199,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 @Override
                 public void onClick(View v) {
                     if (!isWish){ //찜 안한 상태일때
-                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, postId, 2);
+                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, item.getPostId(), 2);
                         call.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -214,7 +218,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                             }
                         });
                     } else{
-                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, postId, 2);
+                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, item.getPostId(), 2);
                         call.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -297,6 +301,22 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                             R.drawable.post__indicator_inactive
                     ));
                 }
+            }
+        }
+        public class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
+
+            private final int divHeight;
+
+            public RecyclerViewDecoration(int divHeight)
+            {
+                this.divHeight = divHeight;
+            }
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+            {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.right = divHeight;
             }
         }
     }

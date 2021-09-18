@@ -86,7 +86,6 @@ public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder
             }else if (item.getWishType() == 2){
                 if (item.getThumbnail() != null){
                     Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getThumbnail()).into(thumbnail);
-
                 }
             }
             title.setText(item.getTitle());

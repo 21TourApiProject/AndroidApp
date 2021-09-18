@@ -253,6 +253,16 @@ public class PostWriteActivity extends AppCompatActivity {
                 startActivityForResult(intent, 203);
             }
         });
+
+        //뒤로가기 버튼
+        Button back = findViewById(R.id.postWrite_back_btn);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         Button save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -434,7 +444,7 @@ public class PostWriteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 202){
             if(resultCode == 2){
-                System.out.println("관측지가 넘어왔당");
+                Log.d("postObservation","검색 관측지 데이터 로드");
                 observationName = (String)data.getSerializableExtra("observationName");
                 optionobservationName = (String)data.getSerializableExtra("optionObservationName");
                 if (observationName != null){
@@ -443,7 +453,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 }else{postObservePointItem.setText(optionobservationName);
                 postObservePointName = "나만의 관측지";}
 
-            }else{System.out.println("관측지가 안 넘어왔당");}
+            }else{Log.d("postObservation","검색 관측지 데이터 로드 실패");}
         }
         if(requestCode == 203){
             if(resultCode == 3){
@@ -468,7 +478,7 @@ public class PostWriteActivity extends AppCompatActivity {
 
                 }
                 recyclerView.setAdapter(adapter);
-            }else{System.out.println("해시태그가 안 넘어왔당");}
+            }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
         }
         if (resultCode != RESULT_OK || data == null) {
             return;
@@ -490,7 +500,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     addImage(img);
                     file = new File(getRealPathFromURI(uri));
                     PostImageParams postImageParam = new PostImageParams();
-                    postImageParam.setImageName(file.getName());
+                    postImageParam.setImageName(userId+file.getName());
                     postImageParams.add(postImageParam);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -512,7 +522,7 @@ public class PostWriteActivity extends AppCompatActivity {
                             file = new File(getRealPathFromURI(uri));
                             files.add(file);
                             PostImageParams postImageParam = new PostImageParams();
-                            postImageParam.setImageName(file.getName());
+                            postImageParam.setImageName(userId+file.getName());
                             postImageParams.add(postImageParam);
                             Log.e("FAT=", "일반폰/다중 : "+uri.toString());
                             uris.add(uri);
@@ -564,7 +574,7 @@ public String getRealPathFromURI(Uri contentUri) {
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
-        TransferObserver uploadObserver = transferUtility.upload("starry-night",userId+fileName, file);    // (bucket api, file이름, file객체)
+        TransferObserver uploadObserver = transferUtility.upload("starry-night/postImage",userId+fileName, file);    // (bucket api, file이름, file객체)
 
         uploadObserver.setTransferListener(new TransferListener() {
             @Override

@@ -10,41 +10,43 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 
 import java.util.ArrayList;
 
-public class AlarmItemAdapter extends RecyclerView.Adapter<AlarmItemAdapter.ViewHolder> {
-    ArrayList<AlarmItem> items = new ArrayList<AlarmItem>();
+public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> {
+    ArrayList<Alarm> items = new ArrayList<Alarm>();
     OnAlarmClickListener listener;
 
-    public void addItem(AlarmItem item){items.add(item);}
-    public void setItems(ArrayList<AlarmItem> items){ this.items = items; }
-    public AlarmItem getItem(int position){ return items.get(position); }
+    public void addItem(Alarm item){items.add(item);}
+    public void setItems(ArrayList<Alarm> items){ this.items = items; }
+    public Alarm getItem(int position){ return items.get(position); }
 
 
-    public void setItem(int position, AlarmItem item){
+    public void setItem(int position, Alarm item){
         items.set(position,item);
     }
     @NonNull
     @Override
-    public AlarmItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AlarmAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.custom_alarm_item, parent, false);
-        return new AlarmItemAdapter.ViewHolder(itemView,listener);
+        return new AlarmAdapter.ViewHolder(itemView,listener);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull AlarmItemAdapter.ViewHolder viewHolder, int position) {
-        AlarmItem item = items.get(position);
+    public void onBindViewHolder(@NonNull AlarmAdapter.ViewHolder viewHolder, int position) {
+        Alarm item = items.get(position);
         viewHolder.setItem(item);
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewHolder.button.setRotation(270);
                 if (viewHolder.alarmcontent.getVisibility()==View.GONE){
                 viewHolder.alarmcontent.setVisibility(View.VISIBLE);
-                }else{viewHolder.alarmcontent.setVisibility(View.GONE);}
+                }else{viewHolder.button.setRotation(90);
+                    viewHolder.alarmcontent.setVisibility(View.GONE);
+                    }
             }
         });
     }
@@ -70,10 +72,10 @@ public class AlarmItemAdapter extends RecyclerView.Adapter<AlarmItemAdapter.View
             button = itemView.findViewById(R.id.scroll_btn);
 
         }
-        public void setItem(AlarmItem item){
-            alarmtitle.setText(item.alarmName);
-            alarmdate.setText(item.alarmDate);
-            alarmcontent.setText(item.alarmContent);
+        public void setItem(Alarm item){
+            alarmtitle.setText(item.getAlarmTitle());
+            alarmdate.setText(item.getYearDate());
+            alarmcontent.setText(item.getAlarmContent());
         }
     }
 
