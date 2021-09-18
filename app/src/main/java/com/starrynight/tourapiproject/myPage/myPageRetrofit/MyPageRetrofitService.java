@@ -71,4 +71,7 @@ public interface MyPageRetrofitService {
 
     @GET("alarms/")
     Call<List<Alarm>> getAllAlarm();
+
+    @GET("user/{userId}/isKakao")
+    Call<Boolean> checkIsKakao(@Path("userId") Long userId);
 }
