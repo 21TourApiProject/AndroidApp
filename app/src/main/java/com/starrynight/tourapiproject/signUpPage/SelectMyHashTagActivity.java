@@ -102,7 +102,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
 
         if(button.getTag() == "isClicked"){
             button.setTag("");
-            button.setBackground(ContextCompat.getDrawable(this, R.drawable.select_hash_tag_unclicked));
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag_non));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
@@ -110,7 +110,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
         }
         else{
             button.setTag("isClicked");
-            button.setBackground(ContextCompat.getDrawable(this, R.drawable.select_hash_tag_clicked));
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
