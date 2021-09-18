@@ -178,6 +178,13 @@
                         android:layout_marginLeft="15dp"
                         android:background="@drawable/signup_female_non" />
 
+                    <Button
+                        android:id="@+id/noSex"
+                        android:layout_width="63dp"
+                        android:layout_height="29dp"
+                        android:layout_marginLeft="16dp"
+                        android:background="@drawable/signup_nosex" />
+
                 </LinearLayout>
 
                 <LinearLayout
