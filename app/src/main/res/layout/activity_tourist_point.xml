@@ -81,14 +81,14 @@
                     android:id="@+id/tpHashTag"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="21dp" />
+                    android:layout_marginTop="16dp" />
 
                 <TextView
                     android:id="@+id/overview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="81dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="24dp"
                     android:textSize="12sp"
                     android:visibility="visible" />
 
@@ -104,7 +104,7 @@
                     android:id="@+id/congestionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="29dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="40dp"
                     android:orientation="horizontal"
                     android:visibility="gone">
