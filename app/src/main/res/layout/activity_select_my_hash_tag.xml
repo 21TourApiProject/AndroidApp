@@ -60,8 +60,8 @@
                         android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="분위기 있는" />
+                        android:text="깔끔한"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht3"
@@ -69,8 +69,8 @@
                         android:layout_height="32dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="깔끔한" />
+                        android:text="감성적인"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -86,8 +86,8 @@
                         android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="감성적인" />
+                        android:text="이색적인"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht5"
@@ -96,8 +96,8 @@
                         android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="이색적인" />
+                        android:text="인생샷"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht6"
@@ -105,8 +105,8 @@
                         android:layout_height="32dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="인생샷" />
+                        android:text="전문적인"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -123,8 +123,8 @@
                         android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="전문적인" />
+                        android:text="캠핑"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht8"
@@ -133,8 +133,8 @@
                         android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="캠핑" />
+                        android:text="차박"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht9"
@@ -142,8 +142,8 @@
                         android:layout_height="32dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="차박" />
+                        android:text="경치 좋은"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
             </LinearLayout>

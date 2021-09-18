@@ -42,7 +42,10 @@ public class GeneralSingUpActivity extends AppCompatActivity{
 
     private Button male;
     private Button female;
+    private Button noSex;
     int sex2;
+    Boolean noSex2;
+
     private TextView birth;
     private DatePickerDialog.OnDateSetListener callbackMethod;
 
@@ -70,6 +73,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_sign_up);
         sex2 = 0;
+        noSex2 = false;
         isAge = false;
         isService = false;
         isPersonal = false;
@@ -79,44 +83,67 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         //성별
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);
+        noSex = findViewById(R.id.noSex);
         male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (sex2){
-                    case(0):
-                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
-                        sex2 = 1;
-                        break;
-                    case(1):
-                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
-                        sex2 = 0;
-                        break;
-                    case(2):
-                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
-                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
-                        sex2 = 1;
-                        break;
+                if(noSex2){
+                    noSex.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_nosex_non));
+                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                    noSex2 = false;
+                    sex2 = 1;
+                } else {
+                    switch (sex2) {
+                        case (0):
+                            male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                            sex2 = 1;
+                            break;
+                        case (1):
+                            break;
+                        case (2):
+                            male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                            female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                            sex2 = 1;
+                            break;
+                    }
                 }
             }
         });
         female.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (sex2) {
-                    case (0):
-                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
-                        sex2 = 2;
-                        break;
-                    case (1):
-                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
-                        male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
-                        sex2 = 2;
-                        break;
-                    case (2):
-                        female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
-                        sex2 = 0;
-                        break;
+                if(noSex2){
+                    noSex.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_nosex_non));
+                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                    noSex2 = false;
+                    sex2 = 2;
+                } else {
+                    switch (sex2) {
+                        case (0):
+                            female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                            sex2 = 2;
+                            break;
+                        case (1):
+                            female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                            male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                            sex2 = 2;
+                            break;
+                        case (2):
+                            break;
+                    }
                 }
+            }
+        });
+        noSex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if(!noSex2){
+                   noSex.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_nosex));
+                   male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                   female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                   sex2 = 0;
+                   noSex2 = true;
+               }
             }
         });
 
@@ -348,12 +375,18 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     return;
                 }
 
-                if (sex2 == 1){
-                    sex = true;
-                } else if(sex2 == 2){
-                    sex = false;
-                } else{
-                    sex = null;
+                if(sex2 == 0 && !noSex2){
+                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(sex2 == 1){
+                    sex = true; //남자
+                }
+                if(sex2 == 2){
+                    sex = false; //여자
+                }
+                if(noSex2){
+                    sex = null; //성별 없음
                 }
 
                 birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();

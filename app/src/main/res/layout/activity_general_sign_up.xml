@@ -183,7 +183,7 @@
                         android:layout_width="63dp"
                         android:layout_height="29dp"
                         android:layout_marginLeft="16dp"
-                        android:background="@drawable/signup_nosex" />
+                        android:background="@drawable/signup_nosex_non" />
 
                 </LinearLayout>
 
