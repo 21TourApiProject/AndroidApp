@@ -66,6 +66,9 @@ public interface MyPageRetrofitService {
     @GET("post/user/{userId}")
     Call<List<MyPost>> getMyPost(@Path("userId") Long userId);
 
+    @GET("post/observation/{observationId}")
+    Call<List<MyPost>> getRelatePost(@Path("observationId")Long observationId);
+
     @DELETE("user/{userId}")
     Call<Void> deleteUser(@Path("userId") Long userId);
 
