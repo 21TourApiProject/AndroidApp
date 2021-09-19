@@ -102,7 +102,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         MainPost item = items.get(position);
         viewHolder.setItem(item);
         Glide.with(viewHolder.itemView.getContext())
-                .load(item.getProfileImage())
+                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+item.getProfileImage()).circleCrop()
                 .into(viewHolder.profileimage);
         viewHolder.observation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,6 +258,11 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             });
             nickname.setText(item.getMainNickName());
             mainslider.setOffscreenPageLimit(3);
+
+//            ViewGroup.LayoutParams params = mainslider.getLayoutParams();
+//            params.width=ViewGroup.LayoutParams.MATCH_PARENT;
+//            params.height= params.width;
+//            mainslider.requestLayout();
             ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());
             mainslider.setAdapter(imageSliderAdapter);
 

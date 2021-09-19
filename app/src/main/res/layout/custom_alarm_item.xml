@@ -5,46 +5,59 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/scroll_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:id="@+id/alarmlinear"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/alarm_title"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="알람제목" />
+            android:layout_weight="13"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/alarm_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="YY.MM.HH" />
+            <TextView
+                android:id="@+id/alarm_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="알람제목" />
+
+            <TextView
+                android:id="@+id/alarm_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="YY.MM.HH" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/scroll_btn"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/alarm__updown"
+            android:rotation="90" />
+
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scroll_btn">
+        app:layout_constraintTop_toBottomOf="@id/alarmlinear">
 
         <TextView
             android:id="@+id/alarm_content"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:background="@color/content_blue"
             android:hint="알림 내용"
             android:visibility="gone" />
     </LinearLayout>

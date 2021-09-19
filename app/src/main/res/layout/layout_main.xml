@@ -20,7 +20,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mainslider"
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="350dp">
 
         </androidx.viewpager2.widget.ViewPager2>
 
@@ -28,7 +28,9 @@
             android:id="@+id/mainindicator"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp" />
 
     </LinearLayout>
 
@@ -127,7 +129,7 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="20dp"
-                    android:layout_height="16dp"
+                    android:layout_height="14sp"
                     app:srcCompat="@drawable/mainpage_observationpin" />
 
                 <TextView
