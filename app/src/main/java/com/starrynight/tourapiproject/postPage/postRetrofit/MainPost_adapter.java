@@ -258,6 +258,11 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             });
             nickname.setText(item.getMainNickName());
             mainslider.setOffscreenPageLimit(3);
+
+//            ViewGroup.LayoutParams params = mainslider.getLayoutParams();
+//            params.width=ViewGroup.LayoutParams.MATCH_PARENT;
+//            params.height= params.width;
+//            mainslider.requestLayout();
             ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());
             mainslider.setAdapter(imageSliderAdapter);
 
