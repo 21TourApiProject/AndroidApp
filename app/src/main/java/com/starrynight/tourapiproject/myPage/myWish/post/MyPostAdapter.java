@@ -99,10 +99,10 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
 
         public void setItem(MyPost item) {
             if (item.getThumbnail() != null){
-                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getThumbnail()).into(myWishPostImage);
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + item.getThumbnail()).into(myWishPostImage);
             }
             if (item.getProfileImage() != null){
-                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getProfileImage()).into(myWishPostProfileImage);
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + item.getProfileImage()).circleCrop().into(myWishPostProfileImage);
             }
             myWishPostTitle.setText(item.getTitle());
             myWishPostWriter.setText(item.getNickName());
@@ -112,7 +112,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
                 TextView textView = new TextView(context);
                 textView.setText("#"+ht);
                 textView.setTextColor(ContextCompat.getColor(context, R.color.purple_200));
-                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.hashtags_empty));
+                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.hashtag_background));
                 myWishPostHashTag.addView(textView);
             }
         }
