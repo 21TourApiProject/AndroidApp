@@ -18,5 +18,7 @@
     <string name="signup_birthDay"><u>선택하기</u></string>
     <string name="signup_must"><u>필수</u></string>
     <string name="signup_no_must"><u>보기</u></string>
+    <string name="changeprofile_error">닉네임 형식이 올바르지 않습니다.\n(한글/영문/숫자 조합 15자 이내)</string>
+
 
 </resources>
