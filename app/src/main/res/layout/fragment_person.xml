@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="8dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,196 +19,252 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
+                android:layout_marginTop="18dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/goPostWrite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_gravity="right"
-                    android:text="작성" />
+                    android:layout_marginRight="18.27dp"
+                    android:background="@drawable/mypage_writepost" />
 
                 <Button
                     android:id="@+id/goSetting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="설정" />
+                    android:layout_width="19.45dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/mypage_setting" />
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/profileImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/person_btn" />
+                android:layout_marginTop="22dp"
+                android:background="@drawable/mypage_profilesetting"
+                android:scaleType="center" />
 
             <TextView
                 android:id="@+id/nickName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="8dp"
                 android:text="닉네임"
-                android:textSize="18sp" />
+                android:textSize="17sp" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/myHashTag"
+            <LinearLayout
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myHashTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal" />
+
+                <Button
+                    android:id="@+id/changeMyHashTag"
+                    android:layout_width="54dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/mypage_changehashtag" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|center_horizontal" />
+                android:layout_marginTop="40dp"
+                app:srcCompat="@drawable/mypage_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:text="나의 여행 버킷리스트 "
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="여행 박스" />
+                    android:text="여행 박스"
+                    android:textSize="12sp" />
 
                 <Button
-                    android:layout_width="45dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/back_btn" />
+                    android:id="@+id/myWishBtn"
+                    android:layout_width="4dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/mypage_showmore" />
 
             </LinearLayout>
 
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:id="@+id/myWishList"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent" />-->
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/myWishList"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent" />-->
 
             <LinearLayout
                 android:id="@+id/myWishLayout"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/myWishImage1"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/myWishTitle1"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:textAlignment="center" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/myWishImage2"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/myWishTitle2"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:textAlignment="center" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/myWishImage3"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/myWishTitle3"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:textAlignment="center" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:srcCompat="@drawable/mypage_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:text="내 게시물 "
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="나의 여행 기록들" />
+                    android:text="나의 여행 기록들"
+                    android:textSize="12sp" />
 
                 <Button
-                    android:layout_width="45dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/back_btn" />
+                    android:id="@+id/myPostBtn"
+                    android:layout_width="4dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/mypage_showmore" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/myPostLayout"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/myPostImage1"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"/>
+                        android:layout_height="120dp" />
 
                     <TextView
                         android:id="@+id/myPostTitle1"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -220,13 +276,15 @@
                     <TextView
                         android:id="@+id/myPostTitle2"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="16dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -238,16 +296,25 @@
                     <TextView
                         android:id="@+id/myPostTitle3"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:srcCompat="@drawable/mypage_line" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
 
             </FrameLayout>
+
 
         </LinearLayout>
     </ScrollView>

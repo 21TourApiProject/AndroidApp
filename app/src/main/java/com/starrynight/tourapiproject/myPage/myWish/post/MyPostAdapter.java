@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +76,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         TextView myWishPostTitle;
         ImageView myWishPostProfileImage;
         TextView myWishPostWriter;
-        LinearLayout myWishPostHashTag;
+        RecyclerView myWishPostHashTag;
 
         public ViewHolder(View itemView, final OnMyPostItemClickListener listener) {
             super(itemView);
@@ -102,19 +104,14 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
                 Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + item.getThumbnail()).into(myWishPostImage);
             }
             if (item.getProfileImage() != null){
-                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + item.getProfileImage()).circleCrop().into(myWishPostProfileImage);
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + item.getProfileImage()).into(myWishPostProfileImage);
             }
             myWishPostTitle.setText(item.getTitle());
             myWishPostWriter.setText(item.getNickName());
+            myWishPostHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
+            myWishPostHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            myWishPostHashTag.setHasFixedSize(true);
 
-            List<String> hashTagName = item.getHashTagNames();
-            for (String ht : hashTagName){
-                TextView textView = new TextView(context);
-                textView.setText("#"+ht);
-                textView.setTextColor(ContextCompat.getColor(context, R.color.purple_200));
-                textView.setBackground(ContextCompat.getDrawable(context, R.drawable.hashtag_background));
-                myWishPostHashTag.addView(textView);
-            }
         }
     }
 }
