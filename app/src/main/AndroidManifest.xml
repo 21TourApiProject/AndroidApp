@@ -23,12 +23,11 @@
         android:theme="@style/StarryNight"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".LoginActivity"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
-        <activity android:name=".observationPage.MoreObservationActivity" />
+        <activity android:name=".observationPage.MoreObservationActivity"/>
+        <activity android:name=".signUpPage.MarketingInfoActivity"/>
+        <activity android:name=".signUpPage.PersonalInfoActivity" />
+        <activity android:name=".signUpPage.LocationInfoActivity" />
+        <activity android:name=".signUpPage.ServiceInfoActivity" />
         <activity android:name=".myPage.MyPostActivity" />
         <activity android:name=".myPage.MyWishActivity" />
         <activity android:name=".alarmPage.AlarmActivity" />
@@ -58,7 +57,9 @@
         <activity android:name=".signUpPage.PhoneAuthActivity" />
         <activity android:name=".signUpPage.KakaoPhoneAuthActivity" />
         <activity android:name=".signUpPage.GeneralSingUpActivity" />
-        <activity android:name=".signUpPage.SignUpActivity" />
+        <activity
+            android:name=".signUpPage.SignUpActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".starPage.StarActivity" />
         <activity android:name=".observationPage.ObservationsiteActivity" />
         <activity
