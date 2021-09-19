@@ -39,6 +39,7 @@
                     android:layout_width="80dp"
                     android:layout_height="50dp"
                     android:layout_gravity="right"
+                    android:background="?attr/selectableItemBackground"
                     android:text="저장"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -113,7 +114,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/post_write__edge"
                     android:orientation="vertical"
                     android:paddingHorizontal="16dp">
 
@@ -153,7 +153,6 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/post_write__edge"
                     android:paddingHorizontal="16dp">
 
                     <TextView
@@ -189,7 +188,6 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/post_write__edge"
                     android:paddingHorizontal="16dp">
 
                     <TextView
