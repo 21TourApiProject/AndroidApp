@@ -92,7 +92,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         return new ViewHolder(itemView,listener);
     }
