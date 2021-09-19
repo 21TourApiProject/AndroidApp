@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.starPage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -33,6 +34,9 @@ import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,6 +89,24 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
     TouchImageView touchImageView;
 
+    //계절에 따라 이미지 변경
+    String spring = "0321";
+    String summer = "0622";
+    String fall = "0923";
+    String winter = "1221";
+    String yearEnd = "1231";
+    String yearStart = "0101";
+
+    Date springDate;
+    Date summerDate;
+    Date fallDate;
+    Date winterDate;
+    Date todayDate;
+    Date yearEndDate;
+    Date yearStartDate;
+
+    Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +143,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
 
         // 뒤로 가기 버튼 클릭 이벤트
-        starBackBtn =  v.findViewById(R.id.star_back_btn);
+        starBackBtn = v.findViewById(R.id.star_back_btn);
         starBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,8 +265,55 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             }
         });
 
+        // 계절 별로 다른 이미지 넣기
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("MMdd");
+
+        try {
+            Date today = new Date();
+            springDate = sdf.parse(spring);
+            summerDate = sdf.parse(summer);
+            fallDate = sdf.parse(fall);
+            winterDate = sdf.parse(winter);
+            yearEndDate = sdf.parse(yearEnd);
+            yearStartDate = sdf.parse(yearStart);
+            todayDate = sdf.parse(sdf.format(today));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        compareDataSpring = todayDate.compareTo(springDate);            //3월 21일
+        compareDataSummer = todayDate.compareTo(summerDate);            //6월 22일
+        compareDataFall = todayDate.compareTo(fallDate);                //9월 23일
+        compareDataWinter = todayDate.compareTo(winterDate);            //12월 21일
+        compareDataYearStart = todayDate.compareTo(yearStartDate);      //1월 1일
+        compareDataYearEnd = todayDate.compareTo(yearEndDate);          //12월 31일
+
+
+        // 봄(3/21 ~ 6/21)
+        if ((compareDataSpring == 1 || compareDataSpring == 0) && compareDataSummer == -1) {
+            touchImageView.setImageResource(R.drawable.star__spring);
+        }
+        // 여름(6/22 ~ 9/22)
+        else if ((compareDataSummer == 1 || compareDataSummer == 0) && compareDataFall == -1) {
+            touchImageView.setImageResource(R.drawable.star__summer);
+        }
+        // 가을(9/23 ~ 12/20)
+        else if ((compareDataFall == 1 || compareDataFall == 0) && compareDataWinter == -1) {
+            touchImageView.setImageResource(R.drawable.star__fall);
+        }
+        // 겨울(12/21 ~ 12/31)
+        else if ((compareDataWinter == 1 || compareDataWinter == 0) && compareDataYearEnd == -1) {
+            touchImageView.setImageResource(R.drawable.star__winter);
+        }
+        // 겨울(01/01 ~ 03/20)
+        else if ((compareDataYearStart == 1 || compareDataYearStart == 0) && compareDataSpring == -1) {
+            touchImageView.setImageResource(R.drawable.star__winter);
+        }
+
         return v;
     }
+
 
     @Override
     public void onResume() {
@@ -285,7 +354,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         }
     }
 
-    public void stateButton(boolean state){
+    public void stateButton(boolean state) {
         touchImageView.setEnabled(state);
         compass.setEnabled(state);
         starBackBtn.setEnabled(state);
