@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,8 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
+
+import java.io.File;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +31,7 @@ public class LogoutPopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.activity_logout_pop);
 
         Intent intent = getIntent();
@@ -49,12 +54,22 @@ public class LogoutPopActivity extends AppCompatActivity {
                             @Override
                             public void onCompleteLogout() {
                                 //로그아웃 성공 시 동작
+                                File dir = getFilesDir();
+                                File file = new File(dir, "userId");
+                                boolean deleted = file.delete();
+                                Log.d(TAG, "앱 내부 저장소의 userId 삭제" + deleted);
+
                                 Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             }
                         });
                     } else {
+                        File dir = getFilesDir();
+                        File file = new File(dir, "userId");
+                        boolean deleted = file.delete();
+                        Log.d(TAG, "앱 내부 저장소의 userId 삭제" + deleted);
+
                         Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
@@ -70,8 +85,6 @@ public class LogoutPopActivity extends AppCompatActivity {
                 Log.e(TAG, "연결실패");
             }
         });
-
-
     }
 
     //팝업 닫기
