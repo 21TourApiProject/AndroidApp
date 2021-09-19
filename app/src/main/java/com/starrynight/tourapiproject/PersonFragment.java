@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 import com.starrynight.tourapiproject.myPage.myPost.MyPost3;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+import com.starrynight.tourapiproject.signUpPage.SelectMyHashTagActivity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -43,11 +45,16 @@ import retrofit2.Response;
 
 public class PersonFragment extends Fragment {
 
+    private static final String LOG = "PersonFragment";
+
     Long userId;
     User2 user;
     List<String> myHashTagResult;
     ImageView profileImage;
     TextView nickName;
+
+    LinearLayout myWishLayout;
+    LinearLayout myPostLayout;
 
     ImageView myWishImage1;
     TextView myWishTitle1;
@@ -72,6 +79,9 @@ public class PersonFragment extends Fragment {
 
         nickName = v.findViewById(R.id.nickName);
         profileImage = v.findViewById(R.id.profileImage);
+
+        myWishLayout = v.findViewById(R.id.myWishLayout);
+        myPostLayout = v.findViewById(R.id.myPostLayout);
 
         myWishImage1 = v.findViewById(R.id.myWishImage1);
         myWishTitle1 = v.findViewById(R.id.myWishTitle1);
@@ -99,8 +109,7 @@ public class PersonFragment extends Fragment {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
-
+        } Log.d(LOG, "userId " + userId);
 
         //닉네임, 프로필 사진을 불러오기 위한 get api
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
@@ -113,7 +122,7 @@ public class PersonFragment extends Fragment {
                     if (user.getProfileImage() != null){
                         String fileName = user.getProfileImage();
                         fileName = fileName.substring(1,fileName.length()-1);
-                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
+                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
                     }
                     nickName.setText(user.getNickName());
                 } else {
@@ -153,6 +162,17 @@ public class PersonFragment extends Fragment {
             }
         });
 
+        //선호 해시태크 변경
+        Button changeMyHashTag = v.findViewById(R.id.changeMyHashTag);
+        changeMyHashTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("userId = " + userId);
+                Intent intent = new Intent(getActivity(), SelectMyHashTagActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, 101);
+            }
+        });
 
         //게시물 작성 페이지로 이동
         Button goPostWrite = v.findViewById(R.id.goPostWrite);
@@ -205,25 +225,28 @@ public class PersonFragment extends Fragment {
                     myWishes = response.body();
                     int size = myWishes.size();
                     int i = 0;
-                    if (size > 0){
+                    if(size == 0){
+                        myWishLayout.setVisibility(View.GONE);
+                    }
+                    else {
                         if (myWishes.get(i).getThumbnail() != null)
                             Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage1);
                         else
-                            myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
+                            myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
                         myWishTitle1.setText(myWishes.get(i).getTitle());
                         i++;
                         if (size > 1){
                             if (myWishes.get(i).getThumbnail() != null)
                                 Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage2);
                             else
-                                myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
+                                myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
                             myWishTitle2.setText(myWishes.get(i).getTitle());
                             i++;
                             if (size > 2){
                                 if (myWishes.get(i).getThumbnail() != null)
                                     Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage3);
                                 else
-                                    myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
+                                    myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
                                 myWishTitle3.setText(myWishes.get(i).getTitle());
                             }
                         }
@@ -240,7 +263,15 @@ public class PersonFragment extends Fragment {
         });
 
         //나의 여행 버킷리스트 페이지로 이동
-        View myWishLayout = v.findViewById(R.id.myWishLayout);
+        Button myWishBtn = v.findViewById(R.id.myWishBtn);
+        myWishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyWishActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, 101);
+            }
+        });
         myWishLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,25 +290,27 @@ public class PersonFragment extends Fragment {
                 if (response.isSuccessful()) {
                     myPost3s = response.body();
                     int size = myPost3s.size();
-                    System.out.println("size = " + size);
                     int i = 0;
-                    if (size > 0){
+                    if(size == 0){
+                        myPostLayout.setVisibility(View.GONE);
+                    }
+                    else {
                         myPostTitle1.setText(myPost3s.get(i).getTitle());
                         if (myPost3s.get(i).getThumbnail() != null)
-                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
-                        else myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
+                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
+                        else myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
                         i++;
                         if (size > 1){
                             myPostTitle2.setText(myPost3s.get(i).getTitle());
                             if (myPost3s.get(i).getThumbnail() != null)
-                                Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
-                            else myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
+                                Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
+                            else myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
                             i++;
                             if (size > 2){
                                 myPostTitle3.setText(myPost3s.get(i).getTitle());
                                 if (myPost3s.get(i).getThumbnail() != null)
-                                    Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
-                            }   else myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.ic_launcher_foreground));
+                                    Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
+                            }   else myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
                         }
                     }
 
@@ -291,8 +324,17 @@ public class PersonFragment extends Fragment {
             }
         });
 
+
         //내 게시물 페이지로 이동
-        View myPostLayout = v.findViewById(R.id.myPostLayout);
+        Button myPostBtn = v.findViewById(R.id.myPostBtn);
+        myPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyPostActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, 101);
+            }
+        });
         myPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

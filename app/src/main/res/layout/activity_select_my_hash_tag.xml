@@ -9,7 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/selectmyhashtag_background">
+        android:background="@drawable/selectmyhashtag_back15">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,8 +50,8 @@
                         android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="공기 좋은" />
+                        android:text="공기 좋은"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht22"
@@ -248,8 +248,8 @@
                         android:layout_height="32dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="도심 속" />
+                        android:text="도심 속"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -285,8 +285,8 @@
                         android:layout_marginRight="8dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="연인" />
+                        android:text="연인"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht16"
@@ -295,8 +295,8 @@
                         android:layout_marginRight="8dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="가족" />
+                        android:text="가족"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht17"
@@ -305,8 +305,8 @@
                         android:layout_marginRight="8dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="친구" />
+                        android:text="친구"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht18"
@@ -314,8 +314,8 @@
                         android:layout_height="32dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="혼자" />
+                        android:text="혼자"
+                        android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -345,8 +345,8 @@
                         android:layout_marginRight="18dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="가성비" />
+                        android:text="가성비"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht20"
@@ -355,8 +355,8 @@
                         android:layout_marginRight="18dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="소확행" />
+                        android:text="소확행"
+                        android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/ht21"
@@ -364,8 +364,8 @@
                         android:layout_height="32dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
-                        android:textSize="11sp"
-                        android:text="럭셔리한" />
+                        android:text="럭셔리한"
+                        android:textSize="11sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
