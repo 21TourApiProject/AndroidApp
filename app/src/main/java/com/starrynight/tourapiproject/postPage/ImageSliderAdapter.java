@@ -28,7 +28,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.custom_post_image_slider, parent, false);
+                .inflate(R.layout.custom_main_image, parent, false);
         return new MyViewHolder(view,listener);
 
     }
@@ -53,7 +53,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
         public MyViewHolder(@NonNull View itemView, final ImageSliderItemClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.custom_post_Image);
+            mImageView = itemView.findViewById(R.id.custom_main_image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

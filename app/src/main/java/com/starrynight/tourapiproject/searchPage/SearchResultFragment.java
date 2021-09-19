@@ -18,10 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.myPage.MyPostActivity;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTpAdapter;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.OnMyWishObTpItemClickListener;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
+import com.starrynight.tourapiproject.myPage.myWish.post.MyPostAdapter;
+import com.starrynight.tourapiproject.myPage.myWish.post.OnMyPostItemClickListener;
+import com.starrynight.tourapiproject.observationPage.MoreObservationActivity;
+import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
@@ -134,7 +139,49 @@ public class SearchResultFragment extends Fragment {
                 obText.setVisibility(View.GONE);
                 tpText.setVisibility(View.GONE);
                 postText.setVisibility(View.VISIBLE);
+                areaCodeList = new ArrayList<>();
+                hashTagIdList = new ArrayList<>();
+                areaCodeList.add(0L);
+                hashTagIdList.add(0L);
 
+                for(int i=0; i<17; i++){
+                    if (area.get(i) == 1){ //선택했으면
+                        areaCodeList.add(areaCode[i]);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if (hashTag.get(i) == 1){ //선택했으면
+                        hashTagIdList.add((long)(i+1));
+                    }
+                }
+                Filter filter = new Filter(areaCodeList, hashTagIdList);
+
+                Call<List<MyPost>>call = RetrofitClient.getApiService().getPostWithFilter(filter);
+                call.enqueue(new Callback<List<MyPost>>() {
+                    @Override
+                    public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
+                        if (response.isSuccessful()){
+                            postResult=response.body();
+                            MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
+                            searchResult.setAdapter(postAdapter);
+                            postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
+                                @Override
+                                public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
+                                    MyPost item = postAdapter.getItem(position);
+                                    Intent intent = new Intent(getContext(), PostActivity.class);
+                                    intent.putExtra("postId", item.getItemId());
+                                    startActivity(intent);
+                                }
+                            });
+
+                        }else{Log.d("searchPost","검색 게시물 업로드 실패");}
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<MyPost>> call, Throwable t) {
+                        Log.d("searchPost","검색 게시물 인터넷 오류");
+                    }
+                });
 
             }
         });
