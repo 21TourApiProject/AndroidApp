@@ -282,7 +282,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
             isNickNameEmpty = true;
             changeNicknameGuide.setText("닉네임을 입력해주세요.");
         } else if (!isCorrectNickName(text)) {
-            changeNicknameGuide.setText("사용할 수 없는 닉네임입니다. (한글/영문/숫자 조합 15자 이내)");
+            changeNicknameGuide.setText(getString(R.string.changeprofile_error));
             isNickNameEmpty = false;
             isNotNickName = true;
         } else if (!text.equals(user.getNickName())){
