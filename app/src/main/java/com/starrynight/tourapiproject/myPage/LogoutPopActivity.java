@@ -27,7 +27,7 @@ public class LogoutPopActivity extends AppCompatActivity {
     //로그아웃
     public void logout(View v){
         Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); //스택 초기화하는 함수임
         startActivity(intent);
     }
 
