@@ -15,11 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
@@ -34,8 +31,6 @@ import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 import com.starrynight.tourapiproject.signUpPage.SelectMyHashTagActivity;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -44,7 +39,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.grpc.internal.JsonUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +46,7 @@ import retrofit2.Response;
 public class PersonFragment extends Fragment {
 
     private static final String TAG = "PersonFragment";
+    private static final int HAVE_TO_REFRESH = 10;
 
     Long userId;
     User2 user;
@@ -124,35 +119,19 @@ public class PersonFragment extends Fragment {
             public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                    //카카오인지
-                    Call<Boolean> call2 = RetrofitClient.getApiService().checkIsKakao(userId);
-                    call2.enqueue(new Callback<Boolean>() {
-                        @Override
-                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                            if (response.isSuccessful()) {
-                                Boolean isKakao = response.body();
-                                if(isKakao){
-                                    if (user.getProfileImage() != null){
-                                        Glide.with(getContext()).load(user.getProfileImage()).circleCrop().into(profileImage);
-                                    }
-                                } else{
-                                    if (user.getProfileImage() != null){
-                                        String fileName = user.getProfileImage();
-                                        fileName = fileName.substring(1,fileName.length()-1);
-                                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
-                                    }
-                                }
-                                nickName.setText(user.getNickName());
-                            } else {
-                                Log.d(TAG, "카카오 정보 불러오기 실패");
-                            }
+                    if (user.getProfileImage() != null) {
+                        if(user.getProfileImage().startsWith("http://")){
+                            Glide.with(getContext()).load(user.getProfileImage()).circleCrop().into(profileImage);
                         }
-                        @Override
-                        public void onFailure(Call<Boolean> call, Throwable t) {
-                            Log.e(TAG, "연결실패");
+                        else{
+                            String fileName = user.getProfileImage();
+                            fileName = fileName.substring(1, fileName.length() - 1);
+                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
                         }
-                    });
-                } else {
+                    }
+                    nickName.setText(user.getNickName());
+                }
+                else {
                     Log.d(TAG, "사용자 정보 불러오기 실패");
                 }
             }
@@ -190,7 +169,7 @@ public class PersonFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), SelectMyHashTagActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -300,7 +279,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyWishActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
         myWishLayout.setOnClickListener(new View.OnClickListener() {
@@ -308,7 +287,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyWishActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -319,15 +298,15 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyPostActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
         myPostLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyPostActivity.class);
-               intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -337,7 +316,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PostWriteActivity.class);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -348,7 +327,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -359,7 +338,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
         TextView nickName = v.findViewById(R.id.nickName);
@@ -368,7 +347,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -378,7 +357,8 @@ public class PersonFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 101){
+        if(requestCode == HAVE_TO_REFRESH){
+            Log.e(TAG, "새로고침");
             //프래그먼트 새로고침
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(this).attach(this).commit();
