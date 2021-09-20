@@ -26,21 +26,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/postWrite_back_btn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/back_btn"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/postWrite_back_btn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="29dp"
+                        android:layout_marginTop="19dp"
+                        android:layout_marginBottom="18dp"
+                        android:background="@drawable/back_btn" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="19dp"
+                        android:text="게시물 올리기"
+                        android:textSize="20sp" />
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/save"
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
+                    android:layout_width="26dp"
+                    android:layout_height="13dp"
                     android:layout_gravity="right"
-                    android:background="?attr/selectableItemBackground"
-                    android:text="저장"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/postwrite__share"
+                    android:paddingHorizontal="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -56,14 +75,13 @@
                 <RelativeLayout
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/post_write__edge">
+                    android:layout_marginLeft="20dp">
 
                     <Button
                         android:id="@+id/addPicture"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/post_write__edge"
+                        android:background="@drawable/postwrite__imageplus"
                         android:gravity="bottom|center_horizontal" />
 
                     <ImageView
@@ -91,9 +109,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/post_write__edge"
                     android:orientation="vertical"
                     android:paddingHorizontal="16dp">
+
+                    <ImageView
+                        android:id="@+id/pw__line"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/postwrite__line" />
 
                     <TextView
                         android:id="@+id/postWriteTitle"
@@ -115,7 +138,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingHorizontal="16dp">
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/pw_line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="8dp"
+                        app:srcCompat="@drawable/postwrite__line" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -153,7 +184,17 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingHorizontal="16dp">
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:id="@+id/pw__line3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/postwrite__line" />
 
                     <TextView
                         android:id="@+id/postWrite_observePoint"
@@ -190,10 +231,20 @@
                     android:layout_height="match_parent"
                     android:paddingHorizontal="16dp">
 
+                    <ImageView
+                        android:id="@+id/pw_line4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/postwrite__line" />
+
                     <TextView
                         android:id="@+id/postWrite_hashTag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:hint="해시태그"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -213,7 +264,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/hashTag">
+                        app:layout_constraintTop_toBottomOf="@id/hashTag"
+                        tools:layout_editor_absoluteX="16dp">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/postHashTagrecyclerView"
@@ -222,6 +274,16 @@
                             android:orientation="horizontal"
                             tools:itemCount="5" />
                     </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/pw_line5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/postHashTagLinearLayout"
+                        app:srcCompat="@drawable/postwrite__line" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <EditText
@@ -230,7 +292,6 @@
                     android:layout_height="200dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="1dp"
-                    android:background="@drawable/post_write__edge"
                     android:ems="0"
                     android:hint="내용을 입력해주세요."
                     android:inputType="textLongMessage" />
