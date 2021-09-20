@@ -1,12 +1,12 @@
 package com.starrynight.tourapiproject.myPage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
 
@@ -20,6 +20,15 @@ public class SettingActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
+
+        //뒤로 가기
+        Button settingBack = findViewById(R.id.settingBack);
+        settingBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //내 정보
         LinearLayout myData = findViewById(R.id.myData);
