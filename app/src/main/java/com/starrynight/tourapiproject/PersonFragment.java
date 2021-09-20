@@ -19,7 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
+import com.starrynight.tourapiproject.myPage.LogoutPopActivity;
 import com.starrynight.tourapiproject.myPage.MyHashTagAdapter;
 import com.starrynight.tourapiproject.myPage.MyPostActivity;
 import com.starrynight.tourapiproject.myPage.MyWishActivity;
@@ -30,8 +33,10 @@ import com.starrynight.tourapiproject.myPage.myPost.MyPost3;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 import com.starrynight.tourapiproject.signUpPage.SelectMyHashTagActivity;
+import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -45,7 +50,7 @@ import retrofit2.Response;
 
 public class PersonFragment extends Fragment {
 
-    private static final String LOG = "PersonFragment";
+    private static final String TAG = "PersonFragment";
 
     Long userId;
     User2 user;
@@ -109,7 +114,7 @@ public class PersonFragment extends Fragment {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } Log.d(LOG, "userId " + userId);
+        } Log.d(TAG, "userId " + userId);
 
         //닉네임, 프로필 사진을 불러오기 위한 get api
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
@@ -118,15 +123,36 @@ public class PersonFragment extends Fragment {
             public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-
-                    if (user.getProfileImage() != null){
-                        String fileName = user.getProfileImage();
-                        fileName = fileName.substring(1,fileName.length()-1);
-                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
-                    }
-                    nickName.setText(user.getNickName());
+                    //카카오인지
+                    Call<Boolean> call2 = RetrofitClient.getApiService().checkIsKakao(userId);
+                    call2.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if (response.isSuccessful()) {
+                                Boolean isKakao = response.body();
+                                if(isKakao){
+                                    if (user.getProfileImage() != null){
+                                        Glide.with(getContext()).load(user.getProfileImage()).circleCrop().into(profileImage);
+                                    }
+                                } else{
+                                    if (user.getProfileImage() != null){
+                                        String fileName = user.getProfileImage();
+                                        fileName = fileName.substring(1,fileName.length()-1);
+                                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
+                                    }
+                                }
+                                nickName.setText(user.getNickName());
+                            } else {
+                                Log.d(TAG, "카카오 정보 불러오기 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+                            Log.e(TAG, "연결실패");
+                        }
+                    });
                 } else {
-                    System.out.println("사용자 정보 불러오기 실패");
+                    Log.d(TAG, "사용자 정보 불러오기 실패");
                 }
             }
             @Override
@@ -144,8 +170,8 @@ public class PersonFragment extends Fragment {
         myHashTagResult = new ArrayList<>();
 
         //사용자 해시태그를 불러오기 위한 get api
-        Call<List<String>> call2 = RetrofitClient.getApiService().getMyHashTag(userId);
-        call2.enqueue(new Callback<List<String>>() {
+        Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag(userId);
+        call3.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response <List<String>> response) {
                 if (response.isSuccessful()) {
@@ -217,8 +243,8 @@ public class PersonFragment extends Fragment {
 
 
         //내 찜 불러오는 api
-        Call<List<MyWish>> call3 = RetrofitClient.getApiService().getMyWish3(userId);
-        call3.enqueue(new Callback<List<MyWish>>() {
+        Call<List<MyWish>> call4 = RetrofitClient.getApiService().getMyWish3(userId);
+        call4.enqueue(new Callback<List<MyWish>>() {
             @Override
             public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
                 if (response.isSuccessful()) {
@@ -283,8 +309,8 @@ public class PersonFragment extends Fragment {
 
 
         //내 게시물 불러오는 api
-        Call<List<MyPost3>> call4 = RetrofitClient.getApiService().getMyPost3(userId);
-        call4.enqueue(new Callback<List<MyPost3>>() {
+        Call<List<MyPost3>> call5 = RetrofitClient.getApiService().getMyPost3(userId);
+        call5.enqueue(new Callback<List<MyPost3>>() {
             @Override
             public void onResponse(Call<List<MyPost3>> call, Response<List<MyPost3>> response) {
                 if (response.isSuccessful()) {
