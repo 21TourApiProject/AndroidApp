@@ -106,8 +106,10 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
         }
 
         public void setItem(MyWishObTp item) {
-            if(item.getThumbnail() != null)
+            if(item.getThumbnail() != null){
                 Glide.with(context).load(item.getThumbnail()).into(obTpImage);
+                obTpImage.setClipToOutline(true);
+            }
             obTpTitle.setText(item.getTitle());
 
             //주소를 두단어까지 줄임

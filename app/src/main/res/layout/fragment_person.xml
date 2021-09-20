@@ -57,28 +57,16 @@
                 android:text="닉네임"
                 android:textSize="17sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <GridView
+                android:id="@+id/myHashTag"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/myHashTag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal" />
-
-                <Button
-                    android:id="@+id/changeMyHashTag"
-                    android:layout_width="54dp"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/mypage_changehashtag" />
-
-            </LinearLayout>
+                android:numColumns="4"
+                android:horizontalSpacing="0dp"
+                android:verticalSpacing="0dp" />
 
             <ImageView
                 android:layout_width="match_parent"
