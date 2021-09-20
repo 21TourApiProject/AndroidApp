@@ -1,12 +1,15 @@
 package com.starrynight.tourapiproject;
 
 import android.content.Intent;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +34,8 @@ import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 import com.starrynight.tourapiproject.signUpPage.SelectMyHashTagActivity;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,6 +44,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.grpc.internal.JsonUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +58,7 @@ public class PersonFragment extends Fragment {
     List<String> myHashTagResult;
     ImageView profileImage;
     TextView nickName;
+    GridView myHashTag;
 
     LinearLayout myWishLayout;
     LinearLayout myPostLayout;
@@ -78,6 +85,7 @@ public class PersonFragment extends Fragment {
 
         nickName = v.findViewById(R.id.nickName);
         profileImage = v.findViewById(R.id.profileImage);
+        myHashTag = v.findViewById(R.id.myHashTag);
 
         myWishLayout = v.findViewById(R.id.myWishLayout);
         myPostLayout = v.findViewById(R.id.myPostLayout);
@@ -155,14 +163,8 @@ public class PersonFragment extends Fragment {
         });
 
 
-        //사용자 해시태그 리사이클러 뷰
-        RecyclerView myHashTagRecyclerview = v.findViewById(R.id.myHashTag);
-        LinearLayoutManager myHashTagLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myHashTagRecyclerview.setLayoutManager(myHashTagLayoutManager);
-        myHashTagRecyclerview.setHasFixedSize(true);
-        myHashTagResult = new ArrayList<>();
-
         //사용자 해시태그를 불러오기 위한 get api
+        myHashTagResult = new ArrayList<>();
         Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag(userId);
         call3.enqueue(new Callback<List<String>>() {
             @Override
@@ -170,7 +172,8 @@ public class PersonFragment extends Fragment {
                 if (response.isSuccessful()) {
                     myHashTagResult = response.body();
                     MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(myHashTagResult);
-                    myHashTagRecyclerview.setAdapter(hashTagAdapter);
+                    myHashTag.setAdapter(hashTagAdapter);
+                    myHashTag.setSelector(new StateListDrawable());
                 } else {
                     Log.d(TAG, "사용자 해시태그 불러오기 실패");
                 }
@@ -181,11 +184,10 @@ public class PersonFragment extends Fragment {
             }
         });
 
-        //선호 해시태크 변경
-        Button changeMyHashTag = v.findViewById(R.id.changeMyHashTag);
-        changeMyHashTag.setOnClickListener(new View.OnClickListener() {
+        //선호 해시태크 변경 페이지로 이동
+        myHashTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), SelectMyHashTagActivity.class);
                 intent.putExtra("userId", userId);
                 startActivityForResult(intent, 101);
@@ -202,7 +204,6 @@ public class PersonFragment extends Fragment {
                     myWishes = response.body();
                     int size = myWishes.size();
                     int i = 0;
-                    System.out.println("size = " + size);
                     if(size == 0)
                         myWishLayout.setVisibility(View.GONE);
                     else {
@@ -215,14 +216,19 @@ public class PersonFragment extends Fragment {
                         i++;
                         if (size > 1){
                             myWishImage2.setVisibility(View.VISIBLE);
-                            if (myWishes.get(i).getThumbnail() != null)
+                            if (myWishes.get(i).getThumbnail() != null){
                                 Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage2);
+                                myWishImage2.setClipToOutline(true);
+                            }
                             myWishTitle2.setText(myWishes.get(i).getTitle());
                             i++;
                             if (size > 2){
+                                System.out.println("찜 3개 이상임");
                                 myWishImage3.setVisibility(View.VISIBLE);
-                                if (myWishes.get(i).getThumbnail() != null)
+                                if (myWishes.get(i).getThumbnail() != null){
                                     Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage3);
+                                    myWishImage3.setClipToOutline(true);
+                                }
                                 myWishTitle3.setText(myWishes.get(i).getTitle());
                             }
                         }
@@ -248,7 +254,6 @@ public class PersonFragment extends Fragment {
                     myPost3s = response.body();
                     int size = myPost3s.size();
                     int i = 0;
-                    System.out.println("size = " + size);
                     if(size == 0)
                         myPostLayout.setVisibility(View.GONE);
                     else {
@@ -256,18 +261,23 @@ public class PersonFragment extends Fragment {
                         if (myPost3s.get(i).getThumbnail() != null) {
                             Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
                             myPostImage1.setClipToOutline(true);
-                        }myPostTitle1.setText(myPost3s.get(i).getTitle());
+                        }
+                        myPostTitle1.setText(myPost3s.get(i).getTitle());
                         i++;
                         if (size > 1){
                             myPostImage2.setVisibility(View.VISIBLE);
-                            if (myPost3s.get(i).getThumbnail() != null)
+                            if (myPost3s.get(i).getThumbnail() != null) {
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
+                                myPostImage2.setClipToOutline(true);
+                            }
                             myPostTitle2.setText(myPost3s.get(i).getTitle());
                             i++;
                             if (size > 2){
                                 myPostImage3.setVisibility(View.VISIBLE);
-                                if (myPost3s.get(i).getThumbnail() != null)
+                                if (myPost3s.get(i).getThumbnail() != null) {
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
+                                    myPostImage3.setClipToOutline(true);
+                                }
                                 myPostTitle3.setText(myPost3s.get(i).getTitle());
                             }
                         }
