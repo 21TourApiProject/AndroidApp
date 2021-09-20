@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -46,6 +51,7 @@ import retrofit2.Response;
 public class ChangeProfileActivity extends AppCompatActivity {
 
     private static final int GET_GALLERY_IMAGE = 0;
+    private static final String TAG = "ChangeProfile";
 
     User2 user;
     Long userId;
@@ -91,7 +97,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     changeNickname.setText(user.getNickName());
                     beforeNickName = user.getNickName();
                 } else {
-                    System.out.println("사용자 정보 불러오기 실패");
+                    Log.d(TAG, "사용자 정보 불러오기 실패");
                 }
             }
             @Override
@@ -145,9 +151,9 @@ public class ChangeProfileActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {
-                                    System.out.println("닉네임 변경 성공");
+                                    Log.d(TAG, "닉네임 변경 성공");
                                 } else {
-                                    System.out.println("닉네임 변경 실패");
+                                    Log.d(TAG, "닉네임 변경 실패");
                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -163,7 +169,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
                 //프로필 사진 변경 put api
                 if (isProfileImageChange){
-                    System.out.println("파일 이름 = " + fileName);
+                    Log.d(TAG, "파일 이름 = " + fileName);
                     uploadWithTransferUtility(fileName, file); //s3 사진 업로드
 
                     Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
@@ -171,9 +177,9 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Void> call2, Response<Void> response) {
                             if (response.isSuccessful()) {
-                                System.out.println("프로필 사진 변경 성공");
+                                Log.d(TAG, "프로필 사진 변경 성공");
                             } else {
-                                System.out.println("프로필 사진 변경 실패");
+                                Log.d(TAG, "프로필 사진 변경 실패");
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -210,21 +216,44 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     InputStream in = getContentResolver().openInputStream(data.getData());
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
-                    profileImage.setImageBitmap(img);
-                    System.out.println("사진 미리보기");
+                    Bitmap croppedBitmap = getCroppedBitmap(img);
+                    profileImage.setImageBitmap(croppedBitmap);
 
                     Uri uri = data.getData();
                     file = new File(getRealPathFromURI(uri));
-                    System.out.println("file = " + file.getName());
+                    Log.d(TAG, "파일 이름 = " + fileName);
                     fileName = "PI" + userId + "_" + file.getName();
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                System.out.println("사진 선택 취소");
+                Log.d(TAG, "사진 선택 취소");
             }
         }
+    }
+
+    //비트맵 둥글게자르기
+    public Bitmap getCroppedBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output;
     }
 
     // 이미지 uri 경로 함수
@@ -271,7 +300,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
     //닉네임 규칙 함수
     private Boolean isCorrectNickName(String nickName) {
-        String pattern = "^[[ㄱ-ㅎㅏ-ㅢ가-힣0-9a-zA-z]*]{1,15}$";
+        String pattern = "^[[ㄱ-ㅎㅏ-ㅢ가-힣0-9a-zA-z ]*]{1,15}$";
         return Pattern.matches(pattern, nickName);
     }
 
@@ -306,7 +335,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                             isNickNameDuplicate = true;
                         }
                     } else {
-                        System.out.println("중복 체크 실패");
+                        Log.d(TAG, "중복 체크 실패");
                         changeNicknameGuide.setText("");
                         Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }

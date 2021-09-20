@@ -413,7 +413,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 }
 
                 //칸에 적힌 데이터 가지고 전화번호 인증 페이지로 이동
-                UserParams userParams = new UserParams(realName, sex, birthDay, email, password, isMarketing);
+                UserParams userParams = new UserParams(realName, sex, birthDay, email, password, isMarketing, false);
                 Intent intent = new Intent(getApplicationContext(), PhoneAuthActivity.class);
                 intent.putExtra("userParams", userParams);
                 startActivity(intent);

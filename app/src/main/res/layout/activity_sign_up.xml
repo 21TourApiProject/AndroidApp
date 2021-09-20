@@ -91,11 +91,11 @@
 
             <ImageButton
                 android:id="@+id/kakaoSignUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="58dp"
-                android:background="@drawable/signup__kakaologin" />
+                android:background="@drawable/kakao_login_large_wide" />
 
             <TextView
                 android:layout_width="wrap_content"
