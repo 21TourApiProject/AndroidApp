@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class FindPasswordActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "FindPassWordActivity";
+    private static final String TAG = "FindPassWord";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
 
     private FirebaseAuth mAuth;
@@ -90,7 +90,8 @@ public class FindPasswordActivity extends AppCompatActivity implements
                 mVerificationInProgress = false;
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    mobilePhoneNumber.setError("올바르지 않은 전화번호 입니다.");
+                    Toast.makeText(getApplicationContext(), "올바르지 않은 전화번호 입니다.", Toast.LENGTH_SHORT).show();
+                    //mobilePhoneNumber.setError("올바르지 않은 전화번호 입니다.");
 
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
@@ -102,7 +103,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                System.out.println("token = " + token);
+                Log.d(TAG,"token = " + token);
                 mVerificationId = verificationId;
                 mResendToken = token;
             }
@@ -178,11 +179,10 @@ public class FindPasswordActivity extends AppCompatActivity implements
                                     if (response.isSuccessful()) {
                                         String result = response.body();
                                         if (!result.equals("none")) {
-                                            System.out.println("비밀번호 찾기 성공");
+                                            Log.d(TAG,"비밀번호 찾기 성공");
                                             signOut();
                                             showPassword.setText("비밀번호: " + result);
                                         } else {
-                                            System.out.println("비밀번호 찾기 실패");
                                             Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
                                             showPassword.setText("");
                                         }
@@ -201,7 +201,8 @@ public class FindPasswordActivity extends AppCompatActivity implements
                         } else {
                             Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                authCode.setError("올바르지 않은 인증번호입니다.");
+                                Toast.makeText(getApplicationContext(), "올바르지 않은 인증번호입니다.", Toast.LENGTH_SHORT).show();
+                                //authCode.setError("올바르지 않은 인증번호입니다.");
                                 showPassword.setText("");
                             }
                         }
@@ -216,11 +217,13 @@ public class FindPasswordActivity extends AppCompatActivity implements
     private boolean validatePhoneNumber() {
         String phoneNumber = mobilePhoneNumber.getText().toString();
         if (TextUtils.isEmpty(phoneNumber)) {
-            mobilePhoneNumber.setError("전화번호를 입력해주세요.");
+            Toast.makeText(getApplicationContext(), "전화번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            //mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
         }
         if(phoneNumber.length() != 11){
-            mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
+            Toast.makeText(getApplicationContext(), "형식에 맞는 전화번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            //mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
             return false;
         }return true;
     }
@@ -235,7 +238,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.startAuth3:
                 if (!validatePhoneNumber()) {
-                    System.out.println("처음 문자요청했는데 전화번호가 이상함");
+                    Log.e(TAG,"처음 문자요청했는데 전화번호가 이상함");
                     return;
                 }
                 isSend = true;
@@ -249,22 +252,26 @@ public class FindPasswordActivity extends AppCompatActivity implements
                 String code = authCode.getText().toString();
 
                 if(findPwdEmail.getText().toString().isEmpty()){
-                    findPwdEmail.setError("이메일을 입력해주세요.");
+                    Toast.makeText(getApplicationContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    //findPwdEmail.setError("이메일을 입력해주세요.");
                     return;
                 }
                 if(findPwdRealName.getText().toString().isEmpty()){
-                    findPwdRealName.setError("이름을 입력해주세요.");
+                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    //findPwdRealName.setError("이름을 입력해주세요.");
                     return;
                 }
                 if (TextUtils.isEmpty(code)) {
-                    authCode.setError("인증번호를 입력해주세요.");
+                    Toast.makeText(getApplicationContext(), "인증번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    //authCode.setError("인증번호를 입력해주세요.");
                     return;
                 }
                 if (!isSend){
-                    authCode.setError("인증 요청을 먼저 해주세요.");
+                    Toast.makeText(getApplicationContext(), "인증 요청을 먼저 해주세요.", Toast.LENGTH_SHORT).show();
+                    //authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
-                System.out.println("인증코드 맞는지 확인들어감 " + code);
+                Log.d(TAG,code + "인증코드 맞는지 확인들어감 ");
                 showPassword.setText("잠시만 기다려주세요...");
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
