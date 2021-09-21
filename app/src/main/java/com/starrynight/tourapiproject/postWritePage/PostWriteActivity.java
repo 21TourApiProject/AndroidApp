@@ -462,6 +462,7 @@ public class PostWriteActivity extends AppCompatActivity {
         if(requestCode == 202){
             if(resultCode == 2){
                 Log.d("postObservation","검색 관측지 데이터 로드");
+                postObservePointItem.setVisibility(View.VISIBLE);
                 observationName = (String)data.getSerializableExtra("observationName");
                 optionobservationName = (String)data.getSerializableExtra("optionObservationName");
                 if (observationName != null){
@@ -590,7 +591,6 @@ public String getRealPathFromURI(Uri contentUri) {
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
         TransferObserver uploadObserver = transferUtility.upload("starry-night/postImage",userId+fileName, file);    // (bucket api, file이름, file객체)
-
         uploadObserver.setTransferListener(new TransferListener() {
             @Override
             public void onStateChanged(int id, TransferState state) {

@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (getLogin()){
-            Log.d("Login","유저 정보 있음");
+            Log.d("Login","유저 정보 있음"+userId);
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
             intent.putExtra("userId",userId);
             startActivity(intent);
@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         }else{
             Log.d("Login","유저 정보 없음");
             Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-            intent.putExtra("userId",userId);
             startActivity(intent);
             finish();
         }
