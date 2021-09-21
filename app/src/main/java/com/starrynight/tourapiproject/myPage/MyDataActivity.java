@@ -117,6 +117,7 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
+                intent.putExtra("userId", userId);
                 startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
@@ -127,6 +128,7 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
+                intent.putExtra("userId", userId);
                 startActivityForResult(intent, CHANGE_PROFILE);
             }
         });

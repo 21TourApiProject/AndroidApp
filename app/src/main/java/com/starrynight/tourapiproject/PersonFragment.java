@@ -20,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.myPage.ChangeProfileActivity;
@@ -56,7 +58,7 @@ public class PersonFragment extends Fragment {
     List<String> myHashTagResult;
     ImageView profileImage;
     TextView nickName;
-    GridView myHashTag;
+    RecyclerView myHashTag;
 
     LinearLayout myWishLayout;
     LinearLayout myPostLayout;
@@ -149,7 +151,11 @@ public class PersonFragment extends Fragment {
 
         //사용자 해시태그를 불러오기 위한 get api
         myHashTagResult = new ArrayList<>();
-        Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag(userId);
+        LinearLayoutManager myHashTagLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myHashTag.setLayoutManager(myHashTagLayoutManager);
+        myHashTag.setHasFixedSize(true);
+
+        Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag3(userId);
         call3.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response <List<String>> response) {
@@ -157,7 +163,6 @@ public class PersonFragment extends Fragment {
                     myHashTagResult = response.body();
                     MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(myHashTagResult);
                     myHashTag.setAdapter(hashTagAdapter);
-                    myHashTag.setSelector(new StateListDrawable());
                 } else {
                     Log.d(TAG, "사용자 해시태그 불러오기 실패");
                 }
@@ -169,9 +174,9 @@ public class PersonFragment extends Fragment {
         });
 
         //선호 해시태크 변경 페이지로 이동
-        myHashTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        myHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SelectMyHashTagActivity.class);
                 intent.putExtra("userId", userId);
                 startActivityForResult(intent, HAVE_TO_REFRESH);
