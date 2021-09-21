@@ -1,7 +1,9 @@
 package com.starrynight.tourapiproject;
 
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -98,6 +101,8 @@ public class PersonFragment extends Fragment {
         myPostImage3 = v.findViewById(R.id.myPostImage3);
         myPostTitle3 = v.findViewById(R.id.myPostTitle3);
 
+        profileImage.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImage.setClipToOutline(true);
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
@@ -121,12 +126,12 @@ public class PersonFragment extends Fragment {
                     user = response.body();
                     if (user.getProfileImage() != null) {
                         if(user.getProfileImage().startsWith("http://")){
-                            Glide.with(getContext()).load(user.getProfileImage()).circleCrop().into(profileImage);
+                            Glide.with(getContext()).load(user.getProfileImage()).into(profileImage);
                         }
                         else{
                             String fileName = user.getProfileImage();
                             fileName = fileName.substring(1, fileName.length() - 1);
-                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
+                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
                         }
                     }
                     nickName.setText(user.getNickName());
@@ -186,26 +191,46 @@ public class PersonFragment extends Fragment {
                     if(size == 0)
                         myWishLayout.setVisibility(View.GONE);
                     else {
-                        myWishImage1.setVisibility(View.VISIBLE);
+                        myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                         if (myWishes.get(i).getThumbnail() != null){
-                            Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage1);
+                            String imageName = myWishes.get(i).getThumbnail();
+                            if(imageName.startsWith("http://")){
+                                Glide.with(getContext()).load(imageName).into(myWishImage1);
+                            }
+                            else{
+                                //imageName = imageName.substring(1, imageName.length() - 1);
+                                Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage1);
+                            }
                             myWishImage1.setClipToOutline(true);
                         }
                         myWishTitle1.setText(myWishes.get(i).getTitle());
                         i++;
                         if (size > 1){
-                            myWishImage2.setVisibility(View.VISIBLE);
+                            myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                             if (myWishes.get(i).getThumbnail() != null){
-                                Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage2);
+                                String imageName = myWishes.get(i).getThumbnail();
+                                if(imageName.startsWith("http://")){
+                                    Glide.with(getContext()).load(imageName).into(myWishImage2);
+                                }
+                                else{
+                                    //imageName = imageName.substring(1, imageName.length() - 1);
+                                    Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage2);
+                                }
                                 myWishImage2.setClipToOutline(true);
                             }
                             myWishTitle2.setText(myWishes.get(i).getTitle());
                             i++;
                             if (size > 2){
-                                System.out.println("찜 3개 이상임");
-                                myWishImage3.setVisibility(View.VISIBLE);
+                                myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                                 if (myWishes.get(i).getThumbnail() != null){
-                                    Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage3);
+                                    String imageName = myWishes.get(i).getThumbnail();
+                                    if(imageName.startsWith("http://")){
+                                        Glide.with(getContext()).load(imageName).into(myWishImage3);
+                                    }
+                                    else{
+                                        //imageName = imageName.substring(1, imageName.length() - 1);
+                                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage3);
+                                    }
                                     myWishImage3.setClipToOutline(true);
                                 }
                                 myWishTitle3.setText(myWishes.get(i).getTitle());
@@ -236,7 +261,7 @@ public class PersonFragment extends Fragment {
                     if(size == 0)
                         myPostLayout.setVisibility(View.GONE);
                     else {
-                        myPostImage1.setVisibility(View.VISIBLE);
+                        myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                         if (myPost3s.get(i).getThumbnail() != null) {
                             Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
                             myPostImage1.setClipToOutline(true);
@@ -244,7 +269,7 @@ public class PersonFragment extends Fragment {
                         myPostTitle1.setText(myPost3s.get(i).getTitle());
                         i++;
                         if (size > 1){
-                            myPostImage2.setVisibility(View.VISIBLE);
+                            myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                             if (myPost3s.get(i).getThumbnail() != null) {
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
                                 myPostImage2.setClipToOutline(true);
@@ -252,7 +277,7 @@ public class PersonFragment extends Fragment {
                             myPostTitle2.setText(myPost3s.get(i).getTitle());
                             i++;
                             if (size > 2){
-                                myPostImage3.setVisibility(View.VISIBLE);
+                                myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                                 if (myPost3s.get(i).getThumbnail() != null) {
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
                                     myPostImage3.setClipToOutline(true);

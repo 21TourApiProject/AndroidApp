@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +39,8 @@ public class MyDataActivity extends AppCompatActivity {
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
 
         profileImage2 = findViewById(R.id.profileImage2);
+        profileImage2.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImage2.setClipToOutline(true);
 
         //뒤로 가기
         Button myDataBack = findViewById(R.id.myDataBack);
