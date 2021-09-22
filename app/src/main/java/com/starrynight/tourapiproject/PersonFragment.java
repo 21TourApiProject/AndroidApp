@@ -174,7 +174,8 @@ public class PersonFragment extends Fragment {
         });
 
         //선호 해시태크 변경 페이지로 이동
-        myHashTag.setOnClickListener(new View.OnClickListener() {
+        LinearLayout changeMyHashTag = v.findViewById(R.id.changeMyHashTag);
+        changeMyHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SelectMyHashTagActivity.class);
