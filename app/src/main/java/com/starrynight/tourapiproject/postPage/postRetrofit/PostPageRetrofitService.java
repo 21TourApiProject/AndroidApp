@@ -3,12 +3,15 @@ package com.starrynight.tourapiproject.postPage.postRetrofit;
 import com.starrynight.tourapiproject.alarmPage.Alarm;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
+import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface PostPageRetrofitService {
@@ -30,9 +33,12 @@ public interface PostPageRetrofitService {
     @DELETE("post/{userId}")
     Call<Void> deletePost(@Path("userId")Long userId);
 
-    @GET("post/")
-    Call<List<MainPost>> getMainPosts();
+    @POST("post/main")
+    Call<List<MainPost>> getMainPosts(@Body Filter filter);
 
     @GET("user/{userId}")
     Call<User> getUser(@Path("userId")Long userId);
+
+    @GET("user/{userId}/myHashTagId")
+    Call<List<Long>> getMyHashTagIdList(@Path("userId") Long userId);
 }
