@@ -51,6 +51,7 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
@@ -480,7 +481,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
                 optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
-                GridLayoutManager layoutManager = new GridLayoutManager(this,5,GridLayoutManager.VERTICAL,false);
+                GridLayoutManager layoutManager = new GridLayoutManager(this,6,GridLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(layoutManager);
                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
                 if (hashTagList.size()!=0){
