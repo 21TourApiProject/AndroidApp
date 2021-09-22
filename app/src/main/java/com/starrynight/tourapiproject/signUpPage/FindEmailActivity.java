@@ -73,8 +73,18 @@ public class FindEmailActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
 
+        //뒤로 가기
+        Button findEmailBack = findViewById(R.id.findEmailBack);
+        findEmailBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        mAuth = FirebaseAuth.getInstance();
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {

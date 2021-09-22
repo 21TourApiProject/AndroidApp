@@ -38,11 +38,26 @@
                     android:textSize="17sp" />
             </LinearLayout>
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                app:srcCompat="@drawable/cspage_cute" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="64dp"
+                app:srcCompat="@drawable/cspage_text" />
+
             <Button
                 android:id="@+id/sendEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="이메일보내기" />
+                android:layout_gravity="center"
+                android:background="@drawable/cspage_sendemail" />
         </LinearLayout>
 
     </ScrollView>

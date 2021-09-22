@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class FindPasswordActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "FindPassWord";
+    private static final String TAG = "FindPassword";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
 
     private FirebaseAuth mAuth;
@@ -75,8 +75,18 @@ public class FindPasswordActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
 
+        //뒤로 가기
+        Button findPasswordBack = findViewById(R.id.findPasswordBack);
+        findPasswordBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        mAuth = FirebaseAuth.getInstance();
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
