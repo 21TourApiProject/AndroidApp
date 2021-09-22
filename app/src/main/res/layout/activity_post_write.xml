@@ -28,28 +28,28 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_height="49dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <Button
                         android:id="@+id/postWrite_back_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="29dp"
-                        android:layout_marginTop="19dp"
-                        android:layout_marginBottom="18dp"
-                        android:background="@drawable/back_btn" />
+                        android:layout_marginEnd="21dp"
+                        android:background="@drawable/signup_back" />
 
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="19dp"
+                        android:layout_gravity="center"
                         android:fontFamily="@font/scdream"
                         android:text="게시물 올리기"
-                        android:textSize="20sp" />
+                        android:textSize="17sp" />
                 </LinearLayout>
 
                 <Button
@@ -213,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/hashtag_background"
                         android:hint="관측지역"
-                        android:textSize="18sp"
+                        android:textSize="11sp"
                         android:visibility="invisible"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/postWrite_observePoint" />
