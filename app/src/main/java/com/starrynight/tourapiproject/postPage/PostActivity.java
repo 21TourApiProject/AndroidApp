@@ -245,6 +245,7 @@ public class PostActivity extends AppCompatActivity{
                                 recyclerView.setLayoutManager(linearLayoutManager);
                                 Post_point_item_Adapter adapter = new Post_point_item_Adapter();
                                 for (int i=0;i<relateImageList.size();i++){
+                                    if (i>3){break;}
                                     relatefilename[i]=relateImageList.get(i).getImageName();
                                 }
                                 for (int i = 0; i <relatefilename.length;i++){

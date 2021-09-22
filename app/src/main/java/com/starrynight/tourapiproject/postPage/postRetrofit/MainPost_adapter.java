@@ -308,7 +308,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 }
             }
         }
-        public class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
+        public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
             private final int divHeight;
 
