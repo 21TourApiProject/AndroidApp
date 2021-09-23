@@ -89,6 +89,15 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
+        //뒤로 가기
+        Button authBack = findViewById(R.id.authBack);
+        authBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //인증 건너뛰기
         Button pass = findViewById(R.id.pass);
         pass.setOnClickListener(new View.OnClickListener() {

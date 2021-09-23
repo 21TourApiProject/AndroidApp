@@ -94,14 +94,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:layout_marginLeft="14dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/findemail_requestauth" />
 
                     <Button
                         android:id="@+id/resendAuth2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="인증 재요청"
+                        android:layout_height="36dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/findemail_requestauth2"
                         android:visibility="gone" />
                 </LinearLayout>
 
