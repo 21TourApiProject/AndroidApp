@@ -72,7 +72,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
 
-        Button skip_btn = findViewById(R.id.skip_btn);
+        Button skip_btn = findViewById(R.id.pass);
         skip_btn.setVisibility(View.VISIBLE);
         skip_btn.setOnClickListener(new View.OnClickListener() {
             @Override

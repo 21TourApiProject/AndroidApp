@@ -52,4 +52,13 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/point_purple</item>
     </style>
+
+    <style name="StarryNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="StarryNight.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="StarryNight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -91,6 +91,16 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        //운영정책
+        LinearLayout managementPolicy = findViewById(R.id.managementPolicy);
+        managementPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, ManagementPolicyActivity.class);
+                startActivity(intent);
+            }
+        });
+
         //로그아웃
         LinearLayout logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
