@@ -13,4 +13,7 @@ public interface SearchPageRetrofitService {
 
     @POST("touristData/search")
     Call<List<MyWishObTp>> getTouristDataWithFilter(@Body Filter filter);
+
+    @POST("search/observation")
+    Call<List<SearchParams1>> getObservationWithFilter(@Body SearchKey searchKey);
 }

@@ -40,12 +40,22 @@ public class Observation {
     boolean nature;
     @SerializedName("courseOrder")
     int courseOrder;
+    @SerializedName("areaCode")
+    Long areaCode;
     @SerializedName("observeHashTags")
     List<ObserveHashTag> observeHashTags;
     @SerializedName("observeImages")
     List<ObserveImage> observeImages;
     @SerializedName("observeFee")
     List<ObserveFee> observeFees;
+
+    public Long getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(Long areaCode) {
+        this.areaCode = areaCode;
+    }
 
     public int getCourseOrder() {
         return courseOrder;

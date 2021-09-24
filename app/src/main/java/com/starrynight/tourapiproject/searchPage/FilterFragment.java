@@ -95,6 +95,13 @@ public class FilterFragment extends Fragment {
                 bundle.putInt("type", 1);
                 bundle.putIntegerArrayList("area",area);
                 bundle.putIntegerArrayList("hashTag",hashTag);
+                String keyword;
+                if(getArguments()!=null)
+                     keyword = getArguments().getString("keyword");
+                else
+                    keyword = null;
+                bundle.putString("keyword", keyword);
+                System.out.println("필터에서 키워드"+keyword);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment searchResultFragment = new SearchResultFragment();
