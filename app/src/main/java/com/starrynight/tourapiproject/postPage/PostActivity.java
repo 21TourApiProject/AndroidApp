@@ -228,7 +228,7 @@ public class PostActivity extends AppCompatActivity{
                                 }
                             });
                             ad.show();
-                        }
+                        } 
                     });
 
 
@@ -245,6 +245,7 @@ public class PostActivity extends AppCompatActivity{
                                 recyclerView.setLayoutManager(linearLayoutManager);
                                 Post_point_item_Adapter adapter = new Post_point_item_Adapter();
                                 for (int i=0;i<relateImageList.size();i++){
+                                    if (i>3){break;}
                                     relatefilename[i]=relateImageList.get(i).getImageName();
                                 }
                                 for (int i = 0; i <relatefilename.length;i++){
@@ -291,7 +292,7 @@ public class PostActivity extends AppCompatActivity{
                     Log.d("postHashTag","게시물 해시태그 가져옴"+response.body());
                     postHashTags = response.body();
                     RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.HORIZONTAL,false);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),5,GridLayoutManager.VERTICAL,false);
                     hashTagRecyclerView.setLayoutManager(gridLayoutManager);
                     PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
                     for (int i=0;i<postHashTags.size();i++){

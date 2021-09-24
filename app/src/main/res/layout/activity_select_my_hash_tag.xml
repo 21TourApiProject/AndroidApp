@@ -8,385 +8,380 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/selectmyhashtag_back15">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="선호하는 해시태그를 골라주세요"
-                android:textSize="25sp" />
+                android:layout_gravity="center"
+                android:layout_marginTop="74dp"
+                android:text="관심사를 골라보세요!"
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginTop="43dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="여행 테마"
+                    android:textSize="12sp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginTop="20dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="여행 테마" />
+                    <Button
+                        android:id="@+id/ht1"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="공기 좋은"
+                        android:textSize="11sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="10dp">
+                    <Button
+                        android:id="@+id/ht22"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="경치 좋은"
+                        android:textSize="11sp" />
 
-                        <Button
-                            android:id="@+id/ht1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="5"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:onClick="clickEvent"
-                            android:text="공기 좋은" />
+                    <Button
+                        android:id="@+id/ht2"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="깔끔한"
+                        android:textSize="11sp" />
+                </LinearLayout>
 
-                        <Button
-                            android:id="@+id/ht2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="6"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="분위기 있는" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/ht3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="깔끔한" />
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/ht3"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="감성적인"
+                        android:textSize="11sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="10dp">
+                    <Button
+                        android:id="@+id/ht4"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="이색적인"
+                        android:textSize="11sp" />
 
-                        <Button
-                            android:id="@+id/ht4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="4"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="감성적인" />
-
-                        <Button
-                            android:id="@+id/ht5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="4"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="이색적인" />
-
-                        <Button
-                            android:id="@+id/ht6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="인생샷" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/ht7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="4"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="전문적인" />
-
-                        <Button
-                            android:id="@+id/ht8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="2"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="캠핑" />
-
-                        <Button
-                            android:id="@+id/ht9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="차박" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6" />
-                    </LinearLayout>
-
+                    <Button
+                        android:id="@+id/ht5"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="인생샷"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginTop="20dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="이동수단" />
+                    <Button
+                        android:id="@+id/ht6"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="전문적인"
+                        android:textSize="11sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/ht7"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="캠핑"
+                        android:textSize="11sp" />
 
-                        <Button
-                            android:id="@+id/ht10"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="3"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="뚜벅이" />
-
-                        <Button
-                            android:id="@+id/ht11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="4"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="드라이브" />
-
-                        <Button
-                            android:id="@+id/ht12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:onClick="clickEvent"
-                            android:text="반려동물" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4" />
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/ht8"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="차박"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="이동수단"
+                    android:textSize="12sp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/ht9"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="22dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="뚜벅이"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/ht10"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="드라이브"
+                        android:textSize="11sp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="분위기" />
+                        android:layout_weight="4" />
+                </LinearLayout>
+            </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                        <Button
-                            android:id="@+id/ht13"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="3"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="한적한" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="분위기"
+                    android:textSize="12sp" />
 
-                        <Button
-                            android:id="@+id/ht14"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="2"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="근교" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
-                        <Button
-                            android:id="@+id/ht15"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="도심 속" />
+                    <Button
+                        android:id="@+id/ht11"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="반려동물"
+                        android:textSize="11sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="5" />
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/ht12"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="한적한"
+                        android:textSize="11sp" />
 
+                    <Button
+                        android:id="@+id/ht13"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="근교"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/ht14"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="도심 속"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="여행 동반자"
+                    android:textSize="12sp" />
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="주로 함께하는 사람" />
+                    <Button
+                        android:id="@+id/ht15"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="연인"
+                        android:textSize="11sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/ht16"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="가족"
+                        android:textSize="11sp" />
 
-                        <Button
-                            android:id="@+id/ht16"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="2"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="연인" />
+                    <Button
+                        android:id="@+id/ht17"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="친구"
+                        android:textSize="11sp" />
 
-                        <Button
-                            android:id="@+id/ht17"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="2"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="가족" />
-
-                        <Button
-                            android:id="@+id/ht18"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:layout_marginRight="10dp"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="친구" />
-
-                        <Button
-                            android:id="@+id/ht19"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="혼자" />
-                    </LinearLayout>
-
+                    <Button
+                        android:id="@+id/ht18"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="혼자"
+                        android:textSize="11sp" />
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="48dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="여행 예산"
+                    android:textSize="12sp" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/ht19"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="가성비"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/ht20"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="18dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="소확행"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/ht21"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="럭셔리한"
+                        android:textSize="11sp" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="여행 예산" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <Button
-                            android:id="@+id/ht20"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="3"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="가성비" />
-
-                        <Button
-                            android:id="@+id/ht21"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="3"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="소확행" />
-
-                        <Button
-                            android:id="@+id/ht22"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:onClick="clickEvent"
-                            android:background="@drawable/select_hash_tag_unclicked"
-                            android:text="럭셔리한" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4" />
-                    </LinearLayout>
+                        android:layout_weight="4" />
                 </LinearLayout>
             </LinearLayout>
 
             <Button
                 android:id="@+id/finSelectHt"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="완료" />
+                android:layout_gravity="center"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="100dp"
+                android:background="@drawable/signup_complete" />
         </LinearLayout>
     </ScrollView>
 
