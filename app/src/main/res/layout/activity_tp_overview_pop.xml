@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@drawable/tppop_area"
     android:orientation="vertical"
     tools:context=".touristPointPage.OverviewPopActivity">
 
@@ -11,13 +11,20 @@
         android:id="@+id/overviewFull"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black" />
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginRight="13dp"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/close"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="closeOverview"
-        android:text="닫기" />
+        android:layout_width="276dp"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/tppop_close"
+        android:onClick="closeOverview" />
 
 </LinearLayout>

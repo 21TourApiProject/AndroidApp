@@ -16,15 +16,18 @@ public class UserParams implements Serializable {
 
     private String password;
 
+    private Boolean isMarketing;
+
     public UserParams(){}
 
-    public UserParams(String realName, Boolean sex, String birthDay, String email, String password) {
+    public UserParams(String realName, Boolean sex, String birthDay, String email, String password, Boolean isMarketing) {
         this.realName = realName;
         this.sex = sex;
         this.birthDay = birthDay;
         this.email = email;
         this.password = password;
         this.mobilePhoneNumber = "";
+        this.isMarketing = isMarketing;
     }
 
     public void setMobilePhoneNumber(String mobilePhoneNumber) {
