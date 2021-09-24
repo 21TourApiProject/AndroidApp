@@ -109,7 +109,21 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
             if(item.getThumbnail() != null)
                 Glide.with(context).load(item.getThumbnail()).into(obTpImage);
             obTpTitle.setText(item.getTitle());
-            opTpAddress.setText(item.getAddress());
+
+            //주소를 두단어까지 줄임
+            String address = item.getAddress();
+            int i = address.indexOf(' ');
+            if (i != -1){
+                int j = address.indexOf(' ', i+1);
+                if(j != -1){
+                    opTpAddress.setText(item.getAddress().substring(0, j));
+                } else{
+                    opTpAddress.setText(item.getAddress());
+                }
+            } else{
+                opTpAddress.setText(item.getAddress());
+            }
+
             obTpCat3Name.setText(item.getCat3());
             obTpOverviewSim.setText(item.getOverviewSim());
             obTpHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,10 +70,11 @@ public class TouristPointActivity extends AppCompatActivity {
     Food foodData;
     Boolean isTp;
 
-    TextView tpCongestion, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
+    TextView tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
             tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText, overviewPop, daumMore;
 
     Button tpWish;
+    ImageView tpCongestion;
 
     LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
@@ -163,7 +165,7 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body()){
                         isWish = true;
-                        tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
+                        tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                     } else{
                         isWish = false;
                     }
@@ -189,7 +191,7 @@ public class TouristPointActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 //버튼 디자인 바뀌게 구현하기
                                 isWish = true;
-                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 실패");
@@ -207,7 +209,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 isWish = false;
-                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
+                                tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 삭제 실패");
@@ -254,7 +256,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setLongitude(tpData.getMapX());
                                     balloonObject.setLatitude(tpData.getMapY());
                                     balloonObject.setName(tpData.getTitle());
-                                    balloonObject.setAddress(tpData.getAddr1());
+                                    balloonObject.setAddress(tpData.getAddr());
                                     balloonObject.setPoint_type(tpData.getCat3Name());
                                     balloonObject.setIntro(tpData.getOverviewSim());
 
@@ -329,8 +331,8 @@ public class TouristPointActivity extends AppCompatActivity {
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getAddr1() != null){
-                                        tpAddress.setText(tpData.getAddr1());
+                                    if (tpData.getAddr() != null){
+                                        tpAddress.setText(tpData.getAddr());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
                                     }
@@ -704,14 +706,30 @@ public class TouristPointActivity extends AppCompatActivity {
                 else {
                     JSONObject items = (JSONObject) body.get("items");
                     JSONObject item = (JSONObject) items.get("item");
-                    Long code = (Long) item.get("estiDecoDivCd");
+                    Integer code = (Integer) item.get("estiDecoDivCd");
                     bf.close();
                     System.out.println("code = " + code);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             congestionLayout.setVisibility(View.VISIBLE);
-                            tpCongestion.setText(Long.toString(code));
+                            switch (code) {
+                                case 1:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
+                                    break;
+                                case 2:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con2));
+                                    break;
+                                case 3:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con3));
+                                    break;
+                                case 4:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con4));
+                                    break;
+                                case 5:
+                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con5));
+                                    break;
+                            }
                         }
                     });
                 }

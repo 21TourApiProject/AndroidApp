@@ -8,12 +8,12 @@
         android:id="@+id/recycler_hashTagName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="#해쉬태그"
+        android:background="@drawable/hashtag_background"
         android:gravity="center"
-        android:textSize="14sp"
         android:paddingHorizontal="6dp"
         android:paddingVertical="3dp"
-        android:background="@drawable/hashtag_background"
-        android:textColor="@color/white"/>
+        android:text="#해쉬태그"
+        android:textColor="@color/white"
+        android:textSize="11sp" />
 
 </RelativeLayout>

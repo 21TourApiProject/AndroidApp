@@ -92,7 +92,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         return new ViewHolder(itemView,listener);
     }
@@ -258,6 +258,11 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             });
             nickname.setText(item.getMainNickName());
             mainslider.setOffscreenPageLimit(3);
+
+//            ViewGroup.LayoutParams params = mainslider.getLayoutParams();
+//            params.width=ViewGroup.LayoutParams.MATCH_PARENT;
+//            params.height= params.width;
+//            mainslider.requestLayout();
             ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());
             mainslider.setAdapter(imageSliderAdapter);
 
@@ -303,7 +308,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 }
             }
         }
-        public class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
+        public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
             private final int divHeight;
 

@@ -1,7 +1,9 @@
+
 package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +20,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.starrynight.tourapiproject.alarmPage.AlarmActivity;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.MyHashTag;
 import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,11 +49,12 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    Long postId;
+    Long userId;
     String[] filename2= new String[10];
     private ArrayList<String> urls = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
     ScrollView scrollView;
+    List<Long>myhashTagIdList;
 
     public MainFragment() {
         // Required empty public constructor
@@ -72,27 +82,55 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         scrollView = v.findViewById(R.id.scroll_layout);
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
-        postId=1L;
-        Call<List<MainPost>> call = RetrofitClient.getApiService().getMainPosts();
-        call.enqueue(new Callback<List<MainPost>>() {
+        myhashTagIdList = new ArrayList<>();
+        String fileName = "userId";
+        try{
+            FileInputStream fis = getActivity().openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Call<List<Long>> call = RetrofitClient.getApiService().getMyHashTagIdList(userId);
+        call.enqueue(new Callback<List<Long>>() {
             @Override
-            public void onResponse(Call<List<MainPost>> call, Response<List<MainPost>> response) {
+            public void onResponse(Call<List<Long>> call, Response<List<Long>> response) {
                 if (response.isSuccessful()){
-                    List<MainPost> result = response.body();
-                    RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                    layoutManager.setReverseLayout(true);
-                    layoutManager.setStackFromEnd(true);
-                    recyclerView.setLayoutManager(layoutManager);
-                    MainPost_adapter adapter = new MainPost_adapter(result,getContext());
-                    recyclerView.setAdapter(adapter);
+                    myhashTagIdList = response.body();
+                    Filter filter = new Filter(null,myhashTagIdList);
+                    Call<List<MainPost>> call2 = RetrofitClient.getApiService().getMainPosts(filter);
+                    call2.enqueue(new Callback<List<MainPost>>() {
+                        @Override
+                        public void onResponse(Call<List<MainPost>> call, Response<List<MainPost>> response) {
+                            if (response.isSuccessful()){
+                                List<MainPost> result = response.body();
+                                RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                                layoutManager.setReverseLayout(true);
+                                layoutManager.setStackFromEnd(true);
+                                recyclerView.setLayoutManager(layoutManager);
+                                MainPost_adapter adapter = new MainPost_adapter(result,getContext());
+                                recyclerView.setAdapter(adapter);
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<MainPost>> call, Throwable t) {
+                            Log.d("mainPostList","인터넷 오류");
+                        }
+                    });
+                    
                 }
             }
-            @Override
-            public void onFailure(Call<List<MainPost>> call, Throwable t) {
 
+            @Override
+            public void onFailure(Call<List<Long>> call, Throwable t) {
+                Log.d("mainPostIdList","인터넷 오류");
             }
         });
+
 
         ImageButton button =(ImageButton) v.findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {

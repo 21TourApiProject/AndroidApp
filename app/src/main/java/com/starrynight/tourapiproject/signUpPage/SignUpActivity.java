@@ -44,6 +44,7 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private static final String LOG = "SignUpActivity";
     private static final String TAG2 = "KakaoLoginApi";
     private SessionCallback sessionCallback = new SessionCallback();
     KakaoUserParams kakaoUserParams;
@@ -68,11 +69,11 @@ public class SignUpActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Long result = response.body();
                             if (result != -1L) {
-                                System.out.println("로그인 성공");
-
+                                Log.d(LOG, "로그인 성공");
                                 //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
                                 String fileName = "userId";
                                 String userId = result.toString();
+                                Log.d(LOG, "userId " + userId);
                                 try {
                                     FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
                                     fos.write(userId.getBytes());
@@ -90,7 +91,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            System.out.println("오류가 발생했습니다. 다시 시도해주세요.");
+                            Log.e(LOG, "로그인 실패");
                         }
                     }
 

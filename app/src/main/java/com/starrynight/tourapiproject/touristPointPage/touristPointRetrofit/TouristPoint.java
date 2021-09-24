@@ -14,8 +14,8 @@ public class TouristPoint {
     private String cat3Name; //소분류 이름
     @SerializedName("overview")
     private String overview; //개요
-    @SerializedName("addr1")
-    private String addr1; //주소
+    @SerializedName("addr")
+    private String addr; //주소
     @SerializedName("tel")
     private String tel; //전화번호
     @SerializedName("useTime")
@@ -59,8 +59,8 @@ public class TouristPoint {
         return overview;
     }
 
-    public String getAddr1() {
-        return addr1;
+    public String getAddr() {
+        return addr;
     }
 
     public String getTel() {
