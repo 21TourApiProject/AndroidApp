@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -27,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -48,6 +50,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
+import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
@@ -267,7 +271,13 @@ public class PostWriteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadfiles(files);
+                AlertDialog.Builder ad = new AlertDialog.Builder(PostWriteActivity.this);
+                ad.setMessage("게시물을 작성하시겠습니까?");
+                ad.setTitle("알림");
+                ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        uploadfiles(files);
                 postContent = ((EditText)(findViewById(R.id.postContentText))).getText().toString();
                 if(postContent.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "게시물 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -426,7 +436,15 @@ public class PostWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+                ad.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                ad.show();
+            }
+        });
     }
 
 
@@ -445,6 +463,7 @@ public class PostWriteActivity extends AppCompatActivity {
         if(requestCode == 202){
             if(resultCode == 2){
                 Log.d("postObservation","검색 관측지 데이터 로드");
+                postObservePointItem.setVisibility(View.VISIBLE);
                 observationName = (String)data.getSerializableExtra("observationName");
                 optionobservationName = (String)data.getSerializableExtra("optionObservationName");
                 if (observationName != null){
@@ -462,18 +481,16 @@ public class PostWriteActivity extends AppCompatActivity {
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
                 optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
-                GridLayoutManager layoutManager = new GridLayoutManager(this, 2,GridLayoutManager.HORIZONTAL,false);
+                GridLayoutManager layoutManager = new GridLayoutManager(this,6,GridLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(layoutManager);
                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
                 if (hashTagList.size()!=0){
                 for (int i=0;i<hashTagList.size();i++){
                     adapter.addItem(new PostHashTagItem(hashTagList.get(i)));
-                    System.out.println("기존"+hashTagList.get(i)+hashTagList.size());
                     }
                 }else{
                     for (int i=0;i<optionhashTagList.length;i++){
                     adapter.addItem(new PostHashTagItem(optionhashTagList[i]));
-                    System.out.println("임의"+optionhashTagList[i]+optionhashTagList.length);
                 }
 
                 }
@@ -575,7 +592,6 @@ public String getRealPathFromURI(Uri contentUri) {
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
         TransferObserver uploadObserver = transferUtility.upload("starry-night/postImage",userId+fileName, file);    // (bucket api, file이름, file객체)
-
         uploadObserver.setTransferListener(new TransferListener() {
             @Override
             public void onStateChanged(int id, TransferState state) {

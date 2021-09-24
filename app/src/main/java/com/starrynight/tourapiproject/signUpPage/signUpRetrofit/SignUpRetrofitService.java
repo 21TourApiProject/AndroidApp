@@ -37,4 +37,7 @@ public interface SignUpRetrofitService {
 
     @GET("user/login/password/{email}/{realName}/{mobilePhoneNumber}")
     Call<String> getPassword(@Path("email")String email, @Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
+
+    @POST("myHashTag/change/{userId}")
+    Call<Void> changeMyHashTag(@Path("userId")Long userId, @Body List<MyHashTagParams> myHashTagParams);
 }

@@ -8,12 +8,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,9 +24,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.weatherPage.wtAppearTimeModel.WtAppearTimeModel;
 import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.WtAreaParams;
+import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustModel;
+import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustRetrofit;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
 
@@ -50,6 +53,12 @@ public class WeatherActivity extends AppCompatActivity {
     Calendar today = Calendar.getInstance();
 
     @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatDateDash = new SimpleDateFormat("yyyy-MM-dd");
+
+    @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyyMMdd");
 
     @SuppressLint("SimpleDateFormat")
@@ -59,15 +68,12 @@ public class WeatherActivity extends AppCompatActivity {
     SimpleDateFormat formatHour = new SimpleDateFormat("HH");
 
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy.MM.dd");
-
-
-    @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyyMMddHH");
 
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
     int mDay = c.get(Calendar.DAY_OF_MONTH);
+
     double observationalFitDegree;
     double cloudVolume;
     double cloudVolumeValue;
@@ -88,7 +94,7 @@ public class WeatherActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener timeListener;
 
     String WT_MET_API_KEY;
-    String WT_APPEAR_TIME_API_KEY;
+    String WT_FINE_DUST_API_KEY;
 
     String strDate;
 
@@ -103,7 +109,9 @@ public class WeatherActivity extends AppCompatActivity {
     String todayDateTime;
 
     String selectDate;
+    String todayDateDash;
     String selectTime;
+    String selectDateDash;
 
     String todayDate;
     String todayTime;
@@ -175,19 +183,25 @@ public class WeatherActivity extends AppCompatActivity {
     TextView cloudTv;
     TextView tempTv;
     TextView moonPhaseTv;
-    TextView findDustTv;
+    TextView fineDustTv;
     TextView windTv;
     TextView humidityTv;
     TextView precipitationTv;
+    TextView lightPolTv;
     TextView minLightPolTv;
     TextView maxLightPolTv;
+    TextView lightSlashTv;
 
     String cloudText;
     String tempText;
-    String tempText1;
+    String tempMaxText;
+    String tempMinText;
+    String moonPhaseText;
     String windText;
+    String fineDustText;
     String humidityText;
     String precipitationText;
+    String lightPolText;
 
     TextView minTempTv;
     TextView maxTempTv;
@@ -202,8 +216,34 @@ public class WeatherActivity extends AppCompatActivity {
     //광공해
     Double minLightPol;
     Double maxLightPol;
-    String minLightPolVal;
-    String maxLightPolVal;
+    String minLightPolText;
+    String maxLightPolText;
+
+    //미세먼지
+    int dustTotalCnt;
+    int dustNoInfo = 0;
+
+    Date changeDate;
+    Date changeSelectDate;
+    String addDate;
+
+    String listDust;
+    String[] arrayComma;
+
+    String[] dustStateArray = new String[19];
+    int index;
+    String state;
+
+    //날씨 상태
+    LinearLayout detailWeather;
+    String cloudState = "좋음";
+    String tempState = "나쁨";
+    String moonPhaseState = "좋음";
+    String fineDustState = "나쁨";
+    String windState = "나쁨";
+    String humidityState = "좋음";
+    String precipState = "나쁨";
+    String lightPolState = "좋음";
 
     {
         try {
@@ -214,11 +254,11 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     {
-//        try {
-//            WT_APPEAR_TIME_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            WT_FINE_DUST_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,22 +269,14 @@ public class WeatherActivity extends AppCompatActivity {
         onClickBackBtn();
         onClickCloudInfo();
 
-        //지역 선택 Spinner
-        onSetAreaSpinner();
-
         onSetDatePicker();
         onSetTimePicker();
 
+        //지역 선택 Spinner
+        onSetAreaSpinner();
+
         selectDateTime = selectDate + selectTime;
         Log.d("selectDateTime", selectDateTime);
-
-        //detailWeatherClickEvent();
-
-        //출몰시각 API 연결
-//        Call<WtAppearTimeModel> getAppearTimeInstance = WtAppearTimeRetrofit.wtAppearTimeInterface()
-//                .getAppearTimeData(WT_APPEAR_TIME_API_KEY, "고양", "20210730");
-//        getAppearTimeInstance.enqueue(appearTimeModelCallback);
-
     }
 
     public void setTextView() {
@@ -260,12 +292,15 @@ public class WeatherActivity extends AppCompatActivity {
         cloudTv = findViewById(R.id.wt_cloud);
         tempTv = findViewById(R.id.wt_temp);
         moonPhaseTv = findViewById(R.id.wt_moon_phase);
-        findDustTv = findViewById(R.id.wt_find_dust);
+        fineDustTv = findViewById(R.id.wt_find_dust);
         windTv = findViewById(R.id.wt_wind);
         humidityTv = findViewById(R.id.wt_humidity);
         precipitationTv = findViewById(R.id.wt_precipitation);
+
+        lightPolTv = findViewById(R.id.wt_light_pol);
         minLightPolTv = findViewById(R.id.wt_min_light_pol);
         maxLightPolTv = findViewById(R.id.wt_max_light_pol);
+        lightSlashTv = findViewById(R.id.wt_light_slash);
 
         minTempTv = findViewById(R.id.wt_min_temp);
         maxTempTv = findViewById(R.id.wt_max_temp);
@@ -299,7 +334,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     //날짜 설정
     public void onSetDatePicker() {
-        //        cal.add(Calendar.DATE, 2);
+//        cal.add(Calendar.DATE, 2);
 //        plusDay = formatDate2.format(cal.getTime());
 //        plusDay += selectTime;
 //        Log.d("plusTwoDay", plusDay);
@@ -354,6 +389,7 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.d("selectDateTime", selectDateTime);
 
                 connectMetApi();
+                connectFineDustApi();
             }
         };
     }
@@ -643,7 +679,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                         if (selectDate.equals(unixToDay)) {
                             //월령 정보
-                            moonPhaseTv.setText(data.getDaily().get(i).getMoonPhase());
+                            moonPhaseText = data.getDaily().get(i).getMoonPhase();
+                            moonPhaseTv.setText(moonPhaseText);
 
                             //일출
                             unixSunMoon = data.getDaily().get(i).getSunrise();
@@ -696,6 +733,8 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     }
 
+                    detailWeather = findViewById(R.id.detail_weather);
+
                     if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
                         for (int i = 0; i < 48; i++) {
                             unixTime = data.getHourly().get(i).getDt();
@@ -703,10 +742,8 @@ public class WeatherActivity extends AppCompatActivity {
                             Log.d("unixToDate", unixToDate);
 
                             if (selectDateTime.equals(unixToDate)) {
-                                tempTv.setVisibility(View.VISIBLE);
-                                maxTempTv.setVisibility(View.GONE);
-                                minTempTv.setVisibility(View.GONE);
-                                tempSlashTv.setVisibility(View.GONE);
+                                //tempTv만 나오게
+                                setTempVisibility(0);
 
                                 cloudText = data.getHourly().get(i).getClouds() + "%";
                                 tempText = data.getHourly().get(i).getTemp() + "°C";
@@ -733,14 +770,11 @@ public class WeatherActivity extends AppCompatActivity {
                             Log.d("unixToDateDaily", unixToDate);
 
                             if (selectDateTime.equals(unixToDate)) {
-                                tempTv.setVisibility(View.GONE);
-                                maxTempTv.setVisibility(View.VISIBLE);
-                                minTempTv.setVisibility(View.VISIBLE);
-                                tempSlashTv.setVisibility(View.VISIBLE);
+                                setTempVisibility(1);
 
                                 cloudText = data.getDaily().get(i).getClouds() + "%";
-                                tempText = data.getDaily().get(i).getTemp().getMin() + "°C";
-                                tempText1 = data.getDaily().get(i).getTemp().getMax() + "°C";
+                                tempMinText = data.getDaily().get(i).getTemp().getMin() + "°C";
+                                tempMaxText = data.getDaily().get(i).getTemp().getMax() + "°C";
                                 windText = data.getDaily().get(i).getWindSpeed() + "m/s";
                                 humidityText = data.getDaily().get(i).getHumidity() + "%";
                                 precipitationText = data.getDaily().get(i).getPop();
@@ -750,8 +784,8 @@ public class WeatherActivity extends AppCompatActivity {
                                 stringPrecip = intPrecip + "%";
 
                                 cloudTv.setText(cloudText);
-                                minTempTv.setText(tempText);
-                                maxTempTv.setText(tempText1);
+                                minTempTv.setText(tempMinText);
+                                maxTempTv.setText(tempMaxText);
                                 windTv.setText(windText);
                                 humidityTv.setText(humidityText);
                                 precipitationTv.setText(stringPrecip);
@@ -759,6 +793,61 @@ public class WeatherActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+                        @SuppressLint("ClickableViewAccessibility")
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if (event.getAction() == MotionEvent.ACTION_UP) {
+                                if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
+                                    tempTv.setText(tempText);
+                                } else {
+                                    setTempVisibility(1);
+
+                                    minTempTv.setText(tempMinText);
+                                    maxTempTv.setText(tempMaxText);
+                                }
+                                cloudTv.setText(cloudText);
+                                moonPhaseTv.setText(moonPhaseText);
+                                fineDustTv.setText(fineDustText);
+                                windTv.setText(windText);
+                                humidityTv.setText(humidityText);
+                                precipitationTv.setText(stringPrecip);
+
+                                setLightPolVisibility(1);
+
+                                maxLightPolTv.setText(maxLightPolText);
+                                minLightPolTv.setText(minLightPolText);
+
+                            }
+                            return false;
+                        }
+                    };
+
+                    detailWeather.setOnLongClickListener(new View.OnLongClickListener() {
+                        @SuppressLint("ClickableViewAccessibility")
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if (maxTempTv.getVisibility() == View.VISIBLE) {
+                                setTempVisibility(0);
+                            }
+
+                            if (maxLightPolTv.getVisibility() == View.VISIBLE) {
+                                setLightPolVisibility(0);
+                            }
+
+                            cloudTv.setText(cloudState);
+                            tempTv.setText(tempState);
+                            moonPhaseTv.setText(moonPhaseState);
+                            fineDustTv.setText(fineDustState);
+                            windTv.setText(windState);
+                            humidityTv.setText(humidityState);
+                            precipitationTv.setText(precipState);
+                            lightPolTv.setText(lightPolState);
+
+                            detailWeather.setOnTouchListener(onTouchListener);
+                            return false;
+                        }
+                    });
                 }
             }
 
@@ -789,41 +878,300 @@ public class WeatherActivity extends AppCompatActivity {
         unixToHourMin = formatHourMin.format(unixHourMin);
     }
 
+    //미세먼지 API 연결
+    public void connectFineDustApi() {
+        try {
+            addDate = todayDate;
+            changeDate = formatDate2.parse(addDate);
+            todayDateDash = formatDateDash.format(changeDate);
+            Log.d("todayDateDash", todayDateDash);
+            Log.d("dustApi", "오늘 날짜로 api 호출");
 
-//    public void detailWeatherClickEvent(){
-//        LinearLayout detailWeather;
-//        detailWeather = findViewById(R.id.detail_weather);
-//        detailWeather.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                tempTv.setVisibility(View.GONE);
-//                maxTempTv.setVisibility(View.VISIBLE);
-//                minTempTv.setVisibility(View.VISIBLE);
-//                tempSlashTv.setVisibility(View.VISIBLE);
-//                return false;
-//            }
-//        });
-//    }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-    //출몰시각 API 연결
-    private Callback<WtAppearTimeModel> appearTimeModelCallback = new Callback<WtAppearTimeModel>() {
-        @Override
-        public void onResponse(Call<WtAppearTimeModel> call, Response<WtAppearTimeModel> response) {
-            if (response.isSuccessful()) {
-                WtAppearTimeModel data = response.body();
-                TextView textView1 = findViewById(R.id.wt_cloud);
-                textView1.setText(data.getResponse().getBody().getTotalCount());
-                Log.d("AppearTime", "response= " + response.raw().request().url().url());
+        if (selectDate.equals(todayDate) && (selectTime.equals("00") || selectTime.equals("01") || selectTime.equals("02") || selectTime.equals("03") || selectTime.equals("04"))) {
+            try {
+                addDate = todayDate;
+                cal.add(Calendar.DATE, -1);
+
+                addDate = formatDate2.format(cal.getTime());
+
+                cal.add(Calendar.DATE, 1);
+
+                changeDate = formatDate2.parse(addDate);
+                todayDateDash = formatDateDash.format(changeDate);
+                Log.d("todayDateDash", todayDateDash);
+                Log.d("dustApi", "어제 날짜로 api 호출");
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            changeSelectDate = formatDate2.parse(selectDate);
+            selectDateDash = formatDateDash.format(changeSelectDate);
+            Log.d("selectDateDash", selectDateDash);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Call<WtFineDustModel> getFineDustInstance = WtFineDustRetrofit.wtFineDustInterface()
+                .getFineDustData(WT_FINE_DUST_API_KEY, "JSON", todayDateDash, "PM10");
+        getFineDustInstance.enqueue(new Callback<WtFineDustModel>() {
+            @Override
+            public void onResponse(Call<WtFineDustModel> call, Response<WtFineDustModel> response) {
+                if (response.isSuccessful()) {
+                    WtFineDustModel data = response.body();
+                    Log.d("FineDust", "response= " + response.raw().request().url().url());
+
+                    dustTotalCnt = data.getResponse().getBody().getTotalCount();
+                    for (int i = 0; i < dustTotalCnt; i++) {
+                        if (data.getResponse().getBody().getItems().get(i).getInformCode().equals("PM10") &&
+                                selectDateDash.equals(data.getResponse().getBody().getItems().get(i).getInformData())) {
+                            listDust = data.getResponse().getBody().getItems().get(i).getInformGrade();
+                            Log.d("dustDateTime", data.getResponse().getBody().getItems().get(i).getDataTime());
+                            Log.d("dustInformData", data.getResponse().getBody().getItems().get(i).getInformData());
+                            dustNoInfo = 1;
+                        }
+                    }
+
+                }
+
+                arrayComma = listDust.split(",");
+
+                for (String s : arrayComma) {
+                    Log.d("test", s);
+                }
+
+                for (int i = 0; i < 19; i++) {
+                    index = arrayComma[i].indexOf(":");
+                    state = arrayComma[i].substring(index + 2);
+                    dustStateArray[i] = state;
+                }
+
+                if (cityName.equals("서울")) {
+                    fineDustText = dustStateArray[0];
+                    Log.d("dust", "0");
+                } else if (cityName.equals("제주")) {
+                    fineDustText = dustStateArray[1];
+                    Log.d("dust", "1");
+                } else if (cityName.equals("전남")) {
+                    fineDustText = dustStateArray[2];
+                    Log.d("dust", "2");
+                } else if (cityName.equals("광주·전북")) {
+                    //광주
+                    if (provName.equals("광산구") || provName.equals("남구") || provName.equals("동구") || provName.equals("북구") || provName.equals("서구")) {
+                        fineDustText = dustStateArray[4];
+                        Log.d("dust", "4");
+                    }
+                    //전북
+                    else {
+                        fineDustText = dustStateArray[3];
+                        Log.d("dust", "3");
+                    }
+                } else if (cityName.equals("경남")) {
+                    fineDustText = dustStateArray[5];
+                    Log.d("dust", "5");
+                } else if (cityName.equals("대구·경북")) {
+                    //대구
+                    if (provName.equals("중구") || provName.equals("동구") || provName.equals("서구") || provName.equals("남구") || provName.equals("북구") || provName.equals("수성구") || provName.equals("달서구") || provName.equals("달성군")) {
+                        fineDustText = dustStateArray[8];
+                        Log.d("dust", "8");
+                    }
+                    //경북
+                    else {
+                        fineDustText = dustStateArray[6];
+                        Log.d("dust", "6");
+                    }
+                } else if (cityName.equals("부산·울산")) {
+                    //울산
+                    if (provName.equals("남구") || provName.equals("동구") || provName.equals("북구") || provName.equals("울주군") || provName.equals("중구")) {
+                        fineDustText = dustStateArray[7];
+                        Log.d("dust", "7");
+                    }
+                    //부산
+                    else {
+                        fineDustText = dustStateArray[9];
+                        Log.d("dust", "9");
+                    }
+                } else if (cityName.equals("충북")) {
+                    fineDustText = dustStateArray[11];
+                    Log.d("dust", "11");
+                } else if (cityName.equals("충남·대전·세종")) {
+                    //대전
+                    if (provName.equals("대덕구") || provName.equals("동구") || provName.equals("서구") || provName.equals("유성구") || provName.equals("중구")) {
+                        fineDustText = dustStateArray[13];
+                        Log.d("dust", "13");
+                    }
+                    //세종
+                    else if (provName.equals("세종")) {
+                        fineDustText = dustStateArray[12];
+                        Log.d("dust", "12");
+                    }
+                    //충남
+                    else {
+                        fineDustText = dustStateArray[10];
+                        Log.d("dust", "10");
+                    }
+                } else if (cityName.equals("인천")) {
+                    fineDustText = dustStateArray[18];
+                    Log.d("dust", "18");
+                } else if (cityName.equals("경기")) {
+                    //경기 북부
+                    if (provName.equals("가평군") || provName.equals("고양시") || provName.equals("구리시") || provName.equals("남양주시") || provName.equals("동두천시")
+                            || provName.equals("양주시") || provName.equals("연천군") || provName.equals("의정부시") || provName.equals("파주시") || provName.equals("포천시")) {
+                        fineDustText = dustStateArray[17];
+                        Log.d("dust", "17");
+                    }
+                    //경기 남부
+                    else {
+                        fineDustText = dustStateArray[16];
+                        Log.d("dust", "16");
+                    }
+                } else if (cityName.equals("강원")) {
+                    //영동
+                    if (provName.equals("강릉시") || provName.equals("고성군") || provName.equals("동해시") || provName.equals("삼척시") || provName.equals("속초시")
+                            || provName.equals("양양군") || provName.equals("태백시")) {
+                        fineDustText = dustStateArray[14];
+                        Log.d("dust", "14");
+                    }
+                    //영서
+                    else {
+                        fineDustText = dustStateArray[15];
+                        Log.d("dust", "15");
+                    }
+                } else {
+                    Log.d("dustError", "else로 빠짐");
+                }
+
+                fineDustTv.setText(fineDustText);
+
+                if (dustNoInfo == 0) {
+                    fineDustTv.setText("정보없음");
+                    Log.d("dustNoInfo", "정보없음");
+                }
+                dustNoInfo = 0;
             }
 
-        }
+            @Override
+            public void onFailure(Call<WtFineDustModel> call, Throwable t) {
+                t.printStackTrace();
+                Log.v("FineDust", "responseError= " + call.request().url());
+            }
+        });
+    }
 
-        @Override
-        public void onFailure(Call<WtAppearTimeModel> call, Throwable t) {
-            t.printStackTrace();
-            Log.v("AppearTime", "responseError= " + call.request().url());
-        }
-    };
+//    public void setDustData() {
+//        arrayComma = listDust.split(",");
+//
+//        for (String s : arrayComma) {
+//            Log.d("test", s);
+//        }
+//
+//        for (int i = 0; i < 19; i++) {
+//            index = arrayComma[i].indexOf(":");
+//            state = arrayComma[i].substring(index + 2);
+//            dustStateArray[i] = state;
+//        }
+//
+//        if (cityName.equals("서울")) {
+//            findDustTv.setText(dustStateArray[0]);
+//            Log.d("dust", "0");
+//        } else if (cityName.equals("제주")) {
+//            findDustTv.setText(dustStateArray[1]);
+//            Log.d("dust", "1");
+//        } else if (cityName.equals("전남")) {
+//            findDustTv.setText(dustStateArray[2]);
+//            Log.d("dust", "2");
+//        } else if (cityName.equals("광주·전북")) {
+//            //광주
+//            if (provName.equals("광산구") || provName.equals("남구") || provName.equals("동구") || provName.equals("북구") || provName.equals("서구")) {
+//                findDustTv.setText(dustStateArray[4]);
+//                Log.d("dust", "4");
+//            }
+//            //전북
+//            else {
+//                findDustTv.setText(dustStateArray[3]);
+//                Log.d("dust", "3");
+//            }
+//        } else if (cityName.equals("경남")) {
+//            findDustTv.setText(dustStateArray[5]);
+//            Log.d("dust", "5");
+//        } else if (cityName.equals("대구·경북")) {
+//            //대구
+//            if (provName.equals("중구") || provName.equals("동구") || provName.equals("서구") || provName.equals("남구") || provName.equals("북구") || provName.equals("수성구") || provName.equals("달서구") || provName.equals("달성군")) {
+//                findDustTv.setText(dustStateArray[8]);
+//                Log.d("dust", "8");
+//            }
+//            //경북
+//            else {
+//                findDustTv.setText(dustStateArray[6]);
+//                Log.d("dust", "6");
+//            }
+//        } else if (cityName.equals("부산·울산")) {
+//            //울산
+//            if (provName.equals("남구") || provName.equals("동구") || provName.equals("북구") || provName.equals("울주군") || provName.equals("중구")) {
+//                findDustTv.setText(dustStateArray[7]);
+//                Log.d("dust", "7");
+//            }
+//            //부산
+//            else {
+//                findDustTv.setText(dustStateArray[9]);
+//                Log.d("dust", "9");
+//            }
+//        } else if (cityName.equals("충북")) {
+//            findDustTv.setText(dustStateArray[11]);
+//            Log.d("dust", "11");
+//        } else if (cityName.equals("충남·대전·세종")) {
+//            //대전
+//            if (provName.equals("대덕구") || provName.equals("동구") || provName.equals("서구") || provName.equals("유성구") || provName.equals("중구")) {
+//                findDustTv.setText(dustStateArray[13]);
+//                Log.d("dust", "13");
+//            }
+//            //세종
+//            else if (provName.equals("세종")) {
+//                findDustTv.setText(dustStateArray[12]);
+//                Log.d("dust", "12");
+//            }
+//            //충남
+//            else {
+//                findDustTv.setText(dustStateArray[10]);
+//                Log.d("dust", "10");
+//            }
+//        } else if (cityName.equals("인천")) {
+//            findDustTv.setText(dustStateArray[18]);
+//            Log.d("dust", "18");
+//        } else if (cityName.equals("경기")) {
+//            //경기 북부
+//            if (provName.equals("가평군") || provName.equals("고양시") || provName.equals("구리시") || provName.equals("남양주시") || provName.equals("동두천시")
+//                    || provName.equals("양주시") || provName.equals("연천군") || provName.equals("의정부시") || provName.equals("파주시") || provName.equals("포천시")) {
+//                findDustTv.setText(dustStateArray[17]);
+//                Log.d("dust", "17");
+//            }
+//            //경기 남부
+//            else {
+//                findDustTv.setText(dustStateArray[16]);
+//                Log.d("dust", "16");
+//            }
+//        } else if (cityName.equals("강원")) {
+//            //영동
+//            if (provName.equals("강릉시") || provName.equals("고성군") || provName.equals("동해시") || provName.equals("삼척시") || provName.equals("속초시")
+//                    || provName.equals("양양군") || provName.equals("태백시")) {
+//                findDustTv.setText(dustStateArray[14]);
+//                Log.d("dust", "14");
+//            }
+//            //영서
+//            else {
+//                findDustTv.setText(dustStateArray[15]);
+//                Log.d("dust", "15");
+//            }
+//        } else {
+//            Log.d("dustError", "else로 빠짐");
+//        }
+//    }
 
     //관측적합도
     public double setObservationalFitDegree() {
@@ -884,6 +1232,7 @@ public class WeatherActivity extends AppCompatActivity {
         latitude = 37.5006;
         longitude = 127.0508;
 
+
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -903,6 +1252,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -915,7 +1265,7 @@ public class WeatherActivity extends AppCompatActivity {
                     cityName = choice_do;
 
                     choice_se = "가평군";
-                    cityName = choice_se;
+                    provName = choice_se;
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gyeonggi, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -927,6 +1277,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -951,6 +1302,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -975,6 +1327,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1002,6 +1355,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1026,6 +1380,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1050,6 +1405,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1074,6 +1430,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1098,6 +1455,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1122,6 +1480,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1146,6 +1505,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1170,6 +1530,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
+                            connectFineDustApi();
                         }
 
                         @Override
@@ -1188,6 +1549,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
 
         connectWtArea();
+        //connectFineDustApi();
     }
 
     public void connectWtArea() {
@@ -1207,11 +1569,11 @@ public class WeatherActivity extends AppCompatActivity {
                     minLightPol = result.getMinLightPol();
                     maxLightPol = result.getMaxLightPol();
 
-                    minLightPolVal = minLightPol.toString();
-                    maxLightPolVal = maxLightPol.toString();
+                    minLightPolText = minLightPol.toString();
+                    maxLightPolText = maxLightPol.toString();
 
-                    minLightPolTv.setText(minLightPolVal);
-                    maxLightPolTv.setText(maxLightPolVal);
+                    minLightPolTv.setText(minLightPolText);
+                    maxLightPolTv.setText(maxLightPolText);
 
                     connectMetApi();
                     Log.d("latitude", String.valueOf(latitude));
@@ -1250,5 +1612,33 @@ public class WeatherActivity extends AppCompatActivity {
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(hourChange.length - num);
         numberPicker.setDisplayedValues(hourChange);
+    }
+
+    public void setTempVisibility(int state) {
+        if (state == 0) {
+            tempTv.setVisibility(View.VISIBLE);
+            maxTempTv.setVisibility(View.GONE);
+            minTempTv.setVisibility(View.GONE);
+            tempSlashTv.setVisibility(View.GONE);
+        } else {
+            tempTv.setVisibility(View.GONE);
+            maxTempTv.setVisibility(View.VISIBLE);
+            minTempTv.setVisibility(View.VISIBLE);
+            tempSlashTv.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setLightPolVisibility(int state) {
+        if (state == 0) {
+            lightPolTv.setVisibility(View.VISIBLE);
+            maxLightPolTv.setVisibility(View.GONE);
+            minLightPolTv.setVisibility(View.GONE);
+            lightSlashTv.setVisibility(View.GONE);
+        } else {
+            lightPolTv.setVisibility(View.GONE);
+            maxLightPolTv.setVisibility(View.VISIBLE);
+            minLightPolTv.setVisibility(View.VISIBLE);
+            lightSlashTv.setVisibility(View.VISIBLE);
+        }
     }
 }

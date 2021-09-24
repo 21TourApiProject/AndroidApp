@@ -1,10 +1,7 @@
 package com.starrynight.tourapiproject.observationPage;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
@@ -16,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,9 +23,6 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -44,11 +39,9 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Ob
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postPage.PostActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
-import com.starrynight.tourapiproject.postPage.postRetrofit.PostPageRetrofitService;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -86,6 +79,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private LinearLayout course_circle_indicator;
     private LinearLayout course_txt_indicator;
     private List<CourseTouristPoint> touristPointList;
+    private FrameLayout relateImageFrame;
 
     private RecyclerFeeAdapter recyclerFeeAdapter;
     private List<ObserveFee> obs_fee_list;
@@ -100,10 +94,12 @@ public class ObservationsiteActivity extends AppCompatActivity {
         relateImage1=findViewById(R.id.relateImage);
         relateImage2=findViewById(R.id.relateImage2);
         relateImage3=findViewById(R.id.relateImage3);
+        relateImageFrame = findViewById(R.id.relateImageFrame);
 
         Intent intent = getIntent();
         Long observationId = 1L;
 
+//        test
 //                (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
         postId = (Long) intent.getSerializableExtra("postId");
 
@@ -387,24 +383,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
         });
 
-//        RecyclerView recyclerView = findViewById(R.id.obv_recyclerview);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
-//        recyclerView.setAdapter(adapter);
-//
-//        adapter.addItem(new post_point_item("게시글1", "https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
-//        adapter.addItem(new post_point_item("게시글2", "https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
-//        adapter.addItem(new post_point_item("게시글3", "https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
-//
-//        adapter.setOnItemClicklistener(new OnPostPointItemClickListener() {
-//            @Override
-//            public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
-//                Intent intent = new Intent(getApplicationContext(), PostActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         //찜버튼 설정
         Button save_btn = findViewById(R.id.obs_save_btn);
 
@@ -515,6 +493,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     for (int i=0;i<relateImageList.size();i++){
                         relatefilename[i]=relateImageList.get(i).getImageName();
                         System.out.println(relatefilename[i]);
+                        if (relateImageList.size()>4){break;}
                     }
                     if (relatefilename[0]!=null){
                         Glide.with(getApplicationContext())
@@ -528,7 +507,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                 .into(relateImage2);
                     }
                     if (relatefilename[2]!=null){
-                        relateImage3.setVisibility(View.VISIBLE);
+                        relateImageFrame.setVisibility(View.VISIBLE);
                         Glide.with(getApplicationContext())
                                 .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[2])
                                 .into(relateImage3);
@@ -552,9 +531,9 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     relateImage3.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent3 = new Intent(getApplicationContext(), PostActivity.class);
-                            intent3.putExtra("postId",relateImageList.get(2).getPostId());
-                            startActivity(intent3);
+                            Intent intent2 = new Intent(getApplicationContext(), MoreObservationActivity.class);
+                            intent2.putExtra("observationId",observationId);
+                            startActivity(intent2);
                         }
                     });
                 }else{Log.d("relatePostImage","관련 게시물 이미지 업로드 실패");}
