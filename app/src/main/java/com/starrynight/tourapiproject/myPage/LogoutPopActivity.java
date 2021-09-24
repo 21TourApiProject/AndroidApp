@@ -2,16 +2,25 @@ package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LogoutPopActivity extends AppCompatActivity {
 
+    private static final String TAG = "Logout";
     Long userId;
 
     @Override
@@ -26,9 +35,43 @@ public class LogoutPopActivity extends AppCompatActivity {
 
     //로그아웃
     public void logout(View v){
-        Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+
+        Call<Boolean> call = RetrofitClient.getApiService().checkIsKakao(userId);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+
+                Log.d(TAG, "카카오 가입자인지 확인");
+                Boolean isKakao = response.body();
+                if (isKakao != null) {
+                    if (isKakao==null||isKakao) {
+                        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onCompleteLogout() {
+                                //로그아웃 성공 시 동작
+                                Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                } else {
+                    Log.e(TAG, "사용자 타입설정 안됨");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e(TAG, "연결실패");
+            }
+        });
+
+
     }
 
     //팝업 닫기

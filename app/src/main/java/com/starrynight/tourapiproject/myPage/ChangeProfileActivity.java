@@ -55,6 +55,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     ImageView profileImage;
     EditText changeNickname;
     TextView changeNicknameGuide;
+    TextView length; // 글자수
 
     private Boolean isNickNameEmpty = false; //닉네임이 비어있는지
     private Boolean isNotNickName = false; //올바른 닉네임 형식이 아닌지
@@ -74,6 +75,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.profileImage3);
         changeNickname = findViewById(R.id.changeNickname);
         changeNicknameGuide = findViewById(R.id.changeNicknameGuide);
+        length = findViewById(R.id.length);
 
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
         call.enqueue(new Callback<User2>() {
@@ -84,7 +86,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     if (user.getProfileImage() != null){
                         String fileName = user.getProfileImage();
                         fileName = fileName.substring(1,fileName.length()-1);
-                        Glide.with(ChangeProfileActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
+                        Glide.with(ChangeProfileActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
                     }
                     changeNickname.setText(user.getNickName());
                     beforeNickName = user.getNickName();
@@ -114,6 +116,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // 입력란에 변화가 있을 때
                 showNickNameGuide(s);
+                String input = changeNickname.getText().toString();
+                length.setText(input.length() + " / 15"); //실시간 글자수
             }
 
             @Override
@@ -186,7 +190,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
 
         //뒤로 가기
-        ImageView back = findViewById(R.id.back);
+        Button back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -278,7 +282,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
             isNickNameEmpty = true;
             changeNicknameGuide.setText("닉네임을 입력해주세요.");
         } else if (!isCorrectNickName(text)) {
-            changeNicknameGuide.setText("사용할 수 없는 닉네임입니다. (한글/영문/숫자 조합 15자 이내)");
+            changeNicknameGuide.setText(getString(R.string.changeprofile_error));
             isNickNameEmpty = false;
             isNotNickName = true;
         } else if (!text.equals(user.getNickName())){
