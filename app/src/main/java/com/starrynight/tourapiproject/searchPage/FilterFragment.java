@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.SearchFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,7 +100,7 @@ public class FilterFragment extends Fragment {
                 else
                     keyword = null;
                 bundle.putString("keyword", keyword);
-                System.out.println("필터에서 키워드"+keyword);
+                System.out.println("필터에서 키워드" + keyword);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment searchResultFragment = new SearchResultFragment();
