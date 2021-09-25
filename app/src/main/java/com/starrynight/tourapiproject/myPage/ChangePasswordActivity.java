@@ -24,6 +24,8 @@ import retrofit2.Response;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    private static final String TAG = "ChangePassword";
+
     Long userId;
     EditText originPwd;
     EditText newPwd;
@@ -126,7 +128,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                System.out.println("중복 체크 실패");
+                                Log.d(TAG, "중복 체크 실패");
                             }
                         }
                         @Override

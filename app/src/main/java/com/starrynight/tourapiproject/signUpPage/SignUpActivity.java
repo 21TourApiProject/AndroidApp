@@ -44,7 +44,7 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private static final String LOG = "SignUpActivity";
+    private static final String TAG0 = "SignUpActivity";
     private static final String TAG2 = "KakaoLoginApi";
     private SessionCallback sessionCallback = new SessionCallback();
     KakaoUserParams kakaoUserParams;
@@ -69,11 +69,12 @@ public class SignUpActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Long result = response.body();
                             if (result != -1L) {
-                                Log.d(LOG, "로그인 성공");
+                                Log.d(TAG0, "로그인 성공");
+
                                 //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
                                 String fileName = "userId";
                                 String userId = result.toString();
-                                Log.d(LOG, "userId " + userId);
+                                Log.d(TAG0, "userId " + userId);
                                 try {
                                     FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
                                     fos.write(userId.getBytes());
@@ -84,14 +85,16 @@ public class SignUpActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
 
+                                //메인 페이지로 이동
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
+
                             } else {
                                 Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Log.e(LOG, "로그인 실패");
+                            Log.e(TAG0, "로그인 실패");
                         }
                     }
 
