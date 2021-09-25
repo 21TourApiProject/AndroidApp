@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.LocationInfoActivity;
 
 public class SettingActivity extends AppCompatActivity {
     Long userId;
@@ -97,6 +98,16 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingActivity.this, ManagementPolicyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //위치기반서비스 이용약관
+        LinearLayout location = findViewById(R.id.location);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, LocationInfoActivity.class);
                 startActivity(intent);
             }
         });
