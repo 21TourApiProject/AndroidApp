@@ -57,6 +57,7 @@ public class SearchResultFragment extends Fragment {
     Button obBtn;
     Button tpBtn;
     Button postBtn;
+    Button allContentBtn;
     SearchView searchView;
 
     LinearLayout selectFilterItem; //선택한 필터들이 보이는 레이아웃
@@ -88,6 +89,7 @@ public class SearchResultFragment extends Fragment {
         obBtn = v.findViewById(R.id.obBtn);
         tpBtn = v.findViewById(R.id.tpBtn);
         postBtn = v.findViewById(R.id.postBtn);
+        allContentBtn= v.findViewById(R.id.allContentBtn);
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
 
@@ -139,6 +141,15 @@ public class SearchResultFragment extends Fragment {
             }
         }
 
+        allContentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                obText.setVisibility(View.GONE);
+                tpText.setVisibility(View.GONE);
+                postText.setVisibility(View.GONE);
+            }
+        });
+
         if (keyword == null) {
             searchView.setQueryHint("검색어를 입력하세요");
         } else {
@@ -149,7 +160,8 @@ public class SearchResultFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 keyword = query;
-                //여기에 진혁이가 전체 결과 새로 띄우는거 연결해줘야 함
+                //여기에 진혁이가 전체 결과 새로 띄우는거 연결해줘야 함 네...?
+
                 return true;
             }
 
@@ -273,12 +285,13 @@ public class SearchResultFragment extends Fragment {
                     }
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
-
-                Call<List<MyPost>>call = RetrofitClient.getApiService().getPostWithFilter(filter);
+                SearchKey searchKey = new SearchKey(filter, keyword);
+                Call<List<MyPost>>call = RetrofitClient.getApiService().getPostWithFilter(searchKey);
                 call.enqueue(new Callback<List<MyPost>>() {
                     @Override
                     public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                         if (response.isSuccessful()){
+                            Log.d("searchPost","검색 게시물 업로드 성공");
                             postResult=response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
                             searchResult.setAdapter(postAdapter);
