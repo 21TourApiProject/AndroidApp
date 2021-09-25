@@ -10,7 +10,7 @@
         android:id="@+id/myWishPostImage"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:background="@drawable/mypost_image"
+        android:background="@drawable/myitem_image"
         android:scaleType="centerCrop" />
 
     <LinearLayout

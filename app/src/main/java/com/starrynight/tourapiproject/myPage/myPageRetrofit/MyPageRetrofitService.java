@@ -5,6 +5,7 @@ import com.starrynight.tourapiproject.myPage.myPost.MyPost3;
 import com.starrynight.tourapiproject.myPage.myWish.MyWish;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
+import com.starrynight.tourapiproject.myPage.notice.Notice;
 
 import java.util.List;
 
@@ -38,6 +39,9 @@ public interface MyPageRetrofitService {
 
     @GET("user/{userId}/myHashTag")
     Call<List<String>> getMyHashTag(@Path("userId") Long userId);
+
+    @GET("user/{userId}/myHashTag/three")
+    Call<List<String>> getMyHashTag3(@Path("userId") Long userId);
 
     @GET("myWish/{userId}/{itemId}/{wishType}")
     Call<Boolean> isThereMyWish(@Path("userId") Long userId, @Path("itemId") Long itemId, @Path("wishType") Integer wishType);
@@ -77,4 +81,7 @@ public interface MyPageRetrofitService {
 
     @GET("user/{userId}/isKakao")
     Call<Boolean> checkIsKakao(@Path("userId") Long userId);
+
+    @GET("notice/all")
+    Call <List<Notice>> getAllNotice();
 }

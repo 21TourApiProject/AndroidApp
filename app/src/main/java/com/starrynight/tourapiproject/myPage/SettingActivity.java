@@ -1,13 +1,15 @@
 package com.starrynight.tourapiproject.myPage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.signUpPage.LocationInfoActivity;
 
 public class SettingActivity extends AppCompatActivity {
     Long userId;
@@ -20,8 +22,17 @@ public class SettingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
 
+        //뒤로 가기
+        Button settingBack = findViewById(R.id.settingBack);
+        settingBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //내 정보
-        TextView myData = findViewById(R.id.myData);
+        LinearLayout myData = findViewById(R.id.myData);
         myData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,7 +43,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         //공지사항
-        TextView notice = findViewById(R.id.notice);
+        LinearLayout notice = findViewById(R.id.notice);
         notice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +53,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         //이용 가이드
-        TextView usageGuide = findViewById(R.id.usageGuide);
+        LinearLayout usageGuide = findViewById(R.id.usageGuide);
         usageGuide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +63,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         //고객센터
-        TextView customerSC = findViewById(R.id.customerSC);
+        LinearLayout customerSC = findViewById(R.id.customerSC);
         customerSC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +73,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         //이용약관
-        TextView termsAndConditions = findViewById(R.id.termsAndConditions);
+        LinearLayout termsAndConditions = findViewById(R.id.termsAndConditions);
         termsAndConditions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +83,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         //개인정보 처리방침
-        TextView personalData = findViewById(R.id.personalData);
+        LinearLayout personalData = findViewById(R.id.personalData);
         personalData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +92,28 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+        //운영정책
+        LinearLayout managementPolicy = findViewById(R.id.managementPolicy);
+        managementPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, ManagementPolicyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //위치기반서비스 이용약관
+        LinearLayout location = findViewById(R.id.location);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, LocationInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         //로그아웃
-        TextView logout = findViewById(R.id.logout);
+        LinearLayout logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +125,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         //탈퇴하기
-        TextView leave = findViewById(R.id.leave);
+        LinearLayout leave = findViewById(R.id.leave);
         leave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

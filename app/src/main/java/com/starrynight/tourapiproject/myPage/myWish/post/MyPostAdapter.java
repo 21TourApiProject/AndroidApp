@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -102,6 +100,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         public void setItem(MyPost item) {
             if (item.getThumbnail() != null){
                 Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + item.getThumbnail()).into(myWishPostImage);
+                myWishPostImage.setClipToOutline(true);
             }
             if (item.getProfileImage() != null){
                 Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + item.getProfileImage()).into(myWishPostProfileImage);

@@ -1,15 +1,19 @@
 package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
@@ -18,13 +22,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.graphics.BitmapFactory.decodeFile;
-
 public class MyDataActivity extends AppCompatActivity {
 
-    private static final int CHANGE_PROFILE = 101;
+    private static final String TAG = "MyData";
+    private static final int CHANGE_PROFILE = 11;
     Long userId;
     User user;
+    ImageView profileImage2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,20 @@ public class MyDataActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
 
+        profileImage2 = findViewById(R.id.profileImage2);
+        profileImage2.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImage2.setClipToOutline(true);
+
+        //뒤로 가기
+        Button myDataBack = findViewById(R.id.myDataBack);
+        myDataBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //사용자 정보 불러오기
         Call<User> call = RetrofitClient.getApiService().getUser(userId);
         call.enqueue(new Callback<User>() {
             @Override
@@ -41,9 +59,15 @@ public class MyDataActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body();
 
-                    ImageView profileImage2 = findViewById(R.id.profileImage2);
-                    if (user.getProfileImage() != null){
-                        profileImage2.setImageBitmap(decodeFile(user.getProfileImage()));
+                    if (user.getProfileImage() != null) {
+                        if(user.getProfileImage().startsWith("http://")){
+                            Glide.with(getApplicationContext()).load(user.getProfileImage()).circleCrop().into(profileImage2);
+                        }
+                        else{
+                            String fileName = user.getProfileImage();
+                            fileName = fileName.substring(1, fileName.length() - 1);
+                            Glide.with(getApplicationContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage2);
+                        }
                     }
 
                     TextView nickName2 = findViewById(R.id.nickName2);
@@ -67,7 +91,7 @@ public class MyDataActivity extends AppCompatActivity {
                     } else{sex.setText("여성");}
 
                 } else {
-                    System.out.println("사용자 정보 불러오기 실패");
+                    Log.e(TAG, "사용자 정보 불러오기 실패");
                 }
             }
             @Override
@@ -93,6 +117,7 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
+                intent.putExtra("userId", userId);
                 startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
@@ -103,6 +128,7 @@ public class MyDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
+                intent.putExtra("userId", userId);
                 startActivityForResult(intent, CHANGE_PROFILE);
             }
         });

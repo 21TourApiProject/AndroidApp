@@ -8,97 +8,140 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="28dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="이메일 찾기"
-                android:textSize="34sp" />
+                android:layout_height="49dp"
+                android:layout_marginTop="22dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="이름" />
+                <Button
+                    android:id="@+id/findEmailBack"
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:layout_marginLeft="29dp"
+                    android:layout_marginRight="21dp"
+                    android:background="@drawable/mypost_back" />
 
-            <EditText
-                android:id="@+id/findEmailRealName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="이름을 입력해주세요"
-                android:inputType="textPersonName" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="휴대폰 번호" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="이메일 찾기"
+                    android:textSize="17sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="56dp"
+                android:layout_marginRight="42dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="이름"
+                    android:textSize="12sp" />
 
                 <EditText
-                    android:id="@+id/findEmailMobilePhoneNumber"
-                    android:layout_width="match_parent"
+                    android:id="@+id/findEmailRealName"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="예시) 01077778888"
-                    android:inputType="phone" />
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/findemail_write"
+                    android:hint="이름을 입력해주세요"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="10dp"
+                    android:textSize="12sp" />
 
-                <Button
-                    android:id="@+id/startAuth2"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="인증 요청" />
+                    android:layout_marginTop="32dp"
+                    android:text="휴대폰 번호"
+                    android:textSize="12sp" />
 
-                <Button
-                    android:id="@+id/resendAuth2"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/findEmailMobilePhoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/findemail_write2"
+                        android:hint="예시) 01077778888"
+                        android:inputType="phone"
+                        android:paddingLeft="10dp"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/startAuth2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/findemail_requestauth" />
+
+                    <Button
+                        android:id="@+id/resendAuth2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/findemail_requestauth2"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:visibility="gone"
-                    android:text="인증 재요청" />
+                    android:layout_marginTop="32dp"
+                    android:text="인증 번호"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/authCode2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/findemail_write2"
+                    android:hint="숫자 6자리"
+                    android:inputType="number"
+                    android:paddingLeft="10dp"
+                    android:textSize="12sp" />
+
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="인증 번호" />
-
-            <EditText
-                android:id="@+id/authCode2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="숫자 6자리"
-                android:inputType="number" />
-
-            <Button
-                android:id="@+id/verify2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="인증 완료" />
 
             <TextView
                 android:id="@+id/showEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:textSize="20sp" />
+                android:layout_marginTop="60dp"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/verify2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/signup_complete" />
 
 
         </LinearLayout>
