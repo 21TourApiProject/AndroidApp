@@ -14,6 +14,8 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 
+import java.io.File;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,12 +51,18 @@ public class LogoutPopActivity extends AppCompatActivity {
                             @Override
                             public void onCompleteLogout() {
                                 //로그아웃 성공 시 동작
+                                File dir = getFilesDir();
+                                File file = new File(dir, "userId");
+                                boolean deleted = file.delete();
                                 Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             }
                         });
                     } else {
+                        File dir = getFilesDir();
+                        File file = new File(dir, "userId");
+                        boolean deleted = file.delete();
                         Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
