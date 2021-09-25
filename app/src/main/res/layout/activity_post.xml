@@ -80,10 +80,10 @@
 
                 <Button
                     android:id="@+id/delete_btn"
-                    android:layout_width="6dp"
-                    android:layout_height="18dp"
+                    android:layout_width="35dp"
+                    android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/post__setting"
+                    android:background="@drawable/post__delete"
                     android:visibility="gone" />
 
             </LinearLayout>
