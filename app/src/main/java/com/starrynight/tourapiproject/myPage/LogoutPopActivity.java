@@ -57,8 +57,6 @@ public class LogoutPopActivity extends AppCompatActivity {
                                 File dir = getFilesDir();
                                 File file = new File(dir, "userId");
                                 boolean deleted = file.delete();
-                                Log.d(TAG, "앱 내부 저장소의 userId 삭제" + deleted);
-
                                 Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
@@ -68,8 +66,6 @@ public class LogoutPopActivity extends AppCompatActivity {
                         File dir = getFilesDir();
                         File file = new File(dir, "userId");
                         boolean deleted = file.delete();
-                        Log.d(TAG, "앱 내부 저장소의 userId 삭제" + deleted);
-
                         Intent intent = new Intent(LogoutPopActivity.this, SignUpActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
@@ -85,6 +81,8 @@ public class LogoutPopActivity extends AppCompatActivity {
                 Log.e(TAG, "연결실패");
             }
         });
+
+
     }
 
     //팝업 닫기

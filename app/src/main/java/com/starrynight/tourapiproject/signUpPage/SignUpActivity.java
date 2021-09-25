@@ -355,6 +355,9 @@ public class SignUpActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 } else if (!result) {
                                     Log.d(TAG2, "회원가입 미진행, 이미가입된 이메일");
+                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             } else {
                                 Log.e(TAG2, "이메일 중복 체크 실패");

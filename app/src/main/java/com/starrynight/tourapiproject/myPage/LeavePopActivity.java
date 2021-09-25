@@ -98,8 +98,6 @@ public class LeavePopActivity extends AppCompatActivity {
                                             File dir = getFilesDir();
                                             File file = new File(dir, "userId");
                                             boolean deleted = file.delete();
-                                            Log.d(TAG, "앱 내부 저장소의 userId 삭제" + deleted);
-
                                             Toast.makeText(getApplicationContext(), "회원탈퇴에 성공했습니다.", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(LeavePopActivity.this, SignUpActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -122,6 +120,7 @@ public class LeavePopActivity extends AppCompatActivity {
                     } else {
                         //일반회원가입인 경우
                         //delete api 호출
+
                         Call<Void> call2 = RetrofitClient.getApiService().deleteUser(userId);
                         call2.enqueue(new Callback<Void>() {
                             @Override
@@ -130,8 +129,6 @@ public class LeavePopActivity extends AppCompatActivity {
                                     File dir = getFilesDir();
                                     File file = new File(dir, "userId");
                                     boolean deleted = file.delete();
-                                    Log.d(TAG, "앱 내부 저장소의 userId 삭제" + deleted);
-
                                     Intent intent = new Intent(LeavePopActivity.this, SignUpActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
@@ -146,6 +143,7 @@ public class LeavePopActivity extends AppCompatActivity {
                         });
                     }
                 }
+
 
             }
 
