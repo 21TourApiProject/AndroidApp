@@ -18,6 +18,8 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 
+import java.io.File;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,6 +93,9 @@ public class LeavePopActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<Void> call, Response<Void> response) {
                                         if (response.isSuccessful()) {
+                                            File dir = getFilesDir();
+                                            File file = new File(dir, "userId");
+                                            boolean deleted = file.delete();
                                             Toast.makeText(getApplicationContext(), "회원탈퇴에 성공했습니다.", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(LeavePopActivity.this, SignUpActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -119,6 +124,9 @@ public class LeavePopActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {
+                                    File dir = getFilesDir();
+                                    File file = new File(dir, "userId");
+                                    boolean deleted = file.delete();
                                     Intent intent = new Intent(LeavePopActivity.this, SignUpActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
