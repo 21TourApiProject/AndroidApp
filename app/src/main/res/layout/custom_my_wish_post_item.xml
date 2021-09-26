@@ -36,8 +36,8 @@
                 android:id="@+id/myWishPostProfileImage"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/main__empty_profile"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@color/gray" />
 
             <TextView
                 android:id="@+id/myWishPostWriter"

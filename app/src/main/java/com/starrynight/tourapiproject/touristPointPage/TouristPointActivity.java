@@ -59,6 +59,7 @@ public class TouristPointActivity extends AppCompatActivity {
     BalloonObject balloonObject= new BalloonObject();
 
     private static final int NEAR = 101;
+    private static final String TAG = "TouristPoint";
 
     private ViewPager2 slider;
     private String[] image = new String[1];
@@ -100,7 +101,7 @@ public class TouristPointActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         todayDate = sdf.format(cal.getTime());
-        System.out.println(todayDate);
+        Log.d(TAG, "오늘날짜 : "+ todayDate);
 
         //혼잡도 구하기
         CongestionThread thread = new CongestionThread();
@@ -155,7 +156,7 @@ public class TouristPointActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         //이미 찜한건지 확인
         Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, contentId, 1);
@@ -170,7 +171,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         isWish = false;
                     }
                 } else {
-                    System.out.println("내 찜 조회하기 실패");
+                    Log.e(TAG, "내 찜 조회하기 실패");
                 }
             }
             @Override
@@ -194,7 +195,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                 tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 실패");
+                                Log.e(TAG, "관광지 찜 실패");
                             }
                         }
                         @Override
@@ -212,7 +213,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                 tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 삭제 실패");
+                                Log.e(TAG, "관광지 찜 삭제 실패");
                             }
                         }
                         @Override
@@ -243,7 +244,7 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Long result = response.body();
                     if (result == 12L){
-                        System.out.println("타입 : 관광지");
+                        Log.d(TAG, "타입 : 관광지");
                         Call<TouristPoint> call1 = RetrofitClient.getApiService().getTouristPointData(contentId);
                         call1.enqueue(new Callback<TouristPoint>() {
                             @Override
@@ -256,7 +257,21 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setLongitude(tpData.getMapX());
                                     balloonObject.setLatitude(tpData.getMapY());
                                     balloonObject.setName(tpData.getTitle());
-                                    balloonObject.setAddress(tpData.getAddr());
+
+                                    //주소를 두단어까지 줄임
+                                    String address = tpData.getAddr();
+                                    int i = address.indexOf(' ');
+                                    if (i != -1){
+                                        int j = address.indexOf(' ', i+1);
+                                        if(j != -1){
+                                            balloonObject.setAddress(address.substring(0, j));
+                                        } else{
+                                            balloonObject.setAddress(address);
+                                        }
+                                    } else{
+                                        balloonObject.setAddress(address);
+                                    }
+
                                     balloonObject.setPoint_type(tpData.getCat3Name());
                                     balloonObject.setIntro(tpData.getOverviewSim());
 
@@ -289,22 +304,25 @@ public class TouristPointActivity extends AppCompatActivity {
                                             .enqueue(new Callback<SearchData>() {
                                                 @Override
                                                 public void onResponse(Call<SearchData> call, Response<SearchData> response) {
-                                                    Log.d("my tag","성공");
-                                                    Listdocument = response.body().Searchdocuments;
-                                                    SearchAdapter adapter1 = new SearchAdapter(Listdocument);
-                                                    daumRecyclerview.setAdapter(adapter1);
-                                                    adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
-                                                        @Override
-                                                        public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
-                                                            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
-                                                            startActivity(intent);
-                                                        }
-                                                    });
+                                                    if (response.isSuccessful()) {
+                                                        Log.d(TAG,"다음 검색 성공");
+                                                        Listdocument = response.body().Searchdocuments;
+                                                        SearchAdapter searchAdapter = new SearchAdapter(Listdocument);
+                                                        daumRecyclerview.setAdapter(searchAdapter);
+                                                        searchAdapter.setOnItemClickListener(new OnSearchItemClickListener() {
+                                                            @Override
+                                                            public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
+                                                                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
+                                                                startActivity(intent);
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Log.e(TAG, "다음 검색 실패");
+                                                    }
                                                 }
-
                                                 @Override
                                                 public void onFailure(Call<SearchData> call, Throwable t) {
-                                                    Log.e("my tag","에러");
+                                                    Log.e(TAG,"연결실패");
                                                 }
                                             });
 
@@ -381,7 +399,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     }
 
                                 } else {
-                                    System.out.println("관광지 타입 불러오기 실패");
+                                    Log.e(TAG, "관광지 타입 불러오기 실패");
                                 }
                             }
                             @Override
@@ -391,7 +409,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         });
                     }
                     else if(result == 39L){
-                        System.out.println("타입 : 음식");
+                        Log.d(TAG, "타입 : 음식");
                         Call<Food> call2 = RetrofitClient.getApiService().getFoodData(contentId);
                         call2.enqueue(new Callback<Food>() {
                             @Override
@@ -404,7 +422,21 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setLongitude(foodData.getMapX());
                                     balloonObject.setLatitude(foodData.getMapY());
                                     balloonObject.setName(foodData.getTitle());
-                                    balloonObject.setAddress(foodData.getAddr1());
+
+                                    //주소를 두단어까지 줄임
+                                    String address = foodData.getAddr1();
+                                    int i = address.indexOf(' ');
+                                    if (i != -1){
+                                        int j = address.indexOf(' ', i+1);
+                                        if(j != -1){
+                                            balloonObject.setAddress(address.substring(0, j));
+                                        } else{
+                                            balloonObject.setAddress(address);
+                                        }
+                                    } else{
+                                        balloonObject.setAddress(address);
+                                    }
+
                                     balloonObject.setPoint_type(foodData.getCat3Name());
                                     balloonObject.setIntro(foodData.getOverviewSim());
 
@@ -520,7 +552,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     }
 
                                 } else {
-                                    System.out.println("음식 타입 불러오기 실패");
+                                    Log.e(TAG, "음식 타입 불러오기 실패");
                                 }
                             }
                             @Override
@@ -530,7 +562,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         });
                     }
                 } else {
-                    System.out.println("관광지 정보 불러오기 실패");
+                    Log.e(TAG, "관광지 정보 불러오기 실패");
                 }
             }
             @Override
@@ -554,12 +586,11 @@ public class TouristPointActivity extends AppCompatActivity {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     hashTagResult = response.body();
-                    System.out.println("hashTagResult.size() = " + hashTagResult.size());
                     HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
                     hashTagRecyclerview.setAdapter(hashTagAdapter);
                     balloonObject.setHashtags(hashTagResult);
                 } else {
-                    System.out.println("관광지 해시태그 불러오기 실패");
+                    Log.e(TAG, "관광지 해시태그 불러오기 실패");
                 }
             }
             @Override
@@ -639,7 +670,7 @@ public class TouristPointActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("주변 관광지 불러오기 실패");
+                    Log.e(TAG, "주변 관광지 불러오기 실패");
                 }
             }
             @Override
@@ -680,7 +711,7 @@ public class TouristPointActivity extends AppCompatActivity {
         private static final String TAG = "CongestionThread";
         public CongestionThread() {}
         public void run() {
-            String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
+            String key = "?ServiceKey=BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
             String result;
 
             try {
@@ -696,34 +727,28 @@ public class TouristPointActivity extends AppCompatActivity {
                 Long count = (Long)body.get("totalCount");
 
                 if (count == 0){
-                    System.out.println("혼잡도 데이터 없음");
+                    Log.d(TAG, "혼잡도 데이터 없음");
                 }
                 else {
                     JSONObject items = (JSONObject) body.get("items");
                     JSONObject item = (JSONObject) items.get("item");
-                    Integer code = (Integer) item.get("estiDecoDivCd");
+                    Long code = (Long) item.get("estiDecoDivCd");
                     bf.close();
-                    System.out.println("code = " + code);
+                    Log.d(TAG, "혼잡도 : " + code);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             congestionLayout.setVisibility(View.VISIBLE);
-                            switch (code) {
-                                case 1:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
-                                    break;
-                                case 2:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con2));
-                                    break;
-                                case 3:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con3));
-                                    break;
-                                case 4:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con4));
-                                    break;
-                                case 5:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con5));
-                                    break;
+                            if (code == 1) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
+                            } else if (code == 2) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con2));
+                            } else if (code == 3) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con3));
+                            } else if (code == 4) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con4));
+                            } else if (code == 5) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con5));
                             }
                         }
                     });
