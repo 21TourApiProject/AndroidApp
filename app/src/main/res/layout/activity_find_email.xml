@@ -83,6 +83,8 @@
                         android:id="@+id/findEmailMobilePhoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="6"
                         android:background="@drawable/findemail_write2"
                         android:hint="예시) 01077778888"
                         android:inputType="phone"
@@ -92,18 +94,28 @@
                     <Button
                         android:id="@+id/startAuth2"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/findemail_requestauth" />
+                        android:layout_weight="1"
+                        android:background="@drawable/star__card_view_round"
+                        android:backgroundTint="@color/sub_blue"
+                        android:text="인증 요청"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/resendAuth2"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/findemail_requestauth2"
+                        android:layout_weight="1"
+                        android:background="@drawable/star__card_view_round"
+                        android:backgroundTint="@color/sub_blue"
+                        android:text="인증 재요청"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
                         android:visibility="gone" />
                 </LinearLayout>
 

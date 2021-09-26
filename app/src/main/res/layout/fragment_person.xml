@@ -90,6 +90,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     app:srcCompat="@drawable/mypage_morehashtag" />
 
             </LinearLayout>
@@ -151,7 +152,6 @@
                         android:id="@+id/myWishImage1"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
-
                         android:scaleType="centerCrop"
                         tools:visibility="visible" />
 
@@ -161,6 +161,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textColor="@color/gray"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -183,6 +185,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -208,6 +212,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textColor="@color/gray"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -268,6 +274,7 @@
                         android:id="@+id/myPostImage1"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
+                        android:scaleType="centerCrop"
                         tools:visibility="visible" />
 
                     <TextView
@@ -276,6 +283,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textColor="@color/gray"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="11sp" />
 
                 </LinearLayout>
@@ -291,6 +300,7 @@
                         android:id="@+id/myPostImage2"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
+                        android:scaleType="centerCrop"
                         tools:visibility="visible" />
 
                     <TextView
@@ -299,6 +309,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textColor="@color/gray"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -313,6 +325,7 @@
                         android:id="@+id/myPostImage3"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
+                        android:scaleType="centerCrop"
                         tools:visibility="visible" />
 
                     <TextView
@@ -321,6 +334,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textColor="@color/gray"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textSize="11sp" />
 
                 </LinearLayout>

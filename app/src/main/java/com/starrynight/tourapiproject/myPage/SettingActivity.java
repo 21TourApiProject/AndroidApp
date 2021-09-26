@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,6 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.signUpPage.LocationInfoActivity;
 
 public class SettingActivity extends AppCompatActivity {
     Long userId;
@@ -72,45 +72,45 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-//        //이용약관
-//        LinearLayout termsAndConditions = findViewById(R.id.termsAndConditions);
-//        termsAndConditions.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(SettingActivity.this, TermsAndConditionsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        //개인정보 처리방침
-//        LinearLayout personalData = findViewById(R.id.personalData);
-//        personalData.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(SettingActivity.this, PersonalDataActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        //운영정책
-//        LinearLayout managementPolicy = findViewById(R.id.managementPolicy);
-//        managementPolicy.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(SettingActivity.this, ManagementPolicyActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-//        //위치기반서비스 이용약관
-//        LinearLayout location = findViewById(R.id.location);
-//        location.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(SettingActivity.this, LocationInfoActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        //이용약관
+        LinearLayout termsAndConditions = findViewById(R.id.termsAndConditions);
+        termsAndConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/d74df94b11ce4e8f8592a77425fd403b"));
+                startActivity(intent);
+            }
+        });
+
+        //개인정보 처리방침
+        LinearLayout personalData = findViewById(R.id.personalData);
+        personalData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/3bae231c3cb34a6e9ce6585df8b96233"));
+                startActivity(intent);
+            }
+        });
+
+        //운영정책
+        LinearLayout managementPolicy = findViewById(R.id.managementPolicy);
+        managementPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/9d25ab83064247069f7191c55b5bf671"));
+                startActivity(intent);
+            }
+        });
+
+        //위치기반서비스 이용약관
+        LinearLayout location = findViewById(R.id.location);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/f3305181536d41a9997961f6516d57ac"));
+                startActivity(intent);
+            }
+        });
 
         //로그아웃
         LinearLayout logout = findViewById(R.id.logout);
