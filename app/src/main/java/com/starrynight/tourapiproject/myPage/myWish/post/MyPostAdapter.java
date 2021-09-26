@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.myPage.myWish.post;
 
 import android.content.Context;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +86,9 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             myWishPostProfileImage = itemView.findViewById(R.id.myWishPostProfileImage);
             myWishPostWriter = itemView.findViewById(R.id.myWishPostWriter);
             myWishPostHashTag = itemView.findViewById(R.id.myWishPostHashTag);
+
+            myWishPostProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
+            myWishPostProfileImage.setClipToOutline(true);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
