@@ -23,6 +23,8 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -39,7 +41,6 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Ob
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postPage.PostActivity;
-import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
@@ -97,10 +98,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         relateImageFrame = findViewById(R.id.relateImageFrame);
 
         Intent intent = getIntent();
-        Long observationId = 1L;
-
-//        test
-//                (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
+        Long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
         postId = (Long) intent.getSerializableExtra("postId");
 
 
@@ -291,17 +289,13 @@ public class ObservationsiteActivity extends AppCompatActivity {
                    map_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 중간에 있던 액티비티들 삭제
-                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
+                            Intent intent = new Intent(ObservationsiteActivity.this, MainActivity.class);
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 중간에 있던 액티비티들 삭제
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
+                            intent.putExtra("FromWhere", Activities.OBSERVATION);
+                            intent.putExtra("BalloonObject", balloonObject);
                             startActivity(intent);
 
-                            Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-                            bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
-                            bundle.putSerializable("BalloonObject", balloonObject);    //지도에 필요한 내용
-                            MapFragment mapFragment = new MapFragment();
-                            mapFragment.setArguments(bundle);
-                            ((MainActivity)MainActivity.mContext).replaceFragment(mapFragment);
                         }
                     });
 

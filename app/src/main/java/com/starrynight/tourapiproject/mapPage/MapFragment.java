@@ -62,6 +62,7 @@ public class MapFragment extends Fragment {
     private static final String TAG = "map page";
 
     private MapView mapView;
+    ViewGroup mapViewContainer;
 
     //내위치설정
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -305,16 +306,15 @@ public class MapFragment extends Fragment {
     };
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onPause() {
         lm.removeUpdates(mLocationListener);
+        mapViewContainer.removeView(mapView);
         super.onPause();
     }
 
@@ -338,9 +338,8 @@ public class MapFragment extends Fragment {
         selectFilterItem = view.findViewById(R.id.map_selectFilterItem);
         selectFilterItem.removeAllViews();
         //지도 띄우기
-//        MapView mapView = new MapView(getActivity());
         mapView = new MapView(getActivity());
-        ViewGroup mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
+        mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
 
     //어댑터, 리스너 설정
