@@ -271,7 +271,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                         balloonObject.setAddress(address);
                                     }
 
-                                    balloonObject.setAddress(tpData.getAddr());
                                     balloonObject.setPoint_type(tpData.getCat3Name());
                                     balloonObject.setIntro(tpData.getOverviewSim());
 
