@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.Activities;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
+import com.starrynight.tourapiproject.myPage.MyPostActivity;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTpAdapter;
 import com.starrynight.tourapiproject.myPage.myWish.obtp.OnMyWishObTpItemClickListener;
@@ -174,7 +177,29 @@ public class SearchResultFragment extends Fragment {
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putSerializable("FromWhere", Activities.SEARCHRESULT);
+
+                areaCodeList = new ArrayList<>();
+                hashTagIdList = new ArrayList<>();
+                for(int i=0; i<17; i++){
+                    if (area.get(i) == 1){ //선택했으면
+                        areaCodeList.add(areaCode[i]);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if (hashTag.get(i) == 1){ //선택했으면
+                        hashTagIdList.add((long)(i+1));
+                    }
+                }
+                Filter filter = new Filter(areaCodeList, hashTagIdList);
+                SearchKey searchKey = new SearchKey(filter, keyword);
+                bundle.putSerializable("searchKey", searchKey);
+
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.setArguments(bundle);
+
+                ((MainActivity)getActivity()).replaceFragment(mapFragment);
             }
         });
 
@@ -186,6 +211,7 @@ public class SearchResultFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putString("keyword", keyword);
+                bundle.putSerializable("fromWhere", Activities.SEARCHRESULT);
                 Fragment filterFragment = new FilterFragment();
                 filterFragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -222,8 +248,6 @@ public class SearchResultFragment extends Fragment {
                         hashTagIdList.add((long)(i+1));
                     }
                 }
-
-                System.out.println("해쉬태그"+hashTagIdList);
 
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
