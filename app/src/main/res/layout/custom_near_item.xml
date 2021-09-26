@@ -10,7 +10,7 @@
         android:id="@+id/nearImage"
         android:layout_width="97dp"
         android:layout_height="97dp"
-        android:background="@drawable/ic_launcher_foreground"
+        android:background="@drawable/myitem_image"
         android:scaleType="center" />
 
     <LinearLayout
