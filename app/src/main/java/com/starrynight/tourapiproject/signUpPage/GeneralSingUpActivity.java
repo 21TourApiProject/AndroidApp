@@ -246,14 +246,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 }
             }
         });
-        TextView marketInfo = findViewById(R.id.marketInfo);
-        marketInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), MarketingInfoActivity.class);
-//                startActivity(intent);
-            }
-        });
 
         //생년월일
         birth = (TextView)findViewById(R.id.birthDay);
