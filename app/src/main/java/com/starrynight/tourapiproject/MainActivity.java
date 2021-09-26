@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -131,6 +130,13 @@ public class MainActivity extends AppCompatActivity {
             }
             if (System.currentTimeMillis() <= backKeyPressTime+2000){
                 finish();
+            }
+        }
+        else{
+            if (getFragmentManager().getBackStackEntryCount() > 0 ){
+                getFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
             }
         }
 

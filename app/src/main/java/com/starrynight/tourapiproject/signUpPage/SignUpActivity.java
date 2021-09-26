@@ -1,8 +1,10 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
@@ -29,6 +33,7 @@ import com.kakao.usermgmt.response.model.Profile;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
+import com.starrynight.tourapiproject.LoginActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.KakaoUserParams;
@@ -46,6 +51,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG0 = "SignUpActivity";
     private static final String TAG2 = "KakaoLoginApi";
+    String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+    String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
+    int PERMISSIONS_REQUEST_CODE = 100;
     private SessionCallback sessionCallback = new SessionCallback();
     KakaoUserParams kakaoUserParams;
 
@@ -88,6 +97,22 @@ public class SignUpActivity extends AppCompatActivity {
                                 //메인 페이지로 이동
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                //권한 설정
+                                int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+                                int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
+
+                                Log.d("test", "onClick: location clicked");
+                                if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
+                                    Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+
+                                } else if (permission == PackageManager.PERMISSION_DENIED){
+                                    Log.d("test", "permission denied");
+                                    Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                                    ActivityCompat.requestPermissions(SignUpActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                    ActivityCompat.requestPermissions(SignUpActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                    ActivityCompat.requestPermissions(SignUpActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                }
                                 finish();
 
                             } else {
