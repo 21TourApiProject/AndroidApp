@@ -1,9 +1,7 @@
 package com.starrynight.tourapiproject;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -16,8 +14,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.starrynight.tourapiproject.mapPage.Activities;
-import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
@@ -94,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
             if (System.currentTimeMillis() <= backKeyPressTime+2000){
                 finish();
             }
-        } else{
+        }
+        else{
             if (getFragmentManager().getBackStackEntryCount() > 0 ){
                 getFragmentManager().popBackStack();
             } else {
