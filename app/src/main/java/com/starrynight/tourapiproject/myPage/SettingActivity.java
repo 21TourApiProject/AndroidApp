@@ -72,45 +72,45 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        //이용약관
-        LinearLayout termsAndConditions = findViewById(R.id.termsAndConditions);
-        termsAndConditions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, TermsAndConditionsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //개인정보 처리방침
-        LinearLayout personalData = findViewById(R.id.personalData);
-        personalData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, PersonalDataActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //운영정책
-        LinearLayout managementPolicy = findViewById(R.id.managementPolicy);
-        managementPolicy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, ManagementPolicyActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        //위치기반서비스 이용약관
-        LinearLayout location = findViewById(R.id.location);
-        location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, LocationInfoActivity.class);
-                startActivity(intent);
-            }
-        });
+//        //이용약관
+//        LinearLayout termsAndConditions = findViewById(R.id.termsAndConditions);
+//        termsAndConditions.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, TermsAndConditionsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        //개인정보 처리방침
+//        LinearLayout personalData = findViewById(R.id.personalData);
+//        personalData.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, PersonalDataActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        //운영정책
+//        LinearLayout managementPolicy = findViewById(R.id.managementPolicy);
+//        managementPolicy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, ManagementPolicyActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        //위치기반서비스 이용약관
+//        LinearLayout location = findViewById(R.id.location);
+//        location.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, LocationInfoActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         //로그아웃
         LinearLayout logout = findViewById(R.id.logout);
