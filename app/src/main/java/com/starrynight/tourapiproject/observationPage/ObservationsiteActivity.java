@@ -39,7 +39,6 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Ob
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postPage.PostActivity;
-import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 
@@ -282,7 +281,21 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     balloonObject.setLongitude(observation.getLongitude());
                     balloonObject.setLatitude(observation.getLatitude());
                     balloonObject.setName(observation.getObservationName());
-                    balloonObject.setAddress(observation.getAddress());
+
+                    //주소를 두단어까지 줄임
+                    String address = observation.getAddress();
+                    int i = address.indexOf(' ');
+                    if (i != -1){
+                        int j = address.indexOf(' ', i+1);
+                        if(j != -1){
+                            balloonObject.setAddress(address.substring(0, j));
+                        } else{
+                            balloonObject.setAddress(address);
+                        }
+                    } else{
+                        balloonObject.setAddress(address);
+                    }
+
                     balloonObject.setPoint_type(observation.getObserveType());
                     balloonObject.setIntro(observation.getIntro());
                     //사진이랑 해쉬태그는 따로 불러와서 그거 각자 call에서 추가해야함 (아래두줄참고)

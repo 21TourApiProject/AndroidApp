@@ -115,7 +115,21 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
 
         public void setItem(Near item) {
             nearTitle.setText(item.getTitle());
-            nearAddr.setText(item.getAddr());
+
+            //주소를 두단어까지 줄임
+            String address = item.getAddr();
+            int i = address.indexOf(' ');
+            if (i != -1){
+                int j = address.indexOf(' ', i+1);
+                if(j != -1){
+                    nearAddr.setText(item.getAddr().substring(0, j));
+                } else{
+                    nearAddr.setText(item.getAddr());
+                }
+            } else{
+                nearAddr.setText(item.getAddr());
+            }
+
             nearCat3Name.setText(item.getCat3Name());
             nearOverviewSim.setText(item.getOverviewSim());
             nearHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
