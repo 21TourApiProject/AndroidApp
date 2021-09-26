@@ -713,7 +713,7 @@ public class TouristPointActivity extends AppCompatActivity {
         private static final String TAG = "CongestionThread";
         public CongestionThread() {}
         public void run() {
-            String key = "?ServiceKey=VQ0keALnEea3BkQdEGgwgCD8XNDNR%2Fg98L9D4GzWryl4UYHnGfUUUI%2BHDA6DdzYjjzJmuHT1UmuJZ7wJHoGfuA%3D%3D"; //인증키
+            String key = "?ServiceKey=BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
             String result;
 
             try {
@@ -734,29 +734,23 @@ public class TouristPointActivity extends AppCompatActivity {
                 else {
                     JSONObject items = (JSONObject) body.get("items");
                     JSONObject item = (JSONObject) items.get("item");
-                    Integer code = (Integer) item.get("estiDecoDivCd");
+                    Long code = (Long) item.get("estiDecoDivCd");
                     bf.close();
                     System.out.println("code = " + code);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             congestionLayout.setVisibility(View.VISIBLE);
-                            switch (code) {
-                                case 1:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
-                                    break;
-                                case 2:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con2));
-                                    break;
-                                case 3:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con3));
-                                    break;
-                                case 4:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con4));
-                                    break;
-                                case 5:
-                                    tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con5));
-                                    break;
+                            if (code == 1) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
+                            } else if (code == 2) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con2));
+                            } else if (code == 3) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con3));
+                            } else if (code == 4) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con4));
+                            } else if (code == 5) {
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con5));
                             }
                         }
                     });
