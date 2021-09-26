@@ -89,6 +89,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             super(itemView);
 
             nearImage = itemView.findViewById(R.id.nearImage);
+            nearImage.setClipToOutline(true);
             nearTitle = itemView.findViewById(R.id.nearTitle);
             nearAddr = itemView.findViewById(R.id.nearAddr);
             nearCat3Name = itemView.findViewById(R.id.nearCat3Name);
