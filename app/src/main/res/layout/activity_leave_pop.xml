@@ -28,22 +28,22 @@
 
     <Button
         android:id="@+id/leaveBtn"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/leavepop_leave"
         android:onClick="leave" />
 
     <Button
         android:id="@+id/closeLeave"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginBottom="25dp"
         android:background="@drawable/logoutpop_close"
         android:onClick="closeLeave" />
