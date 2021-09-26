@@ -30,23 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //권한 설정
-        int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
-        int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
-
-        Log.d("test", "onClick: location clicked");
-        if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
-            Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
-
-        } else if (permission == PackageManager.PERMISSION_DENIED){
-            Log.d("test", "permission denied");
-            Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
-            ActivityCompat.requestPermissions(LoginActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
-            ActivityCompat.requestPermissions(LoginActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
-            ActivityCompat.requestPermissions(LoginActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
-        }
-
         if (getLogin()){
             Log.d("Login","유저 정보 있음"+userId);
             Intent intent = new Intent(getApplicationContext(),MainActivity.class);
