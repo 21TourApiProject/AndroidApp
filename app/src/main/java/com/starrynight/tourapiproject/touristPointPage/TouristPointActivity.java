@@ -256,6 +256,21 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setLongitude(tpData.getMapX());
                                     balloonObject.setLatitude(tpData.getMapY());
                                     balloonObject.setName(tpData.getTitle());
+
+                                    //주소를 두단어까지 줄임
+                                    String address = tpData.getAddr();
+                                    int i = address.indexOf(' ');
+                                    if (i != -1){
+                                        int j = address.indexOf(' ', i+1);
+                                        if(j != -1){
+                                            balloonObject.setAddress(address.substring(0, j));
+                                        } else{
+                                            balloonObject.setAddress(address);
+                                        }
+                                    } else{
+                                        balloonObject.setAddress(address);
+                                    }
+
                                     balloonObject.setAddress(tpData.getAddr());
                                     balloonObject.setPoint_type(tpData.getCat3Name());
                                     balloonObject.setIntro(tpData.getOverviewSim());
@@ -404,7 +419,21 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setLongitude(foodData.getMapX());
                                     balloonObject.setLatitude(foodData.getMapY());
                                     balloonObject.setName(foodData.getTitle());
-                                    balloonObject.setAddress(foodData.getAddr1());
+
+                                    //주소를 두단어까지 줄임
+                                    String address = foodData.getAddr1();
+                                    int i = address.indexOf(' ');
+                                    if (i != -1){
+                                        int j = address.indexOf(' ', i+1);
+                                        if(j != -1){
+                                            balloonObject.setAddress(address.substring(0, j));
+                                        } else{
+                                            balloonObject.setAddress(address);
+                                        }
+                                    } else{
+                                        balloonObject.setAddress(address);
+                                    }
+
                                     balloonObject.setPoint_type(foodData.getCat3Name());
                                     balloonObject.setIntro(foodData.getOverviewSim());
 
