@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.searchPage.searchPageRetrofit;
 
-public class SearchKey {
+import java.io.Serializable;
+
+public class SearchKey implements Serializable {
     Filter filter;
     String keyword;
 
