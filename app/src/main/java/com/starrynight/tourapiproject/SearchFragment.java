@@ -71,7 +71,12 @@ public class SearchFragment extends Fragment {
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putSerializable("FromWhere", Activities.SEARCH);//번들에 넘길 값 저장
+
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.setArguments(bundle);
+                ((MainActivity)getActivity()).replaceFragment(mapFragment);
             }
         });
 
