@@ -39,14 +39,27 @@
                     android:background="@drawable/mypage_setting" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="22dp"
-                android:background="@drawable/mypage_profilesetting"
-                android:scaleType="center" />
+                android:layout_marginTop="22dp">
+
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    app:srcCompat="@color/gray" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="44dp"
+                    app:srcCompat="@drawable/mydata_edit" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/nickName"
@@ -58,6 +71,7 @@
                 android:textSize="17sp" />
 
             <LinearLayout
+                android:id="@+id/changeMyHashTag"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -69,14 +83,14 @@
                     android:id="@+id/myHashTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal" />
+                    android:layout_gravity="center">
 
-                <Button
-                    android:id="@+id/changeMyHashTag"
-                    android:layout_width="54dp"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/mypage_changehashtag" />
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/mypage_morehashtag" />
 
             </LinearLayout>
 
@@ -87,6 +101,7 @@
                 app:srcCompat="@drawable/mypage_line" />
 
             <LinearLayout
+                android:id="@+id/myWishBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -109,7 +124,6 @@
                     android:textSize="12sp" />
 
                 <Button
-                    android:id="@+id/myWishBtn"
                     android:layout_width="4dp"
                     android:layout_height="8dp"
                     android:layout_gravity="center"
@@ -118,23 +132,18 @@
 
             </LinearLayout>
 
-            <!--            <androidx.recyclerview.widget.RecyclerView-->
-            <!--                android:id="@+id/myWishList"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="match_parent" />-->
-
             <LinearLayout
                 android:id="@+id/myWishLayout"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
                 android:layout_marginLeft="24dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="16dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -142,20 +151,23 @@
                         android:id="@+id/myWishImage1"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
-                        android:scaleType="centerCrop" />
+
+                        android:scaleType="centerCrop"
+                        tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/myWishTitle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -163,34 +175,39 @@
                         android:id="@+id/myWishImage2"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/myWishTitle2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:visibility="visible">
 
                     <ImageView
                         android:id="@+id/myWishImage3"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/myWishTitle3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -202,6 +219,7 @@
                 app:srcCompat="@drawable/mypage_line" />
 
             <LinearLayout
+                android:id="@+id/myPostBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
@@ -224,7 +242,6 @@
                     android:textSize="12sp" />
 
                 <Button
-                    android:id="@+id/myPostBtn"
                     android:layout_width="4dp"
                     android:layout_height="8dp"
                     android:layout_gravity="center"
@@ -237,26 +254,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
                 android:layout_marginLeft="24dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="16dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/myPostImage1"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp" />
+                        android:layout_height="120dp"
+                        tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/myPostTitle1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
 
                 </LinearLayout>
@@ -264,40 +283,44 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/myPostImage2"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp" />
+                        android:layout_height="120dp"
+                        tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/myPostTitle2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <ImageView
                         android:id="@+id/myPostImage3"
                         android:layout_width="match_parent"
-                        android:layout_height="120dp" />
+                        android:layout_height="120dp"
+                        tools:visibility="visible" />
 
                     <TextView
                         android:id="@+id/myPostTitle3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
 
                 </LinearLayout>

@@ -28,7 +28,6 @@ import com.starrynight.tourapiproject.myPage.myWish.obtp.OnMyWishObTpItemClickLi
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPostAdapter;
 import com.starrynight.tourapiproject.myPage.myWish.post.OnMyPostItemClickListener;
-import com.starrynight.tourapiproject.observationPage.MoreObservationActivity;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
@@ -59,12 +58,13 @@ public class SearchResultFragment extends Fragment {
     Button obBtn;
     Button tpBtn;
     Button postBtn;
+    Button allContentBtn;
     SearchView searchView;
 
     LinearLayout selectFilterItem; //선택한 필터들이 보이는 레이아웃
 
     List<SearchParams1> obResult; //관측지 필터 결과
-    List<MyWishObTp> tpResult; //관광지 필터 결과
+    List<SearchParams1> tpResult; //관광지 필터 결과
     List<MyPost> postResult; //게시물 필터 결과
 
     ArrayList<Integer> area; //어떤 지역필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
@@ -90,6 +90,7 @@ public class SearchResultFragment extends Fragment {
         obBtn = v.findViewById(R.id.obBtn);
         tpBtn = v.findViewById(R.id.tpBtn);
         postBtn = v.findViewById(R.id.postBtn);
+        allContentBtn= v.findViewById(R.id.allContentBtn);
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
 
@@ -119,7 +120,7 @@ public class SearchResultFragment extends Fragment {
                 for(int i=0; i<17; i++){
                     if(area.get(i) == 1){
                         TextView textView = new TextView(getContext());
-                        textView.setText(" "+ areaName[i] + " ");
+                        textView.setText(" " + areaName[i] + " ");
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
                         selectFilterItem.addView(textView);
@@ -141,6 +142,15 @@ public class SearchResultFragment extends Fragment {
             }
         }
 
+        allContentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                obText.setVisibility(View.GONE);
+                tpText.setVisibility(View.GONE);
+                postText.setVisibility(View.GONE);
+            }
+        });
+
         if (keyword == null) {
             searchView.setQueryHint("검색어를 입력하세요");
         } else {
@@ -151,7 +161,8 @@ public class SearchResultFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 keyword = query;
-                //여기에 진혁이가 전체 결과 새로 띄우는거 연결해줘야 함
+                //여기에 진혁이가 전체 결과 새로 띄우는거 연결해줘야 함 네...?
+
                 return true;
             }
 
@@ -296,12 +307,13 @@ public class SearchResultFragment extends Fragment {
                     }
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
-
-                Call<List<MyPost>>call = RetrofitClient.getApiService().getPostWithFilter(filter);
+                SearchKey searchKey = new SearchKey(filter, keyword);
+                Call<List<MyPost>>call = RetrofitClient.getApiService().getPostWithFilter(searchKey);
                 call.enqueue(new Callback<List<MyPost>>() {
                     @Override
                     public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                         if (response.isSuccessful()){
+                            Log.d("searchPost","검색 게시물 업로드 성공");
                             postResult=response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
                             searchResult.setAdapter(postAdapter);
@@ -337,8 +349,8 @@ public class SearchResultFragment extends Fragment {
 
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
-                areaCodeList.add(0L);
-                hashTagIdList.add(0L);
+//                areaCodeList.add(0L);
+//                hashTagIdList.add(0L);
 
                 for(int i=0; i<17; i++){
                     if (area.get(i) == 1){ //선택했으면
@@ -352,19 +364,21 @@ public class SearchResultFragment extends Fragment {
                 }
 
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
-                Call<List<MyWishObTp>> call = RetrofitClient.getApiService().getTouristDataWithFilter(filter);
-                call.enqueue(new Callback<List<MyWishObTp>>() {
+                SearchKey searchKey = new SearchKey(filter, keyword);
+                Call<List<SearchParams1>> call = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                call.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
-                    public void onResponse(Call<List<MyWishObTp>> call, Response<List<MyWishObTp>> response) {
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
+                            Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
 
-                            MyWishObTpAdapter myWishObAdapter = new MyWishObTpAdapter(tpResult, getContext());
-                            searchResult.setAdapter(myWishObAdapter);
-                            myWishObAdapter.setOnMyWishObTpItemClickListener(new OnMyWishObTpItemClickListener() {
+                            SearchResultAdapter searchResultAdapter = new SearchResultAdapter(tpResult, getContext());
+                            searchResult.setAdapter(searchResultAdapter);
+                            searchResultAdapter.setOnSearchResultItemClickListener(new OnSearchResultItemClickListener() {
                                 @Override
-                                public void onItemClick(MyWishObTpAdapter.ViewHolder holder, View view, int position) {
-                                    MyWishObTp item = myWishObAdapter.getItem(position);
+                                public void onItemClick(SearchResultAdapter.ViewHolder holder, View view, int position) {
+                                    SearchParams1 item = searchResultAdapter.getItem(position);
                                     Intent intent = new Intent(getContext(), TouristPointActivity.class);
                                     intent.putExtra("contentId", item.getItemId());
                                     startActivity(intent);
@@ -375,7 +389,7 @@ public class SearchResultFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(Call<List<MyWishObTp>> call, Throwable t) {
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });

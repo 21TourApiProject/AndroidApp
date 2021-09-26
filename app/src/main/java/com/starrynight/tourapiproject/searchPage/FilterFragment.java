@@ -18,6 +18,7 @@ import com.starrynight.tourapiproject.SearchFragment;
 import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -98,6 +99,7 @@ public class FilterFragment extends Fragment {
                 bundle.putIntegerArrayList("area",area);
                 bundle.putIntegerArrayList("hashTag",hashTag);
                 String keyword;
+
                 Activities fromWhere;
                 if (getArguments() != null) {
                     fromWhere = (Activities) getArguments().getSerializable("FromWhere");

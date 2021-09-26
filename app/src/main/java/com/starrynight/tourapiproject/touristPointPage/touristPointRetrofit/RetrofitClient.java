@@ -7,6 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+
     private static final String BASE_URL = "http://192.168.1.66:8080/v1/";
 
     public static TouristPointPageRetrofitService getApiService(){return getInstance().create(TouristPointPageRetrofitService.class);}
