@@ -77,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
     {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_view, f);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.add(R.id.main_view, f);
         fragmentTransaction.commit();
     }
 
