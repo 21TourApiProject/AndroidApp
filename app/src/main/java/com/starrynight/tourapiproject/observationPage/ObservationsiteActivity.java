@@ -478,7 +478,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent(getApplicationContext(), PostWriteActivity.class);
                 startActivity(intent1);
-                finish();
             }
         });
 

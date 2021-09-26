@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="5"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="공기 좋은" />
 
@@ -93,7 +93,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="3"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="깔끔한" />
 
@@ -102,7 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="5"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="감성적인" />
                     </LinearLayout>
@@ -121,7 +121,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="5"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="이색적인" />
 
@@ -131,7 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="3"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="인생샷" />
 
@@ -140,7 +140,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="5"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="전문적인" />
                     </LinearLayout>
@@ -159,7 +159,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="캠핑" />
 
@@ -169,7 +169,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="차박" />
                         <Button
@@ -177,7 +177,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="경치 좋은" />
 
@@ -217,7 +217,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="뚜벅이" />
 
@@ -227,7 +227,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="드라이브" />
 
@@ -236,7 +236,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="반려동물" />
                     </LinearLayout>
@@ -275,7 +275,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="한적한" />
 
@@ -285,7 +285,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="근교" />
 
@@ -294,7 +294,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="도심 속" />
 
@@ -332,7 +332,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="연인" />
 
@@ -342,7 +342,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="가족" />
 
@@ -352,7 +352,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginRight="10dp"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="친구" />
 
@@ -361,7 +361,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="혼자" />
                     </LinearLayout>
@@ -398,7 +398,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="가성비" />
 
@@ -408,7 +408,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="소확행" />
 
@@ -417,7 +417,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/hashtags_empty"
+                            android:background="@drawable/selectmyhashtag_hashtag_non"
                             android:onClick="ClickEvent"
                             android:text="럭셔리한" />
                     </LinearLayout>
@@ -433,7 +433,7 @@
                 android:textSize="18sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="300dp"
+                android:layout_width="363dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp">
@@ -441,7 +441,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/postwrite__search_bar"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
@@ -450,17 +450,17 @@
                     <EditText
                         android:id="@+id/findHashTag"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="30dp"
                         android:layout_weight="1"
                         android:ems="13"
                         android:hint="원하는 해시태그 추가하기"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/addHashTag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_width="20dp"
+                        android:layout_height="14dp"
                         android:background="@drawable/postwrite_observationsearch" />
                 </LinearLayout>
 
