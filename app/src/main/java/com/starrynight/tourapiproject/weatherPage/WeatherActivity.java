@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -309,7 +310,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     //뒤로가기 버튼 이벤트
     public void onClickBackBtn() {
-        ImageButton button = findViewById(R.id.wt_back_btn);
+        ImageView button = findViewById(R.id.wt_back_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -321,7 +322,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     //기상청 구름 정보 페이지로 이동
     public void onClickCloudInfo() {
-        Button button1 = findViewById(R.id.wt_today_cloud);
+        TextView button1 = findViewById(R.id.wt_today_cloud);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
