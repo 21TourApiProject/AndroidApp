@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.SearchFragment;
+import com.starrynight.tourapiproject.mapPage.Activities;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,18 +98,33 @@ public class FilterFragment extends Fragment {
                 bundle.putIntegerArrayList("area",area);
                 bundle.putIntegerArrayList("hashTag",hashTag);
                 String keyword;
-                if(getArguments()!=null)
-                     keyword = getArguments().getString("keyword");
-                else
-                    keyword = null;
-                bundle.putString("keyword", keyword);
-                System.out.println("필터에서 키워드"+keyword);
+                Activities fromWhere;
+                if (getArguments() != null) {
+                    fromWhere = (Activities) getArguments().getSerializable("FromWhere");
+                    if (fromWhere == Activities.SEARCH) {
+                        keyword = null;
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        Fragment searchResultFragment = new SearchResultFragment();
+                        searchResultFragment.setArguments(bundle);
+                        transaction.replace(R.id.main_view, searchResultFragment);
+                        transaction.commit();
+                    } else if (fromWhere == Activities.SEARCHRESULT) {
+                        keyword = getArguments().getString("keyword");
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        Fragment searchResultFragment = new SearchResultFragment();
+                        searchResultFragment.setArguments(bundle);
+                        transaction.replace(R.id.main_view, searchResultFragment);
+                        transaction.commit();
+                    } else if (fromWhere == Activities.MAP) {
+                        keyword = getArguments().getString("keyword");
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        Fragment mapfragment = new MapFragment();
+                        mapfragment.setArguments(bundle);
+                        transaction.replace(R.id.main_view, mapfragment);
+                        transaction.commit();
+                    }
+                }
 
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment searchResultFragment = new SearchResultFragment();
-                searchResultFragment.setArguments(bundle);
-                transaction.replace(R.id.main_view, searchResultFragment);
-                transaction.commit();
             }
         });
 
