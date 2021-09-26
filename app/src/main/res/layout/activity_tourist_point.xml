@@ -617,6 +617,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -632,7 +633,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|end"
                     android:layout_marginTop="5dp"
-                    android:layout_marginRight="52dp"
                     android:text="+ 더 보기"
                     android:textColor="@color/point_purple"
                     android:textSize="11sp" />
