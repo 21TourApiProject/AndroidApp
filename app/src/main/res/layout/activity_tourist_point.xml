@@ -126,8 +126,7 @@
                     <ImageView
                         android:id="@+id/tpCongestion"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/tp_con1" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
@@ -569,7 +568,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="22dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
                     android:text="+ 더 보기"
                     android:textColor="@color/point_purple"
                     android:textSize="11sp" />
