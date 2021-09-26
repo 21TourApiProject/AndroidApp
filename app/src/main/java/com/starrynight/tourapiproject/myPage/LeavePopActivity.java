@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.myPage;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.ApiErrorCode;
 import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
@@ -33,6 +34,7 @@ public class LeavePopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.activity_leave_pop);
 
         Intent intent = getIntent();
@@ -102,7 +104,7 @@ public class LeavePopActivity extends AppCompatActivity {
                                             startActivity(intent);
                                             finish();
                                         } else {
-                                            System.out.println("탈퇴하기 실패");
+                                            Log.e(TAG, "탈퇴하기 실패");
                                         }
                                     }
                                     @Override
@@ -131,7 +133,7 @@ public class LeavePopActivity extends AppCompatActivity {
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                     startActivity(intent);
                                 } else {
-                                    System.out.println("탈퇴하기 실패");
+                                    Log.e(TAG, "탈퇴하기 실패");
                                 }
                             }
                             @Override

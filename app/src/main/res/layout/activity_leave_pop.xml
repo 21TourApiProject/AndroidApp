@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
+    android:layout_width="320dp"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@drawable/tppop_area"
     android:orientation="vertical"
     tools:context=".myPage.LeavePopActivity">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#53AA57"
-        android:gravity="center"
-        android:text="회원 탈퇴"
-        android:textSize="20sp" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="5dp"
         android:text="정말로 탈퇴하시겠습니까?"
-        android:textColor="@color/black"
-        android:textSize="18sp" />
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="되돌릴 수 없습니다."
-        android:textColor="@color/black"
-        android:textSize="15sp" />
+        android:layout_marginBottom="37dp"
+        android:text="탈퇴 후 되돌릴 수 없습니다."
+        android:textColor="@color/gray"
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/leaveBtn"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:onClick="leave"
-        android:text="탈퇴하기" />
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/leavepop_leave"
+        android:onClick="leave" />
 
     <Button
         android:id="@+id/closeLeave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="closeLeave"
-        android:text="닫기" />
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/logoutpop_close"
+        android:onClick="closeLeave" />
 
 </LinearLayout>

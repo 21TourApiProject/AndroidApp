@@ -23,8 +23,8 @@
         android:theme="@style/StarryNight"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".observationPage.MoreObservationActivity"/>
-        <activity android:name=".signUpPage.MarketingInfoActivity"/>
+        <activity android:name=".observationPage.MoreObservationActivity" />
+        <activity android:name=".signUpPage.MarketingInfoActivity" />
         <activity android:name=".signUpPage.PersonalInfoActivity" />
         <activity android:name=".signUpPage.LocationInfoActivity" />
         <activity android:name=".signUpPage.ServiceInfoActivity" />
@@ -85,8 +85,7 @@
         <activity android:name=".postWritePage.AddHashTagActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
