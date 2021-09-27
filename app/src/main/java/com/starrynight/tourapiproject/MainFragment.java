@@ -151,16 +151,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-        // 회원가입 페이지로 넘어가는 이벤트(수정 예정)
-        Button testSignUp = (Button) v.findViewById(R.id.testSignUp);
-        testSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), SignUpActivity.class);
-                startActivityForResult(intent, 103);
-            }
-        });
-
         // 알림 페이지로 넘어가는 이벤트
 
         Button alarm = (Button)v.findViewById(R.id.main_alarm);

@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.signUpPage;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -180,7 +181,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         serviceInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ServiceInfoActivity.class);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/d74df94b11ce4e8f8592a77425fd403b"));
                 startActivity(intent);
             }
         });
@@ -203,7 +204,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         personalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PersonalInfoActivity.class);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/3bae231c3cb34a6e9ce6585df8b96233"));
                 startActivity(intent);
             }
         });
@@ -226,7 +227,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         locationServiceInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LocationInfoActivity.class);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/f3305181536d41a9997961f6516d57ac"));
                 startActivity(intent);
             }
         });
@@ -243,14 +244,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
                     isMarketing = true;
                 }
-            }
-        });
-        TextView marketInfo = findViewById(R.id.marketInfo);
-        marketInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MarketingInfoActivity.class);
-                startActivity(intent);
             }
         });
 
