@@ -23,18 +23,10 @@
         <item name="android:layout_height">60dp</item>
     </style>
 
-    <style name="Wt_climate_txt">
+    <style name="Wt_detail_txt">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Wt_climate_info">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">8sp</item>
     </style>
 
 
@@ -52,4 +44,13 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/point_purple</item>
     </style>
+
+    <style name="StarryNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="StarryNight.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="StarryNight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

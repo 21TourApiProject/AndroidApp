@@ -206,6 +206,7 @@
                     android:text="분위기"
                     android:textSize="12sp" />
 
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -213,20 +214,10 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/ht11"
-                        android:layout_width="80dp"
-                        android:layout_height="32dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/selectmyhashtag_hashtag_non"
-                        android:onClick="clickEvent"
-                        android:text="반려동물"
-                        android:textSize="11sp" />
-
-                    <Button
                         android:id="@+id/ht12"
                         android:layout_width="80dp"
                         android:layout_height="32dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
                         android:text="한적한"
@@ -236,7 +227,7 @@
                         android:id="@+id/ht13"
                         android:layout_width="80dp"
                         android:layout_height="32dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
                         android:text="근교"
@@ -282,7 +273,7 @@
                         android:id="@+id/ht15"
                         android:layout_width="80dp"
                         android:layout_height="32dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
                         android:text="연인"
@@ -292,7 +283,7 @@
                         android:id="@+id/ht16"
                         android:layout_width="80dp"
                         android:layout_height="32dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginRight="16dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
                         android:text="가족"
@@ -302,10 +293,27 @@
                         android:id="@+id/ht17"
                         android:layout_width="80dp"
                         android:layout_height="32dp"
-                        android:layout_marginRight="8dp"
                         android:background="@drawable/selectmyhashtag_hashtag_non"
                         android:onClick="clickEvent"
                         android:text="친구"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/ht11"
+                        android:layout_width="80dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/selectmyhashtag_hashtag_non"
+                        android:onClick="clickEvent"
+                        android:text="반려동물"
                         android:textSize="11sp" />
 
                     <Button
@@ -316,6 +324,11 @@
                         android:onClick="clickEvent"
                         android:text="혼자"
                         android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -380,7 +393,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="64dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/signup_complete" />
         </LinearLayout>
     </ScrollView>

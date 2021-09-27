@@ -10,7 +10,7 @@
         android:id="@+id/myWishPostImage"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:background="@drawable/mypost_image"
+        android:background="@drawable/myitem_image"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -36,8 +36,8 @@
                 android:id="@+id/myWishPostProfileImage"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@drawable/main__empty_profile"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@color/gray" />
 
             <TextView
                 android:id="@+id/myWishPostWriter"

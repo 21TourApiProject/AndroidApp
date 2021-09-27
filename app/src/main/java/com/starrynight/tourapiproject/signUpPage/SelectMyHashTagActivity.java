@@ -142,4 +142,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
             clicked[id-1] = button.getText().toString();
         }
     }
+
+    @Override public void onBackPressed() {}
+
 }

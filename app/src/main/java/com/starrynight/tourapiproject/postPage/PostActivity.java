@@ -292,7 +292,7 @@ public class PostActivity extends AppCompatActivity{
                     Log.d("postHashTag","게시물 해시태그 가져옴"+response.body());
                     postHashTags = response.body();
                     RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),5,GridLayoutManager.VERTICAL,false);
+                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),4,GridLayoutManager.VERTICAL,false);
                     hashTagRecyclerView.setLayoutManager(gridLayoutManager);
                     PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
                     for (int i=0;i<postHashTags.size();i++){

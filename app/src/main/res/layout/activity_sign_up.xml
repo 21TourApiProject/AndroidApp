@@ -41,7 +41,7 @@
                 android:focusable="true"
                 android:hint="이메일"
                 android:inputType="textEmailAddress"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/logInPwd"
@@ -52,7 +52,7 @@
                 android:focusable="true"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/logIn"
@@ -91,11 +91,11 @@
 
             <ImageButton
                 android:id="@+id/kakaoSignUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="58dp"
-                android:background="@drawable/signup__kakaologin" />
+                android:background="@drawable/kakao_login_large_wide" />
 
             <TextView
                 android:layout_width="wrap_content"

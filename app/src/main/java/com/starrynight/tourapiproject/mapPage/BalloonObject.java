@@ -12,7 +12,6 @@ public class BalloonObject implements Serializable {
     private double longitude;   //경도
     private double latitude;    //위도
     //말풍선 속 내용
-
     private String name;
     private String address;
     private String point_type;  //관광지, 관측지타입
