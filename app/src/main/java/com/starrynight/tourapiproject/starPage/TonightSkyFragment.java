@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.starPage;
 
+import android.animation.ArgbEvaluator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,19 +16,24 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.EditText;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.ortiz.touchview.TouchImageView;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.starPage.horoscope.Horoscope;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
@@ -36,6 +42,7 @@ import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -49,7 +56,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     private LinearLayout bottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
 
-    private EditText editSearch;
+    private SearchView editSearch;
     //나침반 관련
     private SensorManager mSensorManger;
     private Sensor mAcclerometer;
@@ -105,6 +112,19 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     Date yearEndDate;
     Date yearStartDate;
 
+    //별자리 운세
+    ViewPager horViewPager;
+    Adapter horAdapter;
+    Integer[] colors = null;
+    List<Horoscope> horoscopes;
+    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+
+
+    //검색
+    ListView listView;
+    ArrayList<String> stringArrayList = new ArrayList<>();
+    ArrayAdapter<String> adapter;
+
     Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
 
     @Override
@@ -117,6 +137,10 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tonight_sky, container, false);
+
+        //별자리 운세
+
+
 
         //나침반
         mSensorManger = (SensorManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SENSOR_SERVICE);
@@ -244,7 +268,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         helpBackBtn = v.findViewById(R.id.help_back_btn);
         dim = v.findViewById(R.id.dim);
         touchImageView = v.findViewById(R.id.touchImage);
-        compass = v.findViewById(R.id.compass);
+        compass = v.findViewById(R.id.compass_needle);
         starBackBtn = v.findViewById(R.id.star_back_btn);
 
         helpBtn.setOnClickListener(new View.OnClickListener() {
@@ -373,4 +397,5 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     public void onDestroyView() {
         super.onDestroyView();
     }
+
 }
