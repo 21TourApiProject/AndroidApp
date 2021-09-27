@@ -42,10 +42,7 @@ import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
