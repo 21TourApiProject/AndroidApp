@@ -244,7 +244,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         helpBackBtn = v.findViewById(R.id.help_back_btn);
         dim = v.findViewById(R.id.dim);
         touchImageView = v.findViewById(R.id.touchImage);
-        compass = v.findViewById(R.id.compass);
+        compass = v.findViewById(R.id.compass_needle);
         starBackBtn = v.findViewById(R.id.star_back_btn);
 
         helpBtn.setOnClickListener(new View.OnClickListener() {
