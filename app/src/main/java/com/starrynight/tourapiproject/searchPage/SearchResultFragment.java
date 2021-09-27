@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.searchPage;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -162,6 +163,52 @@ public class SearchResultFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 keyword = query;
                 //여기에 진혁이가 전체 결과 새로 띄우는거 연결해줘야 함 네...?
+                for(int i=0; i<17; i++){
+                    if (area.get(i) == 1){ //선택했으면
+                        areaCodeList.add(areaCode[i]);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if (hashTag.get(i) == 1){ //선택했으면
+                        hashTagIdList.add((long)(i+1));
+                    }
+                }
+                List<SearchParams1> finalList = new ArrayList<>();
+                Filter filter = new Filter(areaCodeList, hashTagIdList);
+                SearchKey searchKey = new SearchKey(filter, keyword);
+                Call<List<SearchParams1>> call = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
+                call.enqueue(new Callback<List<SearchParams1>>() {
+                    @Override
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                        if (response.isSuccessful()){
+                            obResult = response.body();
+                            finalList.addAll(obResult);
+                            Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                            call2.enqueue(new Callback<List<SearchParams1>>() {
+                                @Override
+                                public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                                    if (response.isSuccessful()){
+                                        tpResult=response.body();
+                                        finalList.addAll(tpResult);
+                                        SearchResultAdapter searchResultAdapter = new SearchResultAdapter(finalList, getContext());
+                                        searchResult.setAdapter(searchResultAdapter);
+                                    }else{Log.d(TAG,"검색페이지 관측지,관광지 실패");}
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+                                    Log.d(TAG,"검색페이지 관측지,관광지 인터넷 오류");
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+
+                    }
+                });
+
 
                 return true;
             }
@@ -293,8 +340,6 @@ public class SearchResultFragment extends Fragment {
                 postText.setVisibility(View.VISIBLE);
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
-                areaCodeList.add(0L);
-                hashTagIdList.add(0L);
 
                 for(int i=0; i<17; i++){
                     if (area.get(i) == 1){ //선택했으면
@@ -314,6 +359,7 @@ public class SearchResultFragment extends Fragment {
                     public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                         if (response.isSuccessful()){
                             Log.d("searchPost","검색 게시물 업로드 성공");
+                            System.out.println(keyword);
                             postResult=response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
                             searchResult.setAdapter(postAdapter);
