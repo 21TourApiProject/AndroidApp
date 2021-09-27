@@ -21,8 +21,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="24dp"
+                android:focusableInTouchMode="true"
                 android:weightSum="7">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="false">
                 <SearchView
                     android:id="@+id/search"
                     android:layout_width="match_parent"
@@ -31,7 +36,9 @@
                     android:layout_marginEnd="18dp"
                     android:layout_marginBottom="38dp"
                     android:layout_weight="7"
+                    app:iconifiedByDefault="false"
                     android:background="@drawable/postwrite__search_bar" />
+                </FrameLayout>
 
                 <Button
                     android:id="@+id/mapBtn"
