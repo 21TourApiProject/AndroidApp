@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.touristPointPage;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -19,6 +21,7 @@ public class OverviewPopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); //테두리에 이상한거 안남게
         setContentView(R.layout.activity_tp_overview_pop);
 
 //        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();

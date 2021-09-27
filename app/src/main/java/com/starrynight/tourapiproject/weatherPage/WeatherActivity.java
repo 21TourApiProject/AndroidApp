@@ -22,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
@@ -31,6 +33,7 @@ import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustMode
 import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustRetrofit;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
+import com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit.WtTodayParams;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -74,6 +77,9 @@ public class WeatherActivity extends AppCompatActivity {
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
     int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+    //관측적합도
+    RecyclerView obFitList;
 
     double observationalFitDegree;
     double cloudVolume;
@@ -246,6 +252,12 @@ public class WeatherActivity extends AppCompatActivity {
     String precipState = "나쁨";
     String lightPolState = "좋음";
 
+    //오늘의 날씨
+    String todayWtId;
+    String todayWtName1;
+    String todayWtName2;
+    String todayWtName;
+
     {
         try {
             WT_MET_API_KEY = URLDecoder.decode("7c7ba4d9df15258ce566f6592d875413", "UTF-8");
@@ -278,6 +290,12 @@ public class WeatherActivity extends AppCompatActivity {
 
         selectDateTime = selectDate + selectTime;
         Log.d("selectDateTime", selectDateTime);
+
+
+        obFitList = findViewById(R.id.ob_fit_recycler);
+        LinearLayoutManager obFitLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        obFitList.setLayoutManager(obFitLayoutManager);
+
     }
 
     public void setTextView() {
@@ -751,6 +769,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 windText = data.getHourly().get(i).getWindSpeed() + "m/s";
                                 humidityText = data.getHourly().get(i).getHumidity() + "%";
                                 precipitationText = data.getHourly().get(i).getPop();
+                                todayWtId = data.getHourly().get(i).getWeather().get(0).getId();
 
                                 doublePrecip = Double.parseDouble(precipitationText) * 100;
                                 intPrecip = (int) doublePrecip;
@@ -761,6 +780,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 windTv.setText(windText);
                                 humidityTv.setText(humidityText);
                                 precipitationTv.setText(stringPrecip);
+                                connectTodayWeather();
                                 Log.d("getI", String.valueOf(i));
                             }
                         }
@@ -779,6 +799,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 windText = data.getDaily().get(i).getWindSpeed() + "m/s";
                                 humidityText = data.getDaily().get(i).getHumidity() + "%";
                                 precipitationText = data.getDaily().get(i).getPop();
+                                todayWtId = data.getDaily().get(i).getWeather().get(0).getId();
 
                                 doublePrecip = Double.parseDouble(precipitationText) * 100;
                                 intPrecip = (int) doublePrecip;
@@ -790,6 +811,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 windTv.setText(windText);
                                 humidityTv.setText(humidityText);
                                 precipitationTv.setText(stringPrecip);
+                                connectTodayWeather();
                                 Log.d("getIDaily", String.valueOf(i));
                             }
                         }
@@ -818,7 +840,6 @@ public class WeatherActivity extends AppCompatActivity {
 
                                 maxLightPolTv.setText(maxLightPolText);
                                 minLightPolTv.setText(minLightPolText);
-
                             }
                             return false;
                         }
@@ -1176,19 +1197,19 @@ public class WeatherActivity extends AppCompatActivity {
 
     //관측적합도
     public double setObservationalFitDegree() {
-        cloudVolumeValue = -100*(-(1/(-(0.25)*(cloudVolume/100-2.7))-1.48148));
+        cloudVolumeValue = -100 * (-(1 / (-(0.25) * (cloudVolume / 100 - 2.7)) - 1.48148));
 
         if (moonAge <= 0.5) {
             moonAgeValue = Math.round((-8 * Math.pow(moonAge, 3.46)) / 0.727 * 100);
         } else if (moonAge > 0.5 && moonAge <= 0.5609) {
             moonAgeValue = Math.round((-75 * Math.pow(moonAge - 0.5, 2) + 0.727) / 0.727 * 100);
         } else if (moonAge > 0.5609) {
-            moonAgeValue = Math.round((-1 / (5.6 * Math.pow(moonAge + 0.3493, 10))-0.0089) / 0.727 * 100);
+            moonAgeValue = Math.round((-1 / (5.6 * Math.pow(moonAge + 0.3493, 10)) - 0.0089) / 0.727 * 100);
         }
-        if (feel_like<18){
-            feel_likeValue=-0.008*Math.pow((feel_like-18),2);
-        }else{
-            feel_likeValue=-0.09*Math.pow((feel_like-18),2);
+        if (feel_like < 18) {
+            feel_likeValue = -0.008 * Math.pow((feel_like - 18), 2);
+        } else {
+            feel_likeValue = -0.09 * Math.pow((feel_like - 18), 2);
         }
 
         if (fineDust == "good") {
@@ -1198,16 +1219,16 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (fineDust == "bad") {
             fineDustValue = -20;
         }
-        precipitationProbabilityValue = 100*(-(1/(-(1.2)*(precipitationProbability/100-1.5))-0.55556));
+        precipitationProbabilityValue = 100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556));
 
-        if (lightPollution<28.928){
-            lightPollutionValue=-(1/(-(0.001)*(lightPollution-48))-20.833);
-        }else if (lightPollution>=28.928 && lightPollution<77.53){
-            lightPollutionValue=-(1/(-(0.0001)*(lightPollution+52))+155);
-        }else if (lightPollution>=77.53 && lightPollution<88.674){
-            lightPollutionValue = -(1/(-(0.001)*(lightPollution-110))+47);
-        }else{
-            lightPollutionValue= -(1/(-(0.01)*(lightPollution-71))+100);
+        if (lightPollution < 28.928) {
+            lightPollutionValue = -(1 / (-(0.001) * (lightPollution - 48)) - 20.833);
+        } else if (lightPollution >= 28.928 && lightPollution < 77.53) {
+            lightPollutionValue = -(1 / (-(0.0001) * (lightPollution + 52)) + 155);
+        } else if (lightPollution >= 77.53 && lightPollution < 88.674) {
+            lightPollutionValue = -(1 / (-(0.001) * (lightPollution - 110)) + 47);
+        } else {
+            lightPollutionValue = -(1 / (-(0.01) * (lightPollution - 71)) + 100);
         }
 
         observationalFitDegree = 100 + cloudVolumeValue + feel_likeValue + moonAgeValue + fineDustValue + precipitationProbabilityValue + lightPollutionValue;
@@ -1580,7 +1601,7 @@ public class WeatherActivity extends AppCompatActivity {
                     Log.d("latitude", String.valueOf(latitude));
                     Log.d("longitude", String.valueOf(longitude));
                 } else {
-                    System.out.println("지역명으로 경도, 위도 받아오기 실패");
+                    Log.d("connectWtArea", "지역명으로 경도, 위도 받아오기 실패");
                 }
             }
 
@@ -1641,5 +1662,39 @@ public class WeatherActivity extends AppCompatActivity {
             minLightPolTv.setVisibility(View.VISIBLE);
             lightSlashTv.setVisibility(View.VISIBLE);
         }
+    }
+
+    //날씨 id로 오늘의 날씨 text 받아오기
+    public void connectTodayWeather() {
+        Call<WtTodayParams> todayInfoCall = com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit.RetrofitClient.getApiService().getTodayWeatherInfo(todayWtId);
+        todayInfoCall.enqueue(new Callback<WtTodayParams>() {
+            @Override
+            public void onResponse(Call<WtTodayParams> call, Response<WtTodayParams> response) {
+                if (response.isSuccessful()) {
+
+                    WtTodayParams result = response.body();
+                    todayWtName1 = result.getTodayWtName1();
+                    todayWtName2 = result.getTodayWtName2();
+
+                    //한줄
+                    if (todayWtName2.equals("null")) {
+                        todayWtName = todayWtName1;
+                        todayWeatherTv.setText(todayWtName);
+                    }
+                    //두줄
+                    else {
+                        todayWtName = todayWtName1 + "\n" + todayWtName2;
+                        todayWeatherTv.setText(todayWtName);
+                    }
+                } else {
+                    Log.d("connectWtToday", "id로 오늘의 날씨 받아오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WtTodayParams> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
     }
 }

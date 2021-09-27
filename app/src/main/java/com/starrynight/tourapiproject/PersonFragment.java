@@ -2,16 +2,13 @@ package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -204,7 +201,6 @@ public class PersonFragment extends Fragment {
                                 Glide.with(getContext()).load(imageName).into(myWishImage1);
                             }
                             else{
-                                //imageName = imageName.substring(1, imageName.length() - 1);
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage1);
                             }
                             myWishImage1.setClipToOutline(true);
@@ -219,7 +215,6 @@ public class PersonFragment extends Fragment {
                                     Glide.with(getContext()).load(imageName).into(myWishImage2);
                                 }
                                 else{
-                                    //imageName = imageName.substring(1, imageName.length() - 1);
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage2);
                                 }
                                 myWishImage2.setClipToOutline(true);
@@ -234,7 +229,6 @@ public class PersonFragment extends Fragment {
                                         Glide.with(getContext()).load(imageName).into(myWishImage3);
                                     }
                                     else{
-                                        //imageName = imageName.substring(1, imageName.length() - 1);
                                         Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage3);
                                     }
                                     myWishImage3.setClipToOutline(true);

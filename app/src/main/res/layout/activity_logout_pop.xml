@@ -13,29 +13,29 @@
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="23dp"
-        android:text="로그아웃을 하시겠습니까?"
+        android:text="로그아웃 하시겠습니까?"
         android:textColor="@color/white"
         android:textSize="12sp" />
 
     <Button
         android:id="@+id/logoutBtn"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/logoutpop_logout"
         android:onClick="logout" />
 
     <Button
         android:id="@+id/closeLogout"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/logoutpop_close"
         android:onClick="closeLogout" />
 </LinearLayout>
