@@ -473,6 +473,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 postObservePointItem.setText(observationName);
                 postObservePointName=observationName;
                 }else{postObservePointItem.setText(optionobservationName);
+                ob_linear.setVisibility(View.VISIBLE);
                 postObservePointName = "나만의 관측지";}
 
             }else{Log.d("postObservation","검색 관측지 데이터 로드 실패");}
@@ -487,15 +488,22 @@ public class PostWriteActivity extends AppCompatActivity {
                 GridLayoutManager layoutManager = new GridLayoutManager(this,6,GridLayoutManager.VERTICAL,false);
                 recyclerView.setLayoutManager(layoutManager);
                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
-                if (hashTagList.size()!=0){
+                if (hashTagList.size()!=0 && optionhashTagList.length!=0){
                 for (int i=0;i<hashTagList.size();i++){
                     adapter.addItem(new PostHashTagItem(hashTagList.get(i)));
                     }
-                }else{
-                    for (int i=0;i<optionhashTagList.length;i++){
-                    adapter.addItem(new PostHashTagItem(optionhashTagList[i]));
+                    for (String s : optionhashTagList) {
+                        adapter.addItem(new PostHashTagItem(s));
+                    }
+                }else if (hashTagList.size()!=0){
+                    for (int i=0;i<hashTagList.size();i++){
+                        adapter.addItem(new PostHashTagItem(hashTagList.get(i)));
+                    }
                 }
-
+                else{
+                    for (String s : optionhashTagList) {
+                        adapter.addItem(new PostHashTagItem(s));
+                    }
                 }
                 recyclerView.setAdapter(adapter);
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
