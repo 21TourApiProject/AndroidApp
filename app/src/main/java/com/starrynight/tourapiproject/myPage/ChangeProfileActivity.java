@@ -5,11 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
@@ -76,7 +71,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private Boolean isNotNickName = false; //올바른 닉네임 형식이 아닌지
     private Boolean isNickNameDuplicate = false; //닉네임이 중복인지
 
-    File file; //이미지 파일
+    Uri uri;
     String fileName;
 
     @Override
@@ -167,9 +162,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         changeNicknameGuide.setText("");
 
                         //s3 사진 업로드
-                        Log.d(TAG, "새로운 파일 이름 = " + fileName);
                         //if(beforeImage != null) deleteS3File(beforeImage); //이전 사진 삭제
-                        uploadWithTransferUtility(fileName, file);
+                        uploadWithTransferUtility();
 
                         //닉네임 변경 put api
                         Call<Void> call = RetrofitClient.getApiService().updateNickName(userId, changeNickname.getText().toString());
@@ -234,15 +228,11 @@ public class ChangeProfileActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try {
                     isProfileImageChange = true;
-                    Uri uri = data.getData();
+                    uri = data.getData();
                     InputStream in = getContentResolver().openInputStream(uri);
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     profileImage.setImageBitmap(img);
-
-                    file = new File(getRealPathFromURI(uri));
-                    fileName = "PI" + userId + "_" + file.getName();
-                    Log.d(TAG, "새로운 파일 이름 = " + fileName);
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -251,26 +241,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 Log.d(TAG, "사진 선택 취소");
             }
         }
-    }
-
-    // 비트맵 둥글게 자르는 함수
-    public Bitmap getCroppedBitmap(Bitmap bitmap) {
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
-
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
-                bitmap.getWidth() / 2, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        return output;
     }
 
     // 이미지 uri 경로 함수
@@ -284,7 +254,20 @@ public class ChangeProfileActivity extends AppCompatActivity {
     }
 
     //s3에 사진업로드 하는 함수
-    public void uploadWithTransferUtility(String fileName, File file) {
+    public void uploadWithTransferUtility() {
+
+        File file = new File(getRealPathFromURI(uri));
+        BitmapFactory.Options option1 = getBitmapSize(file);
+        int maxWidthSize = 1000;
+        int maxHeightSize = 1000;
+        if (option1.outWidth > maxWidthSize || option1.outHeight > maxHeightSize) {
+            // 최대 크기를 벗어난 경우의 처리, 이미지 크기 변환 등
+            BitmapFactory.Options option2 = new BitmapFactory.Options();
+            option2.inSampleSize = 2;
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), option2);
+        }
+        fileName = "PI" + userId + "_" + file.getName();
+        Log.d(TAG, "새로운 파일 이름 = " + fileName);
 
         AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
@@ -314,6 +297,14 @@ public class ChangeProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    private BitmapFactory.Options getBitmapSize(File imageFile) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+        return options;
+    }
+
 
     public void deleteS3File(String beforeImage){
         AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");
