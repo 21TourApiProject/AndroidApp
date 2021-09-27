@@ -45,8 +45,6 @@
             android:value="2201411c61cc7086fe639ce660ccb21e" />
 
         <activity android:name=".myPage.ChangePasswordActivity" />
-        <activity android:name=".myPage.PersonalDataActivity" />
-        <activity android:name=".myPage.TermsAndConditionsActivity" />
         <activity android:name=".myPage.CustomerSCActivity" />
         <activity android:name=".myPage.UsageGuideActivity" />
         <activity android:name=".myPage.NoticeActivity" />

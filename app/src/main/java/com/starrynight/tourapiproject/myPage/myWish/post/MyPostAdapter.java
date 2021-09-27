@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.myPage.myWish.post;
 
 import android.content.Context;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +87,9 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             myWishPostWriter = itemView.findViewById(R.id.myWishPostWriter);
             myWishPostHashTag = itemView.findViewById(R.id.myWishPostHashTag);
 
+            myWishPostProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
+            myWishPostProfileImage.setClipToOutline(true);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -103,7 +108,9 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
                 myWishPostImage.setClipToOutline(true);
             }
             if (item.getProfileImage() != null){
-                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + item.getProfileImage()).into(myWishPostProfileImage);
+                String imageName = item.getProfileImage();
+                imageName = imageName.substring(1, imageName.length() - 1);
+                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + imageName).into(myWishPostProfileImage);
             }
             myWishPostTitle.setText(item.getTitle());
             myWishPostWriter.setText(item.getNickName());
