@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".searchPage.SearchResultFragment" >
+    tools:context=".searchPage.SearchResultFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,29 +18,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingHorizontal="24dp"
                 android:weightSum="7">
 
                 <SearchView
                     android:id="@+id/search2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="7">
+                    android:layout_height="30dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginEnd="18dp"
+                    android:layout_marginBottom="38dp"
+                    android:queryHint="검색어를 입력하세요"
+                    android:layout_weight="7"
+                    android:background="@drawable/postwrite__search_bar">
 
                 </SearchView>
 
                 <Button
                     android:id="@+id/mapBtn2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="22dp"
                     android:layout_weight="1"
-                    android:hint="지도" />
+                    android:background="@drawable/search__map_btn"/>
 
                 <Button
                     android:id="@+id/filterBtn2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="22dp"
                     android:layout_weight="1"
-                    android:hint="필터" />
+                    android:background="@drawable/search__filter_btn" />
 
             </LinearLayout>
 
@@ -55,6 +64,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/allContentBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="전체" />
                 <Button
                     android:id="@+id/obBtn"
                     android:layout_width="wrap_content"
@@ -82,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="관측지 검색결과"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tpText"

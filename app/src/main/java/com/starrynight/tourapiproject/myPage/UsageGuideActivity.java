@@ -1,8 +1,10 @@
 package com.starrynight.tourapiproject.myPage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
 
@@ -12,5 +14,14 @@ public class UsageGuideActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usage_guide);
+
+        //뒤로 가기
+        Button usageBack = findViewById(R.id.usageBack);
+        usageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

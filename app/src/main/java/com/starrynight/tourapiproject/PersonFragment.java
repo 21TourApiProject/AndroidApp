@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject;
 
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,13 +47,15 @@ import retrofit2.Response;
 
 public class PersonFragment extends Fragment {
 
-    private static final String LOG = "PersonFragment";
+    private static final String TAG = "PersonFragment";
+    private static final int HAVE_TO_REFRESH = 10;
 
     Long userId;
     User2 user;
     List<String> myHashTagResult;
     ImageView profileImage;
     TextView nickName;
+    RecyclerView myHashTag;
 
     LinearLayout myWishLayout;
     LinearLayout myPostLayout;
@@ -62,7 +66,6 @@ public class PersonFragment extends Fragment {
     TextView myWishTitle2;
     ImageView myWishImage3;
     TextView myWishTitle3;
-
     ImageView myPostImage1;
     TextView myPostTitle1;
     ImageView myPostImage2;
@@ -79,6 +82,7 @@ public class PersonFragment extends Fragment {
 
         nickName = v.findViewById(R.id.nickName);
         profileImage = v.findViewById(R.id.profileImage);
+        myHashTag = v.findViewById(R.id.myHashTag);
 
         myWishLayout = v.findViewById(R.id.myWishLayout);
         myPostLayout = v.findViewById(R.id.myPostLayout);
@@ -89,7 +93,6 @@ public class PersonFragment extends Fragment {
         myWishTitle2 = v.findViewById(R.id.myWishTitle2);
         myWishImage3 = v.findViewById(R.id.myWishImage3);
         myWishTitle3 = v.findViewById(R.id.myWishTitle3);
-
         myPostImage1 = v.findViewById(R.id.myPostImage1);
         myPostTitle1 = v.findViewById(R.id.myPostTitle1);
         myPostImage2 = v.findViewById(R.id.myPostImage2);
@@ -97,6 +100,8 @@ public class PersonFragment extends Fragment {
         myPostImage3 = v.findViewById(R.id.myPostImage3);
         myPostTitle3 = v.findViewById(R.id.myPostTitle3);
 
+        profileImage.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImage.setClipToOutline(true);
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
@@ -109,7 +114,7 @@ public class PersonFragment extends Fragment {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } Log.d(LOG, "userId " + userId);
+        } Log.d(TAG, "userId " + userId);
 
         //닉네임, 프로필 사진을 불러오기 위한 get api
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
@@ -118,15 +123,20 @@ public class PersonFragment extends Fragment {
             public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-
-                    if (user.getProfileImage() != null){
-                        String fileName = user.getProfileImage();
-                        fileName = fileName.substring(1,fileName.length()-1);
-                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
+                    if (user.getProfileImage() != null) {
+                        if(user.getProfileImage().startsWith("http://")){
+                            Glide.with(getContext()).load(user.getProfileImage()).into(profileImage);
+                        }
+                        else{
+                            String fileName = user.getProfileImage();
+                            fileName = fileName.substring(1, fileName.length() - 1);
+                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
+                        }
                     }
                     nickName.setText(user.getNickName());
-                } else {
-                    System.out.println("사용자 정보 불러오기 실패");
+                }
+                else {
+                    Log.d(TAG, "사용자 정보 불러오기 실패");
                 }
             }
             @Override
@@ -136,24 +146,22 @@ public class PersonFragment extends Fragment {
         });
 
 
-        //사용자 해시태그 리사이클러 뷰
-        RecyclerView myHashTagRecyclerview = v.findViewById(R.id.myHashTag);
-        LinearLayoutManager myHashTagLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myHashTagRecyclerview.setLayoutManager(myHashTagLayoutManager);
-        myHashTagRecyclerview.setHasFixedSize(true);
-        myHashTagResult = new ArrayList<>();
-
         //사용자 해시태그를 불러오기 위한 get api
-        Call<List<String>> call2 = RetrofitClient.getApiService().getMyHashTag(userId);
-        call2.enqueue(new Callback<List<String>>() {
+        myHashTagResult = new ArrayList<>();
+        LinearLayoutManager myHashTagLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myHashTag.setLayoutManager(myHashTagLayoutManager);
+        myHashTag.setHasFixedSize(true);
+
+        Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag3(userId);
+        call3.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response <List<String>> response) {
                 if (response.isSuccessful()) {
                     myHashTagResult = response.body();
                     MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(myHashTagResult);
-                    myHashTagRecyclerview.setAdapter(hashTagAdapter);
+                    myHashTag.setAdapter(hashTagAdapter);
                 } else {
-                    System.out.println("사용자 해시태그 불러오기 실패");
+                    Log.d(TAG, "사용자 해시태그 불러오기 실패");
                 }
             }
             @Override
@@ -162,15 +170,168 @@ public class PersonFragment extends Fragment {
             }
         });
 
-        //선호 해시태크 변경
-        Button changeMyHashTag = v.findViewById(R.id.changeMyHashTag);
+        //선호 해시태크 변경 페이지로 이동
+        LinearLayout changeMyHashTag = v.findViewById(R.id.changeMyHashTag);
         changeMyHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("userId = " + userId);
                 Intent intent = new Intent(getActivity(), SelectMyHashTagActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
+            }
+        });
+
+
+        //내 찜 불러오는 api
+        Call<List<MyWish>> call4 = RetrofitClient.getApiService().getMyWish3(userId);
+        call4.enqueue(new Callback<List<MyWish>>() {
+            @Override
+            public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
+                if (response.isSuccessful()) {
+                    myWishes = response.body();
+                    int size = myWishes.size();
+                    int i = 0;
+                    if(size == 0)
+                        myWishLayout.setVisibility(View.GONE);
+                    else {
+                        myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                        if (myWishes.get(i).getThumbnail() != null){
+                            String imageName = myWishes.get(i).getThumbnail();
+                            if(imageName.startsWith("http://")){
+                                Glide.with(getContext()).load(imageName).into(myWishImage1);
+                            }
+                            else{
+                                Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage1);
+                            }
+                            myWishImage1.setClipToOutline(true);
+                        }
+                        myWishTitle1.setText(myWishes.get(i).getTitle());
+                        i++;
+                        if (size > 1){
+                            myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                            if (myWishes.get(i).getThumbnail() != null){
+                                String imageName = myWishes.get(i).getThumbnail();
+                                if(imageName.startsWith("http://")){
+                                    Glide.with(getContext()).load(imageName).into(myWishImage2);
+                                }
+                                else{
+                                    Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage2);
+                                }
+                                myWishImage2.setClipToOutline(true);
+                            }
+                            myWishTitle2.setText(myWishes.get(i).getTitle());
+                            i++;
+                            if (size > 2){
+                                myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                                if (myWishes.get(i).getThumbnail() != null){
+                                    String imageName = myWishes.get(i).getThumbnail();
+                                    if(imageName.startsWith("http://")){
+                                        Glide.with(getContext()).load(imageName).into(myWishImage3);
+                                    }
+                                    else{
+                                        Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage3);
+                                    }
+                                    myWishImage3.setClipToOutline(true);
+                                }
+                                myWishTitle3.setText(myWishes.get(i).getTitle());
+                            }
+                        }
+                    }
+
+                } else {
+                    Log.d(TAG, "내 찜 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<MyWish>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+
+        //내 게시물 불러오는 api
+        Call<List<MyPost3>> call5 = RetrofitClient.getApiService().getMyPost3(userId);
+        call5.enqueue(new Callback<List<MyPost3>>() {
+            @Override
+            public void onResponse(Call<List<MyPost3>> call, Response<List<MyPost3>> response) {
+                if (response.isSuccessful()) {
+                    myPost3s = response.body();
+                    int size = myPost3s.size();
+                    int i = 0;
+                    if(size == 0)
+                        myPostLayout.setVisibility(View.GONE);
+                    else {
+                        myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                        if (myPost3s.get(i).getThumbnail() != null) {
+                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
+                            myPostImage1.setClipToOutline(true);
+                        }
+                        myPostTitle1.setText(myPost3s.get(i).getTitle());
+                        i++;
+                        if (size > 1){
+                            myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                            if (myPost3s.get(i).getThumbnail() != null) {
+                                Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
+                                myPostImage2.setClipToOutline(true);
+                            }
+                            myPostTitle2.setText(myPost3s.get(i).getTitle());
+                            i++;
+                            if (size > 2){
+                                myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                                if (myPost3s.get(i).getThumbnail() != null) {
+                                    Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
+                                    myPostImage3.setClipToOutline(true);
+                                }
+                                myPostTitle3.setText(myPost3s.get(i).getTitle());
+                            }
+                        }
+                    }
+
+                } else {
+                    Log.d(TAG, "내 게시물 불러오기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<MyPost3>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        //나의 여행 버킷리스트 페이지로 이동
+        LinearLayout myWishBtn = v.findViewById(R.id.myWishBtn);
+        myWishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyWishActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
+            }
+        });
+        myWishLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyWishActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
+            }
+        });
+
+        //내 게시물 페이지로 이동
+        LinearLayout myPostBtn = v.findViewById(R.id.myPostBtn);
+        myPostBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyPostActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
+            }
+        });
+        myPostLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyPostActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -180,7 +341,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PostWriteActivity.class);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -191,7 +352,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -202,7 +363,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
         TextView nickName = v.findViewById(R.id.nickName);
@@ -211,136 +372,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);
                 intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
-            }
-        });
-
-
-        //내 찜 불러오는 api
-        Call<List<MyWish>> call3 = RetrofitClient.getApiService().getMyWish3(userId);
-        call3.enqueue(new Callback<List<MyWish>>() {
-            @Override
-            public void onResponse(Call<List<MyWish>> call, Response<List<MyWish>> response) {
-                if (response.isSuccessful()) {
-                    myWishes = response.body();
-                    int size = myWishes.size();
-                    int i = 0;
-                    if(size == 0){
-                        myWishLayout.setVisibility(View.GONE);
-                    }
-                    else {
-                        if (myWishes.get(i).getThumbnail() != null)
-                            Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage1);
-                        else
-                            myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
-                        myWishTitle1.setText(myWishes.get(i).getTitle());
-                        i++;
-                        if (size > 1){
-                            if (myWishes.get(i).getThumbnail() != null)
-                                Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage2);
-                            else
-                                myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
-                            myWishTitle2.setText(myWishes.get(i).getTitle());
-                            i++;
-                            if (size > 2){
-                                if (myWishes.get(i).getThumbnail() != null)
-                                    Glide.with(getContext()).load(myWishes.get(i).getThumbnail()).into(myWishImage3);
-                                else
-                                    myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
-                                myWishTitle3.setText(myWishes.get(i).getTitle());
-                            }
-                        }
-                    }
-
-                } else {
-                    System.out.println("내 찜 불러오기 실패");
-                }
-            }
-            @Override
-            public void onFailure(Call<List<MyWish>> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
-            }
-        });
-
-        //나의 여행 버킷리스트 페이지로 이동
-        Button myWishBtn = v.findViewById(R.id.myWishBtn);
-        myWishBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyWishActivity.class);
-                intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
-            }
-        });
-        myWishLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyWishActivity.class);
-                intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
-            }
-        });
-
-
-        //내 게시물 불러오는 api
-        Call<List<MyPost3>> call4 = RetrofitClient.getApiService().getMyPost3(userId);
-        call4.enqueue(new Callback<List<MyPost3>>() {
-            @Override
-            public void onResponse(Call<List<MyPost3>> call, Response<List<MyPost3>> response) {
-                if (response.isSuccessful()) {
-                    myPost3s = response.body();
-                    int size = myPost3s.size();
-                    int i = 0;
-                    if(size == 0){
-                        myPostLayout.setVisibility(View.GONE);
-                    }
-                    else {
-                        myPostTitle1.setText(myPost3s.get(i).getTitle());
-                        if (myPost3s.get(i).getThumbnail() != null)
-                            Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
-                        else myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
-                        i++;
-                        if (size > 1){
-                            myPostTitle2.setText(myPost3s.get(i).getTitle());
-                            if (myPost3s.get(i).getThumbnail() != null)
-                                Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
-                            else myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
-                            i++;
-                            if (size > 2){
-                                myPostTitle3.setText(myPost3s.get(i).getTitle());
-                                if (myPost3s.get(i).getThumbnail() != null)
-                                    Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
-                            }   else myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mypost_image));
-                        }
-                    }
-
-                } else {
-                    System.out.println("내 게시물 불러오기 실패");
-                }
-            }
-            @Override
-            public void onFailure(Call<List<MyPost3>> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
-            }
-        });
-
-
-        //내 게시물 페이지로 이동
-        Button myPostBtn = v.findViewById(R.id.myPostBtn);
-        myPostBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyPostActivity.class);
-                intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
-            }
-        });
-        myPostLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyPostActivity.class);
-               intent.putExtra("userId", userId);
-                startActivityForResult(intent, 101);
+                startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
 
@@ -350,7 +382,8 @@ public class PersonFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 101){
+        if(requestCode == HAVE_TO_REFRESH){
+            Log.e(TAG, "새로고침");
             //프래그먼트 새로고침
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(this).attach(this).commit();

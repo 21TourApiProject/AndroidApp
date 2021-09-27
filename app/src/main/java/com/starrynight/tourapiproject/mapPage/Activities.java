@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.mapPage;
 
 public enum Activities {
+    FILTER(222),
+    SEARCHRESULT(333),
     MAINPOST(444),
     POST(555),
     MAP(666),
