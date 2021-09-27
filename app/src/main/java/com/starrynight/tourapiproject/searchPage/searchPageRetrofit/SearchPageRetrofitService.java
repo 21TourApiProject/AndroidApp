@@ -17,7 +17,7 @@ public interface SearchPageRetrofitService {
     @POST("search/observation")
     Call<List<SearchParams1>> getObservationWithFilter(@Body SearchKey searchKey);
 
-    @POST("post/search")
+    @POST("search/post")
     Call<List<MyPost>> getPostWithFilter(@Body SearchKey searchKey);
 
 }

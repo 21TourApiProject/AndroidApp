@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
+import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
@@ -152,6 +153,14 @@ public class PostActivity extends AppCompatActivity{
                                 Log.d("postObservation","게시물 관측지 가져옴");
                                 Observation observation = response.body();
                                 postObservePoint.setText(observation.getObservationName());
+                                postObservePoint.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent1 = new Intent(getApplicationContext(), ObservationsiteActivity.class);
+                                        intent1.putExtra("observationId",observation.getObservationId());
+                                        startActivity(intent1);
+                                    }
+                                });
                             }else{Log.d("postObservation","게시물 관측지 실패");}
                         }
 
@@ -273,6 +282,60 @@ public class PostActivity extends AppCompatActivity{
                             Log.d("relatePostImage","관련 게시물 이미지 업로드 인터넷 오류");
                         }
                     });
+                    //게시물 해시태그
+                    Call<List<String>>call6 = RetrofitClient.getApiService().getPostHashTagName(postId);
+                    call6.enqueue(new Callback<List<String>>() {
+                        @Override
+                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                            if (response.isSuccessful()){
+                                if (!response.body().isEmpty()){
+                                    Log.d("postHashTag","게시물 해시태그 가져옴"+response.body());
+                                    postHashTags = response.body();
+                                    RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
+                                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),4,GridLayoutManager.VERTICAL,false);
+                                    hashTagRecyclerView.setLayoutManager(gridLayoutManager);
+                                    PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
+                                    for (int i=0;i<postHashTags.size();i++){
+                                        adapter2.addItem(new PostHashTagItem(postHashTags.get(i)));
+                                    }
+                                    if (post.getOptionHashTag()!=null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag()));}
+                                    if (post.getOptionHashTag2()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag2()));}
+                                    if (post.getOptionHashTag3()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag3()));}
+                                    if (post.getOptionHashTag4()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag4()));}
+                                    if (post.getOptionHashTag5()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag5()));}
+                                    if (post.getOptionHashTag6()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag6()));}
+                                    if (post.getOptionHashTag7()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag7()));}
+                                    if (post.getOptionHashTag8()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag8()));}
+                                    if (post.getOptionHashTag9()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag9()));}
+                                    if (post.getOptionHashTag10()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag10()));}
+                                    hashTagRecyclerView.setAdapter(adapter2);
+                                }else{
+                                    Log.d("optionHashTag","메인 해시태그 없음. 임의 해시태그 가져옴");
+                                    RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
+                                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.HORIZONTAL,false);
+                                    hashTagRecyclerView.setLayoutManager(gridLayoutManager);
+                                    PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
+                                    adapter.addItem(new PostHashTagItem(post.getOptionHashTag()));
+                                    if (post.getOptionHashTag2()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag2()));}
+                                    if (post.getOptionHashTag3()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag3()));}
+                                    if (post.getOptionHashTag4()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag4()));}
+                                    if (post.getOptionHashTag5()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag5()));}
+                                    if (post.getOptionHashTag6()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag6()));}
+                                    if (post.getOptionHashTag7()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag7()));}
+                                    if (post.getOptionHashTag8()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag8()));}
+                                    if (post.getOptionHashTag9()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag9()));}
+                                    if (post.getOptionHashTag10()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag10()));}
+                                    hashTagRecyclerView.setAdapter(adapter);
+                                }
+                            }else {Log.d("postHashTag","메인 해시태그 오류");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<String>> call, Throwable t) {
+                            Log.d("postHashTag","해시태그 인터넷 오류");
+                        }
+                    });
                 }else{Log.d("post","게시물 정보 업로드 실패");}
             }
 
@@ -283,49 +346,7 @@ public class PostActivity extends AppCompatActivity{
         });
 
 
-        Call<List<String>>call3 = RetrofitClient.getApiService().getPostHashTagName(postId);
-        call3.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                if (response.isSuccessful()){
-                    if (!response.body().isEmpty()){
-                    Log.d("postHashTag","게시물 해시태그 가져옴"+response.body());
-                    postHashTags = response.body();
-                    RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
-                    GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),4,GridLayoutManager.VERTICAL,false);
-                    hashTagRecyclerView.setLayoutManager(gridLayoutManager);
-                    PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
-                    for (int i=0;i<postHashTags.size();i++){
-                    adapter2.addItem(new PostHashTagItem(postHashTags.get(i)));
-                    }
-                    hashTagRecyclerView.setAdapter(adapter2);
-                }else{
-                        Log.d("optionHashTag","메인 해시태그 없음. 임의 해시태그 가져옴");
-                        RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
-                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,GridLayoutManager.HORIZONTAL,false);
-                        hashTagRecyclerView.setLayoutManager(gridLayoutManager);
-                        PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
-                        adapter.addItem(new PostHashTagItem(post.getOptionHashTag()));
-                        if (post.getOptionHashTag2()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag2()));}
-                        if (post.getOptionHashTag3()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag3()));}
-                        if (post.getOptionHashTag4()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag4()));}
-                        if (post.getOptionHashTag5()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag5()));}
-                        if (post.getOptionHashTag6()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag6()));}
-                        if (post.getOptionHashTag7()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag7()));}
-                        if (post.getOptionHashTag8()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag8()));}
-                        if (post.getOptionHashTag9()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag9()));}
-                        if (post.getOptionHashTag10()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag10()));}
-                        hashTagRecyclerView.setAdapter(adapter);
-                    }
-                }else {Log.d("postHashTag","메인 해시태그 오류");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
-                Log.d("postHashTag","해시태그 인터넷 오류");
-            }
-        });
         //이미 찜한건지 확인
         Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, postId, 2);
         call0.enqueue(new Callback<Boolean>() {

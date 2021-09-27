@@ -129,7 +129,7 @@ public class PersonFragment extends Fragment {
                         }
                         else{
                             String fileName = user.getProfileImage();
-                            fileName = fileName.substring(1, fileName.length() - 1);
+//                            fileName = fileName.substring(1, fileName.length() - 1);
                             Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
                         }
                     }
