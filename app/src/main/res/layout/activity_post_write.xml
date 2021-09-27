@@ -166,6 +166,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/postwrite__date"
                             android:onClick="onClickDatePicker"
+                            android:paddingEnd="10dp"
                             android:text="년도/월/일     "
                             android:textAlignment="center"
                             android:textSize="14sp" />
@@ -177,6 +178,7 @@
                             android:layout_marginStart="10dp"
                             android:background="@drawable/postwrite__date"
                             android:onClick="onClickTimePicker"
+                            android:paddingEnd="10dp"
                             android:text="시간"
                             android:textAlignment="center"
                             android:textSize="14sp" />
@@ -207,16 +209,32 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/postObservationItem"
+                    <LinearLayout
+                        android:id="@+id/postwrite_ob_linear"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/hashtag_background"
-                        android:hint="관측지역"
-                        android:textSize="11sp"
+                        android:orientation="horizontal"
                         android:visibility="invisible"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/postWrite_observePoint" />
+                        app:layout_constraintTop_toBottomOf="@id/postWrite_observePoint">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="20dp"
+                            android:layout_height="14dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/mainpage_observationpin" />
+
+                        <TextView
+                            android:id="@+id/postObservationItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="관측지역"
+                            android:textAlignment="center"
+                            android:textSize="11sp" />
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/observingPoint"
@@ -315,6 +333,7 @@
                         android:inputType="textLongMessage|textMultiLine"
                         android:lines="10"
                         android:scrollHorizontally="false"
+                        android:textSize="12sp"
                         tools:layout_marginTop="9dp" />
                 </LinearLayout>
             </LinearLayout>

@@ -1,9 +1,12 @@
 package com.starrynight.tourapiproject.myPage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -30,13 +33,18 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -46,10 +54,12 @@ import retrofit2.Response;
 public class ChangeProfileActivity extends AppCompatActivity {
 
     private static final int GET_GALLERY_IMAGE = 0;
+    private static final String TAG = "ChangeProfile";
 
     User2 user;
     Long userId;
     String beforeNickName; //변경하기전 닉네임
+    String beforeImage; //변경하기전 사진이름
     Boolean isProfileImageChange = false; //프로필 사진을 바꿨는지
 
     ImageView profileImage;
@@ -61,7 +71,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private Boolean isNotNickName = false; //올바른 닉네임 형식이 아닌지
     private Boolean isNickNameDuplicate = false; //닉네임이 중복인지
 
-    File file; //이미지 파일
+    Uri uri;
     String fileName;
 
     @Override
@@ -77,21 +87,30 @@ public class ChangeProfileActivity extends AppCompatActivity {
         changeNicknameGuide = findViewById(R.id.changeNicknameGuide);
         length = findViewById(R.id.length);
 
+        profileImage.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImage.setClipToOutline(true);
+
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
         call.enqueue(new Callback<User2>() {
             @Override
             public void onResponse(Call<User2> call, Response<User2> response) {
                 if (response.isSuccessful()) {
                     user = response.body();
-                    if (user.getProfileImage() != null){
-                        String fileName = user.getProfileImage();
-                        fileName = fileName.substring(1,fileName.length()-1);
-                        Glide.with(ChangeProfileActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage);
+                    if (user.getProfileImage() != null) {
+                        if(user.getProfileImage().startsWith("http://")){
+                            beforeImage = null;
+                            Glide.with(getApplicationContext()).load(user.getProfileImage()).into(profileImage);
+                        }
+                        else{
+                            beforeImage = user.getProfileImage();
+                            beforeImage = beforeImage.substring(1, beforeImage.length() - 1);
+                            Glide.with(getApplicationContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + beforeImage).into(profileImage);
+                        }
                     }
                     changeNickname.setText(user.getNickName());
                     beforeNickName = user.getNickName();
                 } else {
-                    System.out.println("사용자 정보 불러오기 실패");
+                    Log.d(TAG, "사용자 정보 불러오기 실패");
                 }
             }
             @Override
@@ -135,19 +154,46 @@ public class ChangeProfileActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isNickNameEmpty && !isNotNickName && !isNickNameDuplicate) {
-                    changeNicknameGuide.setText("");
+                if(!isProfileImageChange && beforeNickName.equals(changeNickname.getText().toString())){
+                    finish();
+                }
+                else{
+                    if (!isNickNameEmpty && !isNotNickName && !isNickNameDuplicate) {
+                        changeNicknameGuide.setText("");
 
-                    if (!beforeNickName.equals(changeNickname.getText().toString())) {
+                        //s3 사진 업로드
+                        //if(beforeImage != null) deleteS3File(beforeImage); //이전 사진 삭제
+                        uploadWithTransferUtility();
+
                         //닉네임 변경 put api
                         Call<Void> call = RetrofitClient.getApiService().updateNickName(userId, changeNickname.getText().toString());
                         call.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 if (response.isSuccessful()) {
-                                    System.out.println("닉네임 변경 성공");
+                                    Log.d(TAG, "닉네임 변경 성공");
+
+                                    //프로필 사진 변경 put api
+                                    Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
+                                    call2.enqueue(new Callback<Void>() {
+                                        @Override
+                                        public void onResponse(Call<Void> call2, Response<Void> response) {
+                                            if (response.isSuccessful()) {
+                                                Log.d(TAG, "프로필 사진 변경 성공");
+                                                finish(); //종료
+                                            } else {
+                                                Log.e(TAG, "프로필 사진 변경 실패");
+                                                Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<Void> call2, Throwable t) {
+                                            Log.e("연결실패", t.getMessage());
+                                            Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 } else {
-                                    System.out.println("닉네임 변경 실패");
+                                    Log.d(TAG, "닉네임 변경 실패");
                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -160,31 +206,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         });
                     }
                 }
-
-                //프로필 사진 변경 put api
-                if (isProfileImageChange){
-                    System.out.println("파일 이름 = " + fileName);
-                    uploadWithTransferUtility(fileName, file); //s3 사진 업로드
-
-                    Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
-                    call2.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call2, Response<Void> response) {
-                            if (response.isSuccessful()) {
-                                System.out.println("프로필 사진 변경 성공");
-                            } else {
-                                System.out.println("프로필 사진 변경 실패");
-                                Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<Void> call2, Throwable t) {
-                            Log.e("연결실패", t.getMessage());
-                            Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                finish();
             }
         });
 
@@ -207,22 +228,17 @@ public class ChangeProfileActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try {
                     isProfileImageChange = true;
-                    InputStream in = getContentResolver().openInputStream(data.getData());
+                    uri = data.getData();
+                    InputStream in = getContentResolver().openInputStream(uri);
                     Bitmap img = BitmapFactory.decodeStream(in);
                     in.close();
                     profileImage.setImageBitmap(img);
-                    System.out.println("사진 미리보기");
-
-                    Uri uri = data.getData();
-                    file = new File(getRealPathFromURI(uri));
-                    System.out.println("file = " + file.getName());
-                    fileName = "PI" + userId + "_" + file.getName();
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 }
             } else if (resultCode == RESULT_CANCELED) {
-                System.out.println("사진 선택 취소");
+                Log.d(TAG, "사진 선택 취소");
             }
         }
     }
@@ -238,7 +254,20 @@ public class ChangeProfileActivity extends AppCompatActivity {
     }
 
     //s3에 사진업로드 하는 함수
-    public void uploadWithTransferUtility(String fileName, File file) {
+    public void uploadWithTransferUtility() {
+
+        File file = new File(getRealPathFromURI(uri));
+        BitmapFactory.Options option1 = getBitmapSize(file);
+        int maxWidthSize = 1000;
+        int maxHeightSize = 1000;
+        if (option1.outWidth > maxWidthSize || option1.outHeight > maxHeightSize) {
+            // 최대 크기를 벗어난 경우의 처리, 이미지 크기 변환 등
+            BitmapFactory.Options option2 = new BitmapFactory.Options();
+            option2.inSampleSize = 2;
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), option2);
+        }
+        fileName = "PI" + userId + "_" + file.getName();
+        Log.d(TAG, "새로운 파일 이름 = " + fileName);
 
         AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
@@ -269,9 +298,90 @@ public class ChangeProfileActivity extends AppCompatActivity {
         });
     }
 
+    private BitmapFactory.Options getBitmapSize(File imageFile) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+        return options;
+    }
+
+
+    public void deleteS3File(String beforeImage){
+        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");
+        AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                s3Client.deleteObject(new DeleteObjectRequest("starry-night/profileImage", beforeImage));
+            }
+        }).start();
+
+//        try {
+//            //Delete 객체 생성
+//            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest("starry-night/profileImage", key);
+//            //Delete
+//            s3Client.deleteObject(deleteObjectRequest);
+//
+//        } catch (AmazonServiceException e) {
+//            e.printStackTrace();
+//        } catch (SdkClientException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    //비트맵 용량 줄이는 함수
+    private Bitmap resize(Context context, Uri uri, int resize){
+        Bitmap resizeBitmap=null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        try {
+            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+
+            int width = options.outWidth;
+            int height = options.outHeight;
+            int samplesize = 1;
+
+            while (true) {
+                if (width / 2 < resize || height / 2 < resize)
+                    break;
+                width /= 2;
+                height /= 2;
+                samplesize *= 2;
+            }
+            options.inSampleSize = samplesize;
+            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+            resizeBitmap = bitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resizeBitmap;
+    }
+
+    // 비트맵을 파일로 변환하는 함수
+    private void BitmapToFile(Bitmap bitmap, String strFilePath) {
+        File file = new File(strFilePath);
+        OutputStream out = null;
+        try {
+            file.createNewFile();
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                out.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     //닉네임 규칙 함수
     private Boolean isCorrectNickName(String nickName) {
-        String pattern = "^[[ㄱ-ㅎㅏ-ㅢ가-힣0-9a-zA-z]*]{1,15}$";
+        String pattern = "^[[ㄱ-ㅎㅏ-ㅢ가-힣0-9a-zA-z ]*]{1,15}$";
         return Pattern.matches(pattern, nickName);
     }
 
@@ -306,7 +416,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                             isNickNameDuplicate = true;
                         }
                     } else {
-                        System.out.println("중복 체크 실패");
+                        Log.d(TAG, "중복 체크 실패");
                         changeNicknameGuide.setText("");
                         Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }

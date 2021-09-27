@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -91,6 +92,7 @@ public class PostWriteActivity extends AppCompatActivity {
     Long postId;
     Long userId;
     File file;
+    LinearLayout ob_linear;
     ArrayList<File> files = new ArrayList<>();
     private TextView postObservePointItem;
     String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -114,6 +116,7 @@ public class PostWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_write);
         postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
+        ob_linear = findViewById(R.id.postwrite_ob_linear);
 
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
@@ -463,10 +466,10 @@ public class PostWriteActivity extends AppCompatActivity {
         if(requestCode == 202){
             if(resultCode == 2){
                 Log.d("postObservation","검색 관측지 데이터 로드");
-                postObservePointItem.setVisibility(View.VISIBLE);
                 observationName = (String)data.getSerializableExtra("observationName");
                 optionobservationName = (String)data.getSerializableExtra("optionObservationName");
                 if (observationName != null){
+                ob_linear.setVisibility(View.VISIBLE);
                 postObservePointItem.setText(observationName);
                 postObservePointName=observationName;
                 }else{postObservePointItem.setText(optionobservationName);
@@ -512,7 +515,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 Uri uri = data.getData();
                 Log.e("FAT=", "일반폰/단일 : "+uri.toString());
                 try {
-                    Bitmap img = resize(this, uri, 75);
+                    Bitmap img = resize(this, uri, 100);
                     System.out.println("img = " + img);
                     addImage(img);
                     file = new File(getRealPathFromURI(uri));
@@ -629,7 +632,7 @@ public String getRealPathFromURI(Uri contentUri) {
 //                InputStream in = getContentResolver().openInputStream(uri);
 //                Bitmap img = BitmapFactory.decodeStream(in);
 //                in.close();
-                Bitmap img = resize(this, uri, 75); //해상도 최대로 하고싶으면 100으로
+                Bitmap img = resize(this, uri, 100); //해상도 최대로 하고싶으면 100으로
                 Bitmap roateImage1 = rotateImage(uri,img);
                 System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(roateImage1, numOfPicture));

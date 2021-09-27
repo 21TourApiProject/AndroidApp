@@ -6,18 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
 public class SearchFragment extends Fragment {
@@ -37,12 +40,47 @@ public class SearchFragment extends Fragment {
 
         ((MainActivity)getActivity()).showBottom();
 
+        SearchView searchView = v.findViewById(R.id.search);
+        searchView.setQueryHint("검색어를 입력하세요");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putInt("type",2);
+                bundle.putString("keyword", query);
+
+                Fragment resultfragment = new SearchResultFragment();
+                resultfragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, resultfragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         //지도 페이지로
         Button map_btn = (Button) v.findViewById(R.id.mapBtn);
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putSerializable("FromWhere", Activities.SEARCH);//번들에 넘길 값 저장
+
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, mapFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+//                ((MainActivity)getActivity()).replaceFragment(mapFragment);
             }
         });
 

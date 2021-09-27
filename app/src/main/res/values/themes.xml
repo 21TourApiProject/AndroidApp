@@ -45,6 +45,15 @@
         <item name="android:textColor">@color/point_purple</item>
     </style>
 
+    <style name="StarryNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="StarryNight.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="StarryNight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name = "background">@drawable/wt__spinner_background</item>
     </style>

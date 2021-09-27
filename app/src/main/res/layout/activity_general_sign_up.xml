@@ -68,6 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:textColor="@color/point_purple"
                     android:textSize="11sp" />
 
                 <TextView
@@ -93,6 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:textColor="@color/point_purple"
                     android:textSize="11sp" />
 
                 <TextView
@@ -356,23 +358,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="마케팅 정보 수신 동의 ("
+                        android:text="마케팅 정보 수신 동의 :"
                         android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/marketInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/signup_no_must"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textSize="12sp"
-                        android:text=") :" />
 
                     <Button
                         android:id="@+id/marketing"

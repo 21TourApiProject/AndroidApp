@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -106,8 +104,10 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
         }
 
         public void setItem(MyWishObTp item) {
-            if(item.getThumbnail() != null)
+            if(item.getThumbnail() != null){
                 Glide.with(context).load(item.getThumbnail()).into(obTpImage);
+                obTpImage.setClipToOutline(true);
+            }
             obTpTitle.setText(item.getTitle());
 
             //주소를 두단어까지 줄임
