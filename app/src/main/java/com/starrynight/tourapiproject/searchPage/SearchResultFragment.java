@@ -136,9 +136,16 @@ public class SearchResultFragment extends Fragment {
                     }
                 }
             } else if (type == 2) {
+                //searchpage에서 검색
                 keyword = getArguments().getString("keyword");
                 area = new ArrayList<Integer>(Collections.nCopies(17, 0));
                 hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+            } else if (type == 3) {
+                SearchKey searchKey = (SearchKey) getArguments().getSerializable("searchKey");
+                keyword = searchKey.getKeyword();
+
+                //저 searchkey 넣어서 검색결과 새로 다 넣기
+
             }
         }
 
