@@ -686,16 +686,11 @@ public class TouristPointActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 중간에 있던 액티비티들 삭제
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //스택 중간에 있던 액티비티들 삭제
+//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
+                intent.putExtra("FromWhere", Activities.OBSERVATION);
+                intent.putExtra("BalloonObject", balloonObject);
                 startActivity(intent);
-
-                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-                bundle.putSerializable("FromWhere", Activities.TOURISTPOINT);//번들에 넘길 값 저장
-                bundle.putSerializable("BalloonObject", balloonObject);    //지도에 필요한 내용
-                MapFragment mapFragment = new MapFragment();
-                mapFragment.setArguments(bundle);
-                ((MainActivity)MainActivity.mContext).replaceFragment(mapFragment);
             }
         });
     }
