@@ -103,6 +103,8 @@
                     android:id="@+id/phoneGuide"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/point_purple"
                     android:textSize="12sp" />
 
                 <TextView
