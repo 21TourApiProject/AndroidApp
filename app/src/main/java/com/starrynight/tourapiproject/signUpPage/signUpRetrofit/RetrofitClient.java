@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
 
-    private static final String BASE_URL = "http://172.30.1.55:8080/v1/";
+    private static final String BASE_URL = "http://172.30.1.45:8080/v1/";
 
 
     public static SignUpRetrofitService getApiService(){return getInstance().create(SignUpRetrofitService.class);}
