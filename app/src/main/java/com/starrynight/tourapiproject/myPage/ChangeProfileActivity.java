@@ -39,6 +39,7 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -72,6 +73,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private Boolean isNickNameDuplicate = false; //닉네임이 중복인지
 
     Uri uri;
+    Bitmap img;
     String fileName;
 
     @Override
@@ -235,7 +237,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     isProfileImageChange = true;
                     uri = data.getData();
                     InputStream in = getContentResolver().openInputStream(uri);
-                    Bitmap img = BitmapFactory.decodeStream(in);
+                    img = BitmapFactory.decodeStream(in);
                     in.close();
                     profileImage.setImageBitmap(img);
 
@@ -261,17 +263,47 @@ public class ChangeProfileActivity extends AppCompatActivity {
     //s3에 사진업로드 하는 함수
     public void uploadWithTransferUtility() {
 
-        File file = new File(getRealPathFromURI(uri));
-        BitmapFactory.Options option1 = getBitmapSize(file);
-        int maxWidthSize = 1000;
-        int maxHeightSize = 1000;
-        if (option1.outWidth > maxWidthSize || option1.outHeight > maxHeightSize) {
-            // 최대 크기를 벗어난 경우의 처리, 이미지 크기 변환 등
-            BitmapFactory.Options option2 = new BitmapFactory.Options();
-            option2.inSampleSize = 2;
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), option2);
+//        File file = new File(getRealPathFromURI(uri));
+//        File reFile = null;
+//        BitmapFactory.Options option1 = getBitmapSize(file);
+//        int maxWidthSize = 1000;
+//        int maxHeightSize = 1000;
+//        System.out.println("option1.outWidth = " + option1.outWidth);
+//        System.out.println("option1.outHeight = " + option1.outHeight);
+
+        int width = 2000; // 축소시킬 너비
+        int height = 1200; // 축소시킬 높이
+        float bmpWidth = img.getWidth();
+        float bmpHeight = img.getHeight();
+
+        if (bmpWidth > width) {
+            // 원하는 너비보다 클 경우의 설정
+            float mWidth = bmpWidth / 100;
+            float scale = width/ mWidth;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
+        } else if (bmpHeight > height) {
+            // 원하는 높이보다 클 경우의 설정
+            float mHeight = bmpHeight / 100;
+            float scale = height/ mHeight;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
         }
-        fileName = "PI" + userId + "_" + file.getName();
+        Bitmap resizedBmp = Bitmap.createScaledBitmap(img, (int) bmpWidth, (int) bmpHeight, true);
+
+//        if (option1.outWidth > maxWidthSize || option1.outHeight > maxHeightSize) {
+//            // 최대 크기를 벗어난 경우의 처리, 이미지 크기 변환 등
+//            BitmapFactory.Options option2 = new BitmapFactory.Options();
+//            option2.inSampleSize = 2; // 1/4로 줄임
+//            Bitmap reBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), option2);
+//            System.out.println("reBitmap.outWidth = " + reBitmap.getWidth());
+//            System.out.println("reBitmap.outHeight = " + reBitmap.getHeight());
+//            Uri reUri = getImageUri(getApplicationContext(), reBitmap);
+//            reFile = new File(getRealPathFromURI(reUri));
+//        }
+        Uri resizedUri = getImageUri(getApplicationContext(), resizedBmp);
+        File resizedFile = new File(getRealPathFromURI(resizedUri));
+        fileName = "PI" + userId + "_" + resizedFile.getName();
         Log.d(TAG, "새로운 파일 이름 = " + fileName);
 
         AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
@@ -280,7 +312,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
-        TransferObserver uploadObserver = transferUtility.upload("starry-night/profileImage", fileName, file);    // (bucket api, file이름, file객체)
+        TransferObserver uploadObserver = transferUtility.upload("starry-night/profileImage", fileName, resizedFile);    // (bucket api, file이름, file객체)
 
         uploadObserver.setTransferListener(new TransferListener() {
             @Override
@@ -303,11 +335,20 @@ public class ChangeProfileActivity extends AppCompatActivity {
         });
     }
 
+    // 비트맵 사이즈 알기
     private BitmapFactory.Options getBitmapSize(File imageFile) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
         return options;
+    }
+
+    // bitmap -> uri
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
 
@@ -360,28 +401,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return resizeBitmap;
-    }
-
-    // 비트맵을 파일로 변환하는 함수
-    private void BitmapToFile(Bitmap bitmap, String strFilePath) {
-        File file = new File(strFilePath);
-        OutputStream out = null;
-        try {
-            file.createNewFile();
-            out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                out.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     //닉네임 규칙 함수

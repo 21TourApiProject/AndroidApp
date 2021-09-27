@@ -30,7 +30,9 @@ import retrofit2.Response;
 
 public class GeneralSingUpActivity extends AppCompatActivity{
 
-    private TextView emailGuide; //이메일 칸 바로 밑에 글칸
+    private static final String TAG = "GeneralSingUp";
+
+    private TextView emailGuide; //이메일 가이드
     private Boolean isEmailEmpty = true; //이메일이 비어있는지
     private Boolean isNotEmail = false; //올바른 이메일 형식이 아닌지
     private Boolean isEmailDuplicate = true; //이메일이 중복인지
@@ -38,8 +40,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     private TextView pwdGuide;
     private Boolean isNotPwd = true; //올바른 비밀번호 형식이 아닌지
     private String passwordCheck;
-
-    private Boolean isError = false; //서버 에러가 발생했는지
 
     private Button male;
     private Button female;
@@ -55,11 +55,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     private Button personal;
     private Button locationService;
     private Button marketing;
+    private Button allAgree;
     Boolean isAge;
     Boolean isService;
     Boolean isPersonal;
     Boolean isLocationService;
     Boolean isMarketing;
+    Boolean isAllAgree;
 
     String realName, birthDay, email="", password;
     Boolean sex;
@@ -73,6 +75,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_general_sign_up);
+
         sex2 = 0;
         noSex2 = false;
         isAge = false;
@@ -80,6 +83,7 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         isPersonal = false;
         isLocationService = false;
         isMarketing = false;
+        isAllAgree = false;
 
         //성별
         male = findViewById(R.id.male);
@@ -242,6 +246,41 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     isMarketing = false;
                 } else{
                     marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isMarketing = true;
+                }
+            }
+        });
+
+        //전체 동의
+        allAgree = findViewById(R.id.allAgree);
+        allAgree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAllAgree){
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAllAgree = false;
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAge = false;
+                    isService = false;
+                    isPersonal = false;
+                    isLocationService = false;
+                    isMarketing = false;
+                } else{
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isAllAgree = true;
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isAge = true;
+                    isService = true;
+                    isPersonal = true;
+                    isLocationService = true;
                     isMarketing = true;
                 }
             }
@@ -456,9 +495,8 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                             isNotEmail = true;
                         }
                     } else {
-                        System.out.println("중복 체크 실패");
+                        Log.e(TAG ,"중복 체크 실패");
                         emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                        isError = true;
                     }
                 }
 
@@ -466,7 +504,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("연결실패", t.getMessage());
                     emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                    isError = true;
                 }
             });
         }
