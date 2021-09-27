@@ -47,7 +47,7 @@ public class NoticeActivity extends AppCompatActivity {
                     NoticeAdapter noticeAdapter = new NoticeAdapter(getApplicationContext(), result);
                     noticeRecyclerView.setAdapter(noticeAdapter);
                 } else{
-                    Log.d(TAG,"공지사항 실패");}
+                    Log.e(TAG,"공지사항 실패");}
             }
             @Override
             public void onFailure(Call<List<Notice>> call, Throwable t) {
