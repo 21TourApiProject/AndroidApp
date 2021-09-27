@@ -178,8 +178,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     // 날씨 TextView
     TextView commentTv;
-    TextView todayWeatherTv1;
-    TextView todayWeatherTv2;
+    TextView todayWeatherTv;
     TextView starObFitTv;
     TextView bestObTimeTv;
     TextView sunriseTv;
@@ -256,6 +255,7 @@ public class WeatherActivity extends AppCompatActivity {
     String todayWtId;
     String todayWtName1;
     String todayWtName2;
+    String todayWtName;
 
     {
         try {
@@ -299,8 +299,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     public void setTextView() {
         commentTv = findViewById(R.id.wt_comment);
-        todayWeatherTv1 = findViewById(R.id.wt_today_weather_info1);
-        todayWeatherTv2 = findViewById(R.id.wt_today_weather_info2);
+        todayWeatherTv = findViewById(R.id.wt_today_weather_info);
         starObFitTv = findViewById(R.id.wt_star_ob_fit_info);
         bestObTimeTv = findViewById(R.id.wt_best_ob_time_info);
         sunriseTv = findViewById(R.id.sunrise_info);
@@ -1678,14 +1677,13 @@ public class WeatherActivity extends AppCompatActivity {
 
                     //한줄
                     if (todayWtName2.equals("null")) {
-                        todayWeatherTv2.setVisibility(View.GONE);
-                        todayWeatherTv1.setText(todayWtName1);
+                        todayWtName = todayWtName1;
+                        todayWeatherTv.setText(todayWtName);
                     }
                     //두줄
                     else {
-                        todayWeatherTv2.setVisibility(View.VISIBLE);
-                        todayWeatherTv1.setText(todayWtName1);
-                        todayWeatherTv2.setText(todayWtName2);
+                        todayWtName = todayWtName1 + "\n" + todayWtName2;
+                        todayWeatherTv.setText(todayWtName);
                     }
                 } else {
                     Log.d("connectWtToday", "id로 오늘의 날씨 받아오기 실패");
