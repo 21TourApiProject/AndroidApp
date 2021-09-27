@@ -1,20 +1,21 @@
-package com.starrynight.tourapiproject.myPage.myPageRetrofit;
+package com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.WtAreaRetrofitService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+    private static final String BASE_URL = "http://192.168.200.188:8080/v1/";
 
 
-    private static final String BASE_URL = "http://172.30.1.55:8080/v1/";
+    public static WtTodayRetrofitService getApiService() {
+        return getInstance().create(WtTodayRetrofitService.class);
+    }
 
-
-    public static MyPageRetrofitService getApiService(){return getInstance().create(MyPageRetrofitService.class);}
-
-    private static Retrofit getInstance(){
+    private static Retrofit getInstance() {
         Gson gson = new GsonBuilder().setLenient().create();
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
