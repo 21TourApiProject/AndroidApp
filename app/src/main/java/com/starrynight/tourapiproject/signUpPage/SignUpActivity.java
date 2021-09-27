@@ -1,8 +1,10 @@
 package com.starrynight.tourapiproject.signUpPage;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
@@ -29,6 +33,7 @@ import com.kakao.usermgmt.response.model.Profile;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
+import com.starrynight.tourapiproject.LoginActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.KakaoUserParams;
@@ -44,8 +49,12 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private static final String LOG = "SignUpActivity";
+    private static final String TAG0 = "SignUpActivity";
     private static final String TAG2 = "KakaoLoginApi";
+    String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+    String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
+    int PERMISSIONS_REQUEST_CODE = 100;
     private SessionCallback sessionCallback = new SessionCallback();
     KakaoUserParams kakaoUserParams;
 
@@ -69,11 +78,12 @@ public class SignUpActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Long result = response.body();
                             if (result != -1L) {
-                                Log.d(LOG, "로그인 성공");
+                                Log.d(TAG0, "로그인 성공");
+
                                 //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
                                 String fileName = "userId";
                                 String userId = result.toString();
-                                Log.d(LOG, "userId " + userId);
+                                Log.d(TAG0, "userId " + userId);
                                 try {
                                     FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
                                     fos.write(userId.getBytes());
@@ -84,14 +94,32 @@ public class SignUpActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
 
+                                //메인 페이지로 이동
                                 Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                //권한 설정
+                                int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+                                int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
+
+                                Log.d("test", "onClick: location clicked");
+                                if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
+                                    Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+
+                                } else if (permission == PackageManager.PERMISSION_DENIED){
+                                    Log.d("test", "permission denied");
+                                    Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                                    ActivityCompat.requestPermissions(SignUpActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                    ActivityCompat.requestPermissions(SignUpActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                    ActivityCompat.requestPermissions(SignUpActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                }
                                 finish();
+
                             } else {
                                 Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Log.e(LOG, "로그인 실패");
+                            Log.e(TAG0, "로그인 실패");
                         }
                     }
 
@@ -352,6 +380,9 @@ public class SignUpActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 } else if (!result) {
                                     Log.d(TAG2, "회원가입 미진행, 이미가입된 이메일");
+                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             } else {
                                 Log.e(TAG2, "이메일 중복 체크 실패");

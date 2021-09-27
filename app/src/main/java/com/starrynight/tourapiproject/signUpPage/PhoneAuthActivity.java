@@ -89,6 +89,46 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
+        //뒤로 가기
+        Button authBack = findViewById(R.id.authBack);
+        authBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //인증 건너뛰기
+        Button pass = findViewById(R.id.pass);
+        pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //회원가입을 위한 post api
+                userParams.setMobilePhoneNumber(null);
+                Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if(response.isSuccessful()){
+                            System.out.println("회원가입 성공");
+                            signOut();
+
+                            //선호 해시태그 선택 창으로 전환
+                            Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
+                            intent.putExtra("email", userParams.getEmail());
+                            startActivityForResult(intent, SELECT_HASH_TAG);
+                        } else{
+                            System.out.println("회원가입 실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {

@@ -34,7 +34,7 @@ import retrofit2.Response;
 
 public class FindEmailActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "FindEmailActivity";
+    private static final String TAG = "FindEmail";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
 
     private FirebaseAuth mAuth;
@@ -73,8 +73,18 @@ public class FindEmailActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
 
+        //뒤로 가기
+        Button findEmailBack = findViewById(R.id.findEmailBack);
+        findEmailBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        mAuth = FirebaseAuth.getInstance();
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
@@ -88,7 +98,8 @@ public class FindEmailActivity extends AppCompatActivity implements
                 mVerificationInProgress = false;
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
-                    mobilePhoneNumber.setError("올바르지 않은 전화번호 입니다.");
+                    Toast.makeText(getApplicationContext(), "올바르지 않은 전화번호 입니다.", Toast.LENGTH_SHORT).show();
+                    //mobilePhoneNumber.setError("올바르지 않은 전화번호 입니다.");
 
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
@@ -100,7 +111,7 @@ public class FindEmailActivity extends AppCompatActivity implements
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                System.out.println("token = " + token);
+                Log.d(TAG, "token = " + token);
                 mVerificationId = verificationId;
                 mResendToken = token;
             }
@@ -174,11 +185,10 @@ public class FindEmailActivity extends AppCompatActivity implements
                                     if(response.isSuccessful()) {
                                         String result = response.body();
                                         if (!result.equals("none")) {
-                                            System.out.println("이메일 찾기 성공");
+                                            Log.d(TAG, "이메일 찾기 성공");
                                             signOut();
                                             showEmail.setText("이메일: " + result);
                                         }else{
-                                            System.out.println("이메일 찾기 실패");
                                             Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
                                             showEmail.setText("");
                                         }
@@ -197,7 +207,8 @@ public class FindEmailActivity extends AppCompatActivity implements
                         } else {
                             Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                authCode.setError("올바르지 않은 인증번호입니다.");
+                                Toast.makeText(getApplicationContext(), "인증번호가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                                //authCode.setError("올바르지 않은 인증번호입니다.");
                                 showEmail.setText("");
                             }
                         }
@@ -212,11 +223,13 @@ public class FindEmailActivity extends AppCompatActivity implements
     private boolean validatePhoneNumber() {
         String phoneNumber = mobilePhoneNumber.getText().toString();
         if (TextUtils.isEmpty(phoneNumber)) {
-            mobilePhoneNumber.setError("전화번호를 입력해주세요.");
+            Toast.makeText(getApplicationContext(), "전화번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            //mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
         }
         if(phoneNumber.length() != 11){
-            mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
+            Toast.makeText(getApplicationContext(), "형식에 맞는 전화번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            //mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
             return false;
         }return true;
     }
@@ -231,11 +244,11 @@ public class FindEmailActivity extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.startAuth2:
                 if (!validatePhoneNumber()) {
-                    System.out.println("처음 문자요청했는데 전화번호가 이상함");
+                    Log.e(TAG, "처음 문자요청했는데 전화번호가 이상함");
                     return;
                 }
                 isSend = true;
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "해당 번호로 문자가 발송되었습니다. 2분 안에 인증번호를 입력해주세요.", Toast.LENGTH_LONG).show();
                 startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                 startAuth.setVisibility(View.GONE);
                 resendAuth.setVisibility(View.VISIBLE);
@@ -245,24 +258,27 @@ public class FindEmailActivity extends AppCompatActivity implements
                 String code = authCode.getText().toString();
 
                 if(findEmailRealName.getText().toString().isEmpty()){
-                    findEmailRealName.setError("이름을 입력해주세요.");
+                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    //findEmailRealName.setError("이름을 입력해주세요.");
                     return;
                 }
                 if (TextUtils.isEmpty(code)) {
-                    authCode.setError("인증번호를 입력해주세요.");
+                    Toast.makeText(getApplicationContext(), "인증번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    //authCode.setError("인증번호를 입력해주세요.");
                     return;
                 }
                 if (!isSend){
-                    authCode.setError("인증 요청을 먼저 해주세요.");
+                    Toast.makeText(getApplicationContext(), "인증 요청을 먼저 해주세요.", Toast.LENGTH_SHORT).show();
+                    //authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
-                System.out.println("인증코드 맞는지 확인들어감 " + code);
+                Log.d(TAG, code + "인증코드 맞는지 확인들어감 ");
                 showEmail.setText("잠시만 기다려주세요...");
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
             case R.id.resendAuth2:
-                Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "해당 번호로 문자가 재발송되었습니다. 2분 안에 인증번호를 입력해주세요.", Toast.LENGTH_LONG).show();
                 resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                 break;
         }

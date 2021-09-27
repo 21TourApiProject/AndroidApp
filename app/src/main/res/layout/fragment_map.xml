@@ -7,6 +7,43 @@
         android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:background="@color/sub_blue"
+        android:weightSum="7">
+
+        <SearchView
+            android:id="@+id/map_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="7" />
+
+        <Button
+            android:id="@+id/searchList_Btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="목록" />
+
+        <Button
+            android:id="@+id/map_filterBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:hint="필터" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/map_selectFilterItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/search_layout"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -69,14 +106,15 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="16dp"
                 android:layout_toRightOf="@id/main_img"/>
+
             <TextView
                 android:id="@+id/address_txt"
-                android:layout_width="158dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:layout_below="@id/name_txt"
                 android:layout_alignLeft="@id/name_txt"
-                android:text="주소"/>
+                android:text="주소"
+                android:textSize="14sp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
