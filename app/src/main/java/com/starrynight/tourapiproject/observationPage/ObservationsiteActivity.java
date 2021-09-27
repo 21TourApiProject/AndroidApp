@@ -98,7 +98,9 @@ public class ObservationsiteActivity extends AppCompatActivity {
         relateImageFrame = findViewById(R.id.relateImageFrame);
 
         Intent intent = getIntent();
+
         Long observationId = (Long) intent.getSerializableExtra("observationId"); //전 페이지에서 받아온 contentId
+
         postId = (Long) intent.getSerializableExtra("postId");
 
 
