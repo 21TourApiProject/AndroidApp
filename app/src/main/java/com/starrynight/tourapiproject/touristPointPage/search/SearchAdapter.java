@@ -76,7 +76,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             blogWriter.setText(data.getBlogname());
             blogDate.setText(data.getDatetime().substring(0,10));
             blogUrl.setText(data.getUrl().substring(8));
-            Glide.with(itemView.getContext()).load(data.getThumbnail()).override(100,100).into(blogImage);
+            Glide.with(itemView.getContext()).load(data.getThumbnail()).into(blogImage);
 
         }
     }

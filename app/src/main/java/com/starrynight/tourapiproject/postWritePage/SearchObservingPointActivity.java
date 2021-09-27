@@ -124,9 +124,9 @@ public class SearchObservingPointActivity extends AppCompatActivity {
     public void searchFilter(String searchText) {
         filteredList.clear();
         Button add_btn = findViewById(R.id.addObservePoint);
-        for (int i = 0; i < searchitemArrayList.size(); i++) {
-            if (searchitemArrayList.get(i).getItemName().toLowerCase().contains(searchText.toLowerCase())) {
-                filteredList.add(searchitemArrayList.get(i));
+        for (Search_item search_item : searchitemArrayList) {
+            if (search_item.getItemName().contains(searchText)) {
+                filteredList.add(search_item);
                 add_btn.setVisibility(View.GONE);
             }else{filteredList.add(new Search_item("나만의 관측지를 입력하고 추가버튼을 눌러주세요"));
             add_btn.setVisibility(View.VISIBLE);
