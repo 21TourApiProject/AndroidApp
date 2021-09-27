@@ -246,7 +246,11 @@ public class SearchResultFragment extends Fragment {
                 MapFragment mapFragment = new MapFragment();
                 mapFragment.setArguments(bundle);
 
-                ((MainActivity)getActivity()).replaceFragment(mapFragment);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, mapFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+//                ((MainActivity)getActivity()).replaceFragment(mapFragment);
             }
         });
 

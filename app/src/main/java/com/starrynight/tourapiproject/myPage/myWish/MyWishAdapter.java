@@ -79,14 +79,13 @@ public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder
         }
 
         public void setItem(MyWish item) {
-            if (item.getWishType() == 0 || item.getWishType() == 1){
-                if (item.getThumbnail() != null)
-                    System.out.println("item = " + item.getThumbnail());
+            if(item.getThumbnail() != null){
+                String imageName = item.getThumbnail();
+                if(imageName.startsWith("http://")){
                     Glide.with(context).load(item.getThumbnail()).into(thumbnail);
-            }else if (item.getWishType() == 2){
-                if (item.getThumbnail() != null){
-                    Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + item.getThumbnail()).into(thumbnail);
                 }
+                else{
+                    Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + imageName).into(thumbnail);}
             }
             title.setText(item.getTitle());
         }

@@ -56,6 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             blogDate=itemView.findViewById(R.id.blogDate);
             blogUrl=itemView.findViewById(R.id.blogUrl);
             blogImage=itemView.findViewById(R.id.blogImage);
+            blogImage.setClipToOutline(true);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

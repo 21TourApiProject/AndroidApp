@@ -41,7 +41,6 @@ public class SearchFragment extends Fragment {
         ((MainActivity)getActivity()).showBottom();
 
         SearchView searchView = v.findViewById(R.id.search);
-        searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("검색어를 입력하세요");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -76,7 +75,12 @@ public class SearchFragment extends Fragment {
 
                 MapFragment mapFragment = new MapFragment();
                 mapFragment.setArguments(bundle);
-                ((MainActivity)getActivity()).replaceFragment(mapFragment);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, mapFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+//                ((MainActivity)getActivity()).replaceFragment(mapFragment);
             }
         });
 
