@@ -80,7 +80,9 @@ public class MyDataActivity extends AppCompatActivity {
                     email.setText(user.getEmail());
 
                     TextView mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber);
-                    mobilePhoneNumber.setText(user.getMobilePhoneNumber());
+                    String mpn = user.getMobilePhoneNumber();
+                    mpn = mpn.substring(0,3) + "-" + mpn.substring(3,7) + "-" + mpn.substring(7);
+                    mobilePhoneNumber.setText(mpn);
 
                     TextView birth = findViewById(R.id.birth);
                     birth.setText(user.getBirthDay());
