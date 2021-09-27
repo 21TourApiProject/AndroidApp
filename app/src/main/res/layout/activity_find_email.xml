@@ -101,8 +101,7 @@
                         android:background="@drawable/star__card_view_round"
                         android:backgroundTint="@color/sub_blue"
                         android:text="인증 요청"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <Button
                         android:id="@+id/resendAuth2"
@@ -114,7 +113,6 @@
                         android:background="@drawable/star__card_view_round"
                         android:backgroundTint="@color/sub_blue"
                         android:text="인증 재요청"
-                        android:textColor="@color/white"
                         android:textSize="12sp"
                         android:visibility="gone" />
                 </LinearLayout>

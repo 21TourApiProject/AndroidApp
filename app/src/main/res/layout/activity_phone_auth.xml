@@ -36,13 +36,6 @@
                     android:text="본인 인증"
                     android:textSize="17sp" />
 
-                <Button
-                    android:id="@+id/pass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center|right"
-                    android:text="건너뛰기" />
             </LinearLayout>
 
             <LinearLayout
@@ -70,6 +63,8 @@
                         android:id="@+id/mobilePhoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="6"
                         android:background="@drawable/findemail_write2"
                         android:hint="예시) 01077778888"
                         android:inputType="phone"
@@ -79,19 +74,27 @@
                     <Button
                         android:id="@+id/startAuth"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/findemail_requestauth"
+                        android:layout_weight="1"
+                        android:background="@drawable/star__card_view_round"
+                        android:backgroundTint="@color/sub_blue"
+                        android:text="인증 요청"
+                        android:textSize="12sp"
                         android:visibility="visible" />
 
                     <Button
                         android:id="@+id/resendAuth"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
-                        android:layout_marginTop="3dp"
-                        android:background="@drawable/findemail_requestauth2"
+                        android:layout_weight="1"
+                        android:background="@drawable/star__card_view_round"
+                        android:backgroundTint="@color/sub_blue"
+                        android:text="인증 재요청"
+                        android:textSize="12sp"
                         android:visibility="gone" />
 
                 </LinearLayout>
@@ -119,6 +122,28 @@
                     android:inputType="number"
                     android:paddingLeft="10dp"
                     android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="휴대폰 번호 수집 동의 :"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/phoneAgree"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="53dp"
+                        android:background="@drawable/signup_agree_non" />
+                </LinearLayout>
 
             </LinearLayout>
 

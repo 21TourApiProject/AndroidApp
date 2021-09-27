@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +40,8 @@ import retrofit2.Response;
 
 public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "PhoneAuthActivity";
+
+    private static final String TAG = "PhoneAuth";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int SELECT_HASH_TAG = 0;
 
@@ -66,6 +68,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private Boolean isPhoneEmpty = true; //전화번호이 비어있는지
     private Boolean isNotPhone = false; //올바른 전화번호 형식이 아닌지
     private Boolean isPhoneDuplicate = true; //전화번호이 중복인지
+
+    Button phoneAgree;
+    private Boolean isPhoneAgree = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,36 +103,21 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             }
         });
 
-        //인증 건너뛰기
-        Button pass = findViewById(R.id.pass);
-        pass.setOnClickListener(new View.OnClickListener() {
+        //휴대폰 정보 수집 동의
+        phoneAgree = findViewById(R.id.phoneAgree);
+        phoneAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //회원가입을 위한 post api
-                userParams.setMobilePhoneNumber(null);
-                Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("회원가입 성공");
-                            signOut();
-
-                            //선호 해시태그 선택 창으로 전환
-                            Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
-                            intent.putExtra("email", userParams.getEmail());
-                            startActivityForResult(intent, SELECT_HASH_TAG);
-                        } else{
-                            System.out.println("회원가입 실패");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                    }
-                });
+                if(isPhoneAgree){
+                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isPhoneAgree = false;
+                } else{
+                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isPhoneAgree = true;
+                }
             }
         });
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -158,7 +148,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                System.out.println("token = " + token);
                 mVerificationId = verificationId;
                 mResendToken = token;
             }
@@ -294,7 +283,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             Log.d(TAG, "인증 성공"); //인증 성공하면
 
                            //회원가입을 위한 post api
-                           userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                            if(isPhoneAgree)
+                                userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
                             Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
                             call.enqueue(new Callback<Void>() {
                                 @Override
