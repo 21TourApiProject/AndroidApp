@@ -42,41 +42,69 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="48dp"
+                android:src="@drawable/wt__calendar" />
+
+            <TextView
+                android:id="@+id/wt_datePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:onClick="wtClickDatePicker"
+                android:text="2021.09.21"
+                android:textColor="@color/point_purple"
+                android:textSize="9sp" />
+
+            <View
+                android:layout_width="70dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="8dp"
+                android:background="@color/point_purple" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/wt_datePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="wtClickDatePicker"
-                    android:text="월/일 선택"
-                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/wt_timePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
                     android:onClick="wtClickTimePicker"
-                    android:text="시간 선택"
-                    android:textSize="16sp" />
+                    android:text="14시"
+                    android:textColor="@color/point_purple"
+                    android:textSize="9sp" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/wt__time_drop_down" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="27dp"
                 android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/wt__area_pin" />
 
                 <Spinner
                     android:id="@+id/wt_citySpinner"
@@ -88,7 +116,7 @@
                     android:id="@+id/wt_provinceSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginHorizontal="8dp"
                     android:layout_weight="2" />
 
                 <TextView
@@ -97,7 +125,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="은/는"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -106,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/scdream"
                 android:text="별 보기 아주 좋아요"
                 android:textSize="32sp" />
@@ -145,12 +174,12 @@
                         android:id="@+id/wt_today_weather_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:layout_marginTop="21dp"
                         android:layout_marginBottom="22dp"
+                        android:gravity="center"
                         android:text="맑음"
                         android:textSize="15sp" />
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -174,7 +203,7 @@
                         android:id="@+id/wt_star_ob_fit_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:layout_marginTop="21dp"
                         android:layout_marginBottom="22dp"
                         android:text="100%"
@@ -201,7 +230,7 @@
                         android:id="@+id/wt_best_ob_time_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:layout_marginTop="21dp"
                         android:layout_marginBottom="22dp"
                         android:text="23:45"
@@ -215,7 +244,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/star__card_view_round"
                 android:orientation="vertical">
 
@@ -361,7 +390,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/star__card_view_round"
                 android:orientation="vertical">
 
@@ -375,102 +404,34 @@
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ob_fit_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingVertical="10dp">
+                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/star_ob_fit_6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/star__cel_image" />
+                <!--                    <LinearLayout-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginHorizontal="10dp"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:orientation="vertical">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="19-21"
-                            android:textSize="15sp" />
+                <!--                        <ImageView-->
+                <!--                            android:id="@+id/star_ob_fit_6"-->
+                <!--                            android:layout_width="wrap_content"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:adjustViewBounds="true"-->
+                <!--                            android:src="@drawable/star__cel_image" />-->
 
-                    </LinearLayout>
+                <!--                        <TextView-->
+                <!--                            android:layout_width="wrap_content"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:text="19-21"-->
+                <!--                            android:textSize="15sp" />-->
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/star_ob_fit_9"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/star__cel_image" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="19-21"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/star_ob_fit_0"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/star__cel_image" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="19-21"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/star_ob_fit_03"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/star__cel_image" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="19-21"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                <!--                    </LinearLayout>-->
 
             </LinearLayout>
 
@@ -650,7 +611,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="21dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -807,6 +769,7 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="20dp"
                 android:text="오늘의 구름지도>"
                 android:textColor="@color/point_purple"
                 android:textSize="10sp" />
