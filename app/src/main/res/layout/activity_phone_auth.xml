@@ -44,7 +44,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="건너뛰기"
-                    tools:visibility="gone" />
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
