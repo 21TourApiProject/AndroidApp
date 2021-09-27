@@ -163,7 +163,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
                         //s3 사진 업로드
                         //if(beforeImage != null) deleteS3File(beforeImage); //이전 사진 삭제
-                        uploadWithTransferUtility();
+                        if (isProfileImageChange)
+                            uploadWithTransferUtility();
 
                         //닉네임 변경 put api
                         Call<Void> call = RetrofitClient.getApiService().updateNickName(userId, changeNickname.getText().toString());
@@ -173,25 +174,29 @@ public class ChangeProfileActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     Log.d(TAG, "닉네임 변경 성공");
 
-                                    //프로필 사진 변경 put api
-                                    Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
-                                    call2.enqueue(new Callback<Void>() {
-                                        @Override
-                                        public void onResponse(Call<Void> call2, Response<Void> response) {
-                                            if (response.isSuccessful()) {
-                                                Log.d(TAG, "프로필 사진 변경 성공");
-                                                finish(); //종료
-                                            } else {
-                                                Log.e(TAG, "프로필 사진 변경 실패");
+                                    if (isProfileImageChange){ //프로필 사진 변경 put api
+                                        Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
+                                        call2.enqueue(new Callback<Void>() {
+                                            @Override
+                                            public void onResponse(Call<Void> call2, Response<Void> response) {
+                                                if (response.isSuccessful()) {
+                                                    Log.d(TAG, "프로필 사진 변경 성공");
+                                                    finish(); //종료
+                                                } else {
+                                                    Log.e(TAG, "프로필 사진 변경 실패");
+                                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            @Override
+                                            public void onFailure(Call<Void> call2, Throwable t) {
+                                                Log.e("연결실패", t.getMessage());
                                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                             }
-                                        }
-                                        @Override
-                                        public void onFailure(Call<Void> call2, Throwable t) {
-                                            Log.e("연결실패", t.getMessage());
-                                            Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                        });
+                                    } else{
+                                        finish(); //종료
+                                    }
+
                                 } else {
                                     Log.d(TAG, "닉네임 변경 실패");
                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
