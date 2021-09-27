@@ -14,6 +14,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -102,12 +104,13 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         MainPost item = items.get(position);
         viewHolder.setItem(item);
         Glide.with(viewHolder.itemView.getContext())
-                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+item.getProfileImage()).circleCrop()
+                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+item.getProfileImage())
                 .into(viewHolder.profileimage);
         viewHolder.observation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ObservationsiteActivity.class);
+                intent.putExtra("observationId" ,item.getObservationId());
                 v.getContext().startActivity(intent);
             }
         });
@@ -143,6 +146,8 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             mainslider = itemView.findViewById(R.id.mainslider);
             indicator = itemView.findViewById(R.id.mainindicator);
             bookmark = itemView.findViewById(R.id.mainplus_btn);
+            profileimage.setBackground(new ShapeDrawable(new OvalShape()));
+            profileimage.setClipToOutline(true);
             itemView.setClickable(true);
         }
 
@@ -239,14 +244,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 }
             });
             observation.setText(item.getMainObservation());
-            observation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), ObservationsiteActivity.class);
-                    intent.putExtra("observationId",item.getObservationId());
-                    v.getContext().startActivity(intent);
-                }
-            });
             title.setText(item.getMainTitle());
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
