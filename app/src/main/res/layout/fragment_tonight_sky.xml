@@ -16,41 +16,51 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="center"
-            android:src="@drawable/star__image" />
+            android:src="@drawable/star__fall" />
 
         <ImageView
             android:id="@+id/help_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/star__question"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="22dp"
+            android:background="@drawable/tonight__question"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/compass"
+            android:id="@+id/star_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/star__compass"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/tonight__back"
             android:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/compass_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/tonight__compass_body"
+            android:backgroundTint="@color/white"
+            app:layout_constraintStart_toStartOf="@id/star_back_btn"
+            app:layout_constraintTop_toBottomOf="@id/star_back_btn"
             app:layout_editor_absoluteX="0dp"
             app:layout_editor_absoluteY="56dp" />
 
         <ImageView
-            android:id="@+id/star_back_btn"
+            android:id="@+id/compass_needle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/star__back_btn"
-            android:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="@id/compass"
-            app:layout_constraintTop_toBottomOf="@id/compass" />
+            android:background="@drawable/tonight__compass_needle"
+            app:layout_constraintStart_toStartOf="@id/compass_body"
+            app:layout_constraintEnd_toEndOf="@id/compass_body"
+            app:layout_constraintTop_toTopOf="@id/compass_body"
+            app:layout_constraintBottom_toBottomOf="@id/compass_body" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -70,37 +80,63 @@
             android:scaleType="centerCrop"
             android:src="@drawable/star__ic_remove" />
 
-        <EditText
+        <SearchView
             android:id="@+id/edit_search"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/purple_500" />
-
-        <!--        <include-->
-        <!--            layout="@layout/star__weather"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="20dp" />-->
-
-        <include
-            layout="@layout/star__today_cel"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
+            android:layout_marginHorizontal="10dp"
+            app:closeIcon="@drawable/back_btn"
+            app:queryBackground="@color/sub_blue"
+            app:queryHint="검색어를 입력하시오" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/star__today_cel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" />
+
+                <include
+                    layout="@layout/star__horoscope"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
+    <!--        <ListView-->
+    <!--            android:id="@+id/const_list_view"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:divider="@color/white"-->
+    <!--            android:dividerHeight="2dp"-->
+    <!--            tools:listitem="@android:layout/simple_list_item_1" />-->
+    <!--        <include-->
+    <!--            layout="@layout/star__weather"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="20dp" />-->
+
+
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/help_info"
-        android:elevation="5dp"
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:animateLayoutChanges="true"
         android:background="@color/name_purple"
-        android:orientation="vertical">
+        android:elevation="5dp"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
