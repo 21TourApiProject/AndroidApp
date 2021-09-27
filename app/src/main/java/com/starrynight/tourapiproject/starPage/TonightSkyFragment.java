@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.starPage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -15,7 +16,6 @@ import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.ortiz.touchview.TouchImageView;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
@@ -33,6 +34,9 @@ import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,24 +44,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TonightSkyFragment extends Fragment implements SensorEventListener{
+public class TonightSkyFragment extends Fragment implements SensorEventListener {
     //bottomSheet 관련
     private LinearLayout bottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
 
-    private EditText editText;
+    private EditText editSearch;
     //나침반 관련
-    private ImageView mpointer;
     private SensorManager mSensorManger;
     private Sensor mAcclerometer;
     private Sensor mMagnetometer;
     private final float[] mLastAcceleromter = new float[3];
-    private final float[] mLastMagnetometer= new float[3];
+    private final float[] mLastMagnetometer = new float[3];
     private boolean mLastAccelerometerSet = false;
-    private boolean mLastMagnetometerSet= false;
+    private boolean mLastMagnetometerSet = false;
     private final float[] mR = new float[9];
     private final float[] mOrientation = new float[3];
-    private float mCurrentDegree= 0f;
+    private float mCurrentDegree = 0f;
     //recyclerview 관련
     RecyclerView constList;
     StarViewAdapter constAdapter;
@@ -68,6 +71,41 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener{
     Long constId;
     Constellation constellation;
 
+    //도움말
+    ImageView imgClick;
+    TextView openView;
+
+    ImageView imgClick1;
+    TextView openView1;
+
+    ImageView helpBtn;
+    ImageView compass;
+    ImageView starBackBtn;
+
+
+    LinearLayout helpInfo;
+    ImageView helpBackBtn;
+    View dim;
+
+    TouchImageView touchImageView;
+
+    //계절에 따라 이미지 변경
+    String spring = "0321";
+    String summer = "0622";
+    String fall = "0923";
+    String winter = "1221";
+    String yearEnd = "1231";
+    String yearStart = "0101";
+
+    Date springDate;
+    Date summerDate;
+    Date fallDate;
+    Date winterDate;
+    Date todayDate;
+    Date yearEndDate;
+    Date yearStartDate;
+
+    Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,19 +118,19 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener{
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tonight_sky, container, false);
 
+        //나침반
         mSensorManger = (SensorManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SENSOR_SERVICE);
         mAcclerometer = mSensorManger.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagnetometer = mSensorManger.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        mpointer = v.findViewById(R.id.compass);
 
         // bottomSheet 설정
-        editText = v.findViewById(R.id.edit_search);
-        editText.getViewTreeObserver().addOnGlobalLayoutListener(
+        editSearch = v.findViewById(R.id.edit_search);
+        editSearch.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        editText.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        bottomSheetBehavior.setPeekHeight(editText.getBottom() + 50);
+                        editSearch.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        bottomSheetBehavior.setPeekHeight(editSearch.getBottom() + 50);
                     }
                 }
         );
@@ -100,13 +138,13 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener{
         bottomSheet = v.findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
-        bottomSheetBehavior.setPeekHeight(editText.getBottom());
+        bottomSheetBehavior.setPeekHeight(editSearch.getBottom());
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
 
         // 뒤로 가기 버튼 클릭 이벤트
-        ImageButton backBtn = (ImageButton) v.findViewById(R.id.star_back_btn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        starBackBtn = v.findViewById(R.id.star_back_btn);
+        starBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
@@ -170,48 +208,163 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener{
             }
         });
 
+        //도움말 textView open
+        imgClick = v.findViewById(R.id.imgClick);
+        openView = v.findViewById(R.id.layout_expand);
+        imgClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (openView.getVisibility() == View.VISIBLE) {
+                    openView.setVisibility(View.GONE);
+                    imgClick.animate().setDuration(200).rotation(0f);
+                } else {
+                    openView.setVisibility(View.VISIBLE);
+                    imgClick.animate().setDuration(200).rotation(90f);
+                }
+            }
+        });
+
+        imgClick1 = v.findViewById(R.id.imgClick1);
+        openView1 = v.findViewById(R.id.layout_expand1);
+        imgClick1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (openView1.getVisibility() == View.VISIBLE) {
+                    openView1.setVisibility(View.GONE);
+                    imgClick1.animate().setDuration(200).rotation(0f);
+                } else {
+                    openView1.setVisibility(View.VISIBLE);
+                    imgClick1.animate().setDuration(200).rotation(90f);
+                }
+            }
+        });
+
+        helpBtn = v.findViewById(R.id.help_btn);
+        helpInfo = v.findViewById(R.id.help_info);
+        helpBackBtn = v.findViewById(R.id.help_back_btn);
+        dim = v.findViewById(R.id.dim);
+        touchImageView = v.findViewById(R.id.touchImage);
+        compass = v.findViewById(R.id.compass);
+        starBackBtn = v.findViewById(R.id.star_back_btn);
+
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpInfo.setVisibility(View.VISIBLE);
+                dim.setAlpha(1);
+                stateButton(false);
+            }
+        });
+
+        helpBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                helpInfo.setVisibility(View.GONE);
+                dim.setAlpha(0);
+                stateButton(true);
+            }
+        });
+
+        // 계절 별로 다른 이미지 넣기
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat sdf = new SimpleDateFormat("MMdd");
+
+        try {
+            Date today = new Date();
+            springDate = sdf.parse(spring);
+            summerDate = sdf.parse(summer);
+            fallDate = sdf.parse(fall);
+            winterDate = sdf.parse(winter);
+            yearEndDate = sdf.parse(yearEnd);
+            yearStartDate = sdf.parse(yearStart);
+            todayDate = sdf.parse(sdf.format(today));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        compareDataSpring = todayDate.compareTo(springDate);            //3월 21일
+        compareDataSummer = todayDate.compareTo(summerDate);            //6월 22일
+        compareDataFall = todayDate.compareTo(fallDate);                //9월 23일
+        compareDataWinter = todayDate.compareTo(winterDate);            //12월 21일
+        compareDataYearStart = todayDate.compareTo(yearStartDate);      //1월 1일
+        compareDataYearEnd = todayDate.compareTo(yearEndDate);          //12월 31일
+
+
+        // 봄(3/21 ~ 6/21)
+        if ((compareDataSpring == 1 || compareDataSpring == 0) && compareDataSummer == -1) {
+            touchImageView.setImageResource(R.drawable.star__spring);
+        }
+        // 여름(6/22 ~ 9/22)
+        else if ((compareDataSummer == 1 || compareDataSummer == 0) && compareDataFall == -1) {
+            touchImageView.setImageResource(R.drawable.star__summer);
+        }
+        // 가을(9/23 ~ 12/20)
+        else if ((compareDataFall == 1 || compareDataFall == 0) && compareDataWinter == -1) {
+            touchImageView.setImageResource(R.drawable.star__fall);
+        }
+        // 겨울(12/21 ~ 12/31)
+        else if ((compareDataWinter == 1 || compareDataWinter == 0) && compareDataYearEnd == -1) {
+            touchImageView.setImageResource(R.drawable.star__winter);
+        }
+        // 겨울(01/01 ~ 03/20)
+        else if ((compareDataYearStart == 1 || compareDataYearStart == 0) && compareDataSpring == -1) {
+            touchImageView.setImageResource(R.drawable.star__winter);
+        }
+
         return v;
     }
+
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        mSensorManger.registerListener( this,mAcclerometer,SensorManager.SENSOR_DELAY_GAME);
-        mSensorManger.registerListener(this,mMagnetometer,SensorManager.SENSOR_DELAY_GAME);
+        mSensorManger.registerListener(this, mAcclerometer, SensorManager.SENSOR_DELAY_GAME);
+        mSensorManger.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        mSensorManger.unregisterListener( this,mAcclerometer);
-        mSensorManger.unregisterListener( this,mMagnetometer);
+        mSensorManger.unregisterListener(this, mAcclerometer);
+        mSensorManger.unregisterListener(this, mMagnetometer);
     }
 
     @Override
-    public void onSensorChanged(SensorEvent event){
-        if (event.sensor == mAcclerometer){
-            System.arraycopy(event.values,0,mLastAcceleromter,0,event.values.length);
-            mLastAccelerometerSet= true;
-        }else if (event.sensor==mMagnetometer){
-            System.arraycopy(event.values,0,mLastMagnetometer,0,event.values.length);
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor == mAcclerometer) {
+            System.arraycopy(event.values, 0, mLastAcceleromter, 0, event.values.length);
+            mLastAccelerometerSet = true;
+        } else if (event.sensor == mMagnetometer) {
+            System.arraycopy(event.values, 0, mLastMagnetometer, 0, event.values.length);
             mLastMagnetometerSet = true;
         }
-        if (mLastAccelerometerSet&&mLastMagnetometerSet){
-            SensorManager.getRotationMatrix(mR,null,mLastAcceleromter,mLastMagnetometer);
-            float azimuthinDegress = (int)(Math.toDegrees(SensorManager.getOrientation(mR,mOrientation)[0])+360)%360;
+        if (mLastAccelerometerSet && mLastMagnetometerSet) {
+            SensorManager.getRotationMatrix(mR, null, mLastAcceleromter, mLastMagnetometer);
+            float azimuthinDegress = (int) (Math.toDegrees(SensorManager.getOrientation(mR, mOrientation)[0]) + 360) % 360;
             RotateAnimation ra = new RotateAnimation(
                     mCurrentDegree,
                     -azimuthinDegress,
-                    Animation.RELATIVE_TO_SELF,0.5f,
-                    Animation.RELATIVE_TO_SELF,0.5f
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f
             );
             ra.setDuration(250);
             ra.setFillAfter(true);
-            mpointer.startAnimation(ra);
-            mCurrentDegree= -azimuthinDegress;
+            compass.startAnimation(ra);
+            mCurrentDegree = -azimuthinDegress;
         }
     }
+
+    public void stateButton(boolean state) {
+        touchImageView.setEnabled(state);
+        compass.setEnabled(state);
+        starBackBtn.setEnabled(state);
+        helpBtn.setEnabled(state);
+        bottomSheetBehavior.setDraggable(state);
+        editSearch.setEnabled(state);
+    }
+
     @Override
-    public void onAccuracyChanged(Sensor sensor,int accuracy){
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
