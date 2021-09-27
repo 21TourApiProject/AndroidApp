@@ -132,13 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
-        else{
-            if (getFragmentManager().getBackStackEntryCount() > 0 ){
-                getFragmentManager().popBackStack();
-            } else {
-                super.onBackPressed();
-            }
-        }
 
 //        if(!(fragment instanceof FilterFragment)) {
 //            if(System.currentTimeMillis() > backKeyPressTime+2000){
