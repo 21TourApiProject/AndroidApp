@@ -1,10 +1,7 @@
 package com.starrynight.tourapiproject;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,13 +17,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
-import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
-import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,10 +74,8 @@ public class MainActivity extends AppCompatActivity {
         });
         if (getIntent() != null) {
 
-            System.out.println("여기 들어오니?");
             Intent intent = getIntent();
             Activities fromWhere = (Activities) intent.getSerializableExtra("FromWhere");
-            System.out.println("어디서"+fromWhere);
             if (fromWhere == Activities.OBSERVATION) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
@@ -116,19 +107,26 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
 
-        if ((fragment instanceof FilterFragment) || fragment instanceof SearchResultFragment||(fragment instanceof MapFragment)) {
+        if ((fragment instanceof FilterFragment) || fragment instanceof SearchResultFragment) {
             if (getFragmentManager().getBackStackEntryCount() > 0) {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
             }
-        }else {
-            if(System.currentTimeMillis() > backKeyPressTime+2000){
+        } else if (fragment instanceof MapFragment) {
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStack();
+            } else {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                super.onBackPressed();
+            }
+        } else {
+            if (System.currentTimeMillis() > backKeyPressTime + 2000) {
                 backKeyPressTime = System.currentTimeMillis();
-                Toast.makeText(this,"한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (System.currentTimeMillis() <= backKeyPressTime+2000){
+            if (System.currentTimeMillis() <= backKeyPressTime + 2000) {
                 finish();
             }
         }
