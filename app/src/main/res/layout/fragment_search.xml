@@ -32,15 +32,16 @@
                     android:layout_marginBottom="38dp"
                     android:layout_weight="7"
                     android:focusableInTouchMode="false">
+
                 <SearchView
                     android:id="@+id/search"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_weight="7"
-                    app:iconifiedByDefault="false"
-                    android:background="@drawable/postwrite__search_bar" />
+                    android:background="@drawable/postwrite__search_bar"
+                    app:iconifiedByDefault="false" />
                 </FrameLayout>
-
+              
                 <Button
                     android:id="@+id/mapBtn"
                     android:layout_width="20dp"
@@ -58,40 +59,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/search__filter_btn" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/search__all_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="전체" />
-
-                <Button
-                    android:id="@+id/search__ob_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="관측지" />
-
-                <Button
-                    android:id="@+id/search__tp_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="관광지" />
-
-                <Button
-                    android:id="@+id/search__post_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="게시글" />
             </LinearLayout>
 
             <LinearLayout
