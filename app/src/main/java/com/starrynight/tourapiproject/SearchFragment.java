@@ -89,7 +89,10 @@ public class SearchFragment extends Fragment {
         filter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("fromWhere", Activities.MAP);
                 Fragment filterFragment = new FilterFragment();
+                filterFragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_view, filterFragment);
                 transaction.addToBackStack(null);

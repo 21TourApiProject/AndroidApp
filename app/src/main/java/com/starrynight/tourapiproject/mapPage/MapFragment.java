@@ -38,10 +38,14 @@ import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagAdapter;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagItem;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
+import com.starrynight.tourapiproject.searchPage.OnSearchResultItemClickListener;
+import com.starrynight.tourapiproject.searchPage.SearchResultAdapter;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchKey;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams1;
+import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.MapPOIItem;
@@ -110,7 +114,7 @@ public class MapFragment extends Fragment {
             "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
 
     List<SearchParams1> obResult; //관측지 필터 결과
-    List<MyWishObTp> tpResult; //관광지 필터 결과
+    List<SearchParams1> tpResult; //관광지 필터 결과
     ArrayList<Integer> area; //어떤 지역필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
     ArrayList<Integer> hashTag; //어떤 해시태그필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
     List<Long> areaCodeList;
@@ -281,10 +285,6 @@ public class MapFragment extends Fragment {
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
             Log.e(TAG, "onLocationChanged, location:" + location);
-
-            //센터 포인트를 첫 관광지로 수정 아예 없애도 됨
-//            MY_POINT= MapPoint.mapPointWithGeoCoord(location.getLatitude(),location.getLongitude());
-//            mapView.setMapCenterPoint(MY_POINT, true);
             lm.removeUpdates(mLocationListener);  //  미수신할때는 반드시 자원해체를 해주어야 한다.
 
         }
@@ -305,9 +305,21 @@ public class MapFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        mapViewContainer.removeView(mapView);
+        super.onDestroy();
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+//        mapViewContainer.addView(mapView);
         super.onCreate(savedInstanceState);
     }
 
@@ -351,9 +363,12 @@ public class MapFragment extends Fragment {
         obResult = new ArrayList<>();
         tpResult = new ArrayList<>();
         searchView.setIconifiedByDefault(false);
+        area = new ArrayList<Integer>(Collections.nCopies(17, 0));
+        hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
 
         if (getArguments() != null) {
             Activities fromWhere = (Activities) getArguments().getSerializable("FromWhere");
+            System.out.println("지도에서 여긴 지나가니?"+fromWhere);
 
             //지도 초기화
             initMapView();
@@ -374,38 +389,6 @@ public class MapFragment extends Fragment {
                     Log.e(TAG, "번들에 balloon 없음");
                 }
             } else if (fromWhere == Activities.SEARCHRESULT) {
-
-                SearchKey searchKey;
-                searchKey = (SearchKey) getArguments().getSerializable("searchKey");
-                Call<List<SearchParams1>> call = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
-                call.enqueue(new Callback<List<SearchParams1>>() {
-                    @Override
-                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
-                        if (response.isSuccessful()) {
-                            Log.d(TAG, "관측지 검색 성공");
-                            obResult = response.body();
-
-                            for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1);
-                                observationBalloonObjects.add(balloonObject);
-                                createObserveMarker(mapView, balloonObject);
-                            }
-                        } else {
-                            Log.e(TAG, "관측지 검색 실패");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                    }
-                });
-
-            } else if (fromWhere == Activities.SEARCH) {
-                searchView.setQueryHint("검색어를 입력하세요");
-                area = new ArrayList<Integer>(Collections.nCopies(17, 0));
-                hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
-
-            } else if (fromWhere == Activities.FILTER) {
                 area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
@@ -451,8 +434,8 @@ public class MapFragment extends Fragment {
 
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
-                Call<List<SearchParams1>> call = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
-                call.enqueue(new Callback<List<SearchParams1>>() {
+                Call<List<SearchParams1>> call1 = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
+                call1.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
@@ -460,7 +443,105 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1);
+                                BalloonObject balloonObject = setupMaker(params1,2);
+                                observationBalloonObjects.add(balloonObject);
+                                createObserveMarker(mapView, balloonObject);
+                            }
+                        } else {
+                            Log.e(TAG, "관측지 검색 실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                call2.enqueue(new Callback<List<SearchParams1>>() {
+                    @Override
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "관광지 검색 성공");
+                            tpResult = response.body();
+
+                            for (SearchParams1 params1 : tpResult) {
+                                BalloonObject balloonObject = setupMaker(params1,1);
+                                tourBalloonObjects.add(balloonObject);
+                                createTourMarker(mapView, balloonObject);
+                            }
+                        } else {
+                            System.out.println("관광지 필터 검색 실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
+
+            } else if (fromWhere == Activities.SEARCH) {
+                searchView.setQueryHint("검색어를 입력하세요");
+                area = new ArrayList<Integer>(Collections.nCopies(17, 0));
+                hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+
+            } else if (fromWhere == Activities.FILTER) {
+
+                area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
+                hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
+                keyword = getArguments().getString("keyword");
+                System.out.println("키워드"+keyword+"area"+area);
+
+                selectFilterItem.removeAllViews(); //초기화
+                for(int i=0; i<17; i++){
+                    if(area.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText(" "+ areaName[i] + " ");
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if(hashTag.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText("#" + hashTagName[i]);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+                if (keyword == null) {
+                    searchView.setQueryHint("검색어를 입력하세요");
+                } else {
+                    searchView.setQueryHint(keyword);
+                }
+
+                areaCodeList = new ArrayList<>();
+                hashTagIdList = new ArrayList<>();
+
+                for(int i=0; i<17; i++){
+                    if (area.get(i) == 1){ //선택했으면
+                        areaCodeList.add(areaCode[i]);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if (hashTag.get(i) == 1){ //선택했으면
+                        hashTagIdList.add((long)(i+1));
+                    }
+                }
+
+                Filter filter = new Filter(areaCodeList, hashTagIdList);
+                SearchKey searchKey = new SearchKey(filter, keyword);
+                Call<List<SearchParams1>> call1 = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
+                call1.enqueue(new Callback<List<SearchParams1>>() {
+                    @Override
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "관측지 검색 성공");
+                            obResult = response.body();
+
+                            for (SearchParams1 params1 : obResult) {
+                                BalloonObject balloonObject = setupMaker(params1,2);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -474,6 +555,28 @@ public class MapFragment extends Fragment {
                     }
                 });
                 //관광지 추가해야함
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                call2.enqueue(new Callback<List<SearchParams1>>() {
+                    @Override
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "관광지 검색 성공");
+                            tpResult = response.body();
+
+                            for (SearchParams1 params1 : tpResult) {
+                                BalloonObject balloonObject = setupMaker(params1,1);
+                                tourBalloonObjects.add(balloonObject);
+                                createTourMarker(mapView, balloonObject);
+                            }
+                        } else {
+                            System.out.println("관광지 필터 검색 실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
             }
         }
 
@@ -500,8 +603,8 @@ public class MapFragment extends Fragment {
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
-                Call<List<SearchParams1>> call = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
-                call.enqueue(new Callback<List<SearchParams1>>() {
+                Call<List<SearchParams1>> call1 = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
+                call1.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
@@ -509,7 +612,7 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1);
+                                BalloonObject balloonObject = setupMaker(params1,2);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -523,7 +626,28 @@ public class MapFragment extends Fragment {
                     }
                 });
 
-                //관광지 추가해야 함
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                call2.enqueue(new Callback<List<SearchParams1>>() {
+                    @Override
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "관광지 검색 성공");
+                            tpResult = response.body();
+
+                            for (SearchParams1 params1 : tpResult) {
+                                BalloonObject balloonObject = setupMaker(params1,1);
+                                tourBalloonObjects.add(balloonObject);
+                                createTourMarker(mapView, balloonObject);
+                            }
+                        } else {
+                            System.out.println("관광지 필터 검색 실패");
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+                        Log.e("연결실패", t.getMessage());
+                    }
+                });
 
                 return true;
             }
@@ -534,6 +658,7 @@ public class MapFragment extends Fragment {
             }
         });
 
+        //필터버튼 설정
         Button filter_btn = (Button) view.findViewById(R.id.map_filterBtn);
         filter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -545,17 +670,11 @@ public class MapFragment extends Fragment {
                 filterFragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_view, filterFragment);
-                transaction.addToBackStack(null);
+                transaction.remove(MapFragment.this);
                 transaction.commit();
             }
         });
 
-    //더미데이터 참고용
-//        BalloonObject balloonObject1= setupMaker (1,"관측지1", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
-//        createObserveMarker(mapView, balloonObject1);
-//
-//        BalloonObject balloonObject2 = setupMaker(2,"관광지1", "강릉에 있는 관광지", 37.53737528, 127.00557633);
-//        createTourMarker(mapView, balloonObject2);
 
         //내위치로 정렬
         setMyLocation();
@@ -576,6 +695,29 @@ public class MapFragment extends Fragment {
             }
         });
 
+        //목록이동
+        Button list_btn = (Button) view.findViewById(R.id.searchList_Btn);
+        list_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putIntegerArrayList("area",area);
+                bundle.putIntegerArrayList("hashTag",hashTag);
+                bundle.putString("keyword",keyword);
+                bundle.putInt("type", 3);
+
+                SearchResultFragment searchResultFragment = new SearchResultFragment();
+                searchResultFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, searchResultFragment);
+//                transaction.addToBackStack(null);
+                transaction.remove(MapFragment.this);
+                transaction.commit();
+//                ((MainActivity)getActivity()).replaceFragment(mapFragment);
+            }
+        });
+
         observe_ckb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -584,8 +726,6 @@ public class MapFragment extends Fragment {
                     for (BalloonObject p : observationBalloonObjects) {
                         createObserveMarker(mapView,p);
                     }
-//                    BalloonObject balloonObject1= setupMaker (1,"관측지1", "제주도에 있는 관측지", 37.54892296550104, 126.99089033876304);
-//                    createObserveMarker(mapView, balloonObject1);
                 }else {
                     for(MapPOIItem p : observePOIItems)
                         mapView.removePOIItem(p);
@@ -603,8 +743,6 @@ public class MapFragment extends Fragment {
                     for (BalloonObject p : tourBalloonObjects) {
                         createTourMarker(mapView,p);
                     }
-//                    BalloonObject balloonObject2 = setupMaker(2,"관광지1", "강릉에 있는 관광지", 37.53737528, 127.00557633);
-//                    createTourMarker(mapView, balloonObject2);
                 } else {
                     for(MapPOIItem p : tourPOIItems)
                         mapView.removePOIItem(p);
@@ -690,13 +828,13 @@ public class MapFragment extends Fragment {
 
     }
 
-    private BalloonObject setupMaker(SearchParams1 params1)
+    private BalloonObject setupMaker(SearchParams1 params1, int t)
     {
         //마커 기본정보 object 생성 및 setup
         BalloonObject balloon_Object = new BalloonObject();
         balloon_Object.setName(params1.getTitle());
         balloon_Object.setIntro(params1.getIntro());
-        balloon_Object.setTag(2);   //관측지일 때 2라서 수정필요
+        balloon_Object.setTag(t);
         balloon_Object.setLatitude(params1.getLatitude());
         balloon_Object.setLongitude(params1.getLongitude());
 
