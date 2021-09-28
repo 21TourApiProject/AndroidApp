@@ -93,10 +93,36 @@
 
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:id="@+id/exampleLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/postwrite_area" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/postwrite_area" />
+                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                </androidx.recyclerview.widget.RecyclerView>
 
             </LinearLayout>
 
@@ -133,7 +159,8 @@
                         android:layout_marginTop="10dp"
                         android:ems="20"
                         android:hint="제목을 입력해주세요"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -166,6 +193,7 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/postwrite__date"
                             android:onClick="onClickDatePicker"
+                            android:paddingHorizontal="10dp"
                             android:paddingEnd="10dp"
                             android:text="년도/월/일     "
                             android:textAlignment="center"
@@ -178,6 +206,7 @@
                             android:layout_marginStart="10dp"
                             android:background="@drawable/postwrite__date"
                             android:onClick="onClickTimePicker"
+                            android:paddingHorizontal="10dp"
                             android:paddingEnd="10dp"
                             android:text="시간"
                             android:textAlignment="center"
@@ -205,7 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:hint="장소"
+                        android:text="장소"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -267,7 +296,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:hint="해시태그"
+                        android:text="해시태그"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

@@ -86,6 +86,13 @@ public class AddHashTagActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Button back = findViewById(R.id.addHashTag_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         Button addHashTag = findViewById(R.id.addHashTag);
         addHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +105,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                             break;
                             }
                     }
-                    adapter.addItem(new PostHashTagItem(optionHashTag));
+                    adapter.addItem(new PostHashTagItem(optionHashTag,null,null));
                     adapter.notifyDataSetChanged();
             }
         });
