@@ -24,17 +24,24 @@
                 android:focusableInTouchMode="true"
                 android:weightSum="7">
 
-                <SearchView
-                    android:id="@+id/search"
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="17dp"
                     android:layout_marginEnd="18dp"
                     android:layout_marginBottom="38dp"
                     android:layout_weight="7"
+                    android:focusableInTouchMode="false">
+
+                <SearchView
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="7"
                     android:background="@drawable/postwrite__search_bar"
                     app:iconifiedByDefault="false" />
-
+                </FrameLayout>
+              
                 <Button
                     android:id="@+id/mapBtn"
                     android:layout_width="20dp"
