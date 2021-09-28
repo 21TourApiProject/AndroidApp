@@ -1,19 +1,10 @@
 package com.starrynight.tourapiproject.postPage.postRetrofit;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,18 +16,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.SearchFragment;
-import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
-import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.postItemPage.OnPostHashTagClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.ImageSliderAdapter;
 import com.starrynight.tourapiproject.postPage.PostActivity;
-import com.starrynight.tourapiproject.postWritePage.AddHashTagActivity;
-import com.starrynight.tourapiproject.searchPage.FilterFragment;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -101,14 +97,37 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     public void onBindViewHolder(@NonNull MainPost_adapter.ViewHolder viewHolder, int position) {
         MainPost item = items.get(position);
         viewHolder.setItem(item);
+        String fileName = item.getProfileImage();
+        fileName = fileName.substring(1, fileName.length() -1);
         Glide.with(viewHolder.itemView.getContext())
-                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+item.getProfileImage()).circleCrop()
+                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+fileName)
                 .into(viewHolder.profileimage);
-        viewHolder.observation.setOnClickListener(new View.OnClickListener() {
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(viewHolder.hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        viewHolder.hashTagRecyclerView.setLayoutManager(layoutManager);
+        PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
+        adapter.addItem(new PostHashTagItem(item.getMainObservation(),null, item.getObservationId()));
+        if (item.getHashTags()!=null){
+            for (int i=0;i<item.getHashTags().size();i++){
+                adapter.addItem(new PostHashTagItem(item.getHashTags().get(i),null,null));
+            if (i==2){break;}}
+        }else{
+            adapter.addItem(new PostHashTagItem(item.getOptionHashTag(),null,null));
+            if (item.getOptionHashTag2()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag2(),null,null));}
+            if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3(),null,null));}
+        }
+        viewHolder.hashTagRecyclerView.setAdapter(adapter);
+        viewHolder.hashTagRecyclerView.addItemDecoration(new ViewHolder.RecyclerViewDecoration(20));
+        adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ObservationsiteActivity.class);
-                v.getContext().startActivity(intent);
+            public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
+                Bundle bundle = new Bundle();
+                Fragment searchFragment = new SearchFragment();
+                FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, searchFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
             }
         });
     }
@@ -123,7 +142,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView observation;
         RecyclerView hashTagRecyclerView;
         TextView title;
         TextView nickname;
@@ -135,7 +153,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         public ViewHolder(View itemView,final OnMainPostClickListener listener){
             super(itemView);
 
-            observation = itemView.findViewById(R.id.mainobservepoint);
             hashTagRecyclerView = itemView.findViewById(R.id.mainRecyclerView);
             title = itemView.findViewById(R.id.mainpost_title);
             nickname = itemView.findViewById(R.id.nickname);
@@ -143,36 +160,12 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             mainslider = itemView.findViewById(R.id.mainslider);
             indicator = itemView.findViewById(R.id.mainindicator);
             bookmark = itemView.findViewById(R.id.mainplus_btn);
+            profileimage.setBackground(new ShapeDrawable(new OvalShape()));
+            profileimage.setClipToOutline(true);
             itemView.setClickable(true);
         }
 
         public void setItem(MainPost item){
-            LinearLayoutManager layoutManager = new LinearLayoutManager(hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-            hashTagRecyclerView.setLayoutManager(layoutManager);
-            PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
-            if (item.getHashTags()!=null){
-                for (int i=0;i<item.getHashTags().size();i++){
-                    adapter.addItem(new PostHashTagItem(item.getHashTags().get(i)));}
-            }else{
-                adapter.addItem(new PostHashTagItem(item.getOptionHashTag()));
-                if (item.getOptionHashTag2()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag2()));}
-                if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3()));}
-            }
-            hashTagRecyclerView.setAdapter(adapter);
-            hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20));
-            adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
-                @Override
-                public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
-                    Bundle bundle = new Bundle();
-                    Fragment searchFragment = new SearchFragment();
-                    FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.main_view, searchFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-                }
-            });
-
 
             //이미 찜한건지 확인
             Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId,item.getPostId(), 2);
@@ -236,15 +229,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                             }
                         });
                     }
-                }
-            });
-            observation.setText(item.getMainObservation());
-            observation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), ObservationsiteActivity.class);
-                    intent.putExtra("observationId",item.getObservationId());
-                    v.getContext().startActivity(intent);
                 }
             });
             title.setText(item.getMainTitle());

@@ -37,6 +37,7 @@ import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -51,6 +52,8 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
@@ -94,6 +97,7 @@ public class PostWriteActivity extends AppCompatActivity {
     File file;
     LinearLayout ob_linear;
     ArrayList<File> files = new ArrayList<>();
+    LinearLayout examplelayout;
     private TextView postObservePointItem;
     String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
     String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -117,6 +121,7 @@ public class PostWriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_write);
         postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
         ob_linear = findViewById(R.id.postwrite_ob_linear);
+        examplelayout=findViewById(R.id.exampleLinear);
 
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
@@ -136,6 +141,8 @@ public class PostWriteActivity extends AppCompatActivity {
         addPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                examplelayout.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
                 if (numOfPicture >= 10){
                     Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_LONG).show();
                     return;
@@ -473,6 +480,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 postObservePointItem.setText(observationName);
                 postObservePointName=observationName;
                 }else{postObservePointItem.setText(optionobservationName);
+                ob_linear.setVisibility(View.VISIBLE);
                 postObservePointName = "나만의 관측지";}
 
             }else{Log.d("postObservation","검색 관측지 데이터 로드 실패");}
@@ -484,18 +492,25 @@ public class PostWriteActivity extends AppCompatActivity {
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
                 optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
-                GridLayoutManager layoutManager = new GridLayoutManager(this,6,GridLayoutManager.VERTICAL,false);
+                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,GridLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(layoutManager);
-                PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
-                if (hashTagList.size()!=0){
+                PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
+                if (hashTagList.size()!=0 && optionhashTagList.length!=0){
                 for (int i=0;i<hashTagList.size();i++){
-                    adapter.addItem(new PostHashTagItem(hashTagList.get(i)));
+                    adapter.addItem(new PostWriteHashTagItem(hashTagList.get(i)));
                     }
-                }else{
-                    for (int i=0;i<optionhashTagList.length;i++){
-                    adapter.addItem(new PostHashTagItem(optionhashTagList[i]));
+                    for (String s : optionhashTagList) {
+                        adapter.addItem(new PostWriteHashTagItem(s));
+                    }
+                }else if (hashTagList.size()!=0){
+                    for (int i=0;i<hashTagList.size();i++){
+                        adapter.addItem(new PostWriteHashTagItem(hashTagList.get(i)));
+                    }
                 }
-
+                else{
+                    for (String s : optionhashTagList) {
+                        adapter.addItem(new PostWriteHashTagItem(s));
+                    }
                 }
                 recyclerView.setAdapter(adapter);
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}

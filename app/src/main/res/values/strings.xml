@@ -25,6 +25,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="star_horoscope_text">따스하고 외향적인 천성을 가진 당신. 행동하길 좋아해 늘 변화를 이끌어내지만, 이번 주에는 거침 없는 야망이 오히려 발목을 잡을 수 있으니 주의하자.</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
