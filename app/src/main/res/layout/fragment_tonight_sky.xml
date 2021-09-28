@@ -38,7 +38,7 @@
             android:background="@drawable/tonight__back"
             android:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/compass_body"
@@ -57,10 +57,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/tonight__compass_needle"
-            app:layout_constraintStart_toStartOf="@id/compass_body"
+            app:layout_constraintBottom_toBottomOf="@id/compass_body"
             app:layout_constraintEnd_toEndOf="@id/compass_body"
-            app:layout_constraintTop_toTopOf="@id/compass_body"
-            app:layout_constraintBottom_toBottomOf="@id/compass_body" />
+            app:layout_constraintStart_toStartOf="@id/compass_body"
+            app:layout_constraintTop_toTopOf="@id/compass_body" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -87,7 +87,13 @@
             android:layout_marginHorizontal="10dp"
             app:closeIcon="@drawable/back_btn"
             app:queryBackground="@color/sub_blue"
-            app:queryHint="검색어를 입력하시오" />
+            app:queryHint="검색" />
+
+        <ListView
+            android:id="@+id/const_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
