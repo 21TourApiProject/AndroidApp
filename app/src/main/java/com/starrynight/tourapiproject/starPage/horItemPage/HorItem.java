@@ -1,17 +1,21 @@
-package com.starrynight.tourapiproject.starPage.horoscope;
+package com.starrynight.tourapiproject.starPage.horItemPage;
 
-public class Horoscope {
-    private int horImage;
+public class HorItem {
+    private String horImage;
     private String horEngTitle;
     private String horKrTitle;
     private String horPeriod;
     private String horDesc;
 
-    public int getHorImage() {
+    public HorItem() {
+
+    }
+
+    public String getHorImage() {
         return horImage;
     }
 
-    public void setHorImage(int horImage) {
+    public void setHorImage(String horImage) {
         this.horImage = horImage;
     }
 
@@ -47,7 +51,7 @@ public class Horoscope {
         this.horDesc = horDesc;
     }
 
-    public Horoscope(int horImage, String horEngTitle, String horKrTitle, String horPeriod, String horDesc) {
+    public HorItem(String horImage, String horEngTitle, String horKrTitle, String horPeriod, String horDesc) {
         this.horImage = horImage;
         this.horEngTitle = horEngTitle;
         this.horKrTitle = horKrTitle;
