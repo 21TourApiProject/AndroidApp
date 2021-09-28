@@ -42,24 +42,30 @@
 
             </LinearLayout>
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/slider"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:background="@drawable/mypost_image">
+                android:layout_height="match_parent">
 
-            </androidx.viewpager2.widget.ViewPager2>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:background="@drawable/mypost_image">
 
-            <LinearLayout
-                android:id="@+id/indicator"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/main_purple"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
+                </androidx.viewpager2.widget.ViewPager2>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp">
+
+                </LinearLayout>
+
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -132,9 +138,9 @@
 
                     <Button
                         android:id="@+id/like"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="right"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="right|center_vertical"
                         android:background="@drawable/main__bookmark"
                         app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />
 
@@ -146,32 +152,10 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/hashtag_background"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="14sp"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/mainpage_observationpin" />
-
-                        <TextView
-                            android:id="@+id/postObservation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="관측지"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/hashTagRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
                         android:layout_marginTop="15dp"
                         android:orientation="horizontal"
                         tools:itemCount="4" />
@@ -183,8 +167,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:lines="5"
-                    android:text="게시물 내용" />
+                    android:lines="2"
+                    android:text="게시물 내용"
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -196,8 +181,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:hint="2021년 7월 20일 (월)"
-                        android:textAlignment="center"
+                        android:layout_marginEnd="10dp"
+                        android:hint="2021-09-28"
                         android:textSize="10sp" />
 
                     <TextView
@@ -212,7 +197,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="13dp"
                     android:text="관련 게시물"
@@ -221,8 +205,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="16dp">
+                    android:orientation="horizontal">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/relatePost"
