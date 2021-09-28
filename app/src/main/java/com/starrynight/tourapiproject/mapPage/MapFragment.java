@@ -284,7 +284,9 @@ public class MapFragment extends Fragment {
             //여기서 위치값이 갱신되면 이벤트가 발생한다.
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
-            Log.e(TAG, "onLocationChanged, location:" + location);
+            Log.d(TAG, "onLocationChanged, location:" + location);
+            MY_POINT= MapPoint.mapPointWithGeoCoord(location.getLatitude(),location.getLongitude());
+            mapView.setMapCenterPoint(MY_POINT, true);
             lm.removeUpdates(mLocationListener);  //  미수신할때는 반드시 자원해체를 해주어야 한다.
 
         }
@@ -301,7 +303,7 @@ public class MapFragment extends Fragment {
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
             // 변경시
-            Log.e(TAG, "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+            Log.d(TAG, "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
 
@@ -683,7 +685,6 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);    //denied면 -1
 
-                Log.d(TAG, "onClick: location clicked");
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                     getMyLocaiton();
 

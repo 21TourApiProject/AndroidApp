@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Textview_observation_details"
-        android:text="요금이름"/>
+        android:text="요금이름이 몇글자"/>
 
     <ImageView
         android:id="@+id/fee_line"
@@ -27,6 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Textview_observation_details"
-        android:text="0000원"/>
+        android:text="10,000원"/>
 
 </LinearLayout>
