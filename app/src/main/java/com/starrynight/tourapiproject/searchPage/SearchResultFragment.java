@@ -142,8 +142,84 @@ public class SearchResultFragment extends Fragment {
                 area = new ArrayList<Integer>(Collections.nCopies(17, 0));
                 hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
             } else if (type == 3) {
-                SearchKey searchKey = (SearchKey) getArguments().getSerializable("searchKey");
-                keyword = searchKey.getKeyword();
+
+                area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
+                hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
+                keyword = getArguments().getString("keyword");
+
+                selectFilterItem.removeAllViews(); //초기화
+                for(int i=0; i<17; i++){
+                    if(area.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText(" "+ areaName[i] + " ");
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if(hashTag.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText("#" + hashTagName[i]);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+                if (keyword == null) {
+                    searchView.setQueryHint("검색어를 입력하세요");
+                } else {
+                    searchView.setQueryHint(keyword);
+                }
+
+                areaCodeList = new ArrayList<>();
+                hashTagIdList = new ArrayList<>();
+                for(int i=0; i<17; i++){
+                    if (area.get(i) == 1){ //선택했으면
+                        areaCodeList.add(areaCode[i]);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if (hashTag.get(i) == 1){ //선택했으면
+                        hashTagIdList.add((long)(i+1));
+                    }
+                }
+                List<SearchParams1> finalList = new ArrayList<>();
+                Filter filter = new Filter(areaCodeList, hashTagIdList);
+                SearchKey searchKey = new SearchKey(filter, keyword);
+                Call<List<SearchParams1>> call = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
+                call.enqueue(new Callback<List<SearchParams1>>() {
+                    @Override
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                        if (response.isSuccessful()){
+                            obResult = response.body();
+                            finalList.addAll(obResult);
+                            Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                            call2.enqueue(new Callback<List<SearchParams1>>() {
+                                @Override
+                                public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
+                                    if (response.isSuccessful()){
+                                        tpResult=response.body();
+                                        finalList.addAll(tpResult);
+                                        SearchResultAdapter searchResultAdapter = new SearchResultAdapter(finalList, getContext());
+                                        searchResult.setAdapter(searchResultAdapter);
+                                    }else{Log.d(TAG,"검색페이지 관측지,관광지 실패");}
+                                }
+
+                                @Override
+                                public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+                                    Log.d(TAG,"검색페이지 관측지,관광지 인터넷 오류");
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
+
+                    }
+                });
+
 
                 //저 searchkey 넣어서 검색결과 새로 다 넣기
 
@@ -233,23 +309,9 @@ public class SearchResultFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere", Activities.SEARCHRESULT);
-
-                areaCodeList = new ArrayList<>();
-                hashTagIdList = new ArrayList<>();
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
-                        areaCodeList.add(areaCode[i]);
-                    }
-                }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
-                    }
-                }
-                Filter filter = new Filter(areaCodeList, hashTagIdList);
-                SearchKey searchKey = new SearchKey(filter, keyword);
-                bundle.putSerializable("searchKey", searchKey);
-
+                bundle.putIntegerArrayList("area",area);
+                bundle.putIntegerArrayList("hashTag",hashTag);
+                bundle.putString("keyword",keyword);
                 MapFragment mapFragment = new MapFragment();
                 mapFragment.setArguments(bundle);
 

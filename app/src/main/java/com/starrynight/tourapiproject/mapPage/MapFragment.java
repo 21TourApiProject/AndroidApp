@@ -285,10 +285,6 @@ public class MapFragment extends Fragment {
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
             Log.e(TAG, "onLocationChanged, location:" + location);
-
-            //센터 포인트를 첫 관광지로 수정 아예 없애도 됨
-//            MY_POINT= MapPoint.mapPointWithGeoCoord(location.getLatitude(),location.getLongitude());
-//            mapView.setMapCenterPoint(MY_POINT, true);
             lm.removeUpdates(mLocationListener);  //  미수신할때는 반드시 자원해체를 해주어야 한다.
 
         }
@@ -309,9 +305,21 @@ public class MapFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        mapViewContainer.removeView(mapView);
+        super.onDestroy();
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+//        mapViewContainer.addView(mapView);
         super.onCreate(savedInstanceState);
     }
 
@@ -355,9 +363,12 @@ public class MapFragment extends Fragment {
         obResult = new ArrayList<>();
         tpResult = new ArrayList<>();
         searchView.setIconifiedByDefault(false);
+        area = new ArrayList<Integer>(Collections.nCopies(17, 0));
+        hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
 
         if (getArguments() != null) {
             Activities fromWhere = (Activities) getArguments().getSerializable("FromWhere");
+            System.out.println("지도에서 여긴 지나가니?"+fromWhere);
 
             //지도 초기화
             initMapView();
@@ -378,9 +389,51 @@ public class MapFragment extends Fragment {
                     Log.e(TAG, "번들에 balloon 없음");
                 }
             } else if (fromWhere == Activities.SEARCHRESULT) {
+                area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
+                hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
+                keyword = getArguments().getString("keyword");
 
-                SearchKey searchKey;
-                searchKey = (SearchKey) getArguments().getSerializable("searchKey");
+                selectFilterItem.removeAllViews(); //초기화
+                for(int i=0; i<17; i++){
+                    if(area.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText(" "+ areaName[i] + " ");
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if(hashTag.get(i) == 1){
+                        TextView textView = new TextView(getContext());
+                        textView.setText("#" + hashTagName[i]);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        selectFilterItem.addView(textView);
+                    }
+                }
+                if (keyword == null) {
+                    searchView.setQueryHint("검색어를 입력하세요");
+                } else {
+                    searchView.setQueryHint(keyword);
+                }
+
+                areaCodeList = new ArrayList<>();
+                hashTagIdList = new ArrayList<>();
+
+                for(int i=0; i<17; i++){
+                    if (area.get(i) == 1){ //선택했으면
+                        areaCodeList.add(areaCode[i]);
+                    }
+                }
+                for(int i=0; i<22; i++){
+                    if (hashTag.get(i) == 1){ //선택했으면
+                        hashTagIdList.add((long)(i+1));
+                    }
+                }
+
+                Filter filter = new Filter(areaCodeList, hashTagIdList);
+                SearchKey searchKey = new SearchKey(filter, keyword);
                 Call<List<SearchParams1>> call1 = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
                 call1.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
@@ -432,9 +485,11 @@ public class MapFragment extends Fragment {
                 hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
 
             } else if (fromWhere == Activities.FILTER) {
+
                 area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
+                System.out.println("키워드"+keyword+"area"+area);
 
                 selectFilterItem.removeAllViews(); //초기화
                 for(int i=0; i<17; i++){
@@ -603,6 +658,7 @@ public class MapFragment extends Fragment {
             }
         });
 
+        //필터버튼 설정
         Button filter_btn = (Button) view.findViewById(R.id.map_filterBtn);
         filter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -614,7 +670,7 @@ public class MapFragment extends Fragment {
                 filterFragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_view, filterFragment);
-                transaction.addToBackStack(null);
+                transaction.remove(MapFragment.this);
                 transaction.commit();
             }
         });
@@ -639,28 +695,15 @@ public class MapFragment extends Fragment {
             }
         });
 
+        //목록이동
         Button list_btn = (Button) view.findViewById(R.id.searchList_Btn);
         list_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-                bundle.putSerializable("FromWhere", Activities.MAP);
-
-                areaCodeList = new ArrayList<>();
-                hashTagIdList = new ArrayList<>();
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
-                        areaCodeList.add(areaCode[i]);
-                    }
-                }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
-                    }
-                }
-                Filter filter = new Filter(areaCodeList, hashTagIdList);
-                SearchKey searchKey = new SearchKey(filter, keyword);
-                bundle.putSerializable("searchKey", searchKey);
+                bundle.putIntegerArrayList("area",area);
+                bundle.putIntegerArrayList("hashTag",hashTag);
+                bundle.putString("keyword",keyword);
                 bundle.putInt("type", 3);
 
                 SearchResultFragment searchResultFragment = new SearchResultFragment();
@@ -668,7 +711,8 @@ public class MapFragment extends Fragment {
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.main_view, searchResultFragment);
-                transaction.addToBackStack(null);
+//                transaction.addToBackStack(null);
+                transaction.remove(MapFragment.this);
                 transaction.commit();
 //                ((MainActivity)getActivity()).replaceFragment(mapFragment);
             }

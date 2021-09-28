@@ -102,9 +102,10 @@ public class FilterFragment extends Fragment {
 
                 Activities fromWhere;
                 if (getArguments() != null) {
-                    fromWhere = (Activities) getArguments().getSerializable("FromWhere");
+                    fromWhere = (Activities) getArguments().getSerializable("fromWhere");
                     if (fromWhere == Activities.SEARCH) {
                         keyword = null;
+                        bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         Fragment searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
@@ -112,13 +113,17 @@ public class FilterFragment extends Fragment {
                         transaction.commit();
                     } else if (fromWhere == Activities.SEARCHRESULT) {
                         keyword = getArguments().getString("keyword");
+                        bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         Fragment searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
                         transaction.replace(R.id.main_view, searchResultFragment);
                         transaction.commit();
                     } else if (fromWhere == Activities.MAP) {
+                        System.out.println("여긴 지나가니?");
+                        bundle.putSerializable("FromWhere",Activities.FILTER);
                         keyword = getArguments().getString("keyword");
+                        bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         Fragment mapfragment = new MapFragment();
                         mapfragment.setArguments(bundle);
