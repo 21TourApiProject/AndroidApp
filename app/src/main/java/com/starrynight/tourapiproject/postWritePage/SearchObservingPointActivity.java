@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filterable;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchObservingPointActivity extends AppCompatActivity {
+public class SearchObservingPointActivity extends AppCompatActivity{
     EditText findObservePoint;
     String observePoint;
     ArrayList<Search_item> searchitemArrayList, filteredList;
@@ -57,7 +58,7 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                     Log.d("observation","관측지 리스트 업로드");
                     List<Observation> observationList = response.body();
                     for (int i=1;i<observationList.size();i++){
-                        searchitemArrayList.add(new Search_item(observationList.get(i).getObservationName()));
+                        searchitemArrayList.add(new Search_item(observationList.get(i).getObservationName(),observationList.get(i).getAddress()));
                     }
                 }else {Log.d("observation","관측지 리스트 업로드 실패");}
             }
@@ -124,15 +125,15 @@ public class SearchObservingPointActivity extends AppCompatActivity {
     public void searchFilter(String searchText) {
         filteredList.clear();
         Button add_btn = findViewById(R.id.addObservePoint);
-        for (Search_item search_item : searchitemArrayList) {
-            if (search_item.getItemName().contains(searchText)) {
-                filteredList.add(search_item);
+        for (int i=0;i<searchitemArrayList.size();i++) {
+            if (searchitemArrayList.get(i).getItemName().toLowerCase().contains(searchText.toLowerCase())) {
+                filteredList.add(searchitemArrayList.get(i));
                 add_btn.setVisibility(View.GONE);
-            }else{filteredList.add(new Search_item("나만의 관측지를 입력하고 추가버튼을 눌러주세요"));
+            }
+        }if (filteredList.size()==0){{filteredList.add(new Search_item("나만의 관측지를 입력하고 추가버튼을 눌러주세요",""));
             add_btn.setVisibility(View.VISIBLE);
-            break;}
         }
-
+        }
         search_item_adapter.filterList(filteredList);
     }
 
