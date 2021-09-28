@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.starPage;
 
-import android.animation.ArgbEvaluator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,22 +25,27 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.ortiz.touchview.TouchImageView;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.starPage.horoscope.Horoscope;
+import com.starrynight.tourapiproject.starPage.horItemPage.HorItem;
+import com.starrynight.tourapiproject.starPage.horItemPage.HoroscopeAdapter;
+import com.starrynight.tourapiproject.starPage.horPageRetriofit.Horoscope;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -113,11 +116,18 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     Date yearStartDate;
 
     //별자리 운세
-    ViewPager horViewPager;
-    Adapter horAdapter;
-    Integer[] colors = null;
-    List<Horoscope> horoscopes;
-    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+    List<HorItem> horItems = new ArrayList<>();
+
+    private HoroscopeAdapter horAdapter;
+    private ViewPager2 horViewpager;
+    Long horId = 0L;
+    String todayMonth;
+    String horDesc;
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatMonth = new SimpleDateFormat("MM");
+
+    Calendar cal = Calendar.getInstance();
 
 
     //검색
@@ -139,7 +149,11 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         View v = inflater.inflate(R.layout.fragment_tonight_sky, container, false);
 
         //별자리 운세
+        horViewpager = v.findViewById(R.id.hor_viewpager);
 
+        for(int i = 0; i < 12; i++){
+            connectHoroscope((long) i);
+        }
 
 
         //나침반
@@ -202,7 +216,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         Call<List<StarItem>> todayConstCall = RetrofitClient.getApiService().getTodayConst();
         todayConstCall.enqueue(new Callback<List<StarItem>>() {
             @Override
-            public void onResponse(Call<List<StarItem>> call, Response<List<StarItem>> response) {
+            public void onResponse(@NotNull Call<List<StarItem>> call, Response<List<StarItem>> response) {
                 if (response.isSuccessful()) {
                     List<StarItem> result = response.body();
                     for (StarItem si : result) {
@@ -210,7 +224,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                     }
                     constList.setAdapter(constAdapter);
                 } else {
-                    System.out.println("오늘의 별자리 불러오기 실패");
+                    Log.d("todayConst", "오늘의 별자리 불러오기 실패");
                 }
             }
 
@@ -227,7 +241,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
                 intent.putExtra("constId", item.getConstId());
-                //Log.d("constId출력", item.getConstId().toString());
+                //Log.d("constId 출력", item.getConstId().toString());
                 startActivity(intent);
             }
         });
@@ -385,6 +399,72 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         helpBtn.setEnabled(state);
         bottomSheetBehavior.setDraggable(state);
         editSearch.setEnabled(state);
+    }
+
+    //별자리 운세
+    public void connectHoroscope(Long horId1){
+
+        todayMonth = formatMonth.format(cal.getTime());
+        Log.d("todayMonth", todayMonth);
+
+        horId = horId1;
+
+        //별자리 운세를 불러오는 api
+        Call<Horoscope> horoscopeCall = com.starrynight.tourapiproject.starPage.horPageRetriofit.RetrofitClient.getApiService().getHoroscopes(horId);
+        horoscopeCall.enqueue(new Callback<Horoscope>() {
+            @Override
+            public void onResponse(Call<Horoscope> call, Response<Horoscope> response) {
+                if (response.isSuccessful()) {
+                    Horoscope result = response.body();
+
+                    if (todayMonth.equals("01")) {
+                        horDesc = result.getHorDesc1();
+                    } else if (todayMonth.equals("02")) {
+                        horDesc = result.getHorDesc2();
+                    } else if (todayMonth.equals("03")) {
+                        horDesc = result.getHorDesc3();
+                    } else if (todayMonth.equals("04")) {
+                        horDesc = result.getHorDesc4();
+                    } else if (todayMonth.equals("05")) {
+                        horDesc = result.getHorDesc5();
+                    } else if (todayMonth.equals("06")) {
+                        horDesc = result.getHorDesc6();
+                    } else if (todayMonth.equals("07")) {
+                        horDesc = result.getHorDesc7();
+                    } else if (todayMonth.equals("08")) {
+                        horDesc = result.getHorDesc8();
+                    } else if (todayMonth.equals("09")) {
+                        horDesc = result.getHorDesc9();
+                    } else if (todayMonth.equals("10")) {
+                        horDesc = result.getHorDesc10();
+                    } else if (todayMonth.equals("11")) {
+                        horDesc = result.getHorDesc11();
+                    } else{
+                        horDesc = result.getHorDesc12();
+                    }
+                    Log.d("horDesc", horDesc);
+
+                    HorItem item = new HorItem();
+                    item.setHorImage(result.getHorImage());
+                    item.setHorEngTitle(result.getHorEngTitle());
+                    item.setHorKrTitle(result.getHorKrTitle());
+                    item.setHorPeriod(result.getHorPeriod());
+                    item.setHorDesc(horDesc);
+
+                    horItems.add(item);
+
+                    horViewpager.setAdapter(new HoroscopeAdapter(horItems));
+//                    horAdapter.addItem(new HorItem(result.getHorImage(), result.getHorEngTitle(), result.getHorKrTitle(), result.getHorPeriod(), horDesc));
+                }else{
+                    Log.d("horoscope", "별자리 운세 불러오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Horoscope> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
     }
 
     @Override
