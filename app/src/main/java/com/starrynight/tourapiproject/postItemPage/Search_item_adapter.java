@@ -37,6 +37,7 @@ public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapte
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.itemName.setText(searchItemArrayList.get(position).getItemName());
+        holder.address.setText(searchItemArrayList.get(position).getAddress());
 
     }
 
@@ -58,11 +59,13 @@ public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapte
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView itemName;
+        TextView address;
 
         public ViewHolder(@NonNull View itemView, final OnSearchItemClickListener listener) {
             super(itemView);
 
             itemName=itemView.findViewById(R.id.itemName);
+            address=itemView.findViewById(R.id.address);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
