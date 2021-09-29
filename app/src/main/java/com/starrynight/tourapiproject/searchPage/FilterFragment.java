@@ -120,7 +120,6 @@ public class FilterFragment extends Fragment {
                         transaction.replace(R.id.main_view, searchResultFragment);
                         transaction.commit();
                     } else if (fromWhere == Activities.MAP) {
-                        System.out.println("여긴 지나가니?");
                         bundle.putSerializable("FromWhere",Activities.FILTER);
                         keyword = getArguments().getString("keyword");
                         bundle.putString("keyword", keyword);
