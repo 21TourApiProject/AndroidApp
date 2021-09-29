@@ -72,34 +72,34 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
 
-        TextView skip_btn = findViewById(R.id.pass);
-        skip_btn.setVisibility(View.VISIBLE);
-        skip_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("회원가입 성공");
-                            signOut();
-
-                            //선호 해시태그 선택 창으로 전환
-                            Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
-                            intent.putExtra("email", userParams.getEmail());
-                            startActivityForResult(intent, SELECT_HASH_TAG);
-                        } else{
-                            System.out.println("회원가입 실패");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                    }
-                });
-            }
-        });
+//        TextView skip_btn = findViewById(R.id.pass);
+//        skip_btn.setVisibility(View.VISIBLE);
+//        skip_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
+//                call.enqueue(new Callback<Void>() {
+//                    @Override
+//                    public void onResponse(Call<Void> call, Response<Void> response) {
+//                        if(response.isSuccessful()){
+//                            System.out.println("회원가입 성공");
+//                            signOut();
+//
+//                            //선호 해시태그 선택 창으로 전환
+//                            Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
+//                            intent.putExtra("email", userParams.getEmail());
+//                            startActivityForResult(intent, SELECT_HASH_TAG);
+//                        } else{
+//                            System.out.println("회원가입 실패");
+//                        }
+//                    }
+//                    @Override
+//                    public void onFailure(Call<Void> call, Throwable t) {
+//                        Log.e("연결실패", t.getMessage());
+//                    }
+//                });
+//            }
+//        });
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
