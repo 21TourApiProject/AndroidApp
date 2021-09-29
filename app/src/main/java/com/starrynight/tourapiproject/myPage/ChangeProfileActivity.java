@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -20,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
@@ -41,7 +45,7 @@ import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Pattern;
 
@@ -70,7 +74,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private Boolean isNickNameDuplicate = false; //닉네임이 중복인지
 
     Uri uri;
-    Bitmap img;
+    Bitmap btp;
     String fileName;
 
     @Override
@@ -161,8 +165,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         changeNicknameGuide.setText("");
 
                         //s3 사진 업로드
-                        //if(beforeImage != null) deleteS3File(beforeImage); //이전 사진 삭제
                         if (isProfileImageChange)
+                            //if(beforeImage != null) deleteS3File(beforeImage); //이전 사진 삭제
                             uploadWithTransferUtility();
 
                         //닉네임 변경 put api
@@ -234,9 +238,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     isProfileImageChange = true;
                     uri = data.getData();
                     InputStream in = getContentResolver().openInputStream(uri);
-                    img = BitmapFactory.decodeStream(in);
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
                     in.close();
-                    profileImage.setImageBitmap(img);
+                    btp = rotateImage(uri, bitmap); //회전
+                    profileImage.setImageBitmap(btp); //미리보기
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -260,44 +265,24 @@ public class ChangeProfileActivity extends AppCompatActivity {
     //s3에 사진업로드 하는 함수
     public void uploadWithTransferUtility() {
 
-//        File file = new File(getRealPathFromURI(uri));
-//        File reFile = null;
-//        BitmapFactory.Options option1 = getBitmapSize(file);
-//        int maxWidthSize = 1000;
-//        int maxHeightSize = 1000;
-//        System.out.println("option1.outWidth = " + option1.outWidth);
-//        System.out.println("option1.outHeight = " + option1.outHeight);
-
         int width = 2000; // 축소시킬 너비
         int height = 1200; // 축소시킬 높이
-        float bmpWidth = img.getWidth();
-        float bmpHeight = img.getHeight();
+        float bmpWidth = btp.getWidth();
+        float bmpHeight = btp.getHeight();
 
         if (bmpWidth > width) {
-            // 원하는 너비보다 클 경우의 설정
             float mWidth = bmpWidth / 100;
             float scale = width/ mWidth;
             bmpWidth *= (scale / 100);
             bmpHeight *= (scale / 100);
         } else if (bmpHeight > height) {
-            // 원하는 높이보다 클 경우의 설정
             float mHeight = bmpHeight / 100;
             float scale = height/ mHeight;
             bmpWidth *= (scale / 100);
             bmpHeight *= (scale / 100);
         }
-        Bitmap resizedBmp = Bitmap.createScaledBitmap(img, (int) bmpWidth, (int) bmpHeight, true);
+        Bitmap resizedBmp = Bitmap.createScaledBitmap(btp, (int) bmpWidth, (int) bmpHeight, true);
 
-//        if (option1.outWidth > maxWidthSize || option1.outHeight > maxHeightSize) {
-//            // 최대 크기를 벗어난 경우의 처리, 이미지 크기 변환 등
-//            BitmapFactory.Options option2 = new BitmapFactory.Options();
-//            option2.inSampleSize = 2; // 1/4로 줄임
-//            Bitmap reBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), option2);
-//            System.out.println("reBitmap.outWidth = " + reBitmap.getWidth());
-//            System.out.println("reBitmap.outHeight = " + reBitmap.getHeight());
-//            Uri reUri = getImageUri(getApplicationContext(), reBitmap);
-//            reFile = new File(getRealPathFromURI(reUri));
-//        }
         Uri resizedUri = getImageUri(getApplicationContext(), resizedBmp);
         File resizedFile = new File(getRealPathFromURI(resizedUri));
         fileName = "PI" + userId + "_" + resizedFile.getName();
@@ -332,12 +317,23 @@ public class ChangeProfileActivity extends AppCompatActivity {
         });
     }
 
-    // 비트맵 사이즈 알기
-    private BitmapFactory.Options getBitmapSize(File imageFile) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
-        return options;
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private Bitmap rotateImage(Uri uri, Bitmap bitmap)throws IOException {
+        InputStream in = getContentResolver().openInputStream(uri);
+        ExifInterface exif = new ExifInterface(in);
+        in.close();
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL);
+        Matrix matrix = new Matrix();
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90){
+            matrix.postRotate(90);
+        }
+        else if (orientation == ExifInterface.ORIENTATION_ROTATE_180){
+            matrix.postRotate(180);
+        }
+        else if (orientation == ExifInterface.ORIENTATION_ROTATE_270){
+            matrix.postRotate(270);
+        }
+        return Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
     }
 
     // bitmap -> uri
@@ -347,7 +343,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
-
 
     public void deleteS3File(String beforeImage){
         AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");
@@ -370,34 +365,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
 //        } catch (SdkClientException e) {
 //            e.printStackTrace();
 //        }
-    }
-
-    //비트맵 용량 줄이는 함수
-    private Bitmap resize(Context context, Uri uri, int resize){
-        Bitmap resizeBitmap=null;
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        try {
-            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
-
-            int width = options.outWidth;
-            int height = options.outHeight;
-            int samplesize = 1;
-
-            while (true) {
-                if (width / 2 < resize || height / 2 < resize)
-                    break;
-                width /= 2;
-                height /= 2;
-                samplesize *= 2;
-            }
-            options.inSampleSize = samplesize;
-            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
-            resizeBitmap = bitmap;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return resizeBitmap;
     }
 
     //닉네임 규칙 함수

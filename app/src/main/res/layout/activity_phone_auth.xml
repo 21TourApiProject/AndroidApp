@@ -36,16 +36,6 @@
                     android:text="본인 인증"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/pass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="건너뛰기"
-                    android:visibility="gone"/>
-
             </LinearLayout>
 
             <LinearLayout
