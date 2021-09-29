@@ -98,7 +98,7 @@
                         android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/star__card_view_round"
+                        android:background="@drawable/wt__card_view_round"
                         android:backgroundTint="@color/sub_blue"
                         android:text="인증 요청"
                         android:textSize="12sp"/>
@@ -110,7 +110,7 @@
                         android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/star__card_view_round"
+                        android:background="@drawable/wt__card_view_round"
                         android:backgroundTint="@color/sub_blue"
                         android:text="인증 재요청"
                         android:textSize="12sp"
