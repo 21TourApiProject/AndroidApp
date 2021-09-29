@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.starPage.starPageRetrofit;
+package com.starrynight.tourapiproject.starPage.horPageRetriofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,16 +7,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+    private static final String BASE_URL = "http://192.168.200.125:8080/v1/";
 
-
-
-    private static final String BASE_URL = "http://192.168.162.57:8080/v1/";
-
-
-
-
-    public static StarPageRetrofitService getApiService() {
-        return getInstance().create(StarPageRetrofitService.class);
+    public static HorPageRetrofitService getApiService() {
+        return getInstance().create(HorPageRetrofitService.class);
     }
 
     private static Retrofit getInstance() {
@@ -27,5 +21,3 @@ public class RetrofitClient {
                 .build();
     }
 }
-
-
