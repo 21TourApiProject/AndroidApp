@@ -37,8 +37,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:text="게시글 상세 보기"
                     android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/delete_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/post_delete_btn"
+                    android:visibility="visible" />
 
             </LinearLayout>
 
@@ -50,7 +60,7 @@
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:background="@drawable/mypost_image">
+                    android:background="@drawable/postitem__no_image">
 
                 </androidx.viewpager2.widget.ViewPager2>
 
@@ -88,14 +98,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-                <Button
-                    android:id="@+id/delete_btn"
-                    android:layout_width="35dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/post__delete"
-                    android:visibility="gone" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -123,7 +125,7 @@
                             android:id="@+id/post_profileImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            app:srcCompat="@drawable/main__empty_profile" />
+                            app:srcCompat="@drawable/post__profile_no_image" />
 
                         <TextView
                             android:id="@+id/post_nickname"

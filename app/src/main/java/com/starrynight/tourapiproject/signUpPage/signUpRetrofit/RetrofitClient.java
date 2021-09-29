@@ -12,6 +12,7 @@ public class RetrofitClient {
     private static final String BASE_URL = "http://192.168.162.57:8080/v1/";
 
 
+
     public static SignUpRetrofitService getApiService(){return getInstance().create(SignUpRetrofitService.class);}
 
     private static Retrofit getInstance(){
