@@ -311,7 +311,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         } else {
                             Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                authCode.setError("올바르지 않은 인증번호입니다.");
+                                Toast.makeText(getApplicationContext(), "올바르지 않은 인증번호입니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -332,20 +332,20 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.startAuth:
                 if(isPhoneEmpty){
-                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isNotPhone){
-                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isPhoneDuplicate){
-                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else{
                     isSend = true;
-                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
                     startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                     startAuth.setVisibility(View.GONE);
                     resendAuth.setVisibility(View.VISIBLE);
@@ -363,24 +363,25 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
+                Toast.makeText(getApplicationContext(), "잠시만 기다려주세요...", Toast.LENGTH_SHORT).show();
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
             case R.id.resendAuth:
                 if(isPhoneEmpty){
-                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isNotPhone){
-                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isPhoneDuplicate){
-                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
                     resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                     break;
                 }

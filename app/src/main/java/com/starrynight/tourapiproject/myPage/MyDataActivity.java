@@ -81,8 +81,8 @@ public class MyDataActivity extends AppCompatActivity {
 
                     TextView mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber);
                     String mpn = user.getMobilePhoneNumber();
-                    mpn = mpn.substring(0,3) + "-" + mpn.substring(3,7) + "-" + mpn.substring(7);
-                    mobilePhoneNumber.setText(mpn);
+                    if (mpn != null)
+                        mobilePhoneNumber.setText(mpn.substring(0,3) + "-" + mpn.substring(3,7) + "-" + mpn.substring(7));
 
                     TextView birth = findViewById(R.id.birth);
                     birth.setText(user.getBirthDay());
