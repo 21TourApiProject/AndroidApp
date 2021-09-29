@@ -24,10 +24,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity android:name=".observationPage.MoreObservationActivity" />
-        <activity android:name=".signUpPage.MarketingInfoActivity" />
-        <activity android:name=".signUpPage.PersonalInfoActivity" />
-        <activity android:name=".signUpPage.LocationInfoActivity" />
-        <activity android:name=".signUpPage.ServiceInfoActivity" />
         <activity android:name=".myPage.MyPostActivity" />
         <activity android:name=".myPage.MyWishActivity" />
         <activity android:name=".alarmPage.AlarmActivity" />
