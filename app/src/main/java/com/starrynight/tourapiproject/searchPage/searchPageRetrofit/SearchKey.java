@@ -10,4 +10,20 @@ public class SearchKey implements Serializable {
         this.filter = filter;
         this.keyword = keyword;
     }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 }

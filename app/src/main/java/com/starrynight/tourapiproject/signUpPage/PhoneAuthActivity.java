@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,7 +40,8 @@ import retrofit2.Response;
 
 public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-    private static final String TAG = "PhoneAuthActivity";
+
+    private static final String TAG = "PhoneAuth";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int SELECT_HASH_TAG = 0;
 
@@ -66,6 +68,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private Boolean isPhoneEmpty = true; //전화번호이 비어있는지
     private Boolean isNotPhone = false; //올바른 전화번호 형식이 아닌지
     private Boolean isPhoneDuplicate = true; //전화번호이 중복인지
+
+    Button phoneAgree;
+    private Boolean isPhoneAgree = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,36 +103,21 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             }
         });
 
-        //인증 건너뛰기
-        Button pass = findViewById(R.id.pass);
-        pass.setOnClickListener(new View.OnClickListener() {
+        //휴대폰 정보 수집 동의
+        phoneAgree = findViewById(R.id.phoneAgree);
+        phoneAgree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //회원가입을 위한 post api
-                userParams.setMobilePhoneNumber(null);
-                Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("회원가입 성공");
-                            signOut();
-
-                            //선호 해시태그 선택 창으로 전환
-                            Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
-                            intent.putExtra("email", userParams.getEmail());
-                            startActivityForResult(intent, SELECT_HASH_TAG);
-                        } else{
-                            System.out.println("회원가입 실패");
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                    }
-                });
+                if(isPhoneAgree){
+                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isPhoneAgree = false;
+                } else{
+                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isPhoneAgree = true;
+                }
             }
         });
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -158,7 +148,6 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                System.out.println("token = " + token);
                 mVerificationId = verificationId;
                 mResendToken = token;
             }
@@ -217,7 +206,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             isPhoneDuplicate = true;
                         }
                     } else {
-                        System.out.println("중복 체크 실패");
+                        Log.e(TAG, "중복 체크 실패");
                         phoneGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
                     }
                 }
@@ -294,13 +283,16 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             Log.d(TAG, "인증 성공"); //인증 성공하면
 
                            //회원가입을 위한 post api
-                           userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                            if(isPhoneAgree)
+                                userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                            else
+                                userParams.setMobilePhoneNumber(null);
                             Call<Void> call = RetrofitClient.getApiService().signUp(userParams);
                             call.enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if(response.isSuccessful()){
-                                        System.out.println("회원가입 성공");
+                                        Log.d(TAG, "회원가입 성공");
                                         signOut();
 
                                         //선호 해시태그 선택 창으로 전환
@@ -308,7 +300,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         intent.putExtra("email", userParams.getEmail());
                                         startActivityForResult(intent, SELECT_HASH_TAG);
                                     } else{
-                                        System.out.println("회원가입 실패");
+                                        Log.e(TAG, "회원가입 실패");
                                     }
                                 }
                                 @Override
@@ -319,7 +311,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         } else {
                             Log.w(TAG, "인증 실패", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                authCode.setError("올바르지 않은 인증번호입니다.");
+                                Toast.makeText(getApplicationContext(), "올바르지 않은 인증번호입니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -340,20 +332,20 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.startAuth:
                 if(isPhoneEmpty){
-                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isNotPhone){
-                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isPhoneDuplicate){
-                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else{
                     isSend = true;
-                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
                     startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
                     startAuth.setVisibility(View.GONE);
                     resendAuth.setVisibility(View.VISIBLE);
@@ -371,25 +363,25 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
-                System.out.println("인증코드 맞는지 확인들어감 " + code);
+                Toast.makeText(getApplicationContext(), "잠시만 기다려주세요...", Toast.LENGTH_SHORT).show();
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
             case R.id.resendAuth:
                 if(isPhoneEmpty){
-                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isNotPhone){
-                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(isPhoneDuplicate){
-                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else{
-                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
                     resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                     break;
                 }
@@ -406,9 +398,9 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     if(response.isSuccessful()){
-                        System.out.println("회원정보 삭제 성공");
+                        Log.d(TAG, "회원정보 삭제 성공");
                     } else{
-                        System.out.println("회원정보 삭제 실패");
+                        Log.e(TAG, "회원정보 삭제 실패");
                     }
                 }
                 @Override

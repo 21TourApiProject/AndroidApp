@@ -37,6 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/scdream_light"
                     android:text="이메일 찾기"
                     android:textSize="17sp" />
             </LinearLayout>
@@ -61,10 +62,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="@drawable/findemail_write"
-                    android:hint="이름을 입력해주세요"
                     android:inputType="textPersonName"
                     android:paddingLeft="10dp"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                         android:hint="예시) 01077778888"
                         android:inputType="phone"
                         android:paddingLeft="10dp"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/startAuth2"
@@ -98,11 +98,10 @@
                         android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/star__card_view_round"
+                        android:background="@drawable/wt__card_view_round"
                         android:backgroundTint="@color/sub_blue"
                         android:text="인증 요청"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"/>
 
                     <Button
                         android:id="@+id/resendAuth2"
@@ -111,10 +110,9 @@
                         android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/star__card_view_round"
+                        android:background="@drawable/wt__card_view_round"
                         android:backgroundTint="@color/sub_blue"
                         android:text="인증 재요청"
-                        android:textColor="@color/white"
                         android:textSize="12sp"
                         android:visibility="gone" />
                 </LinearLayout>
@@ -132,10 +130,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:background="@drawable/findemail_write2"
-                    android:hint="숫자 6자리"
                     android:inputType="number"
                     android:paddingLeft="10dp"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
