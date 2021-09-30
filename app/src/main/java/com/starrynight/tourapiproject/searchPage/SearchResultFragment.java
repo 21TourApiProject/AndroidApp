@@ -177,7 +177,7 @@ public class SearchResultFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQueryHint(keyword);
+                    searchView.setQuery(keyword,false);
                 }
 
                 areaCodeList = new ArrayList<>();
@@ -248,6 +248,17 @@ public class SearchResultFragment extends Fragment {
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
+        if (keyword == null) {
+            searchView.setQueryHint("검색어를 입력하세요");
+        } else {
+            searchView.setQuery(keyword,false);
+        }
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                keyword = query;
+                //여기에 진혁이가 전체 결과 새로 띄우는거 연결해줘야 함 네...?
                 for(int i=0; i<17; i++){
                     if (area.get(i) == 1){ //선택했으면
                         areaCodeList.add(areaCode[i]);
