@@ -395,11 +395,13 @@
 
                 <Button
                     android:id="@+id/next"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="51dp"
                     android:layout_marginBottom="50dp"
-                    android:background="@drawable/signup_complete" />
+                    android:text="완료"
+                    android:fontFamily="@font/scdream"
+                    android:background="@drawable/round_btn" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
