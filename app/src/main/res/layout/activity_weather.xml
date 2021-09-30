@@ -58,7 +58,7 @@
                 android:onClick="wtClickDatePicker"
                 android:text="2021.09.21"
                 android:textColor="@color/point_purple"
-                android:textSize="9sp" />
+                android:textSize="20sp" />
 
             <View
                 android:layout_width="70dp"
@@ -387,6 +387,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ob_fit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
