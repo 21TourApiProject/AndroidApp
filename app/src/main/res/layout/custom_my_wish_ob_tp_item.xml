@@ -11,7 +11,7 @@
         android:id="@+id/myWishObTpImage"
         android:layout_width="97dp"
         android:layout_height="97dp"
-        android:background="@drawable/myitem_image"
+        android:background="@drawable/default_image"
         android:scaleType="centerCrop" />
 
     <LinearLayout
