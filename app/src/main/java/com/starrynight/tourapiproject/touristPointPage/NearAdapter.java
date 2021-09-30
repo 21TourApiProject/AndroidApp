@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -89,7 +88,6 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             super(itemView);
 
             nearImage = itemView.findViewById(R.id.nearImage);
-            nearImage.setClipToOutline(true);
             nearTitle = itemView.findViewById(R.id.nearTitle);
             nearAddr = itemView.findViewById(R.id.nearAddr);
             nearCat3Name = itemView.findViewById(R.id.nearCat3Name);
@@ -109,9 +107,11 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
         }
 
         public void bindSliderImage(String imageURL) {
-            Glide.with(context)
-                    .load(imageURL)
-                    .into(nearImage);
+            if (imageURL != null){
+                Glide.with(context)
+                        .load(imageURL)
+                        .into(nearImage);
+            }
         }
 
         public void setItem(Near item) {
