@@ -169,12 +169,13 @@
 
             <Button
                 android:id="@+id/verify"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="100dp"
-                android:background="@drawable/signup_complete" />
-
+                android:text="완료"
+                android:fontFamily="@font/scdream"
+                android:background="@drawable/round_btn" />
 
         </LinearLayout>
     </ScrollView>
