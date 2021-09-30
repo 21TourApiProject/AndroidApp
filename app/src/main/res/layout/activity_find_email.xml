@@ -146,13 +146,13 @@
 
             <Button
                 android:id="@+id/verify2"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="25dp"
                 android:layout_marginTop="70dp"
-                android:layout_marginRight="25dp"
-                android:background="@drawable/changeprofile_complete" />
+                android:text="완료"
+                android:fontFamily="@font/scdream"
+                android:background="@drawable/round_btn" />
 
 
         </LinearLayout>
