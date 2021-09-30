@@ -169,7 +169,7 @@ public class SearchResultFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQueryHint(keyword);
+                    searchView.setQuery(keyword,false);
                 }
 
                 areaCodeList = new ArrayList<>();
@@ -238,7 +238,7 @@ public class SearchResultFragment extends Fragment {
         if (keyword == null) {
             searchView.setQueryHint("검색어를 입력하세요");
         } else {
-            searchView.setQueryHint(keyword);
+            searchView.setQuery(keyword,false);
         }
         searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

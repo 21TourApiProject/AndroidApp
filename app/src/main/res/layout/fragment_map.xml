@@ -90,7 +90,6 @@
             android:layout_above="@+id/blank"
             android:paddingLeft="41dp"
             android:paddingTop="30dp"
-            android:paddingBottom="41dp"
             android:background="@color/bg_dark_indigo"
             android:visibility="gone"
             tools:visibility="visible">
