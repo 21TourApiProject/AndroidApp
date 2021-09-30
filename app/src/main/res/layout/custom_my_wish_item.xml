@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/default_image" />
 
     <TextView
         android:id="@+id/myWishTitle"
