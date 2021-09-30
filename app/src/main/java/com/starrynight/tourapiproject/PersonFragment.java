@@ -194,7 +194,7 @@ public class PersonFragment extends Fragment {
                     if(size == 0)
                         myWishLayout.setVisibility(View.GONE);
                     else {
-                        myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                        myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                         if (myWishes.get(i).getThumbnail() != null){
                             String imageName = myWishes.get(i).getThumbnail();
                             if(imageName.startsWith("http://")){
@@ -208,7 +208,7 @@ public class PersonFragment extends Fragment {
                         myWishTitle1.setText(myWishes.get(i).getTitle());
                         i++;
                         if (size > 1){
-                            myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                            myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                             if (myWishes.get(i).getThumbnail() != null){
                                 String imageName = myWishes.get(i).getThumbnail();
                                 if(imageName.startsWith("http://")){
@@ -222,7 +222,7 @@ public class PersonFragment extends Fragment {
                             myWishTitle2.setText(myWishes.get(i).getTitle());
                             i++;
                             if (size > 2){
-                                myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                                myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                                 if (myWishes.get(i).getThumbnail() != null){
                                     String imageName = myWishes.get(i).getThumbnail();
                                     if(imageName.startsWith("http://")){
@@ -261,7 +261,7 @@ public class PersonFragment extends Fragment {
                     if(size == 0)
                         myPostLayout.setVisibility(View.GONE);
                     else {
-                        myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                        myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                         if (myPost3s.get(i).getThumbnail() != null) {
                             Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
                             myPostImage1.setClipToOutline(true);
@@ -269,7 +269,7 @@ public class PersonFragment extends Fragment {
                         myPostTitle1.setText(myPost3s.get(i).getTitle());
                         i++;
                         if (size > 1){
-                            myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                            myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                             if (myPost3s.get(i).getThumbnail() != null) {
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
                                 myPostImage2.setClipToOutline(true);
@@ -277,7 +277,7 @@ public class PersonFragment extends Fragment {
                             myPostTitle2.setText(myPost3s.get(i).getTitle());
                             i++;
                             if (size > 2){
-                                myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
+                                myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                                 if (myPost3s.get(i).getThumbnail() != null) {
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
                                     myPostImage3.setClipToOutline(true);

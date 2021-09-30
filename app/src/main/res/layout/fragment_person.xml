@@ -51,7 +51,7 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:scaleType="center"
-                    app:srcCompat="@color/gray" />
+                    app:srcCompat="@drawable/profile_default_image" />
 
                 <ImageView
                     android:layout_width="16dp"

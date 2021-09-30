@@ -37,6 +37,23 @@
                     android:text="본인 인증"
                     android:textSize="17sp" />
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/scdream_light"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="건너뛰기" />
+                </FrameLayout>
+
             </LinearLayout>
 
             <LinearLayout
