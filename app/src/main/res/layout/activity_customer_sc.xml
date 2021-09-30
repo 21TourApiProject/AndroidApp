@@ -47,12 +47,19 @@
                 app:srcCompat="@drawable/cspage_cute" />
 
             <ImageView
-                android:id="@+id/imageView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="64dp"
+                android:layout_marginBottom="40dp"
                 app:srcCompat="@drawable/cspage_text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="17sp"
+                android:layout_marginBottom="41dp"
+                android:text="이메일 : starsufers@gmail.com" />
 
             <Button
                 android:id="@+id/sendEmail"

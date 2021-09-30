@@ -22,7 +22,7 @@ public class CustomerSCActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.setType("plain/text");
-                String[] address = {"starsufers@gmail.com "};
+                String[] address = {"starsufers@gmail.com"};
                 email.putExtra(Intent.EXTRA_EMAIL, address);
                 email.putExtra(Intent.EXTRA_SUBJECT, "[고객문의] 제목을 입력해 주세요.");
                 email.putExtra(Intent.EXTRA_TEXT, "정확한 답변 전달을 위해 고객님의 개인정보가 필요합니다. 수집된 정보는 본인 확인 및 문제 해결 이외의 다른 용도로 절대 사용하지 않습니다.\n" +
