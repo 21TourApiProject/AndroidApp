@@ -77,20 +77,26 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = getIntent();
             Activities fromWhere = (Activities) intent.getSerializableExtra("FromWhere");
             if (fromWhere == Activities.OBSERVATION) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
-                MapFragment mapFragment = new MapFragment();
-                mapFragment.setArguments(bundle);
-                replaceFragment(mapFragment);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment mapfragment = new MapFragment();
+                mapfragment.setArguments(bundle);
+                transaction.replace(R.id.main_view, mapfragment);
+                transaction.commit();
             } else if (fromWhere ==Activities.TOURISTPOINT) {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere", Activities.TOURISTPOINT);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
-                MapFragment mapFragment = new MapFragment();
-                mapFragment.setArguments(bundle);
-                ((MainActivity)MainActivity.mContext).replaceFragment(mapFragment);
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment mapfragment = new MapFragment();
+                mapfragment.setArguments(bundle);
+                transaction.replace(R.id.main_view, mapfragment);
+                transaction.commit();
             }
         }
     }
