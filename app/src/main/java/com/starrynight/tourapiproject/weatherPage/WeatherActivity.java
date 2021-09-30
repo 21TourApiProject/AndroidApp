@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
@@ -33,6 +32,8 @@ import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustMode
 import com.starrynight.tourapiproject.weatherPage.wtFineDustModel.WtFineDustRetrofit;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
 import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetRetrofit;
+import com.starrynight.tourapiproject.weatherPage.wtObFit.ObFitItem;
+import com.starrynight.tourapiproject.weatherPage.wtObFit.ObFitViewAdapter;
 import com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit.WtTodayParams;
 
 import java.io.UnsupportedEncodingException;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -79,7 +81,21 @@ public class WeatherActivity extends AppCompatActivity {
     int mDay = c.get(Calendar.DAY_OF_MONTH);
 
     //관측적합도
-    RecyclerView obFitList;
+    RecyclerView obFitRecycler;
+    ObFitViewAdapter obFitViewAdapter;
+    LinearLayout obFit;
+    List<Double> obFitList = new ArrayList<>();
+    List<Integer> obFitImageList = new ArrayList<>();
+    Double obFitValue;
+    int obFitApiId;
+    int obFitImage;
+    String obFitPercent;
+
+    private String obFitHour[] = {"18", "19", "20", "21", "22", "23", "00", "01", "02", "03", "04", "05"
+            , "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"
+            , "16", "17"};
+
+    int obFitHourId;
 
     double observationalFitDegree;
     double cloudVolume;
@@ -208,7 +224,6 @@ public class WeatherActivity extends AppCompatActivity {
     String fineDustText;
     String humidityText;
     String precipitationText;
-    String lightPolText;
 
     TextView minTempTv;
     TextView maxTempTv;
@@ -258,6 +273,7 @@ public class WeatherActivity extends AppCompatActivity {
     String todayWtName2;
     String todayWtName;
 
+
     {
         try {
             WT_MET_API_KEY = URLDecoder.decode("7c7ba4d9df15258ce566f6592d875413", "UTF-8");
@@ -290,12 +306,46 @@ public class WeatherActivity extends AppCompatActivity {
 
         selectDateTime = selectDate + selectTime;
         Log.d("selectDateTime", selectDateTime);
+    }
 
+    public void setObFitRecycler() {
+        //관측 적합도 recyclerview
+        obFitRecycler = findViewById(R.id.ob_fit_recycler);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        obFitRecycler.setLayoutManager(linearLayoutManager);
 
-        obFitList = findViewById(R.id.ob_fit_recycler);
-        LinearLayoutManager obFitLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        obFitList.setLayoutManager(obFitLayoutManager);
+        obFitViewAdapter = new ObFitViewAdapter();
+        obFitRecycler.setAdapter(obFitViewAdapter);
 
+        for (int i = 0; i < obFitList.size(); i++) {
+            if (obFitList.get(i) > 100.0) {
+                obFitImageList.add(R.drawable.wt__ob_fit_good);
+            } else {
+                obFitImageList.add(R.drawable.wt__ob_fit_bad);
+            }
+        }
+
+        if (selectDate.equals(todayDate)) {
+            Log.d("obFitListSize", String.valueOf(obFitList.size()));
+            Log.d("obFitHourId", String.valueOf(obFitHourId));
+
+            for (int i = 0; i < obFitList.size(); i++) {
+                obFitPercent = obFitList.get(i) + "%";
+                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId], obFitPercent));
+                obFitHourId++;
+            }
+        } else if (selectDate.equals(plusDay)) {
+            Log.d("obFitListSize", String.valueOf(obFitList.size()));
+            Log.d("obFitHourId", String.valueOf(obFitHourId));
+            for (int i = 0; i < 6; i++) {
+                obFitPercent = obFitList.get(i) + "%";
+                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId], obFitPercent));
+                obFitHourId++;
+            }
+        }
+
+        obFitImageList.clear();
+        obFitRecycler.setAdapter(obFitViewAdapter);
     }
 
     public void setTextView() {
@@ -409,6 +459,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                 connectMetApi();
                 connectFineDustApi();
+                Log.d("obCheck", "0");
+                setObFitRecycler();
             }
         };
     }
@@ -681,6 +733,8 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("latitude1`", String.valueOf(latitude));
         Log.d("longitude1", String.valueOf(longitude));
 
+        obFit = findViewById(R.id.ob_fit);
+
         Call<WtMetModel> getWeatherInstance = WtMetRetrofit.wtMetInterface()
                 .getMetData(latitude, longitude, "minutely,current", WT_MET_API_KEY, "metric");
 
@@ -722,37 +776,133 @@ public class WeatherActivity extends AppCompatActivity {
                             unixSunMoon = data.getDaily().get(i).getMoonset();
                             unixChange(unixSunMoon);
                             moonsetTv.setText(unixToHourMin);
-
-                            //낮 길이
-//                            unixChange(unixSunrise);
-//                            sunriseSt = unixToHourMin;
-//                            Log.d("sunriseTime", sunriseSt);
-//                            unixChange(unixSunset);
-//                            sunsetSt = unixToHourMin;
-//                            Log.d("date2", sunsetSt);
-//
-//                            try {
-//                                sunriseTime = formatHourMin.parse(sunriseSt);
-//                                sunsetTime = formatHourMin.parse(sunsetSt);
-//
-//                                assert sunsetTime != null;
-//                                assert sunriseTime != null;
-//
-//                                dayLength = sunsetTime.getTime() - sunriseTime.getTime();
-//                                hourValue = (int) (dayLength / (1000 * 60 * 60));
-//                                minValue = (int) ((dayLength / (1000 * 60)) % 60);
-//
-//                                diff = hourValue + "시간 " + minValue + "분";
-//                                Log.d("dayLength", diff);
-//                            } catch (ParseException ignored) {
-//
-//                            }
-//
-//                            dayLengthTv.setText(diff);
                         }
                     }
 
                     detailWeather = findViewById(R.id.detail_weather);
+
+                    //관측 적합도
+                    // 관측적합도 리스트 초기화
+                    obFitList.clear();
+                    Log.d("obFitListSize", String.valueOf(obFitList.size()));
+                    // 당일 오전 6시 ~ 오후 6시
+                    if (selectDate.equals(todayDate)) {
+                        obFit.setVisibility(View.VISIBLE);
+                        moonAge = Double.parseDouble(moonPhaseText);
+
+                        for (int i = 0; i < 48; i++) {
+                            unixTime = data.getHourly().get(i).getDt();
+                            unixChange(unixTime);
+                            Log.d("unixToDate", unixToDate);
+
+                            //당일 오후 6시 ~ 익일 오전 6시
+                            if (unixToDate.equals(todayDate + "18")) {
+                                obFitApiId = i;
+
+                                for (int j = obFitApiId; j < obFitApiId + 13; j++) {
+                                    cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
+                                    feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
+                                    precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
+                                    obFitValue = setObservationalFitDegree();
+                                    obFitList.add(obFitValue);
+                                }
+                                obFitHourId = 0;
+                                break;
+                            } else if (unixToDate.equals(todayDate + "19")) {
+                                for (int j = 0; j < 12; j++) {
+                                    cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
+                                    feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
+                                    precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
+                                    obFitValue = setObservationalFitDegree();
+                                    obFitList.add(obFitValue);
+                                }
+                                obFitHourId = 1;
+                                break;
+                            } else if (unixToDate.equals(todayDate + "20")) {
+                                for (int j = 0; j < 11; j++) {
+                                    cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
+                                    feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
+                                    precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
+                                    obFitValue = setObservationalFitDegree();
+                                    obFitList.add(obFitValue);
+                                }
+                                obFitHourId = 2;
+                                break;
+                            } else if (unixToDate.equals(todayDate + "21")) {
+                                for (int j = 0; j < 10; j++) {
+                                    cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
+                                    feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
+                                    precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
+                                    obFitValue = setObservationalFitDegree();
+                                    obFitList.add(obFitValue);
+                                }
+                                obFitHourId = 3;
+                                break;
+                            } else if (unixToDate.equals(todayDate + "22")) {
+                                Log.d("obFitDate", "22");
+                                for (int j = 0; j < 9; j++) {
+                                    cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
+                                    feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
+                                    precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
+                                    obFitValue = setObservationalFitDegree();
+                                    obFitList.add(obFitValue);
+                                }
+                                obFitHourId = 4;
+                                break;
+                            } else if (unixToDate.equals(todayDate + "23")) {
+                                for (int j = 0; j < 8; j++) {
+                                    cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
+                                    feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
+                                    precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
+                                    obFitValue = setObservationalFitDegree();
+                                    obFitList.add(obFitValue);
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
+                                }
+                                obFitHourId = 5;
+                                break;
+                            }
+                        }
+                        Log.d("obCheck", "1");
+                        setObFitRecycler();
+
+                    }
+
+                    //다음 날 오후 6시 ~ 오후 11시
+                    else if (selectDate.equals(plusDay)) {
+                        obFit.setVisibility(View.VISIBLE);
+                        obFitList.clear();
+                        obFitApiId = 0;
+
+                        for (int i = 0; i < 48; i++) {
+                            unixTime = data.getHourly().get(i).getDt();
+                            unixChange(unixTime);
+                            Log.d("unixToDate", unixToDate);
+
+                            if (unixToDate.equals(plusDay + "18")) {
+                                obFitApiId = i;
+                            }
+                        }
+
+                        for (int i = obFitApiId; i < obFitApiId + 6; i++) {
+                            cloudVolume = Double.parseDouble(data.getHourly().get(i).getClouds());
+                            moonAge = Double.parseDouble(moonPhaseText);
+                            feel_like = Double.parseDouble(data.getHourly().get(i).getFeelsLike());
+                            precipitationProbability = Double.parseDouble(data.getHourly().get(i).getPop());
+                            obFitValue = setObservationalFitDegree();
+                            obFitList.add(obFitValue);
+                        }
+                        obFitHourId = 0;
+                        Log.d("obCheck", "2");
+                        setObFitRecycler();
+                    } else {
+                        obFit.setVisibility(View.GONE);
+                    }
 
                     if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
                         for (int i = 0; i < 48; i++) {
@@ -1070,7 +1220,7 @@ public class WeatherActivity extends AppCompatActivity {
                 }
 
                 fineDustTv.setText(fineDustText);
-
+                fineDust = fineDustText;
                 if (dustNoInfo == 0) {
                     fineDustTv.setText("정보없음");
                     Log.d("dustNoInfo", "정보없음");
@@ -1212,11 +1362,11 @@ public class WeatherActivity extends AppCompatActivity {
             feel_likeValue = -0.09 * Math.pow((feel_like - 18), 2);
         }
 
-        if (fineDust == "good") {
+        if (fineDust.equals("좋음")) {
             fineDustValue = 0;
-        } else if (fineDust == "normal") {
+        } else if (fineDust.equals("보통")) {
             fineDustValue = -5;
-        } else if (fineDust == "bad") {
+        } else if (fineDust.equals("나쁨")) {
             fineDustValue = -20;
         }
         precipitationProbabilityValue = 100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556));
@@ -1590,6 +1740,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                     minLightPol = result.getMinLightPol();
                     maxLightPol = result.getMaxLightPol();
+
+                    lightPollution = (minLightPol + maxLightPol) / 2;
 
                     minLightPolText = minLightPol.toString();
                     maxLightPolText = maxLightPol.toString();
