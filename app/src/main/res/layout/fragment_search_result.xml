@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="80dp"
     tools:context=".searchPage.SearchResultFragment">
 
     <ScrollView
@@ -12,7 +13,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,9 +29,9 @@
                     android:layout_marginTop="17dp"
                     android:layout_marginEnd="18dp"
                     android:layout_marginBottom="38dp"
-                    android:queryHint="검색어를 입력하세요"
                     android:layout_weight="7"
-                    android:background="@drawable/postwrite__search_bar">
+                    android:background="@drawable/postwrite__search_bar"
+                    android:queryHint="검색어를 입력하세요">
 
                 </SearchView>
 
@@ -41,7 +42,7 @@
                     android:layout_marginTop="22dp"
                     android:layout_marginEnd="22dp"
                     android:layout_weight="1"
-                    android:background="@drawable/search__map_btn"/>
+                    android:background="@drawable/search__map_btn" />
 
                 <Button
                     android:id="@+id/filterBtn2"
@@ -70,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="전체" />
+
                 <Button
                     android:id="@+id/obBtn"
                     android:layout_width="wrap_content"
@@ -116,7 +118,46 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/moreTp_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="33dp"
+                android:gravity="center"
+                android:text="+관광지 더보기" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResult2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/moreOb_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="33dp"
+                android:gravity="center"
+                android:text="+관측지 더보기" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searchResult3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/morePost_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="33dp"
+                android:gravity="center"
+                android:text="+ 게시물 더보기" />
         </LinearLayout>
     </ScrollView>
 

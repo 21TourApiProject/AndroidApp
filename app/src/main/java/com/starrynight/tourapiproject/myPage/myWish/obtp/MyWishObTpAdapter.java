@@ -1,9 +1,12 @@
 package com.starrynight.tourapiproject.myPage.myWish.obtp;
 
 import android.content.Context;
+import android.graphics.Outline;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -105,8 +108,11 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
 
         public void setItem(MyWishObTp item) {
             if(item.getThumbnail() != null){
-                Glide.with(context).load(item.getThumbnail()).into(obTpImage);
-                obTpImage.setClipToOutline(true);
+                String imageName = item.getThumbnail();
+                if(imageName.startsWith("http://"))
+                    Glide.with(context).load(imageName).into(obTpImage);
+                else
+                    Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/observationImage/" + imageName).into(obTpImage);
             }
             obTpTitle.setText(item.getTitle());
 

@@ -129,7 +129,7 @@ public class PersonFragment extends Fragment {
                         }
                         else{
                             String fileName = user.getProfileImage();
-//                            fileName = fileName.substring(1, fileName.length() - 1);
+                            fileName = fileName.substring(1, fileName.length() - 1);
                             Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
                         }
                     }
@@ -194,44 +194,40 @@ public class PersonFragment extends Fragment {
                     if(size == 0)
                         myWishLayout.setVisibility(View.GONE);
                     else {
-                        myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                         if (myWishes.get(i).getThumbnail() != null){
                             String imageName = myWishes.get(i).getThumbnail();
-                            if(imageName.startsWith("http://")){
+                            if(imageName.startsWith("http://"))
                                 Glide.with(getContext()).load(imageName).into(myWishImage1);
-                            }
-                            else{
+                            else
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage1);
-                            }
-                            myWishImage1.setClipToOutline(true);
+                        } else{
+                            myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                         }
                         myWishTitle1.setText(myWishes.get(i).getTitle());
                         i++;
+
                         if (size > 1){
-                            myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                             if (myWishes.get(i).getThumbnail() != null){
                                 String imageName = myWishes.get(i).getThumbnail();
-                                if(imageName.startsWith("http://")){
+                                if(imageName.startsWith("http://"))
                                     Glide.with(getContext()).load(imageName).into(myWishImage2);
-                                }
-                                else{
+                                else
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage2);
-                                }
-                                myWishImage2.setClipToOutline(true);
+                            } else{
+                                myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                             }
                             myWishTitle2.setText(myWishes.get(i).getTitle());
                             i++;
+
                             if (size > 2){
-                                myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                                 if (myWishes.get(i).getThumbnail() != null){
                                     String imageName = myWishes.get(i).getThumbnail();
-                                    if(imageName.startsWith("http://")){
+                                    if(imageName.startsWith("http://"))
                                         Glide.with(getContext()).load(imageName).into(myWishImage3);
-                                    }
-                                    else{
+                                    else
                                         Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage3);
-                                    }
-                                    myWishImage3.setClipToOutline(true);
+                                } else{
+                                    myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                                 }
                                 myWishTitle3.setText(myWishes.get(i).getTitle());
                             }
@@ -261,27 +257,24 @@ public class PersonFragment extends Fragment {
                     if(size == 0)
                         myPostLayout.setVisibility(View.GONE);
                     else {
-                        myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                         if (myPost3s.get(i).getThumbnail() != null) {
                             Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage1);
-                            myPostImage1.setClipToOutline(true);
-                        }
+                        } else
+                            myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                         myPostTitle1.setText(myPost3s.get(i).getTitle());
                         i++;
                         if (size > 1){
-                            myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                             if (myPost3s.get(i).getThumbnail() != null) {
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
-                                myPostImage2.setClipToOutline(true);
-                            }
+                            } else
+                                myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                             myPostTitle2.setText(myPost3s.get(i).getTitle());
                             i++;
                             if (size > 2){
-                                myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.myitem_image));
                                 if (myPost3s.get(i).getThumbnail() != null) {
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
-                                    myPostImage3.setClipToOutline(true);
-                                }
+                                } else
+                                    myPostImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                                 myPostTitle3.setText(myPost3s.get(i).getTitle());
                             }
                         }

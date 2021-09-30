@@ -34,6 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/scdream_light"
                     android:text="저장한 관측지, 관광지"
                     android:textSize="17sp" />
             </LinearLayout>

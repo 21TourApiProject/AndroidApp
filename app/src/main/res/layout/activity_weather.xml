@@ -245,13 +245,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/star__card_view_round"
+                android:background="@drawable/wt__card_view_round"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/star__card_view_top"
+                    android:background="@drawable/wt__card_view_top"
                     android:paddingHorizontal="24dp"
                     android:paddingVertical="5dp"
                     android:text="일출/일몰/월출/월몰"
@@ -391,13 +391,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/star__card_view_round"
+                android:background="@drawable/wt__card_view_round"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/star__card_view_top"
+                    android:background="@drawable/wt__card_view_top"
                     android:paddingHorizontal="24dp"
                     android:paddingVertical="5dp"
                     android:text="시간 별 관측 적합도"
@@ -441,13 +441,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/star__card_view_round"
+                android:background="@drawable/wt__card_view_round"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/star__card_view_top"
+                    android:background="@drawable/wt__card_view_top"
                     android:paddingHorizontal="24dp"
                     android:paddingVertical="5dp"
                     android:text="상세 날씨 정보"

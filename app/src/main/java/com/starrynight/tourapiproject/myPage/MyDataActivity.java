@@ -80,16 +80,22 @@ public class MyDataActivity extends AppCompatActivity {
                     email.setText(user.getEmail());
 
                     TextView mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber);
-                    mobilePhoneNumber.setText(user.getMobilePhoneNumber());
+                    String mpn = user.getMobilePhoneNumber();
+                    if (mpn != null)
+                        mobilePhoneNumber.setText(mpn.substring(0,3) + "-" + mpn.substring(3,7) + "-" + mpn.substring(7));
 
                     TextView birth = findViewById(R.id.birth);
                     birth.setText(user.getBirthDay());
 
                     TextView sex = findViewById(R.id.sex);
-                    if (user.getSex()){
-                        sex.setText("남성");
-                    } else{sex.setText("여성");}
-
+                    if (user.getSex() == null)
+                        sex.setText("선택 안함");
+                    else{
+                        if (user.getSex())
+                            sex.setText("남성");
+                        else
+                            sex.setText("여성");
+                    }
                 } else {
                     Log.e(TAG, "사용자 정보 불러오기 실패");
                 }
