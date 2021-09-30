@@ -147,12 +147,20 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/myWishImage1"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
-                        android:scaleType="centerCrop"
-                        tools:visibility="visible" />
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo">
+
+                        <ImageView
+                            android:id="@+id/myWishImage1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/myWishTitle1"
@@ -172,12 +180,20 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/myWishImage2"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
-                        android:scaleType="centerCrop"
-                        tools:visibility="visible" />
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo">
+
+                        <ImageView
+                            android:id="@+id/myWishImage2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop" />
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/myWishTitle2"
@@ -198,12 +214,20 @@
                     android:orientation="vertical"
                     tools:visibility="visible">
 
-                    <ImageView
-                        android:id="@+id/myWishImage3"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
-                        android:scaleType="centerCrop"
-                        tools:visibility="visible" />
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo">
+
+                        <ImageView
+                            android:id="@+id/myWishImage3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/myWishTitle3"
@@ -269,12 +293,20 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/myPostImage1"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:scaleType="centerCrop"
-                        tools:visibility="visible" />
+                        android:layout_height="110dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo">
+
+                        <ImageView
+                            android:id="@+id/myPostImage1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/myPostTitle1"
@@ -295,12 +327,20 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/myPostImage2"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:scaleType="centerCrop"
-                        tools:visibility="visible" />
+                        android:layout_height="110dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo">
+
+                        <ImageView
+                            android:id="@+id/myPostImage2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/myPostTitle2"
@@ -320,12 +360,20 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/myPostImage3"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:scaleType="centerCrop"
-                        tools:visibility="visible" />
+                        android:layout_height="110dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo">
+
+                        <ImageView
+                            android:id="@+id/myPostImage3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/myPostTitle3"
