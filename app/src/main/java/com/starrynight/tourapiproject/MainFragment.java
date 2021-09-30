@@ -79,7 +79,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-        scrollView = v.findViewById(R.id.scroll_layout);
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
         myhashTagIdList = new ArrayList<>();
@@ -162,14 +161,14 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                if (scrollView.getScrollY()==0){
-                    swipeRefreshLayout.isEnabled();
-                }
-            }
-        });
+//        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+//            @Override
+//            public void onScrollChanged() {
+//                if (scrollView.getScrollY()==0){
+//                    swipeRefreshLayout.isEnabled();
+//                }
+//            }
+//        });
 
         return v;
     }
