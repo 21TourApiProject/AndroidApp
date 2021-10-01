@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 public interface SearchPageRetrofitService {
 
     @POST("search/touristPoint")
-    Call<List<SearchParams2>> getTouristPointWithFilter(@Body SearchKey searchKey);
+    Call<List<SearchParams1>> getTouristPointWithFilter(@Body SearchKey searchKey);
 
 
     @POST("search/observation")
