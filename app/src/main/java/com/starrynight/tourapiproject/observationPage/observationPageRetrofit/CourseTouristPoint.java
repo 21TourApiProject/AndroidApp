@@ -14,8 +14,8 @@ public class CourseTouristPoint {
     private String cat3Name; //소분류 이름
     @SerializedName("overview")
     private String overview; //개요
-    @SerializedName("addr1")
-    private String addr1; //주소
+    @SerializedName("addr")
+    private String addr; //주소
     @SerializedName("useTime")
     private String useTime; //이용시간(관광지)
     @SerializedName("parking")
@@ -46,8 +46,8 @@ public class CourseTouristPoint {
         return overview;
     }
 
-    public String getAddr1() {
-        return addr1;
+    public String getAddr() {
+        return addr;
     }
 
     public String getUseTime() {

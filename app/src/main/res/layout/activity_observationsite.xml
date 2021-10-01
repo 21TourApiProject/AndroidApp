@@ -145,9 +145,33 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="주소"
+                            android:text="광공해"
                             style="@style/Textview_observation_details_title"
                             android:layout_alignParentTop="true" />
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/obs_light_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00.0"
+                        style="@style/Textview_observation_details"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="102dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/obs_address_txt">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5.33dp"
+                            android:src="@drawable/observation__address"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="주소"
+                            style="@style/Textview_observation_details_title" />
                     </LinearLayout>
                     <TextView
                         android:id="@+id/obs_address_txt"
@@ -155,8 +179,8 @@
                         android:layout_height="wrap_content"
                         android:text="ㅇㅇ군 ㅇㅇ시 ㅇㅇ동"
                         style="@style/Textview_observation_details"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="102dp"/>
+                        android:layout_alignLeft="@id/obs_light_txt"
+                        android:layout_below="@id/obs_light_txt"/>
 
 
                     <LinearLayout
@@ -375,8 +399,31 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5.33dp"
+                        android:src="@drawable/observation__address"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="광공해"
+                        style="@style/Textview_observation_details_title" />
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/obs_nature_light_txt"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:text="00.0"
+                    style="@style/Textview_observation_details"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="102dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/obs_nature_address_txt">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -394,8 +441,8 @@
                     android:layout_height="wrap_content"
                     android:text="ㅇㅇ군 ㅇㅇ시 ㅇㅇ동"
                     style="@style/Textview_observation_details"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="102dp"/>
+                    android:layout_below="@id/obs_nature_light_txt"
+                    android:layout_alignLeft="@id/obs_nature_light_txt"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
