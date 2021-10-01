@@ -36,7 +36,7 @@
         android:id="@+id/course_tp_img"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:src="@drawable/backgroundocean" />
+        android:src="@drawable/default_image" />
 
     <RelativeLayout
         android:layout_width="match_parent"
