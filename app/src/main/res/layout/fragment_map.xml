@@ -39,12 +39,14 @@
             android:hint="필터" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/map_selectFilterItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/search_layout"/>
+        android:layout_below="@id/search_layout"
+        android:layout_marginStart="26dp"
+        android:orientation="horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"

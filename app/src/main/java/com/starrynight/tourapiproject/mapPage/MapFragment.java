@@ -422,18 +422,28 @@ public class MapFragment extends Fragment {
                     if(area.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText(" "+ areaName[i] + " ");
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
                 for(int i=0; i<22; i++){
                     if(hashTag.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
                 if (keyword == null) {
@@ -524,18 +534,28 @@ public class MapFragment extends Fragment {
                     if(area.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText(" "+ areaName[i] + " ");
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
                 for(int i=0; i<22; i++){
                     if(hashTag.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
                 if (keyword == null) {
