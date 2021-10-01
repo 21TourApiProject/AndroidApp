@@ -62,7 +62,7 @@ public class MoreObservationActivity extends AppCompatActivity {
                        public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
                            MyPost item = relatePostAdapter.getItem(position);
                            Intent intent = new Intent(MoreObservationActivity.this, PostActivity.class);
-                           intent.putExtra("postId", item.getItemId());
+                           intent.putExtra("postId", item.getPostId());
                            startActivity(intent);
                        }
                    });
