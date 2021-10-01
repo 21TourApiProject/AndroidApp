@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -72,7 +73,7 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
         private TextView operating_txt;
         private TextView parking_txt;
         private TextView menu_txt;
-        private TextView menu_name;
+        private LinearLayout menu_name;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -119,16 +120,17 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
         }
 
         public void bindImage(String imageURL) {
-            Glide.with(context)
-                    .load(imageURL)
-                    .into(tp_img);
+                Glide.with(context)
+                        .load(imageURL)
+                        .into(tp_img);
+
         }
 
         public void bindText(CourseTouristPoint courseTouristPoint) {
             name_txt.setText(courseTouristPoint.getTitle());
             tp_type_txt.setText(courseTouristPoint.getCat3Name());
             overview_txt.setText(courseTouristPoint.getOverview());
-            address_txt.setText(courseTouristPoint.getAddr1());
+            address_txt.setText(courseTouristPoint.getAddr());
             operating_txt.setText(courseTouristPoint.getUseTime());
             parking_txt.setText(courseTouristPoint.getParking());
             if (courseTouristPoint.getContentTypeId()==39) {
