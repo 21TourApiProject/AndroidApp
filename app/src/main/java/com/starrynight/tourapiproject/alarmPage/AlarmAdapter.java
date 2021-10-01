@@ -41,10 +41,10 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.button.setRotation(270);
+                viewHolder.button.setRotation(90);
                 if (viewHolder.alarmcontent.getVisibility()==View.GONE){
                 viewHolder.alarmcontent.setVisibility(View.VISIBLE);
-                }else{viewHolder.button.setRotation(90);
+                }else{viewHolder.button.setRotation(0);
                     viewHolder.alarmcontent.setVisibility(View.GONE);
                     }
             }

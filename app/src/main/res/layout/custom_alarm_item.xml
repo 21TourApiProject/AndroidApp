@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/alarmlinear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="52dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="13"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -35,29 +35,34 @@
 
         <Button
             android:id="@+id/scroll_btn"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/alarm__updown"
-            android:rotation="90" />
+            android:layout_width="8dp"
+            android:layout_height="14dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/alarm__updown" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/content_blue"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/alarmlinear">
 
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/alarm__line" />
+
         <TextView
             android:id="@+id/alarm_content"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/content_blue"
+            android:layout_marginTop="8dp"
             android:hint="알림 내용"
             android:visibility="gone" />
     </LinearLayout>

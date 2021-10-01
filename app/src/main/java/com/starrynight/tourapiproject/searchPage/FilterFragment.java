@@ -62,11 +62,11 @@ public class FilterFragment extends Fragment {
             public void onClick(View v) {
                 if (filter[0] == 0) {
                     filter[0] = 1;
-                    areaBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.heart_btn1));
+                    areaBtn.setRotation(90);
                     areaLayout.setVisibility(View.VISIBLE);
                 } else {
                     filter[0] = 0;
-                    areaBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.heart_btn2));
+                    areaBtn.setRotation(0);
                     areaLayout.setVisibility(View.GONE);
                 }
             }
@@ -79,11 +79,11 @@ public class FilterFragment extends Fragment {
             public void onClick(View v) {
                 if (filter[1] == 0) {
                     filter[1] = 1;
-                    hashTagBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.heart_btn1));
+                    hashTagBtn.setRotation(90);
                     hashTagLayout.setVisibility(View.VISIBLE);
                 } else {
                     filter[1] = 0;
-                    hashTagBtn.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.heart_btn2));
+                    hashTagBtn.setRotation(0);
                     hashTagLayout.setVisibility(View.GONE);
                 }
             }
@@ -110,6 +110,7 @@ public class FilterFragment extends Fragment {
                         Fragment searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
                         transaction.replace(R.id.main_view, searchResultFragment);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     } else if (fromWhere == Activities.SEARCHRESULT) {
                         keyword = getArguments().getString("keyword");
@@ -118,6 +119,7 @@ public class FilterFragment extends Fragment {
                         Fragment searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
                         transaction.replace(R.id.main_view, searchResultFragment);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     } else if (fromWhere == Activities.MAP) {
                         bundle.putSerializable("FromWhere",Activities.FILTER);
@@ -127,6 +129,7 @@ public class FilterFragment extends Fragment {
                         Fragment mapfragment = new MapFragment();
                         mapfragment.setArguments(bundle);
                         transaction.replace(R.id.main_view, mapfragment);
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
                 }
@@ -179,10 +182,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(0) == 0) {
-                    areaBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(0, 1);
                 } else {
-                    areaBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(0, 0);
                 }
             }
@@ -191,10 +194,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(1) == 0) {
-                    areaBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(1, 1);
                 } else {
-                    areaBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(1, 0);
                 }
             }
@@ -203,10 +206,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(2) == 0) {
-                    areaBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(2, 1);
                 } else {
-                    areaBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(2, 0);
                 }
             }
@@ -215,10 +218,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(3) == 0) {
-                    areaBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(3, 1);
                 } else {
-                    areaBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(3, 0);
                 }
             }
@@ -227,10 +230,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(4) == 0) {
-                    areaBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(4, 1);
                 } else {
-                    areaBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(4, 0);
                 }
             }
@@ -239,10 +242,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(5) == 0) {
-                    areaBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(5, 1);
                 } else {
-                    areaBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(5, 0);
                 }
             }
@@ -251,10 +254,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(6) == 0) {
-                    areaBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(6, 1);
                 } else {
-                    areaBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(6, 0);
                 }
             }
@@ -263,10 +266,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(7) == 0) {
-                    areaBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(7, 1);
                 } else {
-                    areaBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(7, 0);
                 }
             }
@@ -275,10 +278,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(8) == 0) {
-                    areaBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(8, 1);
                 } else {
-                    areaBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(8, 0);
                 }
             }
@@ -287,10 +290,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(9) == 0) {
-                    areaBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(9, 1);
                 } else {
-                    areaBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(9, 0);
                 }
             }
@@ -299,10 +302,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(10) == 0) {
-                    areaBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(10, 1);
                 } else {
-                    areaBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(10, 0);
                 }
             }
@@ -311,10 +314,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(11) == 0) {
-                    areaBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(11, 1);
                 } else {
-                    areaBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(11, 0);
                 }
             }
@@ -323,10 +326,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(12) == 0) {
-                    areaBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(12, 1);
                 } else {
-                    areaBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(12, 0);
                 }
             }
@@ -335,10 +338,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(13) == 0) {
-                    areaBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(13, 1);
                 } else {
-                    areaBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(13, 0);
                 }
             }
@@ -347,10 +350,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(14) == 0) {
-                    areaBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(14, 1);
                 } else {
-                    areaBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(14, 0);
                 }
             }
@@ -359,10 +362,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(15) == 0) {
-                    areaBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(15, 1);
                 } else {
-                    areaBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(15, 0);
                 }
             }
@@ -371,10 +374,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (area.get(16) == 0) {
-                    areaBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    areaBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     area.set(16, 1);
                 } else {
-                    areaBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    areaBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     area.set(16, 0);
                 }
             }
@@ -383,10 +386,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(0) == 0) {
-                    hashTagBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(0, 1);
                 } else {
-                    hashTagBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(0, 0);
                 }
             }
@@ -395,10 +398,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(1) == 0) {
-                    hashTagBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(1, 1);
                 } else {
-                    hashTagBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(1, 0);
                 }
             }
@@ -407,10 +410,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(2) == 0) {
-                    hashTagBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(2, 1);
                 } else {
-                    hashTagBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(2, 0);
                 }
             }
@@ -419,10 +422,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(3) == 0) {
-                    hashTagBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(3, 1);
                 } else {
-                    hashTagBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn4.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(3, 0);
                 }
             }
@@ -431,10 +434,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(4) == 0) {
-                    hashTagBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(4, 1);
                 } else {
-                    hashTagBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn5.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(4, 0);
                 }
             }
@@ -443,10 +446,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(5) == 0) {
-                    hashTagBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(5, 1);
                 } else {
-                    hashTagBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn6.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(5, 0);
                 }
             }
@@ -455,10 +458,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(6) == 0) {
-                    hashTagBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(6, 1);
                 } else {
-                    hashTagBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn7.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(6, 0);
                 }
             }
@@ -467,10 +470,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(7) == 0) {
-                    hashTagBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(7, 1);
                 } else {
-                    hashTagBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn8.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(7, 0);
                 }
             }
@@ -479,10 +482,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(8) == 0) {
-                    hashTagBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(8, 1);
                 } else {
-                    hashTagBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn9.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(8, 0);
                 }
             }
@@ -491,10 +494,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(9) == 0) {
-                    hashTagBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(9, 1);
                 } else {
-                    hashTagBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn10.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(9, 0);
                 }
             }
@@ -503,10 +506,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(10) == 0) {
-                    hashTagBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(10, 1);
                 } else {
-                    hashTagBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn11.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(10, 0);
                 }
             }
@@ -515,10 +518,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(11) == 0) {
-                    hashTagBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(11, 1);
                 } else {
-                    hashTagBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn12.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(11, 0);
                 }
             }
@@ -527,10 +530,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(12) == 0) {
-                    hashTagBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(12, 1);
                 } else {
-                    hashTagBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn13.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(12, 0);
                 }
             }
@@ -539,10 +542,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(13) == 0) {
-                    hashTagBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(13, 1);
                 } else {
-                    hashTagBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn14.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(13, 0);
                 }
             }
@@ -551,10 +554,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(14) == 0) {
-                    hashTagBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(14, 1);
                 } else {
-                    hashTagBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn15.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(14, 0);
                 }
             }
@@ -563,10 +566,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(15) == 0) {
-                    hashTagBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(15, 1);
                 } else {
-                    hashTagBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn16.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(15, 0);
                 }
             }
@@ -575,10 +578,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(16) == 0) {
-                    hashTagBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(16, 1);
                 } else {
-                    hashTagBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn17.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(16, 0);
                 }
             }
@@ -587,10 +590,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(17) == 0) {
-                    hashTagBtn18.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn18.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(17, 1);
                 } else {
-                    hashTagBtn18.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn18.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(17, 0);
                 }
             }
@@ -599,10 +602,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(18) == 0) {
-                    hashTagBtn19.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn19.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(18, 1);
                 } else {
-                    hashTagBtn19.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn19.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(18, 0);
                 }
             }
@@ -611,10 +614,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(19) == 0) {
-                    hashTagBtn20.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn20.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(19, 1);
                 } else {
-                    hashTagBtn20.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn20.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(19, 0);
                 }
             }
@@ -623,10 +626,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(20) == 0) {
-                    hashTagBtn21.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn21.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(20, 1);
                 } else {
-                    hashTagBtn21.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn21.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(20, 0);
                 }
             }
@@ -635,10 +638,10 @@ public class FilterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(21) == 0) {
-                    hashTagBtn22.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark));
+                    hashTagBtn22.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox));
                     hashTag.set(21, 1);
                 } else {
-                    hashTagBtn22.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.bookmark_non));
+                    hashTagBtn22.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.filter__checkbox_non));
                     hashTag.set(21, 0);
                 }
             }

@@ -44,7 +44,6 @@ import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchKey;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams1;
-import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams2;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
@@ -116,7 +115,7 @@ public class MapFragment extends Fragment {
             "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
 
     List<SearchParams1> obResult; //관측지 필터 결과
-    List<SearchParams2> tpResult; //관광지 필터 결과
+    List<SearchParams1> tpResult; //관광지 필터 결과
     ArrayList<Integer> area; //어떤 지역필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
     ArrayList<Integer> hashTag; //어떤 해시태그필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
     List<Long> areaCodeList;
@@ -481,10 +480,10 @@ public class MapFragment extends Fragment {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
-                Call<List<SearchParams2>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
-                call2.enqueue(new Callback<List<SearchParams2>>() {
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
-                    public void onResponse(Call<List<SearchParams2>> call, Response<List<SearchParams2>> response) {
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
@@ -501,7 +500,7 @@ public class MapFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(Call<List<SearchParams2>> call, Throwable t) {
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
@@ -585,10 +584,10 @@ public class MapFragment extends Fragment {
                 });
 
                 //관광지 추가해야함
-                Call<List<SearchParams2>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
-                call2.enqueue(new Callback<List<SearchParams2>>() {
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
-                    public void onResponse(Call<List<SearchParams2>> call, Response<List<SearchParams2>> response) {
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
@@ -605,7 +604,7 @@ public class MapFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(Call<List<SearchParams2>> call, Throwable t) {
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
@@ -662,10 +661,10 @@ public class MapFragment extends Fragment {
                     }
                 });
 
-                Call<List<SearchParams2>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
-                call2.enqueue(new Callback<List<SearchParams2>>() {
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
-                    public void onResponse(Call<List<SearchParams2>> call, Response<List<SearchParams2>> response) {
+                    public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
@@ -682,7 +681,7 @@ public class MapFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onFailure(Call<List<SearchParams2>> call, Throwable t) {
+                    public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
@@ -901,19 +900,6 @@ public class MapFragment extends Fragment {
 
         return  balloon_Object;
     }
-    private BalloonObject setupMaker2(SearchParams2 params2, int t)
-    {
-        //마커 기본정보 object 생성 및 setup
-        BalloonObject balloon_Object = new BalloonObject();
-        balloon_Object.setName(params2.getTitle());
-        balloon_Object.setIntro(params2.getIntro());
-        balloon_Object.setTag(t);
-        balloon_Object.setLatitude(params2.getLatitude());
-        balloon_Object.setLongitude(params2.getLongitude());
-
-        return  balloon_Object;
-    }
-
 
     private void initHashtagRecycler(){
         //해쉬태그 리사이클러 초기화
