@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
@@ -243,7 +244,7 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod2 = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timePicker.setText(hourOfDay + ":" + minute );
+                timePicker.setText(hourOfDay + ":" + minute+":"+"00" );
                 time = timePicker.getText().toString();
             }
         };
@@ -488,11 +489,12 @@ public class PostWriteActivity extends AppCompatActivity {
         if(requestCode == 203){
             if(resultCode == 3){
                 Log.d("postHashTag","게시물 해시태그 넘어옴");
+                int allsize=0;
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
                 optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
-                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,GridLayoutManager.HORIZONTAL);
+                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(layoutManager);
                 PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
                 if (hashTagList.size()!=0 && optionhashTagList.length!=0){
@@ -512,7 +514,13 @@ public class PostWriteActivity extends AppCompatActivity {
                         adapter.addItem(new PostWriteHashTagItem(s));
                     }
                 }
+                for (int i=0;i<adapter.getItemCount();i++){
+                    allsize+=adapter.getItem(i).getHashTagname().length();
+                }if (allsize>15&&allsize<30){layoutManager.setSpanCount(2);}
+                else if (allsize>31&&allsize<60){layoutManager.setSpanCount(3);}
+                else if (allsize>61){layoutManager.setSpanCount(4);}
                 recyclerView.setAdapter(adapter);
+                recyclerView.addItemDecoration(new RecyclerViewDecoration(20));
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
         }
         if (resultCode != RESULT_OK || data == null) {
@@ -580,26 +588,24 @@ public String getRealPathFromURI(Uri contentUri) {
     cursor.moveToFirst();
     return cursor.getString(column_index);
 }
+    //recyclerview 간격
+    public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
+        private final int divRight;
 
-//    //Bitmap을 File로 변경하는 함수
-//    public String BitmapToFile(Bitmap bitmap, String image) {
-//        File storage = getFilesDir();
-//        String fileName = image + ".jpg";
-//        File imgFile = new File(storage, fileName);
-//        try {
-//            imgFile.createNewFile();
-//            FileOutputStream out = new FileOutputStream(imgFile);
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
-//        } catch (FileNotFoundException e) {
-//            Log.e("saveBitmapToJpg", "FileNotFoundException: "+ e.getMessage());
-//        } catch (IOException e) {
-//            Log.e("saveBitmapToJpg", "IOException: "+ e.getMessage());
-//        }
-//        Log.d("imgPath", getFilesDir() + "/" + fileName);
-//        //return imgFile;
-//        return getFilesDir() + "/" + fileName;
-//    }
+        public RecyclerViewDecoration(int divRight)
+        {
+
+            this.divRight = divRight;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        {
+            super.getItemOffsets(outRect, view, parent, state);
+            outRect.right = divRight;
+        }
+    }
 
     public void uploadWithTransferUtilty(String fileName, File file) {
 

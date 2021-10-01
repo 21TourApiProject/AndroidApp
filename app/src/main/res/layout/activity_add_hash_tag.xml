@@ -420,6 +420,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <Button
+                        android:id="@+id/addHashTag"
+                        android:layout_width="30dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/postwrite_observationsearch" />
+
                     <EditText
                         android:id="@+id/findHashTag"
                         android:layout_width="0dp"
@@ -430,16 +437,12 @@
                         android:inputType="textPersonName"
                         android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/addHashTag"
-                        android:layout_width="20dp"
-                        android:layout_height="14dp"
-                        android:background="@drawable/postwrite_observationsearch" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/post_write__edge"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
