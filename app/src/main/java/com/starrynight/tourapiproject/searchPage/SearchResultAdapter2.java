@@ -14,18 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams1;
-import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams2;
 import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter2;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultAdapter2 extends RecyclerView.Adapter<SearchResultAdapter2.ViewHolder> {
-    private static List<SearchParams2> items;
+    private static List<SearchParams1> items;
     OnSearchResultItemClickListener2 listener;
     private Context context;
 
-    public SearchResultAdapter2(List<SearchParams2> items, Context context){
+    public SearchResultAdapter2(List<SearchParams1> items, Context context){
         this.items = items;
         this.context = context;
     }
@@ -43,7 +42,7 @@ public class SearchResultAdapter2 extends RecyclerView.Adapter<SearchResultAdapt
     @Override
     public void onBindViewHolder(@NonNull SearchResultAdapter2.ViewHolder viewHolder, int position) {
         //viewHolder 재사용 하는 함수
-        SearchParams2 item = items.get(position);
+        SearchParams1 item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -53,19 +52,19 @@ public class SearchResultAdapter2 extends RecyclerView.Adapter<SearchResultAdapt
     }
 
 
-    public void addItem(SearchParams2 item) {
+    public void addItem(SearchParams1 item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<SearchParams2> items) {
+    public void setItems(ArrayList<SearchParams1> items) {
         this.items = items;
     }
 
-    public SearchParams2 getItem(int position) {
+    public SearchParams1 getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, SearchParams2 item) {
+    public void setItem(int position, SearchParams1 item) {
         items.set(position, item);
     }
 
@@ -105,7 +104,7 @@ public class SearchResultAdapter2 extends RecyclerView.Adapter<SearchResultAdapt
             });
         }
 
-        public void setItem(SearchParams2 item) {
+        public void setItem(SearchParams1 item) {
             if(item.getThumbnail() != null)
                 Glide.with(context).load(item.getThumbnail()).into(obTpImage);
             obTpTitle.setText(item.getTitle());

@@ -24,12 +24,12 @@
 
                 <Button
                     android:id="@+id/backFilter"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/postwrite__imagedelete" />
+                    android:layout_marginStart="29dp"
+                    android:layout_marginEnd="21dp"
+                    android:background="@drawable/signup_back" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,39 +38,47 @@
                     android:layout_weight="1"
                     android:text="필터"
                     android:textAlignment="gravity"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <Button
                     android:id="@+id/submitFilter"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:text="완료" />
+                    android:layout_width="27dp"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/filter__adapt"
+                    android:gravity="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:background="@color/sub_blue"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="24dp"
                     android:layout_weight="1"
                     android:text="지역"
-                    android:textSize="18sp" />
+                    android:textSize="13sp" />
 
                 <Button
                     android:id="@+id/areaBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/heart_btn2" />
+                    android:layout_width="10dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="27dp"
+                    android:background="@drawable/filter__close" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/areaLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/content_blue"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -90,10 +98,11 @@
 
                     <Button
                         android:id="@+id/areaBtn1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,10 +121,11 @@
 
                     <Button
                         android:id="@+id/areaBtn2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -134,10 +144,11 @@
 
                     <Button
                         android:id="@+id/areaBtn3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -156,10 +167,11 @@
 
                     <Button
                         android:id="@+id/areaBtn4"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,10 +190,11 @@
 
                     <Button
                         android:id="@+id/areaBtn5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -200,10 +213,11 @@
 
                     <Button
                         android:id="@+id/areaBtn6"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -222,10 +236,11 @@
 
                     <Button
                         android:id="@+id/areaBtn7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -244,10 +259,11 @@
 
                     <Button
                         android:id="@+id/areaBtn8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -266,10 +282,11 @@
 
                     <Button
                         android:id="@+id/areaBtn9"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -288,10 +305,11 @@
 
                     <Button
                         android:id="@+id/areaBtn10"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -310,10 +328,11 @@
 
                     <Button
                         android:id="@+id/areaBtn11"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -332,10 +351,11 @@
 
                     <Button
                         android:id="@+id/areaBtn12"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -354,10 +374,11 @@
 
                     <Button
                         android:id="@+id/areaBtn13"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -376,10 +397,11 @@
 
                     <Button
                         android:id="@+id/areaBtn14"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -398,10 +420,11 @@
 
                     <Button
                         android:id="@+id/areaBtn15"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -420,10 +443,11 @@
 
                     <Button
                         android:id="@+id/areaBtn16"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -442,10 +466,11 @@
 
                     <Button
                         android:id="@+id/areaBtn17"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -453,26 +478,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:background="@color/sub_blue"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="24dp"
                     android:layout_weight="1"
                     android:text="여행 테마"
-                    android:textSize="18sp" />
+                    android:textSize="13sp" />
 
                 <Button
                     android:id="@+id/hashTagBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/heart_btn2" />
+                    android:layout_width="10dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="27dp"
+                    android:background="@drawable/filter__close" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/hashTagLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/content_blue"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -492,10 +523,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -514,10 +546,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -536,10 +569,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -558,10 +592,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn4"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -580,10 +615,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -602,10 +638,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn6"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -624,10 +661,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -646,10 +684,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -668,10 +707,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn9"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -690,10 +730,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn10"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -712,10 +753,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn11"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -734,10 +776,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn12"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -756,10 +799,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn13"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -778,10 +822,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn14"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -800,10 +845,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn15"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -822,10 +868,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn16"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -844,10 +891,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn17"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -866,10 +914,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn18"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -888,10 +937,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn19"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -910,10 +960,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn20"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -932,10 +983,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn21"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -954,10 +1006,11 @@
 
                     <Button
                         android:id="@+id/hashTagBtn22"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
             </LinearLayout>
 
