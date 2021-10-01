@@ -94,7 +94,8 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/main__empty_profile" />
+                    android:src="@drawable/main__empty_profile"
+                    app:srcCompat="@drawable/post__profile_no_image" />
 
                 <TextView
                     android:id="@+id/nickname"

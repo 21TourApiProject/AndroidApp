@@ -1,4 +1,4 @@
-package com.starrynight.tourapiproject.starPage.horoscope;
+package com.starrynight.tourapiproject.starPage.horItemPage;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +11,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.starPage.horPageRetriofit.Horoscope;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorViewHolder> {
-    ArrayList<Horoscope> horItems = new ArrayList<>();
+    List<HorItem> horItems;
+
+    public HoroscopeAdapter(List<HorItem> horItems){
+        this.horItems = horItems;
+    }
 
     @NonNull
     @NotNull
@@ -31,7 +37,7 @@ public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorV
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull HorViewHolder holder, int position) {
-        Horoscope horItem = horItems.get(position);
+        HorItem horItem = horItems.get(position);
         holder.setHorItem(horItem);
         Glide.with(holder.itemView.getContext())
                 .load(horItem.getHorImage())
@@ -43,15 +49,15 @@ public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorV
         return horItems.size();
     }
 
-    public void addItem(Horoscope horItem) {
+    public void addItem(HorItem horItem) {
         horItems.add(horItem);
     }
 
-    public void setItems(ArrayList<Horoscope> horItems) {
+    public void setItems(ArrayList<HorItem> horItems) {
         this.horItems = horItems;
     }
 
-    public Horoscope getItem(int position) {
+    public HorItem getItem(int position) {
         return horItems.get(position);
     }
 
@@ -73,7 +79,7 @@ public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorV
             itemView.setClickable(false);
         }
 
-        public void setHorItem(Horoscope horItem) {
+        public void setHorItem(HorItem horItem) {
             horEngTitle.setText(horItem.getHorEngTitle());
             horKrTitle.setText(horItem.getHorKrTitle());
             horPeriod.setText(horItem.getHorPeriod());

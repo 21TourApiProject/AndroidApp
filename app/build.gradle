@@ -92,6 +92,8 @@ dependencies {
     implementation "com.kakao.sdk:v2-navi:2.5.2" // 카카오내비
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     implementation files('..\\libs\\json-simple-1.1.1.jar')
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:28.0.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

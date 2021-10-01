@@ -22,7 +22,6 @@ import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.BalloonObject;
-import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.touristPointPage.search.OnSearchItemClickListener;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchAdapter;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchData;
@@ -78,7 +77,7 @@ public class TouristPointActivity extends AppCompatActivity {
     ImageView tpCongestion;
 
     LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
-            parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
+            parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout, nearLayout;
 
     String overviewFull; //개요 전체
 
@@ -128,6 +127,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpPacking = findViewById(R.id.tpPacking);
         tpParkingFood = findViewById(R.id.tpParkingFood);
         nearText = findViewById(R.id.nearText);
+        nearLayout = findViewById(R.id.nearLayout);
         daumMore=findViewById(R.id.daumMore);
         congestionLayout = findViewById(R.id.congestionLayout);
         addressLayout = findViewById(R.id.addressLayout);
@@ -144,6 +144,7 @@ public class TouristPointActivity extends AppCompatActivity {
         treatMenuLayout = findViewById(R.id.treatMenuLayout);
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
+
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
@@ -651,6 +652,7 @@ public class TouristPointActivity extends AppCompatActivity {
                     int len = nearResult.size();
                     if (len == 0){
                         nearText.setVisibility(View.GONE);
+                        nearLayout.setVisibility(View.GONE);
                         return;
                     }
                     String[] nearImages = new String[len];
