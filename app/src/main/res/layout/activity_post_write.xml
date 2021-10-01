@@ -267,10 +267,12 @@
 
                     <Button
                         android:id="@+id/observingPoint"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/empty"
-                        android:hint=">"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/signup_back"
+                        android:scaleX="-1"
+                        android:scaleY="1"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -299,10 +301,11 @@
 
                     <Button
                         android:id="@+id/hashTag"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/empty"
-                        android:hint=">"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/signup_back"
+                        android:scaleX="-1"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -311,8 +314,11 @@
                         android:id="@+id/postHashTagLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="20dp"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/hashTag"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/postWrite_hashTag"
                         tools:layout_editor_absoluteX="16dp">
 
                         <androidx.recyclerview.widget.RecyclerView
