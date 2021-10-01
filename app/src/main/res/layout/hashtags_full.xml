@@ -8,8 +8,10 @@
 
     <ImageView
         android:id="@+id/recycler_hashTag_pin"
-        android:layout_width="14dp"
+        android:layout_width="12dp"
         android:layout_height="14dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="3dp"
         android:background="@drawable/mainpage_observationpin"
         android:visibility="gone" />
 
