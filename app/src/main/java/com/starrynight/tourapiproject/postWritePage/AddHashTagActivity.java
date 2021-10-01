@@ -105,20 +105,38 @@ public class AddHashTagActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (!editText.getText().toString().equals("")) {
+                        optionHashTag = editText.getText().toString();
+                        for (int i = 0; i < optionHashTagList.length; i++) {
+                            if (optionHashTagList[i] == "") {
+                                optionHashTagList[i] = optionHashTag;
+                                break;
+                            }
+                        }
+                        adapter.addItem(new PostWriteHashTagItem(optionHashTag));
+                        adapter.notifyDataSetChanged();
+                    }
+                }else{
+                    return false;
+                }
+                return true;
+            }
+        });
+        Button add_hashTag= findViewById(R.id.addHashTag);
+        add_hashTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!editText.getText().toString().equals("")) {
                     optionHashTag = editText.getText().toString();
-                    for (int i=0;i<optionHashTagList.length;i++){
-                        if (optionHashTagList[i]==""){
-                            optionHashTagList[i]=optionHashTag;
-                            System.out.println(optionHashTagList[i]);
+                    for (int i = 0; i < optionHashTagList.length; i++) {
+                        if (optionHashTagList[i] == "") {
+                            optionHashTagList[i] = optionHashTag;
                             break;
                         }
                     }
                     adapter.addItem(new PostWriteHashTagItem(optionHashTag));
                     adapter.notifyDataSetChanged();
-                }else{
-                    return false;
                 }
-                return true;
             }
         });
 
