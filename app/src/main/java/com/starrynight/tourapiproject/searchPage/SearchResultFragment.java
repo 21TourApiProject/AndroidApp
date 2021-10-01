@@ -99,7 +99,7 @@ public class SearchResultFragment extends Fragment {
 
 
         //필터 결과 리사이클러뷰
-        System.out.println("리사이클러뷰 설정ㄹ");
+        System.out.println("리사이클러뷰 설정");
         RecyclerView searchResult = v.findViewById(R.id.searchResult);
         RecyclerView searchResult2 = v.findViewById(R.id.searchResult2);
         RecyclerView searchResult3 = v.findViewById(R.id.searchResult3);
