@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject.postItemPage;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,7 @@ public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapte
 
         TextView itemName;
         TextView address;
+        ImageView itemimage;
 
         public ViewHolder(@NonNull View itemView, final OnSearchItemClickListener listener) {
             super(itemView);

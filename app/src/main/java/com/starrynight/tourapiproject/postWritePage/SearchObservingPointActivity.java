@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Filterable;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,8 +42,8 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         setContentView(R.layout.activity_search_observing_point);
 
         optionObservationRecyclerView = findViewById(R.id.optionObservationRecyclerView);
+        optionObservationRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 1));
         findObservePoint = findViewById(R.id.findObservePoint);
-
         searchitemArrayList = new ArrayList<>();
         filteredList = new ArrayList<>();
         search_item_adapter = new Search_item_adapter(searchitemArrayList,this);
