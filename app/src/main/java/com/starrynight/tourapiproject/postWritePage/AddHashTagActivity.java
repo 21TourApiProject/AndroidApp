@@ -1,9 +1,12 @@
 package com.starrynight.tourapiproject.postWritePage;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 
 import java.io.Serializable;
@@ -27,6 +32,7 @@ public class AddHashTagActivity extends AppCompatActivity {
     RecyclerView optionHashTagRecyclerView;
     TextView findHashTag;
     String optionHashTag;
+    EditText editText;
     String[] optionHashTagList = new String[10];
     String[] hashTaglist =new String[22];
     String[] clicked = new String[22];
@@ -48,7 +54,8 @@ public class AddHashTagActivity extends AppCompatActivity {
         optionHashTagRecyclerView =findViewById(R.id.optionHashTagRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.HORIZONTAL,false);
         optionHashTagRecyclerView.setLayoutManager(layoutManager);
-        PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
+        PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
+        optionHashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20));
         optionHashTagRecyclerView.setAdapter(adapter);
         Button plusHashTag = findViewById(R.id.finish_add_hashTag);
         plusHashTag.setOnClickListener(new View.OnClickListener() {
@@ -93,23 +100,48 @@ public class AddHashTagActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Button addHashTag = findViewById(R.id.addHashTag);
-        addHashTag.setOnClickListener(new View.OnClickListener() {
+        editText = findViewById(R.id.findHashTag);
+        editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onClick(View v) {
-                optionHashTag = ((TextView)(findViewById(R.id.findHashTag))).getText().toString();
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_ENTER) {
+                    optionHashTag = editText.getText().toString();
                     for (int i=0;i<optionHashTagList.length;i++){
-                            if (optionHashTagList[i]==""){
+                        if (optionHashTagList[i]==""){
                             optionHashTagList[i]=optionHashTag;
                             System.out.println(optionHashTagList[i]);
                             break;
-                            }
+                        }
                     }
-                    adapter.addItem(new PostHashTagItem(optionHashTag,null,null));
+                    adapter.addItem(new PostWriteHashTagItem(optionHashTag));
                     adapter.notifyDataSetChanged();
+                }else{
+                    return false;
+                }
+                return true;
             }
         });
+
     }
+    //recyclerview 간격
+    public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
+
+        private final int divRight;
+
+        public RecyclerViewDecoration(int divRight)
+        {
+
+            this.divRight = divRight;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        {
+            super.getItemOffsets(outRect, view, parent, state);
+            outRect.right = divRight;
+        }
+    }
+
     public void ClickEvent(View view) {
         Button button = (Button) view;
 
