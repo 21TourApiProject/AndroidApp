@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.mapPage;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -8,9 +9,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +33,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
+import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagAdapter;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagItem;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
-import com.starrynight.tourapiproject.searchPage.OnSearchResultItemClickListener;
-import com.starrynight.tourapiproject.searchPage.SearchResultAdapter;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
@@ -94,6 +93,8 @@ public class MapFragment extends Fragment {
 
     List<String> observeHashTags;
     private RecyclerHashTagAdapter recyclerHashTagAdapter;
+
+    LoadingDialog dialog;
 
     RelativeLayout details;
     TextView detailsName_txt;
@@ -196,14 +197,32 @@ public class MapFragment extends Fragment {
             kmap_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(intent);
+                    try {
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        String url2 ="market://details?id=net.daum.android.map";
+                        Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(url2));
+                        startActivity(intent2);
+                    }
+
                 }
             });
 
             details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "상세정보 클릭됨", Toast.LENGTH_SHORT).show();
+                    //상세정보 클릭시 관측지나 관광지로 이동
+                    if (bobject.getTag() == 2) {
+                        //관광지
+                        Intent intent = new Intent(getActivity(), TouristPointActivity.class);
+                        intent.putExtra("contentId", bobject.getId());
+                        startActivity(intent);
+
+                    } else if (bobject.getTag()==1) {
+                        Intent intent = new Intent(getActivity(), ObservationsiteActivity.class);
+                        intent.putExtra("observationId", bobject.getId());
+                        startActivity(intent);
+                    }
                 }
             });
             
@@ -285,7 +304,9 @@ public class MapFragment extends Fragment {
             //여기서 위치값이 갱신되면 이벤트가 발생한다.
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
-            Log.e(TAG, "onLocationChanged, location:" + location);
+            Log.d(TAG, "onLocationChanged, location:" + location);
+            MY_POINT= MapPoint.mapPointWithGeoCoord(location.getLatitude(),location.getLongitude());
+            mapView.setMapCenterPoint(MY_POINT, true);
             lm.removeUpdates(mLocationListener);  //  미수신할때는 반드시 자원해체를 해주어야 한다.
 
         }
@@ -302,13 +323,13 @@ public class MapFragment extends Fragment {
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
             // 변경시
-            Log.e(TAG, "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
+            Log.d(TAG, "onStatusChanged, provider:" + provider + ", status:" + status + " ,Bundle:" + extras);
         }
     };
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -327,7 +348,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onPause() {
         lm.removeUpdates(mLocationListener);
-        mapViewContainer.removeView(mapView);
+//        mapViewContainer.removeView(mapView);
         super.onPause();
     }
 
@@ -354,7 +375,9 @@ public class MapFragment extends Fragment {
         mapView = new MapView(getActivity());
         mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
+        ((MainActivity)getActivity()).showBottom();
 
+        dialog = new LoadingDialog(getContext());
     //어댑터, 리스너 설정
         mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
         mapView.setPOIItemEventListener(markereventListner);
@@ -369,8 +392,6 @@ public class MapFragment extends Fragment {
 
         if (getArguments() != null) {
             Activities fromWhere = (Activities) getArguments().getSerializable("FromWhere");
-            System.out.println("지도에서 여긴 지나가니?"+fromWhere);
-
             //지도 초기화
             initMapView();
 
@@ -394,6 +415,9 @@ public class MapFragment extends Fragment {
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
 
+                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5500);
+                task.execute();
+
                 selectFilterItem.removeAllViews(); //초기화
                 for(int i=0; i<17; i++){
                     if(area.get(i) == 1){
@@ -416,7 +440,7 @@ public class MapFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQueryHint(keyword);
+                    searchView.setQuery(keyword,false);
                 }
 
                 areaCodeList = new ArrayList<>();
@@ -444,7 +468,7 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1,2);
+                                BalloonObject balloonObject = setupMaker(params1,1);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -465,13 +489,15 @@ public class MapFragment extends Fragment {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
 
-                            for (SearchParams2 params2 : tpResult) {
-                                BalloonObject balloonObject = setupMaker2(params2,1);
+
+                            for (SearchParams1 params1 : tpResult) {
+                                BalloonObject balloonObject = setupMaker(params1,2);
+
                                 tourBalloonObjects.add(balloonObject);
                                 createTourMarker(mapView, balloonObject);
                             }
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.e(TAG, "관광지 필터 검색 실패");
                         }
                     }
                     @Override
@@ -490,7 +516,9 @@ public class MapFragment extends Fragment {
                 area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
-                System.out.println("키워드"+keyword+"area"+area);
+
+                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5500);
+                task.execute();
 
                 selectFilterItem.removeAllViews(); //초기화
                 for(int i=0; i<17; i++){
@@ -514,7 +542,7 @@ public class MapFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQueryHint(keyword);
+                    searchView.setQuery(keyword,false);
                 }
 
                 areaCodeList = new ArrayList<>();
@@ -542,7 +570,7 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1,2);
+                                BalloonObject balloonObject = setupMaker(params1,1);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -555,6 +583,7 @@ public class MapFragment extends Fragment {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
+
                 //관광지 추가해야함
                 Call<List<SearchParams2>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
                 call2.enqueue(new Callback<List<SearchParams2>>() {
@@ -564,13 +593,15 @@ public class MapFragment extends Fragment {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
 
-                            for (SearchParams2 params2 : tpResult) {
-                                BalloonObject balloonObject = setupMaker2(params2,1);
+
+                            for (SearchParams1 params1 : tpResult) {
+                                BalloonObject balloonObject = setupMaker(params1,2);
+
                                 tourBalloonObjects.add(balloonObject);
                                 createTourMarker(mapView, balloonObject);
                             }
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.e(TAG,"관광지 필터 검색 실패");
                         }
                     }
                     @Override
@@ -602,6 +633,10 @@ public class MapFragment extends Fragment {
                         hashTagIdList.add((long)(i+1));
                     }
                 }
+
+                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5500);
+                task.execute();
+
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
                 Call<List<SearchParams1>> call1 = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
@@ -613,7 +648,7 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1,2);
+                                BalloonObject balloonObject = setupMaker(params1,1);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -635,13 +670,15 @@ public class MapFragment extends Fragment {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
 
-                            for (SearchParams2 params2 : tpResult) {
-                                BalloonObject balloonObject = setupMaker2(params2,1);
+                            System.out.println("관광지 결과는"+tpResult.size());
+                            for (SearchParams1 params1 : tpResult) {
+                                BalloonObject balloonObject = setupMaker(params1,2);
+
                                 tourBalloonObjects.add(balloonObject);
                                 createTourMarker(mapView, balloonObject);
                             }
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.e(TAG,"관광지 필터 검색 실패");
                         }
                     }
                     @Override
@@ -684,7 +721,6 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);    //denied면 -1
 
-                Log.d(TAG, "onClick: location clicked");
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                     getMyLocaiton();
 
@@ -727,11 +763,14 @@ public class MapFragment extends Fragment {
                     for (BalloonObject p : observationBalloonObjects) {
                         createObserveMarker(mapView,p);
                     }
+                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),2000);
+                    task.execute();
                 }else {
-                    for(MapPOIItem p : observePOIItems)
+                    for (MapPOIItem p : observePOIItems)
                         mapView.removePOIItem(p);
                     observePOIItems.clear();
                 }
+
             }
         });
 
@@ -739,13 +778,15 @@ public class MapFragment extends Fragment {
         tour_ckb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tour_ckb.isChecked()) {
+                if (tour_ckb.isChecked()) {
                     //관광지 필터 체크시
                     for (BalloonObject p : tourBalloonObjects) {
-                        createTourMarker(mapView,p);
+                        createTourMarker(mapView, p);
                     }
+                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5000);
+                    task.execute();
                 } else {
-                    for(MapPOIItem p : tourPOIItems)
+                    for (MapPOIItem p : tourPOIItems)
                         mapView.removePOIItem(p);
                     tourPOIItems.clear();
                 }
@@ -804,7 +845,6 @@ public class MapFragment extends Fragment {
         mapView.addPOIItem(mMarker);
         mapView.selectPOIItem(mMarker, true);
         mapView.setMapCenterPoint(MARKER_POINT, false);
-
     }
 
     private void createTourMarker(MapView mapView, BalloonObject balloonObject) {
@@ -833,11 +873,31 @@ public class MapFragment extends Fragment {
     {
         //마커 기본정보 object 생성 및 setup
         BalloonObject balloon_Object = new BalloonObject();
+        balloon_Object.setId(params1.getItemId());
         balloon_Object.setName(params1.getTitle());
         balloon_Object.setIntro(params1.getIntro());
+        if (t == 2) {
+            //주소를 두단어까지 줄임
+            String address = params1.getAddress();
+            int i = address.indexOf(' ');
+            if (i != -1){
+                int j = address.indexOf(' ', i+1);
+                if(j != -1){
+                    balloon_Object.setAddress(params1.getAddress().substring(0, j));
+                } else{
+                    balloon_Object.setAddress(params1.getAddress());
+                }
+            } else{
+                balloon_Object.setAddress(params1.getAddress());
+            }
+        }
+        balloon_Object.setAddress(params1.getAddress());
+        balloon_Object.setPoint_type(params1.getContentType());
         balloon_Object.setTag(t);
         balloon_Object.setLatitude(params1.getLatitude());
         balloon_Object.setLongitude(params1.getLongitude());
+
+        balloon_Object.setHashtags(params1.getHashTagNames());
 
         return  balloon_Object;
     }
@@ -877,5 +937,36 @@ public class MapFragment extends Fragment {
 
         tourBalloonObjects.clear();
         observationBalloonObjects.clear();
+    }
+
+    private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+        private Long mtime;
+
+        public LoadingAsyncTask(Context context, long time ) {
+            mContext = context.getApplicationContext();
+            mtime = time;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+                try {
+                    Thread.sleep(mtime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            return (true);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+        }
     }
 }
