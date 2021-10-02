@@ -611,7 +611,7 @@ public String getRealPathFromURI(Uri contentUri) {
 
     public void uploadWithTransferUtilty(String fileName, File file) {
 
-        AWSCredentials awsCredentials = new BasicAWSCredentials(readAccessKey(), readSecretkey());    // IAM 생성하며 받은 것 입력
+        AWSCredentials awsCredentials = new BasicAWSCredentials(readAccessKey(), readSecretKey());    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
 
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
@@ -752,7 +752,7 @@ public String getRealPathFromURI(Uri contentUri) {
         return data;
     }
 
-    private String readSecretkey() {
+    private String readSecretKey() {
         String data = null;
         InputStream inputStream = getResources().openRawResource(R.raw.secret);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
