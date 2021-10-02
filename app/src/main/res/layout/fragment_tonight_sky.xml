@@ -68,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/star__rounded"
+        android:focusableInTouchMode="false"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -83,10 +84,9 @@
             android:id="@+id/edit_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            app:closeIcon="@drawable/back_btn"
-            app:queryBackground="@color/sub_blue"
-            app:queryHint="검색" />
+            android:layout_marginHorizontal="17dp"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/postwrite__search_bar" />
 
         <ListView
             android:id="@+id/const_list_view"
@@ -104,10 +104,11 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_marginTop="16dp"
+                    android:id="@+id/tonight_weather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/tonight__check_today_weather"/>
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/tonight__check_today_weather" />
 
                 <include
                     layout="@layout/star__today_cel"
@@ -138,108 +139,136 @@
     <!--            android:layout_marginTop="20dp" />-->
 
 
-    <LinearLayout
-        android:id="@+id/help_info"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:animateLayoutChanges="true"
-        android:background="@color/name_purple"
-        android:elevation="5dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:id="@+id/help_info"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:animateLayoutChanges="true"
+            android:background="@color/bg_dark_indigo"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:visibility="invisible">
 
-            <ImageView
-                android:id="@+id/help_back_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/back_btn" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="도움말" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/help_back_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/tonight__help_close" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:background="@color/bg_deepdark_blue"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="17dp"
+                    android:text="도움말"
+                    android:textSize="17sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="dd" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/wt__card_view_round"
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/wt__card_view_top"
+                    android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imgClick"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/alarm__updown" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:text="별을 쉽게 관찰하는 법"
+                        android:textSize="10sp" />
 
-        </LinearLayout>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
 
-        <TextView
-            android:id="@+id/layout_expand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:background="@color/light_blue_A400"
-            android:text="ddddddddddddd\nddddddddd\ndddddd\nddddd\n"
-            android:visibility="gone" />
+                    <ImageView
+                        android:id="@+id/imgClick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="7dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/tonight__help_rotate" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/bg_deepdark_blue"
-            android:orientation="horizontal">
+                </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/layout_expand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/tonight__help_card_view_round"
+                    android:text="ddddddddddddd\nddddddddd\ndddddd\nddddd\n"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="dd" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/wt__card_view_round"
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/wt__card_view_top"
+                    android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imgClick1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/alarm__updown" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:text="별 사진 촬영 카메라 설정법"
+                        android:textSize="10sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/imgClick1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="7dp"
+                        android:layout_marginEnd="14dp"
+                        android:background="@drawable/tonight__help_rotate" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/layout_expand1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/tonight__help_card_view_round"
+                    android:text="@string/star_help_text1"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/layout_expand1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:background="@color/light_blue_A400"
-            android:text="ddddddddddddd\nddddddddd\ndddddd\nddddd\n"
-            android:visibility="gone" />
-    </LinearLayout>
 
     <View
         android:id="@+id/dim"
@@ -249,5 +278,4 @@
         android:background="@color/transparent_black"
         app:layout_anchor="@+id/fragment_container"
         app:layout_anchorGravity="center" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

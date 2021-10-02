@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -41,6 +42,7 @@ import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -93,6 +95,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     ImageView helpBtn;
     ImageView compass;
     ImageView starBackBtn;
+    ImageView todayWeather;
 
 
     LinearLayout helpInfo;
@@ -137,6 +140,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     List<String> nameList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
     long itemClickId;
+    private InputMethodManager imm;
 
 
     Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
@@ -152,6 +156,16 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_tonight_sky, container, false);
 
+        todayWeather = v.findViewById(R.id.tonight_weather);
+
+        todayWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                startActivity(intent);
+            }
+        });
+
         //별자리 운세
         horViewpager = v.findViewById(R.id.hor_viewpager);
 
@@ -162,6 +176,15 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         //별자리 검색
         constSearch = v.findViewById(R.id.edit_search);
         searchList = v.findViewById(R.id.const_list_view);
+
+        constSearch.setQueryHint("검색");
+
+        constSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                constSearch.setIconified(false);
+            }
+        });
 
         //모든 별자리 이름 호출
         Call<List<ConstellationParams2>> constNameCall = RetrofitClient.getApiService().getConstNames();
@@ -540,5 +563,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     public void onDestroyView() {
         super.onDestroyView();
     }
+
 
 }

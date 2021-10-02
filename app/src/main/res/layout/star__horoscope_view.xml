@@ -7,19 +7,19 @@
 
     <ImageView
         android:id="@+id/hor_image"
-        android:layout_width="93dp"
-        android:layout_height="157dp"
-        android:layout_marginTop="31dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/kakao_default_profile_image" />
+        android:layout_marginTop="30dp"
+        android:src="@drawable/star__gorae" />
 
     <TextView
         android:id="@+id/hor_eng_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="SAGITTARIUS"
         android:layout_marginTop="18dp"
+        android:text="SAGITTARIUS"
         android:textSize="22sp" />
 
     <LinearLayout
@@ -32,8 +32,8 @@
             android:id="@+id/hor_kr_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:text="황소" />
+            android:text="황소"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/hor_period"
@@ -41,8 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="4/20 ~ 5/20"
-            android:textSize="14sp"
-            android:textColor="@color/gray" />
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
@@ -53,6 +53,7 @@
         android:layout_marginHorizontal="38dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/star_horoscope_text" />
+        android:text="@string/star_horoscope_text"
+        android:textSize="14sp" />
 
 </LinearLayout>
