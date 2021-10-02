@@ -171,6 +171,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         LinearLayout operating_layout = findViewById(R.id.obs_foroperating_layout);
                         operating_layout.setVisibility(View.GONE);
 
+                        TextView nature_light = findViewById(R.id.obs_nature_light_txt);
+                        nature_light.setText(Double.toString(observation.getLight()));
                         TextView nature_parking = findViewById(R.id.obs_nature_parking_txt);
                         nature_parking.setText(observation.getParking());
                         TextView nature_address = findViewById(R.id.obs_nature_address_txt);
@@ -180,6 +182,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
                     } else {
                         //운영관측지일 경우 레이아웃 구성
+                        TextView light = findViewById(R.id.obs_light_txt);
+                        light.setText(Double.toString(observation.getLight()));
                         TextView address = findViewById(R.id.obs_address_txt);
                         address.setText(observation.getAddress());
                         TextView phonenumber = findViewById(R.id.obs_phonenumber_txt);

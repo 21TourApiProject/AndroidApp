@@ -239,8 +239,10 @@ public class PostActivity extends AppCompatActivity{
                             if (response.isSuccessful()){
                                 Log.d("user","게시물 유저정보 업로드");
                                 User user = response.body();
+                                String fileName = user.getProfileImage();
+                                fileName = fileName.substring(1, fileName.length() -1);
                                 Glide.with(getApplicationContext())
-                                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+user.getProfileImage()).circleCrop()
+                                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+fileName).circleCrop()
                                         .into(profileImage);
                                 nickname.setText(user.getNickName());
                             }

@@ -99,7 +99,7 @@ public class SearchResultFragment extends Fragment {
 
 
         //필터 결과 리사이클러뷰
-        System.out.println("리사이클러뷰 설정ㄹ");
+        System.out.println("리사이클러뷰 설정");
         RecyclerView searchResult = v.findViewById(R.id.searchResult);
         RecyclerView searchResult2 = v.findViewById(R.id.searchResult2);
         RecyclerView searchResult3 = v.findViewById(R.id.searchResult3);
@@ -136,18 +136,28 @@ public class SearchResultFragment extends Fragment {
                     if(area.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText(" " + areaName[i] + " ");
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
                 for(int i=0; i<22; i++){
                     if(hashTag.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
             } else if (type == 2) {
@@ -278,18 +288,28 @@ public class SearchResultFragment extends Fragment {
                     if(area.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText(" "+ areaName[i] + " ");
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
                 for(int i=0; i<22; i++){
                     if(hashTag.get(i) == 1){
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_200));
+                        textView.setTextSize(10);
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = 20;
+                        textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
+                        selectFilterItem.setDividerPadding(5);
                     }
                 }
                 if (keyword == null) {
