@@ -37,7 +37,6 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
