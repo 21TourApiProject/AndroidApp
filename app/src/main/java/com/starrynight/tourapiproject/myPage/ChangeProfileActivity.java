@@ -77,9 +77,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
     Bitmap btp;
     String fileName;
 
-    String accessKey;
-    String secretKey;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
