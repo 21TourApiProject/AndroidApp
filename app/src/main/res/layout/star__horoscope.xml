@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/wt__card_view_top"
-        android:paddingHorizontal="5dp"
+        android:paddingHorizontal="16dp"
         android:paddingVertical="5dp"
         android:text="오늘의 별자리 운세"
         android:textColor="@color/white" />
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:layout_marginStart="10dp"
             android:src="@drawable/tonight__hor_back" />
 
         <androidx.viewpager2.widget.ViewPager2
@@ -42,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/tonight__hor_next" />
     </LinearLayout>
 </LinearLayout>

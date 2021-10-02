@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/tonight__gradation_light"
     tools:context=".starPage.TonightSkyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +26,6 @@
             android:layout_marginTop="25dp"
             android:layout_marginEnd="22dp"
             android:background="@drawable/tonight__question"
-            android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,10 +33,9 @@
             android:id="@+id/star_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="26dp"
             android:background="@drawable/tonight__back"
-            android:backgroundTint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,17 +103,23 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tonight__check_today_weather"/>
+
                 <include
                     layout="@layout/star__today_cel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="16dp" />
 
                 <include
                     layout="@layout/star__horoscope"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="16dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
