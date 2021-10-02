@@ -25,6 +25,7 @@
                 android:id="@+id/alarm_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqahansansneomedium"
                 android:hint="알람제목" />
 
             <TextView
@@ -63,8 +64,9 @@
             android:id="@+id/alarm_content"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="8dp"
             android:hint="알림 내용"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
             android:visibility="gone" />
     </LinearLayout>
 
