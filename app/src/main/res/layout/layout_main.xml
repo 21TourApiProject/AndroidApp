@@ -50,9 +50,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/spoqahansansneobold"
             android:text="제목"
-            android:textSize="15sp"
-            android:textStyle="normal" />
+            android:textSize="15sp" />
 
         <Button
             android:layout_width="14dp"
@@ -102,8 +102,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:fontFamily="@font/spoqahansansneobold"
                     android:text="닉네임"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
