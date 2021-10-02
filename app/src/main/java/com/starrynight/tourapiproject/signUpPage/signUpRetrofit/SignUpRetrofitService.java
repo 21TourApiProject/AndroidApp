@@ -32,6 +32,9 @@ public interface SignUpRetrofitService {
     @GET("user/login/{email}/{password}")
     Call<Long> logIn(@Path("email")String email, @Path("password")String password);
 
+    @GET("user/kakaologin/{email}")
+    Call<Long> kakaoLogIn(@Path("email")String email);
+
     @GET("user/login/email/{realName}/{mobilePhoneNumber}")
     Call<String> getEmail(@Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
 
