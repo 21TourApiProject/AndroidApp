@@ -69,7 +69,7 @@ public class MyPostActivity extends AppCompatActivity {
                         public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
                             MyPost item = myPostAdapter.getItem(position);
                             Intent intent = new Intent(MyPostActivity.this, PostActivity.class);
-                            intent.putExtra("postId", item.getItemId());
+                            intent.putExtra("postId", item.getPostId());
                             startActivityForResult(intent, POST);
                         }
                     });

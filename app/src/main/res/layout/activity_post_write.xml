@@ -71,6 +71,7 @@
                 android:layout_height="160dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="24dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -131,19 +132,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/pw__line"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/postwrite__line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:paddingHorizontal="16dp">
-
-                    <ImageView
-                        android:id="@+id/pw__line"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/postwrite__line" />
 
                     <TextView
                         android:id="@+id/postWriteTitle"
@@ -163,6 +165,13 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/pw_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    app:srcCompat="@drawable/postwrite__line" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -170,16 +179,10 @@
                     android:paddingHorizontal="16dp"
                     android:paddingBottom="8dp">
 
-                    <ImageView
-                        android:id="@+id/pw_line2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"
-                        app:srcCompat="@drawable/postwrite__line" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="관측시간" />
 
                     <LinearLayout
@@ -194,7 +197,8 @@
                             android:background="@drawable/postwrite__date"
                             android:onClick="onClickDatePicker"
                             android:paddingHorizontal="10dp"
-                            android:paddingEnd="10dp"
+                            android:paddingTop="2dp"
+                            android:paddingEnd="20dp"
                             android:text="년도/월/일     "
                             android:textAlignment="center"
                             android:textSize="14sp" />
@@ -207,6 +211,7 @@
                             android:background="@drawable/postwrite__date"
                             android:onClick="onClickTimePicker"
                             android:paddingHorizontal="10dp"
+                            android:paddingTop="2dp"
                             android:paddingEnd="10dp"
                             android:text="시간"
                             android:textAlignment="center"
@@ -214,20 +219,17 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <ImageView
+                    android:id="@+id/pw__line3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/postwrite__line" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:paddingHorizontal="16dp"
                     android:paddingBottom="8dp">
-
-                    <ImageView
-                        android:id="@+id/pw__line3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/postwrite__line" />
 
                     <TextView
                         android:id="@+id/postWrite_observePoint"
@@ -250,7 +252,6 @@
                         app:layout_constraintTop_toBottomOf="@id/postWrite_observePoint">
 
                         <ImageView
-                            android:id="@+id/imageView3"
                             android:layout_width="20dp"
                             android:layout_height="14dp"
                             android:layout_weight="1"
@@ -261,35 +262,35 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="관측지역"
+                            android:paddingEnd="5dp"
                             android:textAlignment="center"
                             android:textSize="11sp" />
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/observingPoint"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/empty"
-                        android:hint=">"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/signup_back"
+                        android:scaleX="-1"
+                        android:scaleY="1"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <ImageView
+                    android:id="@+id/pw_line4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/postwrite__line" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="16dp">
-
-                    <ImageView
-                        android:id="@+id/pw_line4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/postwrite__line" />
 
                     <TextView
                         android:id="@+id/postWrite_hashTag"
@@ -302,10 +303,11 @@
 
                     <Button
                         android:id="@+id/hashTag"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:background="@color/empty"
-                        android:hint=">"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/signup_back"
+                        android:scaleX="-1"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -314,8 +316,11 @@
                         android:id="@+id/postHashTagLinearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="20dp"
                         android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@id/hashTag"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/postWrite_hashTag"
                         tools:layout_editor_absoluteX="16dp">
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -326,17 +331,14 @@
                             tools:itemCount="5" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/pw_line5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/postHashTagLinearLayout"
-                        app:srcCompat="@drawable/postwrite__line" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/pw_line5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@drawable/postwrite__line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

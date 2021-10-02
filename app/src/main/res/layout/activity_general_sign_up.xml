@@ -35,6 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:fontFamily="@font/scdream_light"
                     android:text="회원가입"
                     android:textSize="17sp" />
             </LinearLayout>
@@ -370,13 +371,37 @@
                         android:background="@drawable/signup_agree_non" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="전체 동의 :"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/allAgree"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="53dp"
+                        android:background="@drawable/signup_agree_non" />
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/next"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="51dp"
                     android:layout_marginBottom="50dp"
-                    android:background="@drawable/signup_complete" />
+                    android:text="완료"
+                    android:fontFamily="@font/scdream"
+                    android:background="@drawable/round_btn" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
