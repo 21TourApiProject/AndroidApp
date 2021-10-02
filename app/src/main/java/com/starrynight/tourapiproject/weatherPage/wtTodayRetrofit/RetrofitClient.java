@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://192.168.0.35:8080/v1/";
+    private static final String BASE_URL = "http://192.168.35.75:8080/v1/";
 
     public static WtTodayRetrofitService getApiService() {
         return getInstance().create(WtTodayRetrofitService.class);
