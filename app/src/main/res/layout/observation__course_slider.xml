@@ -36,7 +36,7 @@
         android:id="@+id/course_tp_img"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:src="@drawable/backgroundocean" />
+        android:src="@drawable/default_image" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -117,8 +117,11 @@
             android:layout_below="@id/course_tpaddress_txt"
             android:layout_alignLeft="@id/course_tpaddress_txt"/>
         <LinearLayout
+            android:id="@+id/course_tpmenu_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_alignTop="@id/course_tpmenu_txt">
             <ImageView
                 android:layout_width="wrap_content"
@@ -127,14 +130,12 @@
                 android:src="@drawable/observation__menu"/>
 
             <TextView
-                android:id="@+id/course_tpmenu_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="메뉴"
-                style="@style/Textview_observation_details_title"
-                android:visibility="gone"
-                tools:visibility="visible" />
+                style="@style/Textview_observation_details_title" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/course_tpmenu_txt"
             android:layout_width="wrap_content"

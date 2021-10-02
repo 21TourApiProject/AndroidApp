@@ -3,6 +3,8 @@ package com.starrynight.tourapiproject.observationPage;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.InputType;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -23,6 +25,7 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -168,22 +171,25 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         LinearLayout operating_layout = findViewById(R.id.obs_foroperating_layout);
                         operating_layout.setVisibility(View.GONE);
 
+                        TextView nature_light = findViewById(R.id.obs_nature_light_txt);
+                        nature_light.setText(Double.toString(observation.getLight()));
                         TextView nature_parking = findViewById(R.id.obs_nature_parking_txt);
                         nature_parking.setText(observation.getParking());
                         TextView nature_address = findViewById(R.id.obs_nature_address_txt);
                         nature_address.setText(observation.getAddress());
                         TextView nature_guide = findViewById(R.id.obs_nature_guide_txt);
-                        nature_guide.setText(observation.getGuide());
-
+                        nature_guide.setText(Html.fromHtml(observation.getGuide(), HtmlCompat.FROM_HTML_MODE_LEGACY));
 
                     } else {
                         //운영관측지일 경우 레이아웃 구성
+                        TextView light = findViewById(R.id.obs_light_txt);
+                        light.setText(Double.toString(observation.getLight()));
                         TextView address = findViewById(R.id.obs_address_txt);
                         address.setText(observation.getAddress());
                         TextView phonenumber = findViewById(R.id.obs_phonenumber_txt);
                         phonenumber.setText(observation.getPhoneNumber());
                         TextView operatinghour = findViewById(R.id.obs_operatinghour_txt);
-                        operatinghour.setText(observation.getOperatingHour());
+                        operatinghour.setText(Html.fromHtml(observation.getOperatingHour(), HtmlCompat.FROM_HTML_MODE_LEGACY));
                         TextView closedday = findViewById(R.id.obs_closedday_txt);
                         closedday.setText(observation.getClosedDay());
 
@@ -219,7 +225,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         });
 
                         TextView guide = findViewById(R.id.obs_guide_txt);
-                        guide.setText(observation.getGuide());
+                        guide.setText(Html.fromHtml(observation.getGuide(), HtmlCompat.FROM_HTML_MODE_LEGACY));
                         TextView parking = findViewById(R.id.obs_parking_txt);
                         parking.setText(observation.getParking());
                         link = findViewById(R.id.obs_url_txt);
