@@ -77,6 +77,9 @@ public class ChangeProfileActivity extends AppCompatActivity {
     Bitmap btp;
     String fileName;
 
+    String accessKey;
+    String secretKey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -288,7 +291,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
         fileName = "PI" + userId + "_" + resizedFile.getName();
         Log.d(TAG, "새로운 파일 이름 = " + fileName);
 
-        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
+
+        AWSCredentials awsCredentials = new BasicAWSCredentials(readAccessKey(), readSecretkey());    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
 
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
@@ -344,27 +348,46 @@ public class ChangeProfileActivity extends AppCompatActivity {
         return Uri.parse(path);
     }
 
-    public void deleteS3File(String beforeImage){
-        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");
-        AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                s3Client.deleteObject(new DeleteObjectRequest("starry-night/profileImage", beforeImage));
+    private String readAccessKey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.accesskey);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
             }
-        }).start();
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
 
-//        try {
-//            //Delete 객체 생성
-//            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest("starry-night/profileImage", key);
-//            //Delete
-//            s3Client.deleteObject(deleteObjectRequest);
-//
-//        } catch (AmazonServiceException e) {
-//            e.printStackTrace();
-//        } catch (SdkClientException e) {
-//            e.printStackTrace();
-//        }
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("data = " + data);
+        return data;
+    }
+
+    private String readSecretkey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.secretkey);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("data = " + data);
+        return data;
     }
 
     //닉네임 규칙 함수
