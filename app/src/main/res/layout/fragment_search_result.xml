@@ -28,7 +28,7 @@
                     android:layout_height="30dp"
                     android:layout_marginTop="17dp"
                     android:layout_marginEnd="18dp"
-                    android:layout_marginBottom="38dp"
+                    android:layout_marginBottom="14dp"
                     android:layout_weight="7"
                     android:background="@drawable/postwrite__search_bar"
                     android:queryHint="검색어를 입력하세요">
@@ -58,11 +58,13 @@
                 android:id="@+id/selectFilterItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
                 android:orientation="horizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
                 android:orientation="horizontal">
 
                 <Button

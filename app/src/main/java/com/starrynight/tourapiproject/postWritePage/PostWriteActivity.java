@@ -244,8 +244,9 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod2 = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timePicker.setText(hourOfDay + ":" + minute+":"+"00" );
-                time = timePicker.getText().toString();
+                String realtime = hourOfDay+":"+minute+":"+"00";
+                timePicker.setText(hourOfDay + ":" + minute);
+                time = realtime;
             }
         };
 

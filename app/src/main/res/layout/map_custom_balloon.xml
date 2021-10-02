@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:background="@drawable/map__test_bubble"
-    android:padding="10dp"
+    android:padding="5dp"
     android:orientation="vertical" >
 
 
@@ -22,7 +22,6 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="Custom Marker"
-                android:textColor="#ff000000"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
