@@ -350,7 +350,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
     private String readAccessKey() {
         String data = null;
-        InputStream inputStream = getResources().openRawResource(R.raw.accesskey);
+        InputStream inputStream = getResources().openRawResource(R.raw.access);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         int i;
         try {
@@ -371,7 +371,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
     private String readSecretkey() {
         String data = null;
-        InputStream inputStream = getResources().openRawResource(R.raw.secretkey);
+        InputStream inputStream = getResources().openRawResource(R.raw.secret);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         int i;
         try {
