@@ -16,13 +16,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.viewpager2.widget.ViewPager2
+            <ImageView
                 android:id="@+id/tpSlider"
                 android:layout_width="match_parent"
                 android:layout_height="308.73dp"
-                android:scaleType="fitCenter">
-
-            </androidx.viewpager2.widget.ViewPager2>
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
