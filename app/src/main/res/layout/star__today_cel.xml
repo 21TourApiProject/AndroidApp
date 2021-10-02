@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="end"
+                android:layout_marginEnd="16dp"
                 android:text="모든 천체 보기 >"
                 android:textColor="@color/white" />
 
