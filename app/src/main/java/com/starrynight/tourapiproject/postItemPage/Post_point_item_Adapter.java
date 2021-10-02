@@ -41,7 +41,7 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
     public void onBindViewHolder(@NonNull Post_point_item_Adapter.ViewHolder viewHolder, int position) {
         post_point_item item = items.get(position);
         viewHolder.setItem(item);
-        viewHolder.imageView.setBackground(ContextCompat.getDrawable(viewHolder.imageView.getContext(), R.drawable.myitem_image));
+        viewHolder.imageView.setBackground(ContextCompat.getDrawable(viewHolder.imageView.getContext(), R.drawable.default_image));
         viewHolder.imageView.setClipToOutline(true);
         Glide.with(viewHolder.itemView.getContext())
                 .load(item.getTourimage())
