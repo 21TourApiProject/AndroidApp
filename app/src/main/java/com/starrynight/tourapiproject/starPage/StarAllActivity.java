@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -74,7 +75,7 @@ public class StarAllActivity extends AppCompatActivity {
         });
 
         // 뒤로가기 버튼 클릭 이벤트
-        ImageButton backBtn = findViewById(R.id.all_star_back_btn);
+        ImageView backBtn = findViewById(R.id.all_star_back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
