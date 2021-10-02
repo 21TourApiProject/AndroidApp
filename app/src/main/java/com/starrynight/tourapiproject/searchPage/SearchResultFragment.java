@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -57,6 +58,10 @@ public class SearchResultFragment extends Fragment {
     Button tpBtn;
     Button postBtn;
     Button allContentBtn;
+    ImageView obBtnTap;
+    ImageView tpBtnTap;
+    ImageView postBtnTap;
+    ImageView allContentBtnTap;
     SearchView searchView;
 
     LinearLayout selectFilterItem; //선택한 필터들이 보이는 레이아웃
@@ -94,6 +99,10 @@ public class SearchResultFragment extends Fragment {
         tpBtn = v.findViewById(R.id.tpBtn);
         postBtn = v.findViewById(R.id.postBtn);
         allContentBtn= v.findViewById(R.id.allContentBtn);
+        obBtnTap=v.findViewById(R.id.obBtn_tap);
+        tpBtnTap=v.findViewById(R.id.tpBtn_tap);
+        postBtnTap = v.findViewById(R.id.postBtn_tap);
+        allContentBtnTap=v.findViewById(R.id.allContent_tap);
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
 
@@ -333,6 +342,10 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.VISIBLE);
                 searchResult2.setVisibility(View.VISIBLE);
                 searchResult3.setVisibility(View.VISIBLE);
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
@@ -665,6 +678,10 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 //                areaCodeList.add(0L);
@@ -728,6 +745,10 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
@@ -787,6 +808,10 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 //                areaCodeList.add(0L);

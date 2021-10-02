@@ -19,6 +19,7 @@
         android:id="@+id/recycler_hashTagName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqahansansneomedium"
         android:gravity="center"
         android:paddingHorizontal="6dp"
         android:text="#해쉬태그"
