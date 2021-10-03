@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
@@ -20,13 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.starrynight.tourapiproject.alarmPage.AlarmActivity;
-import com.starrynight.tourapiproject.myPage.myPageRetrofit.MyHashTag;
-import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost;
+import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
-import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
 import java.io.BufferedReader;
@@ -35,8 +32,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
