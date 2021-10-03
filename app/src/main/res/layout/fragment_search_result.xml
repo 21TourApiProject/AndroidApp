@@ -133,27 +133,6 @@
                     android:background="@drawable/search_tap_non" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/obText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="관측지 검색결과"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tpText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="관광지 검색결과"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/postText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="게시물 검색결과"
-                android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult"
                 android:layout_width="match_parent"

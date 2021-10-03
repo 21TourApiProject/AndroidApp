@@ -92,9 +92,6 @@ public class SearchResultFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_search_result, container, false);
 
         searchView = v.findViewById(R.id.search2);
-        obText = v.findViewById(R.id.obText);
-        tpText = v.findViewById(R.id.tpText);
-        postText = v.findViewById(R.id.postText);
         moreObText=v.findViewById(R.id.moreOb_text);
         moreTpText=v.findViewById(R.id.moreTp_text);
         morePostText=v.findViewById(R.id.morePost_text);
@@ -340,9 +337,6 @@ public class SearchResultFragment extends Fragment {
         allContentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obText.setVisibility(View.GONE);
-                tpText.setVisibility(View.GONE);
-                postText.setVisibility(View.GONE);
                 moreObText.setVisibility(View.VISIBLE);
                 moreTpText.setVisibility(View.VISIBLE);
                 morePostText.setVisibility(View.VISIBLE);
@@ -679,9 +673,6 @@ public class SearchResultFragment extends Fragment {
         obBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obText.setVisibility(View.VISIBLE);
-                tpText.setVisibility(View.GONE);
-                postText.setVisibility(View.GONE);
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
@@ -749,9 +740,6 @@ public class SearchResultFragment extends Fragment {
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obText.setVisibility(View.GONE);
-                tpText.setVisibility(View.GONE);
-                postText.setVisibility(View.VISIBLE);
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
@@ -815,9 +803,6 @@ public class SearchResultFragment extends Fragment {
         tpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obText.setVisibility(View.GONE);
-                tpText.setVisibility(View.VISIBLE);
-                postText.setVisibility(View.GONE);
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
