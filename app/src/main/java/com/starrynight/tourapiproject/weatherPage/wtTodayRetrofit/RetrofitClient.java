@@ -2,7 +2,6 @@ package com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.starrynight.tourapiproject.weatherPage.wtAreaRetrofit.WtAreaRetrofitService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
