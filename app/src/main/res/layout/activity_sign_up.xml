@@ -116,11 +116,11 @@
                 android:layout_marginBottom="52dp"
                 android:background="@drawable/signup_emailsignup" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="임시로그아웃"
-                android:id="@+id/logout_tmp"/>
+<!--            <Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="임시로그아웃"-->
+<!--                android:id="@+id/logout_tmp"/>-->
         </LinearLayout>
     </ScrollView>
 

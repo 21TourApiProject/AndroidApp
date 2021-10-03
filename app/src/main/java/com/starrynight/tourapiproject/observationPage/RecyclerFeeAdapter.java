@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.observationPage;
 
-import android.media.Image;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;

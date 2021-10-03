@@ -191,27 +191,27 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-                Button logout = findViewById(R.id.logout_tmp);
-        logout.setOnClickListener(v -> {
-            Log.d("KakaoLogin", "onCreate:click ");
-            UserManagement.getInstance()
-                    .requestLogout(new LogoutResponseCallback() {
-                        @Override
-                        public void onSessionClosed(ErrorResult errorResult) {
-                            super.onSessionClosed(errorResult);
-                            Log.d("KakaoLogin", "onSessionClosed: " + errorResult.getErrorMessage());
-
-                        }
-
-                        @Override
-                        public void onCompleteLogout() {
-                            if (sessionCallback != null) {
-                                Session.getCurrentSession().removeCallback(sessionCallback);
-                            }
-                            Log.d("KakaoLogin", "onCompleteLogout:logout ");
-                        }
-                    });
-        });
+//                Button logout = findViewById(R.id.logout_tmp);
+//        logout.setOnClickListener(v -> {
+//            Log.d("KakaoLogin", "onCreate:click ");
+//            UserManagement.getInstance()
+//                    .requestLogout(new LogoutResponseCallback() {
+//                        @Override
+//                        public void onSessionClosed(ErrorResult errorResult) {
+//                            super.onSessionClosed(errorResult);
+//                            Log.d("KakaoLogin", "onSessionClosed: " + errorResult.getErrorMessage());
+//
+//                        }
+//
+//                        @Override
+//                        public void onCompleteLogout() {
+//                            if (sessionCallback != null) {
+//                                Session.getCurrentSession().removeCallback(sessionCallback);
+//                            }
+//                            Log.d("KakaoLogin", "onCompleteLogout:logout ");
+//                        }
+//                    });
+//        });
 
     }
 
