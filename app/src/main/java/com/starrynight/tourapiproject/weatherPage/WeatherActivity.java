@@ -269,6 +269,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     //오늘의 날씨
     String todayWtId;
+    int todayWtIdInt;
     String todayWtName1;
     String todayWtName2;
     String todayWtName;
@@ -920,6 +921,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 humidityText = data.getHourly().get(i).getHumidity() + "%";
                                 precipitationText = data.getHourly().get(i).getPop();
                                 todayWtId = data.getHourly().get(i).getWeather().get(0).getId();
+                                todayWtIdInt = Integer.parseInt(todayWtId);
 
                                 doublePrecip = Double.parseDouble(precipitationText) * 100;
                                 intPrecip = (int) doublePrecip;
@@ -1818,7 +1820,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     //날씨 id로 오늘의 날씨 text 받아오기
     public void connectTodayWeather() {
-        Call<WtTodayParams> todayInfoCall = com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit.RetrofitClient.getApiService().getTodayWeatherInfo(todayWtId);
+        Call<WtTodayParams> todayInfoCall = com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit.RetrofitClient.getApiService().getTodayWeatherInfo(todayWtIdInt);
         todayInfoCall.enqueue(new Callback<WtTodayParams>() {
             @Override
             public void onResponse(Call<WtTodayParams> call, Response<WtTodayParams> response) {

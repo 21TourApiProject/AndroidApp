@@ -7,7 +7,7 @@ public class WtToday {
     private Long wtTodayId;
 
     @SerializedName("todayWtId")
-    private String todayWtId;
+    private Long todayWtId;
 
     @SerializedName("todayWtName1")
     private String todayWtName1;
