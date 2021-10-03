@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.signUpPage;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,11 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.RetrofitClient;
@@ -28,10 +29,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GeneralSingUpActivity extends AppCompatActivity{
-    private TextView birth;
-    private DatePickerDialog.OnDateSetListener callbackMethod;
 
-    private TextView emailGuide; //이메일 칸 바로 밑에 글칸
+    private static final String TAG = "GeneralSingUp";
+
+    private TextView emailGuide; //이메일 가이드
     private Boolean isEmailEmpty = true; //이메일이 비어있는지
     private Boolean isNotEmail = false; //올바른 이메일 형식이 아닌지
     private Boolean isEmailDuplicate = true; //이메일이 중복인지
@@ -40,7 +41,27 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     private Boolean isNotPwd = true; //올바른 비밀번호 형식이 아닌지
     private String passwordCheck;
 
-    private Boolean isError = false; //서버 에러가 발생했는지
+    private Button male;
+    private Button female;
+    private Button noSex;
+    int sex2;
+    Boolean noSex2;
+
+    private TextView birth;
+    private DatePickerDialog.OnDateSetListener callbackMethod;
+
+    private Button ageLimit;
+    private Button service;
+    private Button personal;
+    private Button locationService;
+    private Button marketing;
+    private Button allAgree;
+    Boolean isAge;
+    Boolean isService;
+    Boolean isPersonal;
+    Boolean isLocationService;
+    Boolean isMarketing;
+    Boolean isAllAgree;
 
     String realName, birthDay, email="", password;
     Boolean sex;
@@ -53,7 +74,217 @@ public class GeneralSingUpActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_general_sing_up);
+        setContentView(R.layout.activity_general_sign_up);
+
+        sex2 = 0;
+        noSex2 = false;
+        isAge = false;
+        isService = false;
+        isPersonal = false;
+        isLocationService = false;
+        isMarketing = false;
+        isAllAgree = false;
+
+        //성별
+        male = findViewById(R.id.male);
+        female = findViewById(R.id.female);
+        noSex = findViewById(R.id.noSex);
+        male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(noSex2){
+                    noSex.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_nosex_non));
+                    male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                    noSex2 = false;
+                    sex2 = 1;
+                } else {
+                    switch (sex2) {
+                        case (0):
+                            male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                            sex2 = 1;
+                            break;
+                        case (1):
+                            break;
+                        case (2):
+                            male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male));
+                            female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                            sex2 = 1;
+                            break;
+                    }
+                }
+            }
+        });
+        female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(noSex2){
+                    noSex.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_nosex_non));
+                    female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                    noSex2 = false;
+                    sex2 = 2;
+                } else {
+                    switch (sex2) {
+                        case (0):
+                            female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                            sex2 = 2;
+                            break;
+                        case (1):
+                            female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female));
+                            male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                            sex2 = 2;
+                            break;
+                        case (2):
+                            break;
+                    }
+                }
+            }
+        });
+        noSex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if(!noSex2){
+                   noSex.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_nosex));
+                   male.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_male_non));
+                   female.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_female_non));
+                   sex2 = 0;
+                   noSex2 = true;
+               }
+            }
+        });
+
+        //만 14세 이상
+        ageLimit = findViewById(R.id.ageLimit);
+        ageLimit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAge){
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAge = false;
+                } else{
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isAge = true;
+                }
+            }
+        });
+
+        //서비스 동의
+        service = findViewById(R.id.service);
+        service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isService){
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isService = false;
+                } else{
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isService = true;
+                }
+            }
+        });
+        TextView serviceInfo = findViewById(R.id.serviceInfo);
+        serviceInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/d74df94b11ce4e8f8592a77425fd403b"));
+                startActivity(intent);
+            }
+        });
+
+        //개인정보 동의
+        personal = findViewById(R.id.personal);
+        personal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isPersonal){
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isPersonal = false;
+                } else{
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isPersonal = true;
+                }
+            }
+        });
+        TextView personalInfo = findViewById(R.id.personalInfo);
+        personalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/3bae231c3cb34a6e9ce6585df8b96233"));
+                startActivity(intent);
+            }
+        });
+
+        //위치정보 동의
+        locationService = findViewById(R.id.locationService);
+        locationService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isLocationService){
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isLocationService = false;
+                } else{
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isLocationService = true;
+                }
+            }
+        });
+        TextView locationServiceInfo = findViewById(R.id.locationServiceInfo);
+        locationServiceInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/f3305181536d41a9997961f6516d57ac"));
+                startActivity(intent);
+            }
+        });
+
+        //마케팅 정보 수신 동의
+        marketing = findViewById(R.id.marketing);
+        marketing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isMarketing){
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isMarketing = false;
+                } else{
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isMarketing = true;
+                }
+            }
+        });
+
+        //전체 동의
+        allAgree = findViewById(R.id.allAgree);
+        allAgree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAllAgree){
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAllAgree = false;
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAge = false;
+                    isService = false;
+                    isPersonal = false;
+                    isLocationService = false;
+                    isMarketing = false;
+                } else{
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isAllAgree = true;
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isAge = true;
+                    isService = true;
+                    isPersonal = true;
+                    isLocationService = true;
+                    isMarketing = true;
+                }
+            }
+        });
 
         //생년월일
         birth = (TextView)findViewById(R.id.birthDay);
@@ -143,29 +374,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
-                if(realName.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                RadioButton male = findViewById(R.id.male);
-                RadioButton female = findViewById(R.id.female);
-                if (male.isChecked()){
-                    sex = true;
-                } else if(female.isChecked()){
-                    sex = false;
-                } else{
-                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();
-                if(birthDay.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 if(isEmailEmpty){
                     Toast.makeText(getApplicationContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
@@ -193,12 +401,54 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                     return;
                 }
 
+                realName = ((EditText) (findViewById(R.id.realName))).getText().toString();
+                if(realName.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(sex2 == 0 && !noSex2){
+                    Toast.makeText(getApplicationContext(), "성별을 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(sex2 == 1){
+                    sex = true; //남자
+                }
+                if(sex2 == 2){
+                    sex = false; //여자
+                }
+                if(noSex2){
+                    sex = null; //성별 없음
+                }
+
+                birthDay = ((TextView) (findViewById(R.id.birthDay))).getText().toString();
+                if(birthDay.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "생년월일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(!isAge){
+                    Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!isService){
+                    Toast.makeText(getApplicationContext(), "서비스 이용약관 동의는 필수입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!isPersonal){
+                    Toast.makeText(getApplicationContext(), "개인정보 수집 및 이용동의는 필수입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!isLocationService){
+                    Toast.makeText(getApplicationContext(), "위치서비스 이용 동의는 필수입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //칸에 적힌 데이터 가지고 전화번호 인증 페이지로 이동
-                UserParams userParams = new UserParams(realName, sex, birthDay, email, password);
+                UserParams userParams = new UserParams(realName, sex, birthDay, email, password, isMarketing, false);
                 Intent intent = new Intent(getApplicationContext(), PhoneAuthActivity.class);
                 intent.putExtra("userParams", userParams);
                 startActivity(intent);
-
             }
         });
     }
@@ -245,9 +495,8 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                             isNotEmail = true;
                         }
                     } else {
-                        System.out.println("중복 체크 실패");
+                        Log.e(TAG ,"중복 체크 실패");
                         emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                        isError = true;
                     }
                 }
 
@@ -255,7 +504,6 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("연결실패", t.getMessage());
                     emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                    isError = true;
                 }
             });
         }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_purple"
     tools:context=".postWritePage.SearchObservingPointActivity">
 
     <ScrollView
@@ -15,57 +16,78 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="38dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="29dp">
+
+                <Button
+                    android:id="@+id/search__back_btn"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="21dp"
+                    android:background="@drawable/signup_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/scdream_light"
+                    android:text="장소 설정"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="45dp"
-                android:background="@drawable/post_write__edge">
+                android:paddingHorizontal="24dp">
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/postwrite__search_bar"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/search_btn" />
+                        android:id="@+id/addObservePoint"
+                        android:layout_width="30dp"
+                        android:layout_height="24dp"
+                        android:background="@drawable/postwrite_observationsearch"
+                        android:visibility="visible" />
 
                     <EditText
                         android:id="@+id/findObservePoint"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@null"
-                        android:ems="10"
-                        android:hint="관측 지점 추가하기"
-                        android:inputType="textPersonName" />
+                        android:ems="13"
+                        android:fontFamily="@font/spoqahansansneoregular"
+                        android:hint="관측 지점을 찾아보세요"
+                        android:inputType="textPersonName"
+                        android:paddingStart="10dp"
+                        android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/addObservePoint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="추가" />
                 </LinearLayout>
 
-                <ScrollView
-                    android:layout_width="300dp"
-                    android:layout_height="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                    <LinearLayout
-                        android:id="@+id/dynamicLayout2"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/optionObservationRecyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"/>
-                </ScrollView>
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

@@ -6,51 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".MainFragment">
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+        <ImageButton
             android:id="@+id/weather_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="날씨" />
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@color/empty"
+            android:src="@drawable/main__weather" />
 
-        <TextView
-            android:id="@+id/textView18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="별헤는밤"
-            android:textAlignment="center"
-            android:textSize="24sp" />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/starryNightTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/main__logo" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <Button
+            android:id="@+id/main_alarm"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_toLeftOf="@+id/postWrite"
+            android:background="@drawable/main__alarm" />
+
+        <Button
+            android:id="@+id/postWrite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/mainpage_postwrite" />
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="@dimen/bottom_nav_size"
         android:foregroundGravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foregroundGravity="center">
 
+
             <LinearLayout
-                android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/todayEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_launcher_background"
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
@@ -59,37 +86,8 @@
                     android:layout_gravity="center_horizontal"
                     tools:itemCount="5" />
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <Button
-        android:id="@+id/postWrite"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/post_plus__button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/post"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="105dp"
-        android:text="게시물"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/testSignUp"
-        android:layout_width="90dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="140dp"
-        android:text="회원가입"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

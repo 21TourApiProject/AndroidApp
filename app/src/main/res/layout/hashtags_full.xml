@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/hashtag_background"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/recycler_hashTag_pin"
+        android:layout_width="12dp"
+        android:layout_height="14dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="3dp"
+        android:background="@drawable/mainpage_observationpin"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/recycler_hashTagName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqahansansneomedium"
+        android:gravity="center"
+        android:paddingHorizontal="6dp"
+        android:text="#해쉬태그"
+        android:textColor="@color/white"
+        android:textSize="11sp" />
+
+</LinearLayout>

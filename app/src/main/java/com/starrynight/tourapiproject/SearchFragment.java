@@ -2,76 +2,147 @@ package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 
-import com.starrynight.tourapiproject.touristSpotPage.Touristspot_Activity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
+import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
+import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
+import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
+import com.starrynight.tourapiproject.postItemPage.post_point_item;
+import com.starrynight.tourapiproject.searchPage.FilterFragment;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
+import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SearchFragment extends Fragment {
 
-    public SearchFragment() {
-        // Required empty public constructor
-    }
-
-
-    // TODO: Rename and change types and number of parameters
     public static SearchFragment newInstance() {
-        SearchFragment fragment = new SearchFragment();
-
-        return fragment;
+        return new SearchFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
-        Button maptest_btn = (Button) v.findViewById(R.id.test_map);
-        maptest_btn.setOnClickListener(new View.OnClickListener() {
+        ((MainActivity)getActivity()).showBottom();
+
+        SearchView searchView = v.findViewById(R.id.search);
+        searchView.setQueryHint("검색어를 입력하세요");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                ((MainActivity)getActivity()).replaceFragment(MapFragment.newInstance());
+            public boolean onQueryTextSubmit(String query) {
+
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putInt("type",2);
+                bundle.putString("keyword", query);
+
+                Fragment resultfragment = new SearchResultFragment();
+                resultfragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, resultfragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                return true;
             }
-        });
-        Button button  =(Button)v.findViewById(R.id.Touristspot_button);
-        button.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), Touristspot_Activity.class);
-                startActivity(intent);
-            }
-        });
-        Button observation_btn = (Button)v.findViewById(R.id.observation_button);
-        observation_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),ObservationsiteActivity.class);
-                startActivity(intent);
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
 
+        //지도 페이지로
+        Button map_btn = (Button) v.findViewById(R.id.mapBtn);
+        map_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle(); // 번들을 통해 값 전달
+                bundle.putSerializable("FromWhere", Activities.SEARCH);//번들에 넘길 값 저장
+
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, mapFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+//                ((MainActivity)getActivity()).replaceFragment(mapFragment);
+            }
+        });
+
+        //필터 고르는 페이지로
+        Button filter_btn = (Button) v.findViewById(R.id.filterBtn);
+        filter_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("fromWhere", Activities.SEARCH);
+                Fragment filterFragment = new FilterFragment();
+                filterFragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, filterFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        if (getArguments() != null)
+        {
+            int type = getArguments().getInt("type");
+            if (type == 0) {
+                ((MainActivity) getActivity()).showBottom();
+            }
+        }
+
+        //요즘 핫한 밤하늘 명소
+        RecyclerView recyclerView = v.findViewById(R.id.hotpointRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        Post_point_item_Adapter adapter = new Post_point_item_Adapter();
+        recyclerView.setAdapter(adapter);
+        adapter.addItem(new post_point_item("게시글1","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
+        adapter.addItem(new post_point_item("게시글2","https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
+        adapter.addItem(new post_point_item("게시글3","https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
+        adapter.setOnItemClicklistener(new OnPostPointItemClickListener() {
+            @Override
+            public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
+                Intent intent = new Intent(getActivity(), ObservationsiteActivity.class);
+                intent.putExtra("observationId", 1L);
+                startActivity(intent);
+            }
+        });
+        //나와 가까운 밤하늘 명소
+        RecyclerView recyclerView2 = v.findViewById(R.id.nearPointRecyclerView);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        recyclerView2.setLayoutManager(linearLayoutManager2);
+        Post_point_item_Adapter adapter2 = new Post_point_item_Adapter();
+        recyclerView2.setAdapter(adapter2);
+        adapter2.addItem(new post_point_item("게시글1","https://cdn.pixabay.com/photo/2018/08/11/20/37/cathedral-3599450_960_720.jpg"));
+        adapter2.addItem(new post_point_item("게시글2","https://cdn.pixabay.com/photo/2018/07/15/23/22/prague-3540883_960_720.jpg"));
+        adapter2.addItem(new post_point_item("게시글3","https://cdn.pixabay.com/photo/2019/12/13/07/35/city-4692432_960_720.jpg"));
+
+        adapter2.setOnItemClicklistener(new OnPostPointItemClickListener() {
+            @Override
+            public void onItemClick(Post_point_item_Adapter.ViewHolder holder, View view, int position) {
+                Intent intent = new Intent(getActivity(), TouristPointActivity.class);
+                intent.putExtra("contentId", 132805L);
+                startActivity(intent);
+            }
+        });
         return v;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 }

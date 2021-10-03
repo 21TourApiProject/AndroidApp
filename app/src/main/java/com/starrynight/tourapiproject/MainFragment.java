@@ -1,29 +1,55 @@
+
 package com.starrynight.tourapiproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ScrollView;
 
-import com.starrynight.tourapiproject.postItemPage.Post_item_adapter;
-import com.starrynight.tourapiproject.postItemPage.post_item;
-import com.starrynight.tourapiproject.postPage.PostActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.starrynight.tourapiproject.alarmPage.AlarmActivity;
+import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost;
+import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
+import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
-import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
+import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
-    Layout_main layout_main;
+public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    Long userId;
+    String[] filename2= new String[10];
+    private ArrayList<String> urls = new ArrayList<>();
+    SwipeRefreshLayout swipeRefreshLayout;
+    ScrollView scrollView;
+    List<Long>myhashTagIdList;
 
     public MainFragment() {
         // Required empty public constructor
@@ -48,22 +74,59 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+        swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        myhashTagIdList = new ArrayList<>();
+        String fileName = "userId";
+        try{
+            FileInputStream fis = getActivity().openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Call<List<Long>> call = RetrofitClient.getApiService().getMyHashTagIdList(userId);
+        call.enqueue(new Callback<List<Long>>() {
+            @Override
+            public void onResponse(Call<List<Long>> call, Response<List<Long>> response) {
+                if (response.isSuccessful()){
+                    myhashTagIdList = response.body();
+                    Filter filter = new Filter(null,myhashTagIdList);
+                    Call<List<MainPost>> call2 = RetrofitClient.getApiService().getMainPosts(filter);
+                    call2.enqueue(new Callback<List<MainPost>>() {
+                        @Override
+                        public void onResponse(Call<List<MainPost>> call, Response<List<MainPost>> response) {
+                            if (response.isSuccessful()){
+                                List<MainPost> result = response.body();
+                                RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+                                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                                layoutManager.setReverseLayout(true);
+                                layoutManager.setStackFromEnd(true);
+                                recyclerView.setLayoutManager(layoutManager);
+                                MainPost_adapter adapter = new MainPost_adapter(result,getContext());
+                                recyclerView.setAdapter(adapter);
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<MainPost>> call, Throwable t) {
+                            Log.d("mainPostList","인터넷 오류");
+                        }
+                    });
+                    
+                }
+            }
 
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+            @Override
+            public void onFailure(Call<List<Long>> call, Throwable t) {
+                Log.d("mainPostIdList","인터넷 오류");
+            }
+        });
 
-        Post_item_adapter adapter = new Post_item_adapter();
-        recyclerView.setAdapter(adapter);
 
-        adapter.addItem(new post_item(" #hash","#hash2","제목1","닉네임1","댓글을 달아주세요","https://cdn.pixabay.com/photo/2017/05/27/06/18/starry-sky-2347801_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash3","#hash4","제목2","닉네임2","댓글을 달아주세요","https://cdn.pixabay.com/photo/2017/10/09/09/26/the-atacama-desert-2832866_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash5","#hash6","제목3","닉네임3","댓글을 달아주세요","https://cdn.pixabay.com/photo/2018/12/06/02/00/the-milky-way-3859013_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-        adapter.addItem(new post_item(" #hash7","#hash8","제목4","닉네임4","댓글을 달아주세요","https://cdn.pixabay.com/photo/2017/02/14/11/47/natural-2065714_960_720.jpg","https://img-premium.flaticon.com/png/512/1144/1144811.png?token=exp=1627537493~hmac=2f43e8605ee99c9aec9e5491069d0d3c"));
-
-        recyclerView.setAdapter((adapter));
-
-        Button button =(Button) v.findViewById(R.id.weather_button);
+        ImageButton button =(ImageButton) v.findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,30 +144,49 @@ public class MainFragment extends Fragment {
                 startActivityForResult(intent, 101);
             }
         });
-        // 게시물 페이지로 넘어가는 이벤트(수정 예정)
-        Button post =(Button) v.findViewById(R.id.post);
-        post.setOnClickListener(new View.OnClickListener() {
+
+        // 알림 페이지로 넘어가는 이벤트
+
+        Button alarm = (Button)v.findViewById(R.id.main_alarm);
+        alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), PostActivity.class);
-                startActivityForResult(intent, 102);
+                Intent intent = new Intent(getActivity().getApplicationContext(), AlarmActivity.class);
+                startActivityForResult(intent, 104);
             }
         });
 
-        // 회원가입 페이지로 넘어가는 이벤트(수정 예정)
-        Button testSignUp = (Button) v.findViewById(R.id.testSignUp);
-        testSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), SignUpActivity.class);
-                startActivityForResult(intent, 103);
-            }
-        });
+//        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+//            @Override
+//            public void onScrollChanged() {
+//                if (scrollView.getScrollY()==0){
+//                    swipeRefreshLayout.isEnabled();
+//                }
+//            }
+//        });
+
         return v;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 101){
+            //프래그먼트 새로고침
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.detach(this).attach(this).commit();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
+
+    @Override
+    public void onRefresh() {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
 }

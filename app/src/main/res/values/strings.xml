@@ -12,4 +12,47 @@
     <string name="title_person">Person</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kakao_app_key">2201411c61cc7086fe639ce660ccb21e</string>
+    <string name="constellation_content_example"><![CDATA[별자리(constellation)는 천구(celestial sphere)에 투영된 별을 이어 사물이나 인물, 동물을 연상하도록 이름을 붙인 것이다. 따라서 별자리는 문화권과 시대마다 모양이 달랐고, 다른 이름으로 불렸다. 현재는 1930년 국제천문연맹(International Astronomical Union, IAU)에서 천구 전체를 채우도록 정한 88개의 별자리가 공식적인 별자리로 인정받고 있다./> </LinearLayout>]]></string>
+    <string name="tp_overview_detail"><u>자세히 보기</u></string>
+    <string name="signup_birthDay"><u>선택하기</u></string>
+    <string name="signup_must"><u>필수</u></string>
+    <string name="signup_no_must"><u>보기</u></string>
+    <string name="changeprofile_error">닉네임 형식이 올바르지 않습니다.\n(한글/영문/숫자 조합 15자 이내)</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="star_horoscope_text">따스하고 외향적인 천성을 가진 당신. 행동하길 좋아해 늘 변화를 이끌어내지만, 이번 주에는 거침 없는 야망이 오히려 발목을 잡을 수 있으니 주의하자.</string>
+    <string name = "star_help_text1">카메라는 렌즈로부터 ‘빛을 받아들여’ 영상을 기록하는 원리로 작동하는데, 빛을 어떻게, 얼마만큼 받아들이는지가 사진 촬영의 중요한 요소이며, 이것을 ‘노출’이라는 단어로 표현할 수 있습니다. 노출은 크게 ‘조리개, 셔터 스피드, ISO’ 3가지 요소로 결정되며, 이 요소들을 적절히 조합함으로써 좋은 사진을 담아낼 수 있어요. 이것을 이해한다면, 사진에 대해 아무것도 모르는 우리도 별이 쏟아지는 밤하늘을 멋지게 담아낼 수 있을 거예요.\n
+
+스마트폰의 경우 수동으로 설정값을 선택해 사진을 촬영하는 수동모드를 활용해 예쁘게 별사진을 촬영할 수 있어요. 삼성은 프로모드, LG는 전문가 모드가 있고 아쉽게도 아이폰은 수동모드를 지원하지 않으며 야간모드를 활용해 촬영할 수 있답니다. 지금부터 상세하게 카메라 설정에 대해 알아보아요.\n
+*아래 설명은 삼성 프로모드를 기준으로 하며, 설정값은 카메라 사양 및 촬영 환경에 따라 크게 달라질 수 있으며 절대적인 설정값은 없음을 알려드립니다.\n
+
+• 초점 : AF/MF가 표기된 아이콘. \n
+MF(멀티포커스)모드 설정 후 초첨레버를 ‘산’에 위치시킬수록 멀리 있는 대상을 전체적으로 선명하고 또렷하게 찍을 수 있습니다. 따라서 MF로 설정 후 초첨레버를 ‘산’에 최대한으로 위치시켜 별을 더 잘 촬영할 수 있어요. \n
+
+• F – 조리개 : F값이 표기된 아이콘. \n
+값이 낮을수록 조리개가 더 많이 개방되어 빛을 많이 받아들여서 사진이 밝게 나와요. 대부분의 스마트폰은 조리개가 고정되어 있거나 두가지로 나누어져 있으며, 나눠져 있는 경우 낮은 값을 선택하면 별을 더 잘 촬영할 수 있어요.\n
+
+• ISO - 감도 : ISO가 표기된 아이콘. \n
+센서가 빛에 민감하게 반응하는 정도로, 값을 높일수록 빛에 민감하게 반응해 빛을 많이 받아들여 사진이 밝아져서 밤하늘의 별을 더 선명하게 찍을 수 있습니다. 다만, 민감한 만큼 화질이 저하되고 빛 번짐 현상이 발생할 수 있기 때문에 적절한 높은 값을 잘 찾아야 합니다. 보통 800 정도를 추천하며, 주변 광해가 있으면 400, 없으면 1600으로 설정할 수 있는데, 기종 및 촬영환경에 따라 사진 결과도 많이 다릅니다. 따라서 높지 않은 선에서 최초 값을 설정해 결과물을 확인 후 사진의 밝기 및 화질에 따라 ISO값을 변화시키는 과정을 거치는 것이 좋아요.
+
+• 셔터 스피드 : F값이 표기된 아이콘. \n
+셔터가 열렸다가 닫히는 속도로, 1/N으로 표현되며 N초 동안 빛을 받아들여 사진을 촬영하는 것을 의미한다. N값을 높게 설정할수록 셔터속도가 느려져 빛을 오래(많이) 받아들여 별을 더 선명하게 찍을 수 있습니다. 셔터속도가 너무 느리면 별의 이동이 찍혀 흐릿할 수 있으므로 15초 정도를 추천합니다. 관련한 중요 사항으로는 셔터가 열려 있는 동안 사진이 흔들리기 쉽기 때문에 ‘삼각대’로 핸드폰을 고정하는 것이 필수적입니다. 또 셔터를 누를 때도 화면이 흔들리기 때문에 타이머, 리모컨 활용 등을 통해 흔들림 없이 촬영하는 것이 매우 중요합니다.\n
+
+• 화이트밸런스(WB) : WB가 표기된 아이콘. \n
+색의 온도를 조절하는 기능으로, 값이 낮을수록 차가운 느낌의 파란색, 높을수록 따뜻한 느낌의 주황색으로 변합니다. WB 조절 만으로 사진의 분위기를 크게 변화시킬 수 있어 초보자에게 추천하는 설정 값입니다. 후보정때 설정하는 경우도 많으며, 값을 조금 낮게 설정한 차가운 파란색 느낌의 별사진을 많이 찾아볼 수 있는 편입니다.\n
+
+  • RAW파일 형태 저장 : JPG파일에 비해 화질의 손상 없이 후보정이 가능한 형태의 파일로, 후보정을 하고자 하는 경우에 권장하는 사항이며, 카메라 앱 설정에서 선택 가능합니다.\n
+</string>
+
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="termsAndConditionsTestText">이용약관 내용\n이용약관 내용 <b>진하게</b></string>
+
+
 </resources>

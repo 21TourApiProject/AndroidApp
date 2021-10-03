@@ -1,12 +1,13 @@
 package com.starrynight.tourapiproject.postWritePage;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
 
@@ -43,7 +44,6 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
 
     public void removeItem(int position){
         items.remove(position);
-
     }
 
     public void setItems(ArrayList<SelectImage> items) {

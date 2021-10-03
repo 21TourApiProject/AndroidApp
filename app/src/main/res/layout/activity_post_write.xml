@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#313063"
     android:textAlignment="textEnd"
     tools:context=".postWritePage.PostWriteActivity">
 
@@ -16,128 +17,363 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-<!--            <HorizontalScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="150dp"-->
-<!--                android:layout_marginTop="40dp">-->
-
-                <LinearLayout
-                    android:id="@+id/dynamicLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="40dp">
-
-                    <RelativeLayout
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:background="@drawable/post_write__edge">
-
-                        <Button
-                            android:id="@+id/addPicture"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/post_write__edge"
-                            android:gravity="bottom|center_horizontal"
-                            android:text="0/10" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="20dp"
-                            app:srcCompat="@drawable/post_write__add_button"
-                            tools:ignore="VectorDrawableCompat" />
-
-                    </RelativeLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
-
-<!--            </HorizontalScrollView>-->
+            <!--            <HorizontalScrollView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="150dp"-->
+            <!--                android:layout_marginTop="40dp">-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/datePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
-                    android:background="#D083DD"
-                    android:onClick="onClickDatePicker"
-                    android:text="년/월/일"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/timePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="76dp"
-                    android:background="#CE91D8"
-                    android:onClick="onClickTimePicker"
-                    android:text="시간"
-                    android:textSize="16sp"
+                    <Button
+                        android:id="@+id/postWrite_back_btn"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="29dp"
+                        android:layout_marginEnd="21dp"
+                        android:background="@drawable/signup_back" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/scdream_light"
+                        android:text="게시물 올리기"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="26dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/postwrite__share"
+                    android:paddingHorizontal="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="당시 별 관측 적합도 : 좋음/나쁨으로 표시"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/postContentText"
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="1dp"
-                android:background="@drawable/post_write__edge"
-                android:ems="0"
-                android:hint="내용을 입력해주세요."
-                android:inputType="textPersonName" />
-
-            <Button
-                android:id="@+id/observingPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+            <LinearLayout
+                android:id="@+id/dynamicLayout"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="40dp"
-                android:text="관측 지점 검색"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_marginBottom="24dp"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/hashTag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:text="해시태그 추가" />
+                <RelativeLayout
+                    android:layout_width="57dp"
+                    android:layout_height="160dp"
+                    android:layout_marginLeft="20dp">
 
-            <Button
-                android:id="@+id/save"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="60dp"
-                android:text="저장" />
+                    <Button
+                        android:id="@+id/addPicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/postwrite__imageplus"
+                        android:gravity="bottom|center_horizontal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/postwrite__imageplus"
+                        tools:ignore="VectorDrawableCompat" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/exampleLinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/postwrite_area" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/postwrite_area" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <!--            </HorizontalScrollView>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/pw__line"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/postwrite__line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+
+                    <TextView
+                        android:id="@+id/postWriteTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="제목" />
+
+                    <EditText
+                        android:id="@+id/postWrite_titleText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:ems="20"
+                        android:hint="제목을 입력해주세요"
+                        android:inputType="textPersonName"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pw_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp"
+                    app:srcCompat="@drawable/postwrite__line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="관측시간" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/datePicker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/postwrite__date"
+                            android:onClick="onClickDatePicker"
+                            android:paddingHorizontal="10dp"
+                            android:paddingTop="2dp"
+                            android:paddingEnd="20dp"
+                            android:text="년도/월/일     "
+                            android:textAlignment="center"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/timePicker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:background="@drawable/postwrite__date"
+                            android:onClick="onClickTimePicker"
+                            android:paddingHorizontal="10dp"
+                            android:paddingTop="2dp"
+                            android:paddingEnd="10dp"
+                            android:text="시간"
+                            android:textAlignment="center"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pw__line3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/postwrite__line" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_observation"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/postWrite_observePoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="장소"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/postwrite_ob_linear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/hashtag_background"
+                        android:orientation="horizontal"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/postWrite_observePoint">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="14dp"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/mainpage_observationpin" />
+
+                        <TextView
+                            android:id="@+id/postObservationItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneomedium"
+                            android:hint="관측지역"
+                            android:paddingEnd="5dp"
+                            android:textAlignment="center"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/observingPoint"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/signup_back"
+                        android:scaleX="-1"
+                        android:scaleY="1"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/pw_line4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/postwrite__line" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_hashtag"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="16dp">
+
+                    <TextView
+                        android:id="@+id/postWrite_hashTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="해시태그"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/hashTag"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/signup_back"
+                        android:scaleX="-1"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/postHashTagLinearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/postWrite_hashTag">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/postHashTagrecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            tools:itemCount="5" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/pw_line5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:srcCompat="@drawable/postwrite__line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="본문" />
+
+                    <EditText
+                        android:id="@+id/postContentText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="1dp"
+                        android:ems="0"
+                        android:fontFamily="@font/spoqahansansneoregular"
+                        android:gravity="top"
+                        android:hint="내용을 입력해주세요."
+                        android:inputType="textLongMessage|textMultiLine"
+                        android:lines="10"
+                        android:scrollHorizontally="false"
+                        android:textSize="12sp"
+                        tools:layout_marginTop="9dp" />
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
