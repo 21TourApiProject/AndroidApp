@@ -423,23 +423,6 @@ public class PostActivity extends AppCompatActivity{
                 }
             }
         });
-
-
-        RecyclerView recyclerView = findViewById(R.id.relatePost);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(layoutManager);
-
-        RelatePostAdapter adapter = new RelatePostAdapter();
-
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnPersonItemClickListener(new OnRelatePostItemClickListener() {
-            @Override
-            public void onItemClick(RelatePostAdapter.ViewHolder holder, View view, int position) {
-                RelatePost item = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(), "클릭됨 : " + item.getTitle(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void setupIndicators(int count) {
