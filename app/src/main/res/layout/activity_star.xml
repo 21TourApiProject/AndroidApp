@@ -7,32 +7,39 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-31dp"
+        tools:layout_editor_absoluteY="254dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="90dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/detail_star_back_btn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="start"
-                    android:src="@drawable/back_btn" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginVertical="17dp"
+                    android:layout_marginStart="24dp"
+                    android:background="@drawable/star__back_btn" />
 
                 <TextView
                     android:id="@+id/detail_const_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/scdream_light"
                     android:text="사자자리"
-                    android:textSize="25sp" />
+                    android:textSize="17sp" />
 
             </LinearLayout>
 
@@ -40,44 +47,133 @@
                 android:id="@+id/detail_const_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/star__gorae"
                 android:adjustViewBounds="true" />
 
             <ImageView
-                android:id="@+id/const_feature"
+                android:id="@+id/const_feature1"
                 android:layout_width="match_parent"
                 android:layout_height="63dp"
                 android:layout_marginTop="15dp"
                 android:paddingHorizontal="10dp"
                 android:src="@color/purple_500" />
 
-            <include
-                android:id="@+id/const_story_textView"
-                layout="@layout/star__detail_view"
+            <ImageView
+                android:id="@+id/const_feature2"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:layout_marginTop="15dp"
+                android:paddingHorizontal="10dp"
+                android:src="@color/purple_500" />
+
+            <ImageView
+                android:id="@+id/const_feature3"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:layout_marginTop="15dp"
+                android:paddingHorizontal="10dp"
+                android:src="@color/purple_500" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" />
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="31dp"
+                android:background="@drawable/wt__card_view_round"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/wt__card_view_top"
+                    android:paddingHorizontal="17dp"
+                    android:paddingVertical="3dp"
+                    android:text="별자리 이야기"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/const_story"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginTop="16dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginVertical="15sp"
+                    android:layout_marginEnd="10dp"
+                    android:alpha="0.7"
+                    android:text="(출처:한국천문연구원-별자리전설)" />
+
+            </LinearLayout>
 
             <include
-                android:id="@+id/const_ob_info_textView"
-                layout="@layout/star__detail_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" />
+                android:id="@+id/const_mtd_tv"
+                layout="@layout/star__detail_view" />
 
             <include
-                android:id="@+id/const_best_month_textView"
-                layout="@layout/star__detail_view"
+                android:id="@+id/const_best_month_tv"
+                layout="@layout/star__detail_view" />
+
+            <LinearLayout
+                android:id="@+id/const_personality_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" />
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/wt__card_view_round"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/wt__card_view_top"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="17dp"
+                        android:paddingVertical="3dp"
+                        android:text="별자리 성격"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/const_period"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:text="07.22~08.15"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/const_personality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/const_travel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginVertical="16dp"
+                    android:layout_marginTop="16dp"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
             <include
-                android:id="@+id/const_personality_textView"
-                layout="@layout/star_detail_personality"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" />
-
+                android:id="@+id/const_guard_tv"
+                layout="@layout/star__detail_view" />
 
         </LinearLayout>
     </ScrollView>
