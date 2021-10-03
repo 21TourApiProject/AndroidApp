@@ -58,6 +58,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 public class TonightSkyFragment extends Fragment implements SensorEventListener {
     //bottomSheet 관련
     private LinearLayout bottomSheet;
@@ -86,10 +88,10 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     Constellation constellation;
 
     //도움말
-    LinearLayout imgClick;
+    ImageView imgClick;
     TextView openView;
 
-    LinearLayout imgClick1;
+    ImageView imgClick1;
     TextView openView1;
 
     ImageView helpBtn;
@@ -185,6 +187,9 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 constSearch.setIconified(false);
             }
         });
+
+        imm = (InputMethodManager) getActivity().getSystemService(INPUT_METHOD_SERVICE);
+
 
         //모든 별자리 이름 호출
         Call<List<ConstellationParams2>> constNameCall = RetrofitClient.getApiService().getConstNames();
@@ -335,32 +340,30 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         //도움말 textView open
         imgClick = v.findViewById(R.id.imgClick);
         openView = v.findViewById(R.id.layout_expand);
-        ImageView arrow = v.findViewById(R.id.arrow);
         imgClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (openView.getVisibility() == View.VISIBLE) {
                     openView.setVisibility(View.GONE);
-                    arrow.animate().setDuration(200).rotation(0f);
+                    imgClick.animate().setDuration(200).rotation(0f);
                 } else {
                     openView.setVisibility(View.VISIBLE);
-                    arrow.animate().setDuration(200).rotation(90f);
+                    imgClick.animate().setDuration(200).rotation(90f);
                 }
             }
         });
 
         imgClick1 = v.findViewById(R.id.imgClick1);
         openView1 = v.findViewById(R.id.layout_expand1);
-        ImageView arrow1 = v.findViewById(R.id.arrow1);
         imgClick1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (openView1.getVisibility() == View.VISIBLE) {
                     openView1.setVisibility(View.GONE);
-                    arrow1.animate().setDuration(200).rotation(0f);
+                    imgClick1.animate().setDuration(200).rotation(0f);
                 } else {
                     openView1.setVisibility(View.VISIBLE);
-                    arrow1.animate().setDuration(200).rotation(90f);
+                    imgClick1.animate().setDuration(200).rotation(90f);
                 }
             }
         });
@@ -565,6 +568,4 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     public void onDestroyView() {
         super.onDestroyView();
     }
-
-
 }
