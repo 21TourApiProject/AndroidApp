@@ -186,7 +186,7 @@ public class PostActivity extends AppCompatActivity{
                                                     allsize+=adapter2.getItem(i).getHashTagname().length();
                                                 }if (allsize>15&&allsize<30){staggeredGridLayoutManager.setSpanCount(2);}
                                                 else if (allsize>31&&allsize<60){staggeredGridLayoutManager.setSpanCount(3);}
-                                                else{staggeredGridLayoutManager.setSpanCount(4);}
+                                                else if (allsize>61){staggeredGridLayoutManager.setSpanCount(4);}
                                                 hashTagRecyclerView.setAdapter(adapter2);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
                                             }else{
@@ -210,7 +210,7 @@ public class PostActivity extends AppCompatActivity{
                                                     allsize+=adapter.getItem(i).getHashTagname().length();
                                                 }if (allsize>20&&allsize<35){staggeredGridLayoutManager.setSpanCount(2);}
                                                 else if (allsize>36&&allsize<60){staggeredGridLayoutManager.setSpanCount(3);}
-                                                else{staggeredGridLayoutManager.setSpanCount(4);}
+                                                else if (allsize>61){staggeredGridLayoutManager.setSpanCount(4);}
                                                 hashTagRecyclerView.setAdapter(adapter);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
                                             }
@@ -239,8 +239,10 @@ public class PostActivity extends AppCompatActivity{
                             if (response.isSuccessful()){
                                 Log.d("user","게시물 유저정보 업로드");
                                 User user = response.body();
+                                String fileName = user.getProfileImage();
+                                fileName = fileName.substring(1, fileName.length() -1);
                                 Glide.with(getApplicationContext())
-                                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+user.getProfileImage()).circleCrop()
+                                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+fileName).circleCrop()
                                         .into(profileImage);
                                 nickname.setText(user.getNickName());
                             }

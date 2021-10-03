@@ -2,9 +2,6 @@ package com.starrynight.tourapiproject.postPage.postRetrofit;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 public class Post {

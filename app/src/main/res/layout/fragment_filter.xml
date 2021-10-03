@@ -24,53 +24,62 @@
 
                 <Button
                     android:id="@+id/backFilter"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/postwrite__imagedelete" />
+                    android:layout_marginStart="29dp"
+                    android:layout_marginEnd="21dp"
+                    android:background="@drawable/filter_x_btn" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:fontFamily="@font/scdream_light"
                     android:text="필터"
                     android:textAlignment="gravity"
-                    android:textSize="20sp" />
+                    android:textSize="17sp" />
 
                 <Button
                     android:id="@+id/submitFilter"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:text="완료" />
+                    android:layout_width="27dp"
+                    android:layout_height="17dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/filter__adapt"
+                    android:gravity="center" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:background="@color/sub_blue"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="24dp"
                     android:layout_weight="1"
                     android:text="지역"
-                    android:textSize="18sp" />
+                    android:textSize="13sp" />
 
                 <Button
                     android:id="@+id/areaBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/heart_btn2" />
+                    android:layout_width="10dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="27dp"
+                    android:background="@drawable/filter__close" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/areaLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/content_blue"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -86,14 +95,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="서울"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -108,14 +118,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="경기"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -130,14 +141,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="인천"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -152,14 +164,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="강원"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn4"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -174,14 +187,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="충북"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -196,14 +210,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="충남"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn6"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -218,14 +233,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="대전"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -240,14 +256,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="세종"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -262,14 +279,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="전북"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn9"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -284,14 +302,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="광주"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn10"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -306,14 +325,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="전남"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn11"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -328,14 +348,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="경북"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn12"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -350,14 +371,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="대구"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn13"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -372,14 +394,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="경남"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn14"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -394,14 +417,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="부산"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn15"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -416,14 +440,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="울산"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn16"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -438,14 +463,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="제주"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/areaBtn17"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -453,26 +479,32 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:background="@color/sub_blue"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="24dp"
                     android:layout_weight="1"
                     android:text="여행 테마"
-                    android:textSize="18sp" />
+                    android:textSize="13sp" />
 
                 <Button
                     android:id="@+id/hashTagBtn"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/heart_btn2" />
+                    android:layout_width="10dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="27dp"
+                    android:background="@drawable/filter__close" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/hashTagLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/content_blue"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -488,14 +520,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="공기 좋은"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -510,14 +543,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="깔끔한"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn2"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -532,14 +566,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="감성적인"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -554,14 +589,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="이색적인"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn4"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -576,14 +612,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="인생샷"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -598,14 +635,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="전문적인"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn6"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -620,14 +658,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="캠핑"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn7"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -642,14 +681,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="차박"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -664,14 +704,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="뚜벅이"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn9"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -686,14 +727,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="드라이브"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn10"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -708,14 +750,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="반려동물"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn11"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -730,14 +773,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="한적한"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn12"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -752,14 +796,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="근교"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn13"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -774,14 +819,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="도심 속"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn14"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -796,14 +842,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="연인"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn15"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -818,14 +865,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="가족"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn16"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -840,14 +888,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="친구"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn17"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -862,14 +911,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="혼자"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn18"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -884,14 +934,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="가성비"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn19"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -906,14 +957,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="소확행"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn20"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -928,14 +980,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="럭셔리한"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn21"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -950,14 +1003,15 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="경치 좋은"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <Button
                         android:id="@+id/hashTagBtn22"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:background="@drawable/bookmark_non" />
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/filter__checkbox_non" />
                 </LinearLayout>
             </LinearLayout>
 

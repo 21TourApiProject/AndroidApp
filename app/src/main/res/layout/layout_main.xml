@@ -50,16 +50,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:fontFamily="@font/spoqahansansneobold"
             android:text="제목"
-            android:textSize="15sp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text=" >"
             android:textSize="15sp" />
+
+        <Button
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/setting_more" />
+
     </LinearLayout>
 
 
@@ -94,15 +94,17 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/main__empty_profile" />
+                    android:src="@drawable/main__empty_profile"
+                    app:srcCompat="@drawable/post__profile_no_image" />
 
                 <TextView
                     android:id="@+id/nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:fontFamily="@font/spoqahansansneobold"
                     android:text="닉네임"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

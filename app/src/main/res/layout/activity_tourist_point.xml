@@ -16,14 +16,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.viewpager2.widget.ViewPager2
+            <ImageView
                 android:id="@+id/tpSlider"
                 android:layout_width="match_parent"
                 android:layout_height="308.73dp"
-                android:scaleType="fitCenter"
-                android:background="@drawable/ic_launcher_foreground">
-
-            </androidx.viewpager2.widget.ViewPager2>
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +38,7 @@
                         android:id="@+id/tpTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_gravity="top"
                         android:text="제목"
                         android:textSize="17sp" />
 
@@ -50,7 +47,7 @@
                         android:layout_width="13dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="8dp"
                         android:background="@drawable/location_btn" />
 
                     <FrameLayout
@@ -586,9 +583,11 @@
                 app:srcCompat="@drawable/tp_line" />
 
             <LinearLayout
+                android:id="@+id/nearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="24dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -610,7 +609,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 app:srcCompat="@drawable/tp_line" />
 
             <LinearLayout

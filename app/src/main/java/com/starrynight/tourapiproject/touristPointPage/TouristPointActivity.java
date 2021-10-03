@@ -16,13 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.BalloonObject;
-import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.touristPointPage.search.OnSearchItemClickListener;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchAdapter;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchData;
@@ -61,8 +60,7 @@ public class TouristPointActivity extends AppCompatActivity {
     private static final int NEAR = 101;
     private static final String TAG = "TouristPoint";
 
-    private ViewPager2 slider;
-    private String[] image = new String[1];
+    ImageView slider;
 
     Long contentId;
     String todayDate; //오늘 날짜
@@ -78,7 +76,7 @@ public class TouristPointActivity extends AppCompatActivity {
     ImageView tpCongestion;
 
     LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
-            parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout;
+            parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout, nearLayout;
 
     String overviewFull; //개요 전체
 
@@ -128,6 +126,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpPacking = findViewById(R.id.tpPacking);
         tpParkingFood = findViewById(R.id.tpParkingFood);
         nearText = findViewById(R.id.nearText);
+        nearLayout = findViewById(R.id.nearLayout);
         daumMore=findViewById(R.id.daumMore);
         congestionLayout = findViewById(R.id.congestionLayout);
         addressLayout = findViewById(R.id.addressLayout);
@@ -144,6 +143,7 @@ public class TouristPointActivity extends AppCompatActivity {
         treatMenuLayout = findViewById(R.id.treatMenuLayout);
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
+
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
@@ -230,8 +230,6 @@ public class TouristPointActivity extends AppCompatActivity {
 
         //이미지 슬라이더
         slider = findViewById(R.id.tpSlider);
-        slider.setOffscreenPageLimit(image.length);
-
 
         //관광지 정보 불러오기
         LinearLayout tpInfo1 = findViewById(R.id.tpInfo1);
@@ -278,16 +276,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     //이미지
                                     if (tpData.getFirstImage() != null){
                                         balloonObject.setImage(tpData.getFirstImage());
-
-                                        image[0] = tpData.getFirstImage();
-                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
-
-                                        slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                                            @Override
-                                            public void onPageSelected(int position) {
-                                                super.onPageSelected(position);
-                                            }
-                                        });
+                                        Glide.with(getApplicationContext()).load(tpData.getFirstImage()).into(slider);
                                     }
                                     tpTitle.setText(tpData.getTitle());
                                     daumSearchWord = tpData.getTitle();
@@ -343,8 +332,14 @@ public class TouristPointActivity extends AppCompatActivity {
                                     cat3Name.setText(tpData.getCat3Name());
 
                                     if (tpData.getOverview() != null){
-                                        overview.setText(tpData.getOverview().substring(0,120) + "...");
-                                        overviewFull = tpData.getOverview();
+                                        String tpO = tpData.getOverview();
+                                        if (tpO.length() > 120)
+                                            overview.setText(tpO.substring(0,120) + "...");
+                                        else{
+                                            overview.setText(tpO);
+                                            overviewPop.setVisibility(View.GONE);
+                                        }
+                                        overviewFull = tpO;
                                     }else{
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
@@ -424,7 +419,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setName(foodData.getTitle());
 
                                     //주소를 두단어까지 줄임
-                                    String address = foodData.getAddr1();
+                                    String address = foodData.getAddr();
                                     int i = address.indexOf(' ');
                                     if (i != -1){
                                         int j = address.indexOf(' ', i+1);
@@ -442,17 +437,9 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     //이미지
                                     if (foodData.getFirstImage() != null){
+                                        System.out.println("foodData.getFirstImage() = " + foodData.getFirstImage());
                                         balloonObject.setImage(foodData.getFirstImage());
-
-                                        image[0] = foodData.getFirstImage();
-                                        slider.setAdapter(new TpImageSliderAdapter(TouristPointActivity.this, image));
-
-                                        slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                                            @Override
-                                            public void onPageSelected(int position) {
-                                                super.onPageSelected(position);
-                                            }
-                                        });
+                                        Glide.with(getApplicationContext()).load(foodData.getFirstImage()).into(slider);
                                     }
                                     tpTitle.setText(foodData.getTitle());
                                     daumSearchWord = foodData.getTitle();
@@ -504,14 +491,20 @@ public class TouristPointActivity extends AppCompatActivity {
                                     cat3Name.setText(foodData.getCat3Name());
 
                                     if (foodData.getOverview() != null){
-                                        overview.setText(foodData.getOverview().substring(0,120) + "...");
-                                        overviewFull = foodData.getOverview();
+                                        String foodO = foodData.getOverview();
+                                        if (foodO.length() > 120)
+                                            overview.setText(foodO.substring(0,120) + "...");
+                                        else {
+                                            overview.setText(foodO);
+                                            overviewPop.setVisibility(View.GONE);
+                                        }
+                                        overviewFull = foodO;
                                     }else{
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getAddr1() != null){
-                                        tpAddress.setText(foodData.getAddr1());
+                                    if (foodData.getAddr() != null){
+                                        tpAddress.setText(foodData.getAddr());
                                     }else{
                                         addressLayout.setVisibility(View.GONE);
                                     }
@@ -651,6 +644,7 @@ public class TouristPointActivity extends AppCompatActivity {
                     int len = nearResult.size();
                     if (len == 0){
                         nearText.setVisibility(View.GONE);
+                        nearLayout.setVisibility(View.GONE);
                         return;
                     }
                     String[] nearImages = new String[len];

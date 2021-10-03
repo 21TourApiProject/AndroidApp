@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -20,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
@@ -33,18 +37,15 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User2;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.regex.Pattern;
 
 import retrofit2.Call;
@@ -72,6 +73,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private Boolean isNickNameDuplicate = false; //닉네임이 중복인지
 
     Uri uri;
+    Bitmap btp;
     String fileName;
 
     @Override
@@ -162,8 +164,9 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         changeNicknameGuide.setText("");
 
                         //s3 사진 업로드
-                        //if(beforeImage != null) deleteS3File(beforeImage); //이전 사진 삭제
-                        uploadWithTransferUtility();
+                        if (isProfileImageChange)
+                            //if(beforeImage != null) deleteS3File(beforeImage); //이전 사진 삭제
+                            uploadWithTransferUtility();
 
                         //닉네임 변경 put api
                         Call<Void> call = RetrofitClient.getApiService().updateNickName(userId, changeNickname.getText().toString());
@@ -173,25 +176,29 @@ public class ChangeProfileActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     Log.d(TAG, "닉네임 변경 성공");
 
-                                    //프로필 사진 변경 put api
-                                    Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
-                                    call2.enqueue(new Callback<Void>() {
-                                        @Override
-                                        public void onResponse(Call<Void> call2, Response<Void> response) {
-                                            if (response.isSuccessful()) {
-                                                Log.d(TAG, "프로필 사진 변경 성공");
-                                                finish(); //종료
-                                            } else {
-                                                Log.e(TAG, "프로필 사진 변경 실패");
+                                    if (isProfileImageChange){ //프로필 사진 변경 put api
+                                        Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
+                                        call2.enqueue(new Callback<Void>() {
+                                            @Override
+                                            public void onResponse(Call<Void> call2, Response<Void> response) {
+                                                if (response.isSuccessful()) {
+                                                    Log.d(TAG, "프로필 사진 변경 성공");
+                                                    finish(); //종료
+                                                } else {
+                                                    Log.e(TAG, "프로필 사진 변경 실패");
+                                                    Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            @Override
+                                            public void onFailure(Call<Void> call2, Throwable t) {
+                                                Log.e("연결실패", t.getMessage());
                                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                             }
-                                        }
-                                        @Override
-                                        public void onFailure(Call<Void> call2, Throwable t) {
-                                            Log.e("연결실패", t.getMessage());
-                                            Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                        });
+                                    } else{
+                                        finish(); //종료
+                                    }
+
                                 } else {
                                     Log.d(TAG, "닉네임 변경 실패");
                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -230,9 +237,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     isProfileImageChange = true;
                     uri = data.getData();
                     InputStream in = getContentResolver().openInputStream(uri);
-                    Bitmap img = BitmapFactory.decodeStream(in);
+                    Bitmap bitmap = BitmapFactory.decodeStream(in);
                     in.close();
-                    profileImage.setImageBitmap(img);
+                    btp = rotateImage(uri, bitmap); //회전
+                    profileImage.setImageBitmap(btp); //미리보기
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
@@ -256,26 +264,37 @@ public class ChangeProfileActivity extends AppCompatActivity {
     //s3에 사진업로드 하는 함수
     public void uploadWithTransferUtility() {
 
-        File file = new File(getRealPathFromURI(uri));
-        BitmapFactory.Options option1 = getBitmapSize(file);
-        int maxWidthSize = 1000;
-        int maxHeightSize = 1000;
-        if (option1.outWidth > maxWidthSize || option1.outHeight > maxHeightSize) {
-            // 최대 크기를 벗어난 경우의 처리, 이미지 크기 변환 등
-            BitmapFactory.Options option2 = new BitmapFactory.Options();
-            option2.inSampleSize = 2;
-            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), option2);
+        int width = 2000; // 축소시킬 너비
+        int height = 1200; // 축소시킬 높이
+        float bmpWidth = btp.getWidth();
+        float bmpHeight = btp.getHeight();
+
+        if (bmpWidth > width) {
+            float mWidth = bmpWidth / 100;
+            float scale = width/ mWidth;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
+        } else if (bmpHeight > height) {
+            float mHeight = bmpHeight / 100;
+            float scale = height/ mHeight;
+            bmpWidth *= (scale / 100);
+            bmpHeight *= (scale / 100);
         }
-        fileName = "PI" + userId + "_" + file.getName();
+        Bitmap resizedBmp = Bitmap.createScaledBitmap(btp, (int) bmpWidth, (int) bmpHeight, true);
+
+        Uri resizedUri = getImageUri(getApplicationContext(), resizedBmp);
+        File resizedFile = new File(getRealPathFromURI(resizedUri));
+        fileName = "PI" + userId + "_" + resizedFile.getName();
         Log.d(TAG, "새로운 파일 이름 = " + fileName);
 
-        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
+
+        AWSCredentials awsCredentials = new BasicAWSCredentials(readAccessKey(), readSecretkey());    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
 
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
-        TransferObserver uploadObserver = transferUtility.upload("starry-night/profileImage", fileName, file);    // (bucket api, file이름, file객체)
+        TransferObserver uploadObserver = transferUtility.upload("starry-night/profileImage", fileName, resizedFile);    // (bucket api, file이름, file객체)
 
         uploadObserver.setTransferListener(new TransferListener() {
             @Override
@@ -298,85 +317,73 @@ public class ChangeProfileActivity extends AppCompatActivity {
         });
     }
 
-    private BitmapFactory.Options getBitmapSize(File imageFile) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
-        return options;
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private Bitmap rotateImage(Uri uri, Bitmap bitmap)throws IOException {
+        InputStream in = getContentResolver().openInputStream(uri);
+        ExifInterface exif = new ExifInterface(in);
+        in.close();
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL);
+        Matrix matrix = new Matrix();
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90){
+            matrix.postRotate(90);
+        }
+        else if (orientation == ExifInterface.ORIENTATION_ROTATE_180){
+            matrix.postRotate(180);
+        }
+        else if (orientation == ExifInterface.ORIENTATION_ROTATE_270){
+            matrix.postRotate(270);
+        }
+        return Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
     }
 
-
-    public void deleteS3File(String beforeImage){
-        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");
-        AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                s3Client.deleteObject(new DeleteObjectRequest("starry-night/profileImage", beforeImage));
-            }
-        }).start();
-
-//        try {
-//            //Delete 객체 생성
-//            DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest("starry-night/profileImage", key);
-//            //Delete
-//            s3Client.deleteObject(deleteObjectRequest);
-//
-//        } catch (AmazonServiceException e) {
-//            e.printStackTrace();
-//        } catch (SdkClientException e) {
-//            e.printStackTrace();
-//        }
+    // bitmap -> uri
+    private Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
-    //비트맵 용량 줄이는 함수
-    private Bitmap resize(Context context, Uri uri, int resize){
-        Bitmap resizeBitmap=null;
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
+    private String readAccessKey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.access);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
         try {
-            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
-
-            int width = options.outWidth;
-            int height = options.outHeight;
-            int samplesize = 1;
-
-            while (true) {
-                if (width / 2 < resize || height / 2 < resize)
-                    break;
-                width /= 2;
-                height /= 2;
-                samplesize *= 2;
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
             }
-            options.inSampleSize = samplesize;
-            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
-            resizeBitmap = bitmap;
-        } catch (FileNotFoundException e) {
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+
+            inputStream.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return resizeBitmap;
+        System.out.println("data = " + data);
+        return data;
     }
 
-    // 비트맵을 파일로 변환하는 함수
-    private void BitmapToFile(Bitmap bitmap, String strFilePath) {
-        File file = new File(strFilePath);
-        OutputStream out = null;
+    private String readSecretkey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.secret);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
         try {
-            file.createNewFile();
-            out = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-        }
-        catch (Exception e) {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+
+            inputStream.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            try {
-                out.close();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        System.out.println("data = " + data);
+        return data;
     }
 
     //닉네임 규칙 함수

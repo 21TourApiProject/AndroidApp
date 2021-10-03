@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.postPage.postRetrofit;
 
-import com.starrynight.tourapiproject.alarmPage.Alarm;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
