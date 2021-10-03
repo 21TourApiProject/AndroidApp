@@ -24,8 +24,8 @@
 
                 <Button
                     android:id="@+id/noticeBack"
-                    android:layout_width="16sp"
-                    android:layout_height="16sp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_marginLeft="29dp"
                     android:layout_marginRight="21dp"
                     android:background="@drawable/mypost_back" />
