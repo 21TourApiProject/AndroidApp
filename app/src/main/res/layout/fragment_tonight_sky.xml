@@ -227,8 +227,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:background="@drawable/tonight__help_card_view_round"
-                        android:text="ddddddddddddd\nddddddddd\ndddddd\nddddd\n"
+                        android:text="안녕하세요 오늘은 별을 쉽게 관찰하는 법을 알아보려고해요 여러분도 별을 쉽게 관찰하는 법이 뭔지 궁금하시죠? 저도 참 궁금한데요, 별을 잘 관측하려면 눈을 크게뜨고 밤하늘을 바라보면 어느순간 별이 잘 보일꺼에요 여기까지 별을 잘 관찰하는 법을 알아보았습니다"
                         android:textSize="11sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:visibility="gone" />
 
                 </LinearLayout>
@@ -275,6 +277,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:background="@drawable/tonight__help_card_view_round"
                         android:text="@string/star_help_text1"
                         android:textSize="11sp"
