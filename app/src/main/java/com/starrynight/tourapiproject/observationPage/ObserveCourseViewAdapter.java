@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.observationPage;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Layout;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,15 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.CourseTouristPoint;
-import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourseViewAdapter.MyViewHolder>{
 
