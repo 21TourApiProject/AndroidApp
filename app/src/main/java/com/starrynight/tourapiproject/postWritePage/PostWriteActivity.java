@@ -32,6 +32,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
@@ -246,8 +247,8 @@ public class PostWriteActivity extends AppCompatActivity {
         };
 
         //관측지점검색 버튼 클릭 이벤트
-        Button observingPoint = findViewById(R.id.observingPoint);
-        observingPoint.setOnClickListener(new View.OnClickListener() {
+        ConstraintLayout observationlayout = findViewById(R.id.layout_observation);
+        observationlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostWriteActivity.this, SearchObservingPointActivity.class);
@@ -256,8 +257,8 @@ public class PostWriteActivity extends AppCompatActivity {
         });
 
         //해시태그추가 버튼 클릭 이벤트
-        Button addHashTag = findViewById(R.id.hashTag);
-        addHashTag.setOnClickListener(new View.OnClickListener() {
+        ConstraintLayout hashTaglayout = findViewById(R.id.layout_hashtag);
+        hashTaglayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostWriteActivity.this, AddHashTagActivity.class);
