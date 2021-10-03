@@ -6,12 +6,18 @@
     android:layout_marginBottom="10dp"
     android:paddingBottom="24dp">
 
-    <ImageView
-        android:id="@+id/myWishPostImage"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:background="@drawable/myitem_image"
-        android:scaleType="centerCrop" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp">
+        <ImageView
+            android:id="@+id/myWishPostImage"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/postitem__no_image"
+            android:scaleType="centerCrop" />
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +29,7 @@
             android:id="@+id/myWishPostTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqahansansneomedium"
             android:textSize="12sp" />
 
         <LinearLayout
@@ -37,7 +44,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@color/gray" />
+                app:srcCompat="@drawable/post__profile_no_image" />
 
             <TextView
                 android:id="@+id/myWishPostWriter"
@@ -45,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
+                android:fontFamily="@font/spoqahansansneobold"
                 android:textSize="12sp" />
 
         </LinearLayout>

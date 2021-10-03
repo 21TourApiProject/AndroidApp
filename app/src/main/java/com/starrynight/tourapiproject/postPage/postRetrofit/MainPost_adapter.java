@@ -282,12 +282,12 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 if (i == position) {
                     imageView.setImageDrawable(ContextCompat.getDrawable(
                             indicator.getContext(),
-                            R.drawable.post__indicator_active
+                            R.drawable.mainpage_postimage
                     ));
                 } else {
                     imageView.setImageDrawable(ContextCompat.getDrawable(
                             indicator.getContext(),
-                            R.drawable.post__indicator_inactive
+                            R.drawable.mainpage_postimage_non
                     ));
                 }
             }

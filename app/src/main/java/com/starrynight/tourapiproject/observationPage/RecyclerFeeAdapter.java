@@ -1,6 +1,6 @@
 package com.starrynight.tourapiproject.observationPage;
 
-import android.media.Image;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
@@ -35,7 +36,7 @@ public class RecyclerFeeAdapter extends RecyclerView.Adapter<RecyclerFeeAdapter.
         }
 
         void onBind(RecyclerFeeItem item) {
-            fee_name.setText(item.getFeeName());
+            fee_name.setText(Html.fromHtml(item.getFeeName(), HtmlCompat.FROM_HTML_MODE_LEGACY));
             if(item.getEntranceFee()==null)
                 line.setVisibility(View.GONE);
             entrance_fee.setText(item.getEntranceFee());

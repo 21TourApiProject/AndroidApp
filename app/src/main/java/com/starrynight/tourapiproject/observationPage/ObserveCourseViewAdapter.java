@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.observationPage;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Layout;
@@ -9,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,15 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.CourseTouristPoint;
-import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourseViewAdapter.MyViewHolder>{
 
@@ -72,7 +66,7 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
         private TextView operating_txt;
         private TextView parking_txt;
         private TextView menu_txt;
-        private TextView menu_name;
+        private LinearLayout menu_name;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -119,16 +113,17 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
         }
 
         public void bindImage(String imageURL) {
-            Glide.with(context)
-                    .load(imageURL)
-                    .into(tp_img);
+                Glide.with(context)
+                        .load(imageURL)
+                        .into(tp_img);
+
         }
 
         public void bindText(CourseTouristPoint courseTouristPoint) {
             name_txt.setText(courseTouristPoint.getTitle());
             tp_type_txt.setText(courseTouristPoint.getCat3Name());
             overview_txt.setText(courseTouristPoint.getOverview());
-            address_txt.setText(courseTouristPoint.getAddr1());
+            address_txt.setText(courseTouristPoint.getAddr());
             operating_txt.setText(courseTouristPoint.getUseTime());
             parking_txt.setText(courseTouristPoint.getParking());
             if (courseTouristPoint.getContentTypeId()==39) {

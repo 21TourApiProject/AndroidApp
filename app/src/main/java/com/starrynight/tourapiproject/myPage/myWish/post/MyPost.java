@@ -6,8 +6,8 @@ import java.util.List;
 
 public class MyPost {
 
-    @SerializedName("itemId")
-    private Long itemId;
+    @SerializedName("postId")
+    private Long postId;
     @SerializedName("thumbnail")
     private String thumbnail;
     @SerializedName("title")
@@ -19,8 +19,8 @@ public class MyPost {
     @SerializedName("hashTagNames")
     private List<String> hashTagNames;
 
-    public MyPost(Long itemId, String thumbnail, String title, String nickName, String profileImage, List<String> hashTagNames) {
-        this.itemId = itemId;
+    public MyPost(Long postId, String thumbnail, String title, String nickName, String profileImage, List<String> hashTagNames) {
+        this.postId = postId;
         this.thumbnail = thumbnail;
         this.title = title;
         this.nickName = nickName;
@@ -28,12 +28,12 @@ public class MyPost {
         this.hashTagNames = hashTagNames;
     }
 
-    public Long getItemId() {
-        return itemId;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getThumbnail() {

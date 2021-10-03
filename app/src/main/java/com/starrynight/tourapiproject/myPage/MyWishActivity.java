@@ -213,7 +213,7 @@ public class MyWishActivity extends AppCompatActivity {
                         public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
                             MyPost item = myPostAdapter.getItem(position);
                             Intent intent = new Intent(MyWishActivity.this, PostActivity.class);
-                            intent.putExtra("postId", item.getItemId());
+                            intent.putExtra("postId", item.getPostId());
                             startActivityForResult(intent, WISH);
                         }
                     });

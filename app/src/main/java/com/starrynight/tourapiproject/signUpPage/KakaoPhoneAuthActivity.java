@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,6 +58,11 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     private Button resendAuth;
     private Button verify;
 
+    private Button ageLimit;
+    Boolean isAge;
+    Button phoneAgree;
+    private Boolean isPhoneAgree = false;
+
     String testPhoneNum = "+16505553333";
 
     KakaoUserParams userParams;
@@ -70,13 +76,17 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phone_auth);
+        setContentView(R.layout.activity_kakao_phone_auth);
 
-        Button skip_btn = findViewById(R.id.pass);
+        TextView skip_btn = findViewById(R.id.kko_pass);
         skip_btn.setVisibility(View.VISIBLE);
         skip_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!isAge){
+                    Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
                 call.enqueue(new Callback<Void>() {
                     @Override
@@ -108,13 +118,14 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         userParams = (KakaoUserParams) intent.getSerializableExtra("userParams");
 
-        mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber); //전화번호
-        phoneGuide = findViewById(R.id.phoneGuide);
-        authCode = findViewById(R.id.authCode); //인증코드
-        startAuth = findViewById(R.id.startAuth); //처음 문자요청
-        resendAuth = findViewById(R.id.resendAuth); //재 문자요청
-        verify = findViewById(R.id.verify); //인증요청
+        mobilePhoneNumber = findViewById(R.id.kko_mobilePhoneNumber); //전화번호
+        phoneGuide = findViewById(R.id.kko_phoneGuide);
+        authCode = findViewById(R.id.kko_authCode); //인증코드
+        startAuth = findViewById(R.id.kko_startAuth); //처음 문자요청
+        resendAuth = findViewById(R.id.kko_resendAuth); //재 문자요청
+        verify = findViewById(R.id.kko_verify); //인증요청
 
+        isAge = false;
         startAuth.setOnClickListener(this);
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
@@ -153,6 +164,34 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                 mResendToken = token;
             }
         };
+
+        ageLimit = findViewById(R.id.kko_ageLimit);
+        ageLimit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAge){
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAge = false;
+                } else{
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isAge = true;
+                }
+            }
+        });
+
+        phoneAgree = findViewById(R.id.kko_phoneAgree);
+        phoneAgree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isPhoneAgree){
+                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isPhoneAgree = false;
+                } else{
+                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+                    isPhoneAgree = true;
+                }
+            }
+        });
 
 
         //전화번호 칸에 글씨가 입력됨에 따라 실시간으로 phoneGuide 뜨게
@@ -284,7 +323,10 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                             Log.d(TAG, "인증 성공"); //인증 성공하면
 
                            //회원가입을 위한 post api
-                           userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                            if(isPhoneAgree)
+                                userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                            else
+                                userParams.setMobilePhoneNumber(null);
                             Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
                             call.enqueue(new Callback<Void>() {
                                 @Override
@@ -352,6 +394,11 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
 
             case R.id.verify:
                 String code = authCode.getText().toString();
+
+                if(!isAge){
+                    Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 if (TextUtils.isEmpty(code)) {
                     authCode.setError("인증번호를 입력해주세요.");

@@ -33,7 +33,6 @@ import com.kakao.usermgmt.response.model.Profile;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
-import com.starrynight.tourapiproject.LoginActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.KakaoUserParams;
@@ -173,6 +172,9 @@ public class SignUpActivity extends AppCompatActivity {
         kakaoSignUp.setOnClickListener(v -> {
             if (Session.getCurrentSession().checkAndImplicitOpen()) {
                 Log.d("KakaoLogin", "onClick: 로그인 세션 살아있음");
+
+                sessionCallback.requestMe();
+
                 //창이안뜸, 아직 로그인 세션 살아있음
                 //회원가입 안함
             } else {
@@ -189,28 +191,27 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
-        Button logout = findViewById(R.id.logout_tmp);
-        logout.setOnClickListener(v -> {
-            Log.d("KakaoLogin", "onCreate:click ");
-            UserManagement.getInstance()
-                    .requestLogout(new LogoutResponseCallback() {
-                        @Override
-                        public void onSessionClosed(ErrorResult errorResult) {
-                            super.onSessionClosed(errorResult);
-                            Log.d("KakaoLogin", "onSessionClosed: " + errorResult.getErrorMessage());
-
-                        }
-
-                        @Override
-                        public void onCompleteLogout() {
-                            if (sessionCallback != null) {
-                                Session.getCurrentSession().removeCallback(sessionCallback);
-                            }
-                            Log.d("KakaoLogin", "onCompleteLogout:logout ");
-                        }
-                    });
-        });
+//                Button logout = findViewById(R.id.logout_tmp);
+//        logout.setOnClickListener(v -> {
+//            Log.d("KakaoLogin", "onCreate:click ");
+//            UserManagement.getInstance()
+//                    .requestLogout(new LogoutResponseCallback() {
+//                        @Override
+//                        public void onSessionClosed(ErrorResult errorResult) {
+//                            super.onSessionClosed(errorResult);
+//                            Log.d("KakaoLogin", "onSessionClosed: " + errorResult.getErrorMessage());
+//
+//                        }
+//
+//                        @Override
+//                        public void onCompleteLogout() {
+//                            if (sessionCallback != null) {
+//                                Session.getCurrentSession().removeCallback(sessionCallback);
+//                            }
+//                            Log.d("KakaoLogin", "onCompleteLogout:logout ");
+//                        }
+//                    });
+//        });
 
     }
 
@@ -276,7 +277,7 @@ public class SignUpActivity extends AppCompatActivity {
         @Override
         public void onSessionOpened() {
             Log.d(TAG, "session is opened. call request");
-            requestMe();
+//            requestMe();
         }
 
 
@@ -380,9 +381,51 @@ public class SignUpActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 } else if (!result) {
                                     Log.d(TAG2, "회원가입 미진행, 이미가입된 이메일");
-                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    Call<Long> call2 = RetrofitClient.getApiService().kakaoLogIn(kakaoUserParams.getEmail());
+                                    call2.enqueue(new Callback<Long>() {
+                                        @Override
+                                        public void onResponse(Call<Long> call, Response<Long> response) {
+                                            //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
+                                            String fileName = "userId";
+                                            String userId = response.body().toString();
+                                            Log.d(TAG0, "userId " + userId);
+                                            try {
+                                                FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                                                fos.write(userId.getBytes());
+                                                fos.close();
+                                            } catch (FileNotFoundException e) {
+                                                e.printStackTrace();
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            //메인 페이지로 이동
+                                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                            startActivity(intent);
+                                            //권한 설정
+                                            int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                                            int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+                                            int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
+
+                                            Log.d("test", "onClick: location clicked");
+                                            if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
+                                                Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+
+                                            } else if (permission == PackageManager.PERMISSION_DENIED){
+                                                Log.d("test", "permission denied");
+                                                Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                                                ActivityCompat.requestPermissions(SignUpActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                                ActivityCompat.requestPermissions(SignUpActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                                ActivityCompat.requestPermissions(SignUpActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                                            }
+                                            finish();
+                                        }
+                                        @Override
+                                        public void onFailure(Call<Long> call, Throwable t) {
+                                            Log.e(TAG, "카카오 로그인 사용자 없음");
+                                        }
+                                    });
+
                                 }
                             } else {
                                 Log.e(TAG2, "이메일 중복 체크 실패");

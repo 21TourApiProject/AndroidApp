@@ -1,9 +1,6 @@
 package com.starrynight.tourapiproject.postWritePage.postWriteRetrofit;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class PostParams implements Serializable {
     private String postContent;

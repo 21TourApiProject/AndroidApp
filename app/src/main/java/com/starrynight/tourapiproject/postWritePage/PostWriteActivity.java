@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
@@ -34,7 +35,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -50,18 +50,15 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
-import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
-import com.starrynight.tourapiproject.postPage.PostActivity;
-import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -70,7 +67,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -243,8 +239,9 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod2 = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timePicker.setText(hourOfDay + ":" + minute+":" + "00" );
-                time = timePicker.getText().toString();
+                String realtime = hourOfDay+":"+minute+":"+"00";
+                timePicker.setText(hourOfDay + ":" + minute);
+                time = realtime;
             }
         };
 
@@ -488,11 +485,12 @@ public class PostWriteActivity extends AppCompatActivity {
         if(requestCode == 203){
             if(resultCode == 3){
                 Log.d("postHashTag","게시물 해시태그 넘어옴");
+                int allsize=0;
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
                 optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
-                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,GridLayoutManager.HORIZONTAL);
+                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(layoutManager);
                 PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
                 if (hashTagList.size()!=0 && optionhashTagList.length!=0){
@@ -512,7 +510,13 @@ public class PostWriteActivity extends AppCompatActivity {
                         adapter.addItem(new PostWriteHashTagItem(s));
                     }
                 }
+                for (int i=0;i<adapter.getItemCount();i++){
+                    allsize+=adapter.getItem(i).getHashTagname().length();
+                }if (allsize>15&&allsize<30){layoutManager.setSpanCount(2);}
+                else if (allsize>31&&allsize<60){layoutManager.setSpanCount(3);}
+                else if (allsize>61){layoutManager.setSpanCount(4);}
                 recyclerView.setAdapter(adapter);
+                recyclerView.addItemDecoration(new RecyclerViewDecoration(20));
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
         }
         if (resultCode != RESULT_OK || data == null) {
@@ -580,30 +584,28 @@ public String getRealPathFromURI(Uri contentUri) {
     cursor.moveToFirst();
     return cursor.getString(column_index);
 }
+    //recyclerview 간격
+    public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
+        private final int divRight;
 
-//    //Bitmap을 File로 변경하는 함수
-//    public String BitmapToFile(Bitmap bitmap, String image) {
-//        File storage = getFilesDir();
-//        String fileName = image + ".jpg";
-//        File imgFile = new File(storage, fileName);
-//        try {
-//            imgFile.createNewFile();
-//            FileOutputStream out = new FileOutputStream(imgFile);
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
-//        } catch (FileNotFoundException e) {
-//            Log.e("saveBitmapToJpg", "FileNotFoundException: "+ e.getMessage());
-//        } catch (IOException e) {
-//            Log.e("saveBitmapToJpg", "IOException: "+ e.getMessage());
-//        }
-//        Log.d("imgPath", getFilesDir() + "/" + fileName);
-//        //return imgFile;
-//        return getFilesDir() + "/" + fileName;
-//    }
+        public RecyclerViewDecoration(int divRight)
+        {
+
+            this.divRight = divRight;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        {
+            super.getItemOffsets(outRect, view, parent, state);
+            outRect.right = divRight;
+        }
+    }
 
     public void uploadWithTransferUtilty(String fileName, File file) {
 
-        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
+        AWSCredentials awsCredentials = new BasicAWSCredentials(readAccessKey(), readSecretKey());    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
 
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
@@ -721,6 +723,48 @@ public String getRealPathFromURI(Uri contentUri) {
             e.printStackTrace();
         }
         return resizeBitmap;
+    }
+
+    private String readAccessKey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.access);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("data = " + data);
+        return data;
+    }
+
+    private String readSecretKey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.secret);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("data = " + data);
+        return data;
     }
 
 }

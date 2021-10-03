@@ -8,8 +8,10 @@
 
     <ImageView
         android:id="@+id/recycler_hashTag_pin"
-        android:layout_width="14dp"
+        android:layout_width="12dp"
         android:layout_height="14dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="3dp"
         android:background="@drawable/mainpage_observationpin"
         android:visibility="gone" />
 
@@ -17,6 +19,7 @@
         android:id="@+id/recycler_hashTagName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqahansansneomedium"
         android:gravity="center"
         android:paddingHorizontal="6dp"
         android:text="#해쉬태그"

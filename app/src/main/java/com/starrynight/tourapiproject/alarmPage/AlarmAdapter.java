@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,15 +39,16 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull AlarmAdapter.ViewHolder viewHolder, int position) {
         Alarm item = items.get(position);
         viewHolder.setItem(item);
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+        viewHolder.alarmLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.button.setRotation(270);
-                if (viewHolder.alarmcontent.getVisibility()==View.GONE){
-                viewHolder.alarmcontent.setVisibility(View.VISIBLE);
-                }else{viewHolder.button.setRotation(90);
-                    viewHolder.alarmcontent.setVisibility(View.GONE);
-                    }
+                if (viewHolder.alarmOpen.getVisibility() == View.GONE){ //닫혀있으면 열기
+                    viewHolder.alarmBtn.setRotation(90);
+                    viewHolder.alarmOpen.setVisibility(View.VISIBLE);
+                } else{ //열려있으면 닫기
+                    viewHolder.alarmBtn.setRotation(360);
+                    viewHolder.alarmOpen.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -59,23 +61,28 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+        LinearLayout alarmLayout;
         TextView alarmtitle;
         TextView alarmdate;
         TextView alarmcontent;
-        Button button;
+        Button alarmBtn;
+        LinearLayout alarmOpen;
 
         public ViewHolder(View itemView, final OnAlarmClickListener listener){
             super(itemView);
+            alarmLayout =itemView.findViewById(R.id.alarmLayout);
             alarmtitle =itemView.findViewById(R.id.alarm_title);
             alarmdate = itemView.findViewById(R.id.alarm_date);
             alarmcontent= itemView.findViewById(R.id.alarm_content);
-            button = itemView.findViewById(R.id.scroll_btn);
+            alarmBtn = itemView.findViewById(R.id.scroll_btn);
+            alarmOpen = itemView.findViewById(R.id.alarmOpen);
 
         }
         public void setItem(Alarm item){
             alarmtitle.setText(item.getAlarmTitle());
             alarmdate.setText(item.getYearDate());
             alarmcontent.setText(item.getAlarmContent());
+            alarmOpen.setVisibility(View.GONE);
         }
     }
 
