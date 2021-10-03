@@ -868,6 +868,13 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                obline.setVisibility(View.GONE);
+                tpline.setVisibility(View.GONE);
+                postline.setVisibility(View.GONE);
+                allContentBtnTap.setVisibility(View.GONE);
+                obBtnTap.setVisibility(View.VISIBLE);
+                tpBtnTap.setVisibility(View.GONE);
+                postBtnTap.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
                 areaCodeList = new ArrayList<>();
@@ -928,6 +935,13 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                obline.setVisibility(View.GONE);
+                tpline.setVisibility(View.GONE);
+                postline.setVisibility(View.GONE);
+                allContentBtnTap.setVisibility(View.GONE);
+                obBtnTap.setVisibility(View.GONE);
+                tpBtnTap.setVisibility(View.GONE);
+                postBtnTap.setVisibility(View.VISIBLE);
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
@@ -980,6 +994,13 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                obline.setVisibility(View.GONE);
+                tpline.setVisibility(View.GONE);
+                postline.setVisibility(View.GONE);
+                allContentBtnTap.setVisibility(View.GONE);
+                obBtnTap.setVisibility(View.GONE);
+                tpBtnTap.setVisibility(View.VISIBLE);
+                postBtnTap.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
                 areaCodeList = new ArrayList<>();
