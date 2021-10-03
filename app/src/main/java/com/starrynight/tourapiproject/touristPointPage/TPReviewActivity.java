@@ -1,10 +1,11 @@
 package com.starrynight.tourapiproject.touristPointPage;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
 
