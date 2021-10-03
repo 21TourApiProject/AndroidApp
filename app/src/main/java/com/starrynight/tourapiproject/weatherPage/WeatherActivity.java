@@ -921,8 +921,9 @@ public class WeatherActivity extends AppCompatActivity {
                                 humidityText = data.getHourly().get(i).getHumidity() + "%";
                                 precipitationText = data.getHourly().get(i).getPop();
                                 todayWtId = data.getHourly().get(i).getWeather().get(0).getId();
+                                Log.d("todayWtId", todayWtId);
                                 todayWtIdInt = Integer.parseInt(todayWtId);
-
+                                Log.d("todayWtIdInt", String.valueOf(todayWtIdInt));
                                 doublePrecip = Double.parseDouble(precipitationText) * 100;
                                 intPrecip = (int) doublePrecip;
                                 stringPrecip = intPrecip + "%";
@@ -1830,16 +1831,13 @@ public class WeatherActivity extends AppCompatActivity {
                     todayWtName1 = result.getTodayWtName1();
                     todayWtName2 = result.getTodayWtName2();
 
-                    //한줄
-                    if (todayWtName2.equals("null")) {
+                    if(todayWtName2 == null){
                         todayWtName = todayWtName1;
-                        todayWeatherTv.setText(todayWtName);
-                    }
-                    //두줄
-                    else {
+                    }else{
                         todayWtName = todayWtName1 + "\n" + todayWtName2;
-                        todayWeatherTv.setText(todayWtName);
                     }
+
+                    todayWeatherTv.setText(todayWtName);
                 } else {
                     Log.d("connectWtToday", "id로 오늘의 날씨 받아오기 실패");
                 }
