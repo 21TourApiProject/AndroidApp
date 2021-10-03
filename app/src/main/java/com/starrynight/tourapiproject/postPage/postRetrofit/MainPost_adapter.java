@@ -118,18 +118,18 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         }
         viewHolder.hashTagRecyclerView.setAdapter(adapter);
         viewHolder.hashTagRecyclerView.addItemDecoration(new ViewHolder.RecyclerViewDecoration(20));
-        adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
-            @Override
-            public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
-                Bundle bundle = new Bundle();
-                Fragment searchFragment = new SearchFragment();
-                FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, searchFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
-            }
-        });
+//        adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
+//            @Override
+//            public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
+//                Bundle bundle = new Bundle();
+//                Fragment searchFragment = new SearchFragment();
+//                FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.main_view, searchFragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//
+//            }
+//        });
     }
 
     @Override
