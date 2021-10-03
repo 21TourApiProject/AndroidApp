@@ -76,7 +76,6 @@
                     android:id="@+id/todayEvent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher_background"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
