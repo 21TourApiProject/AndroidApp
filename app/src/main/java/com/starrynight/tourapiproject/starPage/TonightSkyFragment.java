@@ -58,6 +58,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 public class TonightSkyFragment extends Fragment implements SensorEventListener {
     //bottomSheet 관련
     private LinearLayout bottomSheet;
@@ -140,7 +142,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     List<String> nameList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
     long itemClickId;
-    private InputMethodManager imm;
 
 
     Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
@@ -336,6 +337,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         imgClick = v.findViewById(R.id.imgClick);
         openView = v.findViewById(R.id.layout_expand);
         ImageView arrow = v.findViewById(R.id.arrow);
+
         imgClick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -352,6 +354,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         imgClick1 = v.findViewById(R.id.imgClick1);
         openView1 = v.findViewById(R.id.layout_expand1);
         ImageView arrow1 = v.findViewById(R.id.arrow1);
+
         imgClick1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -565,6 +568,4 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     public void onDestroyView() {
         super.onDestroyView();
     }
-
-
 }
