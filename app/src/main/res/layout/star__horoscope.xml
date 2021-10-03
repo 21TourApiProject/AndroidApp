@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="16dp"
     android:background="@drawable/wt__card_view_round"
     android:orientation="vertical">
 
@@ -11,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/wt__card_view_top"
+        android:fontFamily="@font/spoqahansansneobold"
         android:paddingHorizontal="16dp"
         android:paddingVertical="5dp"
         android:text="오늘의 별자리 운세"
@@ -34,6 +34,7 @@
             android:id="@+id/hor_viewpager"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:clipChildren="false"
             android:clipToPadding="false">
 
