@@ -14,10 +14,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.SearchFragment;
 import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
