@@ -53,9 +53,11 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
             viewHolder.postHashTagName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1 = new Intent(viewHolder.itemView.getContext(), ObservationsiteActivity.class);
-                    intent1.putExtra("observationId",item0.ObservationId);
-                    viewHolder.itemView.getContext().startActivity(intent1);
+                    if (item0.getObservationId()!=null) {
+                        Intent intent1 = new Intent(viewHolder.itemView.getContext(), ObservationsiteActivity.class);
+                        intent1.putExtra("observationId", item0.ObservationId);
+                        viewHolder.itemView.getContext().startActivity(intent1);
+                    }
                 }
             });
         }
