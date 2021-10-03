@@ -226,6 +226,7 @@
                     app:srcCompat="@drawable/postwrite__line" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_observation"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:paddingHorizontal="16dp"
@@ -290,6 +291,7 @@
                     app:srcCompat="@drawable/postwrite__line" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_hashtag"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="16dp">

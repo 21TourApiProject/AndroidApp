@@ -536,7 +536,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="26dp"
-                    android:weightSum="3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -544,17 +543,19 @@
 
                     <ImageView
                         android:id="@+id/relateImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_weight="1"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/default_image" />
 
                     <ImageView
                         android:id="@+id/relateImage2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
                         android:layout_weight="1"
                         android:adjustViewBounds="true"
+                        android:src="@drawable/default_image"
                         android:visibility="gone" />
 
                     <FrameLayout
@@ -566,8 +567,8 @@
 
                         <ImageView
                             android:id="@+id/relateImage3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
                             android:foreground="@drawable/observation__moreimage"
