@@ -171,6 +171,7 @@
                 android:textColor="@color/sub_blue" />
 
             <ImageView
+                android:id="@+id/ob_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="31dp"
@@ -191,6 +192,7 @@
                 android:textColor="@color/sub_blue" />
 
             <ImageView
+                android:id="@+id/tp_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="31dp"
@@ -211,7 +213,7 @@
                 android:textColor="@color/sub_blue" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/post_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="31dp"

@@ -61,6 +61,9 @@ public class SearchResultFragment extends Fragment {
     ImageView obBtnTap;
     ImageView tpBtnTap;
     ImageView postBtnTap;
+    ImageView obline;
+    ImageView tpline;
+    ImageView postline;
     ImageView allContentBtnTap;
     SearchView searchView;
 
@@ -98,6 +101,9 @@ public class SearchResultFragment extends Fragment {
         obBtn = v.findViewById(R.id.obBtn);
         tpBtn = v.findViewById(R.id.tpBtn);
         postBtn = v.findViewById(R.id.postBtn);
+        obline= v.findViewById(R.id.ob_line);
+        tpline=v.findViewById(R.id.tp_line);
+        postline=v.findViewById(R.id.post_line);
         allContentBtn= v.findViewById(R.id.allContentBtn);
         obBtnTap=v.findViewById(R.id.obBtn_tap);
         tpBtnTap=v.findViewById(R.id.tpBtn_tap);
@@ -342,6 +348,9 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.VISIBLE);
                 searchResult2.setVisibility(View.VISIBLE);
                 searchResult3.setVisibility(View.VISIBLE);
+                obline.setVisibility(View.VISIBLE);
+                tpline.setVisibility(View.VISIBLE);
+                postline.setVisibility(View.VISIBLE);
                 allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
                 tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
@@ -678,6 +687,9 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                obline.setVisibility(View.GONE);
+                tpline.setVisibility(View.GONE);
+                postline.setVisibility(View.GONE);
                 allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
@@ -745,6 +757,9 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                obline.setVisibility(View.GONE);
+                tpline.setVisibility(View.GONE);
+                postline.setVisibility(View.GONE);
                 allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
@@ -808,6 +823,9 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                obline.setVisibility(View.GONE);
+                tpline.setVisibility(View.GONE);
+                postline.setVisibility(View.GONE);
                 allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
                 obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
