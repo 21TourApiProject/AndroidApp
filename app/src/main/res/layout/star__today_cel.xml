@@ -15,15 +15,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/wt__card_view_top"
             android:orientation="horizontal"
-            android:paddingHorizontal="5dp"
             android:paddingVertical="5dp">
 
             <TextView
+                android:fontFamily="@font/spoqahansansneobold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="4dp"
+                android:textSize="14sp"
                 android:text="오늘 볼 수 있는 천체" />
 
             <View
