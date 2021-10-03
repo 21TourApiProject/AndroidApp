@@ -132,8 +132,9 @@
                             android:id="@+id/post_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/spoqahansansneobold"
                             android:text="닉네임"
                             android:textSize="12sp" />
 
