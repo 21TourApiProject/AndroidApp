@@ -6,6 +6,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:background="@drawable/wt__card_view_round"
         android:orientation="vertical">
 
@@ -20,19 +21,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_weight="2"
-                android:text="오늘 볼 수 있는 천체"
-                android:textColor="@color/white" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="4dp"
+                android:text="오늘 볼 수 있는 천체" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/all_const_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:text="모든 천체 보기 >"
-                android:textColor="@color/white" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:text="더보기 >"
+                android:textSize="10sp" />
 
         </LinearLayout>
 

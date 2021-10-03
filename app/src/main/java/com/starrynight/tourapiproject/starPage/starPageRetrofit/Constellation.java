@@ -15,17 +15,8 @@ public class Constellation {
     @SerializedName("constStory")
     private String constStory;
 
-    @SerializedName("springConstMtd")
-    private String springConstMtd;
-
-    @SerializedName("summerConstMtd")
-    private String summerConstMtd;
-
-    @SerializedName("fallConstMtd")
-    private String fallConstMtd;
-
-    @SerializedName("winterConstMtd")
-    private String winterConstMtd;
+    @SerializedName("constMtd")
+    private String constMtd;
 
     @SerializedName("constBestMonth")
     private String constBestMonth;
@@ -33,17 +24,35 @@ public class Constellation {
     @SerializedName("constPersonality")
     private String constPersonality;
 
+    @SerializedName("constTravel")
+    private String constTravel;
+
     @SerializedName("constPeriod")
     private String constPeriod;
 
-    @SerializedName("constFeature")
-    private String constFeature;
+    @SerializedName("constFeature1")
+    private String constFeature1;
+
+    @SerializedName("constFeature2")
+    private String constFeature2;
+
+    @SerializedName("constFeature3")
+    private String constFeature3;
 
     @SerializedName("startDate")
     private String startDate;
 
     @SerializedName("endDate")
     private String endDate;
+
+    @SerializedName("constGuard")
+    private String constGuard;
+
+    @SerializedName("startDate1")
+    private String startDate1;
+
+    @SerializedName("endDate2")
+    private String endDat2;
 
     public Constellation() {
     }
@@ -80,36 +89,12 @@ public class Constellation {
         this.constStory = constStory;
     }
 
-    public String getSpringConstMtd() {
-        return springConstMtd;
+    public String getConstMtd() {
+        return constMtd;
     }
 
-    public void setSpringConstMtd(String springConstMtd) {
-        this.springConstMtd = springConstMtd;
-    }
-
-    public String getSummerConstMtd() {
-        return summerConstMtd;
-    }
-
-    public void setSummerConstMtd(String summerConstMtd) {
-        this.summerConstMtd = summerConstMtd;
-    }
-
-    public String getFallConstMtd() {
-        return fallConstMtd;
-    }
-
-    public void setFallConstMtd(String fallConstMtd) {
-        this.fallConstMtd = fallConstMtd;
-    }
-
-    public String getWinterConstMtd() {
-        return winterConstMtd;
-    }
-
-    public void setWinterConstMtd(String winterConstMtd) {
-        this.winterConstMtd = winterConstMtd;
+    public void setConstMtd(String constMtd) {
+        this.constMtd = constMtd;
     }
 
     public String getConstBestMonth() {
@@ -128,6 +113,14 @@ public class Constellation {
         this.constPersonality = constPersonality;
     }
 
+    public String getConstTravel() {
+        return constTravel;
+    }
+
+    public void setConstTravel(String constTravel) {
+        this.constTravel = constTravel;
+    }
+
     public String getConstPeriod() {
         return constPeriod;
     }
@@ -136,12 +129,28 @@ public class Constellation {
         this.constPeriod = constPeriod;
     }
 
-    public String getConstFeature() {
-        return constFeature;
+    public String getConstFeature1() {
+        return constFeature1;
     }
 
-    public void setConstFeature(String constFeature) {
-        this.constFeature = constFeature;
+    public String getConstFeature2() {
+        return constFeature2;
+    }
+
+    public String getConstFeature3() {
+        return constFeature3;
+    }
+
+    public void setConstFeature1(String constFeature1) {
+        this.constFeature1 = constFeature1;
+    }
+
+    public void setConstFeature2(String constFeature2) {
+        this.constFeature2 = constFeature2;
+    }
+
+    public void setConstFeature3(String constFeature3) {
+        this.constFeature3 = constFeature3;
     }
 
     public String getStartDate() {
@@ -158,5 +167,29 @@ public class Constellation {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getConstGuard() {
+        return constGuard;
+    }
+
+    public void setConstGuard(String constGuard) {
+        this.constGuard = constGuard;
+    }
+
+    public String getEndDat2() {
+        return endDat2;
+    }
+
+    public String getStartDate1() {
+        return startDate1;
+    }
+
+    public void setEndDat2(String endDat2) {
+        this.endDat2 = endDat2;
+    }
+
+    public void setStartDate1(String startDate1) {
+        this.startDate1 = startDate1;
     }
 }
