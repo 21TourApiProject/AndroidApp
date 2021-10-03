@@ -40,7 +40,6 @@ import retrofit2.Response;
 
 public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-
     private static final String TAG = "PhoneAuth";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int SELECT_HASH_TAG = 0;
