@@ -25,7 +25,6 @@ import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeV2ResponseCallback;
 import com.kakao.usermgmt.response.MeV2Response;
 import com.kakao.usermgmt.response.model.Gender;
@@ -76,7 +75,13 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onResponse(Call<Long> call, Response<Long> response) {
                         if (response.isSuccessful()) {
                             Long result = response.body();
-                            if (result != -1L) {
+                            if (result == -1L){
+                                Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (result == -2L){
+                                Toast.makeText(getApplicationContext(), "카카오 회원은 아래의 카카오 로그인을 이용해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
                                 Log.d(TAG0, "로그인 성공");
 
                                 //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
@@ -114,8 +119,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                                 finish();
 
-                            } else {
-                                Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Log.e(TAG0, "로그인 실패");
