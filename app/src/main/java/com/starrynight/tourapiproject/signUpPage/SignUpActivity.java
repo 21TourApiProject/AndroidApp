@@ -33,7 +33,6 @@ import com.kakao.usermgmt.response.model.Profile;
 import com.kakao.usermgmt.response.model.UserAccount;
 import com.kakao.util.OptionalBoolean;
 import com.kakao.util.exception.KakaoException;
-import com.starrynight.tourapiproject.LoginActivity;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.signUpPage.signUpRetrofit.KakaoUserParams;
