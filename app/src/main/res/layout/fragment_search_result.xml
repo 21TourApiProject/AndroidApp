@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="80dp"
+    android:layout_marginBottom="@dimen/bottom_nav_size"
     tools:context=".searchPage.SearchResultFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -133,31 +133,11 @@
                     android:background="@drawable/search_tap_non" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/obText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="관측지 검색결과"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tpText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="관광지 검색결과"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/postText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="게시물 검색결과"
-                android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -180,7 +160,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp" />
 
             <TextView
                 android:id="@+id/moreTp_text"
@@ -201,7 +182,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp" />
 
             <TextView
                 android:id="@+id/morePost_text"
