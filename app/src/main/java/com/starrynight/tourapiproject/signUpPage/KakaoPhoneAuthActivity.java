@@ -370,7 +370,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.startAuth:
+            case R.id.kko_startAuth:
                 if(isPhoneEmpty){
                     Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
                     break;
@@ -392,7 +392,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                     break;
                 }
 
-            case R.id.verify:
+            case R.id.kko_verify:
                 String code = authCode.getText().toString();
 
                 if(!isAge){
@@ -412,7 +412,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
-            case R.id.resendAuth:
+            case R.id.kko_resendAuth:
                 if(isPhoneEmpty){
                     Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
                     break;
