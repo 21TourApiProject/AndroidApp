@@ -90,7 +90,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("fromWhere", Activities.MAP);
+                bundle.putSerializable("fromWhere", Activities.SEARCH);
                 Fragment filterFragment = new FilterFragment();
                 filterFragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
