@@ -1,21 +1,16 @@
 package com.starrynight.tourapiproject.weatherPage.wtMetModel;
 
-import com.starrynight.tourapiproject.weatherPage.wtMetModel.WtMetModel;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface WtMetInterface {
-    @GET("getVilageFcst")
+    @GET("onecall")
     Call<WtMetModel> getMetData(
-            @Query("serviceKey") String serviceKey,
-            @Query("numOfRows") String numOfRows,
-            @Query("pageNo") String pageNo,
-            @Query("dataType") String dataType,
-            @Query("base_date") String base_date,
-            @Query("base_time") String base_time,
-            @Query("nx") String nx,
-            @Query("ny") String ny
+            @Query("lat") Double lat,
+            @Query("lon") Double lon,
+            @Query("exclude") String exclude,
+            @Query("appid") String appid,
+            @Query("units") String units
     );
 }

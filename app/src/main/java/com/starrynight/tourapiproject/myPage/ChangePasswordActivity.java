@@ -1,7 +1,6 @@
 package com.starrynight.tourapiproject.myPage;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
@@ -22,13 +24,16 @@ import retrofit2.Response;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
+    private static final String TAG = "ChangePassword";
+
+    Long userId;
     EditText originPwd;
     EditText newPwd;
     EditText newPwdCheck;
     TextView newPwdGuide;
     TextView newPwdCheckGuide;
 
-    String pwd;
+    String pwd = "";
     String pwdCheck = "";
     Boolean isPwd = false; //형식에 맞는 비밀번호인지
     Boolean isSame = false; //같은 비밀번호인지
@@ -38,6 +43,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
+        Intent intent = getIntent();
+        userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
+
+        originPwd = findViewById(R.id.originPwd);
         newPwd = findViewById(R.id.newPwd);
         newPwdCheck = findViewById(R.id.newPwdCheck);
         newPwdGuide = findViewById(R.id.newPwdGuide);
@@ -91,27 +100,43 @@ public class ChangePasswordActivity extends AppCompatActivity {
         pwdSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //비밀번호 변경을 위한 put api
-                Call<Void> call = RetrofitClient.getApiService().updatePassword(1L, pwd);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-
-                        } else {
-                            System.out.println("중복 체크 실패");
-                            //emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                            //isError = true;
+                String oriPwd = originPwd.getText().toString();
+                if (oriPwd.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+                else if (pwd.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                }
+                else if (!isPwd){
+                    Toast.makeText(getApplicationContext(), "비밀번호 형식이 올바르지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+                else if(!isSame){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    //비밀번호 변경을 위한 put api
+                    Call<Boolean> call = RetrofitClient.getApiService().updatePassword(userId, oriPwd, pwd);
+                    call.enqueue(new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if (response.isSuccessful()) {
+                                Boolean result = response.body();
+                                if (result){
+                                    //비밀번호 성공적으로 변경되면 이전 페이지로
+                                    finish();
+                                } else{
+                                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Log.d(TAG, "중복 체크 실패");
+                            }
                         }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                        //emailGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
-                        //isError = true;
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+                            Log.e("연결실패", t.getMessage());
+                        }
+                    });
+                }
             }
         });
     }
@@ -119,11 +144,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
     //비밀번호 두개가 맞는지 실시간으로
     private void showPwdCheckGuide(String pwd, String pwdCheck) {
         if (!pwd.equals(pwdCheck)){
-            newPwdCheckGuide.setText("비밀번호가 일치하지 않습니다.");
             isSame = false;
+            newPwdCheckGuide.setText("비밀번호가 일치하지 않습니다.");
         } else {
-            newPwdCheckGuide.setText("");
             isSame = true;
+            newPwdCheckGuide.setText("");
         }
     }
 

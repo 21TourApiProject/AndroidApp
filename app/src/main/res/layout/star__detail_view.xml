@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="24dp"
+    android:layout_marginTop="24dp"
+    android:background="@drawable/wt__card_view_round"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/star_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wt__card_view_top"
+        android:paddingHorizontal="17dp"
+        android:paddingVertical="3dp"
+        android:text="수호성"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="26dp"
+        android:id="@+id/star_content_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp" />
+
+</LinearLayout>

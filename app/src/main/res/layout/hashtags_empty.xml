@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/recycler_hashTagName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/hashtags_empty"
+        android:fontFamily="@font/spoqahansansneomedium"
+        android:gravity="center"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="3dp"
+        android:text="#해쉬태그"
+        android:textColor="@color/point_purple"
+        android:textSize="9sp" />
+</LinearLayout>

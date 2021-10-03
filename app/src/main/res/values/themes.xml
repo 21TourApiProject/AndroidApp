@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TourapiProject" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.TourapiProject" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryDark">@color/purple_700</item>
@@ -23,23 +23,38 @@
         <item name="android:layout_height">60dp</item>
     </style>
 
-    <style name="Wt_climate_txt">
+    <style name="Wt_detail_txt">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Wt_climate_info">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
 
     <style name="ThemeOverlay.TourapiProject.FullscreenContainer" parent="">
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
+    <style name="Textview_observation_details" parent="">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="Textview_observation_details_title" parent="">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/point_purple</item>
+    </style>
+
+    <style name="StarryNight.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="StarryNight.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="StarryNight.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name = "background">@drawable/wt__spinner_background</item>
     </style>
 </resources>

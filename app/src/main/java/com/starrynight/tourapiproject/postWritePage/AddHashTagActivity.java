@@ -1,92 +1,181 @@
 package com.starrynight.tourapiproject.postWritePage;
 
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
-import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AddHashTagActivity extends AppCompatActivity {
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
+    RecyclerView optionHashTagRecyclerView;
     TextView findHashTag;
-    LinearLayout dynamicLayout2;
-    int numOfHT = 0;
-    String PostHashTags;
-    Long userId;
+    String optionHashTag;
+    EditText editText;
+    String[] optionHashTagList = new String[10];
+    String[] hashTaglist =new String[22];
+    String[] clicked = new String[22];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hash_tag);
-        Intent intent = getIntent();
-        userId = (Long) intent.getSerializableExtra("userId");
-
         findHashTag = findViewById(R.id.findHashTag);
-        dynamicLayout2 = (LinearLayout)findViewById(R.id.dynamicLayout2);
 
-        Button addHashTag = findViewById(R.id.addHashTag);
-        addHashTag.setOnClickListener(new View.OnClickListener() {
+        Intent intent= getIntent();
+        for(int i=0; i<22; i++){
+            clicked[i]="";
+        }
+
+        Arrays.fill(hashTaglist, "");
+        Arrays.fill(optionHashTagList, "");
+        final List<String> finallist= new ArrayList<>();
+        optionHashTagRecyclerView =findViewById(R.id.optionHashTagRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.HORIZONTAL,false);
+        optionHashTagRecyclerView.setLayoutManager(layoutManager);
+        PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
+        optionHashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20));
+        optionHashTagRecyclerView.setAdapter(adapter);
+        Button plusHashTag = findViewById(R.id.finish_add_hashTag);
+        plusHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (findHashTag != null){
-                    addHashTag(findHashTag.getText().toString());
+                for(int i=0; i<22; i++){
+                    if (!clicked[i].isEmpty()){
+                        PostHashTagParams postHashTagParam = new PostHashTagParams();
+                        postHashTagParam.setHashTagName(clicked[i]);
+                        postHashTagParams.add(postHashTagParam);
+                    }
                 }
-                PostHashTags = ((TextView)(findViewById(R.id.findHashTag))).getText().toString();
-                PostHashTagParams postHashTagParam= new PostHashTagParams(userId,PostHashTags);
-                postHashTagParams.add(postHashTagParam);
-                Intent intent1 = new Intent(getApplicationContext(), PostWriteActivity.class);
-                intent1.putExtra("postHashTagParams", postHashTagParam);
-                startActivity(intent1);
+                for (int i=0;i<hashTaglist.length;i++){
+                    if (!clicked[i].isEmpty()){
+                        if (hashTaglist[i]==""){
+                            hashTaglist[i]=clicked[i];
+                        }
+                    }
+                }
+                Collections.addAll(finallist,hashTaglist);
+                for (int i=21;i>=0;i--){
+                    if (finallist.get(i)==""){
+                        finallist.remove(i);
+                    }
+                }
+                for (int i=9;i>=0;i--){
+                    if (optionHashTagList[i]==""){
+                        optionHashTagList = Arrays.copyOf(optionHashTagList, optionHashTagList.length-1);
+                    }
+                }
+                intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
+                intent.putExtra("hashTagList", (Serializable) finallist);
+                intent.putExtra("optionHashTagList",optionHashTagList);
+                setResult(3,intent);
                 finish();
             }
         });
-        Call <Void> call = RetrofitClient.getApiService().createPostHashTag(postHashTagParams);
-        call.enqueue(new Callback<Void>() {
+        Button back = findViewById(R.id.addHashTag_back);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()){
-                    System.out.println("post 성공");
-                }else{
-                    System.out.println("post 실패");
-                }
-
+            public void onClick(View v) {
+                finish();
             }
+        });
+        editText = findViewById(R.id.findHashTag);
+        editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("로그 실패",t.getMessage());
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (!editText.getText().toString().equals("")) {
+                        optionHashTag = editText.getText().toString();
+                        for (int i = 0; i < optionHashTagList.length; i++) {
+                            if (optionHashTagList[i] == "") {
+                                optionHashTagList[i] = optionHashTag;
+                                break;
+                            }
+                        }
+                        adapter.addItem(new PostWriteHashTagItem(optionHashTag));
+                        adapter.notifyDataSetChanged();
+                    }
+                }else{
+                    return false;
+                }
+                return true;
+            }
+        });
+        Button add_hashTag= findViewById(R.id.addHashTag);
+        add_hashTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!editText.getText().toString().equals("")) {
+                    optionHashTag = editText.getText().toString();
+                    for (int i = 0; i < optionHashTagList.length; i++) {
+                        if (optionHashTagList[i] == "") {
+                            optionHashTagList[i] = optionHashTag;
+                            break;
+                        }
+                    }
+                    adapter.addItem(new PostWriteHashTagItem(optionHashTag));
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
     }
+    //recyclerview 간격
+    public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
-    private void addHashTag(String data) {
-        numOfHT ++;
-        TextView textView = new TextView(this);
-        textView.setText(data);
-        //String id = "@+id/hashTag"+ String.valueOf(numOfHT);
-        textView.setId(numOfHT);
-        textView.setBackground(ContextCompat.getDrawable(this, R.drawable.post_write__edge));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        private final int divRight;
 
-        final int height = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, getResources().getDisplayMetrics());
-        dynamicLayout2.addView(textView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+        public RecyclerViewDecoration(int divRight)
+        {
+
+            this.divRight = divRight;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        {
+            super.getItemOffsets(outRect, view, parent, state);
+            outRect.right = divRight;
+        }
+    }
+
+    public void ClickEvent(View view) {
+        Button button = (Button) view;
+
+        if(button.getTag() == "isClicked"){
+            button.setTag("");
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag_non));
+
+            String viewId = view.getResources().getResourceEntryName(view.getId());
+            int id = Integer.parseInt(viewId.substring(2));
+            clicked[id-1] = "";
+        }
+        else{
+            button.setTag("isClicked");
+            button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
+
+            String viewId = view.getResources().getResourceEntryName(view.getId());
+            int id = Integer.parseInt(viewId.substring(2));
+            clicked[id-1] = button.getText().toString();
+        }
     }
 }
