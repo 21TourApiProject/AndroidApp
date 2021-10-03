@@ -84,6 +84,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
+                    <TextView
+                        android:id="@+id/optionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="나만의 관측지를 추가해주세요."
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/optionObservationRecyclerView"
                         android:layout_width="match_parent"

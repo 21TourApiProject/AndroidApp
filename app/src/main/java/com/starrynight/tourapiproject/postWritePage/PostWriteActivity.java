@@ -18,6 +18,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -274,7 +275,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        Handler handler = new Handler();
         Button save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -392,7 +393,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Long> call, Response<Long> response) {
                         if(response.isSuccessful()){
-                            System.out.println("post 성공");
+                            Log.d("post","게시물 작성 성공");
                             Long result = response.body();
                             //앱 내부 저장소에 postId란 이름으로 게시글 id 저장
                             String fileName = "postId";
@@ -411,13 +412,13 @@ public class PostWriteActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
-                                        System.out.println("이미지 업로드 성공");
-                                    }else {System.out.println("이미지 업로드 실패");}
+                                       Log.d("postImage","이미지 업로드 성공");
+                                    }else {Log.d("postImage","이미지 업로드 실패");}
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("이미지 업로드 실패 2");
+                                    Log.d("postImage","이미지 업로드 인터넷 오류");
                                 }
                             });
                             Call<Void>call2 =RetrofitClient.getApiService().createPostHashTag(result,postHashTagParams);
@@ -425,23 +426,28 @@ public class PostWriteActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
-                                        System.out.println("해시태그 생성");
-                                    }else {System.out.println("해시태그 생성 실패,임시 해시태그 생성");}
+                                        Log.d("posthashTag","해시태그 업로드 성공");
+                                    }else {  Log.d("posthashTag","해시태그 업로드 실패");}
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("해시태그 생성 실패2");
+                                    Log.d("posthashTag","해시태그 업로드 인터넷 오류");
                                 }
                             });
-                        }else{ System.out.println("post 실패");}
+                        }else{   Log.d("post","게시물 작성 성공");;}
                     }
                     @Override
                     public void onFailure(Call<Long> call, Throwable t) {
-                        System.out.println("post2 실패");
+                        Log.d("post","게시물 작성 인터넷 오류");
                     }
                 });
-                finish();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                },3000);
             }
         });
                 ad.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
@@ -517,7 +523,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 else if (allsize>31&&allsize<60){layoutManager.setSpanCount(3);}
                 else if (allsize>61){layoutManager.setSpanCount(4);}
                 recyclerView.setAdapter(adapter);
-                recyclerView.addItemDecoration(new RecyclerViewDecoration(20));
+                recyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
         }
         if (resultCode != RESULT_OK || data == null) {
@@ -589,11 +595,11 @@ public String getRealPathFromURI(Uri contentUri) {
     public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
         private final int divRight;
-
-        public RecyclerViewDecoration(int divRight)
+        private final int divHeight;
+        public RecyclerViewDecoration(int divRight,int divHeight)
         {
-
             this.divRight = divRight;
+            this.divHeight = divHeight;
         }
 
         @Override
@@ -601,6 +607,7 @@ public String getRealPathFromURI(Uri contentUri) {
         {
             super.getItemOffsets(outRect, view, parent, state);
             outRect.right = divRight;
+            outRect.top = divHeight;
         }
     }
 

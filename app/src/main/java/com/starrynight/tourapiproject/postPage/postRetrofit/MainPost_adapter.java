@@ -106,7 +106,9 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewHolder.hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         viewHolder.hashTagRecyclerView.setLayoutManager(layoutManager);
         PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
+        if (!item.getMainObservation().equals("나만의 관측지")){
         adapter.addItem(new PostHashTagItem(item.getMainObservation(),null, item.getObservationId()));
+        }else{adapter.addItem(new PostHashTagItem(item.getOptionObservation(),null,null));}
         if (item.getHashTags()!=null){
             for (int i=0;i<item.getHashTags().size();i++){
                 adapter.addItem(new PostHashTagItem(item.getHashTags().get(i),null,null));
