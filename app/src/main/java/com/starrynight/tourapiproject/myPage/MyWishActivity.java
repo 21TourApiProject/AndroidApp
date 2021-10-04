@@ -205,8 +205,6 @@ public class MyWishActivity extends AppCompatActivity {
             public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                 if (response.isSuccessful()) {
                     postResult = response.body();
-                    System.out.println("postResult.get(0).getThumbnail() = " + postResult.get(0).getThumbnail());
-                    System.out.println("postResult.get(0).getNickName() = " + postResult.get(0).getNickName());
 
                     MyPostAdapter myPostAdapter = new MyPostAdapter(postResult, MyWishActivity.this);
                     myWishRecyclerview.setAdapter(myPostAdapter);
