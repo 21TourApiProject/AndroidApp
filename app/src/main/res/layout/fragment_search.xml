@@ -21,7 +21,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="24dp"
-                android:focusableInTouchMode="true"
                 android:weightSum="7">
 
                 <FrameLayout
@@ -42,22 +41,30 @@
                     app:iconifiedByDefault="false" />
                 </FrameLayout>
               
-                <Button
+                <ImageButton
                     android:id="@+id/mapBtn"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="22dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="17dp"
                     android:layout_weight="1"
-                    android:background="@drawable/search__map_btn" />
+                    android:padding="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@color/empty"
+                    android:src="@drawable/search__map_btn" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/filterBtn"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="17dp"
                     android:layout_weight="1"
-                    android:background="@drawable/search__filter_btn" />
+                    android:padding="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@color/empty"
+                    android:src="@drawable/search__filter_btn" />
 
             </LinearLayout>
 
