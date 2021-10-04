@@ -34,7 +34,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@color/empty"
-            android:src="@drawable/search__map_btn"
+            android:src="@drawable/map__list"
             android:padding="5dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
