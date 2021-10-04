@@ -60,7 +60,7 @@ public class MyDataActivity extends AppCompatActivity {
                     user = response.body();
 
                     if (user.getProfileImage() != null) {
-                        if(user.getProfileImage().startsWith("http://")){
+                        if(user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")){
                             Glide.with(getApplicationContext()).load(user.getProfileImage()).circleCrop().into(profileImage2);
                         }
                         else{
