@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.view.Menu;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     TonightSkyFragment tonightSkyFragment;
     PersonFragment personFragment;
     View bottom;
+    BottomNavigationView bottomNavigationView;
     private long backKeyPressTime=0;
     String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
     String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
         bottom = findViewById(R.id.bottom_nav_view);
 
@@ -156,7 +158,18 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().remove(fragment).commit();
                 super.onBackPressed();
             }
-        } else {
+        } else if (fragment instanceof TonightSkyFragment) {
+            if (getFragmentManager().getBackStackEntryCount() > 0) {
+                getFragmentManager().popBackStack();
+            } else {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+                replaceFragment(mainFragment);
+
+                showBottom();
+            }
+        }
+        else {
             if (System.currentTimeMillis() > backKeyPressTime + 2000) {
                 backKeyPressTime = System.currentTimeMillis();
                 Toast.makeText(this, "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
