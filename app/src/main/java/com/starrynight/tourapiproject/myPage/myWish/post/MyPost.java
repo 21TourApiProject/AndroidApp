@@ -12,7 +12,7 @@ public class MyPost {
     private String thumbnail;
     @SerializedName("title")
     private String title;
-    @SerializedName("writer")
+    @SerializedName("nickName")
     private String nickName;
     @SerializedName("profileImage")
     private String profileImage;
