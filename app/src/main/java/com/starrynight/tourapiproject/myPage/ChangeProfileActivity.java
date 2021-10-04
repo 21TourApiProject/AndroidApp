@@ -99,7 +99,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body();
                     if (user.getProfileImage() != null) {
-                        if(user.getProfileImage().startsWith("http://")){
+                        if(user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")){
                             beforeImage = null;
                             Glide.with(getApplicationContext()).load(user.getProfileImage()).into(profileImage);
                         }

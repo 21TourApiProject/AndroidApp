@@ -3,6 +3,8 @@ package com.starrynight.tourapiproject.postPage;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -131,6 +133,8 @@ public class PostActivity extends AppCompatActivity{
         postDate = findViewById(R.id.postDate);
         profileImage = findViewById(R.id.post_profileImage);
         nickname = findViewById(R.id.post_nickname);
+        profileImage.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImage.setClipToOutline(true);
         //게시물 정보가져오는 get api
         Call<Post>call1 = RetrofitClient.getApiService().getPost(postId);
         call1.enqueue(new Callback<Post>() {
@@ -169,7 +173,6 @@ public class PostActivity extends AppCompatActivity{
                                                 if (!observation.getObservationName().equals("나만의 관측지")){
                                                     adapter2.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId()));
                                                 }else{adapter2.addItem(new PostHashTagItem(post.getOptionObservation(),null,null));}
-                                                adapter2.addItem(new PostHashTagItem(observation.getObservationName(),null,observation.getObservationId()));
                                                 for (int i=0;i<postHashTags.size();i++){
                                                     adapter2.addItem(new PostHashTagItem(postHashTags.get(i),null,null));
                                                 }
@@ -196,7 +199,9 @@ public class PostActivity extends AppCompatActivity{
                                                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                                                 hashTagRecyclerView.setLayoutManager(staggeredGridLayoutManager);
                                                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
-                                                adapter.addItem(new PostHashTagItem(observation.getObservationName(),null,observation.getObservationId()));
+                                                if (!observation.getObservationName().equals("나만의 관측지")){
+                                                    adapter.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId()));
+                                                }else{adapter.addItem(new PostHashTagItem(post.getOptionObservation(),null,null));}
                                                 adapter.addItem(new PostHashTagItem(post.getOptionHashTag(),null,null));
                                                 if (post.getOptionHashTag2()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag2(),null,null));}
                                                 if (post.getOptionHashTag3()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag3(),null,null));}
@@ -209,7 +214,7 @@ public class PostActivity extends AppCompatActivity{
                                                 if (post.getOptionHashTag10()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag10(),null,null));}
                                                 for (int i=0;i<adapter.getItemCount();i++){
                                                     allsize+=adapter.getItem(i).getHashTagname().length();
-                                                }if (allsize>20&&allsize<35){staggeredGridLayoutManager.setSpanCount(2);}
+                                                }if (allsize>15&&allsize<35){staggeredGridLayoutManager.setSpanCount(2);}
                                                 else if (allsize>36&&allsize<60){staggeredGridLayoutManager.setSpanCount(3);}
                                                 else if (allsize>61){staggeredGridLayoutManager.setSpanCount(4);}
                                                 hashTagRecyclerView.setAdapter(adapter);
@@ -240,11 +245,16 @@ public class PostActivity extends AppCompatActivity{
                             if (response.isSuccessful()){
                                 Log.d("user","게시물 유저정보 업로드");
                                 User user = response.body();
-                                String fileName = user.getProfileImage();
-                                fileName = fileName.substring(1, fileName.length() -1);
-                                Glide.with(getApplicationContext())
-                                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+fileName).circleCrop()
-                                        .into(profileImage);
+                                if (user.getProfileImage() != null) {
+                                    if(user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")){
+                                        Glide.with(getApplicationContext()).load(user.getProfileImage()).into(profileImage);
+                                    }
+                                    else{
+                                        String fileName = user.getProfileImage();
+                                        fileName = fileName.substring(1, fileName.length() - 1);
+                                        Glide.with(getApplicationContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
+                                    }
+                                }
                                 nickname.setText(user.getNickName());
                             }
                         }

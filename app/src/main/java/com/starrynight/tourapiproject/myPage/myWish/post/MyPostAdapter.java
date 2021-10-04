@@ -110,7 +110,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
 
             if (item.getProfileImage() != null){
                 String imageName = item.getProfileImage();
-                if(imageName.startsWith("http://")){
+                if(item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")){
                     Glide.with(context).load(imageName).into(myWishPostProfileImage);
                 }
                 else{
