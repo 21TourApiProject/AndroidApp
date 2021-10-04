@@ -282,6 +282,24 @@ public class PostActivity extends AppCompatActivity{
                                         public void onResponse(Call<Void> call, Response<Void> response) {
                                             if (response.isSuccessful()){
                                                 Log.d("deletePost","게시물 삭제 완료");
+                                               if (isWish){
+                                                   Call<Void> call2 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, postId, 2);
+                                                   call2.enqueue(new Callback<Void>() {
+                                                       @Override
+                                                       public void onResponse(Call<Void> call, Response<Void> response) {
+                                                           if (response.isSuccessful()) {
+                                                               isWish = false;
+                                                               v.setSelected(!v.isSelected());
+                                                           } else {
+                                                               Log.d("myWish","게시물 찜 삭제 실패");
+                                                           }
+                                                       }
+                                                       @Override
+                                                       public void onFailure(Call<Void> call, Throwable t) {
+                                                           Log.d("my wish","인터넷 오류");
+                                                       }
+                                                   });
+                                               }
                                             Intent intent1 = new Intent(getApplicationContext(), MainActivity.class);
                                             startActivity(intent1);
                                             finish();
