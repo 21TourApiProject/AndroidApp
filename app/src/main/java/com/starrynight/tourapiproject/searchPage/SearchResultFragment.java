@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -624,7 +625,7 @@ public class SearchResultFragment extends Fragment {
         });
 
         //지도 페이지로
-        Button map_btn = (Button) v.findViewById(R.id.mapBtn2);
+        ImageButton map_btn = (ImageButton) v.findViewById(R.id.mapBtn2);
         map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -646,7 +647,7 @@ public class SearchResultFragment extends Fragment {
 
 
         //필터 고르는 페이지로
-        Button filter_btn = (Button) v.findViewById(R.id.filterBtn2);
+        ImageButton filter_btn = (ImageButton) v.findViewById(R.id.filterBtn2);
         filter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
