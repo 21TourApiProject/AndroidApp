@@ -166,6 +166,9 @@ public class PostActivity extends AppCompatActivity{
                                                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                                                 hashTagRecyclerView.setLayoutManager(staggeredGridLayoutManager);
                                                 PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
+                                                if (!observation.getObservationName().equals("나만의 관측지")){
+                                                    adapter2.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId()));
+                                                }else{adapter2.addItem(new PostHashTagItem(post.getOptionObservation(),null,null));}
                                                 adapter2.addItem(new PostHashTagItem(observation.getObservationName(),null,observation.getObservationId()));
                                                 for (int i=0;i<postHashTags.size();i++){
                                                     adapter2.addItem(new PostHashTagItem(postHashTags.get(i),null,null));
@@ -273,7 +276,7 @@ public class PostActivity extends AppCompatActivity{
                             ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Call<Void>call8 = RetrofitClient.getApiService().deletePost(userId);
+                                    Call<Void>call8 = RetrofitClient.getApiService().deletePost(postId);
                                     call8.enqueue(new Callback<Void>() {
                                         @Override
                                         public void onResponse(Call<Void> call, Response<Void> response) {
