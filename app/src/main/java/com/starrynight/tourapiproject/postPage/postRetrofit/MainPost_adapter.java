@@ -204,7 +204,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                     v.setSelected(!v.isSelected());
                                     Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Log.d("myWish","관광지 찜 실패");
+                                    Log.d("myWish","게시물 찜 실패");
                                 }
                             }
                             @Override
@@ -222,7 +222,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                     v.setSelected(!v.isSelected());
                                     Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Log.d("myWish","관광지 찜 삭제 실패");
+                                    Log.d("myWish","게시물 찜 삭제 실패");
                                 }
                             }
                             @Override
