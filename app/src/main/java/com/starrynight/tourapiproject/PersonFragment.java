@@ -124,7 +124,7 @@ public class PersonFragment extends Fragment {
                 if (response.isSuccessful()) {
                     user = response.body();
                     if (user.getProfileImage() != null) {
-                        if(user.getProfileImage().startsWith("http://")){
+                        if(user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")){
                             Glide.with(getContext()).load(user.getProfileImage()).into(profileImage);
                         }
                         else{
