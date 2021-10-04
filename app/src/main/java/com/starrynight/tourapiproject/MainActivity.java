@@ -168,16 +168,21 @@ public class MainActivity extends AppCompatActivity {
 
                 showBottom();
             }
-        }
-        else {
+        } else if (fragment instanceof MainFragment) {
             if (System.currentTimeMillis() > backKeyPressTime + 2000) {
                 backKeyPressTime = System.currentTimeMillis();
                 Toast.makeText(this, "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (System.currentTimeMillis() <= backKeyPressTime + 2000) {
-                finish();
+                finishAffinity();
+                System.runFinalization();
+                System.exit(0);
+//                finish();
             }
+        } else {
+            bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+            replaceFragment(mainFragment);
         }
 
 //        if(!(fragment instanceof FilterFragment)) {
