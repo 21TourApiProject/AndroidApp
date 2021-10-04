@@ -1,10 +1,13 @@
 package com.starrynight.tourapiproject;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,6 +29,7 @@ import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
+import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
     View bottom;
     BottomNavigationView bottomNavigationView;
     private long backKeyPressTime=0;
+    String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+    String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
+    int PERMISSIONS_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,23 @@ public class MainActivity extends AppCompatActivity {
         searchFragment = new SearchFragment();
         tonightSkyFragment = new TonightSkyFragment();
         personFragment = new PersonFragment();
+
+        //권한 설정
+        int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
+
+        Log.d("test", "onClick: location clicked");
+        if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
+            Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+
+        } else if (permission == PackageManager.PERMISSION_DENIED){
+            Log.d("test", "permission denied");
+            Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(MainActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
+            ActivityCompat.requestPermissions(MainActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
+            ActivityCompat.requestPermissions(MainActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
+        }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
@@ -87,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
-
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Fragment mapfragment = new MapFragment();
                 mapfragment.setArguments(bundle);
