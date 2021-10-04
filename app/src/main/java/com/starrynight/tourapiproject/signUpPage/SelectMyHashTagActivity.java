@@ -102,8 +102,9 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                                     }
 
                                     Intent intent = new Intent(SelectMyHashTagActivity.this, MainActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP); //액티비티 스택제거
                                     startActivity(intent);
-                                    finish();
+
                                 } else {
                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                 }

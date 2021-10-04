@@ -16,8 +16,10 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -51,11 +53,13 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostWriteLoadingDialog;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
 import java.io.BufferedReader;
@@ -91,6 +95,7 @@ public class PostWriteActivity extends AppCompatActivity {
     String[] optionhashTagList= new String[10];
     Long postId;
     Long userId;
+    PostWriteLoadingDialog dialog;
     File file;
     LinearLayout ob_linear;
     ArrayList<File> files = new ArrayList<>();
@@ -119,6 +124,7 @@ public class PostWriteActivity extends AppCompatActivity {
         postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
         ob_linear = findViewById(R.id.postwrite_ob_linear);
         examplelayout=findViewById(R.id.exampleLinear);
+        dialog = new PostWriteLoadingDialog(PostWriteActivity.this);
 
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
@@ -274,7 +280,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        Handler handler = new Handler();
         Button save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -392,7 +398,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Long> call, Response<Long> response) {
                         if(response.isSuccessful()){
-                            System.out.println("post 성공");
+                            Log.d("post","게시물 작성 성공");
                             Long result = response.body();
                             //앱 내부 저장소에 postId란 이름으로 게시글 id 저장
                             String fileName = "postId";
@@ -411,13 +417,13 @@ public class PostWriteActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
-                                        System.out.println("이미지 업로드 성공");
-                                    }else {System.out.println("이미지 업로드 실패");}
+                                       Log.d("postImage","이미지 업로드 성공");
+                                    }else {Log.d("postImage","이미지 업로드 실패");}
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("이미지 업로드 실패 2");
+                                    Log.d("postImage","이미지 업로드 인터넷 오류");
                                 }
                             });
                             Call<Void>call2 =RetrofitClient.getApiService().createPostHashTag(result,postHashTagParams);
@@ -425,24 +431,25 @@ public class PostWriteActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
-                                        System.out.println("해시태그 생성");
-                                    }else {System.out.println("해시태그 생성 실패,임시 해시태그 생성");}
+                                        Log.d("posthashTag","해시태그 업로드 성공");
+                                    }else {  Log.d("posthashTag","해시태그 업로드 실패");}
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("해시태그 생성 실패2");
+                                    Log.d("posthashTag","해시태그 업로드 인터넷 오류");
                                 }
                             });
-                        }else{ System.out.println("post 실패");}
+                        }else{   Log.d("post","게시물 작성 성공");;}
                     }
                     @Override
                     public void onFailure(Call<Long> call, Throwable t) {
-                        System.out.println("post2 실패");
+                        Log.d("post","게시물 작성 인터넷 오류");
                     }
                 });
-                finish();
-            }
+                LoadingAsyncTask task = new LoadingAsyncTask(PostWriteActivity.this,3000);
+                task.execute();
+                    }
         });
                 ad.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
                     @Override
@@ -517,7 +524,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 else if (allsize>31&&allsize<60){layoutManager.setSpanCount(3);}
                 else if (allsize>61){layoutManager.setSpanCount(4);}
                 recyclerView.setAdapter(adapter);
-                recyclerView.addItemDecoration(new RecyclerViewDecoration(20));
+                recyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
         }
         if (resultCode != RESULT_OK || data == null) {
@@ -589,11 +596,11 @@ public String getRealPathFromURI(Uri contentUri) {
     public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
         private final int divRight;
-
-        public RecyclerViewDecoration(int divRight)
+        private final int divHeight;
+        public RecyclerViewDecoration(int divRight,int divHeight)
         {
-
             this.divRight = divRight;
+            this.divHeight = divHeight;
         }
 
         @Override
@@ -601,6 +608,7 @@ public String getRealPathFromURI(Uri contentUri) {
         {
             super.getItemOffsets(outRect, view, parent, state);
             outRect.right = divRight;
+            outRect.top = divHeight;
         }
     }
 
@@ -767,5 +775,35 @@ public String getRealPathFromURI(Uri contentUri) {
         System.out.println("data = " + data);
         return data;
     }
+    private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+        private Long mtime;
 
+        public LoadingAsyncTask(Context context, long time ) {
+            mContext = PostWriteActivity.this;
+            mtime = time;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+                Thread.sleep(mtime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return (true);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+            finish();
+        }
+    }
 }

@@ -106,7 +106,9 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewHolder.hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         viewHolder.hashTagRecyclerView.setLayoutManager(layoutManager);
         PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
+        if (!item.getMainObservation().equals("나만의 관측지")){
         adapter.addItem(new PostHashTagItem(item.getMainObservation(),null, item.getObservationId()));
+        }else{adapter.addItem(new PostHashTagItem(item.getOptionObservation(),null,null));}
         if (item.getHashTags()!=null){
             for (int i=0;i<item.getHashTags().size();i++){
                 adapter.addItem(new PostHashTagItem(item.getHashTags().get(i),null,null));
@@ -202,7 +204,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                     v.setSelected(!v.isSelected());
                                     Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Log.d("myWish","관광지 찜 실패");
+                                    Log.d("myWish","게시물 찜 실패");
                                 }
                             }
                             @Override
@@ -220,7 +222,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                     v.setSelected(!v.isSelected());
                                     Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Log.d("myWish","관광지 찜 삭제 실패");
+                                    Log.d("myWish","게시물 찜 삭제 실패");
                                 }
                             }
                             @Override

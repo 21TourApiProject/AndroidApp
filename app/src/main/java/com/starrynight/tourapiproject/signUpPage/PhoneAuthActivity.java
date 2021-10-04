@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -40,7 +39,6 @@ import retrofit2.Response;
 
 public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-
     private static final String TAG = "PhoneAuth";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int SELECT_HASH_TAG = 0;
@@ -391,32 +389,32 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         }
     }
 
-    @Override //선호 해시태그 선택하다말고 뒤로 돌아오면
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == SELECT_HASH_TAG){
-            //회원정보 삭제
-            Call<Void> call = RetrofitClient.getApiService().cancelSignUp(userParams.getEmail());
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if(response.isSuccessful()){
-                        Log.d(TAG, "회원정보 삭제 성공");
-                    } else{
-                        Log.e(TAG, "회원정보 삭제 실패");
-                    }
-                }
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Log.e("연결실패", t.getMessage());
-                }
-            });
-
-//            Intent intent = getIntent();
-//            finish();
-//            startActivity(intent);
-
-        }
-    }
+//    @Override //선호 해시태그 선택하다말고 뒤로 돌아오면
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == SELECT_HASH_TAG){
+//            //회원정보 삭제
+//            Call<Void> call = RetrofitClient.getApiService().cancelSignUp(userParams.getEmail());
+//            call.enqueue(new Callback<Void>() {
+//                @Override
+//                public void onResponse(Call<Void> call, Response<Void> response) {
+//                    if(response.isSuccessful()){
+//                        Log.d(TAG, "회원정보 삭제 성공");
+//                    } else{
+//                        Log.e(TAG, "회원정보 삭제 실패");
+//                    }
+//                }
+//                @Override
+//                public void onFailure(Call<Void> call, Throwable t) {
+//                    Log.e("연결실패", t.getMessage());
+//                }
+//            });
+//
+////            Intent intent = getIntent();
+////            finish();
+////            startActivity(intent);
+//
+//        }
+//    }
 
 }
