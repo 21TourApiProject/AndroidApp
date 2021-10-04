@@ -349,7 +349,9 @@ public class PostActivity extends AppCompatActivity{
                                 Post_point_item_Adapter adapter = new Post_point_item_Adapter();
                                 for (int i=0;i<relateImageList.size();i++){
                                     if (i>3){break;}
+                                    if (relateImageList.get(i).getPostId()!=post.getPostId()){
                                     relatefilename[i]=relateImageList.get(i).getImageName();
+                                    }
                                 }
                                 for (int i = 0; i <relatefilename.length;i++){
                                     if(relatefilename[i] != null) {
