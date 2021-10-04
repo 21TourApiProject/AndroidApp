@@ -126,6 +126,7 @@
                             android:id="@+id/post_profileImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:scaleType="centerCrop"
                             app:srcCompat="@drawable/post__profile_no_image" />
 
                         <TextView

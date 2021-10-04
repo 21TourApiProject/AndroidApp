@@ -53,6 +53,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
    private static Long userId;
    private static Long postId;
     private static Context context;
+    String beforeImage;
 
     public MainPost_adapter(List<MainPost> items, Context context){
         this.items = items;
@@ -97,11 +98,17 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     public void onBindViewHolder(@NonNull MainPost_adapter.ViewHolder viewHolder, int position) {
         MainPost item = items.get(position);
         viewHolder.setItem(item);
-        String fileName = item.getProfileImage();
-        fileName = fileName.substring(1, fileName.length() -1);
-        Glide.with(viewHolder.itemView.getContext())
-                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/"+fileName)
-                .into(viewHolder.profileimage);
+        if(item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")){
+            beforeImage = null;
+            Glide.with(viewHolder.itemView.getContext()).load(item.getProfileImage()).into(viewHolder.profileimage);
+        }
+        else {
+            String fileName = item.getProfileImage();
+            fileName = fileName.substring(1, fileName.length() - 1);
+            Glide.with(viewHolder.itemView.getContext())
+                    .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName)
+                    .into(viewHolder.profileimage);
+        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewHolder.hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         viewHolder.hashTagRecyclerView.setLayoutManager(layoutManager);
