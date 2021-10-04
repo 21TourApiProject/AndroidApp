@@ -16,6 +16,7 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,11 +53,13 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostWriteLoadingDialog;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
 import java.io.BufferedReader;
@@ -92,6 +95,7 @@ public class PostWriteActivity extends AppCompatActivity {
     String[] optionhashTagList= new String[10];
     Long postId;
     Long userId;
+    PostWriteLoadingDialog dialog;
     File file;
     LinearLayout ob_linear;
     ArrayList<File> files = new ArrayList<>();
@@ -120,6 +124,7 @@ public class PostWriteActivity extends AppCompatActivity {
         postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
         ob_linear = findViewById(R.id.postwrite_ob_linear);
         examplelayout=findViewById(R.id.exampleLinear);
+        dialog = new PostWriteLoadingDialog(PostWriteActivity.this);
 
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
@@ -442,13 +447,9 @@ public class PostWriteActivity extends AppCompatActivity {
                         Log.d("post","게시물 작성 인터넷 오류");
                     }
                 });
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
+                LoadingAsyncTask task = new LoadingAsyncTask(PostWriteActivity.this,3000);
+                task.execute();
                     }
-                },3000);
-            }
         });
                 ad.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
                     @Override
@@ -774,5 +775,35 @@ public String getRealPathFromURI(Uri contentUri) {
         System.out.println("data = " + data);
         return data;
     }
+    private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+        private Long mtime;
 
+        public LoadingAsyncTask(Context context, long time ) {
+            mContext = PostWriteActivity.this;
+            mtime = time;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+                Thread.sleep(mtime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return (true);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+            finish();
+        }
+    }
 }
