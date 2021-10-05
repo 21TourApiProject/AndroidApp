@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.Menu;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +29,6 @@ import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
-import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -232,6 +231,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void showBottom(){
         bottom.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
     }
 
 }

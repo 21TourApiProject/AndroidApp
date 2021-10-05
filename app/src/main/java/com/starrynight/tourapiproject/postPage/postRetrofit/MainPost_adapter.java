@@ -1,11 +1,11 @@
 package com.starrynight.tourapiproject.postPage.postRetrofit;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.SearchFragment;
-import com.starrynight.tourapiproject.postItemPage.OnPostHashTagClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postPage.ImageSliderAdapter;
@@ -49,10 +44,9 @@ import retrofit2.Response;
 public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.ViewHolder>{
     List<MainPost> items = new ArrayList<MainPost>();
     OnMainPostClickListener listener;
-   private static boolean isWish;
    private static Long userId;
    private static Long postId;
-    private static Context context;
+   private static Context context;
     String beforeImage;
 
     public MainPost_adapter(List<MainPost> items, Context context){
@@ -98,6 +92,73 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     public void onBindViewHolder(@NonNull MainPost_adapter.ViewHolder viewHolder, int position) {
         MainPost item = items.get(position);
         viewHolder.setItem(item);
+        final boolean[] isWish = new boolean[items.size()];
+        //이미 찜한건지 확인
+        Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId,item.getPostId(), 2);
+        call0.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (response.body()){
+                        System.out.println("찜한것"+item.getPostId());
+                        isWish[position] = true;
+                        viewHolder.bookmark.setSelected(!viewHolder.bookmark.isSelected());
+                    } else{
+                        System.out.println("찜안한거"+item.getPostId());
+                        isWish[position] = false;
+                    }
+                } else {
+                    Log.d("isWish","내 찜 조회하기 실패");
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("isWish","연결실패");
+            }
+        });
+        viewHolder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isWish[position]){ //찜 안한 상태일때
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, item.getPostId(), 2);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                //버튼 디자인 바뀌게 구현하기
+                                isWish[position] = true;
+                                v.setSelected(!v.isSelected());
+                                Toast.makeText(viewHolder.bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d("myWish","게시물 찜 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("myWish","인터넷 오류");
+                        }
+                    });
+                } else{
+                    Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, item.getPostId(), 2);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                isWish[position] = false;
+                                v.setSelected(!v.isSelected());
+                                Toast.makeText(viewHolder.bookmark.getContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.d("deleteMyWish","게시물 찜 삭제 실패");
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("deleteMyWish","인터넷 오류");
+                        }
+                    });
+                }
+            }
+        });
         if(item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")){
             beforeImage = null;
             Glide.with(viewHolder.itemView.getContext()).load(item.getProfileImage()).into(viewHolder.profileimage);
@@ -114,31 +175,19 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         viewHolder.hashTagRecyclerView.setLayoutManager(layoutManager);
         PostHashTagItemAdapter adapter  = new PostHashTagItemAdapter();
         if (!item.getMainObservation().equals("나만의 관측지")){
-        adapter.addItem(new PostHashTagItem(item.getMainObservation(),null, item.getObservationId()));
-        }else{adapter.addItem(new PostHashTagItem(item.getOptionObservation(),null,null));}
+        adapter.addItem(new PostHashTagItem(item.getMainObservation(),null, item.getObservationId(),null));
+        }else{adapter.addItem(new PostHashTagItem(item.getOptionObservation(),null,null,null));}
         if (item.getHashTags()!=null){
             for (int i=0;i<item.getHashTags().size();i++){
-                adapter.addItem(new PostHashTagItem(item.getHashTags().get(i),null,null));
+                adapter.addItem(new PostHashTagItem(item.getHashTags().get(i),null,null,null));
             if (i==2){break;}}
         }else{
-            adapter.addItem(new PostHashTagItem(item.getOptionHashTag(),null,null));
-            if (item.getOptionHashTag2()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag2(),null,null));}
-            if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3(),null,null));}
+            adapter.addItem(new PostHashTagItem(item.getOptionHashTag(),null,null,null));
+            if (item.getOptionHashTag2()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag2(),null,null,null));}
+            if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3(),null,null,null));}
         }
         viewHolder.hashTagRecyclerView.setAdapter(adapter);
         viewHolder.hashTagRecyclerView.addItemDecoration(new ViewHolder.RecyclerViewDecoration(20));
-//        adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
-//            @Override
-//            public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
-//                Bundle bundle = new Bundle();
-//                Fragment searchFragment = new SearchFragment();
-//                FragmentTransaction transaction = ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.main_view, searchFragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//
-//            }
-//        });
     }
 
     @Override
@@ -176,86 +225,18 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
 
         public void setItem(MainPost item){
 
-            //이미 찜한건지 확인
-            Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId,item.getPostId(), 2);
-            call0.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful()) {
-                        if (response.body()){
-                            isWish = true;
-                            bookmark.setSelected(!bookmark.isSelected());
-                        } else{
-                            isWish = false;
-                        }
-                    } else {
-                        Log.d("isWish","내 찜 조회하기 실패");
-                    }
-                }
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.d("isWish","연결실패");
-                }
-            });
-            bookmark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isWish){ //찜 안한 상태일때
-                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, item.getPostId(), 2);
-                        call.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    //버튼 디자인 바뀌게 구현하기
-                                    isWish = true;
-                                    v.setSelected(!v.isSelected());
-                                    Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Log.d("myWish","게시물 찜 실패");
-                                }
-                            }
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Log.d("myWish","인터넷 오류");
-                            }
-                        });
-                    } else{
-                        Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, item.getPostId(), 2);
-                        call.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    isWish = false;
-                                    v.setSelected(!v.isSelected());
-                                    Toast.makeText(bookmark.getContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Log.d("myWish","게시물 찜 삭제 실패");
-                                }
-                            }
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Log.d("my wish","인터넷 오류");
-                            }
-                        });
-                    }
-                }
-            });
             title.setText(item.getMainTitle());
             title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PostActivity.class);
                     intent.putExtra("postId",item.getPostId());
-                    v.getContext().startActivity(intent);
+                    ((Activity)context).startActivityForResult(intent,101);
                 }
             });
             nickname.setText(item.getMainNickName());
             mainslider.setOffscreenPageLimit(3);
 
-//            ViewGroup.LayoutParams params = mainslider.getLayoutParams();
-//            params.width=ViewGroup.LayoutParams.MATCH_PARENT;
-//            params.height= params.width;
-//            mainslider.requestLayout();
             ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());
             mainslider.setAdapter(imageSliderAdapter);
 
@@ -301,6 +282,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 }
             }
         }
+
         public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
             private final int divHeight;
