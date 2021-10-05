@@ -8,10 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:orientation="horizontal"
         android:paddingHorizontal="24dp"
-        android:paddingVertical="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,12 +21,14 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@color/empty"
+            android:layout_centerVertical="true"
             android:src="@drawable/main__weather" />
 
         <ImageView
             android:id="@+id/starryNightTitle"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
+            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/main__logo" />
 
@@ -36,6 +37,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginRight="24dp"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/postWrite"
             android:background="@drawable/main__alarm" />
 
@@ -43,6 +45,7 @@
             android:id="@+id/postWrite"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/mainpage_postwrite" />
     </RelativeLayout>
