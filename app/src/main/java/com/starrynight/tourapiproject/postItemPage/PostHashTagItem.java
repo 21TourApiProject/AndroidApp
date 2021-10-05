@@ -9,6 +9,20 @@ public class PostHashTagItem {
 
     Long ObservationId;
 
+    Long HashTagId;
+
+    public void setHashTagPin(ImageView hashTagPin) {
+        this.hashTagPin = hashTagPin;
+    }
+
+    public Long getHashTagId() {
+        return HashTagId;
+    }
+
+    public void setHashTagId(Long hashTagId) {
+        HashTagId = hashTagId;
+    }
+
     public String getHashTagname() {
         return hashTagname;
     }
@@ -25,9 +39,10 @@ public class PostHashTagItem {
         this.hashTagname = hashTagname;
     }
 
-    public PostHashTagItem(String hashTagname, ImageView hashTagPin, Long observationId) {
+    public PostHashTagItem(String hashTagname, ImageView hashTagPin, Long observationId, Long hashTagId) {
         this.hashTagname = hashTagname;
         this.hashTagPin = hashTagPin;
         ObservationId = observationId;
+        HashTagId = hashTagId;
     }
 }

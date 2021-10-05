@@ -156,15 +156,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-//        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-//            @Override
-//            public void onScrollChanged() {
-//                if (scrollView.getScrollY()==0){
-//                    swipeRefreshLayout.isEnabled();
-//                }
-//            }
-//        });
-
         return v;
     }
     @Override
