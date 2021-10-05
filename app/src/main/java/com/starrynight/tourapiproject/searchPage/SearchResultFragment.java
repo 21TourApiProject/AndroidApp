@@ -186,7 +186,10 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
-                            tpResult = response.body();
+                            if (tpResult.size()==0){
+                                moreTpText.setVisibility(View.GONE);
+                                tpline.setVisibility(View.GONE);
+                            }
                             if (tpResult.size()>3){
                                 finalTpResult.add(tpResult.get(0));
                                 finalTpResult.add(tpResult.get(1));
@@ -204,7 +207,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.d(TAG, "관광지 검색 실패");
+                            moreTpText.setVisibility(View.GONE);
+                            tpline.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -222,7 +227,10 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관측지 검색 성공");
                             obResult = response.body();
-                            obResult = response.body();
+                            if (obResult.size()==0){
+                                moreObText.setVisibility(View.GONE);
+                                obline.setVisibility(View.GONE);
+                            }
                             if (obResult.size()>3){
                                 finalObResult.add(obResult.get(0));
                                 finalObResult.add(obResult.get(1));
@@ -242,6 +250,8 @@ public class SearchResultFragment extends Fragment {
                             });
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
+                            moreObText.setVisibility(View.GONE);
+                            obline.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -259,7 +269,10 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()){
                             Log.d("searchPost","검색 게시물 업로드 성공");
                             postResult=response.body();
-                            postResult = response.body();
+                            if (postResult.size()==0){
+                                morePostText.setVisibility(View.GONE);
+                                postline.setVisibility(View.GONE);
+                            }
                             if (postResult.size()>3){
                                 finalPostResult.add(postResult.get(0));
                                 finalPostResult.add(postResult.get(1));
@@ -278,7 +291,10 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
 
-                        }else{Log.d("searchPost","검색 게시물 업로드 실패");}
+                        }else{Log.d("searchPost","검색 게시물 업로드 실패");
+                        morePostText.setVisibility(View.GONE);
+                        postline.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
@@ -371,6 +387,10 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
+                            if (tpResult.size()==0){
+                                moreTpText.setVisibility(View.GONE);
+                                tpline.setVisibility(View.GONE);
+                            }
                             if (tpResult.size()>3){
                                 finalTpResult.add(tpResult.get(0));
                                 finalTpResult.add(tpResult.get(1));
@@ -389,7 +409,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.d(TAG, "관광지 검색 실패");
+                            moreTpText.setVisibility(View.GONE);
+                            tpline.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -408,6 +430,10 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관측지 검색 성공");
                             obResult = response.body();
+                            if (obResult.size()==0){
+                                moreObText.setVisibility(View.GONE);
+                                obline.setVisibility(View.GONE);
+                            }
                             if (obResult.size()>3){
                                 finalObResult.add(obResult.get(0));
                                 finalObResult.add(obResult.get(1));
@@ -427,6 +453,8 @@ public class SearchResultFragment extends Fragment {
                             });
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
+                            moreObText.setVisibility(View.GONE);
+                            obline.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -445,6 +473,10 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()){
                             Log.d("searchPost","검색 게시물 업로드 성공");
                             postResult=response.body();
+                            if (postResult.size()==0){
+                                morePostText.setVisibility(View.GONE);
+                                postline.setVisibility(View.GONE);
+                            }
                             if (postResult.size()>3){
                                 finalPostResult.add(postResult.get(0));
                                 finalPostResult.add(postResult.get(1));
@@ -463,7 +495,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
 
-                        }else{Log.d("searchPost","검색 게시물 업로드 실패");}
+                        }else{Log.d("searchPost","검색 게시물 업로드 실패");
+                            morePostText.setVisibility(View.GONE);
+                            postline.setVisibility(View.GONE);}
                     }
 
                     @Override
@@ -525,7 +559,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.d(TAG, "관광지 검색 실패");
+                            moreTpText.setVisibility(View.GONE);
+                            tpline.setVisibility(View.GONE);
                         }
                     }
 
@@ -566,6 +602,8 @@ public class SearchResultFragment extends Fragment {
                             });
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
+                            moreObText.setVisibility(View.GONE);
+                            obline.setVisibility(View.GONE);
                         }
                     }
 
@@ -607,6 +645,8 @@ public class SearchResultFragment extends Fragment {
 
                         } else {
                             Log.d("searchPost", "검색 게시물 업로드 실패");
+                            morePostText.setVisibility(View.GONE);
+                            postline.setVisibility(View.GONE);
                         }
                     }
 
@@ -723,6 +763,8 @@ public class SearchResultFragment extends Fragment {
                             });
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
+                            moreObText.setVisibility(View.GONE);
+                            obline.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -785,7 +827,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
 
-                        }else{Log.d("searchPost","검색 게시물 업로드 실패");}
+                        }else{Log.d("searchPost","검색 게시물 업로드 실패");
+                            morePostText.setVisibility(View.GONE);
+                            postline.setVisibility(View.GONE);}
                     }
 
                     @Override
@@ -852,7 +896,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.d(TAG, "관광지 검색 실패");
+                            moreTpText.setVisibility(View.GONE);
+                            tpline.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -869,15 +915,15 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                searchResult2.setVisibility(View.GONE);
+                searchResult3.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setVisibility(View.GONE);
-                obBtnTap.setVisibility(View.VISIBLE);
-                tpBtnTap.setVisibility(View.GONE);
-                postBtnTap.setVisibility(View.GONE);
-                searchResult2.setVisibility(View.GONE);
-                searchResult3.setVisibility(View.GONE);
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 //                areaCodeList.add(0L);
@@ -918,6 +964,8 @@ public class SearchResultFragment extends Fragment {
                             });
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
+                            moreObText.setVisibility(View.GONE);
+                            obline.setVisibility(View.GONE);
                         }
                     }
                     @Override
@@ -939,10 +987,10 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setVisibility(View.GONE);
-                obBtnTap.setVisibility(View.GONE);
-                tpBtnTap.setVisibility(View.GONE);
-                postBtnTap.setVisibility(View.VISIBLE);
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
@@ -978,7 +1026,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
 
-                        }else{Log.d("searchPost","검색 게시물 업로드 실패");}
+                        }else{Log.d("searchPost","검색 게시물 업로드 실패");
+                            morePostText.setVisibility(View.GONE);
+                            postline.setVisibility(View.GONE);}
                     }
 
                     @Override
@@ -995,15 +1045,15 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                searchResult2.setVisibility(View.GONE);
+                searchResult3.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setVisibility(View.GONE);
-                obBtnTap.setVisibility(View.GONE);
-                tpBtnTap.setVisibility(View.VISIBLE);
-                postBtnTap.setVisibility(View.GONE);
-                searchResult2.setVisibility(View.GONE);
-                searchResult3.setVisibility(View.GONE);
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 //                areaCodeList.add(0L);
@@ -1043,7 +1093,9 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
                         } else {
-                            System.out.println("관광지 필터 검색 실패");
+                            Log.d(TAG, "관광지 검색 실패");
+                            moreTpText.setVisibility(View.GONE);
+                            tpline.setVisibility(View.GONE);
                         }
                     }
                     @Override
