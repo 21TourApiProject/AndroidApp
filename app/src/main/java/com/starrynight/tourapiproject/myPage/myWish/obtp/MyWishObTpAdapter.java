@@ -106,10 +106,13 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
         public void setItem(MyWishObTp item) {
             if(item.getThumbnail() != null){
                 String imageName = item.getThumbnail();
-                if(imageName.startsWith("http://"))
+                if(imageName.startsWith("http://") || imageName.startsWith("https://"))
                     Glide.with(context).load(imageName).into(obTpImage);
-                else
+                else {
+                    imageName = imageName.substring(1, imageName.length() - 1);
                     Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/observationImage/" + imageName).into(obTpImage);
+
+                }
             }
             obTpTitle.setText(item.getTitle());
 
