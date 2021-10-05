@@ -40,4 +40,7 @@ public interface PostPageRetrofitService {
 
     @GET("user/{userId}/myHashTagId")
     Call<List<Long>> getMyHashTagIdList(@Path("userId") Long userId);
+
+    @GET("postHashTag/{postId}")
+    Call<List<PostHashTag>> getPostHashTags(@Path("postId")Long postId);
 }

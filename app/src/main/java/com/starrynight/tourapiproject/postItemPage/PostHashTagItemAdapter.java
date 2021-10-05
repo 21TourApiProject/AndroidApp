@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.postItemPage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItemAdapter.ViewHolder> {
     ArrayList<PostHashTagItem>items = new ArrayList<PostHashTagItem>();
     OnPostHashTagClickListener listener;
+    ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
+    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+    String keyword;
 
     public void addItem(PostHashTagItem item){
         items.add(item);
@@ -45,6 +54,36 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
         if (position!=0){
         PostHashTagItem item = items.get(position);
         viewHolder.setItem(item);
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", 1);
+        viewHolder.postHashTagName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.getHashTagId()!=null){
+                    keyword = null;
+                    bundle.putString("keyword", keyword);
+                    hashTag.set(item.getHashTagId().intValue(), 1);
+                    bundle.putIntegerArrayList("area",area);
+                    bundle.putIntegerArrayList("hashTag",hashTag);
+                    Fragment searchResultFragment = new SearchResultFragment();
+                    searchResultFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity)viewHolder.itemView.getContext()).getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.main_view, searchResultFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }else {keyword = item.getHashTagname();
+                    bundle.putString("keyword", keyword);
+                    bundle.putIntegerArrayList("area",area);
+                    bundle.putIntegerArrayList("hashTag",hashTag);
+                    Fragment searchResultFragment = new SearchResultFragment();
+                    searchResultFragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((AppCompatActivity)viewHolder.itemView.getContext()).getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.main_view, searchResultFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            }
+        });
         }else{
             PostHashTagItem item0 = items.get(0);
             viewHolder.setItem(item0);
@@ -75,6 +114,7 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
         TextView postHashTagName;
         ImageView hashTagPin;
         Long observationId;
+        Long hashTagId;
 
         public ViewHolder(View itemView, final OnPostHashTagClickListener listener){
             super(itemView);
@@ -97,6 +137,7 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
         public void setItem(PostHashTagItem item){
             postHashTagName.setText("#"+item.getHashTagname());
             observationId= item.getObservationId();
+            hashTagId = item.getHashTagId();
         }
     }
 }

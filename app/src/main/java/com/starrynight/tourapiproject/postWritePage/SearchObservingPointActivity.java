@@ -106,6 +106,16 @@ public class SearchObservingPointActivity extends AppCompatActivity{
                 finish();
             }
         });
+        optionText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("optionObservationName",observePoint);
+                setResult(2,intent);
+                finish();
+            }
+        });
 
         Button addObservePoint = findViewById(R.id.addObservePoint);
         addObservePoint.setOnClickListener(new View.OnClickListener() {
