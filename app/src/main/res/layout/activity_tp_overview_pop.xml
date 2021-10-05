@@ -2,30 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="wrap_content"
+    android:layout_height="288dp"
     android:background="@drawable/tppop_area"
     android:orientation="vertical"
     tools:context=".touristPointPage.OverviewPopActivity">
 
-    <TextView
-        android:id="@+id/overviewFull"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginRight="15dp"
-        android:textColor="@color/white"
-        android:textSize="12sp" />
+        android:layout_height="246dp"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/overviewFull"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/close"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="32dp"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="12dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="12dp"
         android:background="@drawable/tppop_close"
         android:onClick="closeOverview" />
 
