@@ -52,6 +52,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/areaLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/sub_blue"
@@ -108,7 +109,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/postwrite_area2"
+                    android:id="@+id/area2"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal">
@@ -494,6 +495,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/hashTagLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/sub_blue"

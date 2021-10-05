@@ -53,9 +53,8 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.mapPage.MapFragment;
-import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
-import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem2;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem2Adapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
@@ -92,7 +91,7 @@ public class PostWriteActivity extends AppCompatActivity {
     List<PostImageParams> postImageParams = new ArrayList<>();
     String postObservePointName="";
     List<String> hashTagList= new ArrayList<>();
-    String[] optionhashTagList= new String[10];
+    List<String> optionhashTagList= new ArrayList<>();
     Long postId;
     Long userId;
     PostWriteLoadingDialog dialog;
@@ -314,7 +313,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(hashTagList.isEmpty()&&optionhashTagList[0]==null){
+                if(hashTagList.isEmpty()&&optionhashTagList.get(0)==null){
                     Toast.makeText(getApplicationContext(), "해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -329,70 +328,70 @@ public class PostWriteActivity extends AppCompatActivity {
                 postParams.setUserId(userId);
                 postParams.setPostTitle(postTitle);
                 postParams.setOptionObservation(optionobservationName);
-                if (optionhashTagList.length==1){postParams.setOptionHashTag(optionhashTagList[0]);}
-                if (optionhashTagList.length==2){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);}
-                if (optionhashTagList.length==3){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);}
-                if (optionhashTagList.length==4){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);}
-                if (optionhashTagList.length==5){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);}
-                if (optionhashTagList.length==6){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);}
-                if (optionhashTagList.length==7){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);}
-                if (optionhashTagList.length==8){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);
-                    postParams.setOptionHashTag8(optionhashTagList[7]);}
-                if (optionhashTagList.length==9){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);
-                    postParams.setOptionHashTag8(optionhashTagList[7]);
-                    postParams.setOptionHashTag9(optionhashTagList[8]);}
-                if (optionhashTagList.length==10){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);
-                    postParams.setOptionHashTag8(optionhashTagList[7]);
-                    postParams.setOptionHashTag9(optionhashTagList[8]);
-                    postParams.setOptionHashTag10(optionhashTagList[9]);}
+                if (optionhashTagList.size()==1){postParams.setOptionHashTag(optionhashTagList.get(0));}
+                if (optionhashTagList.size()==2){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));}
+                if (optionhashTagList.size()==3){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));}
+                if (optionhashTagList.size()==4){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));}
+                if (optionhashTagList.size()==5){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));}
+                if (optionhashTagList.size()==6){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));}
+                if (optionhashTagList.size()==7){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));}
+                if (optionhashTagList.size()==8){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));
+                    postParams.setOptionHashTag8(optionhashTagList.get(7));}
+                if (optionhashTagList.size()==9){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));
+                    postParams.setOptionHashTag8(optionhashTagList.get(7));
+                    postParams.setOptionHashTag9(optionhashTagList.get(8));}
+                if (optionhashTagList.size()==10){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));
+                    postParams.setOptionHashTag8(optionhashTagList.get(7));
+                    postParams.setOptionHashTag9(optionhashTagList.get(8));
+                    postParams.setOptionHashTag10(optionhashTagList.get(9));}
                 Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
                 call.enqueue(new Callback<Long>() {
                     @Override
@@ -496,26 +495,26 @@ public class PostWriteActivity extends AppCompatActivity {
                 int allsize=0;
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
-                optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
+                optionhashTagList =  (List<String>) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(layoutManager);
-                PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
-                if (hashTagList.size()!=0 && optionhashTagList.length!=0){
+                PostWriteHashTagItem2Adapter adapter = new PostWriteHashTagItem2Adapter();
+                if (hashTagList.size()!=0 && optionhashTagList.size()!=0){
                 for (int i=0;i<hashTagList.size();i++){
-                    adapter.addItem(new PostWriteHashTagItem(hashTagList.get(i)));
+                    adapter.addItem(new PostWriteHashTagItem2(hashTagList.get(i)));
                     }
                     for (String s : optionhashTagList) {
-                        adapter.addItem(new PostWriteHashTagItem(s));
+                        adapter.addItem(new PostWriteHashTagItem2(s));
                     }
                 }else if (hashTagList.size()!=0){
                     for (int i=0;i<hashTagList.size();i++){
-                        adapter.addItem(new PostWriteHashTagItem(hashTagList.get(i)));
+                        adapter.addItem(new PostWriteHashTagItem2(hashTagList.get(i)));
                     }
                 }
                 else{
                     for (String s : optionhashTagList) {
-                        adapter.addItem(new PostWriteHashTagItem(s));
+                        adapter.addItem(new PostWriteHashTagItem2(s));
                     }
                 }
                 for (int i=0;i<adapter.getItemCount();i++){
