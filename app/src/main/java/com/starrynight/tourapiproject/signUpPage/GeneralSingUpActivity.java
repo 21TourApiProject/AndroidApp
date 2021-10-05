@@ -157,7 +157,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         ageLimit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isAge){
+                if(isAllAgree){
+                    ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isAge = false;
+                    isAllAgree = false;
+                }
+                else if(isAge){
                     ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
                     isAge = false;
                 } else{
@@ -172,7 +178,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isService){
+                if(isAllAgree){
+                    service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isService = false;
+                    isAllAgree = false;
+                }
+                else if(isService){
                     service.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
                     isService = false;
                 } else{
@@ -195,7 +207,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         personal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isPersonal){
+                if(isAllAgree){
+                    personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isPersonal = false;
+                    isAllAgree = false;
+                }
+                else if(isPersonal){
                     personal.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
                     isPersonal = false;
                 } else{
@@ -218,7 +236,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         locationService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isLocationService){
+                if(isAllAgree){
+                    locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isLocationService = false;
+                    isAllAgree = false;
+                }
+                else if(isLocationService){
                     locationService.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
                     isLocationService = false;
                 } else{
@@ -241,7 +265,13 @@ public class GeneralSingUpActivity extends AppCompatActivity{
         marketing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isMarketing){
+                if(isAllAgree){
+                    marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    allAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+                    isMarketing = false;
+                    isAllAgree = false;
+                }
+                else if(isMarketing){
                     marketing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
                     isMarketing = false;
                 } else{
@@ -296,14 +326,14 @@ public class GeneralSingUpActivity extends AppCompatActivity{
                 String day = Integer.toString(dayOfMonth);
 
                 if (monthOfYear < 10){
-                    month = "0"+ Integer.toString(monthOfYear);
+                    month = "0"+ monthOfYear;
                 }
 
                 if(dayOfMonth < 10){
-                    day = "0"+ Integer.toString(dayOfMonth);
+                    day = "0"+ dayOfMonth;
                 }
 
-                birth.setText(year + "-" + month + "-" + day);
+                birth.setText(year + "/" + month + "/" + day);
             }
         };
 
