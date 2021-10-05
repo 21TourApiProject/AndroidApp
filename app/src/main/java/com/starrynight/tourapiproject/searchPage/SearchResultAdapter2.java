@@ -105,10 +105,33 @@ public class SearchResultAdapter2 extends RecyclerView.Adapter<SearchResultAdapt
         }
 
         public void setItem(SearchParams1 item) {
-            if(item.getThumbnail() != null)
-                Glide.with(context).load(item.getThumbnail()).into(obTpImage);
+            if(item.getThumbnail() != null){
+                String imageName = item.getThumbnail();
+                if(imageName.startsWith("http://") || imageName.startsWith("https://"))
+                    Glide.with(context).load(imageName).into(obTpImage);
+                else {
+                    imageName = imageName.substring(1, imageName.length() - 1);
+                    Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/observationImage/" + imageName).into(obTpImage);
+
+                }
+            }
+
             obTpTitle.setText(item.getTitle());
-            opTpAddress.setText(item.getAddress());
+
+            //주소를 두단어까지 줄임
+            String address = item.getAddress();
+            int i = address.indexOf(' ');
+            if (i != -1){
+                int j = address.indexOf(' ', i+1);
+                if(j != -1){
+                    opTpAddress.setText(item.getAddress().substring(0, j));
+                } else{
+                    opTpAddress.setText(item.getAddress());
+                }
+            } else{
+                opTpAddress.setText(item.getAddress());
+            }
+
             obTpCat3Name.setText(item.getContentType());
             obTpOverviewSim.setText(item.getIntro());
             obTpHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
