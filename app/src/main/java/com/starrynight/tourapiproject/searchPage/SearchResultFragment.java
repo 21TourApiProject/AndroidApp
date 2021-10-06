@@ -286,7 +286,6 @@ public class SearchResultFragment extends Fragment {
                                     MyPost item = postAdapter.getItem(position);
                                     Intent intent = new Intent(getContext(), PostActivity.class);
                                     intent.putExtra("postId", item.getPostId());
-                                    System.out.println(item.getPostId());
                                     startActivity(intent);
                                 }
                             });
@@ -403,7 +402,6 @@ public class SearchResultFragment extends Fragment {
                                 public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
                                     SearchParams1 item = searchResultAdapter2.getItem(position);
                                     Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                                    System.out.println(item.getItemId());
                                     intent.putExtra("contentId", item.getItemId());
                                     startActivity(intent);
                                 }
@@ -490,7 +488,6 @@ public class SearchResultFragment extends Fragment {
                                     MyPost item = postAdapter.getItem(position);
                                     Intent intent = new Intent(getContext(), PostActivity.class);
                                     intent.putExtra("postId", item.getPostId());
-                                    System.out.println(item.getPostId());
                                     startActivity(intent);
                                 }
                             });
@@ -553,7 +550,6 @@ public class SearchResultFragment extends Fragment {
                                 public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
                                     SearchParams1 item = searchResultAdapter2.getItem(position);
                                     Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                                    System.out.println(item.getItemId());
                                     intent.putExtra("contentId", item.getItemId());
                                     startActivity(intent);
                                 }
@@ -638,7 +634,6 @@ public class SearchResultFragment extends Fragment {
                                     MyPost item = postAdapter.getItem(position);
                                     Intent intent = new Intent(getContext(), PostActivity.class);
                                     intent.putExtra("postId", item.getPostId());
-                                    System.out.println(item.getPostId());
                                     startActivity(intent);
                                 }
                             });
@@ -890,7 +885,6 @@ public class SearchResultFragment extends Fragment {
                                 public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
                                     SearchParams1 item = searchResultAdapter2.getItem(position);
                                     Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                                    System.out.println(item.getItemId());
                                     intent.putExtra("contentId", item.getItemId());
                                     startActivity(intent);
                                 }
@@ -1087,7 +1081,6 @@ public class SearchResultFragment extends Fragment {
                                 public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
                                     SearchParams1 item = searchResultAdapter2.getItem(position);
                                     Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                                    System.out.println(item.getItemId());
                                     intent.putExtra("contentId", item.getItemId());
                                     startActivity(intent);
                                 }
@@ -1105,8 +1098,6 @@ public class SearchResultFragment extends Fragment {
                 });
             }
         });
-
-
         return v;
     }
 }

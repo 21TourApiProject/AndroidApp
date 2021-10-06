@@ -45,7 +45,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     List<MainPost> items = new ArrayList<MainPost>();
     OnMainPostClickListener listener;
    private static Long userId;
-   private static Long postId;
    private static Context context;
     String beforeImage;
 
@@ -177,17 +176,32 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         if (!item.getMainObservation().equals("나만의 관측지")){
         adapter.addItem(new PostHashTagItem(item.getMainObservation(),null, item.getObservationId(),null));
         }else{adapter.addItem(new PostHashTagItem(item.getOptionObservation(),null,null,null));}
-        if (item.getHashTags()!=null){
-            for (int i=0;i<item.getHashTags().size();i++){
-                adapter.addItem(new PostHashTagItem(item.getHashTags().get(i),null,null,null));
-            if (i==2){break;}}
-        }else{
-            adapter.addItem(new PostHashTagItem(item.getOptionHashTag(),null,null,null));
-            if (item.getOptionHashTag2()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag2(),null,null,null));}
-            if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3(),null,null,null));}
-        }
-        viewHolder.hashTagRecyclerView.setAdapter(adapter);
-        viewHolder.hashTagRecyclerView.addItemDecoration(new ViewHolder.RecyclerViewDecoration(20));
+        Call<List<PostHashTag>>call = RetrofitClient.getApiService().getPostHashTags(item.getPostId());
+        call.enqueue(new Callback<List<PostHashTag>>() {
+            @Override
+            public void onResponse(Call<List<PostHashTag>> call, Response<List<PostHashTag>> response) {
+                if (response.isSuccessful()){
+                    Log.d("mainHashTag","메인 게시물 해시태그 업로드 성공");
+                    List<PostHashTag> postHashTagIds = response.body();
+                    if (item.getHashTags()!=null){
+                        for (int i=0;i<item.getHashTags().size();i++){
+                            adapter.addItem(new PostHashTagItem(item.getHashTags().get(i),null,null,postHashTagIds.get(i).getHashTagId()));
+                            if (i==2){break;}}
+                    }else{
+                        adapter.addItem(new PostHashTagItem(item.getOptionHashTag(),null,null,null));
+                        if (item.getOptionHashTag2()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag2(),null,null,null));}
+                        if (item.getOptionHashTag3()!=null){adapter.addItem(new PostHashTagItem(item.getOptionHashTag3(),null,null,null));}
+                    }
+                    viewHolder.hashTagRecyclerView.setAdapter(adapter);
+                    viewHolder.hashTagRecyclerView.addItemDecoration(new ViewHolder.RecyclerViewDecoration(20));
+                }else{Log.d("mainHashTag","메인 게시물 해시태그 업로드 실패");}
+            }
+
+            @Override
+            public void onFailure(Call<List<PostHashTag>> call, Throwable t) {
+                Log.d("mainHashTag","메인 게시물 해시태그 인터넷 오류");
+            }
+        });
     }
 
     @Override
