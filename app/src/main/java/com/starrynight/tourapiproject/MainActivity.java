@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
     int PERMISSIONS_REQUEST_CODE = 100;
 
+    Fragment map,searchResult, filter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,28 +145,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
-
-        if ((fragment instanceof FilterFragment) || fragment instanceof SearchResultFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragment instanceof SearchResultFragment) {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentManager.popBackStack();
             } else {
                 super.onBackPressed();
             }
-        } else if (fragment instanceof MapFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+        } else if(fragment instanceof FilterFragment){
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
             } else {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                super.onBackPressed();
+            }
+        }else if (fragment instanceof MapFragment) {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().remove(fragment).commit();
+            } else {
+                fragmentManager.beginTransaction().remove(fragment).commit();
                 super.onBackPressed();
             }
         } else if (fragment instanceof TonightSkyFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
             } else {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                fragmentManager.beginTransaction().remove(fragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
                 replaceFragment(mainFragment);
-
                 showBottom();
             }
         } else if (fragment instanceof MainFragment) {
@@ -241,4 +250,27 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
     }
 
+    public Fragment getMap() {
+        return map;
+    }
+
+    public void setMap(Fragment map) {
+        this.map = map;
+    }
+
+    public Fragment getSearchResult() {
+        return searchResult;
+    }
+
+    public void setSearchResult(Fragment searchResult) {
+        this.searchResult = searchResult;
+    }
+
+    public Fragment getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Fragment filter) {
+        this.filter = filter;
+    }
 }
