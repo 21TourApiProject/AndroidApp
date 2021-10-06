@@ -116,6 +116,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                         }
                         adapter.addItem(new PostWriteHashTagItem(optionHashTag));
                         adapter.notifyDataSetChanged();
+                        editText.getText().clear();
                     }
                 }else{
                     return false;
@@ -137,6 +138,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                     }
                     adapter.addItem(new PostWriteHashTagItem(optionHashTag));
                     adapter.notifyDataSetChanged();
+                    editText.getText().clear();
                 }
             }
         });
