@@ -60,7 +60,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     private Button ageLimit;
     Boolean isAge;
     Button phoneAgree;
-    private Boolean isPhoneAgree = false;
+    private Boolean isPhoneAgree = true;
 
     String testPhoneNum = "+16505553333";
 
@@ -78,7 +78,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_kakao_phone_auth);
 
         TextView skip_btn = findViewById(R.id.kko_pass);
-        skip_btn.setVisibility(View.VISIBLE);
+//        skip_btn.setVisibility(View.VISIBLE);
         skip_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +129,14 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
+        Button authBack = findViewById(R.id.kko_authBack);
+        authBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -178,19 +186,19 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
             }
         });
 
-        phoneAgree = findViewById(R.id.kko_phoneAgree);
-        phoneAgree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isPhoneAgree){
-                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
-                    isPhoneAgree = false;
-                } else{
-                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
-                    isPhoneAgree = true;
-                }
-            }
-        });
+//        phoneAgree = findViewById(R.id.kko_phoneAgree);
+//        phoneAgree.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(isPhoneAgree){
+//                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+//                    isPhoneAgree = false;
+//                } else{
+//                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+//                    isPhoneAgree = true;
+//                }
+//            }
+//        });
 
 
         //전화번호 칸에 글씨가 입력됨에 따라 실시간으로 phoneGuide 뜨게
@@ -286,7 +294,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
@@ -305,7 +313,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
@@ -321,11 +329,11 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             Log.d(TAG, "인증 성공"); //인증 성공하면
 
-                           //회원가입을 위한 post api
-                            if(isPhoneAgree)
-                                userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
-                            else
-                                userParams.setMobilePhoneNumber(null);
+                                //회원가입을 위한 post api
+                                if (isPhoneAgree)
+                                    userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                                else
+                                    userParams.setMobilePhoneNumber(null);
                             Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
                             call.enqueue(new Callback<Void>() {
                                 @Override
