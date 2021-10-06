@@ -40,7 +40,10 @@ public class SearchFragment extends Fragment {
 
         ((MainActivity)getActivity()).showBottom();
 
+        ((MainActivity)getActivity()).setFilter(null);
+
         SearchView searchView = v.findViewById(R.id.search);
+        searchView.setIconifiedByDefault(false);
         searchView.setQueryHint("검색어를 입력하세요");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -91,10 +94,13 @@ public class SearchFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("fromWhere", Activities.SEARCH);
-                Fragment filterFragment = new FilterFragment();
+
+                FilterFragment filterFragment = new FilterFragment();
                 filterFragment.setArguments(bundle);
+                ((MainActivity) getActivity()).setFilter(filterFragment);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, filterFragment);
+                transaction.add(R.id.main_view, filterFragment);
+                transaction.replace(R.id.main_view,filterFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

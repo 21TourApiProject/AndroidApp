@@ -103,24 +103,33 @@ public class FilterFragment extends Fragment {
                 Activities fromWhere;
                 if (getArguments() != null) {
                     fromWhere = (Activities) getArguments().getSerializable("fromWhere");
+                    System.out.println("어디서왔냐면"+fromWhere.toString());
+                    Fragment filterFragment, searchResultFragment;
+                    filterFragment = ((MainActivity) getActivity()).getFilter();
                     if (fromWhere == Activities.SEARCH) {
                         keyword = null;
                         bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        Fragment searchResultFragment = new SearchResultFragment();
+                        searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, searchResultFragment);
-                        transaction.addToBackStack(null);
+                        transaction.add(R.id.main_view, searchResultFragment);
                         transaction.commit();
+                        if (filterFragment!=null) {
+                            getFragmentManager().beginTransaction().hide(filterFragment).commit();
+                        }
+
                     } else if (fromWhere == Activities.SEARCHRESULT) {
                         keyword = getArguments().getString("keyword");
                         bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        Fragment searchResultFragment = new SearchResultFragment();
+                        searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, searchResultFragment);
-                        transaction.addToBackStack(null);
+                        transaction.add(R.id.main_view, searchResultFragment);
                         transaction.commit();
+                        if (filterFragment != null) {
+                            getFragmentManager().beginTransaction().hide(filterFragment).commit();
+                        }
+
                     } else if (fromWhere == Activities.MAP) {
                         bundle.putSerializable("FromWhere",Activities.FILTER);
                         keyword = getArguments().getString("keyword");
@@ -128,8 +137,7 @@ public class FilterFragment extends Fragment {
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         Fragment mapfragment = new MapFragment();
                         mapfragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, mapfragment);
-                        transaction.addToBackStack(null);
+                        transaction.add(R.id.main_view, mapfragment);
                         transaction.commit();
                     }
                 }
