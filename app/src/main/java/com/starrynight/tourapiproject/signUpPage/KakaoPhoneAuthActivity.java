@@ -129,6 +129,14 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
+        Button authBack = findViewById(R.id.kko_authBack);
+        authBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -286,7 +294,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
@@ -305,7 +313,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
@@ -321,18 +329,11 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             Log.d(TAG, "인증 성공"); //인증 성공하면
 
-                            if (!isAge) {
-                                Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
-                                return;
-                            } else{
-                                userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
-                            }
-
                                 //회원가입을 위한 post api
-//                                if (isPhoneAgree)
-//                                    userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
-//                                else
-//                                    userParams.setMobilePhoneNumber(null);
+                                if (isPhoneAgree)
+                                    userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                                else
+                                    userParams.setMobilePhoneNumber(null);
                             Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
                             call.enqueue(new Callback<Void>() {
                                 @Override
