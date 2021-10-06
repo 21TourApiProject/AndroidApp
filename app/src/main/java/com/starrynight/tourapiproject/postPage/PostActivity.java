@@ -18,6 +18,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -26,8 +28,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
+import com.starrynight.tourapiproject.postItemPage.OnPostHashTagClickListener;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
@@ -38,6 +42,7 @@ import com.starrynight.tourapiproject.postPage.postRetrofit.PostHashTag;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,6 +50,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -70,6 +76,9 @@ public class PostActivity extends AppCompatActivity{
     List<PostHashTag> postHashTagList;
     String[] filename2= new String[10];
     String[] relatefilename = new String[4];
+    ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
+    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+    String keyword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,7 +174,7 @@ public class PostActivity extends AppCompatActivity{
                                     public void onResponse(Call<List<PostHashTag>> call, Response<List<PostHashTag>> response) {
                                         if (response.isSuccessful()){
                                             if (!response.body().isEmpty()){
-                                                Log.d("postHashTag","게시물 해시태그 가져옴"+response.body());
+                                                Log.d("postHashTag","게시물 해시태그 가져옴");
                                                 postHashTagList = response.body();
                                                 RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
                                                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
@@ -174,8 +183,10 @@ public class PostActivity extends AppCompatActivity{
                                                 if (!observation.getObservationName().equals("나만의 관측지")){
                                                     adapter2.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId(),null));
                                                 }else{adapter2.addItem(new PostHashTagItem(post.getOptionObservation(),null,null,null));}
-                                                for (int i=0;i<postHashTagList.size();i++){
-                                                    adapter2.addItem(new PostHashTagItem(postHashTagList.get(i).getHashTagName(),null,null,postHashTagList.get(i).getHashTagId()));
+                                                for (int i=0;i<postHashTagList.size();i++) {
+                                                    if (postHashTagList.get(i).getHashTagId() != null) {
+                                                        adapter2.addItem(new PostHashTagItem(postHashTagList.get(i).getHashTagName(), null, null, postHashTagList.get(i).getHashTagId()));
+                                                    }
                                                 }
                                                 if (post.getOptionHashTag()!=null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag(),null,null,null));}
                                                 if (post.getOptionHashTag2()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag2(),null,null,null));}
@@ -194,6 +205,30 @@ public class PostActivity extends AppCompatActivity{
                                                 else if (allsize>61){staggeredGridLayoutManager.setSpanCount(4);}
                                                 hashTagRecyclerView.setAdapter(adapter2);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
+                                                adapter2.setOnItemClicklistener(new OnPostHashTagClickListener() {
+                                                    @Override
+                                                    public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
+                                                        Intent intent1 = new Intent(PostActivity.this,MainActivity.class);
+                                                        PostHashTagItem item = adapter2.getItem(position);
+                                                        if (item.getHashTagId()!=null){
+                                                            keyword = null;
+                                                            intent1.putExtra("keyword", keyword);
+                                                            int x = item.getHashTagId().intValue();
+                                                            hashTag.set(x-1, 1);
+                                                            intent1.putExtra("area",area);
+                                                            intent1.putExtra("hashTag",hashTag);
+                                                            intent1.putExtra("FromWhere", Activities.POST);
+                                                            startActivity(intent1);
+                                                        }else {
+                                                            keyword = item.getHashTagname();
+                                                            intent1.putExtra("keyword", keyword);
+                                                            intent1.putExtra("area",area);
+                                                            intent1.putExtra("hashTag",hashTag);
+                                                            intent1.putExtra("FromWhere", Activities.POST);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
                                             }else{
                                                 Log.d("optionHashTag","메인 해시태그 없음. 임의 해시태그 가져옴");
                                                 RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
@@ -220,6 +255,23 @@ public class PostActivity extends AppCompatActivity{
                                                 else if (allsize>61){staggeredGridLayoutManager.setSpanCount(4);}
                                                 hashTagRecyclerView.setAdapter(adapter);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
+                                                adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
+                                                    @Override
+                                                    public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
+                                                        Intent intent1 = new Intent(PostActivity.this,MainActivity.class);
+                                                        PostHashTagItem item = adapter.getItem(position);
+                                                        if (item.getHashTagId()!=null){
+                                                            keyword = null;
+                                                            intent1.putExtra("keyword", keyword);
+                                                            int x = item.getHashTagId().intValue();
+                                                            hashTag.set(x-1, 1);
+                                                            intent1.putExtra("area",area);
+                                                            intent1.putExtra("hashTag",hashTag);
+                                                            intent.putExtra("FromWhere", Activities.POST);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
                                             }
                                         }else {Log.d("postHashTag","메인 해시태그 오류");
                                         }

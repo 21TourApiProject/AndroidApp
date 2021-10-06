@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +30,8 @@ import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
@@ -129,6 +132,19 @@ public class MainActivity extends AppCompatActivity {
                 Fragment mapfragment = new MapFragment();
                 mapfragment.setArguments(bundle);
                 transaction.replace(R.id.main_view, mapfragment);
+                transaction.commit();
+            }
+            else if (fromWhere == Activities.POST){
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 1);
+                bundle.putSerializable("keyword",intent.getSerializableExtra("keyword"));
+                bundle.putIntegerArrayList("hashTag", (ArrayList<Integer>) intent.getSerializableExtra("hashTag"));
+                bundle.putIntegerArrayList("area", (ArrayList<Integer>) intent.getSerializableExtra("area"));
+                Fragment searchResultFragment = new SearchResultFragment();
+                searchResultFragment.setArguments(bundle);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, searchResultFragment);
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 transaction.commit();
             }
         }
