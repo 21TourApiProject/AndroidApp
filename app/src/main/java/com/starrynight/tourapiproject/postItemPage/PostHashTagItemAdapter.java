@@ -54,36 +54,37 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
         if (position!=0){
         PostHashTagItem item = items.get(position);
         viewHolder.setItem(item);
-        Bundle bundle = new Bundle();
-        bundle.putInt("type", 1);
-        viewHolder.postHashTagName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (item.getHashTagId()!=null){
-                    keyword = null;
-                    bundle.putString("keyword", keyword);
-                    hashTag.set(item.getHashTagId().intValue(), 1);
-                    bundle.putIntegerArrayList("area",area);
-                    bundle.putIntegerArrayList("hashTag",hashTag);
-                    Fragment searchResultFragment = new SearchResultFragment();
-                    searchResultFragment.setArguments(bundle);
-                    FragmentTransaction transaction = ((AppCompatActivity)viewHolder.itemView.getContext()).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.main_view, searchResultFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }else {keyword = item.getHashTagname();
-                    bundle.putString("keyword", keyword);
-                    bundle.putIntegerArrayList("area",area);
-                    bundle.putIntegerArrayList("hashTag",hashTag);
-                    Fragment searchResultFragment = new SearchResultFragment();
-                    searchResultFragment.setArguments(bundle);
-                    FragmentTransaction transaction = ((AppCompatActivity)viewHolder.itemView.getContext()).getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.main_view, searchResultFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
-            }
-        });
+//        Bundle bundle = new Bundle();  // 아직 게시물 상세페이지에서는 에러나서 보류
+//        bundle.putInt("type", 1);
+//        viewHolder.postHashTagName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (item.getHashTagId()!=null){
+//                    keyword = null;
+//                    bundle.putString("keyword", keyword);
+//                    int x = item.HashTagId.intValue();
+//                    hashTag.set(x-1, 1);
+//                    bundle.putIntegerArrayList("area",area);
+//                    bundle.putIntegerArrayList("hashTag",hashTag);
+//                    Fragment searchResultFragment = new SearchResultFragment();
+//                    searchResultFragment.setArguments(bundle);
+//                    FragmentTransaction transaction = ((AppCompatActivity)viewHolder.itemView.getContext()).getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.main_view, searchResultFragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                }else {keyword = item.getHashTagname();
+//                    bundle.putString("keyword", keyword);
+//                    bundle.putIntegerArrayList("area",area);
+//                    bundle.putIntegerArrayList("hashTag",hashTag);
+//                    Fragment searchResultFragment = new SearchResultFragment();
+//                    searchResultFragment.setArguments(bundle);
+//                    FragmentTransaction transaction = ((AppCompatActivity)viewHolder.itemView.getContext()).getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.main_view, searchResultFragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                }
+//            }
+//        });
         }else{
             PostHashTagItem item0 = items.get(0);
             viewHolder.setItem(item0);
