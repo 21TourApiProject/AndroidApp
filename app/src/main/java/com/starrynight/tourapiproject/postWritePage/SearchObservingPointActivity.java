@@ -20,7 +20,6 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postItemPage.OnSearchItemClickListener;
-import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.Search_item;
 import com.starrynight.tourapiproject.postItemPage.Search_item_adapter;
 
