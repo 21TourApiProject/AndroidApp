@@ -171,11 +171,15 @@ public class MapFragment extends Fragment {
             initHashtagRecycler();
             observeHashTags = bobject.getHashtags();
             if (observeHashTags != null) {
+                int i=0;
                 for (String p : observeHashTags) {
+                    if (i == 3)
+                        break;
                     RecyclerHashTagItem item = new RecyclerHashTagItem();
                     item.setHashtagName(p);
 
                     recyclerHashTagAdapter.addItem(item);
+                    i++;
                 }
                 recyclerHashTagAdapter.notifyDataSetChanged();
             } else {
