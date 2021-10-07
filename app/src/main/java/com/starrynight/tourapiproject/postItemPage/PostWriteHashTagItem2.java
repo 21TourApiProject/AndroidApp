@@ -2,7 +2,7 @@ package com.starrynight.tourapiproject.postItemPage;
 
 import android.widget.ImageView;
 
-public class PostWriteHashTagItem {
+public class PostWriteHashTagItem2 {
     String hashTagname;
     ImageView hashTagDelete;
 
@@ -22,7 +22,7 @@ public class PostWriteHashTagItem {
         this.hashTagname = hashTagname;
     }
 
-    public PostWriteHashTagItem(String hashTagname) {
+    public PostWriteHashTagItem2(String hashTagname) {
         this.hashTagname = hashTagname;
     }
 }
