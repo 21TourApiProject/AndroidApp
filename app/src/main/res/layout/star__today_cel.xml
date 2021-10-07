@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:textSize="14sp"
-                android:text="오늘 볼 수 있는 천체" />
+                android:text="오늘 볼 수 있는 별자리" />
 
             <View
                 android:layout_width="0dp"
