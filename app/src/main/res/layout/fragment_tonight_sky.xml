@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
             android:scaleType="centerCrop"
+            android:layout_marginVertical="16dp"
             android:src="@drawable/star__ic_remove" />
 
         <SearchView
@@ -86,7 +87,6 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginHorizontal="17dp"
-            android:layout_marginVertical="16dp"
             android:background="@drawable/postwrite__search_bar" />
 
         <ListView
@@ -169,20 +169,19 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        style="@style/ImageButton.size21.pad12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/help_back_btn"
-                        android:layout_width="8dp"
-                        android:layout_height="10dp"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/tonight__help_close" />
+                        android:src="@drawable/tonight__help_close" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="도움말"
-                        android:textSize="12sp" />
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 

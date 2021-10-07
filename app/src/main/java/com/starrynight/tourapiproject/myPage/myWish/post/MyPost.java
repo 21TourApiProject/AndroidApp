@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MyPost {
 
-    @SerializedName("postId")
+    @SerializedName("itemId")
     private Long postId;
     @SerializedName("thumbnail")
     private String thumbnail;
