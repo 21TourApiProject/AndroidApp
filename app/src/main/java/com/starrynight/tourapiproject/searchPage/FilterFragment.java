@@ -112,7 +112,7 @@ public class FilterFragment extends Fragment {
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.add(R.id.main_view, searchResultFragment);
+                        transaction.replace(R.id.main_view, searchResultFragment);
                         transaction.commit();
                         if (filterFragment!=null) {
                             getFragmentManager().beginTransaction().hide(filterFragment).commit();
@@ -124,7 +124,7 @@ public class FilterFragment extends Fragment {
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.add(R.id.main_view, searchResultFragment);
+                        transaction.replace(R.id.main_view, searchResultFragment);
                         transaction.commit();
                         if (filterFragment != null) {
                             getFragmentManager().beginTransaction().hide(filterFragment).commit();
