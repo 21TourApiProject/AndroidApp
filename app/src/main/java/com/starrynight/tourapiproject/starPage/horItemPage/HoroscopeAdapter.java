@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.starPage.horPageRetriofit.Horoscope;
 
 import org.jetbrains.annotations.NotNull;
 

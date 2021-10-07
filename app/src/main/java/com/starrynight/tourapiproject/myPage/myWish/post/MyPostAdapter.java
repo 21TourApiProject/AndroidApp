@@ -107,11 +107,18 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
                 Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + item.getThumbnail()).into(myWishPostImage);
                 myWishPostImage.setClipToOutline(true);
             }
+
             if (item.getProfileImage() != null){
                 String imageName = item.getProfileImage();
-                imageName = imageName.substring(1, imageName.length() - 1);
-                Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + imageName).into(myWishPostProfileImage);
+                if(item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")){
+                    Glide.with(context).load(imageName).into(myWishPostProfileImage);
+                }
+                else{
+                    imageName = imageName.substring(1, imageName.length() - 1);
+                    Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + imageName).into(myWishPostProfileImage);
+                }
             }
+
             myWishPostTitle.setText(item.getTitle());
             myWishPostWriter.setText(item.getNickName());
             myWishPostHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));

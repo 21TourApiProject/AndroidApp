@@ -1,73 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/alarmlinear"
+        android:id="@+id/alarmLayout"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/alarm_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/alarm_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqahansansneomedium"
-                android:hint="알람제목" />
-
-            <TextView
-                android:id="@+id/alarm_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="YY.MM.HH" />
-        </LinearLayout>
+            android:layout_marginLeft="24dp"
+            android:text="알람 제목"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/scroll_btn"
-            android:layout_width="8dp"
+            android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/alarm__updown" />
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/setting_more" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/alarm__line" />
+
+    <LinearLayout
+        android:id="@+id/alarmOpen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/content_blue"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/alarmlinear">
+        android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/alarm_date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/alarm__line" />
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="7dp"
+            android:text="알람 날짜"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/alarm_content"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:hint="알림 내용"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="8dp"
-            android:visibility="gone" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="알람 내용"
+            android:textSize="12sp" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

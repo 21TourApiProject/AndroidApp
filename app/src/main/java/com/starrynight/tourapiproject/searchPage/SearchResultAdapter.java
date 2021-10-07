@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.myPage.myWish.obtp.MyWishObTp;
-import com.starrynight.tourapiproject.myPage.myWish.obtp.OnMyWishObTpItemClickListener;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams1;
 import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter2;
 

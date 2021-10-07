@@ -536,57 +536,80 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="26dp"
-                    android:weightSum="3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/writePost_btn">
 
-                    <ImageView
-                        android:id="@+id/relateImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:adjustViewBounds="true" />
-
-                    <ImageView
-                        android:id="@+id/relateImage2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:adjustViewBounds="true"
-                        android:visibility="gone" />
-
-                    <FrameLayout
-                        android:id="@+id/relateImageFrame"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:visibility="gone">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        app:cardCornerRadius="5dp">
 
                         <ImageView
-                            android:id="@+id/relateImage3"
+                            android:id="@+id/relateImage"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_weight="1"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/default_image" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="20dp"
+                        app:cardCornerRadius="5dp">
+
+                        <ImageView
+                            android:id="@+id/relateImage2"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_weight="1"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/default_image"
+                            android:visibility="gone" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="5dp">
+
+                        <FrameLayout
+                            android:id="@+id/relateImageFrame"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:adjustViewBounds="true"
-                            android:foreground="@drawable/observation__moreimage"
-                            android:visibility="visible" />
+                            android:visibility="gone">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
+                            <ImageView
+                                android:id="@+id/relateImage3"
+                                android:layout_width="90dp"
+                                android:layout_height="90dp"
+                                android:layout_weight="1"
+                                android:adjustViewBounds="true"
+                                android:foreground="@drawable/observation__moreimage"
+                                android:visibility="visible" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="+더 보기" />
-                        </LinearLayout>
+                                android:orientation="vertical">
 
-                    </FrameLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="+더 보기" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,14 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.myPage.MyPostActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPost;
 import com.starrynight.tourapiproject.myPage.myWish.post.MyPostAdapter;
 import com.starrynight.tourapiproject.myPage.myWish.post.OnMyPostItemClickListener;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

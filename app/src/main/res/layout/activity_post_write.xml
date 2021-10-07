@@ -55,10 +55,10 @@
                 <Button
                     android:id="@+id/save"
                     android:layout_width="26dp"
-                    android:layout_height="13dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/postwrite__share"
+                    android:background="@drawable/postwrite__complete"
                     android:paddingHorizontal="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -226,6 +226,7 @@
                     app:srcCompat="@drawable/postwrite__line" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_observation"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:paddingHorizontal="16dp"
@@ -290,6 +291,7 @@
                     app:srcCompat="@drawable/postwrite__line" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_hashtag"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="16dp">

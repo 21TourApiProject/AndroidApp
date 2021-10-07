@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -40,7 +39,6 @@ import retrofit2.Response;
 
 public class PhoneAuthActivity extends AppCompatActivity implements
         View.OnClickListener {
-
     private static final String TAG = "PhoneAuth";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
     private static final int SELECT_HASH_TAG = 0;
@@ -69,8 +67,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private Boolean isNotPhone = false; //올바른 전화번호 형식이 아닌지
     private Boolean isPhoneDuplicate = true; //전화번호이 중복인지
 
-    Button phoneAgree;
-    private Boolean isPhoneAgree = false;
+//    Button phoneAgree;
+    private Boolean isPhoneAgree = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,19 +105,19 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         });
 
         //휴대폰 정보 수집 동의
-        phoneAgree = findViewById(R.id.phoneAgree);
-        phoneAgree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isPhoneAgree){
-                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
-                    isPhoneAgree = false;
-                } else{
-                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
-                    isPhoneAgree = true;
-                }
-            }
-        });
+//        phoneAgree = findViewById(R.id.phoneAgree);
+//        phoneAgree.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(isPhoneAgree){
+//                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+//                    isPhoneAgree = false;
+//                } else{
+//                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+//                    isPhoneAgree = true;
+//                }
+//            }
+//        });
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -250,7 +248,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
@@ -269,7 +267,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
@@ -391,32 +389,32 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         }
     }
 
-    @Override //선호 해시태그 선택하다말고 뒤로 돌아오면
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == SELECT_HASH_TAG){
-            //회원정보 삭제
-            Call<Void> call = RetrofitClient.getApiService().cancelSignUp(userParams.getEmail());
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if(response.isSuccessful()){
-                        Log.d(TAG, "회원정보 삭제 성공");
-                    } else{
-                        Log.e(TAG, "회원정보 삭제 실패");
-                    }
-                }
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Log.e("연결실패", t.getMessage());
-                }
-            });
-
-//            Intent intent = getIntent();
-//            finish();
-//            startActivity(intent);
-
-        }
-    }
+//    @Override //선호 해시태그 선택하다말고 뒤로 돌아오면
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode == SELECT_HASH_TAG){
+//            //회원정보 삭제
+//            Call<Void> call = RetrofitClient.getApiService().cancelSignUp(userParams.getEmail());
+//            call.enqueue(new Callback<Void>() {
+//                @Override
+//                public void onResponse(Call<Void> call, Response<Void> response) {
+//                    if(response.isSuccessful()){
+//                        Log.d(TAG, "회원정보 삭제 성공");
+//                    } else{
+//                        Log.e(TAG, "회원정보 삭제 실패");
+//                    }
+//                }
+//                @Override
+//                public void onFailure(Call<Void> call, Throwable t) {
+//                    Log.e("연결실패", t.getMessage());
+//                }
+//            });
+//
+////            Intent intent = getIntent();
+////            finish();
+////            startActivity(intent);
+//
+//        }
+//    }
 
 }

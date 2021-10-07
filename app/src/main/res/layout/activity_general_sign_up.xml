@@ -43,7 +43,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="42dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginTop="48dp"
                 android:layout_marginRight="42dp"
                 android:orientation="vertical">
@@ -219,6 +219,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="전체 동의 :"
+                        android:textSize="12sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp">
+
+                        <Button
+                            android:id="@+id/allAgree"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="70dp"
+                            android:background="@drawable/signup_agree_non" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
@@ -229,13 +256,19 @@
                         android:text="만 14세 이상입니다 (필수) :"
                         android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/ageLimit"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_agree_non" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp">
+
+                        <Button
+                            android:id="@+id/ageLimit"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="70dp"
+                            android:background="@drawable/signup_agree_non" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -266,13 +299,19 @@
                         android:text=") :"
                         android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/service"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_agree_non" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp">
+
+                        <Button
+                            android:id="@+id/service"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="70dp"
+                            android:background="@drawable/signup_agree_non" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -303,13 +342,19 @@
                         android:textSize="12sp"
                         android:text=") :" />
 
-                    <Button
-                        android:id="@+id/personal"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_agree_non" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp">
+
+                        <Button
+                            android:id="@+id/personal"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="70dp"
+                            android:background="@drawable/signup_agree_non" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -339,14 +384,18 @@
                         android:layout_gravity="center"
                         android:textSize="12sp"
                         android:text=") :" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp">
 
-                    <Button
-                        android:id="@+id/locationService"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_agree_non" />
+                        <Button
+                            android:id="@+id/locationService"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="70dp"
+                            android:background="@drawable/signup_agree_non" />
+                    </FrameLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -362,35 +411,19 @@
                         android:text="마케팅 정보 수신 동의 :"
                         android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/marketing"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_agree_non" />
-                </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/marketing"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="70dp"
+                            android:background="@drawable/signup_agree_non" />
+                    </FrameLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="전체 동의 :"
-                        android:textSize="12sp" />
-
-                    <Button
-                        android:id="@+id/allAgree"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_agree_non" />
                 </LinearLayout>
 
                 <Button

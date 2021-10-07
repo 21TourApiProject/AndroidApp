@@ -2,6 +2,7 @@ package com.starrynight.tourapiproject.postItemPage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItemAdapter.ViewHolder> {
     ArrayList<PostHashTagItem>items = new ArrayList<PostHashTagItem>();
@@ -53,9 +59,11 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
             viewHolder.postHashTagName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent1 = new Intent(viewHolder.itemView.getContext(), ObservationsiteActivity.class);
-                    intent1.putExtra("observationId",item0.ObservationId);
-                    viewHolder.itemView.getContext().startActivity(intent1);
+                    if (item0.getObservationId()!=null) {
+                        Intent intent1 = new Intent(viewHolder.itemView.getContext(), ObservationsiteActivity.class);
+                        intent1.putExtra("observationId", item0.ObservationId);
+                        viewHolder.itemView.getContext().startActivity(intent1);
+                    }
                 }
             });
         }
@@ -73,6 +81,7 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
         TextView postHashTagName;
         ImageView hashTagPin;
         Long observationId;
+        Long hashTagId;
 
         public ViewHolder(View itemView, final OnPostHashTagClickListener listener){
             super(itemView);
@@ -95,6 +104,7 @@ public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItem
         public void setItem(PostHashTagItem item){
             postHashTagName.setText("#"+item.getHashTagname());
             observationId= item.getObservationId();
+            hashTagId = item.getHashTagId();
         }
     }
 }
