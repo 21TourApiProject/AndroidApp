@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     Fragment map,searchResult, filter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
-        mainFragment = new MainFragment();
-        searchFragment = new SearchFragment();
-        tonightSkyFragment = new TonightSkyFragment();
-        personFragment = new PersonFragment();
+//        mainFragment = new MainFragment();
+//        searchFragment = new SearchFragment();
+//        tonightSkyFragment = new TonightSkyFragment();
+//        personFragment = new PersonFragment();
 
         //권한 설정
         int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -80,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
         }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
+        if (mainFragment == null) {
+            mainFragment = new MainFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
+        }
+
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
         bottom = findViewById(R.id.bottom_nav_view);
@@ -93,17 +98,30 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.navigation_main:
+                        if (mainFragment == null)
+                            mainFragment = new MainFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
+                        getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
                         return true;
                     case R.id.navigation_search:
+                        if(searchFragment ==null)
+                            searchFragment = new SearchFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                         return true;
                     case R.id.navigation_star:
+                        if(tonightSkyFragment==null)
+                            tonightSkyFragment = new TonightSkyFragment();
                         showOffBottom();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, tonightSkyFragment).commit();
                         return true;
                     case R.id.navigation_person:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, personFragment).commit();
+                        if(personFragment==null)
+                            personFragment = new PersonFragment();
+                        getSupportFragmentManager().beginTransaction().add(R.id.main_view, personFragment).commit();
+                        getSupportFragmentManager().beginTransaction().show(personFragment).commit();
+                        if(mainFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(mainFragment).commit();
+
                         return true;
                 }
                 return false;
