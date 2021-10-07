@@ -80,6 +80,8 @@ public class WeatherActivity extends AppCompatActivity {
     int mMonth = c.get(Calendar.MONTH);
     int mDay = c.get(Calendar.DAY_OF_MONTH);
 
+    int cntClick = 0;
+
     //관측적합도
     RecyclerView obFitRecycler;
     ObFitViewAdapter obFitViewAdapter;
@@ -273,6 +275,8 @@ public class WeatherActivity extends AppCompatActivity {
     String todayWtName1;
     String todayWtName2;
     String todayWtName;
+
+    int daily;
 
 
     {
@@ -969,11 +973,31 @@ public class WeatherActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+
+                    detailWeather.setOnClickListener(new View.OnClickListener() {
                         @SuppressLint("ClickableViewAccessibility")
                         @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            if (event.getAction() == MotionEvent.ACTION_UP) {
+                        public void onClick(View v) {
+                            if(cntClick == 0){
+                                if (maxTempTv.getVisibility() == View.VISIBLE) {
+                                    setTempVisibility(0);
+                                }
+
+                                if (maxLightPolTv.getVisibility() == View.VISIBLE) {
+                                    setLightPolVisibility(0);
+                                }
+
+                                cloudTv.setText(cloudState);
+                                tempTv.setText(tempState);
+                                moonPhaseTv.setText(moonPhaseState);
+                                fineDustTv.setText(fineDustState);
+                                windTv.setText(windState);
+                                humidityTv.setText(humidityState);
+                                precipitationTv.setText(precipState);
+                                lightPolTv.setText(lightPolState);
+
+                                cntClick = 1;
+                            }else{
                                 if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
                                     tempTv.setText(tempText);
                                 } else {
@@ -993,34 +1017,11 @@ public class WeatherActivity extends AppCompatActivity {
 
                                 maxLightPolTv.setText(maxLightPolText);
                                 minLightPolTv.setText(minLightPolText);
-                            }
-                            return false;
-                        }
-                    };
 
-                    detailWeather.setOnLongClickListener(new View.OnLongClickListener() {
-                        @SuppressLint("ClickableViewAccessibility")
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if (maxTempTv.getVisibility() == View.VISIBLE) {
-                                setTempVisibility(0);
+                                cntClick = 0;
                             }
 
-                            if (maxLightPolTv.getVisibility() == View.VISIBLE) {
-                                setLightPolVisibility(0);
-                            }
 
-                            cloudTv.setText(cloudState);
-                            tempTv.setText(tempState);
-                            moonPhaseTv.setText(moonPhaseState);
-                            fineDustTv.setText(fineDustState);
-                            windTv.setText(windState);
-                            humidityTv.setText(humidityState);
-                            precipitationTv.setText(precipState);
-                            lightPolTv.setText(lightPolState);
-
-                            detailWeather.setOnTouchListener(onTouchListener);
-                            return false;
                         }
                     });
                 }
