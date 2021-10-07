@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -27,6 +26,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -57,8 +58,6 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class TonightSkyFragment extends Fragment implements SensorEventListener {
     //bottomSheet 관련
@@ -125,6 +124,8 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     //별자리 운세
     List<HorItem> horItems = new ArrayList<>();
 
+    ImageView horPrevBtn, horNextBtn;
+
     private HoroscopeAdapter horAdapter;
     private ViewPager2 horViewpager;
     Long horId = 0L;
@@ -169,6 +170,23 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
         //별자리 운세
         horViewpager = v.findViewById(R.id.hor_viewpager);
+
+        horPrevBtn = v.findViewById(R.id.hor_prev_btn);
+        horNextBtn = v.findViewById(R.id.hor_next_btn);
+
+        horPrevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                horViewpager.setCurrentItem(getItem(-1), true);
+            }
+        });
+
+        horNextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                horViewpager.setCurrentItem(getItem(1), true);
+            }
+        });
 
         for (int i = 0; i < 12; i++) {
             connectHoroscope((long) i);
@@ -272,7 +290,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         starBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).onBackPressed();
+                ((MainActivity) getActivity()).onBackPressed();
             }
         });
 
@@ -564,7 +582,11 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
 
     @Override
-    public void onDestroyView() {
+    public void onDestroyView(){
         super.onDestroyView();
+    }
+
+    private int getItem(int i){
+        return horViewpager.getCurrentItem() + i;
     }
 }

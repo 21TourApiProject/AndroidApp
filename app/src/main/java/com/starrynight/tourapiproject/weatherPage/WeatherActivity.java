@@ -311,6 +311,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         selectDateTime = selectDate + selectTime;
         Log.d("selectDateTime", selectDateTime);
+
     }
 
     public void setObFitRecycler() {
@@ -387,8 +388,7 @@ public class WeatherActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

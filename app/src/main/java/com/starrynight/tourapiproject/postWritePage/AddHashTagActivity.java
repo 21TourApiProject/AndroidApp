@@ -24,10 +24,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class AddHashTagActivity extends AppCompatActivity {
     List<PostHashTagParams>postHashTagParams = new ArrayList<>();
+    List<PostHashTagParams>postHashTagParams2 = new ArrayList<>();
     RecyclerView optionHashTagRecyclerView;
     TextView findHashTag;
     String optionHashTag;
@@ -35,6 +37,11 @@ public class AddHashTagActivity extends AppCompatActivity {
     String[] optionHashTagList = new String[10];
     String[] hashTaglist =new String[22];
     String[] clicked = new String[22];
+    ArrayList<String> hashtag=new ArrayList<>();
+    HashMap<String, Integer> hashTagMap = new HashMap<String, Integer>();
+    String[] hashTagName = {"공기 좋은", "깔끔한", "감성적인", "이색적인", "인생샷", "전문적인", "캠핑", "차박", "뚜벅이", "드라이브",
+            "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
+    Button[] buttons = new Button[22];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +49,81 @@ public class AddHashTagActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_hash_tag);
         findHashTag = findViewById(R.id.findHashTag);
 
+
         Intent intent= getIntent();
+        postHashTagParams2= (List<PostHashTagParams>)intent.getSerializableExtra("hashTagParams");
         for(int i=0; i<22; i++){
             clicked[i]="";
+        }
+        if (postHashTagParams2 != null) {
+            for (int i = 0; i < postHashTagParams2.size(); i++) {
+                if (postHashTagParams2.get(i).getHashTagName() != null) {
+                    hashtag.add(postHashTagParams2.get(i).getHashTagName());
+                }
+            }
+        }
+
+        if(hashtag != null){
+            int i = 0;
+            for (String name : hashTagName){
+                hashTagMap.put(name, i);
+                i++;
+            }
+
+            for (String h : hashtag){
+                clicked[hashTagMap.get(h)]=h;
+            }
+        }
+        Button ht1 = findViewById(R.id.ht1);
+        Button ht2 = findViewById(R.id.ht2);
+        Button ht3 = findViewById(R.id.ht3);
+        Button ht4 = findViewById(R.id.ht4);
+        Button ht5 = findViewById(R.id.ht5);
+        Button ht6 = findViewById(R.id.ht6);
+        Button ht7 = findViewById(R.id.ht7);
+        Button ht8 = findViewById(R.id.ht8);
+        Button ht9 = findViewById(R.id.ht9);
+        Button ht10 = findViewById(R.id.ht10);
+        Button ht11 = findViewById(R.id.ht11);
+        Button ht12 = findViewById(R.id.ht12);
+        Button ht13 = findViewById(R.id.ht13);
+        Button ht14 = findViewById(R.id.ht14);
+        Button ht15 = findViewById(R.id.ht15);
+        Button ht16 = findViewById(R.id.ht16);
+        Button ht17 = findViewById(R.id.ht17);
+        Button ht18 = findViewById(R.id.ht18);
+        Button ht19 = findViewById(R.id.ht19);
+        Button ht20 = findViewById(R.id.ht20);
+        Button ht21 = findViewById(R.id.ht21);
+        Button ht22 = findViewById(R.id.ht22);
+        buttons[0] = ht1;
+        buttons[1] = ht2;
+        buttons[2] = ht3;
+        buttons[3] = ht4;
+        buttons[4] = ht5;
+        buttons[5] = ht6;
+        buttons[6] = ht7;
+        buttons[7] = ht8;
+        buttons[8] = ht9;
+        buttons[9] = ht10;
+        buttons[10] = ht11;
+        buttons[11] = ht12;
+        buttons[12] = ht13;
+        buttons[13] = ht14;
+        buttons[14] = ht15;
+        buttons[15] = ht16;
+        buttons[16] = ht17;
+        buttons[17] = ht18;
+        buttons[18] = ht19;
+        buttons[19] = ht20;
+        buttons[20] = ht21;
+        buttons[21] = ht22;
+
+        for(int i=0; i<22; i++){
+            if (!clicked[i].equals("")){
+                buttons[i].setTag("isClicked");
+                buttons[i].setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
+            }
         }
 
         Arrays.fill(hashTaglist, "");
