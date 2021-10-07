@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/scdream_light"
-                    android:text="본인 인증"
+                    android:text="휴대폰 인증"
                     android:textSize="17sp" />
 
                 <FrameLayout
@@ -143,27 +143,27 @@
                     android:paddingLeft="10dp"
                     android:textSize="14sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:orientation="horizontal">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="40dp"-->
+<!--                    android:orientation="horizontal">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="휴대폰 번호 수집 동의 :"
-                        android:textSize="12sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:text="휴대폰 번호 수집 동의 :"-->
+<!--                        android:textSize="12sp" />-->
 
-                    <Button
-                        android:id="@+id/phoneAgree"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="53dp"
-                        android:background="@drawable/signup_agree_non" />
-                </LinearLayout>
+<!--                    <Button-->
+<!--                        android:id="@+id/phoneAgree"-->
+<!--                        android:layout_width="18dp"-->
+<!--                        android:layout_height="18dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginLeft="53dp"-->
+<!--                        android:background="@drawable/signup_agree_non" />-->
+<!--                </LinearLayout>-->
 
             </LinearLayout>
 

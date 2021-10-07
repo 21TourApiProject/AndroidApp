@@ -55,7 +55,8 @@ public class FilterFragment extends Fragment {
 
         //지역
         Button areaBtn = v.findViewById(R.id.areaBtn);
-        areaBtn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout areaLinearLayout = v.findViewById(R.id.areaLinearLayout);
+        areaLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (filter[0] == 0) {
@@ -72,7 +73,8 @@ public class FilterFragment extends Fragment {
 
         //여행 테마
         Button hashTagBtn = v.findViewById(R.id.hashTagBtn);
-        hashTagBtn.setOnClickListener(new View.OnClickListener() {
+        LinearLayout hashTagLinearLayout = v.findViewById(R.id.hashTagLinearLayout);
+        hashTagLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (filter[1] == 0) {
@@ -101,24 +103,33 @@ public class FilterFragment extends Fragment {
                 Activities fromWhere;
                 if (getArguments() != null) {
                     fromWhere = (Activities) getArguments().getSerializable("fromWhere");
+                    System.out.println("어디서왔냐면"+fromWhere.toString());
+                    Fragment filterFragment, searchResultFragment;
+                    filterFragment = ((MainActivity) getActivity()).getFilter();
                     if (fromWhere == Activities.SEARCH) {
                         keyword = null;
                         bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        Fragment searchResultFragment = new SearchResultFragment();
+                        searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, searchResultFragment);
-                        transaction.addToBackStack(null);
+                        transaction.add(R.id.main_view, searchResultFragment);
                         transaction.commit();
+                        if (filterFragment!=null) {
+                            getFragmentManager().beginTransaction().hide(filterFragment).commit();
+                        }
+
                     } else if (fromWhere == Activities.SEARCHRESULT) {
                         keyword = getArguments().getString("keyword");
                         bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        Fragment searchResultFragment = new SearchResultFragment();
+                        searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, searchResultFragment);
-                        transaction.addToBackStack(null);
+                        transaction.add(R.id.main_view, searchResultFragment);
                         transaction.commit();
+                        if (filterFragment != null) {
+                            getFragmentManager().beginTransaction().hide(filterFragment).commit();
+                        }
+
                     } else if (fromWhere == Activities.MAP) {
                         bundle.putSerializable("FromWhere",Activities.FILTER);
                         keyword = getArguments().getString("keyword");
@@ -126,8 +137,7 @@ public class FilterFragment extends Fragment {
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         Fragment mapfragment = new MapFragment();
                         mapfragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, mapfragment);
-                        transaction.addToBackStack(null);
+                        transaction.add(R.id.main_view, mapfragment);
                         transaction.commit();
                     }
                 }
@@ -152,6 +162,23 @@ public class FilterFragment extends Fragment {
         Button areaBtn15 = v.findViewById(R.id.areaBtn15);
         Button areaBtn16 = v.findViewById(R.id.areaBtn16);
         Button areaBtn17 = v.findViewById(R.id.areaBtn17);
+        LinearLayout area1 = v.findViewById(R.id.area1);
+        LinearLayout area2 = v.findViewById(R.id.area2);
+        LinearLayout area3 = v.findViewById(R.id.area3);
+        LinearLayout area4 = v.findViewById(R.id.area4);
+        LinearLayout area5 = v.findViewById(R.id.area5);
+        LinearLayout area6 = v.findViewById(R.id.area6);
+        LinearLayout area7 = v.findViewById(R.id.area7);
+        LinearLayout area8 = v.findViewById(R.id.area8);
+        LinearLayout area9 = v.findViewById(R.id.area9);
+        LinearLayout area10 = v.findViewById(R.id.area10);
+        LinearLayout area11 = v.findViewById(R.id.area11);
+        LinearLayout area12 = v.findViewById(R.id.area12);
+        LinearLayout area13 = v.findViewById(R.id.area13);
+        LinearLayout area14 = v.findViewById(R.id.area14);
+        LinearLayout area15 = v.findViewById(R.id.area15);
+        LinearLayout area16 = v.findViewById(R.id.area16);
+        LinearLayout area17 = v.findViewById(R.id.area17);
 
         Button hashTagBtn1 = v.findViewById(R.id.hashTagBtn1);
         Button hashTagBtn2 = v.findViewById(R.id.hashTagBtn2);
@@ -175,8 +202,31 @@ public class FilterFragment extends Fragment {
         Button hashTagBtn20 = v.findViewById(R.id.hashTagBtn20);
         Button hashTagBtn21 = v.findViewById(R.id.hashTagBtn21);
         Button hashTagBtn22 = v.findViewById(R.id.hashTagBtn22);
+        LinearLayout hashTag1 = v.findViewById(R.id.hashTag1);
+        LinearLayout hashTag2 = v.findViewById(R.id.hashTag2);
+        LinearLayout hashTag3 = v.findViewById(R.id.hashTag3);
+        LinearLayout hashTag4 = v.findViewById(R.id.hashTag4);
+        LinearLayout hashTag5 = v.findViewById(R.id.hashTag5);
+        LinearLayout hashTag6 = v.findViewById(R.id.hashTag6);
+        LinearLayout hashTag7 = v.findViewById(R.id.hashTag7);
+        LinearLayout hashTag8 = v.findViewById(R.id.hashTag8);
+        LinearLayout hashTag9 = v.findViewById(R.id.hashTag9);
+        LinearLayout hashTag10 = v.findViewById(R.id.hashTag10);
+        LinearLayout hashTag11 = v.findViewById(R.id.hashTag11);
+        LinearLayout hashTag12 = v.findViewById(R.id.hashTag12);
+        LinearLayout hashTag13 = v.findViewById(R.id.hashTag13);
+        LinearLayout hashTag14 = v.findViewById(R.id.hashTag14);
+        LinearLayout hashTag15 = v.findViewById(R.id.hashTag15);
+        LinearLayout hashTag16 = v.findViewById(R.id.hashTag16);
+        LinearLayout hashTag17 = v.findViewById(R.id.hashTag17);
+        LinearLayout hashTag18 = v.findViewById(R.id.hashTag18);
+        LinearLayout hashTag19 = v.findViewById(R.id.hashTag19);
+        LinearLayout hashTag20 = v.findViewById(R.id.hashTag20);
+        LinearLayout hashTag21 = v.findViewById(R.id.hashTag21);
+        LinearLayout hashTag22 = v.findViewById(R.id.hashTag22);
 
-        areaBtn1.setOnClickListener(new View.OnClickListener() {
+
+        area1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(0) == 0) {
@@ -188,7 +238,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn2.setOnClickListener(new View.OnClickListener() {
+        area2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(1) == 0) {
@@ -200,7 +250,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn3.setOnClickListener(new View.OnClickListener() {
+        area3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(2) == 0) {
@@ -212,7 +262,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn4.setOnClickListener(new View.OnClickListener() {
+        area4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(3) == 0) {
@@ -224,7 +274,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn5.setOnClickListener(new View.OnClickListener() {
+        area5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(4) == 0) {
@@ -236,7 +286,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn6.setOnClickListener(new View.OnClickListener() {
+        area6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(5) == 0) {
@@ -248,7 +298,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn7.setOnClickListener(new View.OnClickListener() {
+        area7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(6) == 0) {
@@ -260,7 +310,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn8.setOnClickListener(new View.OnClickListener() {
+        area8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(7) == 0) {
@@ -272,7 +322,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn9.setOnClickListener(new View.OnClickListener() {
+        area9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(8) == 0) {
@@ -284,7 +334,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn10.setOnClickListener(new View.OnClickListener() {
+        area10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(9) == 0) {
@@ -296,7 +346,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn11.setOnClickListener(new View.OnClickListener() {
+        area11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(10) == 0) {
@@ -308,7 +358,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn12.setOnClickListener(new View.OnClickListener() {
+        area12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(11) == 0) {
@@ -320,7 +370,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn13.setOnClickListener(new View.OnClickListener() {
+        area13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(12) == 0) {
@@ -332,7 +382,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn14.setOnClickListener(new View.OnClickListener() {
+        area14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(13) == 0) {
@@ -344,7 +394,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn15.setOnClickListener(new View.OnClickListener() {
+        area15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(14) == 0) {
@@ -356,7 +406,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn16.setOnClickListener(new View.OnClickListener() {
+        area16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(15) == 0) {
@@ -368,7 +418,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        areaBtn17.setOnClickListener(new View.OnClickListener() {
+        area17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (area.get(16) == 0) {
@@ -380,7 +430,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn1.setOnClickListener(new View.OnClickListener() {
+        hashTag1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(0) == 0) {
@@ -392,7 +442,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn2.setOnClickListener(new View.OnClickListener() {
+        hashTag2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(1) == 0) {
@@ -404,7 +454,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn3.setOnClickListener(new View.OnClickListener() {
+        hashTag3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(2) == 0) {
@@ -416,7 +466,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn4.setOnClickListener(new View.OnClickListener() {
+        hashTag4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(3) == 0) {
@@ -428,7 +478,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn5.setOnClickListener(new View.OnClickListener() {
+        hashTag5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(4) == 0) {
@@ -440,7 +490,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn6.setOnClickListener(new View.OnClickListener() {
+        hashTag6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(5) == 0) {
@@ -452,7 +502,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn7.setOnClickListener(new View.OnClickListener() {
+        hashTag7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(6) == 0) {
@@ -464,7 +514,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn8.setOnClickListener(new View.OnClickListener() {
+        hashTag8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(7) == 0) {
@@ -476,7 +526,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn9.setOnClickListener(new View.OnClickListener() {
+        hashTag9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(8) == 0) {
@@ -488,7 +538,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn10.setOnClickListener(new View.OnClickListener() {
+        hashTag10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(9) == 0) {
@@ -500,7 +550,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn11.setOnClickListener(new View.OnClickListener() {
+        hashTag11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(10) == 0) {
@@ -512,7 +562,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn12.setOnClickListener(new View.OnClickListener() {
+        hashTag12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(11) == 0) {
@@ -524,7 +574,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn13.setOnClickListener(new View.OnClickListener() {
+        hashTag13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(12) == 0) {
@@ -536,7 +586,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn14.setOnClickListener(new View.OnClickListener() {
+        hashTag14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(13) == 0) {
@@ -548,7 +598,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn15.setOnClickListener(new View.OnClickListener() {
+        hashTag15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(14) == 0) {
@@ -560,7 +610,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn16.setOnClickListener(new View.OnClickListener() {
+        hashTag16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(15) == 0) {
@@ -572,7 +622,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn17.setOnClickListener(new View.OnClickListener() {
+        hashTag17.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(16) == 0) {
@@ -584,7 +634,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn18.setOnClickListener(new View.OnClickListener() {
+        hashTag18.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(17) == 0) {
@@ -596,7 +646,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn19.setOnClickListener(new View.OnClickListener() {
+        hashTag19.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(18) == 0) {
@@ -608,7 +658,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn20.setOnClickListener(new View.OnClickListener() {
+        hashTag20.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(19) == 0) {
@@ -620,7 +670,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn21.setOnClickListener(new View.OnClickListener() {
+        hashTag21.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(20) == 0) {
@@ -632,7 +682,7 @@ public class FilterFragment extends Fragment {
                 }
             }
         });
-        hashTagBtn22.setOnClickListener(new View.OnClickListener() {
+        hashTag22.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hashTag.get(21) == 0) {

@@ -20,7 +20,6 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postItemPage.OnSearchItemClickListener;
-import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.Search_item;
 import com.starrynight.tourapiproject.postItemPage.Search_item_adapter;
 
@@ -102,6 +101,16 @@ public class SearchObservingPointActivity extends AppCompatActivity{
                 observePoint= item.getItemName();
                 Intent intent = new Intent();
                 intent.putExtra("observationName",observePoint);
+                setResult(2,intent);
+                finish();
+            }
+        });
+        optionText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("optionObservationName",observePoint);
                 setResult(2,intent);
                 finish();
             }

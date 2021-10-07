@@ -1,12 +1,12 @@
 package com.starrynight.tourapiproject;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.Menu;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -29,8 +29,9 @@ import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.MapFragment;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
-import com.starrynight.tourapiproject.signUpPage.SignUpActivity;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
     int PERMISSIONS_REQUEST_CODE = 100;
+
+    Fragment map,searchResult, filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
@@ -130,6 +134,19 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.main_view, mapfragment);
                 transaction.commit();
             }
+            else if (fromWhere == Activities.POST){
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 1);
+                bundle.putSerializable("keyword",intent.getSerializableExtra("keyword"));
+                bundle.putIntegerArrayList("hashTag", (ArrayList<Integer>) intent.getSerializableExtra("hashTag"));
+                bundle.putIntegerArrayList("area", (ArrayList<Integer>) intent.getSerializableExtra("area"));
+                Fragment searchResultFragment = new SearchResultFragment();
+                searchResultFragment.setArguments(bundle);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, searchResultFragment);
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+                transaction.commit();
+            }
         }
     }
 
@@ -144,28 +161,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
-
-        if ((fragment instanceof FilterFragment) || fragment instanceof SearchResultFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragment instanceof SearchResultFragment) {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentManager.popBackStack();
             } else {
                 super.onBackPressed();
             }
-        } else if (fragment instanceof MapFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+        } else if(fragment instanceof FilterFragment){
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
             } else {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                super.onBackPressed();
+            }
+        }else if (fragment instanceof MapFragment) {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().remove(fragment).commit();
+            } else {
+                fragmentManager.beginTransaction().remove(fragment).commit();
                 super.onBackPressed();
             }
         } else if (fragment instanceof TonightSkyFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
             } else {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                fragmentManager.beginTransaction().remove(fragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
                 replaceFragment(mainFragment);
-
                 showBottom();
             }
         } else if (fragment instanceof MainFragment) {
@@ -234,4 +258,35 @@ public class MainActivity extends AppCompatActivity {
         bottom.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
+    }
+
+    public Fragment getMap() {
+        return map;
+    }
+
+    public void setMap(Fragment map) {
+        this.map = map;
+    }
+
+    public Fragment getSearchResult() {
+        return searchResult;
+    }
+
+    public void setSearchResult(Fragment searchResult) {
+        this.searchResult = searchResult;
+    }
+
+    public Fragment getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Fragment filter) {
+        this.filter = filter;
+    }
 }

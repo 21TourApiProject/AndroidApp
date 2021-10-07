@@ -52,7 +52,7 @@ public class PersonFragment extends Fragment {
 
     Long userId;
     User2 user;
-    List<String> myHashTagResult;
+    ArrayList<String> myHashTagResult;
     ImageView profileImage;
     TextView nickName;
     RecyclerView myHashTag;
@@ -157,7 +157,7 @@ public class PersonFragment extends Fragment {
             @Override
             public void onResponse(Call<List<String>> call, Response <List<String>> response) {
                 if (response.isSuccessful()) {
-                    myHashTagResult = response.body();
+                    myHashTagResult = (ArrayList<String>) response.body();
                     MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(myHashTagResult);
                     myHashTag.setAdapter(hashTagAdapter);
                 } else {
@@ -177,6 +177,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SelectMyHashTagActivity.class);
                 intent.putExtra("userId", userId);
+                intent.putExtra("hashtag", myHashTagResult);
                 startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });

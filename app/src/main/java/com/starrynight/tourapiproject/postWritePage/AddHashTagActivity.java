@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.postItemPage.OnPostWriteHashTagItemAdapter;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
@@ -49,6 +50,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         Arrays.fill(hashTaglist, "");
         Arrays.fill(optionHashTagList, "");
         final List<String> finallist= new ArrayList<>();
+        final List<String> optionFinalList = new ArrayList<>();
         optionHashTagRecyclerView =findViewById(R.id.optionHashTagRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.HORIZONTAL,false);
         optionHashTagRecyclerView.setLayoutManager(layoutManager);
@@ -79,14 +81,15 @@ public class AddHashTagActivity extends AppCompatActivity {
                         finallist.remove(i);
                     }
                 }
+                Collections.addAll(optionFinalList,optionHashTagList);
                 for (int i=9;i>=0;i--){
-                    if (optionHashTagList[i]==""){
-                        optionHashTagList = Arrays.copyOf(optionHashTagList, optionHashTagList.length-1);
+                    if (optionFinalList.get(i)==""){
+                       optionFinalList.remove(i);
                     }
                 }
                 intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
                 intent.putExtra("hashTagList", (Serializable) finallist);
-                intent.putExtra("optionHashTagList",optionHashTagList);
+                intent.putExtra("optionHashTagList",(Serializable)optionFinalList);
                 setResult(3,intent);
                 finish();
             }
@@ -113,6 +116,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                         }
                         adapter.addItem(new PostWriteHashTagItem(optionHashTag));
                         adapter.notifyDataSetChanged();
+                        editText.getText().clear();
                     }
                 }else{
                     return false;
@@ -134,7 +138,17 @@ public class AddHashTagActivity extends AppCompatActivity {
                     }
                     adapter.addItem(new PostWriteHashTagItem(optionHashTag));
                     adapter.notifyDataSetChanged();
+                    editText.getText().clear();
                 }
+            }
+        });
+        //해시태그 삭제
+        adapter.setOnItemClicklistener(new OnPostWriteHashTagItemAdapter() {
+            @Override
+            public void onItemClick(PostWriteHashTagItemAdapter.ViewHolder holder, View view, int position) {
+                adapter.removeItem(position);
+                adapter.notifyDataSetChanged();
+                optionHashTagList[position]="";
             }
         });
 

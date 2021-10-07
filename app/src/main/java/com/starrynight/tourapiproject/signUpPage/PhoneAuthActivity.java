@@ -67,8 +67,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private Boolean isNotPhone = false; //올바른 전화번호 형식이 아닌지
     private Boolean isPhoneDuplicate = true; //전화번호이 중복인지
 
-    Button phoneAgree;
-    private Boolean isPhoneAgree = false;
+//    Button phoneAgree;
+    private Boolean isPhoneAgree = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,19 +105,19 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         });
 
         //휴대폰 정보 수집 동의
-        phoneAgree = findViewById(R.id.phoneAgree);
-        phoneAgree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isPhoneAgree){
-                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
-                    isPhoneAgree = false;
-                } else{
-                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
-                    isPhoneAgree = true;
-                }
-            }
-        });
+//        phoneAgree = findViewById(R.id.phoneAgree);
+//        phoneAgree.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(isPhoneAgree){
+//                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
+//                    isPhoneAgree = false;
+//                } else{
+//                    phoneAgree.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
+//                    isPhoneAgree = true;
+//                }
+//            }
+//        });
 
 
         mAuth = FirebaseAuth.getInstance();

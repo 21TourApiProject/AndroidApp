@@ -18,7 +18,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -27,17 +28,21 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
+import com.starrynight.tourapiproject.postItemPage.OnPostHashTagClickListener;
 import com.starrynight.tourapiproject.postItemPage.OnPostPointItemClickListener;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
 import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
 import com.starrynight.tourapiproject.postItemPage.Post_point_item_Adapter;
 import com.starrynight.tourapiproject.postItemPage.post_point_item;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
+import com.starrynight.tourapiproject.postPage.postRetrofit.PostHashTag;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -45,6 +50,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -67,8 +73,12 @@ public class PostActivity extends AppCompatActivity{
     TextView postDate;
     ImageView profileImage;
     List<String>postHashTags;
+    List<PostHashTag> postHashTagList;
     String[] filename2= new String[10];
     String[] relatefilename = new String[4];
+    ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
+    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+    String keyword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,34 +168,36 @@ public class PostActivity extends AppCompatActivity{
                                 Log.d("postObservation","게시물 관측지 가져옴");
                                 Observation observation = response.body();
                                 //게시물 해시태그
-                                Call<List<String>>call6 = RetrofitClient.getApiService().getPostHashTagName(postId);
-                                call6.enqueue(new Callback<List<String>>() {
+                                Call<List<PostHashTag>>call6 = RetrofitClient.getApiService().getPostHashTags(postId);
+                                call6.enqueue(new Callback<List<PostHashTag>>() {
                                     @Override
-                                    public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                                    public void onResponse(Call<List<PostHashTag>> call, Response<List<PostHashTag>> response) {
                                         if (response.isSuccessful()){
                                             if (!response.body().isEmpty()){
-                                                Log.d("postHashTag","게시물 해시태그 가져옴"+response.body());
-                                                postHashTags = response.body();
+                                                Log.d("postHashTag","게시물 해시태그 가져옴");
+                                                postHashTagList = response.body();
                                                 RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
                                                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                                                 hashTagRecyclerView.setLayoutManager(staggeredGridLayoutManager);
                                                 PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
                                                 if (!observation.getObservationName().equals("나만의 관측지")){
-                                                    adapter2.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId()));
-                                                }else{adapter2.addItem(new PostHashTagItem(post.getOptionObservation(),null,null));}
-                                                for (int i=0;i<postHashTags.size();i++){
-                                                    adapter2.addItem(new PostHashTagItem(postHashTags.get(i),null,null));
+                                                    adapter2.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId(),null));
+                                                }else{adapter2.addItem(new PostHashTagItem(post.getOptionObservation(),null,null,null));}
+                                                for (int i=0;i<postHashTagList.size();i++) {
+                                                    if (postHashTagList.get(i).getHashTagId() != null) {
+                                                        adapter2.addItem(new PostHashTagItem(postHashTagList.get(i).getHashTagName(), null, null, postHashTagList.get(i).getHashTagId()));
+                                                    }
                                                 }
-                                                if (post.getOptionHashTag()!=null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag(),null,null));}
-                                                if (post.getOptionHashTag2()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag2(),null,null));}
-                                                if (post.getOptionHashTag3()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag3(),null,null));}
-                                                if (post.getOptionHashTag4()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag4(),null,null));}
-                                                if (post.getOptionHashTag5()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag5(),null,null));}
-                                                if (post.getOptionHashTag6()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag6(),null,null));}
-                                                if (post.getOptionHashTag7()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag7(),null,null));}
-                                                if (post.getOptionHashTag8()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag8(),null,null));}
-                                                if (post.getOptionHashTag9()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag9(),null,null));}
-                                                if (post.getOptionHashTag10()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag10(),null,null));}
+                                                if (post.getOptionHashTag()!=null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag(),null,null,null));}
+                                                if (post.getOptionHashTag2()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag2(),null,null,null));}
+                                                if (post.getOptionHashTag3()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag3(),null,null,null));}
+                                                if (post.getOptionHashTag4()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag4(),null,null,null));}
+                                                if (post.getOptionHashTag5()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag5(),null,null,null));}
+                                                if (post.getOptionHashTag6()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag6(),null,null,null));}
+                                                if (post.getOptionHashTag7()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag7(),null,null,null));}
+                                                if (post.getOptionHashTag8()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag8(),null,null,null));}
+                                                if (post.getOptionHashTag9()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag9(),null,null,null));}
+                                                if (post.getOptionHashTag10()!= null){adapter2.addItem(new PostHashTagItem(post.getOptionHashTag10(),null,null,null));}
                                                 for (int i=0;i<adapter2.getItemCount();i++){
                                                     allsize+=adapter2.getItem(i).getHashTagname().length();
                                                 }if (allsize>15&&allsize<30){staggeredGridLayoutManager.setSpanCount(2);}
@@ -193,6 +205,30 @@ public class PostActivity extends AppCompatActivity{
                                                 else if (allsize>61){staggeredGridLayoutManager.setSpanCount(4);}
                                                 hashTagRecyclerView.setAdapter(adapter2);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
+                                                adapter2.setOnItemClicklistener(new OnPostHashTagClickListener() {
+                                                    @Override
+                                                    public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
+                                                        Intent intent1 = new Intent(PostActivity.this,MainActivity.class);
+                                                        PostHashTagItem item = adapter2.getItem(position);
+                                                        if (item.getHashTagId()!=null){
+                                                            keyword = null;
+                                                            intent1.putExtra("keyword", keyword);
+                                                            int x = item.getHashTagId().intValue();
+                                                            hashTag.set(x-1, 1);
+                                                            intent1.putExtra("area",area);
+                                                            intent1.putExtra("hashTag",hashTag);
+                                                            intent1.putExtra("FromWhere", Activities.POST);
+                                                            startActivity(intent1);
+                                                        }else {
+                                                            keyword = item.getHashTagname();
+                                                            intent1.putExtra("keyword", keyword);
+                                                            intent1.putExtra("area",area);
+                                                            intent1.putExtra("hashTag",hashTag);
+                                                            intent1.putExtra("FromWhere", Activities.POST);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
                                             }else{
                                                 Log.d("optionHashTag","메인 해시태그 없음. 임의 해시태그 가져옴");
                                                 RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
@@ -200,18 +236,18 @@ public class PostActivity extends AppCompatActivity{
                                                 hashTagRecyclerView.setLayoutManager(staggeredGridLayoutManager);
                                                 PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();
                                                 if (!observation.getObservationName().equals("나만의 관측지")){
-                                                    adapter.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId()));
-                                                }else{adapter.addItem(new PostHashTagItem(post.getOptionObservation(),null,null));}
-                                                adapter.addItem(new PostHashTagItem(post.getOptionHashTag(),null,null));
-                                                if (post.getOptionHashTag2()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag2(),null,null));}
-                                                if (post.getOptionHashTag3()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag3(),null,null));}
-                                                if (post.getOptionHashTag4()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag4(),null,null));}
-                                                if (post.getOptionHashTag5()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag5(),null,null));}
-                                                if (post.getOptionHashTag6()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag6(),null,null));}
-                                                if (post.getOptionHashTag7()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag7(),null,null));}
-                                                if (post.getOptionHashTag8()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag8(),null,null));}
-                                                if (post.getOptionHashTag9()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag9(),null,null));}
-                                                if (post.getOptionHashTag10()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag10(),null,null));}
+                                                    adapter.addItem(new PostHashTagItem(observation.getObservationName(),null, observation.getObservationId(),null));
+                                                }else{adapter.addItem(new PostHashTagItem(post.getOptionObservation(),null,null,null));}
+                                                adapter.addItem(new PostHashTagItem(post.getOptionHashTag(),null,null,null));
+                                                if (post.getOptionHashTag2()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag2(),null,null,null));}
+                                                if (post.getOptionHashTag3()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag3(),null,null,null));}
+                                                if (post.getOptionHashTag4()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag4(),null,null,null));}
+                                                if (post.getOptionHashTag5()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag5(),null,null,null));}
+                                                if (post.getOptionHashTag6()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag6(),null,null,null));}
+                                                if (post.getOptionHashTag7()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag7(),null,null,null));}
+                                                if (post.getOptionHashTag8()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag8(),null,null,null));}
+                                                if (post.getOptionHashTag9()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag9(),null,null,null));}
+                                                if (post.getOptionHashTag10()!= null){adapter.addItem(new PostHashTagItem(post.getOptionHashTag10(),null,null,null));}
                                                 for (int i=0;i<adapter.getItemCount();i++){
                                                     allsize+=adapter.getItem(i).getHashTagname().length();
                                                 }if (allsize>15&&allsize<35){staggeredGridLayoutManager.setSpanCount(2);}
@@ -219,13 +255,30 @@ public class PostActivity extends AppCompatActivity{
                                                 else if (allsize>61){staggeredGridLayoutManager.setSpanCount(4);}
                                                 hashTagRecyclerView.setAdapter(adapter);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
+                                                adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
+                                                    @Override
+                                                    public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
+                                                        Intent intent1 = new Intent(PostActivity.this,MainActivity.class);
+                                                        PostHashTagItem item = adapter.getItem(position);
+                                                        if (item.getHashTagId()!=null){
+                                                            keyword = null;
+                                                            intent1.putExtra("keyword", keyword);
+                                                            int x = item.getHashTagId().intValue();
+                                                            hashTag.set(x-1, 1);
+                                                            intent1.putExtra("area",area);
+                                                            intent1.putExtra("hashTag",hashTag);
+                                                            intent.putExtra("FromWhere", Activities.POST);
+                                                            startActivity(intent1);
+                                                        }
+                                                    }
+                                                });
                                             }
                                         }else {Log.d("postHashTag","메인 해시태그 오류");
                                         }
                                     }
 
                                     @Override
-                                    public void onFailure(Call<List<String>> call, Throwable t) {
+                                    public void onFailure(Call<List<PostHashTag>> call, Throwable t) {
                                         Log.d("postHashTag","해시태그 인터넷 오류");
                                     }
                                 });
@@ -390,6 +443,7 @@ public class PostActivity extends AppCompatActivity{
 
 
         //이미 찜한건지 확인
+        like_btn= findViewById(R.id.like);
         Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, postId, 2);
         call0.enqueue(new Callback<Boolean>() {
             @Override
@@ -411,7 +465,6 @@ public class PostActivity extends AppCompatActivity{
             }
         });
 
-        like_btn= findViewById(R.id.like);
         like_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -425,6 +478,7 @@ public class PostActivity extends AppCompatActivity{
                                 isWish = true;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                ((MainActivity)MainActivity.mContext).onResume();
                             } else {
                                 Log.d("myWish","관광지 찜 실패");
                             }
@@ -443,6 +497,7 @@ public class PostActivity extends AppCompatActivity{
                                 isWish = false;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                ((MainActivity)MainActivity.mContext).onResume();
                             } else {
                                 Log.d("deleteMyWish","관광지 찜 삭제 실패");
                             }

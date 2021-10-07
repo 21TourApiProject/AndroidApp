@@ -47,6 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|end"
                         android:layout_marginEnd="20dp"
+                        android:visibility="gone"
                         android:layout_weight="1"
                         android:fontFamily="@font/scdream_light"
                         android:paddingTop="10dp"
@@ -55,29 +56,7 @@
                 </FrameLayout>
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
-                android:layout_marginRight="42dp"
-                android:layout_marginTop="24dp"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="만 14세 이상입니다 (필수) :"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/kko_ageLimit"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="53dp"
-                    android:background="@drawable/signup_agree_non" />
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -168,20 +147,21 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="42dp"
+                    android:layout_marginTop="24dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="휴대폰 번호 수집 동의 :"
+                        android:text="만 14세 이상입니다 (필수) :"
                         android:textSize="12sp" />
 
                     <Button
-                        android:id="@+id/kko_phoneAgree"
-                        android:layout_width="15dp"
-                        android:layout_height="16dp"
+                        android:id="@+id/kko_ageLimit"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="53dp"
                         android:background="@drawable/signup_agree_non" />
