@@ -19,6 +19,6 @@
         android:layout_width="20dp"
         android:layout_height="18dp"
         android:layout_marginLeft="140dp"
-        android:background="@drawable/postwrite__image_remove" />
+        android:background="@drawable/new_postwrite_delete" />
 </FrameLayout>
 
