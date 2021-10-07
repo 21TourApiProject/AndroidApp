@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filterable;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -36,6 +37,8 @@ public class SearchObservingPointActivity extends AppCompatActivity{
     Search_item_adapter search_item_adapter;
     LinearLayoutManager layoutManager;
     RecyclerView optionObservationRecyclerView;
+    TextView optionText;
+    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         layoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
         optionObservationRecyclerView.setLayoutManager(layoutManager);
         optionObservationRecyclerView.setAdapter(search_item_adapter);
+        optionText = findViewById(R.id.optionText);
 
         Call<List<Observation>> call = RetrofitClient.getApiService().getAllObservation();
         call.enqueue(new Callback<List<Observation>>() {
@@ -101,6 +105,16 @@ public class SearchObservingPointActivity extends AppCompatActivity{
                 finish();
             }
         });
+        optionText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
+                Intent intent = new Intent();
+                intent.putExtra("optionObservationName",observePoint);
+                setResult(2,intent);
+                finish();
+            }
+        });
 
         Button addObservePoint = findViewById(R.id.addObservePoint);
         addObservePoint.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +136,25 @@ public class SearchObservingPointActivity extends AppCompatActivity{
             }
         });
 
+        editText = findViewById(R.id.findObservePoint);
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if (!editText.getText().toString().equals("")) {
+                        observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
+                        Intent intent = new Intent();
+                        intent.putExtra("optionObservationName",observePoint);
+                        setResult(2,intent);
+                        finish();
+                    }
+                }else{
+                    return false;
+                }
+                return true;
+            }
+        });
+
     }
     public void searchFilter(String searchText) {
         filteredList.clear();
@@ -129,10 +162,9 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         for (int i=0;i<searchitemArrayList.size();i++) {
             if (searchitemArrayList.get(i).getItemName().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredList.add(searchitemArrayList.get(i));
+                optionText.setVisibility(View.GONE);
             }
-        }if (filteredList.size()==0){{filteredList.add(new Search_item("나만의 관측지를 입력하고 추가버튼을 눌러주세요",""));
-            add_btn.setVisibility(View.VISIBLE);
-        }
+        }if (filteredList.size()==0){{ optionText.setVisibility(View.VISIBLE);}
         }
         search_item_adapter.filterList(filteredList);
     }

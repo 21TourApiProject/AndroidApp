@@ -1,14 +1,24 @@
 package com.starrynight.tourapiproject;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,6 +31,8 @@ import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     public static Context mContext;
@@ -30,7 +42,14 @@ public class MainActivity extends AppCompatActivity {
     TonightSkyFragment tonightSkyFragment;
     PersonFragment personFragment;
     View bottom;
+    BottomNavigationView bottomNavigationView;
     private long backKeyPressTime=0;
+    String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+    String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
+    int PERMISSIONS_REQUEST_CODE = 100;
+
+    Fragment map,searchResult, filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +63,32 @@ public class MainActivity extends AppCompatActivity {
         tonightSkyFragment = new TonightSkyFragment();
         personFragment = new PersonFragment();
 
+        //권한 설정
+        int permission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permission2 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
+
+        Log.d("test", "onClick: location clicked");
+        if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
+            Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+
+        } else if (permission == PackageManager.PERMISSION_DENIED){
+            Log.d("test", "permission denied");
+            Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(MainActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
+            ActivityCompat.requestPermissions(MainActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
+            ActivityCompat.requestPermissions(MainActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
+        }
+
         getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);
+        bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
         bottom = findViewById(R.id.bottom_nav_view);
 
 
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
@@ -81,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
-
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Fragment mapfragment = new MapFragment();
                 mapfragment.setArguments(bundle);
@@ -98,6 +134,19 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.main_view, mapfragment);
                 transaction.commit();
             }
+            else if (fromWhere == Activities.POST){
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", 1);
+                bundle.putSerializable("keyword",intent.getSerializableExtra("keyword"));
+                bundle.putIntegerArrayList("hashTag", (ArrayList<Integer>) intent.getSerializableExtra("hashTag"));
+                bundle.putIntegerArrayList("area", (ArrayList<Integer>) intent.getSerializableExtra("area"));
+                Fragment searchResultFragment = new SearchResultFragment();
+                searchResultFragment.setArguments(bundle);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.main_view, searchResultFragment);
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+                transaction.commit();
+            }
         }
     }
 
@@ -112,29 +161,52 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
-
-        if ((fragment instanceof FilterFragment) || fragment instanceof SearchResultFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragment instanceof SearchResultFragment) {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentManager.popBackStack();
             } else {
                 super.onBackPressed();
             }
-        } else if (fragment instanceof MapFragment) {
-            if (getFragmentManager().getBackStackEntryCount() > 0) {
-                getFragmentManager().popBackStack();
+        } else if(fragment instanceof FilterFragment){
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
             } else {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
                 super.onBackPressed();
             }
-        } else {
+        }else if (fragment instanceof MapFragment) {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().remove(fragment).commit();
+            } else {
+                fragmentManager.beginTransaction().remove(fragment).commit();
+                super.onBackPressed();
+            }
+        } else if (fragment instanceof TonightSkyFragment) {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+            } else {
+                fragmentManager.beginTransaction().remove(fragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+                replaceFragment(mainFragment);
+                showBottom();
+            }
+        } else if (fragment instanceof MainFragment) {
             if (System.currentTimeMillis() > backKeyPressTime + 2000) {
                 backKeyPressTime = System.currentTimeMillis();
                 Toast.makeText(this, "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (System.currentTimeMillis() <= backKeyPressTime + 2000) {
-                finish();
+                finishAffinity();
+                System.runFinalization();
+                System.exit(0);
+//                finish();
             }
+        } else {
+            bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+            replaceFragment(mainFragment);
         }
 
 //        if(!(fragment instanceof FilterFragment)) {
@@ -154,6 +226,22 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }
     }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
 
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -170,4 +258,35 @@ public class MainActivity extends AppCompatActivity {
         bottom.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
+    }
+
+    public Fragment getMap() {
+        return map;
+    }
+
+    public void setMap(Fragment map) {
+        this.map = map;
+    }
+
+    public Fragment getSearchResult() {
+        return searchResult;
+    }
+
+    public void setSearchResult(Fragment searchResult) {
+        this.searchResult = searchResult;
+    }
+
+    public Fragment getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Fragment filter) {
+        this.filter = filter;
+    }
 }

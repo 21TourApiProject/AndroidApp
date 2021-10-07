@@ -19,4 +19,8 @@ public class PostHashTag {
     public String getHashTagName() {
         return hashTagName;
     }
+
+    public Long getHashTagId() {
+        return hashTagId;
+    }
 }

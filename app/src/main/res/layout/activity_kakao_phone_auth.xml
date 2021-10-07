@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".signUpPage.PhoneAuthActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginTop="22dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/kko_authBack"
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:layout_marginLeft="29dp"
+                    android:layout_marginRight="21dp"
+                    android:background="@drawable/mypost_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/scdream_light"
+                    android:text="본인 인증"
+                    android:textSize="17sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/kko_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|end"
+                        android:layout_marginEnd="20dp"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/scdream_light"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:text="건너뛰기" />
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
+                    android:layout_weight="1"
+                    android:text="휴대폰 번호"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/kko_mobilePhoneNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="6"
+                        android:background="@drawable/findemail_write2"
+                        android:hint="예시) 01077778888"
+                        android:inputType="phone"
+                        android:paddingLeft="10dp"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/kko_startAuth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:layout_marginLeft="14dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/wt__card_view_round"
+                        android:backgroundTint="@color/sub_blue"
+                        android:text="인증 요청"
+                        android:textSize="12sp"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/kko_resendAuth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:layout_marginLeft="14dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/wt__card_view_round"
+                        android:backgroundTint="@color/sub_blue"
+                        android:text="인증 재요청"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/kko_phoneGuide"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/point_purple"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="인증 번호"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/kko_authCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/findemail_write2"
+                    android:hint="숫자 6자리"
+                    android:inputType="number"
+                    android:paddingLeft="10dp"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="42dp"
+                    android:layout_marginTop="24dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="만 14세 이상입니다 (필수) :"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/kko_ageLimit"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="53dp"
+                        android:background="@drawable/signup_agree_non" />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/kko_verify"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:text="완료"
+                android:fontFamily="@font/scdream"
+                android:background="@drawable/round_btn" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

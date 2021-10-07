@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_dark_indigo"
     tools:context=".SearchFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -21,17 +22,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingHorizontal="24dp"
-                android:focusableInTouchMode="true"
                 android:weightSum="7">
 
+<!--                android:focusableInTouchMode="false"-->
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="17dp"
                     android:layout_marginEnd="18dp"
                     android:layout_marginBottom="38dp"
-                    android:layout_weight="7"
-                    android:focusableInTouchMode="false">
+                    android:layout_weight="7">
 
                 <SearchView
                     android:id="@+id/search"
@@ -42,22 +42,30 @@
                     app:iconifiedByDefault="false" />
                 </FrameLayout>
               
-                <Button
+                <ImageButton
                     android:id="@+id/mapBtn"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="22dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="17dp"
                     android:layout_weight="1"
-                    android:background="@drawable/search__map_btn" />
+                    android:padding="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@color/empty"
+                    android:src="@drawable/search__map_btn" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/filterBtn"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="17dp"
                     android:layout_weight="1"
-                    android:background="@drawable/search__filter_btn" />
+                    android:padding="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@color/empty"
+                    android:src="@drawable/search__filter_btn" />
 
             </LinearLayout>
 
@@ -119,6 +127,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
 
+    <View
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/blank"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_nav_size"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

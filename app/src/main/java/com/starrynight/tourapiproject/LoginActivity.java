@@ -3,6 +3,7 @@ package com.starrynight.tourapiproject;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,18 +26,29 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Handler handler = new Handler();
 
         if (getLogin()){
             Log.d("Login","유저 정보 있음"+userId);
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-            intent.putExtra("userId",userId);
-            startActivity(intent);
-            finish();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.putExtra("userId",userId);
+                    startActivity(intent);
+                    finish();
+                }
+            },2000);
         }else{
-            Log.d("Login","유저 정보 없음");
-            Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-            startActivity(intent);
-            finish();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("Login","유저 정보 없음");
+                    Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            },2000);
         }
 
     }

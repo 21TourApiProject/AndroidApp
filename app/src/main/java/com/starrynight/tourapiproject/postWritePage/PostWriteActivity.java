@@ -16,8 +16,10 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -32,10 +34,10 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.loader.content.CursorLoader;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -51,18 +53,16 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.postItemPage.PostHashTagItem;
-import com.starrynight.tourapiproject.postItemPage.PostHashTagItemAdapter;
-import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem;
-import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItemAdapter;
-import com.starrynight.tourapiproject.postPage.PostActivity;
-import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem2;
+import com.starrynight.tourapiproject.postItemPage.PostWriteHashTagItem2Adapter;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostHashTagParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostImageParams;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostParams;
+import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.PostWriteLoadingDialog;
 import com.starrynight.tourapiproject.postWritePage.postWriteRetrofit.RetrofitClient;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -71,7 +71,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -92,9 +91,10 @@ public class PostWriteActivity extends AppCompatActivity {
     List<PostImageParams> postImageParams = new ArrayList<>();
     String postObservePointName="";
     List<String> hashTagList= new ArrayList<>();
-    String[] optionhashTagList= new String[10];
+    List<String> optionhashTagList= new ArrayList<>();
     Long postId;
     Long userId;
+    PostWriteLoadingDialog dialog;
     File file;
     LinearLayout ob_linear;
     ArrayList<File> files = new ArrayList<>();
@@ -123,6 +123,7 @@ public class PostWriteActivity extends AppCompatActivity {
         postObservePointItem = (TextView)findViewById(R.id.postObservationItem);
         ob_linear = findViewById(R.id.postwrite_ob_linear);
         examplelayout=findViewById(R.id.exampleLinear);
+        dialog = new PostWriteLoadingDialog(PostWriteActivity.this);
 
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
@@ -251,8 +252,8 @@ public class PostWriteActivity extends AppCompatActivity {
         };
 
         //관측지점검색 버튼 클릭 이벤트
-        Button observingPoint = findViewById(R.id.observingPoint);
-        observingPoint.setOnClickListener(new View.OnClickListener() {
+        ConstraintLayout observationlayout = findViewById(R.id.layout_observation);
+        observationlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostWriteActivity.this, SearchObservingPointActivity.class);
@@ -261,8 +262,8 @@ public class PostWriteActivity extends AppCompatActivity {
         });
 
         //해시태그추가 버튼 클릭 이벤트
-        Button addHashTag = findViewById(R.id.hashTag);
-        addHashTag.setOnClickListener(new View.OnClickListener() {
+        ConstraintLayout hashTaglayout = findViewById(R.id.layout_hashtag);
+        hashTaglayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostWriteActivity.this, AddHashTagActivity.class);
@@ -278,7 +279,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        Handler handler = new Handler();
         Button save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,7 +313,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(hashTagList.isEmpty()&&optionhashTagList[0]==null){
+                if(hashTagList.isEmpty()&&optionhashTagList.get(0)==null){
                     Toast.makeText(getApplicationContext(), "해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -327,76 +328,76 @@ public class PostWriteActivity extends AppCompatActivity {
                 postParams.setUserId(userId);
                 postParams.setPostTitle(postTitle);
                 postParams.setOptionObservation(optionobservationName);
-                if (optionhashTagList.length==1){postParams.setOptionHashTag(optionhashTagList[0]);}
-                if (optionhashTagList.length==2){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);}
-                if (optionhashTagList.length==3){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);}
-                if (optionhashTagList.length==4){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);}
-                if (optionhashTagList.length==5){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);}
-                if (optionhashTagList.length==6){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);}
-                if (optionhashTagList.length==7){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);}
-                if (optionhashTagList.length==8){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);
-                    postParams.setOptionHashTag8(optionhashTagList[7]);}
-                if (optionhashTagList.length==9){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);
-                    postParams.setOptionHashTag8(optionhashTagList[7]);
-                    postParams.setOptionHashTag9(optionhashTagList[8]);}
-                if (optionhashTagList.length==10){
-                    postParams.setOptionHashTag(optionhashTagList[0]);
-                    postParams.setOptionHashTag2(optionhashTagList[1]);
-                    postParams.setOptionHashTag3(optionhashTagList[2]);
-                    postParams.setOptionHashTag4(optionhashTagList[3]);
-                    postParams.setOptionHashTag5(optionhashTagList[4]);
-                    postParams.setOptionHashTag6(optionhashTagList[5]);
-                    postParams.setOptionHashTag7(optionhashTagList[6]);
-                    postParams.setOptionHashTag8(optionhashTagList[7]);
-                    postParams.setOptionHashTag9(optionhashTagList[8]);
-                    postParams.setOptionHashTag10(optionhashTagList[9]);}
+                if (optionhashTagList.size()==1){postParams.setOptionHashTag(optionhashTagList.get(0));}
+                if (optionhashTagList.size()==2){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));}
+                if (optionhashTagList.size()==3){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));}
+                if (optionhashTagList.size()==4){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));}
+                if (optionhashTagList.size()==5){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));}
+                if (optionhashTagList.size()==6){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));}
+                if (optionhashTagList.size()==7){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));}
+                if (optionhashTagList.size()==8){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));
+                    postParams.setOptionHashTag8(optionhashTagList.get(7));}
+                if (optionhashTagList.size()==9){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));
+                    postParams.setOptionHashTag8(optionhashTagList.get(7));
+                    postParams.setOptionHashTag9(optionhashTagList.get(8));}
+                if (optionhashTagList.size()==10){
+                    postParams.setOptionHashTag(optionhashTagList.get(0));
+                    postParams.setOptionHashTag2(optionhashTagList.get(1));
+                    postParams.setOptionHashTag3(optionhashTagList.get(2));
+                    postParams.setOptionHashTag4(optionhashTagList.get(3));
+                    postParams.setOptionHashTag5(optionhashTagList.get(4));
+                    postParams.setOptionHashTag6(optionhashTagList.get(5));
+                    postParams.setOptionHashTag7(optionhashTagList.get(6));
+                    postParams.setOptionHashTag8(optionhashTagList.get(7));
+                    postParams.setOptionHashTag9(optionhashTagList.get(8));
+                    postParams.setOptionHashTag10(optionhashTagList.get(9));}
                 Call<Long>call = RetrofitClient.getApiService().postup(postObservePointName,postParams);
                 call.enqueue(new Callback<Long>() {
                     @Override
                     public void onResponse(Call<Long> call, Response<Long> response) {
                         if(response.isSuccessful()){
-                            System.out.println("post 성공");
+                            Log.d("post","게시물 작성 성공");
                             Long result = response.body();
                             //앱 내부 저장소에 postId란 이름으로 게시글 id 저장
                             String fileName = "postId";
@@ -415,13 +416,13 @@ public class PostWriteActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
-                                        System.out.println("이미지 업로드 성공");
-                                    }else {System.out.println("이미지 업로드 실패");}
+                                       Log.d("postImage","이미지 업로드 성공");
+                                    }else {Log.d("postImage","이미지 업로드 실패");}
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("이미지 업로드 실패 2");
+                                    Log.d("postImage","이미지 업로드 인터넷 오류");
                                 }
                             });
                             Call<Void>call2 =RetrofitClient.getApiService().createPostHashTag(result,postHashTagParams);
@@ -429,24 +430,25 @@ public class PostWriteActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if (response.isSuccessful()) {
-                                        System.out.println("해시태그 생성");
-                                    }else {System.out.println("해시태그 생성 실패,임시 해시태그 생성");}
+                                        Log.d("posthashTag","해시태그 업로드 성공");
+                                    }else {  Log.d("posthashTag","해시태그 업로드 실패");}
                                 }
 
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
-                                    System.out.println("해시태그 생성 실패2");
+                                    Log.d("posthashTag","해시태그 업로드 인터넷 오류");
                                 }
                             });
-                        }else{ System.out.println("post 실패");}
+                        }else{   Log.d("post","게시물 작성 성공");;}
                     }
                     @Override
                     public void onFailure(Call<Long> call, Throwable t) {
-                        System.out.println("post2 실패");
+                        Log.d("post","게시물 작성 인터넷 오류");
                     }
                 });
-                finish();
-            }
+                LoadingAsyncTask task = new LoadingAsyncTask(PostWriteActivity.this,3000);
+                task.execute();
+                    }
         });
                 ad.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
                     @Override
@@ -493,26 +495,26 @@ public class PostWriteActivity extends AppCompatActivity {
                 int allsize=0;
                 postHashTagParams = (List<PostHashTagParams>)data.getSerializableExtra("postHashTagParams");
                 hashTagList =(List<String>)data.getSerializableExtra("hashTagList");
-                optionhashTagList =  (String[]) data.getSerializableExtra("optionHashTagList");
+                optionhashTagList =  (List<String>) data.getSerializableExtra("optionHashTagList");
                 RecyclerView recyclerView = findViewById(R.id.postHashTagrecyclerView);
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(layoutManager);
-                PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
-                if (hashTagList.size()!=0 && optionhashTagList.length!=0){
+                PostWriteHashTagItem2Adapter adapter = new PostWriteHashTagItem2Adapter();
+                if (hashTagList.size()!=0 && optionhashTagList.size()!=0){
                 for (int i=0;i<hashTagList.size();i++){
-                    adapter.addItem(new PostWriteHashTagItem(hashTagList.get(i)));
+                    adapter.addItem(new PostWriteHashTagItem2(hashTagList.get(i)));
                     }
                     for (String s : optionhashTagList) {
-                        adapter.addItem(new PostWriteHashTagItem(s));
+                        adapter.addItem(new PostWriteHashTagItem2(s));
                     }
                 }else if (hashTagList.size()!=0){
                     for (int i=0;i<hashTagList.size();i++){
-                        adapter.addItem(new PostWriteHashTagItem(hashTagList.get(i)));
+                        adapter.addItem(new PostWriteHashTagItem2(hashTagList.get(i)));
                     }
                 }
                 else{
                     for (String s : optionhashTagList) {
-                        adapter.addItem(new PostWriteHashTagItem(s));
+                        adapter.addItem(new PostWriteHashTagItem2(s));
                     }
                 }
                 for (int i=0;i<adapter.getItemCount();i++){
@@ -521,7 +523,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 else if (allsize>31&&allsize<60){layoutManager.setSpanCount(3);}
                 else if (allsize>61){layoutManager.setSpanCount(4);}
                 recyclerView.setAdapter(adapter);
-                recyclerView.addItemDecoration(new RecyclerViewDecoration(20));
+                recyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
         }
         if (resultCode != RESULT_OK || data == null) {
@@ -593,11 +595,11 @@ public String getRealPathFromURI(Uri contentUri) {
     public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
         private final int divRight;
-
-        public RecyclerViewDecoration(int divRight)
+        private final int divHeight;
+        public RecyclerViewDecoration(int divRight,int divHeight)
         {
-
             this.divRight = divRight;
+            this.divHeight = divHeight;
         }
 
         @Override
@@ -605,12 +607,13 @@ public String getRealPathFromURI(Uri contentUri) {
         {
             super.getItemOffsets(outRect, view, parent, state);
             outRect.right = divRight;
+            outRect.top = divHeight;
         }
     }
 
     public void uploadWithTransferUtilty(String fileName, File file) {
 
-        AWSCredentials awsCredentials = new BasicAWSCredentials("AKIA56KLCEH5WNTFY4OK", "RSuNQ5qtPpMu1c1zojcfAmTbwfA4QZ6Zq8uDuOiM");    // IAM 생성하며 받은 것 입력
+        AWSCredentials awsCredentials = new BasicAWSCredentials(readAccessKey(), readSecretKey());    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
 
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
@@ -730,4 +733,76 @@ public String getRealPathFromURI(Uri contentUri) {
         return resizeBitmap;
     }
 
+    private String readAccessKey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.access);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("data = " + data);
+        return data;
+    }
+
+    private String readSecretKey() {
+        String data = null;
+        InputStream inputStream = getResources().openRawResource(R.raw.secret);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        int i;
+        try {
+            i = inputStream.read();
+            while (i != -1) {
+                byteArrayOutputStream.write(i);
+                i = inputStream.read();
+            }
+            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("data = " + data);
+        return data;
+    }
+    private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+        private Long mtime;
+
+        public LoadingAsyncTask(Context context, long time ) {
+            mContext = PostWriteActivity.this;
+            mtime = time;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+                Thread.sleep(mtime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return (true);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+            finish();
+        }
+    }
 }

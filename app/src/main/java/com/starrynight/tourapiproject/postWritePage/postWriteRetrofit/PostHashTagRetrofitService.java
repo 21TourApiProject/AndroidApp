@@ -1,12 +1,7 @@
 package com.starrynight.tourapiproject.postWritePage.postWriteRetrofit;
 
-import android.graphics.Bitmap;
-
-import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.postPage.postRetrofit.Post;
-import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import retrofit2.Call;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="80dp"
+    android:layout_marginBottom="@dimen/bottom_nav_size"
     tools:context=".searchPage.SearchResultFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -36,22 +36,30 @@
 
                 </SearchView>
 
-                <Button
+                <ImageButton
                     android:id="@+id/mapBtn2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginEnd="22dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/search__map_btn" />
+                    android:padding="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@color/empty"
+                    android:src="@drawable/search__map_btn" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/filterBtn2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="22dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:background="@drawable/search__filter_btn" />
+                    android:padding="5dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:background="@color/empty"
+                    android:src="@drawable/search__filter_btn" />
 
             </LinearLayout>
 
@@ -133,31 +141,11 @@
                     android:background="@drawable/search_tap_non" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/obText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="관측지 검색결과"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tpText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="관광지 검색결과"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/postText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="게시물 검색결과"
-                android:visibility="gone" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -171,6 +159,7 @@
                 android:textColor="@color/sub_blue" />
 
             <ImageView
+                android:id="@+id/ob_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="31dp"
@@ -179,7 +168,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp" />
 
             <TextView
                 android:id="@+id/moreTp_text"
@@ -191,6 +181,7 @@
                 android:textColor="@color/sub_blue" />
 
             <ImageView
+                android:id="@+id/tp_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="31dp"
@@ -199,7 +190,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp" />
 
             <TextView
                 android:id="@+id/morePost_text"
@@ -211,7 +203,7 @@
                 android:textColor="@color/sub_blue" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/post_line"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="31dp"

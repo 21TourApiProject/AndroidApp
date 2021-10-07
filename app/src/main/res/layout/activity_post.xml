@@ -48,7 +48,7 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/post_delete_btn"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -126,14 +126,16 @@
                             android:id="@+id/post_profileImage"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:scaleType="centerCrop"
                             app:srcCompat="@drawable/post__profile_no_image" />
 
                         <TextView
                             android:id="@+id/post_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/spoqahansansneobold"
                             android:text="닉네임"
                             android:textSize="12sp" />
 
@@ -141,8 +143,8 @@
 
                     <Button
                         android:id="@+id/like"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_gravity="right|center_vertical"
                         android:background="@drawable/main__bookmark"
                         app:layout_constraintTop_toBottomOf="@+id/postThumbnail" />

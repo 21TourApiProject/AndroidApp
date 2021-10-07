@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class PostWriteHashTagItemAdapter extends RecyclerView.Adapter<PostWriteHashTagItemAdapter.ViewHolder> {
     ArrayList<PostWriteHashTagItem> items = new ArrayList<PostWriteHashTagItem>();
+    OnPostWriteHashTagItemAdapter listener;
 
     public void addItem(PostWriteHashTagItem item){
         items.add(item);
@@ -23,6 +24,7 @@ public class PostWriteHashTagItemAdapter extends RecyclerView.Adapter<PostWriteH
     public void setItems(ArrayList<PostWriteHashTagItem>items){
         this.items = items;
     }
+    public void removeItem(int position){ items.remove(position); }
     public PostWriteHashTagItem getItem(int position){
         return items.get(position);
     }
@@ -35,14 +37,18 @@ public class PostWriteHashTagItemAdapter extends RecyclerView.Adapter<PostWriteH
     @Override
     public PostWriteHashTagItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.hashtags_full, parent, false);
-        return new PostWriteHashTagItemAdapter.ViewHolder(itemView);
+        View itemView = inflater.inflate(R.layout.hashtags_full2, parent, false);
+        return new PostWriteHashTagItemAdapter.ViewHolder(itemView,listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostWriteHashTagItemAdapter.ViewHolder viewHolder, int position){
         PostWriteHashTagItem item = items.get(position);
         viewHolder.setItem(item);
+    }
+
+    public void  setOnItemClicklistener(OnPostWriteHashTagItemAdapter listener){
+        this.listener = listener;
     }
 
     @Override
@@ -52,10 +58,23 @@ public class PostWriteHashTagItemAdapter extends RecyclerView.Adapter<PostWriteH
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView postHashTagName;
+        ImageView hashTagDelete;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView, final OnPostWriteHashTagItemAdapter listener){
             super(itemView);
-            postHashTagName =itemView.findViewById(R.id.recycler_hashTagName);
+            postHashTagName =itemView.findViewById(R.id.hashtags_name);
+            hashTagDelete = itemView.findViewById(R.id.hashtags_delete);
+
+            itemView.setClickable(true);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null){
+                        listener.onItemClick(PostWriteHashTagItemAdapter.ViewHolder.this, v, position);
+                    }
+                }
+            });
         }
 
         @SuppressLint("SetTextI18n")

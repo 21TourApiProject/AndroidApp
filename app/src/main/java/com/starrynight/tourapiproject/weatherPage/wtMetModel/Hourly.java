@@ -12,6 +12,9 @@ public class Hourly {
     @SerializedName("temp")
     private String temp;
 
+    @SerializedName("feels_like")
+    private String feelsLike;
+
     @SerializedName("humidity")
     private String humidity;
 
@@ -95,4 +98,11 @@ public class Hourly {
         this.pop = pop;
     }
 
+    public String getFeelsLike() {
+        return feelsLike;
+    }
+
+    public void setFeelsLike(String feelsLike) {
+        this.feelsLike = feelsLike;
+    }
 }
