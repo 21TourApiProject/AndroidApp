@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (mainFragment == null) {
             mainFragment = new MainFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
         }
 
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
@@ -98,29 +98,62 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.navigation_main:
-                        if (mainFragment == null)
+                        if (mainFragment == null) {
                             mainFragment = new MainFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, mainFragment).commit();
-                        getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
+                        }
+                        if(mainFragment!=null)
+                            getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
+                        if(searchFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
+                        if(tonightSkyFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
+                        if(personFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
                         return true;
                     case R.id.navigation_search:
-                        if(searchFragment ==null)
+                        if (searchFragment == null) {
                             searchFragment = new SearchFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
-                        return true;
-                    case R.id.navigation_star:
-                        if(tonightSkyFragment==null)
-                            tonightSkyFragment = new TonightSkyFragment();
-                        showOffBottom();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_view, tonightSkyFragment).commit();
-                        return true;
-                    case R.id.navigation_person:
-                        if(personFragment==null)
-                            personFragment = new PersonFragment();
-                        getSupportFragmentManager().beginTransaction().add(R.id.main_view, personFragment).commit();
-                        getSupportFragmentManager().beginTransaction().show(personFragment).commit();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_view, searchFragment).commit();
+                        }
                         if(mainFragment!=null)
                             getSupportFragmentManager().beginTransaction().hide(mainFragment).commit();
+                        if(searchFragment!=null)
+                            getSupportFragmentManager().beginTransaction().show(searchFragment).commit();
+                        if(tonightSkyFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
+                        if(personFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+                        return true;
+                    case R.id.navigation_star:
+                        if (tonightSkyFragment == null) {
+                            tonightSkyFragment = new TonightSkyFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_view, tonightSkyFragment).commit();
+                        }
+                        if(mainFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(mainFragment).commit();
+                        if(searchFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
+                        if(tonightSkyFragment!=null)
+                            getSupportFragmentManager().beginTransaction().show(tonightSkyFragment).commit();
+                        if(personFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+
+                        showOffBottom();
+                        return true;
+                    case R.id.navigation_person:
+                        if (personFragment == null) {
+                            personFragment = new PersonFragment();
+                            getSupportFragmentManager().beginTransaction().add(R.id.main_view, personFragment).commit();
+                        }
+                        if(mainFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(mainFragment).commit();
+                        if(searchFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
+                        if(tonightSkyFragment!=null)
+                            getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
+                        if(personFragment!=null)
+                            getSupportFragmentManager().beginTransaction().show(personFragment).commit();
 
                         return true;
                 }
@@ -194,20 +227,21 @@ public class MainActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
         }else if (fragment instanceof MapFragment) {
+            fragmentManager.beginTransaction().remove(fragment).commit();
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
-                fragmentManager.beginTransaction().remove(fragment).commit();
             } else {
-                fragmentManager.beginTransaction().remove(fragment).commit();
                 super.onBackPressed();
             }
         } else if (fragment instanceof TonightSkyFragment) {
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
-                fragmentManager.beginTransaction().remove(fragment).commit();
+                if(tonightSkyFragment!=null)
+                    getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
-                replaceFragment(mainFragment);
+                if(mainFragment!=null)
+                    getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
                 showBottom();
             }
         } else if (fragment instanceof MainFragment) {
@@ -224,7 +258,14 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             bottomNavigationView.setSelectedItemId(R.id.navigation_main);
-            replaceFragment(mainFragment);
+            if(mainFragment!=null)
+                getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
+            if(searchFragment!=null)
+                getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
+            if(tonightSkyFragment!=null)
+                getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
+            if(personFragment!=null)
+                getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
         }
 
 //        if(!(fragment instanceof FilterFragment)) {

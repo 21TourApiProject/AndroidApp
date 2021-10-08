@@ -103,7 +103,6 @@ public class FilterFragment extends Fragment {
                 Activities fromWhere;
                 if (getArguments() != null) {
                     fromWhere = (Activities) getArguments().getSerializable("fromWhere");
-                    System.out.println("어디서왔냐면"+fromWhere.toString());
                     Fragment filterFragment, searchResultFragment;
                     filterFragment = ((MainActivity) getActivity()).getFilter();
                     if (fromWhere == Activities.SEARCH) {
