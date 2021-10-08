@@ -104,7 +104,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="개요"
-                        android:lineSpacingExtra="25dp"
+                        android:lineSpacingExtra="4dp"
                         android:textSize="12sp"
                         android:layout_centerHorizontal="true"
                         android:maxLines="4"
@@ -119,6 +119,7 @@
                         android:text="자세히 보기 >"
                         android:textSize="11sp"
                         android:layout_marginLeft="1dp"
+                        android:layout_marginTop="4dp"
                         android:visibility="gone"
                         tools:visibility="visible"
                         android:layout_below="@id/obs_outline_txt" />
@@ -157,9 +158,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00.0"
+                        android:layout_marginTop="0.6dp"
                         style="@style/Textview_observation_details"
-                        android:layout_alignParentLeft="true"
                         android:layout_marginLeft="102dp"/>
+                    <ImageView
+                        android:id="@+id/obs_light_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/obs_light_txt"
+                        android:src="@drawable/observation__light_worst"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -315,7 +322,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="이용안내 글 전체"
-                        android:lineSpacingExtra="25dp"
+                        android:lineSpacingExtra="4dp"
                         style="@style/Textview_observation_details"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="102dp"/>
@@ -420,9 +427,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00.0"
+                    android:layout_marginTop="0.6dp"
                     style="@style/Textview_observation_details"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="102dp"/>
+                <ImageView
+                    android:id="@+id/obs_nature_light_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/obs_nature_light_txt"
+                    android:src="@drawable/observation__light_worst"/>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -495,7 +510,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="이용안내 글 전체"
-                    android:lineSpacingExtra="25dp"
+                    android:lineSpacingExtra="4dp"
                     style="@style/Textview_observation_details"
                     android:layout_below="@id/obs_nature_parking_txt"
                     android:layout_alignLeft="@id/obs_nature_address_txt"/>
