@@ -167,8 +167,20 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         LinearLayout operating_layout = findViewById(R.id.obs_foroperating_layout);
                         operating_layout.setVisibility(View.GONE);
 
+                        double lighttxt = observation.getLight();
                         TextView nature_light = findViewById(R.id.obs_nature_light_txt);
                         nature_light.setText(Double.toString(observation.getLight()));
+                        ImageView nature_light_icon = findViewById(R.id.obs_nature_light_icon);
+                        if(lighttxt<=1)
+                            nature_light_icon.setImageResource(R.drawable.observation__light_great);
+                        else if (lighttxt>1 && lighttxt<=15)
+                            nature_light_icon.setImageResource(R.drawable.observation__light_good);
+                        else if(lighttxt>15 && lighttxt<=45)
+                            nature_light_icon.setImageResource(R.drawable.observation__light_common);
+                        else if(lighttxt>45&&lighttxt<=80)
+                            nature_light_icon.setImageResource(R.drawable.observation__light_bad);
+                        else if(lighttxt>80)
+                            nature_light_icon.setImageResource(R.drawable.observation__light_worst);
                         TextView nature_parking = findViewById(R.id.obs_nature_parking_txt);
                         nature_parking.setText(observation.getParking());
                         TextView nature_address = findViewById(R.id.obs_nature_address_txt);
@@ -178,8 +190,21 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
                     } else {
                         //운영관측지일 경우 레이아웃 구성
+                        double lighttxt = observation.getLight();
                         TextView light = findViewById(R.id.obs_light_txt);
                         light.setText(Double.toString(observation.getLight()));
+                        ImageView light_icon = findViewById(R.id.obs_light_icon);
+                        if(lighttxt<=1)
+                            light_icon.setImageResource(R.drawable.observation__light_great);
+                        else if (lighttxt>1 && lighttxt<=15)
+                            light_icon.setImageResource(R.drawable.observation__light_good);
+                        else if(lighttxt>15 && lighttxt<=45)
+                            light_icon.setImageResource(R.drawable.observation__light_common);
+                        else if(lighttxt>45&&lighttxt<=80)
+                            light_icon.setImageResource(R.drawable.observation__light_bad);
+                        else if(lighttxt>80)
+                            light_icon.setImageResource(R.drawable.observation__light_worst);
+
                         TextView address = findViewById(R.id.obs_address_txt);
                         address.setText(observation.getAddress());
                         TextView phonenumber = findViewById(R.id.obs_phonenumber_txt);
@@ -419,7 +444,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body()){
                         isWish = true;
-                        save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                        save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                     } else{
                         isWish = false;
                     }
@@ -444,7 +469,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 //버튼 디자인 바뀌게 구현하기
                                 isWish = true;
-                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.wish_button));
+                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 실패");
@@ -462,7 +487,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 isWish = false;
-                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_wish_button));
+                                save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("관광지 찜 삭제 실패");
