@@ -6,7 +6,9 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface SearchPageRetrofitService {
 
@@ -19,5 +21,8 @@ public interface SearchPageRetrofitService {
 
     @POST("search/post")
     Call<List<MyPost>> getPostWithFilter(@Body SearchKey searchKey);
+
+    @GET("searchFirst/{typeName}")
+    Call<List<SearchFirst>> getSearchFirst(@Path("typeName")String typeName);
 
 }
