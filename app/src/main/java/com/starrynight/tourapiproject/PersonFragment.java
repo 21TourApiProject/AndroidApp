@@ -48,7 +48,7 @@ import retrofit2.Response;
 public class PersonFragment extends Fragment {
 
     private static final String TAG = "PersonFragment";
-    private static final int HAVE_TO_REFRESH = 10;
+    private static final int HAVE_TO_REFRESH = 20;
 
     Long userId;
     User2 user;
@@ -78,6 +78,7 @@ public class PersonFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);
         View v = inflater.inflate(R.layout.fragment_person, container, false);
 
         nickName = v.findViewById(R.id.nickName);
@@ -152,13 +153,23 @@ public class PersonFragment extends Fragment {
         myHashTag.setLayoutManager(myHashTagLayoutManager);
         myHashTag.setHasFixedSize(true);
 
-        Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag3(userId);
+        Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag(userId);
         call3.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response <List<String>> response) {
                 if (response.isSuccessful()) {
                     myHashTagResult = (ArrayList<String>) response.body();
-                    MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(myHashTagResult);
+                    ArrayList<String> three = new ArrayList<>();
+
+                    if (myHashTagResult.size() > 3){
+                        for (int i =0;i<3;i++){
+                            three.add(myHashTagResult.get(i));
+                        }
+                    }else{
+                        three = myHashTagResult;
+                    }
+
+                    MyHashTagAdapter hashTagAdapter = new MyHashTagAdapter(three);
                     myHashTag.setAdapter(hashTagAdapter);
                 } else {
                     Log.d(TAG, "사용자 해시태그 불러오기 실패");
