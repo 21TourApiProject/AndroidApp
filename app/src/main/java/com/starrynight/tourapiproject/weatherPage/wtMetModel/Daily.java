@@ -15,6 +15,9 @@ public class Daily {
     @SerializedName("sunset")
     private String sunset;
 
+    @SerializedName("feels_like")
+    private FeelsLike feelsLike;
+
     @SerializedName("moonrise")
     private String moonrise;
 
@@ -137,5 +140,13 @@ public class Daily {
 
     public void setPop(String pop) {
         this.pop = pop;
+    }
+
+    public FeelsLike getFeelsLike() {
+        return feelsLike;
+    }
+
+    public void setFeelsLike(FeelsLike feelsLike) {
+        this.feelsLike = feelsLike;
     }
 }
