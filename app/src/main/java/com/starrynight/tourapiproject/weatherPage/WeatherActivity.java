@@ -220,6 +220,8 @@ public class WeatherActivity extends AppCompatActivity {
     TextView maxLightPolTv;
     TextView lightSlashTv;
 
+    TextView detailMent;
+
     String cloudValue;
     String feelsLikeValue;
     String precipValue;
@@ -289,7 +291,6 @@ public class WeatherActivity extends AppCompatActivity {
     String todayWtName2;
     String todayWtName;
 
-    int daily;
 
 
     {
@@ -408,6 +409,8 @@ public class WeatherActivity extends AppCompatActivity {
         minTempTv = findViewById(R.id.wt_min_temp);
         maxTempTv = findViewById(R.id.wt_max_temp);
         tempSlashTv = findViewById(R.id.wt_temp_slash);
+
+        detailMent = findViewById(R.id.wt_detail_ment);
     }
 
     //뒤로가기 버튼 이벤트
@@ -1250,6 +1253,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 humidityTv.setText(humidityState);
                                 precipitationTv.setText(precipState);
                                 lightPolTv.setText(lightPolState);
+                                detailMent.setText("터치해서 상세 수치를 확인해보세요!");
 
                                 cntClick = 1;
                             } else {
@@ -1284,6 +1288,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                                 maxLightPolTv.setText(maxLightPolText);
                                 minLightPolTv.setText(minLightPolText);
+                                detailMent.setText("터치해서 요약 정보를 확인해보세요!");
+
 
                                 cntClick = 0;
                             }
