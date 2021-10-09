@@ -1350,19 +1350,19 @@ public class WeatherActivity extends AppCompatActivity {
 
     //관측적합도
     public double setObservationalFitDegree() {
-        cloudVolumeValue = -100 * (-(1 / (-(0.25) * (cloudVolume / 100 - 2.7)) - 1.48148));
+        cloudVolumeValue = Math.round(100 * (-(1 / (-(0.25) * (cloudVolume / 100 - 2.7)) - 1.48148))*100)/100.0;
 
         if (moonAge <= 0.5) {
-            moonAgeValue = Math.round((-8 * Math.pow(moonAge, 3.46)) / 0.727 * 100);
+            moonAgeValue = -Math.round(((8 * Math.pow(moonAge, 3.46)) / 0.727 * 100)*100)/100.0;
         } else if (moonAge > 0.5 && moonAge <= 0.5609) {
-            moonAgeValue = Math.round((-75 * Math.pow(moonAge - 0.5, 2) + 0.727) / 0.727 * 100);
+            moonAgeValue = -Math.round(((-75 * Math.pow(moonAge - 0.5, 2) + 0.727) / 0.727 * 100)*100)/100.0;
         } else if (moonAge > 0.5609) {
-            moonAgeValue = Math.round((-1 / (5.6 * Math.pow(moonAge + 0.3493, 10)) - 0.0089) / 0.727 * 100);
+            moonAgeValue = -Math.round(((1 / (5.6 * Math.pow(moonAge + 0.3493, 10)) - 0.0089) / 0.727 * 100)*100)/100.0;
         }
         if (feel_like < 18) {
-            feel_likeValue = -0.008 * Math.pow((feel_like - 18), 2);
+            feel_likeValue = Math.round(-0.008 * Math.pow((feel_like - 18), 2)*100)/100.0;
         } else {
-            feel_likeValue = -0.09 * Math.pow((feel_like - 18), 2);
+            feel_likeValue = Math.round(-0.09 * Math.pow((feel_like - 18), 2)*100)/100.0;
         }
 
         if (fineDust.equals("좋음")) {
@@ -1372,21 +1372,21 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (fineDust.equals("나쁨")) {
             fineDustValue = -20;
         }
-        precipitationProbabilityValue = 100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556));
+        precipitationProbabilityValue = Math.round(100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556))*100)/100.0;
 
         if (lightPollution < 28.928) {
-            lightPollutionValue = -(1 / (-(0.001) * (lightPollution - 48)) - 20.833);
+            lightPollutionValue = Math.round(-(1 / (-(0.001) * (lightPollution - 48)) - 20.833)*100)/100.0;
         } else if (lightPollution >= 28.928 && lightPollution < 77.53) {
-            lightPollutionValue = -(1 / (-(0.0001) * (lightPollution + 52)) + 155);
+            lightPollutionValue = Math.round(-(1 / (-(0.0001) * (lightPollution + 52)) + 155)*100)/100.0;
         } else if (lightPollution >= 77.53 && lightPollution < 88.674) {
-            lightPollutionValue = -(1 / (-(0.001) * (lightPollution - 110)) + 47);
+            lightPollutionValue = Math.round(-(1 / (-(0.001) * (lightPollution - 110)) + 47)*100)/100.0;
         } else {
-            lightPollutionValue = -(1 / (-(0.01) * (lightPollution - 71)) + 100);
+            lightPollutionValue = Math.round(-(1 / (-(0.01) * (lightPollution - 71)) + 100)*100)/100.0;
         }
 
         observationalFitDegree = 100 + cloudVolumeValue + feel_likeValue + moonAgeValue + fineDustValue + precipitationProbabilityValue + lightPollutionValue;
 
-        return observationalFitDegree;
+        return Math.round(observationalFitDegree*100)/100.0;
     }
 
     //시,도 Spinner 동작
