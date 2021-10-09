@@ -62,8 +62,6 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
             }
 
             for (String h : hashtag){
-                System.out.println("h = " + h);
-                System.out.println("hashTagMap.get(h) = " + hashTagMap.get(h));
                 clicked[hashTagMap.get(h)]=h;
             }
         }
@@ -121,6 +119,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
         }
 
         Button selectHashTagBack = findViewById(R.id.selectHashTagBack); //뒤로가기
+
         if (email == null){
             selectHashTagBack.setVisibility(View.VISIBLE);
         }
@@ -186,10 +185,14 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-
-                                    Intent intent = new Intent(SelectMyHashTagActivity.this, MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP); //액티비티 스택제거
-                                    startActivity(intent);
+                                    if (email == null){
+                                        finish();
+                                    }
+                                    else{
+                                        Intent intent = new Intent(SelectMyHashTagActivity.this, MainActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP); //액티비티 스택제거
+                                        startActivity(intent);
+                                    }
 
                                 } else {
                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();

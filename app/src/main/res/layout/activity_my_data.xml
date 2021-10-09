@@ -39,36 +39,36 @@
                     android:textSize="17sp" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/profileImage2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                app:srcCompat="@drawable/profile_default_image" />
-
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginTop="22dp">
 
-                <TextView
-                    android:id="@+id/nickName2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/profileImage2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center"
-                    android:text="닉네임"
-                    android:textSize="17sp" />
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/profile_default_image" />
 
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="44dp"
                     app:srcCompat="@drawable/mydata_edit" />
-            </LinearLayout>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/nickName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="닉네임"
+                android:textSize="17sp" />
 
             <ImageView
                 android:layout_width="match_parent"
