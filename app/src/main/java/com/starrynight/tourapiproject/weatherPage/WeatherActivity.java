@@ -210,6 +210,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     TextView cloudTv;
     TextView tempTv;
+    TextView tempTextTv;
     TextView moonPhaseTv;
     TextView fineDustTv;
     TextView windTv;
@@ -219,6 +220,8 @@ public class WeatherActivity extends AppCompatActivity {
     TextView minLightPolTv;
     TextView maxLightPolTv;
     TextView lightSlashTv;
+
+    TextView detailMent;
 
     String cloudValue;
     String feelsLikeValue;
@@ -288,8 +291,6 @@ public class WeatherActivity extends AppCompatActivity {
     String todayWtName1;
     String todayWtName2;
     String todayWtName;
-
-    int daily;
 
 
     {
@@ -394,6 +395,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         cloudTv = findViewById(R.id.wt_cloud);
         tempTv = findViewById(R.id.wt_temp);
+        tempTextTv = findViewById(R.id.wt_temp_text);
         moonPhaseTv = findViewById(R.id.wt_moon_phase);
         fineDustTv = findViewById(R.id.wt_find_dust);
         windTv = findViewById(R.id.wt_wind);
@@ -408,6 +410,8 @@ public class WeatherActivity extends AppCompatActivity {
         minTempTv = findViewById(R.id.wt_min_temp);
         maxTempTv = findViewById(R.id.wt_max_temp);
         tempSlashTv = findViewById(R.id.wt_temp_slash);
+
+        detailMent = findViewById(R.id.wt_detail_ment);
     }
 
     //뒤로가기 버튼 이벤트
@@ -801,6 +805,7 @@ public class WeatherActivity extends AppCompatActivity {
                 .getMetData(latitude, longitude, "minutely,current", WT_MET_API_KEY, "metric");
 
         getWeatherInstance.enqueue(new Callback<WtMetModel>() {
+            @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
             public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
 
@@ -860,7 +865,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     precipValue = data.getHourly().get(i).getPop();
 
                                     cloudText = cloudValue + "%";
-                                    tempText = data.getHourly().get(i).getTemp() + "°C";
+                                    tempText = String.format("%.1f", Double.parseDouble(data.getHourly().get(i).getTemp())) + "°C";
                                     windText = data.getHourly().get(i).getWindSpeed() + "m/s";
                                     humidityText = data.getHourly().get(i).getHumidity() + "%";
                                     todayWtId = data.getHourly().get(i).getWeather().get(0).getId();
@@ -880,6 +885,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
+                                    tempTextTv.setText("기온");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -902,8 +908,8 @@ public class WeatherActivity extends AppCompatActivity {
                                     precipValue = data.getHourly().get(i).getPop();
 
                                     cloudText = cloudValue + "%";
-                                    tempMinText = data.getDaily().get(i).getTemp().getMin() + "°C";
-                                    tempMaxText = data.getDaily().get(i).getTemp().getMax() + "°C";
+                                    tempMinText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMin())) + "°C";
+                                    tempMaxText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMax())) + "°C";
                                     windText = data.getDaily().get(i).getWindSpeed() + "m/s";
                                     humidityText = data.getDaily().get(i).getHumidity() + "%";
                                     todayWtId = data.getDaily().get(i).getWeather().get(0).getId();
@@ -924,6 +930,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
+                                    tempTextTv.setText("기온(최고/최저)");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -949,7 +956,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     precipValue = data.getHourly().get(i).getPop();
 
                                     cloudText = cloudValue + "%";
-                                    tempText = data.getHourly().get(i).getTemp() + "°C";
+                                    tempText = String.format("%.1f", Double.parseDouble(data.getHourly().get(i).getTemp())) + "°C";
                                     windText = data.getHourly().get(i).getWindSpeed() + "m/s";
                                     humidityText = data.getHourly().get(i).getHumidity() + "%";
                                     todayWtId = data.getHourly().get(i).getWeather().get(0).getId();
@@ -969,6 +976,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
+                                    tempTextTv.setText("기온");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -991,8 +999,8 @@ public class WeatherActivity extends AppCompatActivity {
                                     precipValue = data.getHourly().get(i).getPop();
 
                                     cloudText = cloudValue + "%";
-                                    tempMinText = data.getDaily().get(i).getTemp().getMin() + "°C";
-                                    tempMaxText = data.getDaily().get(i).getTemp().getMax() + "°C";
+                                    tempMinText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMin())) + "°C";
+                                    tempMaxText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMax())) + "°C";
                                     windText = data.getDaily().get(i).getWindSpeed() + "m/s";
                                     humidityText = data.getDaily().get(i).getHumidity() + "%";
                                     todayWtId = data.getDaily().get(i).getWeather().get(0).getId();
@@ -1013,6 +1021,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
+                                    tempTextTv.setText("기온(최고/최저)");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -1250,17 +1259,20 @@ public class WeatherActivity extends AppCompatActivity {
                                 humidityTv.setText(humidityState);
                                 precipitationTv.setText(precipState);
                                 lightPolTv.setText(lightPolState);
+                                detailMent.setText("터치해서 상세 수치를 확인해보세요!");
 
                                 cntClick = 1;
                             } else {
                                 if (todayTime.equals("00")) {
                                     if (selectDate.equals(todayDate) || selectDate.equals(plusDay)) {
                                         tempTv.setText(tempText);
+                                        tempTextTv.setText("기온");
                                     } else {
                                         setTempVisibility(1);
 
                                         minTempTv.setText(tempMinText);
                                         maxTempTv.setText(tempMaxText);
+                                        tempTextTv.setText("기온(최고/최저)");
                                     }
                                 } else {
                                     if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
@@ -1284,6 +1296,8 @@ public class WeatherActivity extends AppCompatActivity {
 
                                 maxLightPolTv.setText(maxLightPolText);
                                 minLightPolTv.setText(minLightPolText);
+                                detailMent.setText("터치해서 요약 정보를 확인해보세요!");
+
 
                                 cntClick = 0;
                             }
@@ -1814,19 +1828,19 @@ public class WeatherActivity extends AppCompatActivity {
 
     //관측적합도
     public double setObservationalFitDegree() {
-        cloudVolumeValue = Math.round(100 * (-(1 / (-(0.25) * (cloudVolume / 100 - 2.7)) - 1.48148))*100)/100.0;
+        cloudVolumeValue = Math.round(100 * (-(1 / (-(0.25) * (cloudVolume / 100 - 2.7)) - 1.48148)) * 100) / 100.0;
 
         if (moonAge <= 0.5) {
-            moonAgeValue = -Math.round(((8 * Math.pow(moonAge, 3.46)) / 0.727 * 100)*100)/100.0;
+            moonAgeValue = -Math.round(((8 * Math.pow(moonAge, 3.46)) / 0.727 * 100) * 100) / 100.0;
         } else if (moonAge > 0.5 && moonAge <= 0.5609) {
-            moonAgeValue = -Math.round(((-75 * Math.pow(moonAge - 0.5, 2) + 0.727) / 0.727 * 100)*100)/100.0;
+            moonAgeValue = -Math.round(((-75 * Math.pow(moonAge - 0.5, 2) + 0.727) / 0.727 * 100) * 100) / 100.0;
         } else if (moonAge > 0.5609) {
-            moonAgeValue = -Math.round(((1 / (5.6 * Math.pow(moonAge + 0.3493, 10)) - 0.0089) / 0.727 * 100)*100)/100.0;
+            moonAgeValue = -Math.round(((1 / (5.6 * Math.pow(moonAge + 0.3493, 10)) - 0.0089) / 0.727 * 100) * 100) / 100.0;
         }
         if (feel_like < 18) {
-            feel_likeValue = Math.round(-0.008 * Math.pow((feel_like - 18), 2)*100)/100.0;
+            feel_likeValue = Math.round(-0.008 * Math.pow((feel_like - 18), 2) * 100) / 100.0;
         } else {
-            feel_likeValue = Math.round(-0.09 * Math.pow((feel_like - 18), 2)*100)/100.0;
+            feel_likeValue = Math.round(-0.09 * Math.pow((feel_like - 18), 2) * 100) / 100.0;
         }
 
         if (fineDust.equals("좋음")) {
@@ -1836,20 +1850,20 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (fineDust.equals("나쁨")) {
             fineDustValue = -20;
         }
-        precipitationProbabilityValue = Math.round(100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556))*100)/100.0;
+        precipitationProbabilityValue = Math.round(100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556)) * 100) / 100.0;
 
         if (lightPollution < 28.928) {
-            lightPollutionValue = Math.round(-(1 / (-(0.001) * (lightPollution - 48)) - 20.833)*100)/100.0;
+            lightPollutionValue = Math.round(-(1 / (-(0.001) * (lightPollution - 48)) - 20.833) * 100) / 100.0;
         } else if (lightPollution >= 28.928 && lightPollution < 77.53) {
-            lightPollutionValue = Math.round(-(1 / (-(0.0001) * (lightPollution + 52)) + 155)*100)/100.0;
+            lightPollutionValue = Math.round(-(1 / (-(0.0001) * (lightPollution + 52)) + 155) * 100) / 100.0;
         } else if (lightPollution >= 77.53 && lightPollution < 88.674) {
-            lightPollutionValue = Math.round(-(1 / (-(0.001) * (lightPollution - 110)) + 47)*100)/100.0;
+            lightPollutionValue = Math.round(-(1 / (-(0.001) * (lightPollution - 110)) + 47) * 100) / 100.0;
         } else {
-            lightPollutionValue = Math.round(-(1 / (-(0.01) * (lightPollution - 71)) + 100)*100)/100.0;
+            lightPollutionValue = Math.round(-(1 / (-(0.01) * (lightPollution - 71)) + 100) * 100) / 100.0;
         }
         observationalFitDegree = 100 + cloudVolumeValue + feel_likeValue + moonAgeValue + fineDustValue + precipitationProbabilityValue + lightPollutionValue;
 
-        return Math.round(observationalFitDegree*100)/100.0;
+        return Math.round(observationalFitDegree * 100) / 100.0;
     }
 
     //시,도 Spinner 동작
