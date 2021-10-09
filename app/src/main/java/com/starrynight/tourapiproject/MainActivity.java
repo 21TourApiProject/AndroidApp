@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+                        showBottom();
                         return true;
                     case R.id.navigation_search:
                         if (searchFragment == null) {
@@ -125,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
                         return true;
+
                     case R.id.navigation_star:
                         if (tonightSkyFragment == null) {
                             tonightSkyFragment = new TonightSkyFragment();
@@ -161,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         if (getIntent() != null) {
-
             Intent intent = getIntent();
             Activities fromWhere = (Activities) intent.getSerializableExtra("FromWhere");
             if (fromWhere == Activities.OBSERVATION) {
@@ -211,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
+        System.out.println("어디 프래그먼트임?"+bottomNavigationView.getSelectedItemId());
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragment instanceof SearchResultFragment) {
@@ -233,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 super.onBackPressed();
             }
-        } else if (fragment instanceof TonightSkyFragment) {
+        } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_star) {
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
@@ -244,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
                 showBottom();
             }
-        } else if (fragment instanceof MainFragment) {
+        } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_main) {
             if (System.currentTimeMillis() > backKeyPressTime + 2000) {
                 backKeyPressTime = System.currentTimeMillis();
                 Toast.makeText(this, "한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
@@ -256,16 +259,14 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(0);
 //                finish();
             }
-        } else {
+        } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_person||bottomNavigationView.getSelectedItemId() == R.id.navigation_search) {
             bottomNavigationView.setSelectedItemId(R.id.navigation_main);
-            if(mainFragment!=null)
-                getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
-            if(searchFragment!=null)
-                getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
-            if(tonightSkyFragment!=null)
-                getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
-            if(personFragment!=null)
-                getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+        } else {
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
 
 //        if(!(fragment instanceof FilterFragment)) {
