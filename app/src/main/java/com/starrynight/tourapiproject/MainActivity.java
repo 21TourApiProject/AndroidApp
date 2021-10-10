@@ -207,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
                 transaction.add(R.id.main_view, searchResultFragment);
                 transaction.hide(searchFragment);
                 searchResult = searchResultFragment;
-                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 transaction.commit();
             }
         }
@@ -226,8 +225,13 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragment instanceof SearchResultFragment) {
-            fragmentManager.beginTransaction().remove(fragment).commit();
-            bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.beginTransaction().remove(fragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+            } else {
+                super.onBackPressed();
+            }
+
 
 //            if (fragmentManager.getBackStackEntryCount() > 0) {
 //                fragmentManager.beginTransaction().remove(fragment);
