@@ -62,7 +62,7 @@ public class SearchObservingPointActivity extends AppCompatActivity{
                 if (response.isSuccessful()){
                     Log.d("observation","관측지 리스트 업로드");
                     List<Observation> observationList = response.body();
-                    for (int i=1;i<observationList.size();i++){
+                    for (int i=0;i<observationList.size();i++){
                         searchitemArrayList.add(new Search_item(observationList.get(i).getObservationName(),observationList.get(i).getAddress()));
                     }
                 }else {Log.d("observation","관측지 리스트 업로드 실패");}
