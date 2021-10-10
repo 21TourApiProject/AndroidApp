@@ -68,12 +68,13 @@
 
                     <Button
                         android:id="@+id/obs_location_btn"
-                        android:layout_width="13dp"
-                        android:layout_height="16dp"
+                        android:layout_width="16dp"
+                        android:layout_height="19dp"
+                        android:layout_marginBottom="3dp"
                         android:background="@drawable/location_btn"
                         android:layout_toRightOf="@id/obs_name_txt"
                         android:layout_marginLeft="8dp"
-                        android:layout_alignBaseline="@id/obs_name_txt"/>
+                        android:layout_alignBottom="@id/obs_name_txt"/>
                     <Button
                         android:id="@+id/obs_save_btn"
                         android:layout_width="24dp"
@@ -158,7 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="00.0"
-                        android:layout_marginTop="0.6dp"
+                        android:layout_marginTop="0.8dp"
                         style="@style/Textview_observation_details"
                         android:layout_marginLeft="102dp"/>
                     <ImageView
@@ -427,7 +428,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00.0"
-                    android:layout_marginTop="0.6dp"
+                    android:layout_marginTop="0.8dp"
                     style="@style/Textview_observation_details"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="102dp"/>

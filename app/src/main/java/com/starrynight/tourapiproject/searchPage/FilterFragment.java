@@ -111,7 +111,8 @@ public class FilterFragment extends Fragment {
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, searchResultFragment);
+                        transaction.add(R.id.main_view, searchResultFragment);
+                        ((MainActivity) getActivity()).setSearchResult(searchResultFragment);
                         transaction.commit();
                         if (filterFragment!=null) {
                             getFragmentManager().beginTransaction().hide(filterFragment).commit();
@@ -123,7 +124,8 @@ public class FilterFragment extends Fragment {
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         searchResultFragment = new SearchResultFragment();
                         searchResultFragment.setArguments(bundle);
-                        transaction.replace(R.id.main_view, searchResultFragment);
+                        transaction.add(R.id.main_view, searchResultFragment);
+                        ((MainActivity) getActivity()).setSearchResult(searchResultFragment);
                         transaction.commit();
                         if (filterFragment != null) {
                             getFragmentManager().beginTransaction().hide(filterFragment).commit();
@@ -137,7 +139,11 @@ public class FilterFragment extends Fragment {
                         Fragment mapfragment = new MapFragment();
                         mapfragment.setArguments(bundle);
                         transaction.add(R.id.main_view, mapfragment);
+                        ((MainActivity) getActivity()).setMap(mapfragment);
                         transaction.commit();
+                        if (filterFragment != null) {
+                            getFragmentManager().beginTransaction().hide(filterFragment).commit();
+                        }
                     }
                 }
 
