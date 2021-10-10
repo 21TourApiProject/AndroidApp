@@ -113,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="24dp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/imageView13"
@@ -159,7 +159,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="24dp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/imageView12"
