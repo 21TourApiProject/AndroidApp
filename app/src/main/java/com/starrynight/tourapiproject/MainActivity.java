@@ -170,24 +170,28 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = getIntent();
             Activities fromWhere = (Activities) intent.getSerializableExtra("FromWhere");
             if (fromWhere == Activities.OBSERVATION) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Fragment mapfragment = new MapFragment();
                 mapfragment.setArguments(bundle);
-                transaction.replace(R.id.main_view, mapfragment);
+                transaction.hide(searchFragment);
+                transaction.add(R.id.main_view, mapfragment);
+                map = mapfragment;
                 transaction.commit();
             } else if (fromWhere ==Activities.TOURISTPOINT) {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere", Activities.TOURISTPOINT);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
-
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Fragment mapfragment = new MapFragment();
                 mapfragment.setArguments(bundle);
-                transaction.replace(R.id.main_view, mapfragment);
+                transaction.hide(searchFragment);
+                transaction.add(R.id.main_view, mapfragment);
+                map = mapfragment;
                 transaction.commit();
             }
             else if (fromWhere == Activities.POST){
@@ -196,10 +200,13 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putSerializable("keyword",intent.getSerializableExtra("keyword"));
                 bundle.putIntegerArrayList("hashTag", (ArrayList<Integer>) intent.getSerializableExtra("hashTag"));
                 bundle.putIntegerArrayList("area", (ArrayList<Integer>) intent.getSerializableExtra("area"));
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 Fragment searchResultFragment = new SearchResultFragment();
                 searchResultFragment.setArguments(bundle);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, searchResultFragment);
+                transaction.add(R.id.main_view, searchResultFragment);
+                transaction.hide(searchFragment);
+                searchResult = searchResultFragment;
                 bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 transaction.commit();
             }
@@ -216,22 +223,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        System.out.println("어디 프래그먼트임?"+bottomNavigationView.getSelectedItemId());
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragment instanceof SearchResultFragment) {
             fragmentManager.beginTransaction().remove(fragment).commit();
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                fragmentManager.popBackStack();
-            } else {
-                super.onBackPressed();
-            }
+            bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+
+//            if (fragmentManager.getBackStackEntryCount() > 0) {
+//                fragmentManager.beginTransaction().remove(fragment);
+//                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//            } else {
+//                super.onBackPressed();
+//            }
         } else if(fragment instanceof FilterFragment){
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
-                super.onBackPressed();
             }
         }else if (fragment instanceof MapFragment) {
             fragmentManager.beginTransaction().remove(fragment).commit();
@@ -241,16 +248,12 @@ public class MainActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_star) {
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
-            } else {
                 if(tonightSkyFragment!=null)
                     getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
                 if(mainFragment!=null)
                     getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
                 showBottom();
-            }
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_main) {
             if (System.currentTimeMillis() > backKeyPressTime + 2000) {
                 backKeyPressTime = System.currentTimeMillis();
