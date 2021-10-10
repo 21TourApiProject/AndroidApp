@@ -797,7 +797,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관광지 검색 성공");
                     tpResult = response.body();
-                    if (tpResult.size()==0){
+                    if (tpResult.size()<3){
                         moreTpText.setVisibility(View.GONE);
                         tpline.setVisibility(View.GONE);
                     }
@@ -805,7 +805,10 @@ public class SearchResultFragment extends Fragment {
                         finalTpResult.add(tpResult.get(0));
                         finalTpResult.add(tpResult.get(1));
                         finalTpResult.add(tpResult.get(2));
-                    }else{finalTpResult.addAll(tpResult);}
+                        moreTpText.setVisibility(View.VISIBLE);
+                        tpline.setVisibility(View.VISIBLE);
+                    }
+                    else{finalTpResult.addAll(tpResult); }
                     SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(finalTpResult, getContext());
                     searchResult2.setAdapter(searchResultAdapter2);
                     searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
@@ -838,7 +841,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관측지 검색 성공");
                     obResult = response.body();
-                    if (obResult.size()==0){
+                    if (obResult.size()<3){
                         moreObText.setVisibility(View.GONE);
                         obline.setVisibility(View.GONE);
                     }
@@ -846,6 +849,8 @@ public class SearchResultFragment extends Fragment {
                         finalObResult.add(obResult.get(0));
                         finalObResult.add(obResult.get(1));
                         finalObResult.add(obResult.get(2));
+                        moreObText.setVisibility(View.VISIBLE);
+                        obline.setVisibility(View.VISIBLE);
                     }else{ finalObResult.addAll(obResult);}
                     //게시물은 어댑터 따로 만들어야 함
                     SearchResultAdapter searchResultAdapter = new SearchResultAdapter(finalObResult, getContext());
@@ -879,7 +884,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()){
                     Log.d("searchPost","검색 게시물 업로드 성공");
                     postResult=response.body();
-                    if (postResult.size()==0){
+                    if (postResult.size()<3){
                         morePostText.setVisibility(View.GONE);
                         postline.setVisibility(View.GONE);
                     }
@@ -887,6 +892,8 @@ public class SearchResultFragment extends Fragment {
                         finalPostResult.add(postResult.get(0));
                         finalPostResult.add(postResult.get(1));
                         finalPostResult.add(postResult.get(2));
+                        morePostText.setVisibility(View.VISIBLE);
+                        postline.setVisibility(View.VISIBLE);
                     }else {finalPostResult.addAll(postResult);}
                     MyPostAdapter postAdapter = new MyPostAdapter(finalPostResult,getContext());
                     searchResult3.setAdapter(postAdapter);
