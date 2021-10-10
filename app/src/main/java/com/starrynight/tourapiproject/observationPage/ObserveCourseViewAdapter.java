@@ -46,7 +46,8 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
     @Override
     public void onBindViewHolder(@NonNull @NotNull ObserveCourseViewAdapter.MyViewHolder holder, int position) {
         CourseTouristPoint courseTouristPoint = touristPointList.get(position);
-        holder.bindImage(courseTouristPoint.getFirstImage());
+        if(courseTouristPoint.getFirstImage()!=null)
+            holder.bindImage(courseTouristPoint.getFirstImage());
         holder.bindText(courseTouristPoint);
         holder.setOutlineButton(position);
     }

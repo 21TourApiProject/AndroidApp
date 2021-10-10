@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
                         showBottom();
+                        removeFragments();
                         return true;
                     case R.id.navigation_search:
                         if (searchFragment == null) {
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+                        removeFragments();
                         return true;
 
                     case R.id.navigation_star:
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
 
                         showOffBottom();
+                        removeFragments();
                         return true;
                     case R.id.navigation_person:
                         if (personFragment == null) {
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().show(personFragment).commit();
-
+                        removeFragments();
                         return true;
                 }
                 return false;
@@ -217,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragment instanceof SearchResultFragment) {
+            fragmentManager.beginTransaction().remove(fragment).commit();
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 fragmentManager.popBackStack();
@@ -348,5 +352,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void setFilter(Fragment filter) {
         this.filter = filter;
+    }
+
+    private void removeFragments() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (map != null) {
+            transaction.remove(map);
+            map = null;
+        }
+        if (searchResult != null) {
+            transaction.remove(searchResult);
+            searchResult = null;
+        }
+        if (filter != null) {
+            transaction.remove(filter);
+            filter = null;
+        }
+
+        transaction.commit();
     }
 }
