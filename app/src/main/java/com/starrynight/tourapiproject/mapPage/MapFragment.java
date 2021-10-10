@@ -93,6 +93,8 @@ public class MapFragment extends Fragment {
     List<String> observeHashTags;
     private RecyclerHashTagAdapter recyclerHashTagAdapter;
 
+    boolean from_detail=false;
+
     LoadingDialog dialog;
 
     RelativeLayout details;
@@ -213,16 +215,18 @@ public class MapFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //상세정보 클릭시 관측지나 관광지로 이동
-                    if (bobject.getTag() == 2) {
-                        //관광지
-                        Intent intent = new Intent(getActivity(), TouristPointActivity.class);
-                        intent.putExtra("contentId", bobject.getId());
-                        startActivity(intent);
+                    if (!from_detail) {
+                        if (bobject.getTag() == 2) {
+                            //관광지
+                            Intent intent = new Intent(getActivity(), TouristPointActivity.class);
+                            intent.putExtra("contentId", bobject.getId());
+                            startActivity(intent);
 
-                    } else if (bobject.getTag()==1) {
-                        Intent intent = new Intent(getActivity(), ObservationsiteActivity.class);
-                        intent.putExtra("observationId", bobject.getId());
-                        startActivity(intent);
+                        } else if (bobject.getTag()==1) {
+                            Intent intent = new Intent(getActivity(), ObservationsiteActivity.class);
+                            intent.putExtra("observationId", bobject.getId());
+                            startActivity(intent);
+                        }
                     }
                 }
             });
@@ -399,7 +403,7 @@ public class MapFragment extends Fragment {
             if (fromWhere == Activities.OBSERVATION || fromWhere == Activities.TOURISTPOINT || fromWhere == Activities.POST || fromWhere == Activities.MAINPOST) {
                 //주소가 하나만 넘어올 때
                 BalloonObject singleBalloonObject = (BalloonObject) getArguments().getSerializable("BalloonObject");
-
+                from_detail = true;
                 if (singleBalloonObject != null) {
                     if (singleBalloonObject.getTag() == 1) {
                         observationBalloonObjects.add(singleBalloonObject);
@@ -731,12 +735,22 @@ public class MapFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("keyword", keyword);
                 bundle.putSerializable("fromWhere", Activities.MAP);
-                Fragment filterFragment = new FilterFragment();
-                filterFragment.setArguments(bundle);
+                Fragment filterFragment = ((MainActivity) getActivity()).getFilter();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, filterFragment);
                 transaction.remove(MapFragment.this);
-                transaction.commit();
+                ((MainActivity) getActivity()).setMap(null);
+
+                if (((MainActivity) getActivity()).getFilter() == null) {
+                    filterFragment = new FilterFragment();
+                    filterFragment.setArguments(bundle);
+                    ((MainActivity) getActivity()).setFilter(filterFragment);
+                    transaction.add(R.id.main_view, filterFragment);
+                    transaction.commit();
+                } else {
+                    filterFragment.setArguments(bundle);
+                    transaction.show(filterFragment);
+                    transaction.commit();
+                }
             }
         });
 
@@ -770,15 +784,15 @@ public class MapFragment extends Fragment {
                 bundle.putString("keyword",keyword);
                 bundle.putInt("type", 3);
 
-                SearchResultFragment searchResultFragment = new SearchResultFragment();
+                Fragment searchResultFragment = new SearchResultFragment();
+                ((MainActivity) getActivity()).setSearchResult(searchResultFragment);
                 searchResultFragment.setArguments(bundle);
-
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, searchResultFragment);
-//                transaction.addToBackStack(null);
                 transaction.remove(MapFragment.this);
+                ((MainActivity) getActivity()).setMap(null);
+                transaction.add(R.id.main_view, searchResultFragment);
                 transaction.commit();
-//                ((MainActivity)getActivity()).replaceFragment(mapFragment);
+
             }
         });
 
