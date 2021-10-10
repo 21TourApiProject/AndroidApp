@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.searchPage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchKey;
+import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchLoadingDialog;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams1;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
@@ -84,6 +87,7 @@ public class SearchResultFragment extends Fragment {
     List<Long> hashTagIdList;
 
     String keyword;
+    SearchLoadingDialog dialog;
 
     public static SearchResultFragment newInstance() {
         return new SearchResultFragment();
@@ -110,6 +114,7 @@ public class SearchResultFragment extends Fragment {
         allContentBtnTap=v.findViewById(R.id.allContent_tap);
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
+        dialog = new SearchLoadingDialog(getContext());
 
 
         //필터 결과 리사이클러뷰
@@ -281,6 +286,7 @@ public class SearchResultFragment extends Fragment {
                 postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
+
 
                 for(int i=0; i<17; i++){
                     if (area.get(i) == 1){ //선택했으면
@@ -543,6 +549,9 @@ public class SearchResultFragment extends Fragment {
                 postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
+                LoadingAsyncTask task = new LoadingAsyncTask(getContext(),10000);
+                task.execute();
+
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
@@ -566,6 +575,7 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
+                            task.cancel(true);
 
                             SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(tpResult, getContext());
                             searchResult.setAdapter(searchResultAdapter2);
@@ -609,6 +619,7 @@ public class SearchResultFragment extends Fragment {
                 postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
+
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
@@ -622,6 +633,7 @@ public class SearchResultFragment extends Fragment {
                         hashTagIdList.add((long)(i+1));
                     }
                 }
+
 
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
@@ -795,6 +807,8 @@ public class SearchResultFragment extends Fragment {
     private void searchEverything(SearchKey searchKey) {
         searchResult2.removeAllViews();
         finalTpResult.clear();
+        LoadingAsyncTask task = new LoadingAsyncTask(getContext(),10000);
+        task.execute();
         Call<List<SearchParams1>> call = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
         call.enqueue(new Callback<List<SearchParams1>>() {
             @Override
@@ -802,6 +816,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관광지 검색 성공");
                     tpResult = response.body();
+                    task.cancel(true);
                     if (tpResult.size()<3){
                         moreTpText.setVisibility(View.GONE);
                         tpline.setVisibility(View.GONE);
@@ -923,5 +938,39 @@ public class SearchResultFragment extends Fragment {
                 Log.d("searchPost","검색 게시물 인터넷 오류");
             }
         });
+    }
+    private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+        private Long mtime;
+
+        public LoadingAsyncTask(Context context, long time ) {
+            mContext = context.getApplicationContext();
+            mtime = time;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+                Thread.sleep(mtime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return (true);
+        }
+        @Override
+        protected void onCancelled(Boolean result) {
+                dialog.dismiss();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+        }
     }
 }
