@@ -491,6 +491,7 @@
                             android:src="@drawable/wt__detail_temp" />
 
                         <TextView
+                            android:id="@+id/wt_temp_text"
                             style="@style/Wt_detail_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -765,13 +766,14 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/wt_detail_ment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="13dp"
                     android:textColor="@color/gray"
-                    android:text="클릭해서 좋음/나쁨 수치로 확인해보세요!"/>
+                    android:text="터치해서 요약 정보를 확인해보세요!"/>
             </LinearLayout>
 
             <TextView
