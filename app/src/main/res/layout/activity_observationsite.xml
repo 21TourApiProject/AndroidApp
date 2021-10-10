@@ -24,7 +24,8 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/obs_Img_slider"
                     android:layout_width="match_parent"
-                    android:layout_height="308dp">
+                    android:layout_height="308dp"
+                    android:background="@drawable/default_tp">
 
                 </androidx.viewpager2.widget.ViewPager2>
 
