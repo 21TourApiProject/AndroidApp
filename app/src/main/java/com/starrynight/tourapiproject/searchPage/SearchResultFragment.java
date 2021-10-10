@@ -343,9 +343,11 @@ public class SearchResultFragment extends Fragment {
                 bundle.putString("keyword",keyword);
                 MapFragment mapFragment = new MapFragment();
                 mapFragment.setArguments(bundle);
-
+                ((MainActivity) getActivity()).setMap(mapFragment);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, mapFragment);
+                transaction.add(R.id.main_view, mapFragment);
+                transaction.remove(SearchResultFragment.this);
+                ((MainActivity) getActivity()).setSearchResult(null);
                 transaction.addToBackStack("result");
                 transaction.commit();
 //                ((MainActivity)getActivity()).replaceFragment(mapFragment);
@@ -368,7 +370,9 @@ public class SearchResultFragment extends Fragment {
                     filterFragment = new FilterFragment();
                     filterFragment.setArguments(bundle);
                     ((MainActivity) getActivity()).setFilter(filterFragment);
-                    transaction.replace(R.id.main_view, filterFragment);
+                    transaction.add(R.id.main_view, filterFragment);
+                    transaction.remove(SearchResultFragment.this);
+                    ((MainActivity) getActivity()).setSearchResult(null);
                     transaction.addToBackStack("result");
                     transaction.commit();
                 } else {
@@ -376,6 +380,7 @@ public class SearchResultFragment extends Fragment {
                     filterFragment.setArguments(bundle);
                     transaction.addToBackStack("result");
                     transaction.remove(SearchResultFragment.this);
+                    ((MainActivity) getActivity()).setSearchResult(null);
                     transaction.show(filterFragment);
                     transaction.commit();
                 }
