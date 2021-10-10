@@ -69,8 +69,8 @@
 
                     <Button
                         android:id="@+id/tpGps"
-                        android:layout_width="13dp"
-                        android:layout_height="16dp"
+                        android:layout_width="16dp"
+                        android:layout_height="19dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
                         android:background="@drawable/location_btn" />
@@ -95,7 +95,7 @@
                     android:id="@+id/cat3Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="3dp"
                     android:text="관광지 타입"
                     android:textSize="11sp" />
 
