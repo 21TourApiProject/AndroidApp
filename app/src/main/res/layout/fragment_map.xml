@@ -115,7 +115,7 @@
         <RelativeLayout
             android:id="@+id/detail_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="168dp"
             android:layout_alignParentBottom="true"
             android:paddingLeft="41dp"
             android:paddingTop="30dp"
@@ -197,7 +197,7 @@
                 android:text="카카오맵에서 보기 >"
                 android:textSize="12sp"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/hashtags_layout"/>
+                android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
     </RelativeLayout>
