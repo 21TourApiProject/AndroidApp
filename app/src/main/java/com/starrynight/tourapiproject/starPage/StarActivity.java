@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,7 +63,7 @@ public class StarActivity extends AppCompatActivity {
         constBestMonthTl = constBestMonthTv.findViewById(R.id.star_title_text);
 
         constPersonalityTv = findViewById(R.id.const_personality_tv);
-        constPersonality  = findViewById(R.id.const_personality);
+        constPersonality = findViewById(R.id.const_personality);
         constPeriod = findViewById(R.id.const_period);
         constTravel = findViewById(R.id.const_travel);
 
@@ -82,7 +81,7 @@ public class StarActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                     constData = response.body();
-                    Glide.with(StarActivity.this).load(constData.getConstImage()).fitCenter().into(constImage);
+                    Glide.with(StarActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/constDetailImage/b_" + constData.getConstEng() + ".png").fitCenter().into(constImage);
                     constName.setText(constData.getConstName());
                     constStory.setText(constData.getConstStory());
                     constMtd.setText(constData.getConstMtd());
@@ -97,11 +96,11 @@ public class StarActivity extends AppCompatActivity {
                     if (constData.getConstFeature2() == null) {
                         constFeature2.setVisibility(View.GONE);
                     } else {
-                        Glide.with(StarActivity.this).load(constData.getConstFeature1()).fitCenter().into(constFeature2);
+                        Glide.with(StarActivity.this).load(constData.getConstFeature2()).fitCenter().into(constFeature2);
                     }
 
                     if (constData.getConstFeature3() == null) {
-                        constFeature2.setVisibility(View.GONE);
+                        constFeature3.setVisibility(View.GONE);
                     } else {
                         Glide.with(StarActivity.this).load(constData.getConstFeature3()).fitCenter().into(constFeature3);
                     }

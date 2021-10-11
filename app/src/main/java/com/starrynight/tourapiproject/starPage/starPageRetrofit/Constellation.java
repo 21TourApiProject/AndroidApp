@@ -9,8 +9,11 @@ public class Constellation {
     @SerializedName("constName")
     private String constName;
 
-    @SerializedName("constImage")
-    private String constImage;
+//    @SerializedName("constBigImage")
+//    private String constBigImage;
+//
+//    @SerializedName("constSmallImage")
+//    private String constSmallImage;
 
     @SerializedName("constStory")
     private String constStory;
@@ -54,6 +57,9 @@ public class Constellation {
     @SerializedName("endDate2")
     private String endDat2;
 
+    @SerializedName("constEng")
+    private String constEng;
+
     public Constellation() {
     }
 
@@ -73,13 +79,21 @@ public class Constellation {
         this.constName = constName;
     }
 
-    public String getConstImage() {
-        return constImage;
-    }
-
-    public void setConstImage(String constImage) {
-        this.constImage = constImage;
-    }
+//    public String getConstBigImage() {
+//        return constBigImage;
+//    }
+//
+//    public void setConstBigImage(String constBigImage) {
+//        this.constBigImage = constBigImage;
+//    }
+//
+//    public String getConstSmallImage() {
+//        return constSmallImage;
+//    }
+//
+//    public void setConstSmallImage(String constSmallImage) {
+//        this.constSmallImage = constSmallImage;
+//    }
 
     public String getConstStory() {
         return constStory;
@@ -191,5 +205,13 @@ public class Constellation {
 
     public void setStartDate1(String startDate1) {
         this.startDate1 = startDate1;
+    }
+
+    public String getConstEng() {
+        return constEng;
+    }
+
+    public void setConstEng(String constEng) {
+        this.constEng = constEng;
     }
 }
