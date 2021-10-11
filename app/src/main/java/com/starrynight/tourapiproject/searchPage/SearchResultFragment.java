@@ -253,6 +253,8 @@ public class SearchResultFragment extends Fragment {
                     searchView.setQuery(keyword,false);
                 }
 
+                areaCodeList = new ArrayList<>();
+                hashTagIdList = new ArrayList<>();
                 for(int i=0; i<17; i++){
                     if (area.get(i) == 1){ //선택했으면
                         areaCodeList.add(areaCode[i]);
