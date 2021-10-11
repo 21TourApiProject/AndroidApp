@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
                         showBottom();
+                        removeFragments();
                         return true;
                     case R.id.navigation_search:
                         if (searchFragment == null) {
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+                        removeFragments();
                         return true;
 
                     case R.id.navigation_star:
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
 
                         showOffBottom();
+                        removeFragments();
                         return true;
                     case R.id.navigation_person:
                         if (personFragment == null) {
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                             getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                         if(personFragment!=null)
                             getSupportFragmentManager().beginTransaction().show(personFragment).commit();
-
+                        removeFragments();
                         return true;
                 }
                 return false;
@@ -167,24 +170,28 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = getIntent();
             Activities fromWhere = (Activities) intent.getSerializableExtra("FromWhere");
             if (fromWhere == Activities.OBSERVATION) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.main_view, searchFragment).commit();
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere",Activities.OBSERVATION);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Fragment mapfragment = new MapFragment();
                 mapfragment.setArguments(bundle);
-                transaction.replace(R.id.main_view, mapfragment);
+                transaction.hide(searchFragment);
+                transaction.add(R.id.main_view, mapfragment);
+                map = mapfragment;
                 transaction.commit();
             } else if (fromWhere ==Activities.TOURISTPOINT) {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere", Activities.TOURISTPOINT);//번들에 넘길 값 저장
                 bundle.putSerializable("BalloonObject", intent.getSerializableExtra("BalloonObject"));    //지도에 필요한 내용
-
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Fragment mapfragment = new MapFragment();
                 mapfragment.setArguments(bundle);
-                transaction.replace(R.id.main_view, mapfragment);
+                transaction.hide(searchFragment);
+                transaction.add(R.id.main_view, mapfragment);
+                map = mapfragment;
                 transaction.commit();
             }
             else if (fromWhere == Activities.POST){
@@ -193,11 +200,13 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putSerializable("keyword",intent.getSerializableExtra("keyword"));
                 bundle.putIntegerArrayList("hashTag", (ArrayList<Integer>) intent.getSerializableExtra("hashTag"));
                 bundle.putIntegerArrayList("area", (ArrayList<Integer>) intent.getSerializableExtra("area"));
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 Fragment searchResultFragment = new SearchResultFragment();
                 searchResultFragment.setArguments(bundle);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, searchResultFragment);
-                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+                transaction.add(R.id.main_view, searchResultFragment);
+                transaction.hide(searchFragment);
+                searchResult = searchResultFragment;
                 transaction.commit();
             }
         }
@@ -213,21 +222,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        System.out.println("어디 프래그먼트임?"+bottomNavigationView.getSelectedItemId());
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragment instanceof SearchResultFragment) {
             if (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                fragmentManager.popBackStack();
+                fragmentManager.beginTransaction().remove(fragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
             } else {
                 super.onBackPressed();
             }
+
+
+//            if (fragmentManager.getBackStackEntryCount() > 0) {
+//                fragmentManager.beginTransaction().remove(fragment);
+//                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//            } else {
+//                super.onBackPressed();
+//            }
         } else if(fragment instanceof FilterFragment){
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
-                super.onBackPressed();
             }
         }else if (fragment instanceof MapFragment) {
             fragmentManager.beginTransaction().remove(fragment).commit();
@@ -237,16 +252,12 @@ public class MainActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_star) {
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
-            } else {
                 if(tonightSkyFragment!=null)
                     getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
                 if(mainFragment!=null)
                     getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
                 showBottom();
-            }
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_main) {
             if (System.currentTimeMillis() > backKeyPressTime + 2000) {
                 backKeyPressTime = System.currentTimeMillis();
@@ -348,5 +359,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void setFilter(Fragment filter) {
         this.filter = filter;
+    }
+
+    private void removeFragments() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (map != null) {
+            transaction.remove(map);
+            map = null;
+        }
+        if (searchResult != null) {
+            transaction.remove(searchResult);
+            searchResult = null;
+        }
+        if (filter != null) {
+            transaction.remove(filter);
+            filter = null;
+        }
+
+        transaction.commit();
     }
 }

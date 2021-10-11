@@ -264,6 +264,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         ViewPager2 mainslider;
         LinearLayout indicator;
         Button bookmark;
+        LinearLayout titleLinear;
 
         public ViewHolder(View itemView,final OnMainPostClickListener listener){
             super(itemView);
@@ -275,6 +276,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             mainslider = itemView.findViewById(R.id.mainslider);
             indicator = itemView.findViewById(R.id.mainindicator);
             bookmark = itemView.findViewById(R.id.mainplus_btn);
+            titleLinear=itemView.findViewById(R.id.linear_title);
             profileimage.setBackground(new ShapeDrawable(new OvalShape()));
             profileimage.setClipToOutline(true);
             itemView.setClickable(true);
@@ -283,7 +285,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
         public void setItem(MainPost item){
 
             title.setText(item.getMainTitle());
-            title.setOnClickListener(new View.OnClickListener() {
+            titleLinear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PostActivity.class);

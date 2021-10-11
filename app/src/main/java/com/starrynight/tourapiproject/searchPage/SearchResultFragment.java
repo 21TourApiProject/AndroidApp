@@ -1,6 +1,8 @@
 package com.starrynight.tourapiproject.searchPage;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchKey;
+import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchLoadingDialog;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchParams1;
 import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
@@ -84,6 +87,7 @@ public class SearchResultFragment extends Fragment {
     List<Long> hashTagIdList;
 
     String keyword;
+    SearchLoadingDialog dialog;
 
     public static SearchResultFragment newInstance() {
         return new SearchResultFragment();
@@ -110,6 +114,7 @@ public class SearchResultFragment extends Fragment {
         allContentBtnTap=v.findViewById(R.id.allContent_tap);
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
+        dialog = new SearchLoadingDialog(getContext());
 
 
         //필터 결과 리사이클러뷰
@@ -282,6 +287,7 @@ public class SearchResultFragment extends Fragment {
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
+
                 for(int i=0; i<17; i++){
                     if (area.get(i) == 1){ //선택했으면
                         areaCodeList.add(areaCode[i]);
@@ -343,9 +349,11 @@ public class SearchResultFragment extends Fragment {
                 bundle.putString("keyword",keyword);
                 MapFragment mapFragment = new MapFragment();
                 mapFragment.setArguments(bundle);
-
+                ((MainActivity) getActivity()).setMap(mapFragment);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, mapFragment);
+                transaction.add(R.id.main_view, mapFragment);
+                transaction.remove(SearchResultFragment.this);
+                ((MainActivity) getActivity()).setSearchResult(null);
                 transaction.addToBackStack("result");
                 transaction.commit();
 //                ((MainActivity)getActivity()).replaceFragment(mapFragment);
@@ -368,7 +376,9 @@ public class SearchResultFragment extends Fragment {
                     filterFragment = new FilterFragment();
                     filterFragment.setArguments(bundle);
                     ((MainActivity) getActivity()).setFilter(filterFragment);
-                    transaction.replace(R.id.main_view, filterFragment);
+                    transaction.add(R.id.main_view, filterFragment);
+                    transaction.remove(SearchResultFragment.this);
+                    ((MainActivity) getActivity()).setSearchResult(null);
                     transaction.addToBackStack("result");
                     transaction.commit();
                 } else {
@@ -376,6 +386,7 @@ public class SearchResultFragment extends Fragment {
                     filterFragment.setArguments(bundle);
                     transaction.addToBackStack("result");
                     transaction.remove(SearchResultFragment.this);
+                    ((MainActivity) getActivity()).setSearchResult(null);
                     transaction.show(filterFragment);
                     transaction.commit();
                 }
@@ -538,6 +549,9 @@ public class SearchResultFragment extends Fragment {
                 postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
+                LoadingAsyncTask task = new LoadingAsyncTask(getContext(),10000);
+                task.execute();
+
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
@@ -561,6 +575,7 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
+                            task.cancel(true);
 
                             SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(tpResult, getContext());
                             searchResult.setAdapter(searchResultAdapter2);
@@ -604,6 +619,7 @@ public class SearchResultFragment extends Fragment {
                 postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
+
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
@@ -617,6 +633,7 @@ public class SearchResultFragment extends Fragment {
                         hashTagIdList.add((long)(i+1));
                     }
                 }
+
 
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
@@ -790,6 +807,8 @@ public class SearchResultFragment extends Fragment {
     private void searchEverything(SearchKey searchKey) {
         searchResult2.removeAllViews();
         finalTpResult.clear();
+        LoadingAsyncTask task = new LoadingAsyncTask(getContext(),10000);
+        task.execute();
         Call<List<SearchParams1>> call = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
         call.enqueue(new Callback<List<SearchParams1>>() {
             @Override
@@ -797,7 +816,8 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관광지 검색 성공");
                     tpResult = response.body();
-                    if (tpResult.size()==0){
+                    task.cancel(true);
+                    if (tpResult.size()<3){
                         moreTpText.setVisibility(View.GONE);
                         tpline.setVisibility(View.GONE);
                     }
@@ -805,7 +825,10 @@ public class SearchResultFragment extends Fragment {
                         finalTpResult.add(tpResult.get(0));
                         finalTpResult.add(tpResult.get(1));
                         finalTpResult.add(tpResult.get(2));
-                    }else{finalTpResult.addAll(tpResult);}
+                        moreTpText.setVisibility(View.VISIBLE);
+                        tpline.setVisibility(View.VISIBLE);
+                    }
+                    else{finalTpResult.addAll(tpResult); }
                     SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(finalTpResult, getContext());
                     searchResult2.setAdapter(searchResultAdapter2);
                     searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
@@ -838,7 +861,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관측지 검색 성공");
                     obResult = response.body();
-                    if (obResult.size()==0){
+                    if (obResult.size()<3){
                         moreObText.setVisibility(View.GONE);
                         obline.setVisibility(View.GONE);
                     }
@@ -846,6 +869,8 @@ public class SearchResultFragment extends Fragment {
                         finalObResult.add(obResult.get(0));
                         finalObResult.add(obResult.get(1));
                         finalObResult.add(obResult.get(2));
+                        moreObText.setVisibility(View.VISIBLE);
+                        obline.setVisibility(View.VISIBLE);
                     }else{ finalObResult.addAll(obResult);}
                     //게시물은 어댑터 따로 만들어야 함
                     SearchResultAdapter searchResultAdapter = new SearchResultAdapter(finalObResult, getContext());
@@ -879,7 +904,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()){
                     Log.d("searchPost","검색 게시물 업로드 성공");
                     postResult=response.body();
-                    if (postResult.size()==0){
+                    if (postResult.size()<3){
                         morePostText.setVisibility(View.GONE);
                         postline.setVisibility(View.GONE);
                     }
@@ -887,6 +912,8 @@ public class SearchResultFragment extends Fragment {
                         finalPostResult.add(postResult.get(0));
                         finalPostResult.add(postResult.get(1));
                         finalPostResult.add(postResult.get(2));
+                        morePostText.setVisibility(View.VISIBLE);
+                        postline.setVisibility(View.VISIBLE);
                     }else {finalPostResult.addAll(postResult);}
                     MyPostAdapter postAdapter = new MyPostAdapter(finalPostResult,getContext());
                     searchResult3.setAdapter(postAdapter);
@@ -911,5 +938,39 @@ public class SearchResultFragment extends Fragment {
                 Log.d("searchPost","검색 게시물 인터넷 오류");
             }
         });
+    }
+    private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+        private Long mtime;
+
+        public LoadingAsyncTask(Context context, long time ) {
+            mContext = context.getApplicationContext();
+            mtime = time;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+                Thread.sleep(mtime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return (true);
+        }
+        @Override
+        protected void onCancelled(Boolean result) {
+                dialog.dismiss();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+        }
     }
 }

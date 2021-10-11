@@ -16,6 +16,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginTop="22dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/tpBack"
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:layout_marginLeft="29dp"
+                    android:layout_marginRight="21dp"
+                    android:background="@drawable/mypost_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/scdream_light"
+                    android:text="관광지 상세페이지"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/tpSlider"
                 android:layout_width="match_parent"
@@ -45,8 +69,8 @@
 
                     <Button
                         android:id="@+id/tpGps"
-                        android:layout_width="13dp"
-                        android:layout_height="16dp"
+                        android:layout_width="16dp"
+                        android:layout_height="19dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="8dp"
                         android:background="@drawable/location_btn" />
@@ -71,7 +95,7 @@
                     android:id="@+id/cat3Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="3dp"
                     android:text="관광지 타입"
                     android:textSize="11sp" />
 
@@ -116,7 +140,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="54.12dp"
+                        android:layout_marginRight="44dp"
                         android:text="혼잡도"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
@@ -619,28 +643,41 @@
                 android:layout_marginRight="24dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="16dp"
-                    android:text="다음 블로그 검색결과"
-                    android:textSize="12sp" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/daumMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|end"
-                    android:layout_marginTop="5dp"
-                    android:text="+ 더 보기"
-                    android:textColor="@color/point_purple"
-                    android:textSize="11sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="다음 블로그 검색결과"
+                        android:textSize="12sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/daumMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:text="+ 더 보기"
+                            android:textColor="@color/point_purple"
+                            android:textSize="11sp" />
+                    </FrameLayout>
+
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/daumRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_marginTop="15dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
