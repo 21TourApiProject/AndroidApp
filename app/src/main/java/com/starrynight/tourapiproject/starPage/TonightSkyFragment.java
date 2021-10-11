@@ -26,8 +26,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -205,6 +203,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             }
         });
 
+
         //모든 별자리 이름 호출
         Call<List<ConstellationParams2>> constNameCall = RetrofitClient.getApiService().getConstNames();
         constNameCall.enqueue(new Callback<List<ConstellationParams2>>() {
@@ -324,7 +323,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 if (response.isSuccessful()) {
                     List<StarItem> result = response.body();
                     for (StarItem si : result) {
-                        constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstImage()));
+                        constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstEng()));
                     }
                     constList.setAdapter(constAdapter);
                 } else {
@@ -582,11 +581,11 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
 
     @Override
-    public void onDestroyView(){
+    public void onDestroyView() {
         super.onDestroyView();
     }
 
-    private int getItem(int i){
+    private int getItem(int i) {
         return horViewpager.getCurrentItem() + i;
     }
 }

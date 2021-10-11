@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +47,7 @@ public class StarAllActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     List<StarItem> result = response.body();
                     for (StarItem si : result) {
-                        constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstImage()));
+                        constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstEng()));
                     }
                     recyclerView.setAdapter(constAdapter);
                 } else {

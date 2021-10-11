@@ -86,6 +86,8 @@
             android:id="@+id/edit_search"
             android:layout_width="match_parent"
             android:layout_height="36dp"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             android:layout_marginHorizontal="17dp"
             android:background="@drawable/postwrite__search_bar" />
 
