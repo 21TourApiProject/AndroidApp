@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.postWritePage;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ClipData;
@@ -71,6 +72,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -110,12 +112,20 @@ public class PostWriteActivity extends AppCompatActivity {
     Calendar c = Calendar.getInstance();
     int mYear = c.get(Calendar.YEAR);
     int mMonth = c.get(Calendar.MONTH);
-    int mDay = c.get(Calendar.DAY_OF_MONTH) + 1;
+    int mDay = c.get(Calendar.DAY_OF_MONTH);
 
     private TextView datePicker;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private TextView timePicker;
     private TimePickerDialog.OnTimeSetListener callbackMethod2;
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatHour = new SimpleDateFormat("HH");
+
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formatMin = new SimpleDateFormat("mm");
+    private String todaydate;
+    private String todaytime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,7 +234,7 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                monthOfYear += 1;
+//                monthOfYear += 1;
                 String month = Integer.toString(monthOfYear);
                 String day = Integer.toString(dayOfMonth);
 
@@ -246,8 +256,12 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod2 = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String realtime = hourOfDay+":"+minute+":"+"00";
-                timePicker.setText(hourOfDay + ":" + minute);
+                String hour = Integer.toString(hourOfDay);
+                if (hourOfDay<10||hourOfDay==12){
+                    hour = "0"+Integer.toString(hourOfDay);
+                }
+                String realtime = hour+":"+minute+":"+"00";
+                timePicker.setText(hour + ":" + minute);
                 time = realtime;
             }
         };
@@ -687,7 +701,11 @@ public String getRealPathFromURI(Uri contentUri) {
 
     }
     public void onClickTimePicker(View view){
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod2, 15, 24, false);
+        todaydate = formatHour.format(c.getTime());
+        todaytime = formatMin.format(c.getTime());
+        int todayHour= Integer.parseInt(todaydate);
+        int todayTime = Integer.parseInt(todaytime);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod2, todayHour, todayTime, false);
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
     }

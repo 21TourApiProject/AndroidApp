@@ -66,8 +66,10 @@ public class SearchFragment extends Fragment {
                 Fragment resultfragment = new SearchResultFragment();
                 resultfragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, resultfragment);
+                transaction.add(R.id.main_view, resultfragment);
+                ((MainActivity) getActivity()).setSearchResult(resultfragment);
                 transaction.addToBackStack(null);
+                transaction.hide(SearchFragment.this);
                 transaction.commit();
                 return true;
             }
@@ -90,8 +92,10 @@ public class SearchFragment extends Fragment {
                 mapFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.main_view, mapFragment);
+                transaction.add(R.id.main_view, mapFragment);
+                ((MainActivity) getActivity()).setMap(mapFragment);
                 transaction.addToBackStack(null);
+                transaction.hide(SearchFragment.this);
                 transaction.commit();
 //                ((MainActivity)getActivity()).replaceFragment(mapFragment);
             }
@@ -110,8 +114,8 @@ public class SearchFragment extends Fragment {
                 ((MainActivity) getActivity()).setFilter(filterFragment);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.add(R.id.main_view, filterFragment);
-                transaction.replace(R.id.main_view,filterFragment);
                 transaction.addToBackStack(null);
+                transaction.hide(SearchFragment.this);
                 transaction.commit();
             }
         });

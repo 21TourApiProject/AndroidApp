@@ -208,7 +208,7 @@ public class PersonFragment extends Fragment {
                     else {
                         if (myWishes.get(i).getThumbnail() != null){
                             String imageName = myWishes.get(i).getThumbnail();
-                            if(imageName.startsWith("http://"))
+                            if(imageName.startsWith("http://") || imageName.startsWith("https://"))
                                 Glide.with(getContext()).load(imageName).into(myWishImage1);
                             else
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage1);
@@ -221,7 +221,7 @@ public class PersonFragment extends Fragment {
                         if (size > 1){
                             if (myWishes.get(i).getThumbnail() != null){
                                 String imageName = myWishes.get(i).getThumbnail();
-                                if(imageName.startsWith("http://"))
+                                if(imageName.startsWith("http://") || imageName.startsWith("https://"))
                                     Glide.with(getContext()).load(imageName).into(myWishImage2);
                                 else
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage2);
@@ -234,7 +234,7 @@ public class PersonFragment extends Fragment {
                             if (size > 2){
                                 if (myWishes.get(i).getThumbnail() != null){
                                     String imageName = myWishes.get(i).getThumbnail();
-                                    if(imageName.startsWith("http://"))
+                                    if(imageName.startsWith("http://") || imageName.startsWith("https://"))
                                         Glide.with(getContext()).load(imageName).into(myWishImage3);
                                     else
                                         Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage3);

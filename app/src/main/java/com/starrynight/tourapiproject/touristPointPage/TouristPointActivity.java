@@ -144,6 +144,14 @@ public class TouristPointActivity extends AppCompatActivity {
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
 
+        Button tpBack = findViewById(R.id.tpBack);
+        tpBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
