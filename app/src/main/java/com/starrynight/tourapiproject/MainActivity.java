@@ -195,17 +195,17 @@ public class MainActivity extends AppCompatActivity {
                 transaction.commit();
             }
             else if (fromWhere == Activities.POST){
+                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+                getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 1);
                 bundle.putSerializable("keyword",intent.getSerializableExtra("keyword"));
                 bundle.putIntegerArrayList("hashTag", (ArrayList<Integer>) intent.getSerializableExtra("hashTag"));
                 bundle.putIntegerArrayList("area", (ArrayList<Integer>) intent.getSerializableExtra("area"));
-                bottomNavigationView.setSelectedItemId(R.id.navigation_search);
                 Fragment searchResultFragment = new SearchResultFragment();
                 searchResultFragment.setArguments(bundle);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.main_view, searchResultFragment);
-                transaction.hide(searchFragment);
                 searchResult = searchResultFragment;
                 transaction.commit();
             }
@@ -224,30 +224,28 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
+        System.out.println("무슨 fragment?"+fragment);
         if (fragment instanceof SearchResultFragment) {
+            System.out.println("어디로?1번");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.beginTransaction().remove(fragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_search);
             } else {
                 super.onBackPressed();
             }
-
-
-//            if (fragmentManager.getBackStackEntryCount() > 0) {
-//                fragmentManager.beginTransaction().remove(fragment);
 //                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//            } else {
-//                super.onBackPressed();
-//            }
         } else if(fragment instanceof FilterFragment){
+            System.out.println("어디로?2번");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
             }
         }else if (fragment instanceof MapFragment) {
+            System.out.println("어디로?3번");
             fragmentManager.beginTransaction().remove(fragment).commit();
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
+                map = null;
             } else {
                 super.onBackPressed();
             }
@@ -271,12 +269,19 @@ public class MainActivity extends AppCompatActivity {
 //                finish();
             }
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_person||bottomNavigationView.getSelectedItemId() == R.id.navigation_search) {
-            bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+            System.out.println("어디로?4번");
+            if (map != null || searchResult != null) {
+                finish();
+            } else {
+                bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+            }
         } else {
+            System.out.println("어디로?5번");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
                 super.onBackPressed();
+//                finish();
             }
         }
 

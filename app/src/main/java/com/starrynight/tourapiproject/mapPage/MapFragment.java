@@ -420,7 +420,7 @@ public class MapFragment extends Fragment {
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
 
-                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5500);
+                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),4500);
                 task.execute();
 
                 selectFilterItem.setVisibility(View.VISIBLE);
@@ -921,18 +921,19 @@ public class MapFragment extends Fragment {
             //주소를 두단어까지 줄임
             String address = params1.getAddress();
             int i = address.indexOf(' ');
-            if (i != -1){
-                int j = address.indexOf(' ', i+1);
-                if(j != -1){
+            if (i != -1) {
+                int j = address.indexOf(' ', i + 1);
+                if (j != -1) {
                     balloon_Object.setAddress(params1.getAddress().substring(0, j));
-                } else{
+                } else {
                     balloon_Object.setAddress(params1.getAddress());
                 }
-            } else{
+            } else {
                 balloon_Object.setAddress(params1.getAddress());
             }
+        } else {
+            balloon_Object.setAddress(params1.getAddress());
         }
-        balloon_Object.setAddress(params1.getAddress());
         balloon_Object.setPoint_type(params1.getContentType());
         balloon_Object.setTag(t);
         balloon_Object.setLatitude(params1.getLatitude());
