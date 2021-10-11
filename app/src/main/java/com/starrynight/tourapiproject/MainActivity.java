@@ -271,7 +271,11 @@ public class MainActivity extends AppCompatActivity {
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_person||bottomNavigationView.getSelectedItemId() == R.id.navigation_search) {
             System.out.println("어디로?4번");
             if (map != null || searchResult != null) {
-                finish();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+                } else {
+                    finish();
+                }
             } else {
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
             }
