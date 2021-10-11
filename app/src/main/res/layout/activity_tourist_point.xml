@@ -118,6 +118,7 @@
                     android:id="@+id/overviewPop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/tp_overview_detail"
                     android:textColor="@color/point_purple"
                     android:textSize="11sp" />
@@ -126,10 +127,8 @@
                     android:id="@+id/congestionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="40dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -163,7 +162,6 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginRight="5.33dp"
                         app:srcCompat="@drawable/tp_addr" />
 
