@@ -140,7 +140,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     ListView searchList;
     List<String> nameList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
-    long itemClickId;
+    String itemClickId;
 
 
     Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
@@ -234,9 +234,10 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemClickId = parent.getItemIdAtPosition(position) + 1;
+                itemClickId = parent.getItemAtPosition(position).toString();
                 Intent intent = new Intent(Objects.requireNonNull(getActivity()).getApplicationContext(), StarActivity.class);
-                intent.putExtra("constId", itemClickId);
+                intent.putExtra("constName", itemClickId);
+                Log.d("constName", itemClickId);
                 startActivity(intent);
                 //Toast.makeText(getActivity().getApplicationContext(), "You Click -" + parent.getItemAtPosition(position).toString() + parent.getItemIdAtPosition(position), Toast.LENGTH_SHORT).show();
             }

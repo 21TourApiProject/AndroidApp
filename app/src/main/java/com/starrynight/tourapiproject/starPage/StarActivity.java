@@ -32,7 +32,7 @@ public class StarActivity extends AppCompatActivity {
     View constMtdTv, constBestMonthTv, constGuardTv, constPersonalityTv;
     ImageView constImage, constFeature1, constFeature2, constFeature3;
 
-    Long constId;
+    String intentConstName;
     Constellation constData;
 
     @Override
@@ -42,8 +42,8 @@ public class StarActivity extends AppCompatActivity {
 
         // 넘겨준 constId 받기
         Intent intent = getIntent();
-        constId = (Long) intent.getSerializableExtra("constId");
-        //Log.d("constId 받아오기", constId.toString());
+        intentConstName = (String) intent.getSerializableExtra("constName");
+        Log.d("constName 받아오기", intentConstName);
 
         constName = findViewById(R.id.detail_const_name);
         constImage = findViewById(R.id.detail_const_image);
@@ -74,7 +74,7 @@ public class StarActivity extends AppCompatActivity {
         constBestMonthTl.setText("가장 보기 좋은 달");
 
         // 별자리 클릭 후 상세 정보 불러오는 api
-        Call<Constellation> detailConstCall = RetrofitClient.getApiService().getDetailConst(constId);
+        Call<Constellation> detailConstCall = RetrofitClient.getApiService().getDetailConst(intentConstName);
         detailConstCall.enqueue(new Callback<Constellation>() {
             @Override
             public void onResponse(Call<Constellation> call, Response<Constellation> response) {
