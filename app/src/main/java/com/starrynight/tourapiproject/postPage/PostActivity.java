@@ -318,7 +318,7 @@ public class PostActivity extends AppCompatActivity{
                         }
                     });
                     //뒤로 버튼
-                    Button back = findViewById(R.id.post_back_btn);
+                    LinearLayout back = findViewById(R.id.back_btn_layout);
                     back.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -328,9 +328,10 @@ public class PostActivity extends AppCompatActivity{
 
                     //삭제 버튼
                     Button deleteBtn = findViewById(R.id.delete_btn);
+                    LinearLayout deleteLayout = findViewById(R.id.delete_layout);
                     if(post.getUserId()==userId){deleteBtn.setVisibility(View.VISIBLE);}
                     else if(post.getUserId()!=userId){deleteBtn.setVisibility(View.GONE);}
-                    deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    deleteLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             AlertDialog.Builder ad = new AlertDialog.Builder(PostActivity.this);

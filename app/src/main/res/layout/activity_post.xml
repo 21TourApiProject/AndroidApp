@@ -23,14 +23,20 @@
                 android:background="@color/main_purple"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/post_back_btn"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="29dp"
-                    android:layout_marginEnd="21dp"
-                    android:background="@drawable/signup_back" />
+                <LinearLayout
+                    android:id="@+id/back_btn_layout"
+                    android:layout_width="50dp"
+                    android:layout_height="49dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/post_back_btn"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/signup_back" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/post_detail"
@@ -41,14 +47,21 @@
                     android:text="게시글 상세 보기"
                     android:textSize="17sp" />
 
-                <Button
-                    android:id="@+id/delete_btn"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/post_delete_btn"
-                    android:visibility="gone" />
+                <LinearLayout
+                    android:id="@+id/delete_layout"
+                    android:layout_width="50dp"
+                    android:layout_height="49dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/delete_btn"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/post_delete_btn"
+                        android:visibility="visible" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -60,7 +73,7 @@
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:background="@drawable/postitem__no_image">
+                    android:background="@drawable/post_image_">
 
                 </androidx.viewpager2.widget.ViewPager2>
 

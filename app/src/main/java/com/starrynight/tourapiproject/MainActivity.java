@@ -224,9 +224,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed(){
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        System.out.println("무슨 fragment?"+fragment);
         if (fragment instanceof SearchResultFragment) {
-            System.out.println("어디로?1번");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.beginTransaction().remove(fragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_search);
@@ -235,13 +233,11 @@ public class MainActivity extends AppCompatActivity {
             }
 //                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         } else if(fragment instanceof FilterFragment){
-            System.out.println("어디로?2번");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
             }
         }else if (fragment instanceof MapFragment) {
-            System.out.println("어디로?3번");
             fragmentManager.beginTransaction().remove(fragment).commit();
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
@@ -269,14 +265,16 @@ public class MainActivity extends AppCompatActivity {
 //                finish();
             }
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_person||bottomNavigationView.getSelectedItemId() == R.id.navigation_search) {
-            System.out.println("어디로?4번");
             if (map != null || searchResult != null) {
-                finish();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    bottomNavigationView.setSelectedItemId(R.id.navigation_search);
+                } else {
+                    finish();
+                }
             } else {
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
             }
         } else {
-            System.out.println("어디로?5번");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
