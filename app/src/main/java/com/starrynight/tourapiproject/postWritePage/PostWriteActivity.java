@@ -234,7 +234,7 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                monthOfYear += 1;
+                monthOfYear += 1;
                 String month = Integer.toString(monthOfYear);
                 String day = Integer.toString(dayOfMonth);
 
