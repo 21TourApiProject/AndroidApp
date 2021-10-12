@@ -4,6 +4,9 @@
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
+        <item name="android:background">@color/content_blue</item>
+    </style>
 
     <style name="StarryNight" parent="Theme.AppCompat.NoActionBar">
         // Attributes from material theme
@@ -13,6 +16,7 @@
         <item name="colorSurface">@color/point_purple</item>
         <item name="titleTextColor">@color/white</item>
         <item name="android:textColor">@color/white</item>
+
 
         // Attributes from android framework
         <item name="android:windowBackground">@color/bg_dark_indigo</item>
