@@ -423,18 +423,6 @@ public class PostWriteActivity extends AppCompatActivity {
                         if(response.isSuccessful()){
                             Log.d("post","게시물 작성 성공");
                             Long result = response.body();
-                            //앱 내부 저장소에 postId란 이름으로 게시글 id 저장
-                            String fileName = "postId";
-                            String postId = result.toString();
-                            try {
-                                FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
-                                fos.write(postId.getBytes());
-                                fos.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                             Call<Void>call1 = RetrofitClient.getApiService().createPostImage(result,postImageParams);
                             call1.enqueue(new Callback<Void>() {
                                 @Override
@@ -569,6 +557,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     System.out.println("img = " + img);
                     addImage(img);
                     file = new File(getRealPathFromURI(uri));
+                    files.add(file);
                     PostImageParams postImageParam = new PostImageParams();
                     postImageParam.setImageName(userId+"_"+file.getName());
                     postImageParams.add(postImageParam);
