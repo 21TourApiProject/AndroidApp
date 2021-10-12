@@ -168,31 +168,22 @@ public class PostWriteActivity extends AppCompatActivity {
                 Log.d("test", "onClick: location clicked");
                 if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
                     Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
-
-                } else if (permission == PackageManager.PERMISSION_DENIED){
-                    Log.d("test", "permission denied");
-                    Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
-                    ActivityCompat.requestPermissions(PostWriteActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
-                    ActivityCompat.requestPermissions(PostWriteActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
-                    ActivityCompat.requestPermissions(PostWriteActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
-                }
-
-                Intent intent = new Intent("android.intent.action.MULTIPLE_PICK");
-                intent.setType("image/*");
-                PackageManager manager = getApplicationContext().getPackageManager();
-                List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
+                    Intent intent = new Intent("android.intent.action.MULTIPLE_PICK");
+                    intent.setType("image/*");
+                    PackageManager manager = getApplicationContext().getPackageManager();
+                    List<ResolveInfo> infos = manager.queryIntentActivities(intent, 0);
 
 
-                if (infos.size() > 0) { //테스트 하고 삼성,일반 차이없으면 삭제 예정
-                    Log.e("FAT=","삼성폰");
-                    startActivityForResult(intent, PICK_IMAGE_SAMSUNG);
-                } else {
-                    Log.e("FAT=","일반폰");
-                    Intent pickerIntent = new Intent(Intent.ACTION_PICK);
-                    pickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                    pickerIntent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                    pickerIntent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickerIntent, PICK_IMAGE_MULTIPLE);
+                    if (infos.size() > 0) { //테스트 하고 삼성,일반 차이없으면 삭제 예정
+                        Log.e("FAT=","삼성폰");
+                        startActivityForResult(intent, PICK_IMAGE_SAMSUNG);
+                    } else {
+                        Log.e("FAT=","일반폰");
+                        Intent pickerIntent = new Intent(Intent.ACTION_PICK);
+                        pickerIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                        pickerIntent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                        pickerIntent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(pickerIntent, PICK_IMAGE_MULTIPLE);
 
 //                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // 일반폰 - 반드시 있어야 다중선택 가능
 //                    intent.setAction(Intent.ACTION_PICK); // ACTION_GET_CONTENT 사용불가 - 엘지 G2 테스트
@@ -203,6 +194,13 @@ public class PostWriteActivity extends AppCompatActivity {
 //                    //intent.setType("image/*");
 //                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 //                    startActivityForResult(Intent.createChooser(intent, "사진 최대 9장 선택가능"), PICK_IMAGE_MULTIPLE);
+                    }
+                } else if (permission == PackageManager.PERMISSION_DENIED){
+                    Log.d("test", "permission denied");
+                    Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions(PostWriteActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(PostWriteActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(PostWriteActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
                 }
             }
 
@@ -226,6 +224,10 @@ public class PostWriteActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 numOfPicture --;
                 addPicture.setText(Integer.toString(numOfPicture) + "/10");
+                if (numOfPicture==0){
+                    recyclerView.setVisibility(View.GONE);
+                    examplelayout.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -257,11 +259,15 @@ public class PostWriteActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String hour = Integer.toString(hourOfDay);
+                String min = Integer.toString(minute);
                 if (hourOfDay<10||hourOfDay==12){
-                    hour = "0"+Integer.toString(hourOfDay);
+                    hour = "0"+hourOfDay;
                 }
-                String realtime = hour+":"+minute+":"+"00";
-                timePicker.setText(hour + ":" + minute);
+                if (minute<10){
+                    min = "0"+minute;
+                }
+                String realtime = hour+":"+min+":"+"00";
+                timePicker.setText(hour + ":" + min);
                 time = realtime;
             }
         };
@@ -541,7 +547,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 else if (allsize>31&&allsize<60){layoutManager.setSpanCount(3);}
                 else if (allsize>61){layoutManager.setSpanCount(4);}
                 recyclerView.setAdapter(adapter);
-                recyclerView.addItemDecoration(new RecyclerViewDecoration(20,20));
+                recyclerView.addItemDecoration(new RecyclerViewDecoration(15,15));
             }else{Log.d("postHashTag","게시물 검색 해시태그 로드 실패");}
         }
         if (resultCode != RESULT_OK || data == null) {
@@ -564,7 +570,7 @@ public class PostWriteActivity extends AppCompatActivity {
                     addImage(img);
                     file = new File(getRealPathFromURI(uri));
                     PostImageParams postImageParam = new PostImageParams();
-                    postImageParam.setImageName(userId+file.getName());
+                    postImageParam.setImageName(userId+"_"+file.getName());
                     postImageParams.add(postImageParam);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -586,7 +592,7 @@ public class PostWriteActivity extends AppCompatActivity {
                             file = new File(getRealPathFromURI(uri));
                             files.add(file);
                             PostImageParams postImageParam = new PostImageParams();
-                            postImageParam.setImageName(userId+file.getName());
+                            postImageParam.setImageName(userId+"_"+file.getName());
                             postImageParams.add(postImageParam);
                             Log.e("FAT=", "일반폰/다중 : "+uri.toString());
                             uris.add(uri);
@@ -631,13 +637,15 @@ public String getRealPathFromURI(Uri contentUri) {
 
     public void uploadWithTransferUtilty(String fileName, File file) {
 
+        String realFileName = userId+"_"+fileName;
+
         AWSCredentials awsCredentials = new BasicAWSCredentials(readAccessKey(), readSecretKey());    // IAM 생성하며 받은 것 입력
         AmazonS3Client s3Client = new AmazonS3Client(awsCredentials, Region.getRegion(Regions.AP_NORTHEAST_2));
 
         TransferUtility transferUtility = TransferUtility.builder().s3Client(s3Client).context(getApplicationContext()).build();
         TransferNetworkLossHandler.getInstance(getApplicationContext());
 
-        TransferObserver uploadObserver = transferUtility.upload("starry-night/postImage",userId+fileName, file);    // (bucket api, file이름, file객체)
+        TransferObserver uploadObserver = transferUtility.upload("starry-night/postImage",realFileName, file);    // (bucket api, file이름, file객체)
         uploadObserver.setTransferListener(new TransferListener() {
             @Override
             public void onStateChanged(int id, TransferState state) {
