@@ -43,7 +43,7 @@
 
                 <Button
                     android:id="@+id/submitFilter"
-                    android:layout_width="27dp"
+                    android:layout_width="30dp"
                     android:layout_height="17dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="20dp"
@@ -69,8 +69,8 @@
 
                 <Button
                     android:id="@+id/areaBtn"
-                    android:layout_width="10dp"
-                    android:layout_height="16dp"
+                    android:layout_width="12dp"
+                    android:layout_height="14dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="27dp"
                     android:background="@drawable/filter__close" />
@@ -512,8 +512,8 @@
 
                 <Button
                     android:id="@+id/hashTagBtn"
-                    android:layout_width="10dp"
-                    android:layout_height="16dp"
+                    android:layout_width="12dp"
+                    android:layout_height="14dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="27dp"
                     android:background="@drawable/filter__close" />
