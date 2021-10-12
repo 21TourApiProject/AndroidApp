@@ -6,49 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".signUpPage.FindEmailActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="28dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="49dp"
+            android:layout_marginTop="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/findEmailBack"
+                android:layout_width="16sp"
+                android:layout_height="16sp"
+                android:layout_marginLeft="29dp"
+                android:layout_marginRight="21dp"
+                android:background="@drawable/mypost_back"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/scdream_light"
+                android:text="이메일 찾기"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginTop="22dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/findEmailBack"
-                    android:layout_width="16sp"
-                    android:layout_height="16sp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_marginLeft="29dp"
-                    android:layout_marginRight="21dp"
-                    android:background="@drawable/mypost_back" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="@font/scdream_light"
-                    android:text="이메일 찾기"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="42dp"
@@ -57,9 +54,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:text="* 카카오 회원은 제공되지 않는 기능입니다."
                     android:textColor="@color/gray"
-                    android:layout_marginBottom="20dp"
                     android:textSize="11sp" />
 
                 <TextView
@@ -113,7 +110,7 @@
                         android:background="@drawable/wt__card_view_round"
                         android:backgroundTint="@color/sub_blue"
                         android:text="인증 요청"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/resendAuth2"
@@ -168,6 +165,9 @@
                 android:text="완료" />
 
 
-        </LinearLayout>
-    </ScrollView>
+
+        </ScrollView>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
