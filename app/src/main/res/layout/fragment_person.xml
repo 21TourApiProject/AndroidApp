@@ -27,7 +27,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="right"
-                    android:layout_marginRight="18.27dp"
+                    android:layout_marginEnd="18.27dp"
                     android:background="@drawable/mypage_writepost" />
 
                 <Button
@@ -35,7 +35,7 @@
                     android:layout_width="19.45dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
                     android:background="@drawable/mypage_setting" />
             </LinearLayout>
 
@@ -56,7 +56,7 @@
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:layout_marginLeft="44dp"
+                    android:layout_marginStart="44dp"
                     android:layout_marginTop="44dp"
                     app:srcCompat="@drawable/mydata_edit" />
             </FrameLayout>
@@ -104,7 +104,7 @@
                 android:id="@+id/myWishBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
@@ -112,7 +112,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:text="나의 여행 버킷리스트 "
                     android:textSize="17sp" />
 
@@ -127,7 +127,7 @@
                     android:layout_width="4dp"
                     android:layout_height="8dp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="25dp"
+                    android:layout_marginEnd="25dp"
                     android:background="@drawable/mypage_showmore" />
 
             </LinearLayout>
@@ -136,14 +136,14 @@
                 android:id="@+id/myWishLayout"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -176,7 +176,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -209,7 +209,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     tools:visibility="visible">
@@ -251,7 +251,7 @@
                 android:id="@+id/myPostBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
@@ -259,8 +259,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
-                    android:text="내 게시물 "
+                    android:layout_marginEnd="8dp"
+                    android:text="내 게시글 "
                     android:textSize="17sp" />
 
                 <TextView
@@ -274,7 +274,7 @@
                     android:layout_width="4dp"
                     android:layout_height="8dp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="25dp"
+                    android:layout_marginEnd="25dp"
                     android:background="@drawable/mypage_showmore" />
             </LinearLayout>
 
@@ -282,14 +282,14 @@
                 android:id="@+id/myPostLayout"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -323,7 +323,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -356,7 +356,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
