@@ -249,7 +249,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             public boolean onQueryTextSubmit(String query) {
                 //검색 버튼 누를 때 호출
                 TonightSkyFragment.this.arrayAdapter.getFilter().filter(query);
-
                 return false;
             }
 
@@ -257,10 +256,38 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             public boolean onQueryTextChange(String newText) {
                 // 검색 창에서 글자가 변경이 일어날 때마다 호출
                 TonightSkyFragment.this.arrayAdapter.getFilter().filter(newText);
-
+                if (newText.equals("")) {
+                    searchList.setVisibility(View.GONE);
+                } else {
+                    searchList.setVisibility(View.VISIBLE);
+                }
                 return false;
             }
         });
+
+//        constSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    searchList.setVisibility(View.VISIBLE);
+//                    Log.d("hasFocus", "0");
+//                }else{
+//                    searchList.setVisibility(View.GONE);
+//                    Log.d("hasFocus", "1");
+//                }
+//            }
+//        });
+
+//        constSearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    Log.d("hasFocus", "0");
+//                    searchList.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+
 
         //나침반
         mSensorManger = (SensorManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SENSOR_SERVICE);
