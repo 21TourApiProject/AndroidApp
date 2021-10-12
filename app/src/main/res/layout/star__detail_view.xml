@@ -18,11 +18,11 @@
         android:textSize="14sp" />
 
     <TextView
-        android:layout_marginVertical="16dp"
-        android:layout_marginHorizontal="26dp"
         android:id="@+id/star_content_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginVertical="16dp"
         android:textSize="12sp" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.starrynight.tourapiproject.starPage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ public class StarAllActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     StarViewAdapter constAdapter;
+    CardView starCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class StarAllActivity extends AppCompatActivity {
 
         //recyclerView 설정
         recyclerView = findViewById(R.id.all_const_recycler);
+        starCardView = findViewById(R.id.star_card_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(gridLayoutManager);
         constAdapter = new StarViewAdapter();
@@ -42,6 +46,7 @@ public class StarAllActivity extends AppCompatActivity {
         // 이름, 이미지를 불러오기 위한 get api
         Call<List<StarItem>> starItemCall = RetrofitClient.getApiService().getConstellation();
         starItemCall.enqueue(new Callback<List<StarItem>>() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onResponse(Call<List<StarItem>> call, Response<List<StarItem>> response) {
                 if (response.isSuccessful()) {
@@ -50,6 +55,8 @@ public class StarAllActivity extends AppCompatActivity {
                         constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstEng()));
                     }
                     recyclerView.setAdapter(constAdapter);
+                    recyclerView.addItemDecoration(new StarRecyclerViewWidth(24));
+                    recyclerView.addItemDecoration(new StarRecyclerViewHeight(16));
                 } else {
                     System.out.println("모든 별자리 불러오기 실패");
                 }
@@ -67,7 +74,7 @@ public class StarAllActivity extends AppCompatActivity {
             public void onItemClick(StarViewAdapter.ViewHolder holder, View view, int position) {
                 StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getApplicationContext(), StarActivity.class);
-                intent.putExtra("constId", item.getConstId());
+                intent.putExtra("constName", item.getConstName());
                 //Log.d("constId출력", item.getConstId().toString());
                 startActivity(intent);
             }

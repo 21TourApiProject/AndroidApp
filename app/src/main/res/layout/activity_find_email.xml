@@ -6,164 +6,173 @@
     android:layout_height="match_parent"
     tools:context=".signUpPage.FindEmailActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="28dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="49dp"
+            android:layout_marginTop="22dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginTop="22dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <Button
+                android:id="@+id/findEmailBack"
+                android:layout_width="16sp"
+                android:layout_height="16sp"
+                android:layout_marginLeft="29dp"
+                android:layout_marginRight="21dp"
+                android:background="@drawable/mypost_back"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp" />
 
-                <Button
-                    android:id="@+id/findEmailBack"
-                    android:layout_width="16sp"
-                    android:layout_height="16sp"
-                    android:layout_marginLeft="29dp"
-                    android:layout_marginRight="21dp"
-                    android:background="@drawable/mypost_back" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/scdream_light"
+                android:text="이메일 찾기"
+                android:textSize="17sp" />
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="@font/scdream_light"
-                    android:text="이메일 찾기"
-                    android:textSize="17sp" />
-            </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="42dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="42dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="* 카카오 회원은 제공되지 않는 기능입니다."
-                    android:textColor="@color/gray"
-                    android:layout_marginBottom="20dp"
-                    android:textSize="11sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="이름"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/findEmailRealName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/findemail_write"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="10dp"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:text="휴대폰 번호"
-                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="14dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="42dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="* 카카오 회원은 제공되지 않는 기능입니다."
+                        android:textColor="@color/gray"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="이름"
+                        android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/findEmailMobilePhoneNumber"
+                        android:id="@+id/findEmailRealName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_weight="6"
-                        android:background="@drawable/findemail_write2"
-                        android:hint="예시) 01077778888"
-                        android:inputType="phone"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/findemail_write"
+                        android:inputType="textPersonName"
                         android:paddingLeft="10dp"
                         android:textSize="14sp" />
 
-                    <Button
-                        android:id="@+id/startAuth2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end"
-                        android:layout_marginLeft="14dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/wt__card_view_round"
-                        android:backgroundTint="@color/sub_blue"
-                        android:text="인증 요청"
-                        android:textSize="12sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:text="휴대폰 번호"
+                        android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/resendAuth2"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="14dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/findEmailMobilePhoneNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="6"
+                            android:background="@drawable/findemail_write2"
+                            android:hint="예시) 01077778888"
+                            android:inputType="phone"
+                            android:paddingLeft="10dp"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/startAuth2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_gravity="end"
+                            android:layout_marginLeft="14dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/wt__card_view_round"
+                            android:backgroundTint="@color/sub_blue"
+                            android:text="인증 요청"
+                            android:textSize="12sp" />
+
+                        <Button
+                            android:id="@+id/resendAuth2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_gravity="end"
+                            android:layout_marginLeft="14dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/wt__card_view_round"
+                            android:backgroundTint="@color/sub_blue"
+                            android:text="인증 재요청"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:text="인증 번호"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/authCode2"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end"
-                        android:layout_marginLeft="14dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/wt__card_view_round"
-                        android:backgroundTint="@color/sub_blue"
-                        android:text="인증 재요청"
-                        android:textSize="12sp"
-                        android:visibility="gone" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/findemail_write2"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:textSize="14sp" />
+
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:text="인증 번호"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/authCode2"
+                    android:id="@+id/showEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/findemail_write2"
-                    android:inputType="number"
-                    android:paddingLeft="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
                     android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/verify2"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/round_btn"
+                    android:fontFamily="@font/scdream"
+                    android:text="완료" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/showEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="60dp"
-                android:textSize="14sp" />
+        </ScrollView>
 
-            <Button
-                android:id="@+id/verify2"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/round_btn"
-                android:fontFamily="@font/scdream"
-                android:text="완료" />
+    </LinearLayout>
 
-
-        </LinearLayout>
-    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -69,7 +69,7 @@ public class TouristPointActivity extends AppCompatActivity {
     Food foodData;
     Boolean isTp;
 
-    TextView tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
+    TextView tpBanner, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
             tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText, overviewPop, daumMore;
 
     Button tpWish;
@@ -105,6 +105,7 @@ public class TouristPointActivity extends AppCompatActivity {
         CongestionThread thread = new CongestionThread();
         thread.start();
 
+        tpBanner = findViewById(R.id.tpBanner);
         tpWish = findViewById(R.id.tpWish);
         tpCongestion = findViewById(R.id.tpCongestion);
         tpTitle = findViewById(R.id.tpTitle);
@@ -286,6 +287,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                         balloonObject.setImage(tpData.getFirstImage());
                                         Glide.with(getApplicationContext()).load(tpData.getFirstImage()).into(slider);
                                     }
+                                    tpBanner.setText(tpData.getTitle());
                                     tpTitle.setText(tpData.getTitle());
                                     daumSearchWord = tpData.getTitle();
 
@@ -449,6 +451,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                         balloonObject.setImage(foodData.getFirstImage());
                                         Glide.with(getApplicationContext()).load(foodData.getFirstImage()).into(slider);
                                     }
+                                    tpBanner.setText(foodData.getTitle());
                                     tpTitle.setText(foodData.getTitle());
                                     daumSearchWord = foodData.getTitle();
                                     //다음 블로그 검색결과

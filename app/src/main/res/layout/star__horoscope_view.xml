@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/hor_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp" />
 
@@ -16,8 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="18dp"
         android:text="SAGITTARIUS"
+        android:fontFamily="@font/notosanskr_regular"
         android:textSize="22sp" />
 
     <LinearLayout
@@ -48,10 +48,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginHorizontal="38dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/star_horoscope_text"
+        android:text="별자리운세"
         android:textSize="14sp" />
 
 </LinearLayout>
