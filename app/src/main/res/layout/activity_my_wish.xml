@@ -35,8 +35,76 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:fontFamily="@font/scdream_light"
-                android:text="저장한 관측지, 관광지"
+                android:text="나의 여행 버킷리스트"
                 android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/myWishOb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:onClick="clickOb"
+                android:text="관측지"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/myWishTp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:onClick="clickTp"
+                android:text="관광지"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/myWishPost"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:onClick="clickPost"
+                android:text="게시글"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/myWishObLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="clickOb"
+                app:srcCompat="@drawable/mywish_tapclick" />
+
+            <ImageView
+                android:id="@+id/myWishTpLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="clickTp"
+                app:srcCompat="@drawable/mywish_tap" />
+
+            <ImageView
+                android:id="@+id/myWishPostLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="clickPost"
+                app:srcCompat="@drawable/mywish_tap" />
         </LinearLayout>
 
         <ScrollView
@@ -47,74 +115,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/myWishOb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="bottom|center"
-                        android:onClick="clickOb"
-                        android:text="관측지"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/myWishTp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="bottom|center"
-                        android:onClick="clickTp"
-                        android:text="관광지"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/myWishPost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="bottom|center"
-                        android:onClick="clickPost"
-                        android:text="게시글"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/myWishObLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="clickOb"
-                        app:srcCompat="@drawable/mywish_tapclick" />
-
-                    <ImageView
-                        android:id="@+id/myWishTpLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="clickTp"
-                        app:srcCompat="@drawable/mywish_tap" />
-
-                    <ImageView
-                        android:id="@+id/myWishPostLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="clickPost"
-                        app:srcCompat="@drawable/mywish_tap" />
-                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/myWishs"
