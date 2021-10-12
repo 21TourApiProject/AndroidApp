@@ -117,7 +117,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         public void onResponse(Call<List<String>> call, Response<List<String>> response) {
 
                             if (response.isSuccessful()) {
-                                if (response != null) {
+                                if (!response.body().isEmpty()) {
                                     Log.d(TAG, "관측지 이미지 호출 성공");
                                     List<String> imageList = response.body();
                                     obs_images = imageList.toArray(new String[imageList.size()]);

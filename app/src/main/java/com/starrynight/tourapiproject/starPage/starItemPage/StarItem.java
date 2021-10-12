@@ -9,13 +9,16 @@ public class StarItem {
     @SerializedName("constName")
     private String constName;
 
-    @SerializedName("constImage")
-    private String constImage;
+//    @SerializedName("constSmallImage")
+//    private String constSmallImage;
 
-    public StarItem(Long constId, String constName, String constImage) {
+    @SerializedName("constEng")
+    private String constEng;
+
+    public StarItem(Long constId, String constName, String constEng) {
         this.constId = constId;
         this.constName = constName;
-        this.constImage = constImage;
+        this.constEng = constEng;
     }
 
     public void setConstId(Long constId) {
@@ -34,11 +37,19 @@ public class StarItem {
         return constName;
     }
 
-    public void setConstImage(String constImage) {
-        this.constImage = constImage;
+//    public void setConstSmallImage(String constSmallImage) {
+//        this.constSmallImage = constSmallImage;
+//    }
+//
+//    public String getConstSmallImage() {
+//        return constSmallImage;
+//    }
+
+    public String getConstEng() {
+        return constEng;
     }
 
-    public String getConstImage() {
-        return constImage;
+    public void setConstEng(String constEng) {
+        this.constEng = constEng;
     }
 }

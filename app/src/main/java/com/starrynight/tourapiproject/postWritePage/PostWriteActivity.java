@@ -234,7 +234,7 @@ public class PostWriteActivity extends AppCompatActivity {
         callbackMethod = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//                monthOfYear += 1;
+                monthOfYear += 1;
                 String month = Integer.toString(monthOfYear);
                 String day = Integer.toString(dayOfMonth);
 
@@ -257,7 +257,7 @@ public class PostWriteActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String hour = Integer.toString(hourOfDay);
-                if (hourOfDay<12){
+                if (hourOfDay<10||hourOfDay==12){
                     hour = "0"+Integer.toString(hourOfDay);
                 }
                 String realtime = hour+":"+minute+":"+"00";

@@ -34,7 +34,7 @@ public class StarViewAdapter extends RecyclerView.Adapter<StarViewAdapter.ViewHo
         StarItem item = items.get(position);
         viewHolder.setItem(item);
         Glide.with(viewHolder.itemView.getContext())
-                .load(item.getConstImage())
+                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/constDetailImage/s_" + item.getConstEng() + ".png")
                 .into(viewHolder.constImage);
     }
 
