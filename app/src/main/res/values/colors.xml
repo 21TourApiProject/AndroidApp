@@ -26,4 +26,6 @@
     <color name="empty">#00ff0000</color>
     <color name="ripple_grey">#22222222</color>
     <color name="transparent_black">#86000000</color>
+    <color name="transparent">#00000000</color>
+
 </resources>

@@ -114,7 +114,7 @@ public class StarActivity extends AppCompatActivity {
                         constTravel.setText(constData.getConstTravel());
                     }
 
-                    if (constData.getConstPersonality() == null) {
+                    if (constData.getConstGuard() == null) {
                         constGuardTv.setVisibility(View.GONE);
                     } else {
                         constGuardTv.setVisibility(View.VISIBLE);
