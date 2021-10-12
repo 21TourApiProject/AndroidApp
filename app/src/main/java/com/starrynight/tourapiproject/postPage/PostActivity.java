@@ -327,14 +327,13 @@ public class PostActivity extends AppCompatActivity{
                     });
 
                     //삭제 버튼
-                    Button deleteBtn = findViewById(R.id.delete_btn);
                     LinearLayout deleteLayout = findViewById(R.id.delete_layout);
-                    if(post.getUserId()==userId){deleteBtn.setVisibility(View.VISIBLE);}
-                    else if(post.getUserId()!=userId){deleteBtn.setVisibility(View.GONE);}
+                    if(post.getUserId()==userId){deleteLayout.setVisibility(View.VISIBLE);}
+                    else if(post.getUserId()!=userId){deleteLayout.setVisibility(View.GONE);}
                     deleteLayout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            AlertDialog.Builder ad = new AlertDialog.Builder(PostActivity.this);
+                            AlertDialog.Builder ad = new AlertDialog.Builder(PostActivity.this,R.style.MyDialogTheme);
                             ad.setMessage("정말로 게시물을 삭제하시겠습니까?");
                             ad.setTitle("알림");
                             ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
