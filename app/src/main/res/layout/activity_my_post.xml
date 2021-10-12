@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/scdream_light"
-                android:text="내가 쓴 게시글"
+                android:text="내 게시글"
                 android:textSize="17sp" />
         </LinearLayout>
 

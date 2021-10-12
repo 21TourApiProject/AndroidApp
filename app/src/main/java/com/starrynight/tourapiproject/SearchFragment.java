@@ -131,14 +131,14 @@ public class SearchFragment extends Fragment {
         //요즘 핫한 밤하늘 명소
         LinearLayout hotLinear = v.findViewById(R.id.hotlinearlayout);
         RecyclerView hotRecyclerView = v.findViewById(R.id.hotRecyclerview);
-        hotLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (hotRecyclerView.getVisibility()==View.GONE){
-                    hotRecyclerView.setVisibility(View.VISIBLE);
-                }else{hotRecyclerView.setVisibility(View.GONE);}
-            }
-        });
+//        hotLinear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (hotRecyclerView.getVisibility()==View.GONE){
+//                    hotRecyclerView.setVisibility(View.VISIBLE);
+//                }else{hotRecyclerView.setVisibility(View.GONE);}
+//            }
+//        });
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         hotRecyclerView.setLayoutManager(linearLayoutManager);
         Post_point_item_Adapter adapter = new Post_point_item_Adapter();
@@ -174,14 +174,14 @@ public class SearchFragment extends Fragment {
 
         LinearLayout walkLinear = v.findViewById(R.id.walkinglinearlayout);
         RecyclerView walkRecyclerView = v.findViewById(R.id.walkingRecyclerview);
-        walkLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (walkRecyclerView.getVisibility()==View.GONE){
-                    walkRecyclerView.setVisibility(View.VISIBLE);
-                }else{walkRecyclerView.setVisibility(View.GONE);}
-            }
-        });
+//        walkLinear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (walkRecyclerView.getVisibility()==View.GONE){
+//                    walkRecyclerView.setVisibility(View.VISIBLE);
+//                }else{walkRecyclerView.setVisibility(View.GONE);}
+//            }
+//        });
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         walkRecyclerView.setLayoutManager(linearLayoutManager2);
         Post_point_item_Adapter adapter2 = new Post_point_item_Adapter();
@@ -216,14 +216,14 @@ public class SearchFragment extends Fragment {
 
         LinearLayout cityLinear = v.findViewById(R.id.citylinearlayout);
         RecyclerView cityRecyclerView = v.findViewById(R.id.cityRecyclerview);
-        cityLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (cityRecyclerView.getVisibility()==View.GONE){
-                    cityRecyclerView.setVisibility(View.VISIBLE);
-                }else{cityRecyclerView.setVisibility(View.GONE);}
-            }
-        });
+//        cityLinear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (cityRecyclerView.getVisibility()==View.GONE){
+//                    cityRecyclerView.setVisibility(View.VISIBLE);
+//                }else{cityRecyclerView.setVisibility(View.GONE);}
+//            }
+//        });
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         cityRecyclerView.setLayoutManager(linearLayoutManager3);
         Post_point_item_Adapter adapter3 = new Post_point_item_Adapter();
@@ -258,14 +258,14 @@ public class SearchFragment extends Fragment {
 
         LinearLayout hideLinear = v.findViewById(R.id.hidelinearlayout);
         RecyclerView hideRecyclerView = v.findViewById(R.id.hideRecyclerview);
-        hideLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (hideRecyclerView.getVisibility()==View.GONE){
-                    hideRecyclerView.setVisibility(View.VISIBLE);
-                }else{hideRecyclerView.setVisibility(View.GONE);}
-            }
-        });
+//        hideLinear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (hideRecyclerView.getVisibility()==View.GONE){
+//                    hideRecyclerView.setVisibility(View.VISIBLE);
+//                }else{hideRecyclerView.setVisibility(View.GONE);}
+//            }
+//        });
         LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         hideRecyclerView.setLayoutManager(linearLayoutManager4);
         Post_point_item_Adapter adapter4 = new Post_point_item_Adapter();
@@ -299,14 +299,14 @@ public class SearchFragment extends Fragment {
         });
         LinearLayout instaLinear = v.findViewById(R.id.instalinearlayout);
         RecyclerView instaRecyclerView = v.findViewById(R.id.instagramrecylcerview);
-        instaLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (instaRecyclerView.getVisibility()==View.GONE){
-                    instaRecyclerView.setVisibility(View.VISIBLE);
-                }else{instaRecyclerView.setVisibility(View.GONE);}
-            }
-        });
+//        instaLinear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (instaRecyclerView.getVisibility()==View.GONE){
+//                    instaRecyclerView.setVisibility(View.VISIBLE);
+//                }else{instaRecyclerView.setVisibility(View.GONE);}
+//            }
+//        });
         LinearLayoutManager linearLayoutManager5 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         instaRecyclerView.setLayoutManager(linearLayoutManager5);
         Post_point_item_Adapter adapter5 = new Post_point_item_Adapter();
@@ -341,14 +341,14 @@ public class SearchFragment extends Fragment {
 
         LinearLayout campLinear = v.findViewById(R.id.campinglinearlayout);
         RecyclerView campRecyclerView = v.findViewById(R.id.campingrecyclerview);
-        campLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (campRecyclerView.getVisibility()==View.GONE){
-                    campRecyclerView.setVisibility(View.VISIBLE);
-                }else{campRecyclerView.setVisibility(View.GONE);}
-            }
-        });
+//        campLinear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (campRecyclerView.getVisibility()==View.GONE){
+//                    campRecyclerView.setVisibility(View.VISIBLE);
+//                }else{campRecyclerView.setVisibility(View.GONE);}
+//            }
+//        });
         LinearLayoutManager linearLayoutManager6 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         campRecyclerView.setLayoutManager(linearLayoutManager6);
         Post_point_item_Adapter adapter6 = new Post_point_item_Adapter();

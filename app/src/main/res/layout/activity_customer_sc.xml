@@ -50,18 +50,38 @@
                 android:layout_marginTop="60dp"
                 app:srcCompat="@drawable/cspage_cute" />
 
-            <ImageView
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="55dp"
+                android:layout_marginBottom="4dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/scdream"
+                android:text="불편하신 점이나 건의할 사항을 알려주시면" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="40dp"
-                app:srcCompat="@drawable/cspage_text" />
+                android:textSize="12sp"
+                android:fontFamily="@font/scdream"
+                android:text="서비스를 개선하는데에 큰 도움이 됩니다." />
+
+<!--            <ImageView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="55dp"-->
+<!--                android:layout_marginBottom="40dp"-->
+<!--                app:srcCompat="@drawable/cspage_text" />-->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="41dp"
+                android:fontFamily="@font/scdream"
                 android:text="이메일 : starsufers@gmail.com"
                 android:textSize="15sp" />
 

@@ -30,16 +30,16 @@
                     android:paddingRight="10dp"
                     android:paddingLeft="10dp"
                     android:paddingBottom="10dp"
-                    android:layout_marginLeft="29dp"
-                    android:layout_marginRight="21dp"
+                    android:layout_marginStart="29dp"
+                    android:layout_marginEnd="21dp"
                     android:background="@drawable/mypost_back" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:fontFamily="@font/scdream_light"
-                    android:text="내 프로필"
+                    android:text="내 정보"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -60,7 +60,7 @@
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:layout_marginLeft="44dp"
+                    android:layout_marginStart="44dp"
                     android:layout_marginTop="44dp"
                     app:srcCompat="@drawable/mydata_edit" />
             </FrameLayout>
@@ -71,7 +71,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:text="닉네임"
                 android:textSize="17sp" />
 
             <ImageView
@@ -83,14 +82,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
+                android:layout_marginStart="42dp"
                 android:layout_marginTop="24dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="61dp"
+                    android:layout_marginEnd="61dp"
                     android:text="이름"
                     android:textSize="12sp" />
 
@@ -105,22 +104,22 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="125dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="42dp"
+                android:layout_marginEnd="42dp"
                 app:srcCompat="@drawable/setting_line" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
+                android:layout_marginStart="42dp"
                 android:layout_marginTop="39dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="50dp"
+                    android:layout_marginEnd="50dp"
                     android:text="이메일"
                     android:textSize="12sp" />
 
@@ -135,22 +134,22 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="125dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="42dp"
+                android:layout_marginEnd="42dp"
                 app:srcCompat="@drawable/setting_line" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
+                android:layout_marginStart="42dp"
                 android:layout_marginTop="39dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="39dp"
+                    android:layout_marginEnd="39dp"
                     android:text="전화번호"
                     android:textSize="12sp" />
 
@@ -165,22 +164,22 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="125dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="42dp"
+                android:layout_marginEnd="42dp"
                 app:srcCompat="@drawable/setting_line" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
+                android:layout_marginStart="42dp"
                 android:layout_marginTop="39dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="61dp"
+                    android:layout_marginEnd="61dp"
                     android:text="생일"
                     android:textSize="12sp" />
 
@@ -195,22 +194,22 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="125dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="42dp"
+                android:layout_marginEnd="42dp"
                 app:srcCompat="@drawable/setting_line" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
+                android:layout_marginStart="42dp"
                 android:layout_marginTop="39dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="61dp"
+                    android:layout_marginEnd="61dp"
                     android:text="성별"
                     android:textSize="12sp" />
 
@@ -225,16 +224,16 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="125dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="42dp"
+                android:layout_marginEnd="42dp"
                 app:srcCompat="@drawable/setting_line" />
 
             <Button
                 android:id="@+id/changePwd"
-                android:layout_width="100dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="125dp"
+                android:layout_width="105dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/mydata_changepassword" />
 
