@@ -36,11 +36,11 @@
                     android:background="@drawable/mypost_back" />
 
                 <TextView
+                    android:id="@+id/tpBanner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/scdream_light"
-                    android:text="관광지 상세페이지"
                     android:textSize="17sp" />
             </LinearLayout>
 
