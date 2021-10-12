@@ -26,8 +26,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.CompositePageTransformer;
-import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -142,7 +140,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     ListView searchList;
     List<String> nameList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
-    long itemClickId;
+    String itemClickId;
 
 
     Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
@@ -205,6 +203,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             }
         });
 
+
         //모든 별자리 이름 호출
         Call<List<ConstellationParams2>> constNameCall = RetrofitClient.getApiService().getConstNames();
         constNameCall.enqueue(new Callback<List<ConstellationParams2>>() {
@@ -235,9 +234,10 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemClickId = parent.getItemIdAtPosition(position) + 1;
+                itemClickId = parent.getItemAtPosition(position).toString();
                 Intent intent = new Intent(Objects.requireNonNull(getActivity()).getApplicationContext(), StarActivity.class);
-                intent.putExtra("constId", itemClickId);
+                intent.putExtra("constName", itemClickId);
+                Log.d("constName", itemClickId);
                 startActivity(intent);
                 //Toast.makeText(getActivity().getApplicationContext(), "You Click -" + parent.getItemAtPosition(position).toString() + parent.getItemIdAtPosition(position), Toast.LENGTH_SHORT).show();
             }
@@ -249,7 +249,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             public boolean onQueryTextSubmit(String query) {
                 //검색 버튼 누를 때 호출
                 TonightSkyFragment.this.arrayAdapter.getFilter().filter(query);
-
                 return false;
             }
 
@@ -257,10 +256,38 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             public boolean onQueryTextChange(String newText) {
                 // 검색 창에서 글자가 변경이 일어날 때마다 호출
                 TonightSkyFragment.this.arrayAdapter.getFilter().filter(newText);
-
+                if (newText.equals("")) {
+                    searchList.setVisibility(View.GONE);
+                } else {
+                    searchList.setVisibility(View.VISIBLE);
+                }
                 return false;
             }
         });
+
+//        constSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hasFocus){
+//                    searchList.setVisibility(View.VISIBLE);
+//                    Log.d("hasFocus", "0");
+//                }else{
+//                    searchList.setVisibility(View.GONE);
+//                    Log.d("hasFocus", "1");
+//                }
+//            }
+//        });
+
+//        constSearch.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    Log.d("hasFocus", "0");
+//                    searchList.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+
 
         //나침반
         mSensorManger = (SensorManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SENSOR_SERVICE);
@@ -324,7 +351,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 if (response.isSuccessful()) {
                     List<StarItem> result = response.body();
                     for (StarItem si : result) {
-                        constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstImage()));
+                        constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstEng()));
                     }
                     constList.setAdapter(constAdapter);
                 } else {
@@ -582,11 +609,11 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
 
     @Override
-    public void onDestroyView(){
+    public void onDestroyView() {
         super.onDestroyView();
     }
 
-    private int getItem(int i){
+    private int getItem(int i) {
         return horViewpager.getCurrentItem() + i;
     }
 }

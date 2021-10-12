@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +32,7 @@ public class StarActivity extends AppCompatActivity {
     View constMtdTv, constBestMonthTv, constGuardTv, constPersonalityTv;
     ImageView constImage, constFeature1, constFeature2, constFeature3;
 
-    Long constId;
+    String intentConstName;
     Constellation constData;
 
     @Override
@@ -43,8 +42,8 @@ public class StarActivity extends AppCompatActivity {
 
         // 넘겨준 constId 받기
         Intent intent = getIntent();
-        constId = (Long) intent.getSerializableExtra("constId");
-        //Log.d("constId 받아오기", constId.toString());
+        intentConstName = (String) intent.getSerializableExtra("constName");
+        Log.d("constName 받아오기", intentConstName);
 
         constName = findViewById(R.id.detail_const_name);
         constImage = findViewById(R.id.detail_const_image);
@@ -64,7 +63,7 @@ public class StarActivity extends AppCompatActivity {
         constBestMonthTl = constBestMonthTv.findViewById(R.id.star_title_text);
 
         constPersonalityTv = findViewById(R.id.const_personality_tv);
-        constPersonality  = findViewById(R.id.const_personality);
+        constPersonality = findViewById(R.id.const_personality);
         constPeriod = findViewById(R.id.const_period);
         constTravel = findViewById(R.id.const_travel);
 
@@ -75,14 +74,14 @@ public class StarActivity extends AppCompatActivity {
         constBestMonthTl.setText("가장 보기 좋은 달");
 
         // 별자리 클릭 후 상세 정보 불러오는 api
-        Call<Constellation> detailConstCall = RetrofitClient.getApiService().getDetailConst(constId);
+        Call<Constellation> detailConstCall = RetrofitClient.getApiService().getDetailConst(intentConstName);
         detailConstCall.enqueue(new Callback<Constellation>() {
             @Override
             public void onResponse(Call<Constellation> call, Response<Constellation> response) {
                 if (response.isSuccessful()) {
 
                     constData = response.body();
-                    Glide.with(StarActivity.this).load(constData.getConstImage()).fitCenter().into(constImage);
+                    Glide.with(StarActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/constDetailImage/b_" + constData.getConstEng() + ".png").fitCenter().into(constImage);
                     constName.setText(constData.getConstName());
                     constStory.setText(constData.getConstStory());
                     constMtd.setText(constData.getConstMtd());
@@ -97,11 +96,11 @@ public class StarActivity extends AppCompatActivity {
                     if (constData.getConstFeature2() == null) {
                         constFeature2.setVisibility(View.GONE);
                     } else {
-                        Glide.with(StarActivity.this).load(constData.getConstFeature1()).fitCenter().into(constFeature2);
+                        Glide.with(StarActivity.this).load(constData.getConstFeature2()).fitCenter().into(constFeature2);
                     }
 
                     if (constData.getConstFeature3() == null) {
-                        constFeature2.setVisibility(View.GONE);
+                        constFeature3.setVisibility(View.GONE);
                     } else {
                         Glide.with(StarActivity.this).load(constData.getConstFeature3()).fitCenter().into(constFeature3);
                     }
