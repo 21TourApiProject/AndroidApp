@@ -18,11 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorViewHolder> {
-    List<HorItem> horItems;
+    ArrayList <HorItem> horItems = new ArrayList<>();
 
-    public HoroscopeAdapter(List<HorItem> horItems){
-        this.horItems = horItems;
-    }
+//    public HoroscopeAdapter(List<HorItem> horItems){
+//        this.horItems = horItems;
+//    }
 
     @NonNull
     @NotNull
