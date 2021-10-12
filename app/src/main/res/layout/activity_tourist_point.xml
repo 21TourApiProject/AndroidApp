@@ -19,7 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -27,16 +27,20 @@
                     android:id="@+id/tpBack"
                     android:layout_width="16sp"
                     android:layout_height="16sp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_marginLeft="29dp"
                     android:layout_marginRight="21dp"
                     android:background="@drawable/mypost_back" />
 
                 <TextView
+                    android:id="@+id/tpBanner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/scdream_light"
-                    android:text="관광지 상세페이지"
                     android:textSize="17sp" />
             </LinearLayout>
 
@@ -64,6 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
+                        android:fontFamily="@font/spoqahansansneobold"
                         android:text="제목"
                         android:textSize="17sp" />
 
@@ -110,7 +115,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="24dp"
+                    android:lineSpacingExtra="4dp"
+                    android:layout_marginRight="15dp"
                     android:textSize="12sp"
                     android:visibility="visible" />
 
@@ -119,7 +125,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/tp_overview_detail"
+                    android:layout_marginTop="4dp"
+                    android:text="자세히 보기 >"
                     android:textColor="@color/point_purple"
                     android:textSize="11sp" />
 
