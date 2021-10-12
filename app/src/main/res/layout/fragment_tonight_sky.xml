@@ -68,7 +68,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/star__rounded"
-        android:focusableInTouchMode="false"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
@@ -77,23 +78,24 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
+            android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            android:layout_marginVertical="16dp"
             android:src="@drawable/star__ic_remove" />
 
         <SearchView
-            android:windowSoftInputMode = "adjustResize"
             android:id="@+id/edit_search"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginHorizontal="17dp"
-            android:background="@drawable/postwrite__search_bar" />
+            android:layout_marginVertical="17dp"
+            android:background="@drawable/postwrite__search_bar"
+            android:windowSoftInputMode="adjustResize" />
 
         <ListView
             android:id="@+id/const_list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -103,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
 
                 <ImageView
                     android:id="@+id/tonight_weather"
@@ -114,16 +117,15 @@
                 <include
                     layout="@layout/star__today_cel"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" />
+                    android:layout_height="wrap_content" />
 
                 <include
                     layout="@layout/star__horoscope"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginBottom="60dp"
-                    android:layout_marginTop="16dp" />
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="60dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
@@ -169,10 +171,10 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/help_back_btn"
                         style="@style/ImageButton.size21.pad12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/help_back_btn"
                         android:layout_gravity="center"
                         android:src="@drawable/tonight__help_close" />
 
