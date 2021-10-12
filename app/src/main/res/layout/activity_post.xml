@@ -49,16 +49,18 @@
 
                 <LinearLayout
                     android:id="@+id/delete_layout"
-                    android:layout_width="50dp"
+                    android:layout_width="80dp"
                     android:layout_height="49dp"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/delete_btn"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
                         android:background="@drawable/post_delete_btn"
                         android:visibility="visible" />
                 </LinearLayout>

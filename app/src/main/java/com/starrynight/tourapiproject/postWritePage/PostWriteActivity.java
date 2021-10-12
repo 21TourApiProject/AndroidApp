@@ -224,6 +224,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 numOfPicture --;
                 addPicture.setText(Integer.toString(numOfPicture) + "/10");
+                postImageParams.remove(position);
                 if (numOfPicture==0){
                     recyclerView.setVisibility(View.GONE);
                     examplelayout.setVisibility(View.VISIBLE);
@@ -308,7 +309,7 @@ public class PostWriteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder ad = new AlertDialog.Builder(PostWriteActivity.this);
+                AlertDialog.Builder ad = new AlertDialog.Builder(PostWriteActivity.this,R.style.MyDialogTheme);
                 ad.setMessage("게시물을 작성하시겠습니까?");
                 ad.setTitle("알림");
                 ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
