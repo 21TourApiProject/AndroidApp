@@ -88,9 +88,7 @@ public class MyDataActivity extends AppCompatActivity {
                     birth.setText(user.getBirthDay());
 
                     TextView sex = findViewById(R.id.sex);
-                    if (user.getSex() == null)
-                        sex.setText("선택 안함");
-                    else{
+                    if (user.getSex() != null){
                         if (user.getSex())
                             sex.setText("남성");
                         else

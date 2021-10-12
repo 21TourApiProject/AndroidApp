@@ -212,7 +212,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                     viewHolder.hashTagRecyclerView.addItemDecoration(new ViewHolder.RecyclerViewDecoration(20));
                     Bundle bundle = new Bundle();  // 아직 게시물 상세페이지에서는 에러나서 보류
                     bundle.putInt("type", 1);
-                    final String[] keyword = new String[getItemCount()];
+                    final String[] keyword = new String[adapter.getItemCount()];
                     adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
                         @Override
                         public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
