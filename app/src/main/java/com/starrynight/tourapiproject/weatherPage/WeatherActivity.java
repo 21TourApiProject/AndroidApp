@@ -366,7 +366,7 @@ public class WeatherActivity extends AppCompatActivity {
 
             for (int i = 0; i < obFitList.size(); i++) {
                 obFitPercent = String.format("%.0f", obFitList.get(i)) + "%";
-                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId], obFitPercent));
+                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId]+ "시", obFitPercent));
                 obFitHourId++;
             }
         } else if (selectDate.equals(plusDay)) {
@@ -374,7 +374,7 @@ public class WeatherActivity extends AppCompatActivity {
             Log.d("obFitHourId", String.valueOf(obFitHourId));
             for (int i = 0; i < 6; i++) {
                 obFitPercent = String.format("%.0f", obFitList.get(i)) + "%";
-                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId], obFitPercent));
+                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId]+ "시", obFitPercent));
                 obFitHourId++;
             }
         }
@@ -432,7 +432,7 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://www.weather.go.kr/w/index.do"));
+                intent.setData(Uri.parse("https://www.weather.go.kr/wgis-nuri/html/map.html"));
                 startActivity(intent);
             }
         });
