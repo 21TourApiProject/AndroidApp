@@ -601,9 +601,11 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     relateImage1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (!relateImageList.isEmpty()){
                             Intent intent01 = new Intent(getApplicationContext(), PostActivity.class);
                             intent01.putExtra("postId",relateImageList.get(0).getPostId());
                             startActivity(intent01);
+                            }
                         }
                     });
                     relateImage2.setOnClickListener(new View.OnClickListener() {
