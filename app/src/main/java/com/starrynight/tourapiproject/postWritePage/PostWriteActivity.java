@@ -95,7 +95,6 @@ public class PostWriteActivity extends AppCompatActivity {
     String postObservePointName="";
     List<String> hashTagList= new ArrayList<>();
     List<String> optionhashTagList= new ArrayList<>();
-    Long postId;
     Long userId;
     PostWriteLoadingDialog dialog;
     File file;
@@ -260,7 +259,7 @@ public class PostWriteActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String hour = Integer.toString(hourOfDay);
                 String min = Integer.toString(minute);
-                if (hourOfDay<10||hourOfDay==12){
+                if (hourOfDay<10){
                     hour = "0"+hourOfDay;
                 }
                 if (minute<10){
@@ -303,7 +302,6 @@ public class PostWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Handler handler = new Handler();
         Button save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
