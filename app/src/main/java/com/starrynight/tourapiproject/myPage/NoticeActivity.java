@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 
 public class NoticeActivity extends AppCompatActivity {
-    
+
     private static final String TAG = "Notice";
     RecyclerView noticeRecyclerView;
 
@@ -41,16 +41,18 @@ public class NoticeActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Notice>>() {
             @Override
             public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Notice> result = response.body();
                     NoticeAdapter noticeAdapter = new NoticeAdapter(getApplicationContext(), result);
                     noticeRecyclerView.setAdapter(noticeAdapter);
-                } else{
-                    Log.e(TAG,"공지사항 실패");}
+                } else {
+                    Log.e(TAG, "공지사항 실패");
+                }
             }
+
             @Override
             public void onFailure(Call<List<Notice>> call, Throwable t) {
-                Log.e(TAG,"연결 오류");
+                Log.e(TAG, "연결 오류");
             }
         });
 

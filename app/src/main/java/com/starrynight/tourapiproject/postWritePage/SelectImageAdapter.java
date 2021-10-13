@@ -13,7 +13,7 @@ import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
 
-public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.ViewHolder>{
+public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.ViewHolder> {
     ArrayList<SelectImage> items = new ArrayList<SelectImage>();
     OnSelectImageItemClickListener listener;
 
@@ -42,7 +42,7 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
         items.add(item);
     }
 
-    public void removeItem(int position){
+    public void removeItem(int position) {
         items.remove(position);
     }
 
@@ -58,7 +58,7 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
         items.set(position, item);
     }
 
-    public void setOnSelectImageItemClickListener(OnSelectImageItemClickListener listener){
+    public void setOnSelectImageItemClickListener(OnSelectImageItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -77,7 +77,7 @@ public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.
                 public void onClick(View view) {
                     int position = getAdapterPosition();
 
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onItemClick(ViewHolder.this, view, position);
                     }
                 }

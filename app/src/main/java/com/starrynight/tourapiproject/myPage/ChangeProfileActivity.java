@@ -99,11 +99,10 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     user = response.body();
                     if (user.getProfileImage() != null) {
-                        if(user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")){
+                        if (user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")) {
                             beforeImage = null;
                             Glide.with(getApplicationContext()).load(user.getProfileImage()).into(profileImage);
-                        }
-                        else{
+                        } else {
                             beforeImage = user.getProfileImage();
                             beforeImage = beforeImage.substring(1, beforeImage.length() - 1);
                             Glide.with(getApplicationContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + beforeImage).into(profileImage);
@@ -115,6 +114,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                     Log.d(TAG, "사용자 정보 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<User2> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -127,7 +127,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent,GET_GALLERY_IMAGE);
+                startActivityForResult(intent, GET_GALLERY_IMAGE);
             }
         });
 
@@ -148,18 +148,18 @@ public class ChangeProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
-        
+
         //저장 버튼
         Button submit = findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isProfileImageChange && beforeNickName.equals(changeNickname.getText().toString())){
+                if (!isProfileImageChange && beforeNickName.equals(changeNickname.getText().toString())) {
                     finish();
-                }
-                else{
+                } else {
                     if (!isNickNameEmpty && !isNotNickName && !isNickNameDuplicate) {
                         changeNicknameGuide.setText("");
 
@@ -176,7 +176,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     Log.d(TAG, "닉네임 변경 성공");
 
-                                    if (isProfileImageChange){ //프로필 사진 변경 put api
+                                    if (isProfileImageChange) { //프로필 사진 변경 put api
                                         Call<Void> call2 = RetrofitClient.getApiService().updateProfileImage(userId, fileName);
                                         call2.enqueue(new Callback<Void>() {
                                             @Override
@@ -189,13 +189,14 @@ public class ChangeProfileActivity extends AppCompatActivity {
                                                     Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
+
                                             @Override
                                             public void onFailure(Call<Void> call2, Throwable t) {
                                                 Log.e("연결실패", t.getMessage());
                                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                    } else{
+                                    } else {
                                         finish(); //종료
                                     }
 
@@ -253,7 +254,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
     // 이미지 uri 경로 함수
     public String getRealPathFromURI(Uri contentUri) {
-        String [] proj={MediaStore.Images.Media.DATA};
+        String[] proj = {MediaStore.Images.Media.DATA};
         CursorLoader cursorLoader = new CursorLoader(this, contentUri, proj, null, null, null);
         Cursor cursor = cursorLoader.loadInBackground();
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -271,12 +272,12 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
         if (bmpWidth > width) {
             float mWidth = bmpWidth / 100;
-            float scale = width/ mWidth;
+            float scale = width / mWidth;
             bmpWidth *= (scale / 100);
             bmpHeight *= (scale / 100);
         } else if (bmpHeight > height) {
             float mHeight = bmpHeight / 100;
-            float scale = height/ mHeight;
+            float scale = height / mHeight;
             bmpWidth *= (scale / 100);
             bmpHeight *= (scale / 100);
         }
@@ -318,22 +319,20 @@ public class ChangeProfileActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private Bitmap rotateImage(Uri uri, Bitmap bitmap)throws IOException {
+    private Bitmap rotateImage(Uri uri, Bitmap bitmap) throws IOException {
         InputStream in = getContentResolver().openInputStream(uri);
         ExifInterface exif = new ExifInterface(in);
         in.close();
-        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL);
+        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
         Matrix matrix = new Matrix();
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_90){
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
             matrix.postRotate(90);
-        }
-        else if (orientation == ExifInterface.ORIENTATION_ROTATE_180){
+        } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
             matrix.postRotate(180);
-        }
-        else if (orientation == ExifInterface.ORIENTATION_ROTATE_270){
+        } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
             matrix.postRotate(270);
         }
-        return Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     // bitmap -> uri
@@ -355,7 +354,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 byteArrayOutputStream.write(i);
                 i = inputStream.read();
             }
-            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+            data = new String(byteArrayOutputStream.toByteArray(), "MS949");
 
             inputStream.close();
         } catch (IOException e) {
@@ -375,7 +374,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 byteArrayOutputStream.write(i);
                 i = inputStream.read();
             }
-            data = new String(byteArrayOutputStream.toByteArray(),"MS949");
+            data = new String(byteArrayOutputStream.toByteArray(), "MS949");
 
             inputStream.close();
         } catch (IOException e) {
@@ -400,7 +399,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
             changeNicknameGuide.setText(getString(R.string.changeprofile_error));
             isNickNameEmpty = false;
             isNotNickName = true;
-        } else if (!text.equals(user.getNickName())){
+        } else if (!text.equals(user.getNickName())) {
             //닉네임이 중복인지 아닌지를 위한 get api
             changeNicknameGuide.setText("");
             Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateNickName(text);
@@ -426,6 +425,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("연결실패", t.getMessage());

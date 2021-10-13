@@ -13,7 +13,9 @@ public class PostImage {
     private String imageName;
     @SerializedName("postObservePointId")
     private Long postObservePointId;
-    public PostImage(){}
+
+    public PostImage() {
+    }
 
     public Long getPostImageListId() {
         return postImageListId;

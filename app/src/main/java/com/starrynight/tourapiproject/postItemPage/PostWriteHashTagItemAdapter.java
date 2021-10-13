@@ -25,7 +25,8 @@ public class PostWriteHashTagItemAdapter extends RecyclerView.Adapter<PostWriteH
         this.items = items;
     }
     public void removeItem(int position){ items.remove(position); }
-    public PostWriteHashTagItem getItem(int position){
+
+    public PostWriteHashTagItem getItem(int position) {
         return items.get(position);
     }
 

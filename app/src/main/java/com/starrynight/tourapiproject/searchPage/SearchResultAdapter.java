@@ -24,7 +24,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     OnSearchResultItemClickListener listener;
     private Context context;
 
-    public SearchResultAdapter(List<SearchParams1> items, Context context){
+    public SearchResultAdapter(List<SearchParams1> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -48,7 +48,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
     @Override
     public int getItemCount() {
-        return items == null ? 0 :items.size();
+        return items == null ? 0 : items.size();
     }
 
 
@@ -105,7 +105,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         }
 
         public void setItem(SearchParams1 item) {
-            if(item.getThumbnail() != null)
+            if (item.getThumbnail() != null)
                 Glide.with(context).load(item.getThumbnail()).into(obTpImage);
             obTpTitle.setText(item.getTitle());
             opTpAddress.setText(item.getAddress());

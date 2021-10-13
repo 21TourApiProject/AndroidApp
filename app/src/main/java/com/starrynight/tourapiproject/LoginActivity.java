@@ -22,41 +22,42 @@ public class LoginActivity extends AppCompatActivity {
     String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
     int PERMISSIONS_REQUEST_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Handler handler = new Handler();
 
-        if (getLogin()){
-            Log.d("Login","유저 정보 있음"+userId);
+        if (getLogin()) {
+            Log.d("Login", "유저 정보 있음" + userId);
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    intent.putExtra("userId",userId);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("userId", userId);
                     startActivity(intent);
                     finish();
                 }
-            },2000);
-        }else{
+            }, 2000);
+        } else {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("Login","유저 정보 없음");
+                    Log.d("Login", "유저 정보 없음");
                     Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                     startActivity(intent);
                     finish();
                 }
-            },2000);
+            }, 2000);
         }
 
     }
 
-    public boolean getLogin(){
+    public boolean getLogin() {
 
         String fileName = "userId";
-        try{
+        try {
             FileInputStream fis = openFileInput(fileName);
             String line = new BufferedReader(new InputStreamReader(fis)).readLine();
             userId = Long.parseLong(line);
@@ -66,7 +67,8 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (userId!=null){return true;}
-        else return false;
+        if (userId != null) {
+            return true;
+        } else return false;
     }
 }

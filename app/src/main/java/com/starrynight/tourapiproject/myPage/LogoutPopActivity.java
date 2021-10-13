@@ -39,7 +39,7 @@ public class LogoutPopActivity extends AppCompatActivity {
     }
 
     //로그아웃
-    public void logout(View v){
+    public void logout(View v) {
 
         Call<Boolean> call = RetrofitClient.getApiService().checkIsKakao(userId);
         call.enqueue(new Callback<Boolean>() {
@@ -49,7 +49,7 @@ public class LogoutPopActivity extends AppCompatActivity {
                 Log.d(TAG, "카카오 가입자인지 확인");
                 Boolean isKakao = response.body();
                 if (isKakao != null) {
-                    if (isKakao==null||isKakao) {
+                    if (isKakao == null || isKakao) {
                         UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
                             @Override
                             public void onCompleteLogout() {
@@ -86,7 +86,7 @@ public class LogoutPopActivity extends AppCompatActivity {
     }
 
     //팝업 닫기
-    public void closeLogout(View v){
+    public void closeLogout(View v) {
         Intent intent = new Intent();
         intent.putExtra("result", "Close Popup");
         setResult(RESULT_OK, intent);

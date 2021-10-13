@@ -60,10 +60,9 @@ public class MyDataActivity extends AppCompatActivity {
                     user = response.body();
 
                     if (user.getProfileImage() != null) {
-                        if(user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")){
+                        if (user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")) {
                             Glide.with(getApplicationContext()).load(user.getProfileImage()).circleCrop().into(profileImage2);
-                        }
-                        else{
+                        } else {
                             String fileName = user.getProfileImage();
                             fileName = fileName.substring(1, fileName.length() - 1);
                             Glide.with(getApplicationContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).circleCrop().into(profileImage2);
@@ -82,13 +81,13 @@ public class MyDataActivity extends AppCompatActivity {
                     TextView mobilePhoneNumber = findViewById(R.id.mobilePhoneNumber);
                     String mpn = user.getMobilePhoneNumber();
                     if (mpn != null)
-                        mobilePhoneNumber.setText(mpn.substring(0,3) + "-" + mpn.substring(3,7) + "-" + mpn.substring(7));
+                        mobilePhoneNumber.setText(mpn.substring(0, 3) + "-" + mpn.substring(3, 7) + "-" + mpn.substring(7));
 
                     TextView birth = findViewById(R.id.birth);
                     birth.setText(user.getBirthDay());
 
                     TextView sex = findViewById(R.id.sex);
-                    if (user.getSex() != null){
+                    if (user.getSex() != null) {
                         if (user.getSex())
                             sex.setText("남성");
                         else
@@ -98,6 +97,7 @@ public class MyDataActivity extends AppCompatActivity {
                     Log.e(TAG, "사용자 정보 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -141,7 +141,7 @@ public class MyDataActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == CHANGE_PROFILE){
+        if (requestCode == CHANGE_PROFILE) {
             //액티비티 새로고침
             Intent intent = getIntent();
             finish();

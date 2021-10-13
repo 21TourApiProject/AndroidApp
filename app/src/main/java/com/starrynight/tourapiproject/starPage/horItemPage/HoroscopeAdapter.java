@@ -15,10 +15,9 @@ import com.starrynight.tourapiproject.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorViewHolder> {
-    ArrayList <HorItem> horItems = new ArrayList<>();
+    ArrayList<HorItem> horItems = new ArrayList<>();
 
 //    public HoroscopeAdapter(List<HorItem> horItems){
 //        this.horItems = horItems;

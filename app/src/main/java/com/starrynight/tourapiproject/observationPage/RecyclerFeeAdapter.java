@@ -37,7 +37,7 @@ public class RecyclerFeeAdapter extends RecyclerView.Adapter<RecyclerFeeAdapter.
 
         void onBind(RecyclerFeeItem item) {
             fee_name.setText(Html.fromHtml(item.getFeeName(), HtmlCompat.FROM_HTML_MODE_LEGACY));
-            if(item.getEntranceFee()==null)
+            if (item.getEntranceFee() == null)
                 line.setVisibility(View.GONE);
             entrance_fee.setText(item.getEntranceFee());
         }

@@ -184,18 +184,6 @@ public class WeatherActivity extends AppCompatActivity {
     Date unixHourMin;
     Date unixHour;
 
-    //낮 길이
-    String sunriseSt;
-    String sunsetSt;
-
-    Date sunriseTime;
-    Date sunsetTime;
-
-    long dayLength;
-    int hourValue;
-    int minValue;
-    String diff;
-
     //강수량
     double doublePrecip;
 
@@ -561,22 +549,6 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("plusDay", plusDay);
         Log.d("plusTwoDay", plusTwoDay);
         c.add(Calendar.DATE, -2);
-
-//        timePicker.setText(todayTime);
-
-//        timeListener = new TimePickerDialog.OnTimeSetListener() {
-//            @Override
-//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//
-//                Log.d("hourOfDay", String.valueOf(hourOfDay));
-//                timePicker.setText(String.format("%02d시", hourOfDay));
-//                selectTime = String.format("%02d", hourOfDay);
-//                Log.d("selectTime", selectTime);
-//
-//                selectDateTime = selectDate + selectTime;
-//                Log.d("selectDateTime", selectDateTime);
-//            }
-//        };
     }
 
     //시간 선택 이벤트
@@ -1774,115 +1746,6 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
-
-//    public void setDustData() {
-//        arrayComma = listDust.split(",");
-//
-//        for (String s : arrayComma) {
-//            Log.d("test", s);
-//        }
-//
-//        for (int i = 0; i < 19; i++) {
-//            index = arrayComma[i].indexOf(":");
-//            state = arrayComma[i].substring(index + 2);
-//            dustStateArray[i] = state;
-//        }
-//
-//        if (cityName.equals("서울")) {
-//            findDustTv.setText(dustStateArray[0]);
-//            Log.d("dust", "0");
-//        } else if (cityName.equals("제주")) {
-//            findDustTv.setText(dustStateArray[1]);
-//            Log.d("dust", "1");
-//        } else if (cityName.equals("전남")) {
-//            findDustTv.setText(dustStateArray[2]);
-//            Log.d("dust", "2");
-//        } else if (cityName.equals("광주·전북")) {
-//            //광주
-//            if (provName.equals("광산구") || provName.equals("남구") || provName.equals("동구") || provName.equals("북구") || provName.equals("서구")) {
-//                findDustTv.setText(dustStateArray[4]);
-//                Log.d("dust", "4");
-//            }
-//            //전북
-//            else {
-//                findDustTv.setText(dustStateArray[3]);
-//                Log.d("dust", "3");
-//            }
-//        } else if (cityName.equals("경남")) {
-//            findDustTv.setText(dustStateArray[5]);
-//            Log.d("dust", "5");
-//        } else if (cityName.equals("대구·경북")) {
-//            //대구
-//            if (provName.equals("중구") || provName.equals("동구") || provName.equals("서구") || provName.equals("남구") || provName.equals("북구") || provName.equals("수성구") || provName.equals("달서구") || provName.equals("달성군")) {
-//                findDustTv.setText(dustStateArray[8]);
-//                Log.d("dust", "8");
-//            }
-//            //경북
-//            else {
-//                findDustTv.setText(dustStateArray[6]);
-//                Log.d("dust", "6");
-//            }
-//        } else if (cityName.equals("부산·울산")) {
-//            //울산
-//            if (provName.equals("남구") || provName.equals("동구") || provName.equals("북구") || provName.equals("울주군") || provName.equals("중구")) {
-//                findDustTv.setText(dustStateArray[7]);
-//                Log.d("dust", "7");
-//            }
-//            //부산
-//            else {
-//                findDustTv.setText(dustStateArray[9]);
-//                Log.d("dust", "9");
-//            }
-//        } else if (cityName.equals("충북")) {
-//            findDustTv.setText(dustStateArray[11]);
-//            Log.d("dust", "11");
-//        } else if (cityName.equals("충남·대전·세종")) {
-//            //대전
-//            if (provName.equals("대덕구") || provName.equals("동구") || provName.equals("서구") || provName.equals("유성구") || provName.equals("중구")) {
-//                findDustTv.setText(dustStateArray[13]);
-//                Log.d("dust", "13");
-//            }
-//            //세종
-//            else if (provName.equals("세종")) {
-//                findDustTv.setText(dustStateArray[12]);
-//                Log.d("dust", "12");
-//            }
-//            //충남
-//            else {
-//                findDustTv.setText(dustStateArray[10]);
-//                Log.d("dust", "10");
-//            }
-//        } else if (cityName.equals("인천")) {
-//            findDustTv.setText(dustStateArray[18]);
-//            Log.d("dust", "18");
-//        } else if (cityName.equals("경기")) {
-//            //경기 북부
-//            if (provName.equals("가평군") || provName.equals("고양시") || provName.equals("구리시") || provName.equals("남양주시") || provName.equals("동두천시")
-//                    || provName.equals("양주시") || provName.equals("연천군") || provName.equals("의정부시") || provName.equals("파주시") || provName.equals("포천시")) {
-//                findDustTv.setText(dustStateArray[17]);
-//                Log.d("dust", "17");
-//            }
-//            //경기 남부
-//            else {
-//                findDustTv.setText(dustStateArray[16]);
-//                Log.d("dust", "16");
-//            }
-//        } else if (cityName.equals("강원")) {
-//            //영동
-//            if (provName.equals("강릉시") || provName.equals("고성군") || provName.equals("동해시") || provName.equals("삼척시") || provName.equals("속초시")
-//                    || provName.equals("양양군") || provName.equals("태백시")) {
-//                findDustTv.setText(dustStateArray[14]);
-//                Log.d("dust", "14");
-//            }
-//            //영서
-//            else {
-//                findDustTv.setText(dustStateArray[15]);
-//                Log.d("dust", "15");
-//            }
-//        } else {
-//            Log.d("dustError", "else로 빠짐");
-//        }
-//    }
 
     //관측적합도
     public double setObservationalFitDegree() {

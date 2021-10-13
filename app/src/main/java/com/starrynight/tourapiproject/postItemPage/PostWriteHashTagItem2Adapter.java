@@ -14,34 +14,39 @@ import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
 
-public class PostWriteHashTagItem2Adapter extends RecyclerView.Adapter<PostWriteHashTagItem2Adapter.ViewHolder>{
+public class PostWriteHashTagItem2Adapter extends RecyclerView.Adapter<PostWriteHashTagItem2Adapter.ViewHolder> {
     ArrayList<PostWriteHashTagItem2> items = new ArrayList<PostWriteHashTagItem2>();
 
-    public void addItem(PostWriteHashTagItem2 item){
+    public void addItem(PostWriteHashTagItem2 item) {
         items.add(item);
     }
-    public void setItems(ArrayList<PostWriteHashTagItem2>items){
+
+    public void setItems(ArrayList<PostWriteHashTagItem2> items) {
         this.items = items;
     }
-    public void removeItem(int position){ items.remove(position); }
-    public PostWriteHashTagItem2 getItem(int position){
+
+    public void removeItem(int position) {
+        items.remove(position);
+    }
+
+    public PostWriteHashTagItem2 getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, PostWriteHashTagItem2 item){
-        items.set(position,item);
+    public void setItem(int position, PostWriteHashTagItem2 item) {
+        items.set(position, item);
     }
 
     @NonNull
     @Override
     public PostWriteHashTagItem2Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.hashtags_full2, parent, false);
         return new PostWriteHashTagItem2Adapter.ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostWriteHashTagItem2Adapter.ViewHolder viewHolder, int position){
+    public void onBindViewHolder(@NonNull PostWriteHashTagItem2Adapter.ViewHolder viewHolder, int position) {
         PostWriteHashTagItem2 item = items.get(position);
         viewHolder.setItem(item);
         viewHolder.hashTagDelete.setVisibility(View.GONE);
@@ -52,19 +57,19 @@ public class PostWriteHashTagItem2Adapter extends RecyclerView.Adapter<PostWrite
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView postHashTagName;
         ImageView hashTagDelete;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
-            postHashTagName =itemView.findViewById(R.id.hashtags_name);
+            postHashTagName = itemView.findViewById(R.id.hashtags_name);
             hashTagDelete = itemView.findViewById(R.id.hashtags_delete);
         }
 
         @SuppressLint("SetTextI18n")
-        public void setItem(PostWriteHashTagItem2 item){
-            postHashTagName.setText("#"+item.getHashTagname());
+        public void setItem(PostWriteHashTagItem2 item) {
+            postHashTagName.setText("#" + item.getHashTagname());
         }
     }
 }

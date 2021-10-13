@@ -9,12 +9,6 @@ public class Constellation {
     @SerializedName("constName")
     private String constName;
 
-//    @SerializedName("constBigImage")
-//    private String constBigImage;
-//
-//    @SerializedName("constSmallImage")
-//    private String constSmallImage;
-
     @SerializedName("constStory")
     private String constStory;
 
