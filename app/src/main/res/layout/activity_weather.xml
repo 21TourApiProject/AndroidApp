@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="8dp"
-                        android:text="월"
+                        android:text="일"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -100,6 +100,7 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/wt_timePicker_hour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -141,7 +142,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:text="은/는"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -152,7 +153,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/scdream"
-                android:text="별 보기 아주 좋아요"
                 android:textSize="27sp" />
 
             <ImageView
