@@ -147,7 +147,7 @@ public class PostWriteActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         // + 버튼 클릭 이벤트
         addPicture = findViewById(R.id.addPicture);
@@ -219,7 +219,6 @@ public class PostWriteActivity extends AppCompatActivity {
         adapter.setOnSelectImageItemClickListener(new OnSelectImageItemClickListener() {
             @Override
             public void onItemClick(SelectImageAdapter.ViewHolder holder, View view, int position) {
-                System.out.println("position = " + position);
                 adapter.removeItem(position);
                 adapter.notifyDataSetChanged();
                 numOfPicture --;
@@ -555,7 +554,6 @@ public class PostWriteActivity extends AppCompatActivity {
                 Log.e("FAT=", "일반폰/단일 : "+uri.toString());
                 try {
                     Bitmap img = resize(this, uri, 100);
-                    System.out.println("img = " + img);
                     addImage(img);
                     file = new File(getRealPathFromURI(uri));
                     files.add(file);
@@ -675,7 +673,6 @@ public String getRealPathFromURI(Uri contentUri) {
 //                in.close();
                 Bitmap img = resize(this, uri, 100); //해상도 최대로 하고싶으면 100으로
                 Bitmap roateImage1 = rotateImage(uri,img);
-                System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(roateImage1, numOfPicture));
                 recyclerView.setAdapter(adapter);
             } catch (Exception e) {
@@ -770,7 +767,6 @@ public String getRealPathFromURI(Uri contentUri) {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("data = " + data);
         return data;
     }
 
@@ -791,7 +787,6 @@ public String getRealPathFromURI(Uri contentUri) {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("data = " + data);
         return data;
     }
     private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {

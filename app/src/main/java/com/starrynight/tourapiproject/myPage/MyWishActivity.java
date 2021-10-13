@@ -102,7 +102,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("내 찜 관측지 불러오기 실패");
+                    Log.d("myWishOb","내 찜 관측지 불러오기 실패");
                 }
             }
 
@@ -150,7 +150,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("내 찜 관측지 불러오기 실패");
+                    Log.d("myWishOb","내 찜 관측지 불러오기 실패");
                 }
             }
 
@@ -184,7 +184,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("내 찜 관광지 불러오기 실패");
+                    Log.d("myWishTp","내 찜 관광지 불러오기 실패");
                 }
             }
 
@@ -218,7 +218,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("내 찜 게시물 불러오기 실패");
+                    Log.d("myPost","내 찜 게시물 불러오기 실패");
                 }
             }
 

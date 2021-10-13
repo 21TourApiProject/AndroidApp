@@ -110,11 +110,9 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {
                     if (response.body()){
-                        System.out.println("찜한것"+item.getPostId());
                         isWish[position] = true;
                         viewHolder.bookmark.setSelected(!viewHolder.bookmark.isSelected());
                     } else{
-                        System.out.println("찜안한거"+item.getPostId());
                         isWish[position] = false;
                     }
                 } else {
