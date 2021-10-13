@@ -54,7 +54,7 @@ public class SearchResultFragment extends Fragment {
     String[] hashTagName = {"공기 좋은", "깔끔한", "감성적인", "이색적인", "인생샷", "전문적인", "캠핑", "차박", "뚜벅이", "드라이브",
             "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
 
-    TextView moreObText,moreTpText,morePostText;
+    TextView moreObText, moreTpText, morePostText;
     Button obBtn;
     Button tpBtn;
     Button postBtn;
@@ -76,10 +76,10 @@ public class SearchResultFragment extends Fragment {
 
     List<SearchParams1> obResult; //관측지 필터 결과
     List<SearchParams1> tpResult; //관광지 필터 결과
-    List<SearchParams1>finalTpResult = new ArrayList<>();
-    List<SearchParams1>finalObResult = new ArrayList<>();
+    List<SearchParams1> finalTpResult = new ArrayList<>();
+    List<SearchParams1> finalObResult = new ArrayList<>();
     List<MyPost> postResult;//게시물 필터 결과
-    List<MyPost> finalPostResult= new ArrayList<>();
+    List<MyPost> finalPostResult = new ArrayList<>();
     ArrayList<Integer> area; //어떤 지역필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
     ArrayList<Integer> hashTag; //어떤 해시태그필터 선택했는지 Integer값(0이면 선택x, 1이면 선택o)으로 받아온 배열
 
@@ -98,20 +98,20 @@ public class SearchResultFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_search_result, container, false);
 
         searchView = v.findViewById(R.id.search2);
-        moreObText=v.findViewById(R.id.moreOb_text);
-        moreTpText=v.findViewById(R.id.moreTp_text);
-        morePostText=v.findViewById(R.id.morePost_text);
+        moreObText = v.findViewById(R.id.moreOb_text);
+        moreTpText = v.findViewById(R.id.moreTp_text);
+        morePostText = v.findViewById(R.id.morePost_text);
         obBtn = v.findViewById(R.id.obBtn);
         tpBtn = v.findViewById(R.id.tpBtn);
         postBtn = v.findViewById(R.id.postBtn);
-        obline= v.findViewById(R.id.ob_line);
-        tpline=v.findViewById(R.id.tp_line);
-        postline=v.findViewById(R.id.post_line);
-        allContentBtn= v.findViewById(R.id.allContentBtn);
-        obBtnTap=v.findViewById(R.id.obBtn_tap);
-        tpBtnTap=v.findViewById(R.id.tpBtn_tap);
+        obline = v.findViewById(R.id.ob_line);
+        tpline = v.findViewById(R.id.tp_line);
+        postline = v.findViewById(R.id.post_line);
+        allContentBtn = v.findViewById(R.id.allContentBtn);
+        obBtnTap = v.findViewById(R.id.obBtn_tap);
+        tpBtnTap = v.findViewById(R.id.tpBtn_tap);
         postBtnTap = v.findViewById(R.id.postBtn_tap);
-        allContentBtnTap=v.findViewById(R.id.allContent_tap);
+        allContentBtnTap = v.findViewById(R.id.allContent_tap);
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
         dialog = new SearchLoadingDialog(getContext());
@@ -122,8 +122,8 @@ public class SearchResultFragment extends Fragment {
         searchResult2 = v.findViewById(R.id.searchResult2);
         searchResult3 = v.findViewById(R.id.searchResult3);
         LinearLayoutManager searchLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        LinearLayoutManager searchLayoutManager2= new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        LinearLayoutManager searchLayoutManager3= new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager searchLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager searchLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         searchLayoutManager.isAutoMeasureEnabled();
         searchLayoutManager2.isAutoMeasureEnabled();
         searchLayoutManager3.isAutoMeasureEnabled();
@@ -138,39 +138,38 @@ public class SearchResultFragment extends Fragment {
         postResult = new ArrayList<>();
 
 
-        if (getArguments() != null)
-        {
-            ((MainActivity)getActivity()).showBottom();
+        if (getArguments() != null) {
+            ((MainActivity) getActivity()).showBottom();
 
             int type = getArguments().getInt("type");
-            if (type == 1){
+            if (type == 1) {
                 area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
 
                 selectFilterItem.removeAllViews(); //초기화
-                for(int i=0; i<17; i++){
-                    if(area.get(i) == 1){
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) {
                         TextView textView = new TextView(getContext());
                         textView.setText(" " + areaName[i] + " ");
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
                         selectFilterItem.setDividerPadding(5);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if(hashTag.get(i) == 1){
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) {
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
@@ -179,14 +178,14 @@ public class SearchResultFragment extends Fragment {
                 }
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
@@ -196,7 +195,7 @@ public class SearchResultFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQuery(keyword,false);
+                    searchView.setQuery(keyword, false);
                 }
 
             } else if (type == 2) {
@@ -217,28 +216,28 @@ public class SearchResultFragment extends Fragment {
                 keyword = getArguments().getString("keyword");
 
                 selectFilterItem.removeAllViews(); //초기화
-                for(int i=0; i<17; i++){
-                    if(area.get(i) == 1){
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) {
                         TextView textView = new TextView(getContext());
-                        textView.setText(" "+ areaName[i] + " ");
+                        textView.setText(" " + areaName[i] + " ");
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
                         selectFilterItem.setDividerPadding(5);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if(hashTag.get(i) == 1){
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) {
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
@@ -248,19 +247,19 @@ public class SearchResultFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQuery(keyword,false);
+                    searchView.setQuery(keyword, false);
                 }
 
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
@@ -280,22 +279,22 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.VISIBLE);
                 tpline.setVisibility(View.VISIBLE);
                 postline.setVisibility(View.VISIBLE);
-                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
-                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
@@ -306,7 +305,7 @@ public class SearchResultFragment extends Fragment {
         if (keyword == null) {
             searchView.setQueryHint("검색어를 입력하세요");
         } else {
-            searchView.setQuery(keyword,false);
+            searchView.setQuery(keyword, false);
         }
         searchView.setIconifiedByDefault(false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -344,9 +343,9 @@ public class SearchResultFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
                 bundle.putSerializable("FromWhere", Activities.SEARCHRESULT);
-                bundle.putIntegerArrayList("area",area);
-                bundle.putIntegerArrayList("hashTag",hashTag);
-                bundle.putString("keyword",keyword);
+                bundle.putIntegerArrayList("area", area);
+                bundle.putIntegerArrayList("hashTag", hashTag);
+                bundle.putString("keyword", keyword);
                 MapFragment mapFragment = new MapFragment();
                 mapFragment.setArguments(bundle);
                 ((MainActivity) getActivity()).setMap(mapFragment);
@@ -394,7 +393,6 @@ public class SearchResultFragment extends Fragment {
         //처음에 아무 버튼 안눌러도 관측지 필터 결과 보이게 구현
 
 
-
         //관측지 필터 결과 구현 - 채형
         obBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -407,23 +405,23 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
-                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
 
@@ -455,6 +453,7 @@ public class SearchResultFragment extends Fragment {
                             obline.setVisibility(View.GONE);
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -476,33 +475,33 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
-                Call<List<MyPost>>call = RetrofitClient.getApiService().getPostWithFilter(searchKey);
+                Call<List<MyPost>> call = RetrofitClient.getApiService().getPostWithFilter(searchKey);
                 call.enqueue(new Callback<List<MyPost>>() {
                     @Override
                     public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
-                        if (response.isSuccessful()){
-                            Log.d("searchPost","검색 게시물 업로드 성공");
-                            postResult=response.body();
-                            MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
+                        if (response.isSuccessful()) {
+                            Log.d("searchPost", "검색 게시물 업로드 성공");
+                            postResult = response.body();
+                            MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
                             searchResult.setAdapter(postAdapter);
                             postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                                 @Override
@@ -514,14 +513,16 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
 
-                        }else{Log.d("searchPost","검색 게시물 업로드 실패");
+                        } else {
+                            Log.d("searchPost", "검색 게시물 업로드 실패");
                             morePostText.setVisibility(View.GONE);
-                            postline.setVisibility(View.GONE);}
+                            postline.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<List<MyPost>> call, Throwable t) {
-                        Log.d("searchPost","검색 게시물 인터넷 오류");
+                        Log.d("searchPost", "검색 게시물 인터넷 오류");
                     }
                 });
 
@@ -540,26 +541,26 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
-                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
-                LoadingAsyncTask task = new LoadingAsyncTask(getContext(),10000);
+                LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
                 task.execute();
 
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
 
@@ -591,6 +592,7 @@ public class SearchResultFragment extends Fragment {
                             tpline.setVisibility(View.GONE);
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -610,24 +612,24 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
-                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
 
@@ -660,6 +662,7 @@ public class SearchResultFragment extends Fragment {
                             obline.setVisibility(View.GONE);
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -679,33 +682,33 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
                 SearchKey searchKey = new SearchKey(filter, keyword);
-                Call<List<MyPost>>call = RetrofitClient.getApiService().getPostWithFilter(searchKey);
+                Call<List<MyPost>> call = RetrofitClient.getApiService().getPostWithFilter(searchKey);
                 call.enqueue(new Callback<List<MyPost>>() {
                     @Override
                     public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
-                        if (response.isSuccessful()){
-                            Log.d("searchPost","검색 게시물 업로드 성공");
-                            postResult=response.body();
-                            MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
+                        if (response.isSuccessful()) {
+                            Log.d("searchPost", "검색 게시물 업로드 성공");
+                            postResult = response.body();
+                            MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
                             searchResult.setAdapter(postAdapter);
                             postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                                 @Override
@@ -717,14 +720,16 @@ public class SearchResultFragment extends Fragment {
                                 }
                             });
 
-                        }else{Log.d("searchPost","검색 게시물 업로드 실패");
+                        } else {
+                            Log.d("searchPost", "검색 게시물 업로드 실패");
                             morePostText.setVisibility(View.GONE);
-                            postline.setVisibility(View.GONE);}
+                            postline.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<List<MyPost>> call, Throwable t) {
-                        Log.d("searchPost","검색 게시물 인터넷 오류");
+                        Log.d("searchPost", "검색 게시물 인터넷 오류");
                     }
                 });
             }
@@ -741,23 +746,23 @@ public class SearchResultFragment extends Fragment {
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
-                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
-                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
-                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap_non));
+                allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
+                obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+                postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
 
@@ -788,6 +793,7 @@ public class SearchResultFragment extends Fragment {
                             tpline.setVisibility(View.GONE);
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -803,8 +809,8 @@ public class SearchResultFragment extends Fragment {
     private void searchEverything(SearchKey searchKey) {
         searchResult2.removeAllViews();
         finalTpResult.clear();
-        allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
-        LoadingAsyncTask task = new LoadingAsyncTask(getContext(),10000);
+        allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
+        LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
         task.execute();
         Call<List<SearchParams1>> call = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
         call.enqueue(new Callback<List<SearchParams1>>() {
@@ -814,18 +820,19 @@ public class SearchResultFragment extends Fragment {
                     Log.d(TAG, "관광지 검색 성공");
                     tpResult = response.body();
                     task.cancel(true);
-                    if (tpResult.size()<3){
+                    if (tpResult.size() < 3) {
                         moreTpText.setVisibility(View.GONE);
                         tpline.setVisibility(View.GONE);
                     }
-                    if (tpResult.size()>3){
+                    if (tpResult.size() > 3) {
                         finalTpResult.add(tpResult.get(0));
                         finalTpResult.add(tpResult.get(1));
                         finalTpResult.add(tpResult.get(2));
                         moreTpText.setVisibility(View.VISIBLE);
                         tpline.setVisibility(View.VISIBLE);
+                    } else {
+                        finalTpResult.addAll(tpResult);
                     }
-                    else{finalTpResult.addAll(tpResult); }
                     SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(finalTpResult, getContext());
                     searchResult2.setAdapter(searchResultAdapter2);
                     searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
@@ -843,6 +850,7 @@ public class SearchResultFragment extends Fragment {
                     tpline.setVisibility(View.GONE);
                 }
             }
+
             @Override
             public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -857,17 +865,19 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관측지 검색 성공");
                     obResult = response.body();
-                    if (obResult.size()<3){
+                    if (obResult.size() < 3) {
                         moreObText.setVisibility(View.GONE);
                         obline.setVisibility(View.GONE);
                     }
-                    if (obResult.size()>3){
+                    if (obResult.size() > 3) {
                         finalObResult.add(obResult.get(0));
                         finalObResult.add(obResult.get(1));
                         finalObResult.add(obResult.get(2));
                         moreObText.setVisibility(View.VISIBLE);
                         obline.setVisibility(View.VISIBLE);
-                    }else{ finalObResult.addAll(obResult);}
+                    } else {
+                        finalObResult.addAll(obResult);
+                    }
                     //게시물은 어댑터 따로 만들어야 함
                     SearchResultAdapter searchResultAdapter = new SearchResultAdapter(finalObResult, getContext());
                     searchResult.setAdapter(searchResultAdapter);
@@ -886,6 +896,7 @@ public class SearchResultFragment extends Fragment {
                     obline.setVisibility(View.GONE);
                 }
             }
+
             @Override
             public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -893,25 +904,27 @@ public class SearchResultFragment extends Fragment {
         });
         searchResult3.removeAllViews();
         finalPostResult.clear();
-        Call<List<MyPost>>call3 = RetrofitClient.getApiService().getPostWithFilter(searchKey);
+        Call<List<MyPost>> call3 = RetrofitClient.getApiService().getPostWithFilter(searchKey);
         call3.enqueue(new Callback<List<MyPost>>() {
             @Override
             public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
-                if (response.isSuccessful()){
-                    Log.d("searchPost","검색 게시물 업로드 성공");
-                    postResult=response.body();
-                    if (postResult.size()<3){
+                if (response.isSuccessful()) {
+                    Log.d("searchPost", "검색 게시물 업로드 성공");
+                    postResult = response.body();
+                    if (postResult.size() < 3) {
                         morePostText.setVisibility(View.GONE);
                         postline.setVisibility(View.GONE);
                     }
-                    if (postResult.size()>3){
+                    if (postResult.size() > 3) {
                         finalPostResult.add(postResult.get(0));
                         finalPostResult.add(postResult.get(1));
                         finalPostResult.add(postResult.get(2));
                         morePostText.setVisibility(View.VISIBLE);
                         postline.setVisibility(View.VISIBLE);
-                    }else {finalPostResult.addAll(postResult);}
-                    MyPostAdapter postAdapter = new MyPostAdapter(finalPostResult,getContext());
+                    } else {
+                        finalPostResult.addAll(postResult);
+                    }
+                    MyPostAdapter postAdapter = new MyPostAdapter(finalPostResult, getContext());
                     searchResult3.setAdapter(postAdapter);
                     postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                         @Override
@@ -923,28 +936,31 @@ public class SearchResultFragment extends Fragment {
                         }
                     });
 
-                }else{Log.d("searchPost","검색 게시물 업로드 실패");
+                } else {
+                    Log.d("searchPost", "검색 게시물 업로드 실패");
                     morePostText.setVisibility(View.GONE);
-                    postline.setVisibility(View.GONE);}
+                    postline.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onFailure(Call<List<MyPost>> call, Throwable t) {
-                Log.d("searchPost","검색 게시물 인터넷 오류");
+                Log.d("searchPost", "검색 게시물 인터넷 오류");
             }
         });
     }
+
     private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
         private Context mContext = null;
         private Long mtime;
 
-        public LoadingAsyncTask(Context context, long time ) {
+        public LoadingAsyncTask(Context context, long time) {
             mContext = context.getApplicationContext();
             mtime = time;
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             dialog.show();
             super.onPreExecute();
         }
@@ -958,9 +974,10 @@ public class SearchResultFragment extends Fragment {
             }
             return (true);
         }
+
         @Override
         protected void onCancelled(Boolean result) {
-                dialog.dismiss();
+            dialog.dismiss();
         }
 
         @Override

@@ -12,9 +12,11 @@ public class RetrofitClient {
     private static final String BASE_URL = "http://52.79.224.101:8080/v1/";
 
 
-    public static MyPageRetrofitService getApiService(){return getInstance().create(MyPageRetrofitService.class);}
+    public static MyPageRetrofitService getApiService() {
+        return getInstance().create(MyPageRetrofitService.class);
+    }
 
-    private static Retrofit getInstance(){
+    private static Retrofit getInstance() {
         Gson gson = new GsonBuilder().setLenient().create();
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)

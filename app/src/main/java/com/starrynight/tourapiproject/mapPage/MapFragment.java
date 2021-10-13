@@ -71,29 +71,29 @@ public class MapFragment extends Fragment {
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int PERMISSIONS_REQUEST_ACCESS_CALL_PHONE = 2;
     int PERMISSIONS_REQUEST_CODE = 100;
-    String[] REQUIRED_PERMISSIONS = new String[]{ Manifest.permission.ACCESS_FINE_LOCATION};
+    String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
     LocationManager lm;
     //gps와 네트워크 중 알맞은 프로바이더 제공
     Criteria criteria = new Criteria();
 
     //마커, 위치, 오브젝트 생성
     private MapPOIItem mMarker;
-//    private MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304);
+    //    private MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304);
     private MapPoint MY_POINT;
 
     private List<MapPOIItem> tourPOIItems = new ArrayList<>();
     private List<MapPOIItem> observePOIItems = new ArrayList<>();
 
-    private List<BalloonObject>   observationBalloonObjects = new ArrayList<>();
+    private List<BalloonObject> observationBalloonObjects = new ArrayList<>();
     private List<BalloonObject> tourBalloonObjects = new ArrayList<>();
 
-    private MarkereventListner markereventListner= new MarkereventListner();
-    private MapeventListner mapeventListner=new MapeventListner();
+    private MarkereventListner markereventListner = new MarkereventListner();
+    private MapeventListner mapeventListner = new MapeventListner();
 
     List<String> observeHashTags;
     private RecyclerHashTagAdapter recyclerHashTagAdapter;
 
-    boolean from_detail=false;
+    boolean from_detail = false;
 
     LoadingDialog dialog;
 
@@ -156,7 +156,7 @@ public class MapFragment extends Fragment {
     }
 
 
-    class MarkereventListner implements MapView.POIItemEventListener{
+    class MarkereventListner implements MapView.POIItemEventListener {
 
         @Override
         public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
@@ -167,13 +167,13 @@ public class MapFragment extends Fragment {
             detailsAddress_txt.setText(bobject.getAddress());
             detailsType_txt.setText(bobject.getPoint_type());
             details.setVisibility(View.VISIBLE);
-            String url ="kakaomap://look?p="+bobject.getLatitude()+","+bobject.getLongitude();
+            String url = "kakaomap://look?p=" + bobject.getLatitude() + "," + bobject.getLongitude();
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 
             initHashtagRecycler();
             observeHashTags = bobject.getHashtags();
             if (observeHashTags != null) {
-                int i=0;
+                int i = 0;
                 for (String p : observeHashTags) {
                     if (i == 3)
                         break;
@@ -203,7 +203,7 @@ public class MapFragment extends Fragment {
                     try {
                         startActivity(intent);
                     } catch (Exception e) {
-                        String url2 ="market://details?id=net.daum.android.map";
+                        String url2 = "market://details?id=net.daum.android.map";
                         Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(url2));
                         startActivity(intent2);
                     }
@@ -222,7 +222,7 @@ public class MapFragment extends Fragment {
                             intent.putExtra("contentId", bobject.getId());
                             startActivity(intent);
 
-                        } else if (bobject.getTag()==1) {
+                        } else if (bobject.getTag() == 1) {
                             Intent intent = new Intent(getActivity(), ObservationsiteActivity.class);
                             intent.putExtra("observationId", bobject.getId());
                             startActivity(intent);
@@ -230,7 +230,7 @@ public class MapFragment extends Fragment {
                     }
                 }
             });
-            
+
         }
 
         @Override
@@ -249,14 +249,13 @@ public class MapFragment extends Fragment {
         }
     }
 
-    class MapeventListner implements MapView.MapViewEventListener
-    {
+    class MapeventListner implements MapView.MapViewEventListener {
 
         @Override
         public void onMapViewInitialized(MapView mapView) {
-            MapPoint classPoint = MapPoint.mapPointWithGeoCoord( 37.537229,127.005515 );
+            MapPoint classPoint = MapPoint.mapPointWithGeoCoord(37.537229, 127.005515);
             mapView.setMapCenterPoint(classPoint, true);
-            mapView.setZoomLevel( 2, true );
+            mapView.setZoomLevel(2, true);
         }
 
         @Override
@@ -302,7 +301,6 @@ public class MapFragment extends Fragment {
     }
 
 
-
     private final LocationListener mLocationListener = new LocationListener() {
 
         public void onLocationChanged(Location location) {
@@ -310,7 +308,7 @@ public class MapFragment extends Fragment {
             //값은 Location 형태로 리턴되며 좌표 출력 방법은 다음과 같다.
 
             Log.d(TAG, "onLocationChanged, location:" + location);
-            MY_POINT= MapPoint.mapPointWithGeoCoord(location.getLatitude(),location.getLongitude());
+            MY_POINT = MapPoint.mapPointWithGeoCoord(location.getLatitude(), location.getLongitude());
             mapView.setMapCenterPoint(MY_POINT, true);
             lm.removeUpdates(mLocationListener);  //  미수신할때는 반드시 자원해체를 해주어야 한다.
 
@@ -380,10 +378,10 @@ public class MapFragment extends Fragment {
         mapView = new MapView(getActivity());
         mapViewContainer = (ViewGroup) view.findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
-        ((MainActivity)getActivity()).showBottom();
+        ((MainActivity) getActivity()).showBottom();
 
         dialog = new LoadingDialog(getContext());
-    //어댑터, 리스너 설정
+        //어댑터, 리스너 설정
         mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
         mapView.setPOIItemEventListener(markereventListner);
         mapView.setMapViewEventListener(mapeventListner);
@@ -420,35 +418,35 @@ public class MapFragment extends Fragment {
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
 
-                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),4500);
+                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 4500);
                 task.execute();
 
                 selectFilterItem.setVisibility(View.VISIBLE);
                 selectFilterItem.removeAllViews(); //초기화
-                for(int i=0; i<17; i++){
-                    if(area.get(i) == 1){
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) {
                         TextView textView = new TextView(getContext());
-                        textView.setText(" "+ areaName[i] + " ");
+                        textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
                         selectFilterItem.setDividerPadding(5);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if(hashTag.get(i) == 1){
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) {
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
@@ -458,20 +456,20 @@ public class MapFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQuery(keyword,false);
+                    searchView.setQuery(keyword, false);
                 }
 
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
 
@@ -486,7 +484,7 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1,1);
+                                BalloonObject balloonObject = setupMaker(params1, 1);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -494,6 +492,7 @@ public class MapFragment extends Fragment {
                             Log.e(TAG, "관측지 검색 실패");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -509,7 +508,7 @@ public class MapFragment extends Fragment {
 
 
                             for (SearchParams1 params1 : tpResult) {
-                                BalloonObject balloonObject = setupMaker(params1,2);
+                                BalloonObject balloonObject = setupMaker(params1, 2);
 
                                 tourBalloonObjects.add(balloonObject);
                                 createTourMarker(mapView, balloonObject);
@@ -518,6 +517,7 @@ public class MapFragment extends Fragment {
                             Log.e(TAG, "관광지 필터 검색 실패");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -535,35 +535,35 @@ public class MapFragment extends Fragment {
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
 
-                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5500);
+                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 5500);
                 task.execute();
 
                 selectFilterItem.setVisibility(View.VISIBLE);
                 selectFilterItem.removeAllViews(); //초기화
-                for(int i=0; i<17; i++){
-                    if(area.get(i) == 1){
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) {
                         TextView textView = new TextView(getContext());
-                        textView.setText(" "+ areaName[i] + " ");
+                        textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
                         selectFilterItem.setDividerPadding(5);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if(hashTag.get(i) == 1){
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) {
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
                         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
-                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
                         selectFilterItem.addView(textView);
@@ -573,20 +573,20 @@ public class MapFragment extends Fragment {
                 if (keyword == null) {
                     searchView.setQueryHint("검색어를 입력하세요");
                 } else {
-                    searchView.setQuery(keyword,false);
+                    searchView.setQuery(keyword, false);
                 }
 
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
 
@@ -601,7 +601,7 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1,1);
+                                BalloonObject balloonObject = setupMaker(params1, 1);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -609,6 +609,7 @@ public class MapFragment extends Fragment {
                             Log.e(TAG, "관측지 검색 실패");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -626,15 +627,16 @@ public class MapFragment extends Fragment {
 
 
                             for (SearchParams1 params1 : tpResult) {
-                                BalloonObject balloonObject = setupMaker(params1,2);
+                                BalloonObject balloonObject = setupMaker(params1, 2);
 
                                 tourBalloonObjects.add(balloonObject);
                                 createTourMarker(mapView, balloonObject);
                             }
                         } else {
-                            Log.e(TAG,"관광지 필터 검색 실패");
+                            Log.e(TAG, "관광지 필터 검색 실패");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -654,18 +656,18 @@ public class MapFragment extends Fragment {
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
-                for(int i=0; i<17; i++){
-                    if (area.get(i) == 1){ //선택했으면
+                for (int i = 0; i < 17; i++) {
+                    if (area.get(i) == 1) { //선택했으면
                         areaCodeList.add(areaCode[i]);
                     }
                 }
-                for(int i=0; i<22; i++){
-                    if (hashTag.get(i) == 1){ //선택했으면
-                        hashTagIdList.add((long)(i+1));
+                for (int i = 0; i < 22; i++) {
+                    if (hashTag.get(i) == 1) { //선택했으면
+                        hashTagIdList.add((long) (i + 1));
                     }
                 }
 
-                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5500);
+                LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 5500);
                 task.execute();
 
                 Filter filter = new Filter(areaCodeList, hashTagIdList);
@@ -679,7 +681,7 @@ public class MapFragment extends Fragment {
                             obResult = response.body();
 
                             for (SearchParams1 params1 : obResult) {
-                                BalloonObject balloonObject = setupMaker(params1,1);
+                                BalloonObject balloonObject = setupMaker(params1, 1);
                                 observationBalloonObjects.add(balloonObject);
                                 createObserveMarker(mapView, balloonObject);
                             }
@@ -687,6 +689,7 @@ public class MapFragment extends Fragment {
                             Log.e(TAG, "관측지 검색 실패");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -702,15 +705,16 @@ public class MapFragment extends Fragment {
                             tpResult = response.body();
 
                             for (SearchParams1 params1 : tpResult) {
-                                BalloonObject balloonObject = setupMaker(params1,2);
+                                BalloonObject balloonObject = setupMaker(params1, 2);
 
                                 tourBalloonObjects.add(balloonObject);
                                 createTourMarker(mapView, balloonObject);
                             }
                         } else {
-                            Log.e(TAG,"관광지 필터 검색 실패");
+                            Log.e(TAG, "관광지 필터 검색 실패");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -764,7 +768,7 @@ public class MapFragment extends Fragment {
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                     getMyLocaiton();
 
-                } else if (permissionCheck == PackageManager.PERMISSION_DENIED){
+                } else if (permissionCheck == PackageManager.PERMISSION_DENIED) {
                     Log.d(TAG, "permission denied");
                     Toast.makeText(getContext(), "위치권한이 없습니다.", Toast.LENGTH_SHORT).show();
                     ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE);
@@ -778,9 +782,9 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-                bundle.putIntegerArrayList("area",area);
-                bundle.putIntegerArrayList("hashTag",hashTag);
-                bundle.putString("keyword",keyword);
+                bundle.putIntegerArrayList("area", area);
+                bundle.putIntegerArrayList("hashTag", hashTag);
+                bundle.putString("keyword", keyword);
                 bundle.putInt("type", 3);
 
                 Fragment searchResultFragment = new SearchResultFragment();
@@ -798,14 +802,14 @@ public class MapFragment extends Fragment {
         observe_ckb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(observe_ckb.isChecked()){
+                if (observe_ckb.isChecked()) {
                     //관측지필터 체크시
                     for (BalloonObject p : observationBalloonObjects) {
-                        createObserveMarker(mapView,p);
+                        createObserveMarker(mapView, p);
                     }
-                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),2000);
+                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 2000);
                     task.execute();
-                }else {
+                } else {
                     for (MapPOIItem p : observePOIItems)
                         mapView.removePOIItem(p);
                     observePOIItems.clear();
@@ -823,7 +827,7 @@ public class MapFragment extends Fragment {
                     for (BalloonObject p : tourBalloonObjects) {
                         createTourMarker(mapView, p);
                     }
-                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(),5000);
+                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 5000);
                     task.execute();
                 } else {
                     for (MapPOIItem p : tourPOIItems)
@@ -838,7 +842,7 @@ public class MapFragment extends Fragment {
     }
 
     private void setMyLocation() {
-        lm=(LocationManager) getActivity().getSystemService(getContext().LOCATION_SERVICE);
+        lm = (LocationManager) getActivity().getSystemService(getContext().LOCATION_SERVICE);
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         criteria.setAltitudeRequired(false);
         criteria.setBearingRequired(false);
@@ -848,16 +852,16 @@ public class MapFragment extends Fragment {
 
     }
 
-    private void getMyLocaiton(){
+    private void getMyLocaiton() {
         String provider = lm.getBestProvider(criteria, true);
 
         try {
             if (!lm.isProviderEnabled(provider) && lm.getLastKnownLocation(provider) != null) {
-                lm.requestLocationUpdates(provider,1000,10,mLocationListener);
-            }else {
+                lm.requestLocationUpdates(provider, 1000, 10, mLocationListener);
+            } else {
                 criteria.setAccuracy(Criteria.ACCURACY_COARSE);
                 provider = lm.getBestProvider(criteria, true);
-                lm.requestLocationUpdates(provider,1000,10,mLocationListener);
+                lm.requestLocationUpdates(provider, 1000, 10, mLocationListener);
             }
 
         } catch (SecurityException ex) {
@@ -909,8 +913,7 @@ public class MapFragment extends Fragment {
 
     }
 
-    private BalloonObject setupMaker(SearchParams1 params1, int t)
-    {
+    private BalloonObject setupMaker(SearchParams1 params1, int t) {
         //마커 기본정보 object 생성 및 setup
         BalloonObject balloon_Object = new BalloonObject();
         balloon_Object.setId(params1.getItemId());
@@ -940,10 +943,10 @@ public class MapFragment extends Fragment {
 
         balloon_Object.setHashtags(params1.getHashTagNames());
 
-        return  balloon_Object;
+        return balloon_Object;
     }
 
-    private void initHashtagRecycler(){
+    private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
 
 
@@ -955,11 +958,11 @@ public class MapFragment extends Fragment {
     }
 
     private void initMapView() {
-        for(MapPOIItem p : observePOIItems)
+        for (MapPOIItem p : observePOIItems)
             mapView.removePOIItem(p);
         observePOIItems.clear();
 
-        for(MapPOIItem p : tourPOIItems)
+        for (MapPOIItem p : tourPOIItems)
             mapView.removePOIItem(p);
         tourPOIItems.clear();
 
@@ -971,24 +974,24 @@ public class MapFragment extends Fragment {
         private Context mContext = null;
         private Long mtime;
 
-        public LoadingAsyncTask(Context context, long time ) {
+        public LoadingAsyncTask(Context context, long time) {
             mContext = context.getApplicationContext();
             mtime = time;
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             dialog.show();
             super.onPreExecute();
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-                try {
-                    Thread.sleep(mtime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            try {
+                Thread.sleep(mtime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return (true);
         }
 

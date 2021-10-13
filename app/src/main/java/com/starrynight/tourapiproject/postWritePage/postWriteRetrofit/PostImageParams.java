@@ -6,7 +6,8 @@ public class PostImageParams implements Serializable {
 
     private String imageName;
 
-    public PostImageParams(){}
+    public PostImageParams() {
+    }
 
     public String getImageName() {
         return imageName;

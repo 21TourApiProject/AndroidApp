@@ -13,22 +13,27 @@ public class Layout_spot extends LinearLayout {
 
     public Layout_spot(Context context) {
         super(context);
-        init (context);
+        init(context);
     }
 
     public Layout_spot(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init (context);
+        init(context);
     }
-    public void init (Context context){
+
+    public void init(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.layout_spot, this,true);
+        inflater.inflate(R.layout.layout_spot, this, true);
         PostTextview = findViewById(R.id.PostText);
-        PostButton =findViewById(R.id.postimage);
+        PostButton = findViewById(R.id.postimage);
     }
-    public void setImage( int resId){ PostButton.setImageResource(resId);
+
+    public void setImage(int resId) {
+        PostButton.setImageResource(resId);
     }
-    public void setposttext(String tourname){ PostTextview.setText(tourname);
+
+    public void setposttext(String tourname) {
+        PostTextview.setText(tourname);
     }
 
 }

@@ -16,9 +16,9 @@ public class TPReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tourist_point_review);
 
-        Button button= findViewById(R.id.morebutton);
+        Button button = findViewById(R.id.morebutton);
         LinearLayout linearLayout = findViewById(R.id.LinearLayout2);
-        LinearLayout linearLayout1=findViewById(R.id.LinearLayout1);
+        LinearLayout linearLayout1 = findViewById(R.id.LinearLayout1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

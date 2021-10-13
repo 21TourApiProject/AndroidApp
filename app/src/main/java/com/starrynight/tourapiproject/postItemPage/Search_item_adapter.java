@@ -22,14 +22,15 @@ public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapte
     public Search_item_adapter(ArrayList<Search_item> searchItemArrayList, SearchObservingPointActivity searchObservingPointActivity) {
         this.searchItemArrayList = searchItemArrayList;
     }
-    public Search_item getItem(int position){
+
+    public Search_item getItem(int position) {
         return searchItemArrayList.get(position);
     }
 
     @NonNull
     @Override
     public Search_item_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.custom_search_item, parent, false);
         return new ViewHolder(itemView, listener);
     }
@@ -42,7 +43,7 @@ public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapte
 
     }
 
-    public void  setOnItemClicklistener(OnSearchItemClickListener listener){
+    public void setOnItemClicklistener(OnSearchItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -52,12 +53,12 @@ public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapte
         return searchItemArrayList.size();
     }
 
-    public void  filterList(ArrayList<Search_item> filteredList) {
+    public void filterList(ArrayList<Search_item> filteredList) {
         searchItemArrayList = filteredList;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView itemName;
         TextView address;
@@ -66,14 +67,14 @@ public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapte
         public ViewHolder(@NonNull View itemView, final OnSearchItemClickListener listener) {
             super(itemView);
 
-            itemName=itemView.findViewById(R.id.itemName);
-            address=itemView.findViewById(R.id.address);
+            itemName = itemView.findViewById(R.id.itemName);
+            address = itemView.findViewById(R.id.address);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onItemClick(Search_item_adapter.ViewHolder.this, v, position);
                     }
                 }
