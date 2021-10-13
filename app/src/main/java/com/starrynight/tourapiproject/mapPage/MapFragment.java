@@ -701,7 +701,6 @@ public class MapFragment extends Fragment {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
 
-                            System.out.println("관광지 결과는"+tpResult.size());
                             for (SearchParams1 params1 : tpResult) {
                                 BalloonObject balloonObject = setupMaker(params1,2);
 

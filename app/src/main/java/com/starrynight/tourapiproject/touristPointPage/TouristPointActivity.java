@@ -447,7 +447,6 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     //이미지
                                     if (foodData.getFirstImage() != null){
-                                        System.out.println("foodData.getFirstImage() = " + foodData.getFirstImage());
                                         balloonObject.setImage(foodData.getFirstImage());
                                         Glide.with(getApplicationContext()).load(foodData.getFirstImage()).into(slider);
                                     }

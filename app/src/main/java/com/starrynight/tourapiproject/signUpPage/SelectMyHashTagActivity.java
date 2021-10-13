@@ -144,7 +144,6 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                 }
                 //마이페이지에서 넘어왔다면
                 if(userId != null){
-                    System.out.println("마이페이지에서 넘어옴");
                     Call<Void> call = RetrofitClient.getApiService().changeMyHashTag(userId, myHashTagParams);
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -171,7 +170,6 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Long result = response.body();
                                 if (result != -1L) {
-                                    System.out.println("선호 해시태그 선택 성공");
 
                                     //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
                                     String fileName = "userId";
