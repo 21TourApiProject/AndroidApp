@@ -58,7 +58,6 @@ public class StarAllActivity extends AppCompatActivity {
                     recyclerView.addItemDecoration(new StarRecyclerViewWidth(24));
                     recyclerView.addItemDecoration(new StarRecyclerViewHeight(16));
                 } else {
-                    System.out.println("모든 별자리 불러오기 실패");
                 }
             }
 
