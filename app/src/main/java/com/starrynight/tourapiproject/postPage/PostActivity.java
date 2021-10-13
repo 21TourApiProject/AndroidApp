@@ -97,7 +97,7 @@ public class PostActivity extends AppCompatActivity{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         sliderViewPager = findViewById(R.id.slider);
         indicator = findViewById(R.id.indicator);

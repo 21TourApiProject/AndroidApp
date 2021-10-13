@@ -39,7 +39,6 @@ public class MyPostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
-        System.out.println("내 게시물 userId = " + userId);
 
         //뒤로 가기
         Button myPostBack = findViewById(R.id.myPostBack);
@@ -74,7 +73,7 @@ public class MyPostActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("내 찜 게시물 불러오기 실패");
+                    Log.d("myPost","내 게시물 찜 가져오기 실패");
                 }
             }
 

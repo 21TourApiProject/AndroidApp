@@ -118,7 +118,6 @@ public class SearchResultFragment extends Fragment {
 
 
         //필터 결과 리사이클러뷰
-        System.out.println("리사이클러뷰 설정");
         searchResult = v.findViewById(R.id.searchResult);
         searchResult2 = v.findViewById(R.id.searchResult2);
         searchResult3 = v.findViewById(R.id.searchResult3);
@@ -145,7 +144,6 @@ public class SearchResultFragment extends Fragment {
 
             int type = getArguments().getInt("type");
             if (type == 1){
-                System.out.println("값 넘어옴");
                 area = getArguments().getIntegerArrayList("area"); //선택한 지역 필터
                 hashTag = getArguments().getIntegerArrayList("hashTag"); //선택한 해시태그 필터
                 keyword = getArguments().getString("keyword");
@@ -374,7 +372,6 @@ public class SearchResultFragment extends Fragment {
                 Fragment filterFragment = ((MainActivity) getActivity()).getFilter();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 if (((MainActivity) getActivity()).getFilter() == null) {
-                    System.out.println("1번으로");
                     filterFragment = new FilterFragment();
                     filterFragment.setArguments(bundle);
                     ((MainActivity) getActivity()).setFilter(filterFragment);
@@ -384,7 +381,6 @@ public class SearchResultFragment extends Fragment {
                     transaction.addToBackStack("result");
                     transaction.commit();
                 } else {
-                    System.out.println("2번으로");
                     filterFragment.setArguments(bundle);
                     transaction.addToBackStack("result");
                     transaction.remove(SearchResultFragment.this);
@@ -505,7 +501,6 @@ public class SearchResultFragment extends Fragment {
                     public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                         if (response.isSuccessful()){
                             Log.d("searchPost","검색 게시물 업로드 성공");
-                            System.out.println(keyword);
                             postResult=response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
                             searchResult.setAdapter(postAdapter);
@@ -709,7 +704,6 @@ public class SearchResultFragment extends Fragment {
                     public void onResponse(Call<List<MyPost>> call, Response<List<MyPost>> response) {
                         if (response.isSuccessful()){
                             Log.d("searchPost","검색 게시물 업로드 성공");
-                            System.out.println(keyword);
                             postResult=response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult,getContext());
                             searchResult.setAdapter(postAdapter);
@@ -839,7 +833,6 @@ public class SearchResultFragment extends Fragment {
                         public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
                             SearchParams1 item = searchResultAdapter2.getItem(position);
                             Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                            System.out.println(item.getItemId());
                             intent.putExtra("contentId", item.getItemId());
                             startActivity(intent);
                         }
@@ -926,7 +919,6 @@ public class SearchResultFragment extends Fragment {
                             MyPost item = postAdapter.getItem(position);
                             Intent intent = new Intent(getContext(), PostActivity.class);
                             intent.putExtra("postId", item.getPostId());
-                            System.out.println(item.getPostId());
                             startActivity(intent);
                         }
                     });

@@ -484,7 +484,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         //이미 찜한건지 확인
         Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, observationId, 0);
@@ -499,7 +499,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         isWish = false;
                     }
                 } else {
-                    System.out.println("내 찜 조회하기 실패");
+                    Log.d("isWish","내 찜 조회하기 실패");
                 }
             }
             @Override
@@ -522,7 +522,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                 save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 실패");
+                                Log.d("isWish","관광지 찜 실패");
                             }
                         }
                         @Override
@@ -540,7 +540,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                 save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 삭제 실패");
+                                Log.d("isWishDelete","관광지 찜 삭제 실패");
                             }
                         }
                         @Override
