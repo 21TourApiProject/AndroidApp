@@ -121,7 +121,6 @@ public class StarActivity extends AppCompatActivity {
                         constGuard.setText(constData.getConstGuard());
                     }
                 } else {
-                    System.out.println("별자리 정보 불러오기 실패");
                 }
             }
 

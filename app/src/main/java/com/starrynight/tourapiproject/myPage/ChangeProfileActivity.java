@@ -361,7 +361,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("data = " + data);
         return data;
     }
 
@@ -382,7 +381,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("data = " + data);
         return data;
     }
 

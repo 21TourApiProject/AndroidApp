@@ -166,7 +166,6 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                System.out.println("token = " + token);
                 mVerificationId = verificationId;
                 mResendToken = token;
             }
@@ -253,7 +252,6 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                             isPhoneDuplicate = true;
                         }
                     } else {
-                        System.out.println("중복 체크 실패");
                         phoneGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
                     }
                 }
@@ -339,7 +337,6 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
                                     if(response.isSuccessful()){
-                                        System.out.println("회원가입 성공");
                                         signOut();
 
                                         //선호 해시태그 선택 창으로 전환
@@ -347,7 +344,6 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                                         intent.putExtra("email", userParams.getEmail());
                                         startActivityForResult(intent, SELECT_HASH_TAG);
                                     } else{
-                                        System.out.println("회원가입 실패");
                                     }
                                 }
                                 @Override
@@ -415,7 +411,6 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                     authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
-                System.out.println("인증코드 맞는지 확인들어감 " + code);
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
