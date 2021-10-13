@@ -120,6 +120,8 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView timePicker;
     private TimePickerDialog.OnTimeSetListener timeListener;
 
+    TextView wtTimePickerHour;
+
     String WT_MET_API_KEY;
     String WT_FINE_DUST_API_KEY;
 
@@ -147,11 +149,10 @@ public class WeatherActivity extends AppCompatActivity {
     String plusDay;
     String plusTwoDay;
 
-    String setTime = "00시";
+
     String timeZero = "00";
     String timeNoon = "12";
     String setTimeNo = "선택 불가";
-    String todayTimeTxt;
 
     private String hour[] = {"00", "01", "02", "03", "04", "05"
             , "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"
@@ -226,6 +227,12 @@ public class WeatherActivity extends AppCompatActivity {
     String cloudValue;
     String feelsLikeValue;
     String precipValue;
+    String tempValue;
+    Double tempValueDouble;
+    String humidityValue;
+    String windValue;
+    String tempMaxValue;
+    String tempMinValue;
 
     String cloudText;
     String tempText;
@@ -276,14 +283,14 @@ public class WeatherActivity extends AppCompatActivity {
 
     //날씨 상태
     LinearLayout detailWeather;
-    String cloudState = "좋음";
-    String tempState = "나쁨";
-    String moonPhaseState = "좋음";
-    String fineDustState = "나쁨";
-    String windState = "나쁨";
-    String humidityState = "좋음";
-    String precipState = "나쁨";
-    String lightPolState = "좋음";
+    String cloudState;
+    String tempState;
+    String moonPhaseState;
+    String fineDustState;
+    String windState;
+    String humidityState;
+    String precipState;
+    String lightPolState;
 
     //오늘의 날씨
     String todayWtId;
@@ -349,7 +356,7 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.d("obFitMaxCheck", String.valueOf(obFitMaxId));
             }
 
-            if (obFitList.get(i) > 100.0) {
+            if (obFitList.get(i) > 60.0) {
                 obFitImageList.add(R.drawable.wt__ob_fit_good);
             } else {
                 obFitImageList.add(R.drawable.wt__ob_fit_bad);
@@ -366,7 +373,7 @@ public class WeatherActivity extends AppCompatActivity {
 
             for (int i = 0; i < obFitList.size(); i++) {
                 obFitPercent = String.format("%.0f", obFitList.get(i)) + "%";
-                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId], obFitPercent));
+                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId] + "시", obFitPercent));
                 obFitHourId++;
             }
         } else if (selectDate.equals(plusDay)) {
@@ -374,7 +381,7 @@ public class WeatherActivity extends AppCompatActivity {
             Log.d("obFitHourId", String.valueOf(obFitHourId));
             for (int i = 0; i < 6; i++) {
                 obFitPercent = String.format("%.0f", obFitList.get(i)) + "%";
-                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId], obFitPercent));
+                obFitViewAdapter.addItem(new ObFitItem(obFitImageList.get(i), obFitHour[obFitHourId] + "시", obFitPercent));
                 obFitHourId++;
             }
         }
@@ -412,6 +419,8 @@ public class WeatherActivity extends AppCompatActivity {
         tempSlashTv = findViewById(R.id.wt_temp_slash);
 
         detailMent = findViewById(R.id.wt_detail_ment);
+
+        wtTimePickerHour = findViewById(R.id.wt_timePicker_hour);
     }
 
     //뒤로가기 버튼 이벤트
@@ -432,7 +441,7 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://www.weather.go.kr/w/index.do"));
+                intent.setData(Uri.parse("https://www.weather.go.kr/wgis-nuri/html/map.html"));
                 startActivity(intent);
             }
         });
@@ -457,8 +466,8 @@ public class WeatherActivity extends AppCompatActivity {
         datePicker.setText(strDate);
 
         todayTime = formatHour.format(cal.getTime());
-        todayTimeTxt = todayTime + "시";
-        timePicker.setText(todayTimeTxt);
+        timePicker.setText(todayTime);
+        wtTimePickerHour.setVisibility(View.VISIBLE);
 
         dateListener = new DatePickerDialog.OnDateSetListener() {
             @SuppressLint("DefaultLocale")
@@ -475,33 +484,38 @@ public class WeatherActivity extends AppCompatActivity {
 
                 if (todayTime.equals("00")) {
                     if (selectDate.equals(plusDay)) {
-                        timePicker.setText(setTime);
+                        timePicker.setText(timeZero);
+                        wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = timeZero;
                         Log.d("selectTime1", selectTime);
                     } else if (selectDate.equals(todayDate)) {
-                        todayTimeTxt = todayTime + "시";
                         Log.d("todayTime3", todayTime);
-                        timePicker.setText(todayTimeTxt);
+                        timePicker.setText(todayTime);
+                        wtTimePickerHour.setVisibility(View.VISIBLE);
                     } else {
                         timePicker.setText(setTimeNo);
+                        wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                         Log.d("selectTime4", selectTime);
                     }
                 } else {
                     if (selectDate.equals(plusDay)) {
-                        timePicker.setText(setTime);
+                        timePicker.setText(timeZero);
+                        wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = timeZero;
                         Log.d("selectTime1", selectTime);
                     } else if (selectDate.equals(plusTwoDay)) {
-                        timePicker.setText(setTime);
+                        timePicker.setText(timeZero);
+                        wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = timeZero;
                         Log.d("selectTime2", selectTime);
                     } else if (selectDate.equals(todayDate)) {
-                        todayTimeTxt = todayTime + "시";
                         Log.d("todayTime3", todayTime);
-                        timePicker.setText(todayTimeTxt);
+                        timePicker.setText(todayTime);
+                        wtTimePickerHour.setVisibility(View.VISIBLE);
                     } else {
                         timePicker.setText(setTimeNo);
+                        wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                         Log.d("selectTime4", selectTime);
                     }
@@ -765,20 +779,24 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.d("checkSelectTime", selectTime);
                 if (todayTime.equals("00")) {
                     if ((selectDate.equals(todayDate)) || (selectDate.equals(plusDay))) {
-                        timePickerTxt = hourChange[numberPicker.getValue()] + "시";
+                        timePickerTxt = hourChange[numberPicker.getValue()];
                         timePicker.setText(timePickerTxt);
+                        wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
                     } else {
                         timePicker.setText(setTimeNo);
+                        wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                     }
                 } else {
                     if ((selectDate.equals(todayDate)) || (selectDate.equals(plusDay)) || (selectDate.equals(plusTwoDay))) {
-                        timePickerTxt = hourChange[numberPicker.getValue()] + "시";
+                        timePickerTxt = hourChange[numberPicker.getValue()];
                         timePicker.setText(timePickerTxt);
+                        wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
                     } else {
                         timePicker.setText(setTimeNo);
+                        wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                     }
                 }
@@ -863,11 +881,14 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudValue = data.getHourly().get(i).getClouds();
                                     feelsLikeValue = data.getHourly().get(i).getFeelsLike();
                                     precipValue = data.getHourly().get(i).getPop();
+                                    tempValue = data.getHourly().get(i).getTemp();
+                                    humidityValue = data.getHourly().get(i).getHumidity();
+                                    windValue = data.getHourly().get(i).getWindSpeed();
 
                                     cloudText = cloudValue + "%";
-                                    tempText = String.format("%.1f", Double.parseDouble(data.getHourly().get(i).getTemp())) + "°C";
-                                    windText = data.getHourly().get(i).getWindSpeed() + "m/s";
-                                    humidityText = data.getHourly().get(i).getHumidity() + "%";
+                                    tempText = String.format("%.1f", Double.parseDouble(tempValue)) + "°C";
+                                    windText = windValue + "m/s";
+                                    humidityText = humidityValue + "%";
                                     todayWtId = data.getHourly().get(i).getWeather().get(0).getId();
                                     todayWtIdInt = Integer.parseInt(todayWtId);
                                     doublePrecip = Double.parseDouble(precipValue) * 100;
@@ -883,6 +904,10 @@ public class WeatherActivity extends AppCompatActivity {
                                     Log.d("precipitationProbability", String.valueOf(precipitationProbability));
                                     Log.d("obFitValueSelect", String.valueOf(obFitValueSelect));
 
+                                    setDetailState(cloudVolume, Double.parseDouble(tempValue),
+                                            Double.parseDouble(humidityValue), moonAge,
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
                                     tempTextTv.setText("기온");
@@ -890,6 +915,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
                                     starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
+                                    setObFitComment(obFitValueSelect);
                                     connectTodayWeather();
                                     Log.d("getI", String.valueOf(i));
                                 }
@@ -905,13 +931,20 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     cloudValue = data.getDaily().get(i).getClouds();
                                     feelsLikeValue = data.getDaily().get(i).getFeelsLike().getDay();
-                                    precipValue = data.getHourly().get(i).getPop();
+                                    precipValue = data.getDaily().get(i).getPop();
+                                    tempMinValue = data.getDaily().get(i).getTemp().getMin();
+                                    tempMaxValue = data.getDaily().get(i).getTemp().getMax();
+                                    humidityValue = data.getDaily().get(i).getHumidity();
+                                    windValue = data.getDaily().get(i).getWindSpeed();
 
                                     cloudText = cloudValue + "%";
-                                    tempMinText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMin())) + "°C";
-                                    tempMaxText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMax())) + "°C";
-                                    windText = data.getDaily().get(i).getWindSpeed() + "m/s";
-                                    humidityText = data.getDaily().get(i).getHumidity() + "%";
+                                    tempMinText = String.format("%.1f", Double.parseDouble(tempMinValue)) + "°C";
+                                    tempMaxText = String.format("%.1f", Double.parseDouble(tempMaxValue)) + "°C";
+
+                                    tempValueDouble = (Double.parseDouble(tempMinValue) + Double.parseDouble(tempMaxValue)) / 2;
+
+                                    windText = windValue + "m/s";
+                                    humidityText = humidityValue + "%";
                                     todayWtId = data.getDaily().get(i).getWeather().get(0).getId();
 
                                     doublePrecip = Double.parseDouble(precipValue) * 100;
@@ -927,6 +960,10 @@ public class WeatherActivity extends AppCompatActivity {
                                     Log.d("precipitationProbability", String.valueOf(precipitationProbability));
                                     Log.d("obFitValueSelect", String.valueOf(obFitValueSelect));
 
+                                    setDetailState(cloudVolume, tempValueDouble,
+                                            Double.parseDouble(humidityValue), moonAge,
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
@@ -935,6 +972,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
                                     starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
+                                    setObFitComment(obFitValueSelect);
                                     connectTodayWeather();
                                     Log.d("getIDaily", String.valueOf(i));
                                 }
@@ -954,11 +992,14 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudValue = data.getHourly().get(i).getClouds();
                                     feelsLikeValue = data.getHourly().get(i).getFeelsLike();
                                     precipValue = data.getHourly().get(i).getPop();
+                                    tempValue = data.getHourly().get(i).getTemp();
+                                    humidityValue = data.getHourly().get(i).getHumidity();
+                                    windValue = data.getHourly().get(i).getWindSpeed();
 
                                     cloudText = cloudValue + "%";
-                                    tempText = String.format("%.1f", Double.parseDouble(data.getHourly().get(i).getTemp())) + "°C";
-                                    windText = data.getHourly().get(i).getWindSpeed() + "m/s";
-                                    humidityText = data.getHourly().get(i).getHumidity() + "%";
+                                    tempText = String.format("%.1f", Double.parseDouble(tempValue)) + "°C";
+                                    windText = windValue + "m/s";
+                                    humidityText = humidityValue + "%";
                                     todayWtId = data.getHourly().get(i).getWeather().get(0).getId();
                                     todayWtIdInt = Integer.parseInt(todayWtId);
                                     doublePrecip = Double.parseDouble(precipValue) * 100;
@@ -974,6 +1015,10 @@ public class WeatherActivity extends AppCompatActivity {
                                     Log.d("precipitationProbability", String.valueOf(precipitationProbability));
                                     Log.d("obFitValueSelect", String.valueOf(obFitValueSelect));
 
+                                    setDetailState(cloudVolume, Double.parseDouble(tempValue),
+                                            Double.parseDouble(humidityValue), moonAge,
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
                                     tempTextTv.setText("기온");
@@ -981,6 +1026,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
                                     starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
+                                    setObFitComment(obFitValueSelect);
                                     connectTodayWeather();
                                     Log.d("getI", String.valueOf(i));
                                 }
@@ -996,13 +1042,20 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     cloudValue = data.getDaily().get(i).getClouds();
                                     feelsLikeValue = data.getDaily().get(i).getFeelsLike().getDay();
-                                    precipValue = data.getHourly().get(i).getPop();
+                                    precipValue = data.getDaily().get(i).getPop();
+                                    tempMinValue = data.getDaily().get(i).getTemp().getMin();
+                                    tempMaxValue = data.getDaily().get(i).getTemp().getMax();
+                                    humidityValue = data.getDaily().get(i).getHumidity();
+                                    windValue = data.getDaily().get(i).getWindSpeed();
 
                                     cloudText = cloudValue + "%";
-                                    tempMinText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMin())) + "°C";
-                                    tempMaxText = String.format("%.1f", Double.parseDouble(data.getDaily().get(i).getTemp().getMax())) + "°C";
-                                    windText = data.getDaily().get(i).getWindSpeed() + "m/s";
-                                    humidityText = data.getDaily().get(i).getHumidity() + "%";
+                                    tempMinText = String.format("%.1f", Double.parseDouble(tempMinValue)) + "°C";
+                                    tempMaxText = String.format("%.1f", Double.parseDouble(tempMaxValue)) + "°C";
+
+                                    tempValueDouble = (Double.parseDouble(tempMinValue) + Double.parseDouble(tempMaxValue)) / 2;
+
+                                    windText = windValue + "m/s";
+                                    humidityText = humidityValue + "%";
                                     todayWtId = data.getDaily().get(i).getWeather().get(0).getId();
 
                                     doublePrecip = Double.parseDouble(precipValue) * 100;
@@ -1018,6 +1071,10 @@ public class WeatherActivity extends AppCompatActivity {
                                     Log.d("precipitationProbability", String.valueOf(precipitationProbability));
                                     Log.d("obFitValueSelect", String.valueOf(obFitValueSelect));
 
+                                    setDetailState(cloudVolume, tempValueDouble,
+                                            Double.parseDouble(humidityValue), moonAge,
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
@@ -1026,6 +1083,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
                                     starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
+                                    setObFitComment(obFitValueSelect);
                                     connectTodayWeather();
                                     Log.d("getIDaily", String.valueOf(i));
                                 }
@@ -1254,7 +1312,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 cloudTv.setText(cloudState);
                                 tempTv.setText(tempState);
                                 moonPhaseTv.setText(moonPhaseState);
-                                fineDustTv.setText(fineDustState);
+                                fineDustTv.setText(fineDustText);
                                 windTv.setText(windState);
                                 humidityTv.setText(humidityState);
                                 precipitationTv.setText(precipState);
@@ -2338,4 +2396,105 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
+    //관측 적합도 멘트
+    public void setObFitComment(Double obFitValueSelect) {
+        if (obFitValueSelect < 40) {
+            commentTv.setText("오늘은 별을 보기 어려워요");
+        } else if (obFitValueSelect < 60) {
+            commentTv.setText("별 보기 조금 아쉽네요");
+        } else if (obFitValueSelect < 70) {
+            commentTv.setText("별 보기 적당한 날이네요");
+        } else if (obFitValueSelect < 85) {
+            commentTv.setText("별 보기 좋은 날이에요!");
+        } else {
+            commentTv.setText("별 보기 최고의 날이네요!");
+        }
+    }
+
+    //구름
+    public void setDetailState(Double cloud, Double temp, Double humidity, Double moonAge, Double wind, Double precip, Double lightPol) {
+        if (cloud < 11) {
+            cloudState = "매우좋음";
+        } else if (cloud < 21) {
+            cloudState = "좋음";
+        } else if (cloud < 41) {
+            cloudState = "보통";
+        } else if (cloud < 61) {
+            cloudState = "나쁨";
+        } else {
+            cloudState = "매우나쁨";
+        }
+
+        if ((temp <= -1) || (temp >= 31)) {
+            tempState = "매우나쁨";
+        } else if ((temp >= 0 && temp <= 9) || (temp >= 29 && temp <= 30)) {
+            tempState = "나쁨";
+        } else if ((temp >= 10) && (temp <= 13) || (temp >= 26 && temp <= 28)) {
+            tempState = "보통";
+        } else if ((temp >= 14 && temp <= 17) || (temp >= 24 && temp <= 25)) {
+            tempState = "좋음";
+        } else {
+            tempState = "매우좋음";
+        }
+
+        if ((humidity >= 0 && humidity <= 14) || (humidity >= 85 && humidity <= 100)) {
+            humidityState = "매우나쁨";
+        } else if ((humidity >= 20 && humidity <= 29) || (humidity >= 72 && humidity <= 84)) {
+            humidityState = "나쁨";
+        } else if ((humidity >= 30) && (humidity <= 38) || (humidity >= 63 && humidity <= 71)) {
+            humidityState = "보통";
+        } else if ((humidity >= 37 && humidity <= 42) || (humidity >= 58 && humidity <= 62)) {
+            humidityState = "좋음";
+        } else {
+            humidityState = "매우좋음";
+        }
+
+        if ((moonAge >= 0.36 && moonAge <= 0.62)) {
+            moonPhaseState = "매우나쁨";
+        } else if ((moonAge >= 0.22 && moonAge <= 0.35) || (moonAge >= 0.63 && moonAge <= 0.74)) {
+            moonPhaseState = "나쁨";
+        } else if ((moonAge >= 0.14) && (moonAge <= 0.21) || (moonAge >= 0.75 && moonAge <= 0.84)) {
+            moonPhaseState = "보통";
+        } else if ((moonAge >= 0.07 && moonAge <= 0.13) || (moonAge >= 0.85 && moonAge <= 0.93)) {
+            moonPhaseState = "좋음";
+        } else {
+            moonPhaseState = "매우좋음";
+        }
+
+        if (wind <= 2.5) {
+            windState = "매우좋음";
+        } else if (wind <= 4.5) {
+            windState = "좋음";
+        } else if (wind <= 6.5) {
+            windState = "보통";
+        } else if (wind <= 10) {
+            windState = "나쁨";
+        } else {
+            windState = "메우나쁨";
+        }
+
+        if (precip < 16) {
+            precipState = "매우좋음";
+        } else if (precip < 26) {
+            precipState = "좋음";
+        } else if (precip < 41) {
+            precipState = "보통";
+        } else if (precip < 61) {
+            precipState = "나쁨";
+        } else {
+            precipState = "메우나쁨";
+        }
+
+        if (lightPol <= 1) {
+            lightPolState = "매우좋음";
+        } else if (lightPol <= 15) {
+            lightPolState = "좋음";
+        } else if (lightPol <= 45) {
+            lightPolState = "보통";
+        } else if (lightPol <= 80) {
+            lightPolState = "나쁨";
+        } else {
+            lightPolState = "메우나쁨";
+        }
+    }
 }

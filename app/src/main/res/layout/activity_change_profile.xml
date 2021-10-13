@@ -26,6 +26,10 @@
                     android:id="@+id/back"
                     android:layout_width="16sp"
                     android:layout_height="16sp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_marginLeft="29dp"
                     android:layout_marginRight="21dp"
                     android:background="@drawable/mypost_back" />
@@ -35,19 +39,31 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/scdream_light"
-                    android:text="닉네임 설정"
+                    android:text="프로필 편집"
                     android:textSize="17sp" />
             </LinearLayout>
 
-
-            <ImageView
-                android:id="@+id/profileImage3"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/profile_default_image" />
+                android:layout_marginTop="22dp">
+
+                <ImageView
+                    android:id="@+id/profileImage3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/profile_default_image" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginTop="44dp"
+                    app:srcCompat="@drawable/mydata_edit" />
+            </FrameLayout>
 
             <TextView
                 android:layout_width="wrap_content"
