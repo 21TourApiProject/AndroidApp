@@ -91,7 +91,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if(response.isSuccessful()){
-                            System.out.println("회원가입 성공");
+                            Log.d("kakaoSignup","회원가입 성공");
                             signOut();
 
                             //선호 해시태그 선택 창으로 전환
@@ -99,7 +99,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                             intent.putExtra("email", userParams.getEmail());
                             startActivityForResult(intent, SELECT_HASH_TAG);
                         } else{
-                            System.out.println("회원가입 실패");
+                            Log.d("kakaoSignup","회원가입 실패");
                         }
                     }
                     @Override

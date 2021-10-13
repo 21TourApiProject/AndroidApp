@@ -147,7 +147,7 @@ public class PostWriteActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         // + 버튼 클릭 이벤트
         addPicture = findViewById(R.id.addPicture);
@@ -219,11 +219,11 @@ public class PostWriteActivity extends AppCompatActivity {
         adapter.setOnSelectImageItemClickListener(new OnSelectImageItemClickListener() {
             @Override
             public void onItemClick(SelectImageAdapter.ViewHolder holder, View view, int position) {
-                System.out.println("position = " + position);
                 adapter.removeItem(position);
                 adapter.notifyDataSetChanged();
                 numOfPicture --;
                 addPicture.setText(Integer.toString(numOfPicture) + "/10");
+                postImageParams.remove(position);
                 if (numOfPicture==0){
                     recyclerView.setVisibility(View.GONE);
                     examplelayout.setVisibility(View.VISIBLE);
@@ -308,7 +308,7 @@ public class PostWriteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder ad = new AlertDialog.Builder(PostWriteActivity.this);
+                AlertDialog.Builder ad = new AlertDialog.Builder(PostWriteActivity.this,R.style.MyDialogTheme);
                 ad.setMessage("게시물을 작성하시겠습니까?");
                 ad.setTitle("알림");
                 ad.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -423,18 +423,6 @@ public class PostWriteActivity extends AppCompatActivity {
                         if(response.isSuccessful()){
                             Log.d("post","게시물 작성 성공");
                             Long result = response.body();
-                            //앱 내부 저장소에 postId란 이름으로 게시글 id 저장
-                            String fileName = "postId";
-                            String postId = result.toString();
-                            try {
-                                FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
-                                fos.write(postId.getBytes());
-                                fos.close();
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                             Call<Void>call1 = RetrofitClient.getApiService().createPostImage(result,postImageParams);
                             call1.enqueue(new Callback<Void>() {
                                 @Override
@@ -566,9 +554,9 @@ public class PostWriteActivity extends AppCompatActivity {
                 Log.e("FAT=", "일반폰/단일 : "+uri.toString());
                 try {
                     Bitmap img = resize(this, uri, 100);
-                    System.out.println("img = " + img);
                     addImage(img);
                     file = new File(getRealPathFromURI(uri));
+                    files.add(file);
                     PostImageParams postImageParam = new PostImageParams();
                     postImageParam.setImageName(userId+"_"+file.getName());
                     postImageParams.add(postImageParam);
@@ -685,7 +673,6 @@ public String getRealPathFromURI(Uri contentUri) {
 //                in.close();
                 Bitmap img = resize(this, uri, 100); //해상도 최대로 하고싶으면 100으로
                 Bitmap roateImage1 = rotateImage(uri,img);
-                System.out.println("img = " + img);
                 adapter.addItem(new SelectImage(roateImage1, numOfPicture));
                 recyclerView.setAdapter(adapter);
             } catch (Exception e) {
@@ -780,7 +767,6 @@ public String getRealPathFromURI(Uri contentUri) {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("data = " + data);
         return data;
     }
 
@@ -801,7 +787,6 @@ public String getRealPathFromURI(Uri contentUri) {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("data = " + data);
         return data;
     }
     private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
