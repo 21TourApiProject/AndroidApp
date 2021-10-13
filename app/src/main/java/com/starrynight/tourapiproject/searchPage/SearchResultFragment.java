@@ -809,6 +809,7 @@ public class SearchResultFragment extends Fragment {
     private void searchEverything(SearchKey searchKey) {
         searchResult2.removeAllViews();
         finalTpResult.clear();
+        allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.search_tap));
         LoadingAsyncTask task = new LoadingAsyncTask(getContext(),10000);
         task.execute();
         Call<List<SearchParams1>> call = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
