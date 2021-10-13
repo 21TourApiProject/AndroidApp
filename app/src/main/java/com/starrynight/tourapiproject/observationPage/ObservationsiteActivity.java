@@ -38,6 +38,7 @@ import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Co
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveFee;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImageInfo;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
@@ -56,13 +57,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ObservationsiteActivity extends AppCompatActivity {
-    Long userId;
-    Long postId;
-    Boolean isWish;
+    private Long userId;
+    private Long postId;
+    private Boolean isWish;
 
     private static final String TAG = "observation page";
-    Observation observation;
-    List<String> observeHashTags;
+    private Observation observation;
+    private List<String> observeHashTags;
     private RecyclerHashTagAdapter recyclerHashTagAdapter;
     TextView outline;
     TextView link;
@@ -72,8 +73,9 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
     private ViewPager2 obs_slider;
     private LinearLayout obs_indicator;
+    private TextView imageSource_txt;
     private String[] obs_images;
-    private List<ObserveImage> obs_images_list;
+    private List<String> imageSources;
 
     private ViewPager2 course_slider;
     private LinearLayout course_circle_indicator;
@@ -84,6 +86,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private RecyclerFeeAdapter recyclerFeeAdapter;
     private List<ObserveFee> obs_fee_list;
     private String[] relatefilename = new String[3];
+
+
 
     private BalloonObject balloonObject= new BalloonObject();   //mapfragment bundle
 
@@ -111,19 +115,27 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
 
-                    Call<List<String>> call3 = RetrofitClient.getApiService().getObserveImagePath(observationId);
-                    call3.enqueue(new Callback<List<String>>() {
-                        @Override
-                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                    TextView obs_banner = findViewById(R.id.obs_banner);
+                    obs_banner.setText(observation.getObservationName());
 
+                    Call<List<ObserveImageInfo>> call3 = RetrofitClient.getApiService().getObserveImageInfo(observationId);
+                    call3.enqueue(new Callback<List<ObserveImageInfo>>() {
+                        @Override
+                        public void onResponse(Call<List<ObserveImageInfo>> call, Response<List<ObserveImageInfo>> response) {
                             if (response.isSuccessful()) {
                                 if (!response.body().isEmpty()) {
                                     Log.d(TAG, "관측지 이미지 호출 성공");
-                                    List<String> imageList = response.body();
+                                    List<ObserveImageInfo> observeImageInfos = response.body();
+                                    List<String> imageList = new ArrayList<>();
+                                    imageSources = new ArrayList<>();
+
+                                    for (ObserveImageInfo info : observeImageInfos) {
+                                        imageList.add(info.getImage());
+                                        imageSources.add(info.getImageSource());
+                                    }
                                     obs_images = imageList.toArray(new String[imageList.size()]);
                                     balloonObject.setImage(imageList.get(0));   //map위한 bundle
 
-                                    //관측지 이미지 슬라이더 설정
                                     obs_slider = findViewById(R.id.obs_Img_slider);
                                     obs_indicator = findViewById(R.id.obs_Img_indicator);
                                     obs_slider.setAdapter(new ObserveImageSliderAdapter(ObservationsiteActivity.this, obs_images));
@@ -136,19 +148,57 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                             setObserveCurrentIndicator(position);
                                         }
                                     });
+                                    imageSource_txt = findViewById(R.id.obs_image_source);
                                     setupObserveIndicators(obs_images.length);
                                 }
-
-                            } else {
+                            }else {
                                 Log.e(TAG, "관측지 이미지 호출 실패");
                             }
+
                         }
 
                         @Override
-                        public void onFailure(Call<List<String>> call, Throwable t) {
-
-                        }
+                        public void onFailure(Call<List<ObserveImageInfo>> call, Throwable t) {
+                            Log.e(TAG, "관측지 이미지 연결결 실패");
+                       }
                     });
+//                    call3.enqueue(new Callback<List<String>>() {
+//                        @Override
+//                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+//
+//                            if (response.isSuccessful()) {
+//                                if (!response.body().isEmpty()) {
+//                                    Log.d(TAG, "관측지 이미지 호출 성공");
+//                                    List<String> imageList = response.body();
+//                                    obs_images = imageList.toArray(new String[imageList.size()]);
+//                                    balloonObject.setImage(imageList.get(0));   //map위한 bundle
+//
+//                                    //관측지 이미지 슬라이더 설정
+//                                    obs_slider = findViewById(R.id.obs_Img_slider);
+//                                    obs_indicator = findViewById(R.id.obs_Img_indicator);
+//                                    obs_slider.setAdapter(new ObserveImageSliderAdapter(ObservationsiteActivity.this, obs_images));
+//                                    obs_slider.setOffscreenPageLimit(10);
+//
+//                                    obs_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//                                        @Override
+//                                        public void onPageSelected(int position) {
+//                                            super.onPageSelected(position);
+//                                            setObserveCurrentIndicator(position);
+//                                        }
+//                                    });
+//                                    setupObserveIndicators(obs_images.length);
+//                                }
+//
+//                            } else {
+//                                Log.e(TAG, "관측지 이미지 호출 실패");
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<List<String>> call, Throwable t) {
+//
+//                        }
+//                    });
 
 
                     TextView name = findViewById(R.id.obs_name_txt);
@@ -652,7 +702,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
     }
 
     private void setupObserveIndicators(int count) {
-        //이비지 슬라이더 인디케이터 걸정
+        //이비지 슬라이더 인디케이터 설정
         ImageView[] indicators = new ImageView[count];
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -670,6 +720,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
     }
 
     private void setObserveCurrentIndicator(int position) {
+        imageSource_txt.setText(imageSources.get(position));
         int childCount = obs_indicator.getChildCount();
         for (int i = 0; i < childCount; i++) {
             ImageView imageView = (ImageView) obs_indicator.getChildAt(i);
@@ -688,8 +739,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
     }
 
     private void setupCourseIndicators(int count, List<String> names) {
-        //코스 인디케이터 걸정
-        ImageView[] img_indicators = new ImageView[count+1];
+        //코스 인디케이터 설설정
+       ImageView[] img_indicators = new ImageView[count+1];
         TextView[] txt_indicators = new TextView[count+1];
         LinearLayout.LayoutParams img_params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
