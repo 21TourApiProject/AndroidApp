@@ -578,7 +578,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     List<PostImage> relateImageList = response.body();
                     for (int i=0;i<relateImageList.size();i++){
                         relatefilename[i]=relateImageList.get(i).getImageName();
-                        System.out.println(relatefilename[i]);
                         if (relateImageList.size()>4){break;}
                     }
                     if (relatefilename[0]!=null){
