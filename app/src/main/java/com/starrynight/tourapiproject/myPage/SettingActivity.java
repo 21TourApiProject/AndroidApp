@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.starrynight.tourapiproject.R;
 
 public class SettingActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class SettingActivity extends AppCompatActivity {
         opensource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //채형아 여기
+                startActivity(new Intent(SettingActivity.this, OssLicensesMenuActivity.class));
             }
         });
 
