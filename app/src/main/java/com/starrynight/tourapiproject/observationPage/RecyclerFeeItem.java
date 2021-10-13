@@ -19,8 +19,5 @@ public class RecyclerFeeItem {
 
     private String feeName;
     private String entranceFee;
-
-
-
 }
 

@@ -15,6 +15,9 @@ public class MyHashTag {
     @SerializedName("hashTagName")
     private String hashTagName;
 
-    public MyHashTag(){};
+    public MyHashTag() {
+    }
+
+    ;
 
 }

@@ -18,29 +18,29 @@ public interface SignUpRetrofitService {
     Call<Void> kakaoSignUp(@Body KakaoUserParams params);
 
     @DELETE("user/email/{email}")
-    Call<Void> cancelSignUp(@Path("email")String email);
+    Call<Void> cancelSignUp(@Path("email") String email);
 
     @GET("user/duplicate/email/{email}")
-    Call<Boolean> checkDuplicateEmail(@Path("email")String email);
+    Call<Boolean> checkDuplicateEmail(@Path("email") String email);
 
     @GET("user/duplicate/mobilePhoneNumber/{mobilePhoneNumber}")
-    Call<Boolean> checkDuplicateMobilePhoneNumber(@Path("mobilePhoneNumber")String mobilePhoneNumber);
+    Call<Boolean> checkDuplicateMobilePhoneNumber(@Path("mobilePhoneNumber") String mobilePhoneNumber);
 
     @POST("myHashTag/{email}")
-    Call<Long> createMyHashTag(@Path("email")String email, @Body List<MyHashTagParams> myHashTagParams);
+    Call<Long> createMyHashTag(@Path("email") String email, @Body List<MyHashTagParams> myHashTagParams);
 
     @GET("user/login/{email}/{password}")
-    Call<Long> logIn(@Path("email")String email, @Path("password")String password);
+    Call<Long> logIn(@Path("email") String email, @Path("password") String password);
 
     @GET("user/kakaologin/{email}")
-    Call<Long> kakaoLogIn(@Path("email")String email);
+    Call<Long> kakaoLogIn(@Path("email") String email);
 
     @GET("user/login/email/{realName}/{mobilePhoneNumber}")
-    Call<String> getEmail(@Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
+    Call<String> getEmail(@Path("realName") String realName, @Path("mobilePhoneNumber") String mobilePhoneNumber);
 
     @GET("user/login/password/{email}/{realName}/{mobilePhoneNumber}")
-    Call<String> getPassword(@Path("email")String email, @Path("realName")String realName, @Path("mobilePhoneNumber")String mobilePhoneNumber);
+    Call<String> getPassword(@Path("email") String email, @Path("realName") String realName, @Path("mobilePhoneNumber") String mobilePhoneNumber);
 
     @POST("myHashTag/change/{userId}")
-    Call<Void> changeMyHashTag(@Path("userId")Long userId, @Body List<MyHashTagParams> myHashTagParams);
+    Call<Void> changeMyHashTag(@Path("userId") Long userId, @Body List<MyHashTagParams> myHashTagParams);
 }

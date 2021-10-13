@@ -22,17 +22,26 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
     private ArrayList<post_point_item> itemList;
     OnPostPointItemClickListener listener;
 
-    public void addItem(post_point_item item){ items.add(item); }
-    public void setItems(ArrayList<post_point_item> items){ this.items = items; }
-    public post_point_item getItem(int position){ return items.get(position); }
-
-    public void setItem(int position, post_point_item item){
-        items.set(position,item);
+    public void addItem(post_point_item item) {
+        items.add(item);
     }
+
+    public void setItems(ArrayList<post_point_item> items) {
+        this.items = items;
+    }
+
+    public post_point_item getItem(int position) {
+        return items.get(position);
+    }
+
+    public void setItem(int position, post_point_item item) {
+        items.set(position, item);
+    }
+
     @NonNull
     @Override
     public Post_point_item_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater =  LayoutInflater.from(parent.getContext());
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.layout_spot, parent, false);
         return new ViewHolder(itemView, listener);
     }
@@ -49,19 +58,21 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
     }
 
     @Override
-    public int getItemCount() { return items.size(); }
+    public int getItemCount() {
+        return items.size();
+    }
 
-    public void  setOnItemClicklistener(OnPostPointItemClickListener listener){
+    public void setOnItemClicklistener(OnPostPointItemClickListener listener) {
         this.listener = listener;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
         ImageView imageView;
 
-        public ViewHolder(View itemView, final OnPostPointItemClickListener listener){
+        public ViewHolder(View itemView, final OnPostPointItemClickListener listener) {
             super(itemView);
-            textView =itemView.findViewById(R.id.PostText);
+            textView = itemView.findViewById(R.id.PostText);
             imageView = itemView.findViewById(R.id.postimage);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -69,14 +80,15 @@ public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_ite
                 public void onClick(View view) {
                     int position = getAdapterPosition();
 
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onItemClick(Post_point_item_Adapter.ViewHolder.this, view, position);
                     }
                 }
             });
 
         }
-        public void setItem(post_point_item item){
+
+        public void setItem(post_point_item item) {
             textView.setText(item.getTourname());
         }
     }

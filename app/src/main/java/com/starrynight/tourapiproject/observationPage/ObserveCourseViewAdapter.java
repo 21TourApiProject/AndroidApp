@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourseViewAdapter.MyViewHolder>{
+public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourseViewAdapter.MyViewHolder> {
 
     private static final String TAG = "course adapter";
     private Context context;
@@ -46,7 +46,7 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
     @Override
     public void onBindViewHolder(@NonNull @NotNull ObserveCourseViewAdapter.MyViewHolder holder, int position) {
         CourseTouristPoint courseTouristPoint = touristPointList.get(position);
-        if(courseTouristPoint.getFirstImage()!=null)
+        if (courseTouristPoint.getFirstImage() != null)
             holder.bindImage(courseTouristPoint.getFirstImage());
         holder.bindText(courseTouristPoint);
         holder.setOutlineButton(position);
@@ -91,10 +91,10 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
                 @Override
                 public void onGlobalLayout() {
                     Layout l = overview_txt.getLayout();
-                    if ( l != null){
+                    if (l != null) {
                         int lines = l.getLineCount();
-                        if ( lines > 0)
-                            if ( l.getEllipsisCount(lines-1) > 0) {
+                        if (lines > 0)
+                            if (l.getEllipsisCount(lines - 1) > 0) {
                                 outline_btn.setVisibility(View.VISIBLE);
                                 Log.d(TAG, "텍스트 줄넘침");
                             }
@@ -114,9 +114,9 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
         }
 
         public void bindImage(String imageURL) {
-                Glide.with(context)
-                        .load(imageURL)
-                        .into(tp_img);
+            Glide.with(context)
+                    .load(imageURL)
+                    .into(tp_img);
 
         }
 
@@ -127,7 +127,7 @@ public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourse
             address_txt.setText(courseTouristPoint.getAddr());
             operating_txt.setText(courseTouristPoint.getUseTime());
             parking_txt.setText(courseTouristPoint.getParking());
-            if (courseTouristPoint.getContentTypeId()==39) {
+            if (courseTouristPoint.getContentTypeId() == 39) {
                 menu_txt.setVisibility(View.VISIBLE);
                 menu_txt.setText(courseTouristPoint.getTreatMenu());
                 menu_name.setVisibility(View.VISIBLE);

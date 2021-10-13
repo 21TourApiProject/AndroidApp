@@ -102,7 +102,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Log.d("myWishOb","내 찜 관측지 불러오기 실패");
+                    Log.d("myWishOb", "내 찜 관측지 불러오기 실패");
                 }
             }
 
@@ -117,7 +117,7 @@ public class MyWishActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == WISH){
+        if (requestCode == WISH) {
             //액티비티 새로고침
             Intent intent = getIntent();
             finish();
@@ -127,7 +127,7 @@ public class MyWishActivity extends AppCompatActivity {
         }
     }
 
-    public void clickOb(View v){
+    public void clickOb(View v) {
         myWishObLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tapclick));
         myWishTpLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tap));
         myWishPostLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tap));
@@ -150,7 +150,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Log.d("myWishOb","내 찜 관측지 불러오기 실패");
+                    Log.d("myWishOb", "내 찜 관측지 불러오기 실패");
                 }
             }
 
@@ -161,7 +161,7 @@ public class MyWishActivity extends AppCompatActivity {
         });
     }
 
-    public void clickTp(View v){
+    public void clickTp(View v) {
         myWishObLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tap));
         myWishTpLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tapclick));
         myWishPostLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tap));
@@ -184,7 +184,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Log.d("myWishTp","내 찜 관광지 불러오기 실패");
+                    Log.d("myWishTp", "내 찜 관광지 불러오기 실패");
                 }
             }
 
@@ -195,7 +195,7 @@ public class MyWishActivity extends AppCompatActivity {
         });
     }
 
-    public void clickPost(View v){
+    public void clickPost(View v) {
         myWishObLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tap));
         myWishTpLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tap));
         myWishPostLine.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.mywish_tapclick));
@@ -218,7 +218,7 @@ public class MyWishActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Log.d("myPost","내 찜 게시물 불러오기 실패");
+                    Log.d("myPost", "내 찜 게시물 불러오기 실패");
                 }
             }
 

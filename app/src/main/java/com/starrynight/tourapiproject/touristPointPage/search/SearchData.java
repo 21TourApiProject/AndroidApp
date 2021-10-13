@@ -8,95 +8,101 @@ public class SearchData {
     @SerializedName("documents")
     public List<Document> Searchdocuments;
     @SerializedName("meta")
-    public  Meta meta;
- public static class Meta{
-     @SerializedName("total_count")
-     public int total_count;
-     @SerializedName("pageable_count")
-     public int pageable_count;
-     @SerializedName("is_end")
-     public boolean is_end;
+    public Meta meta;
 
-     public int getTotal_count() {
-         return total_count;
-     }
+    public static class Meta {
+        @SerializedName("total_count")
+        public int total_count;
+        @SerializedName("pageable_count")
+        public int pageable_count;
+        @SerializedName("is_end")
+        public boolean is_end;
 
-     public void setTotal_count(int total_count) {
-         this.total_count = total_count;
-     }
+        public int getTotal_count() {
+            return total_count;
+        }
 
-     public int getPageable_count() {
-         return pageable_count;
-     }
+        public void setTotal_count(int total_count) {
+            this.total_count = total_count;
+        }
 
-     public void setPageable_count(int pageable_count) {
-         this.pageable_count = pageable_count;
-     }
+        public int getPageable_count() {
+            return pageable_count;
+        }
 
-     public boolean isIs_end() {
-         return is_end;
-     }
+        public void setPageable_count(int pageable_count) {
+            this.pageable_count = pageable_count;
+        }
 
-     public void setIs_end(boolean is_end) {
-         this.is_end = is_end;
-     }
- }
- public static class Document{
-     String title;
-     String contents;
-     String url;
-     String blogname;
-     String thumbnail;
-     String datetime;
+        public boolean isIs_end() {
+            return is_end;
+        }
 
-     public String getTitle() {
-         title=title.replaceAll("<b>","");
-         title=title.replaceAll("</b>","");
-         return title;
-     }
+        public void setIs_end(boolean is_end) {
+            this.is_end = is_end;
+        }
+    }
 
-     public void setTitle(String title) {
-         this.title = title;
-     }
+    public static class Document {
+        String title;
+        String contents;
+        String url;
+        String blogname;
+        String thumbnail;
+        String datetime;
 
-     public String getContents() {
-         contents=contents.replaceAll("<b>","");
-         contents=contents.replaceAll("</b>","");
-         return contents;
-     }
+        public String getTitle() {
+            title = title.replaceAll("<b>", "");
+            title = title.replaceAll("</b>", "");
+            return title;
+        }
 
-     public void setContents(String contents) {
-         this.contents = contents;
-     }
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
-     public String getUrl() {
-         return url;
-     }
+        public String getContents() {
+            contents = contents.replaceAll("<b>", "");
+            contents = contents.replaceAll("</b>", "");
+            return contents;
+        }
 
-     public void setUrl(String url) {
-         this.url = url;
-     }
+        public void setContents(String contents) {
+            this.contents = contents;
+        }
 
-     public String getBlogname() {
-         blogname=blogname.replaceAll("<b>","");
-         blogname=blogname.replaceAll("</b>","");
-         return blogname;
-     }
+        public String getUrl() {
+            return url;
+        }
 
-     public void setBlogname(String blogname) {
-         this.blogname = blogname;
-     }
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
-     public String getThumbnail() {
-         return thumbnail;
-     }
+        public String getBlogname() {
+            blogname = blogname.replaceAll("<b>", "");
+            blogname = blogname.replaceAll("</b>", "");
+            return blogname;
+        }
 
-     public void setThumbnail(String thumbnail) {
-         this.thumbnail = thumbnail;
-     }
+        public void setBlogname(String blogname) {
+            this.blogname = blogname;
+        }
 
-     public String getDatetime() { return datetime; }
+        public String getThumbnail() {
+            return thumbnail;
+        }
 
-     public void setDatetime(String datetime) { this.datetime = datetime; }
- }
+        public void setThumbnail(String thumbnail) {
+            this.thumbnail = thumbnail;
+        }
+
+        public String getDatetime() {
+            return datetime;
+        }
+
+        public void setDatetime(String datetime) {
+            this.datetime = datetime;
+        }
+    }
 }

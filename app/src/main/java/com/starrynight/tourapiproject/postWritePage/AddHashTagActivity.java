@@ -28,16 +28,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class AddHashTagActivity extends AppCompatActivity {
-    List<PostHashTagParams>postHashTagParams = new ArrayList<>();
-    List<PostHashTagParams>postHashTagParams2 = new ArrayList<>();
+    List<PostHashTagParams> postHashTagParams = new ArrayList<>();
+    List<PostHashTagParams> postHashTagParams2 = new ArrayList<>();
     RecyclerView optionHashTagRecyclerView;
     TextView findHashTag;
     String optionHashTag;
     EditText editText;
     String[] optionHashTagList = new String[10];
-    String[] hashTaglist =new String[22];
+    String[] hashTaglist = new String[22];
     String[] clicked = new String[22];
-    ArrayList<String> hashtag=new ArrayList<>();
+    ArrayList<String> hashtag = new ArrayList<>();
     HashMap<String, Integer> hashTagMap = new HashMap<String, Integer>();
     String[] hashTagName = {"공기 좋은", "깔끔한", "감성적인", "이색적인", "인생샷", "전문적인", "캠핑", "차박", "뚜벅이", "드라이브",
             "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
@@ -50,10 +50,10 @@ public class AddHashTagActivity extends AppCompatActivity {
         findHashTag = findViewById(R.id.findHashTag);
 
 
-        Intent intent= getIntent();
-        postHashTagParams2= (List<PostHashTagParams>)intent.getSerializableExtra("hashTagParams");
-        for(int i=0; i<22; i++){
-            clicked[i]="";
+        Intent intent = getIntent();
+        postHashTagParams2 = (List<PostHashTagParams>) intent.getSerializableExtra("hashTagParams");
+        for (int i = 0; i < 22; i++) {
+            clicked[i] = "";
         }
         if (postHashTagParams2 != null) {
             for (int i = 0; i < postHashTagParams2.size(); i++) {
@@ -63,15 +63,15 @@ public class AddHashTagActivity extends AppCompatActivity {
             }
         }
 
-        if(hashtag != null){
+        if (hashtag != null) {
             int i = 0;
-            for (String name : hashTagName){
+            for (String name : hashTagName) {
                 hashTagMap.put(name, i);
                 i++;
             }
 
-            for (String h : hashtag){
-                clicked[hashTagMap.get(h)]=h;
+            for (String h : hashtag) {
+                clicked[hashTagMap.get(h)] = h;
             }
         }
         Button ht1 = findViewById(R.id.ht1);
@@ -119,8 +119,8 @@ public class AddHashTagActivity extends AppCompatActivity {
         buttons[20] = ht21;
         buttons[21] = ht22;
 
-        for(int i=0; i<22; i++){
-            if (!clicked[i].equals("")){
+        for (int i = 0; i < 22; i++) {
+            if (!clicked[i].equals("")) {
                 buttons[i].setTag("isClicked");
                 buttons[i].setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
             }
@@ -128,10 +128,10 @@ public class AddHashTagActivity extends AppCompatActivity {
 
         Arrays.fill(hashTaglist, "");
         Arrays.fill(optionHashTagList, "");
-        final List<String> finallist= new ArrayList<>();
+        final List<String> finallist = new ArrayList<>();
         final List<String> optionFinalList = new ArrayList<>();
-        optionHashTagRecyclerView =findViewById(R.id.optionHashTagRecyclerView);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.HORIZONTAL,false);
+        optionHashTagRecyclerView = findViewById(R.id.optionHashTagRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false);
         optionHashTagRecyclerView.setLayoutManager(layoutManager);
         PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
         optionHashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20));
@@ -140,36 +140,36 @@ public class AddHashTagActivity extends AppCompatActivity {
         plusHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=0; i<22; i++){
-                    if (!clicked[i].isEmpty()){
+                for (int i = 0; i < 22; i++) {
+                    if (!clicked[i].isEmpty()) {
                         PostHashTagParams postHashTagParam = new PostHashTagParams();
                         postHashTagParam.setHashTagName(clicked[i]);
                         postHashTagParams.add(postHashTagParam);
                     }
                 }
-                for (int i=0;i<hashTaglist.length;i++){
-                    if (!clicked[i].isEmpty()){
-                        if (hashTaglist[i]==""){
-                            hashTaglist[i]=clicked[i];
+                for (int i = 0; i < hashTaglist.length; i++) {
+                    if (!clicked[i].isEmpty()) {
+                        if (hashTaglist[i] == "") {
+                            hashTaglist[i] = clicked[i];
                         }
                     }
                 }
-                Collections.addAll(finallist,hashTaglist);
-                for (int i=21;i>=0;i--){
-                    if (finallist.get(i)==""){
+                Collections.addAll(finallist, hashTaglist);
+                for (int i = 21; i >= 0; i--) {
+                    if (finallist.get(i) == "") {
                         finallist.remove(i);
                     }
                 }
-                Collections.addAll(optionFinalList,optionHashTagList);
-                for (int i=9;i>=0;i--){
-                    if (optionFinalList.get(i)==""){
-                       optionFinalList.remove(i);
+                Collections.addAll(optionFinalList, optionHashTagList);
+                for (int i = 9; i >= 0; i--) {
+                    if (optionFinalList.get(i) == "") {
+                        optionFinalList.remove(i);
                     }
                 }
                 intent.putExtra("postHashTagParams", (Serializable) postHashTagParams);
                 intent.putExtra("hashTagList", (Serializable) finallist);
-                intent.putExtra("optionHashTagList",(Serializable)optionFinalList);
-                setResult(3,intent);
+                intent.putExtra("optionHashTagList", (Serializable) optionFinalList);
+                setResult(3, intent);
                 finish();
             }
         });
@@ -184,7 +184,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                     if (!editText.getText().toString().equals("")) {
                         optionHashTag = editText.getText().toString();
                         for (int i = 0; i < optionHashTagList.length; i++) {
@@ -197,13 +197,13 @@ public class AddHashTagActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                         editText.getText().clear();
                     }
-                }else{
+                } else {
                     return false;
                 }
                 return true;
             }
         });
-        Button add_hashTag= findViewById(R.id.addHashTag);
+        Button add_hashTag = findViewById(R.id.addHashTag);
         add_hashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,25 +227,24 @@ public class AddHashTagActivity extends AppCompatActivity {
             public void onItemClick(PostWriteHashTagItemAdapter.ViewHolder holder, View view, int position) {
                 adapter.removeItem(position);
                 adapter.notifyDataSetChanged();
-                optionHashTagList[position]="";
+                optionHashTagList[position] = "";
             }
         });
 
     }
+
     //recyclerview 간격
     public static class RecyclerViewDecoration extends RecyclerView.ItemDecoration {
 
         private final int divRight;
 
-        public RecyclerViewDecoration(int divRight)
-        {
+        public RecyclerViewDecoration(int divRight) {
 
             this.divRight = divRight;
         }
 
         @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
-        {
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
             outRect.right = divRight;
         }
@@ -254,21 +253,20 @@ public class AddHashTagActivity extends AppCompatActivity {
     public void ClickEvent(View view) {
         Button button = (Button) view;
 
-        if(button.getTag() == "isClicked"){
+        if (button.getTag() == "isClicked") {
             button.setTag("");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag_non));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
-            clicked[id-1] = "";
-        }
-        else{
+            clicked[id - 1] = "";
+        } else {
             button.setTag("isClicked");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
-            clicked[id-1] = button.getText().toString();
+            clicked[id - 1] = button.getText().toString();
         }
     }
 }

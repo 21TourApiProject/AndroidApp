@@ -23,7 +23,7 @@ public class TouristPoint {
     @SerializedName("restDate")
     private String restDate; //휴무일(관광지)
     @SerializedName("expGuide")
-    private String expGuide ; //체험안내(관광지)
+    private String expGuide; //체험안내(관광지)
     @SerializedName("parking")
     private String parking; //주차시설(관광지)
     @SerializedName("chkPet")
@@ -37,7 +37,10 @@ public class TouristPoint {
     @SerializedName("overviewSim")
     private String overviewSim; //한줄개요
 
-    public TouristPoint(){};
+    public TouristPoint() {
+    }
+
+    ;
 
     public Long getContentTypeId() {
         return contentTypeId;

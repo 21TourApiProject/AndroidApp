@@ -18,29 +18,29 @@ public interface PostPageRetrofitService {
     Call<Post> getPost(@Path("postId") Long postId);
 
     @GET("post/{postId}/postImage")
-    Call<List<String>> getPostImage(@Path("postId")Long postId);
+    Call<List<String>> getPostImage(@Path("postId") Long postId);
 
     @GET("post/{observationId}/observation")
-    Call<Observation> getObservation(@Path("observationId")Long observationId);
+    Call<Observation> getObservation(@Path("observationId") Long observationId);
 
     @GET("postHashTagName/{postId}")
-    Call<List<String>> getPostHashTagName(@Path("postId")Long postId);
+    Call<List<String>> getPostHashTagName(@Path("postId") Long postId);
 
     @GET("postImage/{postObservePointId}")
-    Call<List<PostImage>> getRelatePostImageList(@Path("postObservePointId")Long postObservePointId);
+    Call<List<PostImage>> getRelatePostImageList(@Path("postObservePointId") Long postObservePointId);
 
     @DELETE("post/{userId}")
-    Call<Void> deletePost(@Path("userId")Long userId);
+    Call<Void> deletePost(@Path("userId") Long userId);
 
     @POST("post/main")
     Call<List<MainPost>> getMainPosts(@Body Filter filter);
 
     @GET("user/{userId}")
-    Call<User> getUser(@Path("userId")Long userId);
+    Call<User> getUser(@Path("userId") Long userId);
 
     @GET("user/{userId}/myHashTagId")
     Call<List<Long>> getMyHashTagIdList(@Path("userId") Long userId);
 
     @GET("postHashTag/{postId}")
-    Call<List<PostHashTag>> getPostHashTags(@Path("postId")Long postId);
+    Call<List<PostHashTag>> getPostHashTags(@Path("postId") Long postId);
 }

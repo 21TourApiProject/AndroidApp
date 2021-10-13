@@ -8,12 +8,15 @@ public enum Activities {
     MAP(666),
     OBSERVATION(777),
     TOURISTPOINT(888),
-    SEARCH(999)
-    ;
+    SEARCH(999);
 
     private final int value;
+
     Activities(int value) {
         this.value = value;
     }
-    public int getValue() { return value; }
+
+    public int getValue() {
+        return value;
+    }
 }

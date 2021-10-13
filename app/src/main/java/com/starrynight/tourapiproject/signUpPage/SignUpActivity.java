@@ -75,13 +75,11 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onResponse(Call<Long> call, Response<Long> response) {
                         if (response.isSuccessful()) {
                             Long result = response.body();
-                            if (result == -1L){
+                            if (result == -1L) {
                                 Toast.makeText(getApplicationContext(), "로그인 정보가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                            else if (result == -2L){
+                            } else if (result == -2L) {
                                 Toast.makeText(getApplicationContext(), "카카오 회원은 아래의 카카오 로그인을 이용해주세요.", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
+                            } else {
                                 Log.d(TAG0, "로그인 성공");
 
                                 //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
@@ -107,10 +105,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
 
                                 Log.d("test", "onClick: location clicked");
-                                if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
-                                    Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+                                if (permission == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED && permission3 == PackageManager.PERMISSION_GRANTED) {
+                                    Log.d("MyTag", "읽기,쓰기,인터넷 권한이 있습니다.");
 
-                                } else if (permission == PackageManager.PERMISSION_DENIED){
+                                } else if (permission == PackageManager.PERMISSION_DENIED) {
                                     Log.d("test", "permission denied");
                                     Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
                                     ActivityCompat.requestPermissions(SignUpActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
@@ -244,7 +242,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             asyncDialog.setMessage("기다려주세요");
             asyncDialog.show();
@@ -289,6 +287,7 @@ public class SignUpActivity extends AppCompatActivity {
         public void onSessionOpenFailed(KakaoException exception) {
             Log.e("SessionCallback :: ", "onSessionOpenFailed : " + exception.getMessage());
         }
+
         public void requestMe() {
             kakaoUserParams = new KakaoUserParams();
             UserManagement.getInstance().me(new MeV2ResponseCallback() {
@@ -325,21 +324,21 @@ public class SignUpActivity extends AppCompatActivity {
                             Log.d(TAG2, "onSuccess:get Birthday " + kakaoAccount.getBirthday());
                             kakaoUserParams.setBirthDay(kakaoAccount.getBirthday());
                         }
-                        if (kakaoAccount.getGender()!=null) {
+                        if (kakaoAccount.getGender() != null) {
                             Log.d(TAG2, "onSuccess:get Gender " + kakaoAccount.getGender());
-                            if(kakaoAccount.getGender()== Gender.FEMALE)
+                            if (kakaoAccount.getGender() == Gender.FEMALE)
                                 kakaoUserParams.setSex(true);
-                            else if (kakaoAccount.getGender()== Gender.MALE)
+                            else if (kakaoAccount.getGender() == Gender.MALE)
                                 kakaoUserParams.setSex(false);
                         }
 
                         Profile profile = kakaoAccount.getProfile();
-                        if (profile ==null){
+                        if (profile == null) {
                             Log.d(TAG2, "onSuccess:profile null ");
-                        }else{
-                            Log.d(TAG2, "onSuccess:getProfileImageUrl "+profile.getProfileImageUrl());
+                        } else {
+                            Log.d(TAG2, "onSuccess:getProfileImageUrl " + profile.getProfileImageUrl());
                             kakaoUserParams.setProfileImage(profile.getProfileImageUrl());
-                            Log.d(TAG2, "onSuccess:getNickname "+profile.getNickname());
+                            Log.d(TAG2, "onSuccess:getNickname " + profile.getNickname());
                             kakaoUserParams.setNickName(profile.getNickname());
                         }
                         if (email != null) {
@@ -367,11 +366,11 @@ public class SignUpActivity extends AppCompatActivity {
                         } else {
                             // 프로필 획득 불가
                         }
-                    }else{
+                    } else {
                         Log.i(TAG2, "onSuccess: kakaoAccount null");
                     }
 
-                    Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateEmail(kakaoUserParams.getEmail()) ;
+                    Call<Boolean> call = RetrofitClient.getApiService().checkDuplicateEmail(kakaoUserParams.getEmail());
                     call.enqueue(new Callback<Boolean>() {
                         @Override
                         public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -411,10 +410,10 @@ public class SignUpActivity extends AppCompatActivity {
                                             int permission3 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET);//denied면 -1
 
                                             Log.d("test", "onClick: location clicked");
-                                            if (permission == PackageManager.PERMISSION_GRANTED&&permission2 == PackageManager.PERMISSION_GRANTED&&permission3==PackageManager.PERMISSION_GRANTED) {
-                                                Log.d("MyTag","읽기,쓰기,인터넷 권한이 있습니다.");
+                                            if (permission == PackageManager.PERMISSION_GRANTED && permission2 == PackageManager.PERMISSION_GRANTED && permission3 == PackageManager.PERMISSION_GRANTED) {
+                                                Log.d("MyTag", "읽기,쓰기,인터넷 권한이 있습니다.");
 
-                                            } else if (permission == PackageManager.PERMISSION_DENIED){
+                                            } else if (permission == PackageManager.PERMISSION_DENIED) {
                                                 Log.d("test", "permission denied");
                                                 Toast.makeText(getApplicationContext(), "쓰기권한이 없습니다.", Toast.LENGTH_SHORT).show();
                                                 ActivityCompat.requestPermissions(SignUpActivity.this, WRITE_PERMISSION, PERMISSIONS_REQUEST_CODE);
@@ -423,6 +422,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             }
                                             finish();
                                         }
+
                                         @Override
                                         public void onFailure(Call<Long> call, Throwable t) {
                                             Log.e(TAG, "카카오 로그인 사용자 없음");

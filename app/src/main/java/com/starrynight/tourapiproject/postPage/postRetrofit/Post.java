@@ -46,7 +46,8 @@ public class Post {
     @SerializedName("observationId")
     Long observationId;
 
-    public Post(){}
+    public Post() {
+    }
 
     public String getOptionHashTag() {
         return optionHashTag;
@@ -123,7 +124,13 @@ public class Post {
     public Long getUserId() {
         return userId;
     }
-    public List<PostHashTag> getPostHashTags() {return postHashTags;}
-    public List<PostImage>getPostImage(){return postImages;}
+
+    public List<PostHashTag> getPostHashTags() {
+        return postHashTags;
+    }
+
+    public List<PostImage> getPostImage() {
+        return postImages;
+    }
 
 }

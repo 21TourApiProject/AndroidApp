@@ -22,7 +22,7 @@ import java.util.Collections;
 
 public class FilterFragment extends Fragment {
 
-    int[] filter = {0,0};
+    int[] filter = {0, 0};
     ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
     ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
 
@@ -32,12 +32,12 @@ public class FilterFragment extends Fragment {
     public static FilterFragment newInstance() {
         return new FilterFragment();
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_filter, container, false);
 
-        ((MainActivity)getActivity()).showOffBottom();
+        ((MainActivity) getActivity()).showOffBottom();
 
         //x버튼
         Button backFilter = v.findViewById(R.id.backFilter);
@@ -96,8 +96,8 @@ public class FilterFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", 1);
-                bundle.putIntegerArrayList("area",area);
-                bundle.putIntegerArrayList("hashTag",hashTag);
+                bundle.putIntegerArrayList("area", area);
+                bundle.putIntegerArrayList("hashTag", hashTag);
                 String keyword;
 
                 Activities fromWhere;
@@ -114,7 +114,7 @@ public class FilterFragment extends Fragment {
                         transaction.add(R.id.main_view, searchResultFragment);
                         ((MainActivity) getActivity()).setSearchResult(searchResultFragment);
                         transaction.commit();
-                        if (filterFragment!=null) {
+                        if (filterFragment != null) {
                             getFragmentManager().beginTransaction().hide(filterFragment).commit();
                         }
 
@@ -132,7 +132,7 @@ public class FilterFragment extends Fragment {
                         }
 
                     } else if (fromWhere == Activities.MAP) {
-                        bundle.putSerializable("FromWhere",Activities.FILTER);
+                        bundle.putSerializable("FromWhere", Activities.FILTER);
                         keyword = getArguments().getString("keyword");
                         bundle.putString("keyword", keyword);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -702,5 +702,5 @@ public class FilterFragment extends Fragment {
 
         return v;
     }
-    
+
 }

@@ -9,7 +9,10 @@ public class WtTodayParams {
     @SerializedName("todayWtName2")
     private String todayWtName2;
 
-    public WtTodayParams(){};
+    public WtTodayParams() {
+    }
+
+    ;
 
     public String getTodayWtName1() {
         return todayWtName1;

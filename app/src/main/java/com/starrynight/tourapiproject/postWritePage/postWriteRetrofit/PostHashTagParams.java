@@ -6,7 +6,8 @@ public class PostHashTagParams implements Serializable {
 
     private String hashTagName;
 
-    public PostHashTagParams(){}
+    public PostHashTagParams() {
+    }
 
     public void setHashTagName(String hashTagName) {
         this.hashTagName = hashTagName;
