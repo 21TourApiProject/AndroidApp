@@ -29,9 +29,12 @@ public class User {
     @SerializedName("myHashTags")
     List<MyHashTag> myHashTags;
 
-    public User(){};
+    public User() {
+    }
 
-    public Long getUserId(){
+    ;
+
+    public Long getUserId() {
         return userId;
     }
 

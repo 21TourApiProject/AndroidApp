@@ -106,7 +106,7 @@ public class PersonFragment extends Fragment {
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
-        try{
+        try {
             FileInputStream fis = getActivity().openFileInput(fileName);
             String line = new BufferedReader(new InputStreamReader(fis)).readLine();
             userId = Long.parseLong(line);
@@ -115,7 +115,8 @@ public class PersonFragment extends Fragment {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } Log.d(TAG, "userId " + userId);
+        }
+        Log.d(TAG, "userId " + userId);
 
         //닉네임, 프로필 사진을 불러오기 위한 get api
         Call<User2> call = RetrofitClient.getApiService().getUser2(userId);
@@ -125,21 +126,20 @@ public class PersonFragment extends Fragment {
                 if (response.isSuccessful()) {
                     user = response.body();
                     if (user.getProfileImage() != null) {
-                        if(user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")){
+                        if (user.getProfileImage().startsWith("http://") || user.getProfileImage().startsWith("https://")) {
                             Glide.with(getContext()).load(user.getProfileImage()).into(profileImage);
-                        }
-                        else{
+                        } else {
                             String fileName = user.getProfileImage();
                             fileName = fileName.substring(1, fileName.length() - 1);
                             Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName).into(profileImage);
                         }
                     }
                     nickName.setText(user.getNickName());
-                }
-                else {
+                } else {
                     Log.d(TAG, "사용자 정보 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<User2> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -156,16 +156,16 @@ public class PersonFragment extends Fragment {
         Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag(userId);
         call3.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response <List<String>> response) {
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
                     myHashTagResult = (ArrayList<String>) response.body();
                     ArrayList<String> three = new ArrayList<>();
 
-                    if (myHashTagResult.size() > 3){
-                        for (int i =0;i<3;i++){
+                    if (myHashTagResult.size() > 3) {
+                        for (int i = 0; i < 3; i++) {
                             three.add(myHashTagResult.get(i));
                         }
-                    }else{
+                    } else {
                         three = myHashTagResult;
                     }
 
@@ -175,6 +175,7 @@ public class PersonFragment extends Fragment {
                     Log.d(TAG, "사용자 해시태그 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -203,42 +204,42 @@ public class PersonFragment extends Fragment {
                     myWishes = response.body();
                     int size = myWishes.size();
                     int i = 0;
-                    if(size == 0)
+                    if (size == 0)
                         myWishLayout.setVisibility(View.GONE);
                     else {
-                        if (myWishes.get(i).getThumbnail() != null){
+                        if (myWishes.get(i).getThumbnail() != null) {
                             String imageName = myWishes.get(i).getThumbnail();
-                            if(imageName.startsWith("http://") || imageName.startsWith("https://"))
+                            if (imageName.startsWith("http://") || imageName.startsWith("https://"))
                                 Glide.with(getContext()).load(imageName).into(myWishImage1);
                             else
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage1);
-                        } else{
+                        } else {
                             myWishImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                         }
                         myWishTitle1.setText(myWishes.get(i).getTitle());
                         i++;
 
-                        if (size > 1){
-                            if (myWishes.get(i).getThumbnail() != null){
+                        if (size > 1) {
+                            if (myWishes.get(i).getThumbnail() != null) {
                                 String imageName = myWishes.get(i).getThumbnail();
-                                if(imageName.startsWith("http://") || imageName.startsWith("https://"))
+                                if (imageName.startsWith("http://") || imageName.startsWith("https://"))
                                     Glide.with(getContext()).load(imageName).into(myWishImage2);
                                 else
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage2);
-                            } else{
+                            } else {
                                 myWishImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                             }
                             myWishTitle2.setText(myWishes.get(i).getTitle());
                             i++;
 
-                            if (size > 2){
-                                if (myWishes.get(i).getThumbnail() != null){
+                            if (size > 2) {
+                                if (myWishes.get(i).getThumbnail() != null) {
                                     String imageName = myWishes.get(i).getThumbnail();
-                                    if(imageName.startsWith("http://") || imageName.startsWith("https://"))
+                                    if (imageName.startsWith("http://") || imageName.startsWith("https://"))
                                         Glide.with(getContext()).load(imageName).into(myWishImage3);
                                     else
                                         Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + imageName).into(myWishImage3);
-                                } else{
+                                } else {
                                     myWishImage3.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                                 }
                                 myWishTitle3.setText(myWishes.get(i).getTitle());
@@ -250,6 +251,7 @@ public class PersonFragment extends Fragment {
                     Log.d(TAG, "내 찜 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<List<MyWish>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -266,7 +268,7 @@ public class PersonFragment extends Fragment {
                     myPost3s = response.body();
                     int size = myPost3s.size();
                     int i = 0;
-                    if(size == 0)
+                    if (size == 0)
                         myPostLayout.setVisibility(View.GONE);
                     else {
                         if (myPost3s.get(i).getThumbnail() != null) {
@@ -275,14 +277,14 @@ public class PersonFragment extends Fragment {
                             myPostImage1.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                         myPostTitle1.setText(myPost3s.get(i).getTitle());
                         i++;
-                        if (size > 1){
+                        if (size > 1) {
                             if (myPost3s.get(i).getThumbnail() != null) {
                                 Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage2);
                             } else
                                 myPostImage2.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.default_image));
                             myPostTitle2.setText(myPost3s.get(i).getTitle());
                             i++;
-                            if (size > 2){
+                            if (size > 2) {
                                 if (myPost3s.get(i).getThumbnail() != null) {
                                     Glide.with(getContext()).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + myPost3s.get(i).getThumbnail()).into(myPostImage3);
                                 } else
@@ -296,6 +298,7 @@ public class PersonFragment extends Fragment {
                     Log.d(TAG, "내 게시물 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<List<MyPost3>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -387,13 +390,14 @@ public class PersonFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == HAVE_TO_REFRESH){
+        if (requestCode == HAVE_TO_REFRESH) {
             Log.e(TAG, "새로고침");
             //프래그먼트 새로고침
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(this).attach(this).commit();
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

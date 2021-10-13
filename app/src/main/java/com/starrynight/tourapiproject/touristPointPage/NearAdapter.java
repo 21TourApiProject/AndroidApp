@@ -24,7 +24,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
     private Context context;
     private String[] imageUrl;
 
-    public NearAdapter(List<Near> items, String[] imageUrl, Context context){
+    public NearAdapter(List<Near> items, String[] imageUrl, Context context) {
         this.items = items;
         this.imageUrl = imageUrl;
         this.context = context;
@@ -50,7 +50,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return items == null ? 0 :items.size();
+        return items == null ? 0 : items.size();
     }
 
 
@@ -107,7 +107,7 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
         }
 
         public void bindSliderImage(String imageURL) {
-            if (imageURL != null){
+            if (imageURL != null) {
                 Glide.with(context)
                         .load(imageURL)
                         .into(nearImage);
@@ -120,14 +120,14 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             //주소를 두단어까지 줄임
             String address = item.getAddr();
             int i = address.indexOf(' ');
-            if (i != -1){
-                int j = address.indexOf(' ', i+1);
-                if(j != -1){
+            if (i != -1) {
+                int j = address.indexOf(' ', i + 1);
+                if (j != -1) {
                     nearAddr.setText(item.getAddr().substring(0, j));
-                } else{
+                } else {
                     nearAddr.setText(item.getAddr());
                 }
-            } else{
+            } else {
                 nearAddr.setText(item.getAddr());
             }
 

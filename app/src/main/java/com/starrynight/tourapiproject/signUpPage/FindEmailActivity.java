@@ -168,6 +168,7 @@ public class FindEmailActivity extends AppCompatActivity implements
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -182,21 +183,22 @@ public class FindEmailActivity extends AppCompatActivity implements
                             call.enqueue(new Callback<String>() {
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
-                                    if(response.isSuccessful()) {
+                                    if (response.isSuccessful()) {
                                         String result = response.body();
                                         if (!result.equals("none")) {
                                             Log.d(TAG, "이메일 찾기 성공");
                                             signOut();
                                             showEmail.setText("이메일: " + result);
-                                        }else{
+                                        } else {
                                             Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
                                             showEmail.setText("");
                                         }
-                                    } else{
+                                    } else {
                                         Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
                                         showEmail.setText("");
                                     }
                                 }
+
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
                                     Log.e("연결실패", t.getMessage());
@@ -227,15 +229,16 @@ public class FindEmailActivity extends AppCompatActivity implements
             //mobilePhoneNumber.setError("전화번호를 입력해주세요.");
             return false;
         }
-        if(phoneNumber.length() != 11){
+        if (phoneNumber.length() != 11) {
             Toast.makeText(getApplicationContext(), "형식에 맞는 전화번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             //mobilePhoneNumber.setError("형식에 맞는 전화번호를 입력해주세요.");
             return false;
-        }return true;
+        }
+        return true;
     }
 
     //국제 번호 붙여주는 함수
-    private String changePhoneNumber(String phoneNumber){
+    private String changePhoneNumber(String phoneNumber) {
         return "+82" + phoneNumber.substring(1);
     }
 
@@ -257,7 +260,7 @@ public class FindEmailActivity extends AppCompatActivity implements
             case R.id.verify2:
                 String code = authCode.getText().toString();
 
-                if(findEmailRealName.getText().toString().isEmpty()){
+                if (findEmailRealName.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     //findEmailRealName.setError("이름을 입력해주세요.");
                     return;
@@ -267,7 +270,7 @@ public class FindEmailActivity extends AppCompatActivity implements
                     //authCode.setError("인증번호를 입력해주세요.");
                     return;
                 }
-                if (!isSend){
+                if (!isSend) {
                     Toast.makeText(getApplicationContext(), "인증 요청을 먼저 해주세요.", Toast.LENGTH_SHORT).show();
                     //authCode.setError("인증 요청을 먼저 해주세요.");
                     return;

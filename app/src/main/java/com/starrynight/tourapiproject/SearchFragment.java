@@ -25,7 +25,6 @@ import com.starrynight.tourapiproject.searchPage.FilterFragment;
 import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.SearchFirst;
-import com.starrynight.tourapiproject.touristPointPage.TouristPointActivity;
 
 import java.util.List;
 
@@ -48,9 +47,9 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
-        ((MainActivity)getActivity()).showBottom();
+        ((MainActivity) getActivity()).showBottom();
 
-        ((MainActivity)getActivity()).setFilter(null);
+        ((MainActivity) getActivity()).setFilter(null);
 
         SearchView searchView = v.findViewById(R.id.search);
         searchView.setIconifiedByDefault(false);
@@ -60,7 +59,7 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
 
                 Bundle bundle = new Bundle(); // 번들을 통해 값 전달
-                bundle.putInt("type",2);
+                bundle.putInt("type", 2);
                 bundle.putString("keyword", query);
 
                 Fragment resultfragment = new SearchResultFragment();
@@ -120,8 +119,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        if (getArguments() != null)
-        {
+        if (getArguments() != null) {
             int type = getArguments().getInt("type");
             if (type == 0) {
                 ((MainActivity) getActivity()).showBottom();
@@ -139,7 +137,7 @@ public class SearchFragment extends Fragment {
 //                }else{hotRecyclerView.setVisibility(View.GONE);}
 //            }
 //        });
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         hotRecyclerView.setLayoutManager(linearLayoutManager);
         Post_point_item_Adapter adapter = new Post_point_item_Adapter();
         hotRecyclerView.setAdapter(adapter);
@@ -147,10 +145,10 @@ public class SearchFragment extends Fragment {
         call.enqueue(new Callback<List<SearchFirst>>() {
             @Override
             public void onResponse(Call<List<SearchFirst>> call, Response<List<SearchFirst>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<SearchFirst> searchFirsts = response.body();
-                    for (int i=0;i<searchFirsts.size();i++){
-                        adapter.addItem(new post_point_item(searchFirsts.get(i).getObservationName(),searchFirsts.get(i).getObservationImage()));
+                    for (int i = 0; i < searchFirsts.size(); i++) {
+                        adapter.addItem(new post_point_item(searchFirsts.get(i).getObservationName(), searchFirsts.get(i).getObservationImage()));
                     }
                     adapter.notifyDataSetChanged();
                     adapter.setOnItemClicklistener(new OnPostPointItemClickListener() {
@@ -161,13 +159,14 @@ public class SearchFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                }else{
-                    Log.d("hot","요즘 핫한 명소 업로드 실패");}
+                } else {
+                    Log.d("hot", "요즘 핫한 명소 업로드 실패");
+                }
             }
 
             @Override
             public void onFailure(Call<List<SearchFirst>> call, Throwable t) {
-                Log.d("hot","요즘 핫한 명소 인터넷 오류");
+                Log.d("hot", "요즘 핫한 명소 인터넷 오류");
             }
         });
 
@@ -182,7 +181,7 @@ public class SearchFragment extends Fragment {
 //                }else{walkRecyclerView.setVisibility(View.GONE);}
 //            }
 //        });
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         walkRecyclerView.setLayoutManager(linearLayoutManager2);
         Post_point_item_Adapter adapter2 = new Post_point_item_Adapter();
         walkRecyclerView.setAdapter(adapter2);
@@ -190,10 +189,10 @@ public class SearchFragment extends Fragment {
         call2.enqueue(new Callback<List<SearchFirst>>() {
             @Override
             public void onResponse(Call<List<SearchFirst>> call, Response<List<SearchFirst>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<SearchFirst> searchFirsts = response.body();
-                    for (int i=0;i<searchFirsts.size();i++){
-                        adapter2.addItem(new post_point_item(searchFirsts.get(i).getObservationName(),searchFirsts.get(i).getObservationImage()));
+                    for (int i = 0; i < searchFirsts.size(); i++) {
+                        adapter2.addItem(new post_point_item(searchFirsts.get(i).getObservationName(), searchFirsts.get(i).getObservationImage()));
                     }
                     adapter2.notifyDataSetChanged();
                     adapter2.setOnItemClicklistener(new OnPostPointItemClickListener() {
@@ -204,13 +203,14 @@ public class SearchFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                }else{
-                    Log.d("walk","뚜벅이를 위한 명소 업로드 실패");}
+                } else {
+                    Log.d("walk", "뚜벅이를 위한 명소 업로드 실패");
+                }
             }
 
             @Override
             public void onFailure(Call<List<SearchFirst>> call, Throwable t) {
-                Log.d("walk","뚜벅이를 위한 명소 인터넷 오류");
+                Log.d("walk", "뚜벅이를 위한 명소 인터넷 오류");
             }
         });
 
@@ -224,7 +224,7 @@ public class SearchFragment extends Fragment {
 //                }else{cityRecyclerView.setVisibility(View.GONE);}
 //            }
 //        });
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         cityRecyclerView.setLayoutManager(linearLayoutManager3);
         Post_point_item_Adapter adapter3 = new Post_point_item_Adapter();
         cityRecyclerView.setAdapter(adapter3);
@@ -232,10 +232,10 @@ public class SearchFragment extends Fragment {
         call3.enqueue(new Callback<List<SearchFirst>>() {
             @Override
             public void onResponse(Call<List<SearchFirst>> call, Response<List<SearchFirst>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<SearchFirst> searchFirsts = response.body();
-                    for (int i=0;i<searchFirsts.size();i++){
-                        adapter3.addItem(new post_point_item(searchFirsts.get(i).getObservationName(),searchFirsts.get(i).getObservationImage()));
+                    for (int i = 0; i < searchFirsts.size(); i++) {
+                        adapter3.addItem(new post_point_item(searchFirsts.get(i).getObservationName(), searchFirsts.get(i).getObservationImage()));
                     }
                     adapter3.notifyDataSetChanged();
                     adapter3.setOnItemClicklistener(new OnPostPointItemClickListener() {
@@ -246,13 +246,14 @@ public class SearchFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                }else{
-                    Log.d("city","도심 속 명소 업로드 실패");}
+                } else {
+                    Log.d("city", "도심 속 명소 업로드 실패");
+                }
             }
 
             @Override
             public void onFailure(Call<List<SearchFirst>> call, Throwable t) {
-                Log.d("city","도심 속 명소 인터넷 오류");
+                Log.d("city", "도심 속 명소 인터넷 오류");
             }
         });
 
@@ -266,7 +267,7 @@ public class SearchFragment extends Fragment {
 //                }else{hideRecyclerView.setVisibility(View.GONE);}
 //            }
 //        });
-        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         hideRecyclerView.setLayoutManager(linearLayoutManager4);
         Post_point_item_Adapter adapter4 = new Post_point_item_Adapter();
         hideRecyclerView.setAdapter(adapter4);
@@ -274,10 +275,10 @@ public class SearchFragment extends Fragment {
         call4.enqueue(new Callback<List<SearchFirst>>() {
             @Override
             public void onResponse(Call<List<SearchFirst>> call, Response<List<SearchFirst>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<SearchFirst> searchFirsts = response.body();
-                    for (int i=0;i<searchFirsts.size();i++){
-                        adapter4.addItem(new post_point_item(searchFirsts.get(i).getObservationName(),searchFirsts.get(i).getObservationImage()));
+                    for (int i = 0; i < searchFirsts.size(); i++) {
+                        adapter4.addItem(new post_point_item(searchFirsts.get(i).getObservationName(), searchFirsts.get(i).getObservationImage()));
                     }
                     adapter4.notifyDataSetChanged();
                     adapter4.setOnItemClicklistener(new OnPostPointItemClickListener() {
@@ -288,13 +289,14 @@ public class SearchFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                }else{
-                    Log.d("hide","숨겨진 명소 업로드 실패");}
+                } else {
+                    Log.d("hide", "숨겨진 명소 업로드 실패");
+                }
             }
 
             @Override
             public void onFailure(Call<List<SearchFirst>> call, Throwable t) {
-                Log.d("hide","숨겨진 명소 인터넷 오류");
+                Log.d("hide", "숨겨진 명소 인터넷 오류");
             }
         });
         LinearLayout instaLinear = v.findViewById(R.id.instalinearlayout);
@@ -307,7 +309,7 @@ public class SearchFragment extends Fragment {
 //                }else{instaRecyclerView.setVisibility(View.GONE);}
 //            }
 //        });
-        LinearLayoutManager linearLayoutManager5 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager5 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         instaRecyclerView.setLayoutManager(linearLayoutManager5);
         Post_point_item_Adapter adapter5 = new Post_point_item_Adapter();
         instaRecyclerView.setAdapter(adapter5);
@@ -315,10 +317,10 @@ public class SearchFragment extends Fragment {
         call5.enqueue(new Callback<List<SearchFirst>>() {
             @Override
             public void onResponse(Call<List<SearchFirst>> call, Response<List<SearchFirst>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<SearchFirst> searchFirsts = response.body();
-                    for (int i=0;i<searchFirsts.size();i++){
-                        adapter5.addItem(new post_point_item(searchFirsts.get(i).getObservationName(),searchFirsts.get(i).getObservationImage()));
+                    for (int i = 0; i < searchFirsts.size(); i++) {
+                        adapter5.addItem(new post_point_item(searchFirsts.get(i).getObservationName(), searchFirsts.get(i).getObservationImage()));
                     }
                     adapter5.notifyDataSetChanged();
                     adapter5.setOnItemClicklistener(new OnPostPointItemClickListener() {
@@ -329,13 +331,14 @@ public class SearchFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                }else{
-                    Log.d("insta","인스타 감성 명소 업로드 실패");}
+                } else {
+                    Log.d("insta", "인스타 감성 명소 업로드 실패");
+                }
             }
 
             @Override
             public void onFailure(Call<List<SearchFirst>> call, Throwable t) {
-                Log.d("insta","인스타 감성 명소 인터넷 오류");
+                Log.d("insta", "인스타 감성 명소 인터넷 오류");
             }
         });
 
@@ -349,7 +352,7 @@ public class SearchFragment extends Fragment {
 //                }else{campRecyclerView.setVisibility(View.GONE);}
 //            }
 //        });
-        LinearLayoutManager linearLayoutManager6 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager6 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         campRecyclerView.setLayoutManager(linearLayoutManager6);
         Post_point_item_Adapter adapter6 = new Post_point_item_Adapter();
         campRecyclerView.setAdapter(adapter6);
@@ -357,10 +360,10 @@ public class SearchFragment extends Fragment {
         call6.enqueue(new Callback<List<SearchFirst>>() {
             @Override
             public void onResponse(Call<List<SearchFirst>> call, Response<List<SearchFirst>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<SearchFirst> searchFirsts = response.body();
-                    for (int i=0;i<searchFirsts.size();i++){
-                        adapter6.addItem(new post_point_item(searchFirsts.get(i).getObservationName(),searchFirsts.get(i).getObservationImage()));
+                    for (int i = 0; i < searchFirsts.size(); i++) {
+                        adapter6.addItem(new post_point_item(searchFirsts.get(i).getObservationName(), searchFirsts.get(i).getObservationImage()));
                     }
                     adapter6.notifyDataSetChanged();
                     adapter6.setOnItemClicklistener(new OnPostPointItemClickListener() {
@@ -371,13 +374,14 @@ public class SearchFragment extends Fragment {
                             startActivity(intent);
                         }
                     });
-                }else{
-                    Log.d("camp","캠핑족 명소 업로드 실패");}
+                } else {
+                    Log.d("camp", "캠핑족 명소 업로드 실패");
+                }
             }
 
             @Override
             public void onFailure(Call<List<SearchFirst>> call, Throwable t) {
-                Log.d("camp","캠핑족 명소 인터넷 오류");
+                Log.d("camp", "캠핑족 명소 인터넷 오류");
             }
         });
 

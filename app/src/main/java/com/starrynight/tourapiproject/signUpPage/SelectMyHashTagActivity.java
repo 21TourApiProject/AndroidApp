@@ -50,19 +50,19 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
         hashtag = (ArrayList<String>) intent.getSerializableExtra("hashtag"); //전 페이지에서 받아온 사용자 해시태그
 
-        for(int i=0; i<22; i++){
-            clicked[i]="";
+        for (int i = 0; i < 22; i++) {
+            clicked[i] = "";
         }
 
-        if(hashtag != null){
+        if (hashtag != null) {
             int i = 0;
-            for (String name : hashTagName){
+            for (String name : hashTagName) {
                 hashTagMap.put(name, i);
                 i++;
             }
 
-            for (String h : hashtag){
-                clicked[hashTagMap.get(h)]=h;
+            for (String h : hashtag) {
+                clicked[hashTagMap.get(h)] = h;
             }
         }
 
@@ -111,8 +111,8 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
         buttons[20] = ht21;
         buttons[21] = ht22;
 
-        for(int i=0; i<22; i++){
-            if (!clicked[i].equals("")){
+        for (int i = 0; i < 22; i++) {
+            if (!clicked[i].equals("")) {
                 buttons[i].setTag("isClicked");
                 buttons[i].setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
             }
@@ -120,7 +120,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
 
         Button selectHashTagBack = findViewById(R.id.selectHashTagBack); //뒤로가기
 
-        if (email == null){
+        if (email == null) {
             selectHashTagBack.setVisibility(View.VISIBLE);
         }
         selectHashTagBack.setOnClickListener(new View.OnClickListener() {
@@ -135,33 +135,33 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                for(int i=0; i<22; i++){
-                    if (!clicked[i].isEmpty()){
+                for (int i = 0; i < 22; i++) {
+                    if (!clicked[i].isEmpty()) {
                         MyHashTagParams myHashTagParam = new MyHashTagParams();
                         myHashTagParam.setHashTagName(clicked[i]);
                         myHashTagParams.add(myHashTagParam);
                     }
                 }
                 //마이페이지에서 넘어왔다면
-                if(userId != null){
+                if (userId != null) {
                     Call<Void> call = RetrofitClient.getApiService().changeMyHashTag(userId, myHashTagParams);
                     call.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.isSuccessful()) {
                                 finish();
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.e("연결실패", t.getMessage());
                         }
                     });
 
-                } else{
+                } else {
                     //선호 해시태그 입력을 위한 post api
                     Call<Long> call = RetrofitClient.getApiService().createMyHashTag(email, myHashTagParams);
                     call.enqueue(new Callback<Long>() {
@@ -174,7 +174,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                                     //앱 내부 저장소에 userId란 이름으로 사용자 id 저장
                                     String fileName = "userId";
                                     String userId = result.toString();
-                                    try{
+                                    try {
                                         FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
                                         fos.write(userId.getBytes());
                                         fos.close();
@@ -183,10 +183,9 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                    if (email == null){
+                                    if (email == null) {
                                         finish();
-                                    }
-                                    else{
+                                    } else {
                                         Intent intent = new Intent(SelectMyHashTagActivity.this, MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP); //액티비티 스택제거
                                         startActivity(intent);
@@ -199,6 +198,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "오류가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Long> call, Throwable t) {
                             Log.e("연결실패", t.getMessage());
@@ -213,26 +213,26 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
     public void clickEvent(View view) {
         Button button = (Button) view;
 
-        if(button.getTag() == "isClicked"){
+        if (button.getTag() == "isClicked") {
             button.setTag("");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag_non));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
-            clicked[id-1] = "";
-        }
-        else{
+            clicked[id - 1] = "";
+        } else {
             button.setTag("isClicked");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
-            clicked[id-1] = button.getText().toString();
+            clicked[id - 1] = button.getText().toString();
         }
     }
 
-    @Override public void onBackPressed() {
-        if (email == null){
+    @Override
+    public void onBackPressed() {
+        if (email == null) {
             finish();
         }
     }

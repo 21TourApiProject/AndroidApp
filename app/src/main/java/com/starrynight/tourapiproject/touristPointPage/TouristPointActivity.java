@@ -55,7 +55,7 @@ import retrofit2.Response;
 public class TouristPointActivity extends AppCompatActivity {
     Long userId;
     Boolean isWish;
-    BalloonObject balloonObject= new BalloonObject();
+    BalloonObject balloonObject = new BalloonObject();
 
     private static final int NEAR = 101;
     private static final String TAG = "TouristPoint";
@@ -84,13 +84,13 @@ public class TouristPointActivity extends AppCompatActivity {
     List<Near> nearResult;
 
     public String daumSearchWord;
-    private static final String API_KEY= "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
+    private static final String API_KEY = "KakaoAK 8e9d0698ed2d448e4b441ff77ccef198";
     List<SearchData.Document> Listdocument;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView (R.layout.activity_tourist_point);
+        setContentView(R.layout.activity_tourist_point);
 
         Intent intent = getIntent();
         contentId = (Long) intent.getSerializableExtra("contentId"); //전 페이지에서 받아온 contentId
@@ -99,7 +99,7 @@ public class TouristPointActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         todayDate = sdf.format(cal.getTime());
-        Log.d(TAG, "오늘날짜 : "+ todayDate);
+        Log.d(TAG, "오늘날짜 : " + todayDate);
 
         //혼잡도 구하기
         CongestionThread thread = new CongestionThread();
@@ -110,7 +110,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpCongestion = findViewById(R.id.tpCongestion);
         tpTitle = findViewById(R.id.tpTitle);
         cat3Name = findViewById(R.id.cat3Name);
-        overview= findViewById(R.id.overview);
+        overview = findViewById(R.id.overview);
         overviewPop = findViewById(R.id.overviewPop);
         tpAddress = findViewById(R.id.tpAddress);
         tpTel = findViewById(R.id.tpTel);
@@ -128,7 +128,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpParkingFood = findViewById(R.id.tpParkingFood);
         nearText = findViewById(R.id.nearText);
         nearLayout = findViewById(R.id.nearLayout);
-        daumMore=findViewById(R.id.daumMore);
+        daumMore = findViewById(R.id.daumMore);
         congestionLayout = findViewById(R.id.congestionLayout);
         addressLayout = findViewById(R.id.addressLayout);
         telLayout = findViewById(R.id.telLayout);
@@ -156,7 +156,7 @@ public class TouristPointActivity extends AppCompatActivity {
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
-        try{
+        try {
             FileInputStream fis = this.openFileInput(fileName);
             String line = new BufferedReader(new InputStreamReader(fis)).readLine();
             userId = Long.parseLong(line);
@@ -173,16 +173,17 @@ public class TouristPointActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {
-                    if (response.body()){
+                    if (response.body()) {
                         isWish = true;
                         tpWish.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
-                    } else{
+                    } else {
                         isWish = false;
                     }
                 } else {
                     Log.e(TAG, "내 찜 조회하기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -193,7 +194,7 @@ public class TouristPointActivity extends AppCompatActivity {
         tpWish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isWish){ //찜 안한 상태일때
+                if (!isWish) { //찜 안한 상태일때
                     Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, contentId, 1);
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -207,12 +208,13 @@ public class TouristPointActivity extends AppCompatActivity {
                                 Log.e(TAG, "관광지 찜 실패");
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.e("연결실패", t.getMessage());
                         }
                     });
-                } else{
+                } else {
                     Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, contentId, 1);
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -225,6 +227,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                 Log.e(TAG, "관광지 찜 삭제 실패");
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.e("연결실패", t.getMessage());
@@ -250,7 +253,7 @@ public class TouristPointActivity extends AppCompatActivity {
             public void onResponse(Call<Long> call, Response<Long> response) {
                 if (response.isSuccessful()) {
                     Long result = response.body();
-                    if (result == 12L){
+                    if (result == 12L) {
                         Log.d(TAG, "타입 : 관광지");
                         Call<TouristPoint> call1 = RetrofitClient.getApiService().getTouristPointData(contentId);
                         call1.enqueue(new Callback<TouristPoint>() {
@@ -268,14 +271,14 @@ public class TouristPointActivity extends AppCompatActivity {
                                     //주소를 두단어까지 줄임
                                     String address = tpData.getAddr();
                                     int i = address.indexOf(' ');
-                                    if (i != -1){
-                                        int j = address.indexOf(' ', i+1);
-                                        if(j != -1){
+                                    if (i != -1) {
+                                        int j = address.indexOf(' ', i + 1);
+                                        if (j != -1) {
                                             balloonObject.setAddress(address.substring(0, j));
-                                        } else{
+                                        } else {
                                             balloonObject.setAddress(address);
                                         }
-                                    } else{
+                                    } else {
                                         balloonObject.setAddress(address);
                                     }
 
@@ -283,7 +286,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setIntro(tpData.getOverviewSim());
 
                                     //이미지
-                                    if (tpData.getFirstImage() != null){
+                                    if (tpData.getFirstImage() != null) {
                                         balloonObject.setImage(tpData.getFirstImage());
                                         Glide.with(getApplicationContext()).load(tpData.getFirstImage()).into(slider);
                                     }
@@ -298,20 +301,20 @@ public class TouristPointActivity extends AppCompatActivity {
                                     daumRecyclerview.setHasFixedSize(true);
                                     Listdocument = new ArrayList<>();
 
-                                    SearchOpenApi openApi= SearchRetrofitFactory.create();
-                                    openApi.getData(daumSearchWord,"accuracy",1, 3, API_KEY)
+                                    SearchOpenApi openApi = SearchRetrofitFactory.create();
+                                    openApi.getData(daumSearchWord, "accuracy", 1, 3, API_KEY)
                                             .enqueue(new Callback<SearchData>() {
                                                 @Override
                                                 public void onResponse(Call<SearchData> call, Response<SearchData> response) {
                                                     if (response.isSuccessful()) {
-                                                        Log.d(TAG,"다음 검색 성공");
+                                                        Log.d(TAG, "다음 검색 성공");
                                                         Listdocument = response.body().Searchdocuments;
                                                         SearchAdapter searchAdapter = new SearchAdapter(Listdocument);
                                                         daumRecyclerview.setAdapter(searchAdapter);
                                                         searchAdapter.setOnItemClickListener(new OnSearchItemClickListener() {
                                                             @Override
                                                             public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
-                                                                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
+                                                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Listdocument.get(position).getUrl()));
                                                                 startActivity(intent);
                                                             }
                                                         });
@@ -319,9 +322,10 @@ public class TouristPointActivity extends AppCompatActivity {
                                                         Log.e(TAG, "다음 검색 실패");
                                                     }
                                                 }
+
                                                 @Override
                                                 public void onFailure(Call<SearchData> call, Throwable t) {
-                                                    Log.e(TAG,"연결실패");
+                                                    Log.e(TAG, "연결실패");
                                                 }
                                             });
 
@@ -341,55 +345,55 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                     cat3Name.setText(tpData.getCat3Name());
 
-                                    if (tpData.getOverview() != null){
+                                    if (tpData.getOverview() != null) {
                                         String tpO = tpData.getOverview();
                                         if (tpO.length() > 120)
-                                            overview.setText(tpO.substring(0,120) + "...");
-                                        else{
+                                            overview.setText(tpO.substring(0, 120) + "...");
+                                        else {
                                             overview.setText(tpO);
                                             overviewPop.setVisibility(View.GONE);
                                         }
                                         overviewFull = tpO;
-                                    }else{
+                                    } else {
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getAddr() != null){
+                                    if (tpData.getAddr() != null) {
                                         tpAddress.setText(tpData.getAddr());
-                                    }else{
+                                    } else {
                                         addressLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getTel() != null){
+                                    if (tpData.getTel() != null) {
                                         tpTel.setText(tpData.getTel());
-                                    }else{
+                                    } else {
                                         telLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getUseTime() != null){
+                                    if (tpData.getUseTime() != null) {
                                         tpUseTime.setText(tpData.getUseTime());
-                                    }else{
+                                    } else {
                                         useTimeLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getRestDate() != null){
+                                    if (tpData.getRestDate() != null) {
                                         tpRestDate.setText(tpData.getRestDate());
-                                    }else{
+                                    } else {
                                         restDateLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getExpGuide() != null){
+                                    if (tpData.getExpGuide() != null) {
                                         tpExpGuide.setText(tpData.getExpGuide());
-                                    }else{
+                                    } else {
                                         expGuideLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getParking() != null){
+                                    if (tpData.getParking() != null) {
                                         tpParking.setText(tpData.getParking());
-                                    }else{
+                                    } else {
                                         parkingLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getChkPet() != null){
+                                    if (tpData.getChkPet() != null) {
                                         tpChkPet.setText(tpData.getChkPet());
-                                    }else{
+                                    } else {
                                         chkPetLayout.setVisibility(View.GONE);
                                     }
-                                    if (tpData.getHomePage() != null){
+                                    if (tpData.getHomePage() != null) {
                                         String cleanHomepage = tpData.getHomePage();
                                         tpHomePage.setText(cleanHomepage);
                                         tpHomePage.setOnClickListener(new View.OnClickListener() {
@@ -399,7 +403,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                             }
                                         });
-                                    }else{
+                                    } else {
                                         homePageLayout.setVisibility(View.GONE);
                                     }
 
@@ -407,13 +411,13 @@ public class TouristPointActivity extends AppCompatActivity {
                                     Log.e(TAG, "관광지 타입 불러오기 실패");
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<TouristPoint> call, Throwable t) {
                                 Log.e("연결실패", t.getMessage());
                             }
                         });
-                    }
-                    else if(result == 39L){
+                    } else if (result == 39L) {
                         Log.d(TAG, "타입 : 음식");
                         Call<Food> call2 = RetrofitClient.getApiService().getFoodData(contentId);
                         call2.enqueue(new Callback<Food>() {
@@ -431,14 +435,14 @@ public class TouristPointActivity extends AppCompatActivity {
                                     //주소를 두단어까지 줄임
                                     String address = foodData.getAddr();
                                     int i = address.indexOf(' ');
-                                    if (i != -1){
-                                        int j = address.indexOf(' ', i+1);
-                                        if(j != -1){
+                                    if (i != -1) {
+                                        int j = address.indexOf(' ', i + 1);
+                                        if (j != -1) {
                                             balloonObject.setAddress(address.substring(0, j));
-                                        } else{
+                                        } else {
                                             balloonObject.setAddress(address);
                                         }
-                                    } else{
+                                    } else {
                                         balloonObject.setAddress(address);
                                     }
 
@@ -446,7 +450,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     balloonObject.setIntro(foodData.getOverviewSim());
 
                                     //이미지
-                                    if (foodData.getFirstImage() != null){
+                                    if (foodData.getFirstImage() != null) {
                                         balloonObject.setImage(foodData.getFirstImage());
                                         Glide.with(getApplicationContext()).load(foodData.getFirstImage()).into(slider);
                                     }
@@ -460,19 +464,19 @@ public class TouristPointActivity extends AppCompatActivity {
                                     daumRecyclerview.setHasFixedSize(true);
                                     Listdocument = new ArrayList<>();
 
-                                    SearchOpenApi openApi= SearchRetrofitFactory.create();
-                                    openApi.getData(daumSearchWord,"accuracy",1, 3, API_KEY)
+                                    SearchOpenApi openApi = SearchRetrofitFactory.create();
+                                    openApi.getData(daumSearchWord, "accuracy", 1, 3, API_KEY)
                                             .enqueue(new Callback<SearchData>() {
                                                 @Override
                                                 public void onResponse(Call<SearchData> call, Response<SearchData> response) {
-                                                    Log.d("my tag","성공");
+                                                    Log.d("my tag", "성공");
                                                     Listdocument = response.body().Searchdocuments;
                                                     SearchAdapter adapter1 = new SearchAdapter(Listdocument);
                                                     daumRecyclerview.setAdapter(adapter1);
                                                     adapter1.setOnItemClickListener(new OnSearchItemClickListener() {
                                                         @Override
                                                         public void onItemClick(SearchAdapter.ViewHolder holder, View view, int position) {
-                                                            Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(Listdocument.get(position).getUrl()));
+                                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Listdocument.get(position).getUrl()));
                                                             startActivity(intent);
                                                         }
                                                     });
@@ -480,7 +484,7 @@ public class TouristPointActivity extends AppCompatActivity {
 
                                                 @Override
                                                 public void onFailure(Call<SearchData> call, Throwable t) {
-                                                    Log.e("my tag","에러");
+                                                    Log.e("my tag", "에러");
                                                 }
                                             });
 
@@ -493,64 +497,64 @@ public class TouristPointActivity extends AppCompatActivity {
                                             } catch (UnsupportedEncodingException e) {
                                                 e.printStackTrace();
                                             }
-                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://search.daum.net/search?w=blog&f=section&m=&SA=daumsec&lpp=10&nil_profile=vsearch&nil_src=blog&q="+encode));
+                                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://search.daum.net/search?w=blog&f=section&m=&SA=daumsec&lpp=10&nil_profile=vsearch&nil_src=blog&q=" + encode));
                                             startActivity(intent);
                                         }
                                     });
 
                                     cat3Name.setText(foodData.getCat3Name());
 
-                                    if (foodData.getOverview() != null){
+                                    if (foodData.getOverview() != null) {
                                         String foodO = foodData.getOverview();
                                         if (foodO.length() > 120)
-                                            overview.setText(foodO.substring(0,120) + "...");
+                                            overview.setText(foodO.substring(0, 120) + "...");
                                         else {
                                             overview.setText(foodO);
                                             overviewPop.setVisibility(View.GONE);
                                         }
                                         overviewFull = foodO;
-                                    }else{
+                                    } else {
                                         overview.setVisibility(View.GONE);
                                         overviewPop.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getAddr() != null){
+                                    if (foodData.getAddr() != null) {
                                         tpAddress.setText(foodData.getAddr());
-                                    }else{
+                                    } else {
                                         addressLayout.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getTel() != null){
+                                    if (foodData.getTel() != null) {
                                         tpTel.setText(foodData.getTel());
-                                    }else{
+                                    } else {
                                         telLayout.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getOpenTimeFood() != null){
+                                    if (foodData.getOpenTimeFood() != null) {
                                         tpOpenTimeFood.setText(foodData.getOpenTimeFood());
-                                    }else{
+                                    } else {
                                         openTimeFoodLayout.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getRestDateFood() != null){
+                                    if (foodData.getRestDateFood() != null) {
                                         tpRestDateFood.setText(foodData.getRestDateFood());
-                                    }else{
+                                    } else {
                                         restDateFoodLayout.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getFirstMenu() != null){
+                                    if (foodData.getFirstMenu() != null) {
                                         tpFirstMenu.setText(foodData.getFirstMenu());
-                                    }else{
+                                    } else {
                                         firstMenuLayout.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getTreatMenu() != null){
+                                    if (foodData.getTreatMenu() != null) {
                                         tpTreatMenu.setText(foodData.getTreatMenu());
-                                    }else{
+                                    } else {
                                         treatMenuLayout.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getPacking() != null){
+                                    if (foodData.getPacking() != null) {
                                         tpPacking.setText(foodData.getPacking());
-                                    }else{
+                                    } else {
                                         packingLayout.setVisibility(View.GONE);
                                     }
-                                    if (foodData.getParkingFood() != null){
+                                    if (foodData.getParkingFood() != null) {
                                         tpParkingFood.setText(foodData.getParkingFood());
-                                    }else{
+                                    } else {
                                         parkingFoodLayout.setVisibility(View.GONE);
                                     }
 
@@ -558,6 +562,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                     Log.e(TAG, "음식 타입 불러오기 실패");
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<Food> call, Throwable t) {
                                 Log.e("연결실패", t.getMessage());
@@ -568,6 +573,7 @@ public class TouristPointActivity extends AppCompatActivity {
                     Log.e(TAG, "관광지 정보 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<Long> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -596,6 +602,7 @@ public class TouristPointActivity extends AppCompatActivity {
                     Log.e(TAG, "관광지 해시태그 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<List<String>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -610,18 +617,18 @@ public class TouristPointActivity extends AppCompatActivity {
         moreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(moreInfo.getText() == "+ 더 보기"){
+                if (moreInfo.getText() == "+ 더 보기") {
                     moreInfo.setText("- 축소하기");
-                    if (isTp){
+                    if (isTp) {
                         tpInfo2.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         foodInfo2.setVisibility(View.VISIBLE);
                     }
-                } else{
+                } else {
                     moreInfo.setText("+ 더 보기");
-                    if (isTp){
+                    if (isTp) {
                         tpInfo2.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         foodInfo2.setVisibility(View.GONE);
                     }
                 }
@@ -652,19 +659,19 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     nearResult = response.body();
                     int len = nearResult.size();
-                    if (len == 0){
+                    if (len == 0) {
                         nearText.setVisibility(View.GONE);
                         nearLayout.setVisibility(View.GONE);
                         return;
                     }
                     String[] nearImages = new String[len];
-                    for(int i=0; i<len; i++){
+                    for (int i = 0; i < len; i++) {
                         nearImages[i] = nearResult.get(i).getFirstImage();
                     }
 
-                    NearAdapter nearAdapter = new NearAdapter(nearResult, nearImages,TouristPointActivity.this);
+                    NearAdapter nearAdapter = new NearAdapter(nearResult, nearImages, TouristPointActivity.this);
                     nearRecyclerview.setAdapter(nearAdapter);
-                    nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener(){
+                    nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener() {
                         @Override
                         public void onItemClick(NearAdapter.ViewHolder holder, View view, int position) {
                             Near item = nearAdapter.getItem(position);
@@ -677,6 +684,7 @@ public class TouristPointActivity extends AppCompatActivity {
                     Log.e(TAG, "주변 관광지 불러오기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<List<Near>> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -702,7 +710,7 @@ public class TouristPointActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == NEAR){
+        if (requestCode == NEAR) {
             //새로고침
             Intent intent = getIntent();
             finish();
@@ -713,7 +721,10 @@ public class TouristPointActivity extends AppCompatActivity {
     //예측혼잡도구분코드를 얻기 위한 open api 호출
     private class CongestionThread extends Thread {
         private static final String TAG = "CongestionThread";
-        public CongestionThread() {}
+
+        public CongestionThread() {
+        }
+
         public void run() {
             String key = "?ServiceKey=BdxNGWQJQFutFYE6DkjePTmerMbwG2fzioTf6sr69ecOAdLGMH4iiukF8Ex93YotSgkDOHe1VxKNOr8USSN6EQ%3D%3D"; //인증키
             String result;
@@ -728,13 +739,12 @@ public class TouristPointActivity extends AppCompatActivity {
                 JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
                 JSONObject response = (JSONObject) jsonObject.get("response");
                 JSONObject body = (JSONObject) response.get("body");
-                Long count = (Long)body.get("totalCount");
+                Long count = (Long) body.get("totalCount");
 
-                if (count == 0){
+                if (count == 0) {
                     congestionLayout.setVisibility(View.GONE);
                     Log.d(TAG, "혼잡도 데이터 없음");
-                }
-                else {
+                } else {
                     JSONObject items = (JSONObject) body.get("items");
                     JSONObject item = (JSONObject) items.get("item");
                     Long code = (Long) item.get("estiDecoDivCd");
