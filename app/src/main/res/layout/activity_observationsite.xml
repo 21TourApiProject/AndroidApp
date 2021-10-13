@@ -615,6 +615,7 @@
                             android:layout_height="90dp"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/default_image" />
                     </androidx.cardview.widget.CardView>
 
@@ -630,6 +631,7 @@
                             android:layout_height="90dp"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/default_image"
                             android:visibility="gone" />
                     </androidx.cardview.widget.CardView>
@@ -653,6 +655,7 @@
                                 android:layout_weight="1"
                                 android:adjustViewBounds="true"
                                 android:foreground="@drawable/observation__moreimage"
+                                android:scaleType="centerCrop"
                                 android:visibility="visible" />
 
                             <LinearLayout
