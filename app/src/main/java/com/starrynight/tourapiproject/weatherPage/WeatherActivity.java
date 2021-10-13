@@ -432,7 +432,7 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://www.weather.go.kr/w/index.do"));
+                intent.setData(Uri.parse("https://www.weather.go.kr/wgis-nuri/html/map.html"));
                 startActivity(intent);
             }
         });
