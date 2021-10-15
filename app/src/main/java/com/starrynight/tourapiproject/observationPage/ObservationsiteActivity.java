@@ -37,7 +37,7 @@ import com.starrynight.tourapiproject.mapPage.BalloonObject;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.CourseTouristPoint;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.Observation;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveFee;
-import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImage;
+import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.ObserveImageInfo;
 import com.starrynight.tourapiproject.observationPage.observationPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postPage.PostActivity;
 import com.starrynight.tourapiproject.postPage.postRetrofit.PostImage;
@@ -56,13 +56,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ObservationsiteActivity extends AppCompatActivity {
-    Long userId;
-    Long postId;
-    Boolean isWish;
+    private Long userId;
+    private Long postId;
+    private Boolean isWish;
 
     private static final String TAG = "observation page";
-    Observation observation;
-    List<String> observeHashTags;
+    private Observation observation;
+    private List<String> observeHashTags;
     private RecyclerHashTagAdapter recyclerHashTagAdapter;
     TextView outline;
     TextView link;
@@ -72,8 +72,9 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
     private ViewPager2 obs_slider;
     private LinearLayout obs_indicator;
+    private TextView imageSource_txt;
     private String[] obs_images;
-    private List<ObserveImage> obs_images_list;
+    private List<String> imageSources;
 
     private ViewPager2 course_slider;
     private LinearLayout course_circle_indicator;
@@ -85,15 +86,16 @@ public class ObservationsiteActivity extends AppCompatActivity {
     private List<ObserveFee> obs_fee_list;
     private String[] relatefilename = new String[3];
 
-    private BalloonObject balloonObject= new BalloonObject();   //mapfragment bundle
+
+    private BalloonObject balloonObject = new BalloonObject();   //mapfragment bundle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_observationsite);
-        relateImage1=findViewById(R.id.relateImage);
-        relateImage2=findViewById(R.id.relateImage2);
-        relateImage3=findViewById(R.id.relateImage3);
+        relateImage1 = findViewById(R.id.relateImage);
+        relateImage2 = findViewById(R.id.relateImage2);
+        relateImage3 = findViewById(R.id.relateImage3);
         relateImageFrame = findViewById(R.id.relateImageFrame);
 
         Intent intent = getIntent();
@@ -111,19 +113,27 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
 
-                    Call<List<String>> call3 = RetrofitClient.getApiService().getObserveImagePath(observationId);
-                    call3.enqueue(new Callback<List<String>>() {
-                        @Override
-                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                    TextView obs_banner = findViewById(R.id.obs_banner);
+                    obs_banner.setText(observation.getObservationName());
 
+                    Call<List<ObserveImageInfo>> call3 = RetrofitClient.getApiService().getObserveImageInfo(observationId);
+                    call3.enqueue(new Callback<List<ObserveImageInfo>>() {
+                        @Override
+                        public void onResponse(Call<List<ObserveImageInfo>> call, Response<List<ObserveImageInfo>> response) {
                             if (response.isSuccessful()) {
                                 if (!response.body().isEmpty()) {
                                     Log.d(TAG, "관측지 이미지 호출 성공");
-                                    List<String> imageList = response.body();
+                                    List<ObserveImageInfo> observeImageInfos = response.body();
+                                    List<String> imageList = new ArrayList<>();
+                                    imageSources = new ArrayList<>();
+
+                                    for (ObserveImageInfo info : observeImageInfos) {
+                                        imageList.add(info.getImage());
+                                        imageSources.add(info.getImageSource());
+                                    }
                                     obs_images = imageList.toArray(new String[imageList.size()]);
                                     balloonObject.setImage(imageList.get(0));   //map위한 bundle
 
-                                    //관측지 이미지 슬라이더 설정
                                     obs_slider = findViewById(R.id.obs_Img_slider);
                                     obs_indicator = findViewById(R.id.obs_Img_indicator);
                                     obs_slider.setAdapter(new ObserveImageSliderAdapter(ObservationsiteActivity.this, obs_images));
@@ -136,19 +146,57 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                             setObserveCurrentIndicator(position);
                                         }
                                     });
+                                    imageSource_txt = findViewById(R.id.obs_image_source);
                                     setupObserveIndicators(obs_images.length);
                                 }
-
                             } else {
                                 Log.e(TAG, "관측지 이미지 호출 실패");
                             }
+
                         }
 
                         @Override
-                        public void onFailure(Call<List<String>> call, Throwable t) {
-
+                        public void onFailure(Call<List<ObserveImageInfo>> call, Throwable t) {
+                            Log.e(TAG, "관측지 이미지 연결결 실패");
                         }
                     });
+//                    call3.enqueue(new Callback<List<String>>() {
+//                        @Override
+//                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+//
+//                            if (response.isSuccessful()) {
+//                                if (!response.body().isEmpty()) {
+//                                    Log.d(TAG, "관측지 이미지 호출 성공");
+//                                    List<String> imageList = response.body();
+//                                    obs_images = imageList.toArray(new String[imageList.size()]);
+//                                    balloonObject.setImage(imageList.get(0));   //map위한 bundle
+//
+//                                    //관측지 이미지 슬라이더 설정
+//                                    obs_slider = findViewById(R.id.obs_Img_slider);
+//                                    obs_indicator = findViewById(R.id.obs_Img_indicator);
+//                                    obs_slider.setAdapter(new ObserveImageSliderAdapter(ObservationsiteActivity.this, obs_images));
+//                                    obs_slider.setOffscreenPageLimit(10);
+//
+//                                    obs_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//                                        @Override
+//                                        public void onPageSelected(int position) {
+//                                            super.onPageSelected(position);
+//                                            setObserveCurrentIndicator(position);
+//                                        }
+//                                    });
+//                                    setupObserveIndicators(obs_images.length);
+//                                }
+//
+//                            } else {
+//                                Log.e(TAG, "관측지 이미지 호출 실패");
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<List<String>> call, Throwable t) {
+//
+//                        }
+//                    });
 
 
                     TextView name = findViewById(R.id.obs_name_txt);
@@ -171,15 +219,15 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         TextView nature_light = findViewById(R.id.obs_nature_light_txt);
                         nature_light.setText(Double.toString(observation.getLight()));
                         ImageView nature_light_icon = findViewById(R.id.obs_nature_light_icon);
-                        if(lighttxt<=1)
+                        if (lighttxt <= 1)
                             nature_light_icon.setImageResource(R.drawable.observation__light_great);
-                        else if (lighttxt>1 && lighttxt<=15)
+                        else if (lighttxt > 1 && lighttxt <= 15)
                             nature_light_icon.setImageResource(R.drawable.observation__light_good);
-                        else if(lighttxt>15 && lighttxt<=45)
+                        else if (lighttxt > 15 && lighttxt <= 45)
                             nature_light_icon.setImageResource(R.drawable.observation__light_common);
-                        else if(lighttxt>45&&lighttxt<=80)
+                        else if (lighttxt > 45 && lighttxt <= 80)
                             nature_light_icon.setImageResource(R.drawable.observation__light_bad);
-                        else if(lighttxt>80)
+                        else if (lighttxt > 80)
                             nature_light_icon.setImageResource(R.drawable.observation__light_worst);
                         TextView nature_parking = findViewById(R.id.obs_nature_parking_txt);
                         nature_parking.setText(observation.getParking());
@@ -194,15 +242,15 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         TextView light = findViewById(R.id.obs_light_txt);
                         light.setText(Double.toString(observation.getLight()));
                         ImageView light_icon = findViewById(R.id.obs_light_icon);
-                        if(lighttxt<=1)
+                        if (lighttxt <= 1)
                             light_icon.setImageResource(R.drawable.observation__light_great);
-                        else if (lighttxt>1 && lighttxt<=15)
+                        else if (lighttxt > 1 && lighttxt <= 15)
                             light_icon.setImageResource(R.drawable.observation__light_good);
-                        else if(lighttxt>15 && lighttxt<=45)
+                        else if (lighttxt > 15 && lighttxt <= 45)
                             light_icon.setImageResource(R.drawable.observation__light_common);
-                        else if(lighttxt>45&&lighttxt<=80)
+                        else if (lighttxt > 45 && lighttxt <= 80)
                             light_icon.setImageResource(R.drawable.observation__light_bad);
-                        else if(lighttxt>80)
+                        else if (lighttxt > 80)
                             light_icon.setImageResource(R.drawable.observation__light_worst);
 
                         TextView address = findViewById(R.id.obs_address_txt);
@@ -313,14 +361,14 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     //주소를 두단어까지 줄임
                     String address = observation.getAddress();
                     int i = address.indexOf(' ');
-                    if (i != -1){
-                        int j = address.indexOf(' ', i+1);
-                        if(j != -1){
+                    if (i != -1) {
+                        int j = address.indexOf(' ', i + 1);
+                        if (j != -1) {
                             balloonObject.setAddress(address.substring(0, j));
-                        } else{
+                        } else {
                             balloonObject.setAddress(address);
                         }
-                    } else{
+                    } else {
                         balloonObject.setAddress(address);
                     }
 
@@ -329,7 +377,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     //사진이랑 해쉬태그는 따로 불러와서 그거 각자 call에서 추가해야함 (아래두줄참고)
 //                    balloonObject.setHashtags(observeHashTags);   //259에 구현현
 //                    balloonObjec.setImage(이미지); //이미지지한장 129에 구현
-                   map_btn.setOnClickListener(new View.OnClickListener() {
+                    map_btn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(ObservationsiteActivity.this, MainActivity.class);
@@ -355,14 +403,14 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                 List<String> course_name_list = response.body();
 
                                 Call<List<CourseTouristPoint>> call5 = RetrofitClient.getApiService().getCourseTouristPointList(observationId);
-                                call5.enqueue(new Callback<List<CourseTouristPoint>>(){
+                                call5.enqueue(new Callback<List<CourseTouristPoint>>() {
                                     @Override
                                     public void onResponse(Call<List<CourseTouristPoint>> call, Response<List<CourseTouristPoint>> response) {
                                         if (response.isSuccessful()) {
                                             //코스 viewpager에 적용할 관광지 정보 가져오기
                                             if (response != null) {
                                                 Log.d(TAG, "관측지 코스 관광지 호출 성공");
-                                                touristPointList=response.body();
+                                                touristPointList = response.body();
 
                                                 List<String> course_names = new ArrayList<>();
                                                 for (CourseTouristPoint p : touristPointList) {
@@ -380,7 +428,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                                         if (position < observation.getCourseOrder()) {
                                                             setCourseCurrentIndicator(position);
                                                         } else {
-                                                            setCourseCurrentIndicator(position+1);
+                                                            setCourseCurrentIndicator(position + 1);
                                                         }
                                                     }
                                                 });
@@ -413,6 +461,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     Log.e(TAG, "관측지 호출 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<Observation> call, Throwable t) {
                 Log.e(TAG, "연결실패" + t.getMessage());
@@ -425,7 +474,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
         //앱 내부 저장소의 userId 데이터 읽기
         String fileName = "userId";
-        try{
+        try {
             FileInputStream fis = this.openFileInput(fileName);
             String line = new BufferedReader(new InputStreamReader(fis)).readLine();
             userId = Long.parseLong(line);
@@ -434,7 +483,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } System.out.println("userId = " + userId);
+        }
 
         //이미 찜한건지 확인
         Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, observationId, 0);
@@ -442,16 +491,17 @@ public class ObservationsiteActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful()) {
-                    if (response.body()){
+                    if (response.body()) {
                         isWish = true;
                         save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
-                    } else{
+                    } else {
                         isWish = false;
                     }
                 } else {
-                    System.out.println("내 찜 조회하기 실패");
+                    Log.d("isWish", "내 찜 조회하기 실패");
                 }
             }
+
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.e("연결실패", t.getMessage());
@@ -461,7 +511,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isWish){ //찜 안한 상태일때
+                if (!isWish) { //찜 안한 상태일때
                     Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().createMyWish(userId, observationId, 0);
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -472,15 +522,16 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                 save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 실패");
+                                Log.d("isWish", "관광지 찜 실패");
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.e("연결실패", t.getMessage());
                         }
                     });
-                } else{
+                } else {
                     Call<Void> call = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().deleteMyWish(userId, observationId, 0);
                     call.enqueue(new Callback<Void>() {
                         @Override
@@ -490,9 +541,10 @@ public class ObservationsiteActivity extends AppCompatActivity {
                                 save_btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bookmark_non));
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             } else {
-                                System.out.println("관광지 찜 삭제 실패");
+                                Log.d("isWishDelete", "관광지 찜 삭제 실패");
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Void> call, Throwable t) {
                             Log.e("연결실패", t.getMessage());
@@ -519,48 +571,51 @@ public class ObservationsiteActivity extends AppCompatActivity {
         });
 
         //게시물 이미지 가져오기
-        Call<List<PostImage>>call= com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient.getApiService().getRelatePostImageList(observationId);
+        Call<List<PostImage>> call = com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient.getApiService().getRelatePostImageList(observationId);
         call.enqueue(new Callback<List<PostImage>>() {
             @Override
             public void onResponse(Call<List<PostImage>> call, Response<List<PostImage>> response) {
-                if (response.isSuccessful()){
-                    Log.d("relatePostImage","관련 게시물 이미지 업로드");
+                if (response.isSuccessful()) {
+                    Log.d("relatePostImage", "관련 게시물 이미지 업로드");
                     List<PostImage> relateImageList = response.body();
-                    for (int i=0;i<relateImageList.size();i++){
-                        relatefilename[i]=relateImageList.get(i).getImageName();
-                        System.out.println(relatefilename[i]);
-                        if (relateImageList.size()>4){break;}
+                    for (int i = 0; i < relateImageList.size(); i++) {
+                        relatefilename[i] = relateImageList.get(i).getImageName();
+                        if (relateImageList.size() > 4) {
+                            break;
+                        }
                     }
-                    if (relatefilename[0]!=null){
+                    if (relatefilename[0] != null) {
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[0])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + relatefilename[0])
                                 .into(relateImage1);
                     }
-                    if (relatefilename[1]!=null){
+                    if (relatefilename[1] != null) {
                         relateImage2.setVisibility(View.VISIBLE);
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[1])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + relatefilename[1])
                                 .into(relateImage2);
                     }
-                    if (relatefilename[2]!=null){
+                    if (relatefilename[2] != null) {
                         relateImageFrame.setVisibility(View.VISIBLE);
                         Glide.with(getApplicationContext())
-                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/"+relatefilename[2])
+                                .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + relatefilename[2])
                                 .into(relateImage3);
                     }
                     relateImage1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent01 = new Intent(getApplicationContext(), PostActivity.class);
-                            intent01.putExtra("postId",relateImageList.get(0).getPostId());
-                            startActivity(intent01);
+                            if (!relateImageList.isEmpty()) {
+                                Intent intent01 = new Intent(getApplicationContext(), PostActivity.class);
+                                intent01.putExtra("postId", relateImageList.get(0).getPostId());
+                                startActivity(intent01);
+                            }
                         }
                     });
                     relateImage2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent2 = new Intent(getApplicationContext(), PostActivity.class);
-                            intent2.putExtra("postId",relateImageList.get(1).getPostId());
+                            intent2.putExtra("postId", relateImageList.get(1).getPostId());
                             startActivity(intent2);
                         }
                     });
@@ -568,24 +623,25 @@ public class ObservationsiteActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             Intent intent2 = new Intent(getApplicationContext(), MoreObservationActivity.class);
-                            intent2.putExtra("observationId",observationId);
+                            intent2.putExtra("observationId", observationId);
                             startActivity(intent2);
                         }
                     });
-                }else{Log.d("relatePostImage","관련 게시물 이미지 업로드 실패");}
+                } else {
+                    Log.d("relatePostImage", "관련 게시물 이미지 업로드 실패");
+                }
             }
 
             @Override
             public void onFailure(Call<List<PostImage>> call, Throwable t) {
-               Log.d("relatePostImage","관련 게시물 이미지 업로드 인터넷 오류");
+                Log.d("relatePostImage", "관련 게시물 이미지 업로드 인터넷 오류");
             }
         });
 
     }
 
 
-
-    private void initHashtagRecycler(){
+    private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
         RecyclerView hashTagsrecyclerView = findViewById(R.id.obs_hashtags_layout);
 
@@ -596,7 +652,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }
 
-    private void initFeeRecycler(){
+    private void initFeeRecycler() {
         //이용요금 리사이클러 초기화
         RecyclerView feeRecyclerView = findViewById(R.id.obs_entrancefee_layout);
 
@@ -609,13 +665,13 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
     private void setOutlineButton() {
         TextView outline_btn = findViewById(R.id.obs_outline_btn);
-        Layout l= outline.getLayout();
+        Layout l = outline.getLayout();
 
         //개요가 4줄 이상일 경우만 자세히 보기 버튼 생성
         if (l != null) {
-            int lines= l.getLineCount();
+            int lines = l.getLineCount();
             if (lines > 0)
-                if (l.getEllipsisCount(lines-1) > 0) {
+                if (l.getEllipsisCount(lines - 1) > 0) {
                     outline_btn.setVisibility(View.VISIBLE);
                     Log.d(TAG, "텍스트 줄넘침");
                 }
@@ -637,7 +693,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
         //하이퍼 링크인줄 알도록 밑줄추가
         SpannableString content = new SpannableString(observation.getLink());
-        content.setSpan(new UnderlineSpan(),0,content.length(),0);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         link.setText(content);
 
         link.setOnClickListener(new View.OnClickListener() {
@@ -652,7 +708,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
     }
 
     private void setupObserveIndicators(int count) {
-        //이비지 슬라이더 인디케이터 걸정
+        //이비지 슬라이더 인디케이터 설정
         ImageView[] indicators = new ImageView[count];
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -670,6 +726,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
     }
 
     private void setObserveCurrentIndicator(int position) {
+        imageSource_txt.setText(imageSources.get(position));
         int childCount = obs_indicator.getChildCount();
         for (int i = 0; i < childCount; i++) {
             ImageView imageView = (ImageView) obs_indicator.getChildAt(i);
@@ -688,16 +745,15 @@ public class ObservationsiteActivity extends AppCompatActivity {
     }
 
     private void setupCourseIndicators(int count, List<String> names) {
-        //코스 인디케이터 걸정
-        ImageView[] img_indicators = new ImageView[count+1];
-        TextView[] txt_indicators = new TextView[count+1];
+        //코스 인디케이터 설설정
+        ImageView[] img_indicators = new ImageView[count + 1];
+        TextView[] txt_indicators = new TextView[count + 1];
         LinearLayout.LayoutParams img_params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         LinearLayout.LayoutParams txt_params = new LinearLayout.LayoutParams(
-                30, ViewGroup.LayoutParams.WRAP_CONTENT,1);
+                30, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
 
         ViewGroup.LayoutParams test_params = new ViewGroup.LayoutParams(30, ViewGroup.LayoutParams.WRAP_CONTENT);
-
 
 
 //        img_params.setMargins(16, 8, 16, 8);

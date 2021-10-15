@@ -16,7 +16,7 @@ import java.util.List;
 public class MyHashTagAdapter extends RecyclerView.Adapter<MyHashTagAdapter.ViewHolder> {
     private static List<String> items;
 
-    public MyHashTagAdapter(List<String> items){
+    public MyHashTagAdapter(List<String> items) {
         this.items = items;
     }
 
@@ -39,7 +39,7 @@ public class MyHashTagAdapter extends RecyclerView.Adapter<MyHashTagAdapter.View
 
     @Override
     public int getItemCount() {
-        return items == null ? 0 :items.size();
+        return items == null ? 0 : items.size();
     }
 
 

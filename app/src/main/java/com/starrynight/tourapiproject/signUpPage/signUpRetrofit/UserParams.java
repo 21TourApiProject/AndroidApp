@@ -20,7 +20,8 @@ public class UserParams implements Serializable {
 
     private Boolean kakao;
 
-    public UserParams(){}
+    public UserParams() {
+    }
 
     public UserParams(String realName, Boolean sex, String birthDay, String email, String password, Boolean isMarketing, Boolean kakao) {
         this.realName = realName;

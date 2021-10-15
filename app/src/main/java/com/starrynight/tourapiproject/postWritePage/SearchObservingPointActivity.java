@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchObservingPointActivity extends AppCompatActivity{
+public class SearchObservingPointActivity extends AppCompatActivity {
     EditText findObservePoint;
     String observePoint;
     ArrayList<Search_item> searchitemArrayList, filteredList;
@@ -39,6 +39,7 @@ public class SearchObservingPointActivity extends AppCompatActivity{
     RecyclerView optionObservationRecyclerView;
     TextView optionText;
     EditText editText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +50,8 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         findObservePoint = findViewById(R.id.findObservePoint);
         searchitemArrayList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        search_item_adapter = new Search_item_adapter(searchitemArrayList,this);
-        layoutManager = new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
+        search_item_adapter = new Search_item_adapter(searchitemArrayList, this);
+        layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
         optionObservationRecyclerView.setLayoutManager(layoutManager);
         optionObservationRecyclerView.setAdapter(search_item_adapter);
         optionText = findViewById(R.id.optionText);
@@ -59,19 +60,21 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         call.enqueue(new Callback<List<Observation>>() {
             @Override
             public void onResponse(Call<List<Observation>> call, Response<List<Observation>> response) {
-                if (response.isSuccessful()){
-                    Log.d("observation","관측지 리스트 업로드");
+                if (response.isSuccessful()) {
+                    Log.d("observation", "관측지 리스트 업로드");
                     List<Observation> observationList = response.body();
-                    for (int i=0;i<observationList.size();i++){
-                        searchitemArrayList.add(new Search_item(observationList.get(i).getObservationName(),observationList.get(i).getAddress()));
+                    for (int i = 0; i < observationList.size() - 1; i++) {
+                        searchitemArrayList.add(new Search_item(observationList.get(i).getObservationName(), observationList.get(i).getAddress()));
                     }
-                }else {Log.d("observation","관측지 리스트 업로드 실패");}
+                } else {
+                    Log.d("observation", "관측지 리스트 업로드 실패");
+                }
             }
 
 
             @Override
             public void onFailure(Call<List<Observation>> call, Throwable t) {
-                Log.d("observation","관측지 리스트 업로드 인터넷 실패");
+                Log.d("observation", "관측지 리스트 업로드 인터넷 실패");
             }
         });
         search_item_adapter.notifyDataSetChanged();
@@ -97,21 +100,21 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         search_item_adapter.setOnItemClicklistener(new OnSearchItemClickListener() {
             @Override
             public void onItemClick(Search_item_adapter.ViewHolder holder, View view, int position) {
-                Search_item item =search_item_adapter.getItem(position);
-                observePoint= item.getItemName();
+                Search_item item = search_item_adapter.getItem(position);
+                observePoint = item.getItemName();
                 Intent intent = new Intent();
-                intent.putExtra("observationName",observePoint);
-                setResult(2,intent);
+                intent.putExtra("observationName", observePoint);
+                setResult(2, intent);
                 finish();
             }
         });
         optionText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
+                observePoint = ((EditText) (findViewById(R.id.findObservePoint))).getText().toString();
                 Intent intent = new Intent();
-                intent.putExtra("optionObservationName",observePoint);
-                setResult(2,intent);
+                intent.putExtra("optionObservationName", observePoint);
+                setResult(2, intent);
                 finish();
             }
         });
@@ -120,10 +123,10 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         addObservePoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
+                observePoint = ((EditText) (findViewById(R.id.findObservePoint))).getText().toString();
                 Intent intent = new Intent();
-                intent.putExtra("optionObservationName",observePoint);
-                setResult(2,intent);
+                intent.putExtra("optionObservationName", observePoint);
+                setResult(2, intent);
                 finish();
             }
         });
@@ -140,15 +143,15 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction()==KeyEvent.ACTION_DOWN&&keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                     if (!editText.getText().toString().equals("")) {
-                        observePoint = ((EditText)(findViewById(R.id.findObservePoint))).getText().toString();
+                        observePoint = ((EditText) (findViewById(R.id.findObservePoint))).getText().toString();
                         Intent intent = new Intent();
-                        intent.putExtra("optionObservationName",observePoint);
-                        setResult(2,intent);
+                        intent.putExtra("optionObservationName", observePoint);
+                        setResult(2, intent);
                         finish();
                     }
-                }else{
+                } else {
                     return false;
                 }
                 return true;
@@ -156,15 +159,20 @@ public class SearchObservingPointActivity extends AppCompatActivity{
         });
 
     }
+
     public void searchFilter(String searchText) {
         filteredList.clear();
         Button add_btn = findViewById(R.id.addObservePoint);
-        for (int i=0;i<searchitemArrayList.size();i++) {
+        for (int i = 0; i < searchitemArrayList.size(); i++) {
             if (searchitemArrayList.get(i).getItemName().toLowerCase().contains(searchText.toLowerCase())) {
                 filteredList.add(searchitemArrayList.get(i));
                 optionText.setVisibility(View.GONE);
             }
-        }if (filteredList.size()==0){{ optionText.setVisibility(View.VISIBLE);}
+        }
+        if (filteredList.size() == 0) {
+            {
+                optionText.setVisibility(View.VISIBLE);
+            }
         }
         search_item_adapter.filterList(filteredList);
     }

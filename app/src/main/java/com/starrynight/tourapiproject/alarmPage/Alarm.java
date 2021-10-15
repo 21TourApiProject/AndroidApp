@@ -10,7 +10,8 @@ public class Alarm {
     @SerializedName("alarmContent")
     private String alarmContent;
 
-    public Alarm(){}
+    public Alarm() {
+    }
 
     public String getAlarmTitle() {
         return alarmTitle;

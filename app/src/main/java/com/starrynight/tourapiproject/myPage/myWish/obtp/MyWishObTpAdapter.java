@@ -23,7 +23,7 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
     OnMyWishObTpItemClickListener listener;
     private Context context;
 
-    public MyWishObTpAdapter(List<MyWishObTp> items, Context context){
+    public MyWishObTpAdapter(List<MyWishObTp> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -47,7 +47,7 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return items == null ? 0 :items.size();
+        return items == null ? 0 : items.size();
     }
 
 
@@ -104,9 +104,9 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
         }
 
         public void setItem(MyWishObTp item) {
-            if(item.getThumbnail() != null){
+            if (item.getThumbnail() != null) {
                 String imageName = item.getThumbnail();
-                if(imageName.startsWith("http://") || imageName.startsWith("https://"))
+                if (imageName.startsWith("http://") || imageName.startsWith("https://"))
                     Glide.with(context).load(imageName).into(obTpImage);
                 else {
                     imageName = imageName.substring(1, imageName.length() - 1);
@@ -119,14 +119,14 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
             //주소를 두단어까지 줄임
             String address = item.getAddress();
             int i = address.indexOf(' ');
-            if (i != -1){
-                int j = address.indexOf(' ', i+1);
-                if(j != -1){
+            if (i != -1) {
+                int j = address.indexOf(' ', i + 1);
+                if (j != -1) {
                     opTpAddress.setText(item.getAddress().substring(0, j));
-                } else{
+                } else {
                     opTpAddress.setText(item.getAddress());
                 }
-            } else{
+            } else {
                 opTpAddress.setText(item.getAddress());
             }
 

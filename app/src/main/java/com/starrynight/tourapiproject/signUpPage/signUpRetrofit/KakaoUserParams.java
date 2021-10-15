@@ -19,7 +19,7 @@ public class KakaoUserParams implements Serializable {
 
     private String ageRange;
 
-    public KakaoUserParams(){
+    public KakaoUserParams() {
     }
 
     public KakaoUserParams(String realName, Boolean sex, String birthDay, String email) {

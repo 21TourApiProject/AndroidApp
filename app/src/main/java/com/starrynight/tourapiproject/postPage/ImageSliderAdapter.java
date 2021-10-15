@@ -29,7 +29,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_main_image, parent, false);
-        return new MyViewHolder(view,listener);
+        return new MyViewHolder(view, listener);
 
     }
 
@@ -43,7 +43,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         return sliderImage.size();
     }
 
-    public void OnItemClicklistener(ImageSliderItemClickListener listener){
+    public void OnItemClicklistener(ImageSliderItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -58,12 +58,13 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onItemClick(ImageSliderAdapter.MyViewHolder.this, v, position);
                     }
                 }
             });
         }
+
         public void bindSliderImage(String imageURL) {
             Glide.with(context)
                     .load(imageURL)

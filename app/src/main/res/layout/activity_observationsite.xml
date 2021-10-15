@@ -16,6 +16,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/obs_back_btn"
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="21dp"
+                    android:background="@drawable/mypost_back" />
+
+                <TextView
+                    android:id="@+id/obs_banner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/scdream_light"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/obs_image_layout"
                 android:layout_width="match_parent"
@@ -29,6 +57,16 @@
 
                 </androidx.viewpager2.widget.ViewPager2>
 
+                <TextView
+                    android:id="@+id/obs_image_source"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#50000000"
+                    android:text="출처표기"
+                    android:textSize="10sp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white"/>
+
                 <LinearLayout
                     android:id="@+id/obs_Img_indicator"
                     android:layout_width="match_parent"
@@ -37,15 +75,7 @@
                     android:orientation="horizontal"
                     android:layout_alignBottom="@id/obs_Img_slider"
                     android:layout_marginBottom="16dp">
-
                 </LinearLayout>
-                <Button
-                    android:id="@+id/obs_back_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/back_btn"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"/>
 
             </RelativeLayout>
 
@@ -120,7 +150,9 @@
                         android:layout_height="wrap_content"
                         android:text="자세히 보기 >"
                         android:textSize="11sp"
-                        android:layout_marginLeft="1dp"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="20dp"
+                        android:textColor="@color/point_purple"
                         android:layout_marginTop="4dp"
                         android:visibility="gone"
                         tools:visibility="visible"
@@ -386,7 +418,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10sp"
-                        android:text="운영 상세정보는 홈페이지에서 확인 후 방문 요망"
+                        android:text="※ 더 많은 상세정보는 홈페이지에서 확인하세요"
                         android:layout_below="@+id/obs_url_txt"/>
                 </RelativeLayout>
                 <ToggleButton
@@ -583,6 +615,7 @@
                             android:layout_height="90dp"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/default_image" />
                     </androidx.cardview.widget.CardView>
 
@@ -598,6 +631,7 @@
                             android:layout_height="90dp"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
                             android:src="@drawable/default_image"
                             android:visibility="gone" />
                     </androidx.cardview.widget.CardView>
@@ -621,6 +655,7 @@
                                 android:layout_weight="1"
                                 android:adjustViewBounds="true"
                                 android:foreground="@drawable/observation__moreimage"
+                                android:scaleType="centerCrop"
                                 android:visibility="visible" />
 
                             <LinearLayout

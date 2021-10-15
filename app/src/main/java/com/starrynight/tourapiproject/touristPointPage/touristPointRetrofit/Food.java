@@ -37,7 +37,10 @@ public class Food {
     @SerializedName("overviewSim")
     private String overviewSim; //한줄개요
 
-    public Food(){};
+    public Food() {
+    }
+
+    ;
 
     public Long getContentTypeId() {
         return contentTypeId;

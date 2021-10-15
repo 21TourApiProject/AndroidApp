@@ -58,21 +58,24 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 // 입력란에 변화가 있을 때
                 pwd = s.toString();
                 showPwdGuide(pwd);
-                if(!pwdCheck.isEmpty()){
+                if (!pwdCheck.isEmpty()) {
                     showPwdCheckGuide(pwd, pwdCheck);
                 }
             }
+
             @Override
             public void afterTextChanged(Editable arg0) {
                 // 입력이 끝났을 때
                 pwd = arg0.toString();
                 showPwdGuide(pwd);
-                if(!pwdCheck.isEmpty()){
+                if (!pwdCheck.isEmpty()) {
                     showPwdCheckGuide(pwd, pwdCheck);
                 }
             }
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
 
 
@@ -92,7 +95,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
 
         //완료 버튼
@@ -101,19 +105,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String oriPwd = originPwd.getText().toString();
-                if (oriPwd.isEmpty()){
+                if (oriPwd.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
-                }
-                else if (pwd.isEmpty()){
+                } else if (pwd.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
-                }
-                else if (!isPwd){
+                } else if (!isPwd) {
                     Toast.makeText(getApplicationContext(), "비밀번호 형식이 올바르지 않습니다", Toast.LENGTH_SHORT).show();
-                }
-                else if(!isSame){
+                } else if (!isSame) {
                     Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     //비밀번호 변경을 위한 put api
                     Call<Boolean> call = RetrofitClient.getApiService().updatePassword(userId, oriPwd, pwd);
                     call.enqueue(new Callback<Boolean>() {
@@ -121,16 +121,17 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                             if (response.isSuccessful()) {
                                 Boolean result = response.body();
-                                if (result){
+                                if (result) {
                                     //비밀번호 성공적으로 변경되면 이전 페이지로
                                     finish();
-                                } else{
+                                } else {
                                     Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 Log.d(TAG, "중복 체크 실패");
                             }
                         }
+
                         @Override
                         public void onFailure(Call<Boolean> call, Throwable t) {
                             Log.e("연결실패", t.getMessage());
@@ -143,7 +144,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     //비밀번호 두개가 맞는지 실시간으로
     private void showPwdCheckGuide(String pwd, String pwdCheck) {
-        if (!pwd.equals(pwdCheck)){
+        if (!pwd.equals(pwdCheck)) {
             isSame = false;
             newPwdCheckGuide.setText("비밀번호가 일치하지 않습니다.");
         } else {

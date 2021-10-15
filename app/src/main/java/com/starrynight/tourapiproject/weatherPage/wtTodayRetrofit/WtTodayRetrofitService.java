@@ -6,5 +6,5 @@ import retrofit2.http.Path;
 
 public interface WtTodayRetrofitService {
     @GET("wtToday/{todayWtId}")
-    Call <WtTodayParams> getTodayWeatherInfo(@Path("todayWtId") int todayWtId);
+    Call<WtTodayParams> getTodayWeatherInfo(@Path("todayWtId") int todayWtId);
 }

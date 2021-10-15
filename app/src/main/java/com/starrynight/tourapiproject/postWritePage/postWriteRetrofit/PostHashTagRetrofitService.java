@@ -13,20 +13,20 @@ import retrofit2.http.Path;
 public interface PostHashTagRetrofitService {
 
     @POST("post/{observePointName}")
-    Call<Long> postup(@Path("observePointName")String observePointName,@Body PostParams params);
+    Call<Long> postup(@Path("observePointName") String observePointName, @Body PostParams params);
 
-    @POST ("postImage/{postId}")
-    Call <Void> createPostImage(@Path("postId")Long postId,@Body List<PostImageParams> postImageParams);
+    @POST("postImage/{postId}")
+    Call<Void> createPostImage(@Path("postId") Long postId, @Body List<PostImageParams> postImageParams);
 
-    @GET ("post/write/{postContent}")
-    Call<String> addContent(@Path("postContent")String postContent);
+    @GET("post/write/{postContent}")
+    Call<String> addContent(@Path("postContent") String postContent);
 
     @GET("postImage/{postImageListId")
-    Call<String> getPostImageName(@Path("postImageListId")Long postImageListId);
+    Call<String> getPostImageName(@Path("postImageListId") Long postImageListId);
 
     @GET("post/{postId}")
     Call<Post> getPost(@Path("postId") Long postId);
 
-    @POST ("postHashTag/{postId}")
-    Call<Void> createPostHashTag(@Path("postId")Long postId,@Body List<PostHashTagParams> postHashTagParams);
+    @POST("postHashTag/{postId}")
+    Call<Void> createPostHashTag(@Path("postId") Long postId, @Body List<PostHashTagParams> postHashTagParams);
 }

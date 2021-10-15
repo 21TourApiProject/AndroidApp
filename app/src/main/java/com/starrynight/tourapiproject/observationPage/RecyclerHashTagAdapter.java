@@ -29,7 +29,7 @@ public class RecyclerHashTagAdapter extends RecyclerView.Adapter<RecyclerHashTag
         }
 
         void onBind(RecyclerHashTagItem item) {
-            hashtag_name.setText("#"+item.getHashtagName());
+            hashtag_name.setText("#" + item.getHashtagName());
         }
     }
 

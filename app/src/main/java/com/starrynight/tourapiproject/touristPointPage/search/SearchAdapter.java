@@ -16,10 +16,11 @@ import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
-    private static List<SearchData.Document>documents;
+    private static List<SearchData.Document> documents;
     OnSearchItemClickListener listener;
-    public SearchAdapter(List<SearchData.Document>documents){
-        this.documents=documents;
+
+    public SearchAdapter(List<SearchData.Document> documents) {
+        this.documents = documents;
     }
 
     @NonNull
@@ -29,33 +30,36 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         View itemView = inflater.inflate(R.layout.custom_daum_item, parent, false);
         return new ViewHolder(itemView, listener);
     }
+
     @Override
     public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder viewHolder, int position) {
         SearchData.Document data = documents.get(position);
         viewHolder.setItem(data);
     }
+
     @Override
     public int getItemCount() {
-        return documents ==null ? 0 :documents.size(); }
+        return documents == null ? 0 : documents.size();
+    }
 
-        public void setOnItemClickListener(OnSearchItemClickListener listener) {
+    public void setOnItemClickListener(OnSearchItemClickListener listener) {
         this.listener = listener;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView blogTitle;
         TextView blogWriter;
         TextView blogDate;
         TextView blogUrl;
         ImageView blogImage;
 
-        public ViewHolder(View itemView, final OnSearchItemClickListener listener){
+        public ViewHolder(View itemView, final OnSearchItemClickListener listener) {
             super(itemView);
-            blogTitle=itemView.findViewById(R.id.blogTitle);
-            blogWriter =itemView.findViewById(R.id.blogWriter);
-            blogDate=itemView.findViewById(R.id.blogDate);
-            blogUrl=itemView.findViewById(R.id.blogUrl);
-            blogImage=itemView.findViewById(R.id.blogImage);
+            blogTitle = itemView.findViewById(R.id.blogTitle);
+            blogWriter = itemView.findViewById(R.id.blogWriter);
+            blogDate = itemView.findViewById(R.id.blogDate);
+            blogUrl = itemView.findViewById(R.id.blogUrl);
+            blogImage = itemView.findViewById(R.id.blogImage);
             blogImage.setClipToOutline(true);
             itemView.setClickable(true);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +67,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 public void onClick(View view) {
                     int position = getAdapterPosition();
 
-                    if (listener != null){
+                    if (listener != null) {
                         listener.onItemClick(ViewHolder.this, view, position);
                     }
                 }
@@ -71,10 +75,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
         }
 
-        public void setItem(SearchData.Document data){
+        public void setItem(SearchData.Document data) {
             blogTitle.setText(data.getTitle());
             blogWriter.setText(data.getBlogname());
-            blogDate.setText(data.getDatetime().substring(0,10));
+            blogDate.setText(data.getDatetime().substring(0, 10));
             blogUrl.setText(data.getUrl().substring(8));
             Glide.with(itemView.getContext()).load(data.getThumbnail()).into(blogImage);
 

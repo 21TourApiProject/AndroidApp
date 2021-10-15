@@ -15,5 +15,8 @@ public class WtToday {
     @SerializedName("todayWtName2")
     private String todayWtName2;
 
-    public WtToday(){};
+    public WtToday() {
+    }
+
+    ;
 }

@@ -26,5 +26,8 @@ public class ObserveFee {
     @SerializedName("entranceFee")
     private String entranceFee;
 
-    public ObserveFee() { };
+    public ObserveFee() {
+    }
+
+    ;
 }

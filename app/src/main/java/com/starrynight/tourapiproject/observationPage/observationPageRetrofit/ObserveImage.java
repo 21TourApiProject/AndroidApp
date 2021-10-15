@@ -15,7 +15,10 @@ public class ObserveImage {
     @SerializedName("imageSource")
     private String imageSource;
 
-    public ObserveImage(){};
+    public ObserveImage() {
+    }
+
+    ;
 
     public String getImage() {
         return image;

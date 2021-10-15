@@ -64,6 +64,7 @@ public class Observation {
     public List<ObserveFee> getObserveFees() {
         return observeFees;
     }
+
     public List<ObserveImage> getObserveImages() {
         return observeImages;
     }
@@ -71,7 +72,11 @@ public class Observation {
     public String getIntro() {
         return intro;
     }
-    public Observation(){};
+
+    public Observation() {
+    }
+
+    ;
 
     public double getLight() {
         return light;

@@ -9,9 +9,6 @@ public class StarItem {
     @SerializedName("constName")
     private String constName;
 
-//    @SerializedName("constSmallImage")
-//    private String constSmallImage;
-
     @SerializedName("constEng")
     private String constEng;
 

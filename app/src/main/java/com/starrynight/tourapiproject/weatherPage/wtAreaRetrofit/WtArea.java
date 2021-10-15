@@ -18,5 +18,6 @@ public class WtArea {
     @SerializedName("longitude")
     private Double longitude;
 
-    public WtArea(){}
+    public WtArea() {
+    }
 }
