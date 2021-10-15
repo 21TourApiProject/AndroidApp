@@ -29,8 +29,8 @@ public interface PostPageRetrofitService {
     @GET("postImage/{postObservePointId}")
     Call<List<PostImage>> getRelatePostImageList(@Path("postObservePointId") Long postObservePointId);
 
-    @DELETE("post/{userId}")
-    Call<Void> deletePost(@Path("userId") Long userId);
+    @DELETE("post/{postId}")
+    Call<Void> deletePost(@Path("postId") Long postId);
 
     @POST("post/main")
     Call<List<MainPost>> getMainPosts(@Body Filter filter);
