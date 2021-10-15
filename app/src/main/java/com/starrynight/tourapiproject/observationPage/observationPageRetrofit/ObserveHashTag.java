@@ -15,7 +15,10 @@ public class ObserveHashTag {
     @SerializedName("hashTagName")
     private String hashTagName;
 
-    public ObserveHashTag(){};
+    public ObserveHashTag() {
+    }
+
+    ;
 
     public String getHashTagName() {
         return hashTagName;

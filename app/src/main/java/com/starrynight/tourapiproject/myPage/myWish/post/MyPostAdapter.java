@@ -20,12 +20,12 @@ import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder>{
+public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder> {
     private static List<MyPost> items;
     OnMyPostItemClickListener listener;
     private Context context;
 
-    public MyPostAdapter(List<MyPost> items, Context context){
+    public MyPostAdapter(List<MyPost> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -103,17 +103,16 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         }
 
         public void setItem(MyPost item) {
-            if (item.getThumbnail() != null){
+            if (item.getThumbnail() != null) {
                 Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + item.getThumbnail()).into(myWishPostImage);
                 myWishPostImage.setClipToOutline(true);
             }
 
-            if (item.getProfileImage() != null){
+            if (item.getProfileImage() != null) {
                 String imageName = item.getProfileImage();
-                if(item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")){
+                if (item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")) {
                     Glide.with(context).load(imageName).into(myWishPostProfileImage);
-                }
-                else{
+                } else {
                     imageName = imageName.substring(1, imageName.length() - 1);
                     Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + imageName).into(myWishPostProfileImage);
                 }

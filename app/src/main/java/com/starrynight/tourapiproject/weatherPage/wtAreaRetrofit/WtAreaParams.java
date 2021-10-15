@@ -16,7 +16,8 @@ public class WtAreaParams {
     @SerializedName("maxLightPol")
     private Double maxLightPol;
 
-    public WtAreaParams(){}
+    public WtAreaParams() {
+    }
 
     public Double getLatitude() {
         return latitude;

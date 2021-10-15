@@ -71,7 +71,7 @@ public interface MyPageRetrofitService {
     Call<List<MyPost>> getMyPost(@Path("userId") Long userId);
 
     @GET("post/observation/{observationId}")
-    Call<List<MyPost>> getRelatePost(@Path("observationId")Long observationId);
+    Call<List<MyPost>> getRelatePost(@Path("observationId") Long observationId);
 
     @DELETE("user/{userId}")
     Call<Void> deleteUser(@Path("userId") Long userId);
@@ -83,5 +83,5 @@ public interface MyPageRetrofitService {
     Call<Boolean> checkIsKakao(@Path("userId") Long userId);
 
     @GET("notice/all")
-    Call <List<Notice>> getAllNotice();
+    Call<List<Notice>> getAllNotice();
 }

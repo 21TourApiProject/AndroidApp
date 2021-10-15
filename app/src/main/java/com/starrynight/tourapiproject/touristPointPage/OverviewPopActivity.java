@@ -39,7 +39,7 @@ public class OverviewPopActivity extends AppCompatActivity {
     }
 
     //팝업 닫기
-    public void closeOverview(View v){
+    public void closeOverview(View v) {
         finish();
     }
 }

@@ -17,11 +17,11 @@ import com.starrynight.tourapiproject.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder>{
+public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder> {
     private static List<MyWish> items;
     private Context context;
 
-    public MyWishAdapter(List<MyWish> items, Context context){
+    public MyWishAdapter(List<MyWish> items, Context context) {
         this.items = items;
         this.context = context;
     }
@@ -79,13 +79,13 @@ public class MyWishAdapter extends RecyclerView.Adapter<MyWishAdapter.ViewHolder
         }
 
         public void setItem(MyWish item) {
-            if(item.getThumbnail() != null){
+            if (item.getThumbnail() != null) {
                 String imageName = item.getThumbnail();
-                if(imageName.startsWith("http://")){
+                if (imageName.startsWith("http://")) {
                     Glide.with(context).load(item.getThumbnail()).into(thumbnail);
+                } else {
+                    Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + imageName).into(thumbnail);
                 }
-                else{
-                    Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/" + imageName).into(thumbnail);}
             }
             title.setText(item.getTitle());
         }

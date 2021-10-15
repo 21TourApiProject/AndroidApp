@@ -42,7 +42,7 @@ public class LeavePopActivity extends AppCompatActivity {
     }
 
     //탈퇴하기
-    public void leave(View v){
+    public void leave(View v) {
 
         Call<Boolean> call1 = RetrofitClient.getApiService().checkIsKakao(userId);
         call1.enqueue(new Callback<Boolean>() {
@@ -60,7 +60,7 @@ public class LeavePopActivity extends AppCompatActivity {
                                 //회원탈퇴 실패 시
                                 int result = errorResult.getErrorCode();
 
-                                if(result == ApiErrorCode.CLIENT_ERROR_CODE) {
+                                if (result == ApiErrorCode.CLIENT_ERROR_CODE) {
                                     Toast.makeText(getApplicationContext(), "네트워크 연결이 불안정합니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "회원탈퇴에 실패했습니다. 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
@@ -107,6 +107,7 @@ public class LeavePopActivity extends AppCompatActivity {
                                             Log.e(TAG, "탈퇴하기 실패");
                                         }
                                     }
+
                                     @Override
                                     public void onFailure(Call<Void> call, Throwable t) {
                                         Log.e("연결실패", t.getMessage());
@@ -136,6 +137,7 @@ public class LeavePopActivity extends AppCompatActivity {
                                     Log.e(TAG, "탈퇴하기 실패");
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
                                 Log.e("연결실패", t.getMessage());
@@ -156,7 +158,7 @@ public class LeavePopActivity extends AppCompatActivity {
     }
 
     //팝업 닫기
-    public void closeLeave(View v){
+    public void closeLeave(View v) {
         Intent intent = new Intent();
         intent.putExtra("result", "Close Popup");
         setResult(RESULT_OK, intent);

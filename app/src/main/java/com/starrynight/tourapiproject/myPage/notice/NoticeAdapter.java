@@ -16,12 +16,12 @@ import com.starrynight.tourapiproject.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder>{
+public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder> {
     private static List<Notice> items;
     Context context;
     OnNoticeClickListener listener;
 
-    public NoticeAdapter(Context context, List<Notice> items){
+    public NoticeAdapter(Context context, List<Notice> items) {
         this.context = context;
         this.items = items;
     }
@@ -42,10 +42,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         viewHolder.noticeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (viewHolder.noticeOpen.getVisibility() == View.GONE){ //닫혀있으면 열기
+                if (viewHolder.noticeOpen.getVisibility() == View.GONE) { //닫혀있으면 열기
                     viewHolder.noticeBtn.setRotation(90);
                     viewHolder.noticeOpen.setVisibility(View.VISIBLE);
-                } else{ //열려있으면 닫기
+                } else { //열려있으면 닫기
                     viewHolder.noticeBtn.setRotation(360);
                     viewHolder.noticeOpen.setVisibility(View.GONE);
                 }
@@ -58,7 +58,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         return items.size();
     }
 
-    public void  setOnItemClicklistener(OnNoticeClickListener listener){
+    public void setOnItemClicklistener(OnNoticeClickListener listener) {
         this.listener = listener;
     }
 

@@ -14,7 +14,7 @@ import com.starrynight.tourapiproject.R;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ObserveImageSliderAdapter extends RecyclerView.Adapter<ObserveImageSliderAdapter.MyViewHolder>{
+public class ObserveImageSliderAdapter extends RecyclerView.Adapter<ObserveImageSliderAdapter.MyViewHolder> {
     private Context context;
     private String[] sliderImage;
 

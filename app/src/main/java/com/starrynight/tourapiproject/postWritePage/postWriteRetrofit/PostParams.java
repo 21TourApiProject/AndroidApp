@@ -26,7 +26,8 @@ public class PostParams implements Serializable {
 
     private Long userId;
 
-    public PostParams(){}
+    public PostParams() {
+    }
 
     public String getOptionHashTag() {
         return optionHashTag;
@@ -127,6 +128,7 @@ public class PostParams implements Serializable {
     public Long getUserId() {
         return userId;
     }
+
     public void setOptionHashTag(String optionHashTag) {
         this.optionHashTag = optionHashTag;
     }
@@ -167,5 +169,4 @@ public class PostParams implements Serializable {
     }
 
 
-
-    }
+}

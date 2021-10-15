@@ -109,7 +109,6 @@ public class BalloonObject implements Serializable {
     }
 
 
-
     public BalloonObject(Long id, int tag, double longitude, double latitude, String name, String address, String point_type, String intro) {
         this.id = id;
         this.tag = tag;

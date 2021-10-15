@@ -82,7 +82,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         skip_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isAge){
+                if (!isAge) {
                     Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -90,18 +90,19 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        if(response.isSuccessful()){
-                            System.out.println("회원가입 성공");
+                        if (response.isSuccessful()) {
+                            Log.d("kakaoSignup", "회원가입 성공");
                             signOut();
 
                             //선호 해시태그 선택 창으로 전환
                             Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
                             intent.putExtra("email", userParams.getEmail());
                             startActivityForResult(intent, SELECT_HASH_TAG);
-                        } else{
-                            System.out.println("회원가입 실패");
+                        } else {
+                            Log.d("kakaoSignup", "회원가입 실패");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -166,7 +167,6 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.d(TAG, "onCodeSent:" + verificationId);
-                System.out.println("token = " + token);
                 mVerificationId = verificationId;
                 mResendToken = token;
             }
@@ -176,10 +176,10 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         ageLimit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isAge){
+                if (isAge) {
                     ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree_non));
                     isAge = false;
-                } else{
+                } else {
                     ageLimit.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.signup_agree));
                     isAge = true;
                 }
@@ -216,7 +216,8 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
     }
 
@@ -253,10 +254,10 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                             isPhoneDuplicate = true;
                         }
                     } else {
-                        System.out.println("중복 체크 실패");
                         phoneGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("연결실패", t.getMessage());
@@ -321,6 +322,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -329,27 +331,26 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             Log.d(TAG, "인증 성공"); //인증 성공하면
 
-                                //회원가입을 위한 post api
-                                if (isPhoneAgree)
-                                    userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
-                                else
-                                    userParams.setMobilePhoneNumber(null);
+                            //회원가입을 위한 post api
+                            if (isPhoneAgree)
+                                userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
+                            else
+                                userParams.setMobilePhoneNumber(null);
                             Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
                             call.enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
-                                    if(response.isSuccessful()){
-                                        System.out.println("회원가입 성공");
+                                    if (response.isSuccessful()) {
                                         signOut();
 
                                         //선호 해시태그 선택 창으로 전환
                                         Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
                                         intent.putExtra("email", userParams.getEmail());
                                         startActivityForResult(intent, SELECT_HASH_TAG);
-                                    } else{
-                                        System.out.println("회원가입 실패");
+                                    } else {
                                     }
                                 }
+
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     Log.e("연결실패", t.getMessage());
@@ -370,7 +371,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     }
 
     //국제 번호 붙여주는 함수
-    private String changePhoneNumber(String phoneNumber){
+    private String changePhoneNumber(String phoneNumber) {
         return "+82" + phoneNumber.substring(1);
     }
 
@@ -378,19 +379,16 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.kko_startAuth:
-                if(isPhoneEmpty){
+                if (isPhoneEmpty) {
                     Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
                     break;
-                }
-                else if(isNotPhone){
+                } else if (isNotPhone) {
                     Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
                     break;
-                }
-                else if(isPhoneDuplicate){
+                } else if (isPhoneDuplicate) {
                     Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_LONG).show();
                     break;
-                }
-                else{
+                } else {
                     isSend = true;
                     Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_LONG).show();
                     startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
@@ -402,7 +400,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
             case R.id.kko_verify:
                 String code = authCode.getText().toString();
 
-                if(!isAge){
+                if (!isAge) {
                     Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -411,28 +409,24 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
                     authCode.setError("인증번호를 입력해주세요.");
                     return;
                 }
-                if (!isSend){
+                if (!isSend) {
                     authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
-                System.out.println("인증코드 맞는지 확인들어감 " + code);
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
 
             case R.id.kko_resendAuth:
-                if(isPhoneEmpty){
+                if (isPhoneEmpty) {
                     Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_LONG).show();
                     break;
-                }
-                else if(isNotPhone){
+                } else if (isNotPhone) {
                     Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_LONG).show();
                     break;
-                }
-                else if(isPhoneDuplicate){
+                } else if (isPhoneDuplicate) {
                     Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_LONG).show();
                     break;
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_LONG).show();
                     resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                     break;

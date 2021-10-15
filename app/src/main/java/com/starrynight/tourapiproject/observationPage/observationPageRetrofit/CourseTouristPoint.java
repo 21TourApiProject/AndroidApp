@@ -24,7 +24,10 @@ public class CourseTouristPoint {
     private String treatMenu; //취급메뉴(음식)
 
 
-    public CourseTouristPoint(){};
+    public CourseTouristPoint() {
+    }
+
+    ;
 
     public Long getContentTypeId() {
         return contentTypeId;

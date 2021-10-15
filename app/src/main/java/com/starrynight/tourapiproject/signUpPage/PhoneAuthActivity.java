@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -67,7 +66,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     private Boolean isNotPhone = false; //올바른 전화번호 형식이 아닌지
     private Boolean isPhoneDuplicate = true; //전화번호이 중복인지
 
-//    Button phoneAgree;
+    //    Button phoneAgree;
     private Boolean isPhoneAgree = true;
 
     @Override
@@ -170,7 +169,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
             }
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
     }
 
@@ -211,6 +211,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         phoneGuide.setText("오류가 발생했습니다. 다시 시도해주세요.");
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("연결실패", t.getMessage());
@@ -275,6 +276,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -283,8 +285,8 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             Log.d(TAG, "인증 성공"); //인증 성공하면
 
-                           //회원가입을 위한 post api
-                            if(isPhoneAgree)
+                            //회원가입을 위한 post api
+                            if (isPhoneAgree)
                                 userParams.setMobilePhoneNumber(mobilePhoneNumber.getText().toString());
                             else
                                 userParams.setMobilePhoneNumber(null);
@@ -292,7 +294,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                             call.enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
-                                    if(response.isSuccessful()){
+                                    if (response.isSuccessful()) {
                                         Log.d(TAG, "회원가입 성공");
                                         signOut();
 
@@ -300,10 +302,11 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                                         Intent intent = new Intent(PhoneAuthActivity.this, SelectMyHashTagActivity.class);
                                         intent.putExtra("email", userParams.getEmail());
                                         startActivityForResult(intent, SELECT_HASH_TAG);
-                                    } else{
+                                    } else {
                                         Log.e(TAG, "회원가입 실패");
                                     }
                                 }
+
                                 @Override
                                 public void onFailure(Call<Void> call, Throwable t) {
                                     Log.e("연결실패", t.getMessage());
@@ -324,7 +327,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     }
 
     //국제 번호 붙여주는 함수
-    private String changePhoneNumber(String phoneNumber){
+    private String changePhoneNumber(String phoneNumber) {
         return "+82" + phoneNumber.substring(1);
     }
 
@@ -332,19 +335,16 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.startAuth:
-                if(isPhoneEmpty){
+                if (isPhoneEmpty) {
                     Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     break;
-                }
-                else if(isNotPhone){
+                } else if (isNotPhone) {
                     Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
-                }
-                else if(isPhoneDuplicate){
+                } else if (isPhoneDuplicate) {
                     Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_SHORT).show();
                     break;
-                }
-                else{
+                } else {
                     isSend = true;
                     Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 발송되었습니다.", Toast.LENGTH_SHORT).show();
                     startPhoneNumberVerification(changePhoneNumber(mobilePhoneNumber.getText().toString()));
@@ -360,7 +360,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                     authCode.setError("인증번호를 입력해주세요.");
                     return;
                 }
-                if (!isSend){
+                if (!isSend) {
                     authCode.setError("인증 요청을 먼저 해주세요.");
                     return;
                 }
@@ -369,19 +369,16 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 break;
 
             case R.id.resendAuth:
-                if(isPhoneEmpty){
+                if (isPhoneEmpty) {
                     Toast.makeText(getApplicationContext(), "전화번호을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     break;
-                }
-                else if(isNotPhone){
+                } else if (isNotPhone) {
                     Toast.makeText(getApplicationContext(), "전화번호 형식이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
                     break;
-                }
-                else if(isPhoneDuplicate){
+                } else if (isPhoneDuplicate) {
                     Toast.makeText(getApplicationContext(), "이미 가입된 전화번호입니다.", Toast.LENGTH_SHORT).show();
                     break;
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "해당 번호로 인증 문자가 재발송되었습니다.", Toast.LENGTH_SHORT).show();
                     resendVerificationCode(changePhoneNumber(mobilePhoneNumber.getText().toString()), mResendToken);
                     break;
