@@ -130,9 +130,6 @@ public class SearchResultFragment extends Fragment {
         searchResult.setLayoutManager(searchLayoutManager);
         searchResult2.setLayoutManager(searchLayoutManager2);
         searchResult3.setLayoutManager(searchLayoutManager3);
-        searchResult.setHasFixedSize(true);
-        searchResult2.setHasFixedSize(true);
-        searchResult3.setHasFixedSize(true);
         obResult = new ArrayList<>();
         tpResult = new ArrayList<>();
         postResult = new ArrayList<>();

@@ -113,7 +113,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             obTpOverviewSim.setText(item.getIntro());
             obTpHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
             obTpHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            obTpHashTag.setHasFixedSize(true);
         }
 
     }
