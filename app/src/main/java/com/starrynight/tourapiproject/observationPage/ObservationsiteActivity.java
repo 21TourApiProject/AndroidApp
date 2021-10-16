@@ -160,44 +160,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
                             Log.e(TAG, "관측지 이미지 연결결 실패");
                         }
                     });
-//                    call3.enqueue(new Callback<List<String>>() {
-//                        @Override
-//                        public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-//
-//                            if (response.isSuccessful()) {
-//                                if (!response.body().isEmpty()) {
-//                                    Log.d(TAG, "관측지 이미지 호출 성공");
-//                                    List<String> imageList = response.body();
-//                                    obs_images = imageList.toArray(new String[imageList.size()]);
-//                                    balloonObject.setImage(imageList.get(0));   //map위한 bundle
-//
-//                                    //관측지 이미지 슬라이더 설정
-//                                    obs_slider = findViewById(R.id.obs_Img_slider);
-//                                    obs_indicator = findViewById(R.id.obs_Img_indicator);
-//                                    obs_slider.setAdapter(new ObserveImageSliderAdapter(ObservationsiteActivity.this, obs_images));
-//                                    obs_slider.setOffscreenPageLimit(10);
-//
-//                                    obs_slider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//                                        @Override
-//                                        public void onPageSelected(int position) {
-//                                            super.onPageSelected(position);
-//                                            setObserveCurrentIndicator(position);
-//                                        }
-//                                    });
-//                                    setupObserveIndicators(obs_images.length);
-//                                }
-//
-//                            } else {
-//                                Log.e(TAG, "관측지 이미지 호출 실패");
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<List<String>> call, Throwable t) {
-//
-//                        }
-//                    });
-
 
                     TextView name = findViewById(R.id.obs_name_txt);
                     name.setText(observation.getObservationName());
@@ -713,12 +675,12 @@ public class ObservationsiteActivity extends AppCompatActivity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        params.setMargins(5, 0, 5, 0);
+        params.setMargins(15, 0, 15, 0);
 
         for (int i = 0; i < indicators.length; i++) {
             indicators[i] = new ImageView(this);
             indicators[i].setImageDrawable(ContextCompat.getDrawable(this,
-                    R.drawable.post__indicator_inactive));
+                    R.drawable.observe__indicator_inactive));
             indicators[i].setLayoutParams(params);
             obs_indicator.addView(indicators[i]);
         }
@@ -733,12 +695,12 @@ public class ObservationsiteActivity extends AppCompatActivity {
             if (i == position) {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_active
+                        R.drawable.observe__indicator_active
                 ));
             } else {
                 imageView.setImageDrawable(ContextCompat.getDrawable(
                         this,
-                        R.drawable.post__indicator_inactive
+                        R.drawable.observe__indicator_inactive
                 ));
             }
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_purple"
+    android:background="@color/bg_dark_indigo"
     tools:context=".MainActivity">
 
     <ScrollView
@@ -20,7 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:background="@color/main_purple"
+                android:background="@color/bg_dark_indigo"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -120,7 +120,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/content_blue"
                 android:orientation="vertical"
                 android:paddingHorizontal="24dp"
                 android:paddingTop="8dp"
@@ -221,7 +220,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:background="@color/content_blue"
                 android:orientation="vertical"
                 android:paddingHorizontal="24dp">
 
