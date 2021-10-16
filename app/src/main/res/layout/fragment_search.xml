@@ -28,17 +28,17 @@
                 <!--                android:focusableInTouchMode="false"-->
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:layout_marginEnd="18dp"
+                    android:layout_marginEnd="13dp"
                     android:layout_marginBottom="38dp"
                     android:layout_weight="7">
 
-                    <SearchView
+                    <androidx.appcompat.widget.SearchView
                         android:id="@+id/search"
+                        style="@style/MySearchViewStyle"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_weight="7"
                         android:background="@drawable/postwrite__search_bar"
                         app:iconifiedByDefault="false" />
                 </FrameLayout>
@@ -99,19 +99,13 @@
                         android:layout_marginStart="8dp"
                         android:text="밤하늘 명소" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/alarm__updown" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hotRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginBottom="24dp"
                     android:visibility="visible" />
 
@@ -145,19 +139,13 @@
                         android:layout_marginStart="8dp"
                         android:text="밤하늘 명소" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/alarm__updown" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/walkingRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginBottom="24dp"
                     android:visibility="visible" />
 
@@ -191,19 +179,13 @@
                         android:layout_marginStart="8dp"
                         android:text="밤하늘 명소" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/alarm__updown" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/cityRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginBottom="24dp" />
 
                 <ImageView
@@ -236,19 +218,13 @@
                         android:layout_marginStart="8dp"
                         android:text="밤하늘 명소" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/alarm__updown" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hideRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginBottom="24dp" />
 
                 <ImageView
@@ -281,19 +257,13 @@
                         android:layout_marginStart="8dp"
                         android:text="밤하늘 명소" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/alarm__updown" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/instagramrecylcerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="24dp"
                     android:layout_marginBottom="24dp" />
 
                 <ImageView
@@ -325,20 +295,14 @@
                         android:layout_marginStart="8dp"
                         android:text="밤하늘 명소" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/alarm__updown" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/campingrecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="24dp"/>
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="24dp" />
 
                 <ImageView
                     android:layout_width="match_parent"
