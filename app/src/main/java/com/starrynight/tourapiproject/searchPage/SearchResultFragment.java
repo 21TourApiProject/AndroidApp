@@ -809,6 +809,8 @@ public class SearchResultFragment extends Fragment {
     private void searchEverything(SearchKey searchKey) {
         searchResult2.removeAllViews();
         finalTpResult.clear();
+        moreTpText.setVisibility(View.VISIBLE);
+        tpline.setVisibility(View.VISIBLE);
         allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
         LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
         task.execute();
@@ -821,6 +823,9 @@ public class SearchResultFragment extends Fragment {
                     tpResult = response.body();
                     task.cancel(true);
                     if (tpResult.size() <= 3) {
+                        moreTpText.setVisibility(View.GONE);
+                    }
+                    if(tpResult.size()==0){
                         moreTpText.setVisibility(View.GONE);
                         tpline.setVisibility(View.GONE);
                     }
@@ -858,6 +863,8 @@ public class SearchResultFragment extends Fragment {
         });
         searchResult.removeAllViews();
         finalObResult.clear();
+        moreObText.setVisibility(View.VISIBLE);
+        obline.setVisibility(View.VISIBLE);
         Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getObservationWithFilter(searchKey);
         call2.enqueue(new Callback<List<SearchParams1>>() {
             @Override
@@ -866,6 +873,9 @@ public class SearchResultFragment extends Fragment {
                     Log.d(TAG, "관측지 검색 성공");
                     obResult = response.body();
                     if (obResult.size() <= 3) {
+                        moreObText.setVisibility(View.GONE);
+                    }
+                    if (obResult.size() ==0){
                         moreObText.setVisibility(View.GONE);
                         obline.setVisibility(View.GONE);
                     }
@@ -904,6 +914,8 @@ public class SearchResultFragment extends Fragment {
         });
         searchResult3.removeAllViews();
         finalPostResult.clear();
+        morePostText.setVisibility(View.VISIBLE);
+        postline.setVisibility(View.VISIBLE);
         Call<List<MyPost>> call3 = RetrofitClient.getApiService().getPostWithFilter(searchKey);
         call3.enqueue(new Callback<List<MyPost>>() {
             @Override
@@ -912,6 +924,9 @@ public class SearchResultFragment extends Fragment {
                     Log.d("searchPost", "검색 게시물 업로드 성공");
                     postResult = response.body();
                     if (postResult.size() <= 3) {
+                        morePostText.setVisibility(View.GONE);
+                    }
+                    if (postResult.size()==0){
                         morePostText.setVisibility(View.GONE);
                         postline.setVisibility(View.GONE);
                     }
