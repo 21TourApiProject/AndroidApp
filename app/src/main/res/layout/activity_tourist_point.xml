@@ -135,7 +135,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="40dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -169,7 +170,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5.33dp"
+                        android:layout_marginRight="6dp"
                         app:srcCompat="@drawable/tp_addr" />
 
                     <TextView
@@ -224,7 +225,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="40dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:id="@+id/useTimeLayout"
@@ -242,7 +243,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="39dp"
+                            android:layout_marginRight="39.5dp"
                             android:text="이용시간"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
@@ -354,7 +355,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="40dp"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:id="@+id/expGuideLayout"
@@ -372,7 +373,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="39dp"
+                            android:layout_marginRight="39.5dp"
                             android:text="체험안내"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
@@ -400,7 +401,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="39dp"
+                            android:layout_marginRight="39.5dp"
                             android:text="주차시설"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
@@ -456,7 +457,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="39dp"
+                            android:layout_marginRight="40dp"
                             android:text="홈페이지"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
