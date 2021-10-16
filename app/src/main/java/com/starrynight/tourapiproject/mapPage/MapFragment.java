@@ -253,8 +253,8 @@ public class MapFragment extends Fragment {
 
         @Override
         public void onMapViewInitialized(MapView mapView) {
-            MapPoint classPoint = MapPoint.mapPointWithGeoCoord(37.537229, 127.005515);
-            mapView.setMapCenterPoint(classPoint, true);
+//            MapPoint classPoint = MapPoint.mapPointWithGeoCoord(37.537229, 127.005515);
+//            mapView.setMapCenterPoint(classPoint, true);
             mapView.setZoomLevel(2, true);
         }
 

@@ -35,7 +35,6 @@ public class NoticeActivity extends AppCompatActivity {
 
         LinearLayoutManager noticeLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         noticeRecyclerView.setLayoutManager(noticeLayoutManager);
-        noticeRecyclerView.setHasFixedSize(true);
 
         Call<List<Notice>> call = RetrofitClient.getApiService().getAllNotice();
         call.enqueue(new Callback<List<Notice>>() {

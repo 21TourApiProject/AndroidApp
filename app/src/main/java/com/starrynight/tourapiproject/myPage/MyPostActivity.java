@@ -52,7 +52,6 @@ public class MyPostActivity extends AppCompatActivity {
         RecyclerView myPostRecyclerview = findViewById(R.id.myPosts);
         LinearLayoutManager myPostLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         myPostRecyclerview.setLayoutManager(myPostLayoutManager);
-        myPostRecyclerview.setHasFixedSize(true);
         postResult = new ArrayList<>();
 
         Call<List<MyPost>> call = RetrofitClient.getApiService().getMyPost(userId);
