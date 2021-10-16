@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -66,7 +66,7 @@ public class SearchResultFragment extends Fragment {
     ImageView tpline;
     ImageView postline;
     ImageView allContentBtnTap;
-    SearchView searchView;
+    androidx.appcompat.widget.SearchView searchView;
 
     RecyclerView searchResult;
     RecyclerView searchResult2;
@@ -303,7 +303,7 @@ public class SearchResultFragment extends Fragment {
             }
         });
         if (keyword == null) {
-            searchView.setQueryHint("검색어를 입력하세요");
+            searchView.setQueryHint("원하는 것을 검색해보세요");
         } else {
             searchView.setQuery(keyword, false);
         }
@@ -820,7 +820,7 @@ public class SearchResultFragment extends Fragment {
                     Log.d(TAG, "관광지 검색 성공");
                     tpResult = response.body();
                     task.cancel(true);
-                    if (tpResult.size() < 3) {
+                    if (tpResult.size() <= 3) {
                         moreTpText.setVisibility(View.GONE);
                         tpline.setVisibility(View.GONE);
                     }
@@ -865,7 +865,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관측지 검색 성공");
                     obResult = response.body();
-                    if (obResult.size() < 3) {
+                    if (obResult.size() <= 3) {
                         moreObText.setVisibility(View.GONE);
                         obline.setVisibility(View.GONE);
                     }
@@ -911,7 +911,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d("searchPost", "검색 게시물 업로드 성공");
                     postResult = response.body();
-                    if (postResult.size() < 3) {
+                    if (postResult.size() <= 3) {
                         morePostText.setVisibility(View.GONE);
                         postline.setVisibility(View.GONE);
                     }
