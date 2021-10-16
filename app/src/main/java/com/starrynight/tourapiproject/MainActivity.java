@@ -231,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (fragment instanceof FilterFragment) {
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
+                filter = null;
             } else {
             }
         } else if (fragment instanceof MapFragment) {
