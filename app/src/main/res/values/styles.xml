@@ -8,6 +8,13 @@
         <item name="android:background">@color/content_blue</item>
     </style>
 
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="fontFamily">@font/spoqahansansneoregular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="searchIcon">@drawable/postwrite_observationsearch</item>
+        <item name="queryBackground">@null</item>
+    </style>
+
     <style name="StarryNight" parent="Theme.AppCompat.NoActionBar">
         // Attributes from material theme
         <item name="colorPrimary">@color/content_blue</item>

@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -51,9 +51,9 @@ public class SearchFragment extends Fragment {
 
         ((MainActivity) getActivity()).setFilter(null);
 
-        SearchView searchView = v.findViewById(R.id.search);
+        androidx.appcompat.widget.SearchView searchView = v.findViewById(R.id.search);
         searchView.setIconifiedByDefault(false);
-        searchView.setQueryHint("검색어를 입력하세요");
+        searchView.setQueryHint("원하는 것을 검색해보세요");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
