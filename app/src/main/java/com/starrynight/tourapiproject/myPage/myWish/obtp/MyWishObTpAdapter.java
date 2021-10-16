@@ -134,7 +134,6 @@ public class MyWishObTpAdapter extends RecyclerView.Adapter<MyWishObTpAdapter.Vi
             obTpOverviewSim.setText(item.getOverviewSim());
             obTpHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
             obTpHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            obTpHashTag.setHasFixedSize(true);
         }
 
     }
