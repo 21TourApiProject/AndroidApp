@@ -78,6 +78,8 @@ public class WeatherActivity extends AppCompatActivity {
     int mMonth = c.get(Calendar.MONTH);
     int mDay = c.get(Calendar.DAY_OF_MONTH);
 
+    LinearLayout timePickerLinear;
+
     int cntClick = 0;
 
     //관측적합도
@@ -152,7 +154,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     String timeZero = "00";
     String timeNoon = "12";
-    String setTimeNo = "선택 불가";
 
     private String hour[] = {"00", "01", "02", "03", "04", "05"
             , "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"
@@ -409,6 +410,7 @@ public class WeatherActivity extends AppCompatActivity {
         detailMent = findViewById(R.id.wt_detail_ment);
 
         wtTimePickerHour = findViewById(R.id.wt_timePicker_hour);
+        timePickerLinear = findViewById(R.id.wt_timePicker_linear);
     }
 
     //뒤로가기 버튼 이벤트
@@ -454,6 +456,7 @@ public class WeatherActivity extends AppCompatActivity {
         datePicker.setText(strDate);
 
         todayTime = formatHour.format(cal.getTime());
+        timePickerLinear.setVisibility(View.VISIBLE);
         timePicker.setText(todayTime);
         wtTimePickerHour.setVisibility(View.VISIBLE);
 
@@ -472,37 +475,42 @@ public class WeatherActivity extends AppCompatActivity {
 
                 if (todayTime.equals("00")) {
                     if (selectDate.equals(plusDay)) {
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         timePicker.setText(timeZero);
                         wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = timeZero;
                         Log.d("selectTime1", selectTime);
                     } else if (selectDate.equals(todayDate)) {
                         Log.d("todayTime3", todayTime);
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         timePicker.setText(todayTime);
                         wtTimePickerHour.setVisibility(View.VISIBLE);
                     } else {
-                        timePicker.setText(setTimeNo);
+                        timePickerLinear.setVisibility(View.GONE);
                         wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                         Log.d("selectTime4", selectTime);
                     }
                 } else {
                     if (selectDate.equals(plusDay)) {
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         timePicker.setText(timeZero);
                         wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = timeZero;
                         Log.d("selectTime1", selectTime);
                     } else if (selectDate.equals(plusTwoDay)) {
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         timePicker.setText(timeZero);
                         wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = timeZero;
                         Log.d("selectTime2", selectTime);
                     } else if (selectDate.equals(todayDate)) {
                         Log.d("todayTime3", todayTime);
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         timePicker.setText(todayTime);
                         wtTimePickerHour.setVisibility(View.VISIBLE);
                     } else {
-                        timePicker.setText(setTimeNo);
+                        timePickerLinear.setVisibility(View.GONE);
                         wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                         Log.d("selectTime4", selectTime);
@@ -752,22 +760,24 @@ public class WeatherActivity extends AppCompatActivity {
                 if (todayTime.equals("00")) {
                     if ((selectDate.equals(todayDate)) || (selectDate.equals(plusDay))) {
                         timePickerTxt = hourChange[numberPicker.getValue()];
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         timePicker.setText(timePickerTxt);
                         wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
                     } else {
-                        timePicker.setText(setTimeNo);
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                     }
                 } else {
                     if ((selectDate.equals(todayDate)) || (selectDate.equals(plusDay)) || (selectDate.equals(plusTwoDay))) {
                         timePickerTxt = hourChange[numberPicker.getValue()];
+                        timePickerLinear.setVisibility(View.VISIBLE);
                         timePicker.setText(timePickerTxt);
                         wtTimePickerHour.setVisibility(View.VISIBLE);
                         selectTime = String.valueOf(hourChange[numberPicker.getValue()]);
                     } else {
-                        timePicker.setText(setTimeNo);
+                        timePickerLinear.setVisibility(View.GONE);
                         wtTimePickerHour.setVisibility(View.GONE);
                         selectTime = timeNoon;
                     }
