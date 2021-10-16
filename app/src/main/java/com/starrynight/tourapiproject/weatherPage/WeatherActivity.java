@@ -847,6 +847,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 Log.d("unixToDate", unixToDate);
 
                                 if (selectDateTime.equals(unixToDate)) {
+                                    Log.d("selectDateTime", selectDateTime);
                                     //tempTv만 나오게
                                     setTempVisibility(0);
 
@@ -939,7 +940,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
-                                    tempTextTv.setText("기온(최고/최저)");
+                                    tempTextTv.setText("기온(최저/최고)");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -1050,7 +1051,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
-                                    tempTextTv.setText("기온(최고/최저)");
+                                    tempTextTv.setText("기온(최저/최고)");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -1302,7 +1303,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                         minTempTv.setText(tempMinText);
                                         maxTempTv.setText(tempMaxText);
-                                        tempTextTv.setText("기온(최고/최저)");
+                                        tempTextTv.setText("기온(최저/최고)");
                                     }
                                 } else {
                                     if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {
