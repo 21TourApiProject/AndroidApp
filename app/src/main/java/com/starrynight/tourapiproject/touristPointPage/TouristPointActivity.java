@@ -742,7 +742,6 @@ public class TouristPointActivity extends AppCompatActivity {
                 Long count = (Long) body.get("totalCount");
 
                 if (count == 0) {
-                    congestionLayout.setVisibility(View.GONE);
                     Log.d(TAG, "혼잡도 데이터 없음");
                 } else {
                     JSONObject items = (JSONObject) body.get("items");
@@ -753,7 +752,7 @@ public class TouristPointActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
+                            congestionLayout.setVisibility(View.VISIBLE);
                             if (code == 1) {
                                 tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
                             } else if (code == 2) {
