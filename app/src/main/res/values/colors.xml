@@ -15,11 +15,13 @@
     <color name = "name_purple">#AAB2FF</color>
 
 
-    <color name="bg_dark_indigo">#313063</color>
+    <color name="bg_dark_indigo">#18183A</color>
     <color name="point_purple">#AAB2FF</color>
     <color name="point_pink"> #FFC2C2</color>
+    <color name="point_dark"> #6363D3</color>
     <color name="content_blue">#52528B</color>
-    <color name="sub_blue">#6363D3</color>
+    <color name="sub_blue">#222258</color>
+    <color name="tag_color">#3F3F84</color>
     <color name="bg_deepdark_blue">#1E1D38</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#BDBDBD</color>

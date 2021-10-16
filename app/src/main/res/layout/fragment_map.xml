@@ -28,6 +28,7 @@
             android:layout_marginEnd="18dp"
             app:iconifiedByDefault="false"
             android:background="@drawable/postwrite__search_bar"
+            app:theme="@style/AppSearchView"
             android:layout_weight="7" />
 
         <ImageButton

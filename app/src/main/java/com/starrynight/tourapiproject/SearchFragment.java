@@ -62,6 +62,7 @@ public class SearchFragment extends Fragment {
                 bundle.putInt("type", 2);
                 bundle.putString("keyword", query);
 
+                ((MainActivity) getActivity()).setFilter(null);
                 Fragment resultfragment = new SearchResultFragment();
                 resultfragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
