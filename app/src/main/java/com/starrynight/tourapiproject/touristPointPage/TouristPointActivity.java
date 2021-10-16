@@ -298,7 +298,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                     RecyclerView daumRecyclerview = findViewById(R.id.daumRecyclerview);
                                     LinearLayoutManager daumLayoutManager = new LinearLayoutManager(TouristPointActivity.this, LinearLayoutManager.VERTICAL, false);
                                     daumRecyclerview.setLayoutManager(daumLayoutManager);
-                                    daumRecyclerview.setHasFixedSize(true);
                                     Listdocument = new ArrayList<>();
 
                                     SearchOpenApi openApi = SearchRetrofitFactory.create();
@@ -461,7 +460,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                     RecyclerView daumRecyclerview = findViewById(R.id.daumRecyclerview);
                                     LinearLayoutManager daumLayoutManager = new LinearLayoutManager(TouristPointActivity.this, LinearLayoutManager.VERTICAL, false);
                                     daumRecyclerview.setLayoutManager(daumLayoutManager);
-                                    daumRecyclerview.setHasFixedSize(true);
                                     Listdocument = new ArrayList<>();
 
                                     SearchOpenApi openApi = SearchRetrofitFactory.create();
@@ -585,7 +583,6 @@ public class TouristPointActivity extends AppCompatActivity {
         RecyclerView hashTagRecyclerview = findViewById(R.id.tpHashTag);
         LinearLayoutManager hashTagLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         hashTagRecyclerview.setLayoutManager(hashTagLayoutManager);
-        hashTagRecyclerview.setHasFixedSize(true);
         hashTagResult = new ArrayList<>();
 
         //관광지 해시태그 불러오기
@@ -649,7 +646,6 @@ public class TouristPointActivity extends AppCompatActivity {
         RecyclerView nearRecyclerview = findViewById(R.id.nearRecyclerview);
         LinearLayoutManager nearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         nearRecyclerview.setLayoutManager(nearLayoutManager);
-        nearRecyclerview.setHasFixedSize(true);
         nearResult = new ArrayList<>();
 
         Call<List<Near>> call3 = RetrofitClient.getApiService().getNearTouristData(contentId);
