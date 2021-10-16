@@ -22,8 +22,9 @@
                 android:paddingHorizontal="24dp"
                 android:weightSum="7">
 
-                <SearchView
+                <androidx.appcompat.widget.SearchView
                     android:id="@+id/search2"
+                    style="@style/MySearchViewStyle"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginTop="17dp"
@@ -33,7 +34,7 @@
                     android:background="@drawable/postwrite__search_bar"
                     android:queryHint="검색어를 입력하세요">
 
-                </SearchView>
+                </androidx.appcompat.widget.SearchView>
 
                 <ImageButton
                     android:id="@+id/mapBtn2"
