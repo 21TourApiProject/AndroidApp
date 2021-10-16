@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
@@ -40,13 +41,11 @@ public class FilterFragment extends Fragment {
         ((MainActivity) getActivity()).showOffBottom();
 
         //x버튼
-        Button backFilter = v.findViewById(R.id.backFilter);
+        ImageButton backFilter = v.findViewById(R.id.backFilter);
         backFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().remove(FilterFragment.this).commit();
-                fragmentManager.popBackStack();
+                getActivity().onBackPressed();
             }
         });
 

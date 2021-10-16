@@ -349,7 +349,7 @@ public class SearchResultFragment extends Fragment {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.add(R.id.main_view, mapFragment);
                 transaction.remove(SearchResultFragment.this);
-                ((MainActivity) getActivity()).setSearchResult(null);
+//                ((MainActivity) getActivity()).setSearchResult(null);
                 transaction.addToBackStack("result");
                 transaction.commit();
 //                ((MainActivity)getActivity()).replaceFragment(mapFragment);
@@ -373,14 +373,14 @@ public class SearchResultFragment extends Fragment {
                     ((MainActivity) getActivity()).setFilter(filterFragment);
                     transaction.add(R.id.main_view, filterFragment);
                     transaction.remove(SearchResultFragment.this);
-                    ((MainActivity) getActivity()).setSearchResult(null);
+//                    ((MainActivity) getActivity()).setSearchResult(null);
                     transaction.addToBackStack("result");
                     transaction.commit();
                 } else {
                     filterFragment.setArguments(bundle);
                     transaction.addToBackStack("result");
                     transaction.remove(SearchResultFragment.this);
-                    ((MainActivity) getActivity()).setSearchResult(null);
+//                    ((MainActivity) getActivity()).setSearchResult(null);
                     transaction.show(filterFragment);
                     transaction.commit();
                 }
