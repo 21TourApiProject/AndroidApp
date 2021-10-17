@@ -1600,21 +1600,20 @@ public class WeatherActivity extends AppCompatActivity {
                 } else if (cityName.equals("충북")) {
                     fineDustText = dustStateArray[11];
                     Log.d("dust", "11");
-                } else if (cityName.equals("충남·대전·세종")) {
+                } else if (cityName.equals("충남")) {
+                    fineDustText = dustStateArray[10];
+                    Log.d("dust", "10");
+
+                } else if (cityName.equals("대전·세종")) {
                     //대전
                     if (provName.equals("대덕구") || provName.equals("동구") || provName.equals("서구") || provName.equals("유성구") || provName.equals("중구")) {
                         fineDustText = dustStateArray[13];
                         Log.d("dust", "13");
                     }
                     //세종
-                    else if (provName.equals("세종")) {
+                    else {
                         fineDustText = dustStateArray[12];
                         Log.d("dust", "12");
-                    }
-                    //충남
-                    else {
-                        fineDustText = dustStateArray[10];
-                        Log.d("dust", "10");
                     }
                 } else if (cityName.equals("인천")) {
                     fineDustText = dustStateArray[18];
@@ -2054,14 +2053,14 @@ public class WeatherActivity extends AppCompatActivity {
 
                         }
                     });
-                } else if (cityAdSpin.getItem(position).equals("충남·대전·세종")) {
-                    choice_do = "충남·대전·세종";
+                } else if (cityAdSpin.getItem(position).equals("충남")) {
+                    choice_do = "충남";
                     cityName = choice_do;
 
                     choice_se = "계룡시";
                     provName = choice_se;
 
-                    provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_ChungnamDaejeonSejong, android.R.layout.simple_spinner_dropdown_item);
+                    provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Chungnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -2072,6 +2071,32 @@ public class WeatherActivity extends AppCompatActivity {
 
                             connectWtArea();
                             Log.d("connectWtAreaCheck", "5");
+                            connectFineDustApi();
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                } else if (cityAdSpin.getItem(position).equals("대전·세종")) {
+                    choice_do = "대전·세종";
+                    cityName = choice_do;
+
+                    choice_se = "대덕구";
+                    provName = choice_se;
+
+                    provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_DaejeonSejong, android.R.layout.simple_spinner_dropdown_item);
+                    provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            choice_se = provAdSpin.getItem(position).toString();
+                            provName = choice_se;
+
+                            connectWtArea();
+                            Log.d("connectWtAreaCheck", "6");
                             connectFineDustApi();
                         }
 
@@ -2097,7 +2122,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
-                            Log.d("connectWtAreaCheck", "6");
+                            Log.d("connectWtAreaCheck", "7");
                             connectFineDustApi();
                         }
 
@@ -2123,7 +2148,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
-                            Log.d("connectWtAreaCheck", "7");
+                            Log.d("connectWtAreaCheck", "8");
                             connectFineDustApi();
                         }
 
@@ -2149,7 +2174,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
-                            Log.d("connectWtAreaCheck", "8");
+                            Log.d("connectWtAreaCheck", "9");
                             connectFineDustApi();
                         }
 
@@ -2175,7 +2200,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
-                            Log.d("connectWtAreaCheck", "9");
+                            Log.d("connectWtAreaCheck", "10");
                             connectFineDustApi();
                         }
 
@@ -2201,7 +2226,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
-                            Log.d("connectWtAreaCheck", "10");
+                            Log.d("connectWtAreaCheck", "11");
                             connectFineDustApi();
                         }
 
@@ -2227,7 +2252,7 @@ public class WeatherActivity extends AppCompatActivity {
                             provName = choice_se;
 
                             connectWtArea();
-                            Log.d("connectWtAreaCheck", "11");
+                            Log.d("connectWtAreaCheck", "12");
                             connectFineDustApi();
                         }
 
