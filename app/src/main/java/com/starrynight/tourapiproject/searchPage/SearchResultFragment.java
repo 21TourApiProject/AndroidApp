@@ -190,7 +190,7 @@ public class SearchResultFragment extends Fragment {
                 searchEverything(searchKey);
 
                 if (keyword == null) {
-                    searchView.setQueryHint("검색어를 입력하세요");
+                    searchView.setQueryHint("원하는 것을 검색해보세요");
                 } else {
                     searchView.setQuery(keyword, false);
                 }
@@ -242,7 +242,7 @@ public class SearchResultFragment extends Fragment {
                     }
                 }
                 if (keyword == null) {
-                    searchView.setQueryHint("검색어를 입력하세요");
+                    searchView.setQueryHint("원하는 것을 검색해보세요");
                 } else {
                     searchView.setQuery(keyword, false);
                 }
