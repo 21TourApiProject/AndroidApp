@@ -136,8 +136,8 @@
                 android:id="@+id/myWishLayout"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -282,8 +282,8 @@
                 android:id="@+id/myPostLayout"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
