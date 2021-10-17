@@ -254,6 +254,7 @@ public class WeatherActivity extends AppCompatActivity {
     int dustTotalCnt;
     int dustNoInfo = 0;
     int dustCheck = 0;
+    int dustNoCheck = 0;
 
     Date changeDate;
     Date dustNextDate;
@@ -889,7 +890,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, Double.parseDouble(tempValue),
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
 
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
@@ -945,7 +946,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, tempValueDouble,
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
 
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
@@ -1000,7 +1001,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, Double.parseDouble(tempValue),
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
 
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
@@ -1056,7 +1057,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, tempValueDouble,
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
 
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
@@ -1109,13 +1110,13 @@ public class WeatherActivity extends AppCompatActivity {
                                     Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
 
+                                moonPhaseText = data.getDaily().get(1).getMoonPhase();
+                                moonAge = Double.parseDouble(moonPhaseText);
+                                Log.d("obFitSelect", String.valueOf(moonAge));
+
+                                connectNextFineDustApi();
+                                Log.d("dustData0", "0");
                                 for (int j = obFitApiId + 6; j < obFitApiId + 13; j++) {
-                                    moonPhaseText = data.getDaily().get(1).getMoonPhase();
-                                    moonAge = Double.parseDouble(moonPhaseText);
-                                    Log.d("obFitSelect", String.valueOf(moonAge));
-
-                                    connectNextFineDustApi();
-
                                     cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
                                     feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
@@ -1139,17 +1140,27 @@ public class WeatherActivity extends AppCompatActivity {
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
                                 }
+                                moonPhaseText = data.getDaily().get(1).getMoonPhase();
+                                moonAge = Double.parseDouble(moonPhaseText);
+                                Log.d("obFitSelect", String.valueOf(moonAge));
+
+                                connectNextFineDustApi();
+                                Log.d("dustData0", "0");
+
                                 for (int j = 5; j < 12; j++) {
-                                    moonPhaseText = data.getDaily().get(1).getMoonPhase();
-                                    moonAge = Double.parseDouble(moonPhaseText);
-
-                                    connectNextFineDustApi();
-
                                     cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
                                     feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
                                 obFitHourId = 1;
                                 break;
@@ -1160,18 +1171,36 @@ public class WeatherActivity extends AppCompatActivity {
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
+
+                                moonPhaseText = data.getDaily().get(1).getMoonPhase();
+                                moonAge = Double.parseDouble(moonPhaseText);
+                                Log.d("obFitSelect", String.valueOf(moonAge));
+
+                                connectNextFineDustApi();
+                                Log.d("dustData0", "0");
                                 for (int j = 4; j < 11; j++) {
-                                    moonPhaseText = data.getDaily().get(1).getMoonPhase();
-                                    moonAge = Double.parseDouble(moonPhaseText);
-
-                                    connectNextFineDustApi();
-
                                     cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
                                     feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
                                 obFitHourId = 2;
                                 break;
@@ -1182,18 +1211,36 @@ public class WeatherActivity extends AppCompatActivity {
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
+
+                                moonPhaseText = data.getDaily().get(1).getMoonPhase();
+                                moonAge = Double.parseDouble(moonPhaseText);
+                                Log.d("obFitSelect", String.valueOf(moonAge));
+
+                                connectNextFineDustApi();
+                                Log.d("dustData0", "0");
                                 for (int j = 3; j < 10; j++) {
-                                    moonPhaseText = data.getDaily().get(1).getMoonPhase();
-                                    moonAge = Double.parseDouble(moonPhaseText);
-
-                                    connectNextFineDustApi();
-
                                     cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
                                     feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
                                 obFitHourId = 3;
                                 break;
@@ -1205,18 +1252,36 @@ public class WeatherActivity extends AppCompatActivity {
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
+
+                                moonPhaseText = data.getDaily().get(1).getMoonPhase();
+                                moonAge = Double.parseDouble(moonPhaseText);
+                                Log.d("obFitSelect", String.valueOf(moonAge));
+
+                                connectNextFineDustApi();
+                                Log.d("dustData0", "0");
                                 for (int j = 2; j < 9; j++) {
-                                    moonPhaseText = data.getDaily().get(1).getMoonPhase();
-                                    moonAge = Double.parseDouble(moonPhaseText);
-
-                                    connectNextFineDustApi();
-
                                     cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
                                     feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
                                 obFitHourId = 4;
                                 break;
@@ -1228,17 +1293,27 @@ public class WeatherActivity extends AppCompatActivity {
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
                                 }
+
+                                moonPhaseText = data.getDaily().get(1).getMoonPhase();
+                                moonAge = Double.parseDouble(moonPhaseText);
+                                Log.d("obFitSelect", String.valueOf(moonAge));
+
+                                connectNextFineDustApi();
+                                Log.d("dustData0", "0");
                                 for (int j = 1; j < 8; j++) {
-                                    moonPhaseText = data.getDaily().get(1).getMoonPhase();
-                                    moonAge = Double.parseDouble(moonPhaseText);
-
-                                    connectNextFineDustApi();
-
                                     cloudVolume = Double.parseDouble(data.getHourly().get(j).getClouds());
                                     feel_like = Double.parseDouble(data.getHourly().get(j).getFeelsLike());
                                     precipitationProbability = Double.parseDouble(data.getHourly().get(j).getPop());
                                     obFitValue = setObservationalFitDegree();
                                     obFitList.add(obFitValue);
+
+                                    Log.d("obFitCloud", String.valueOf(cloudVolume));
+                                    Log.d("obFitTemp", String.valueOf(feel_like));
+                                    Log.d("obFitMoon", String.valueOf(moonAge));
+                                    Log.d("obFitFineDust", fineDust);
+                                    Log.d("obFitPrecip", String.valueOf(precipitationProbability));
+                                    Log.d("obFitLightPol", String.valueOf(lightPollution));
+                                    Log.d("obValue", String.valueOf(setObservationalFitDegree()));
                                 }
                                 obFitHourId = 5;
                                 break;
@@ -1295,7 +1370,14 @@ public class WeatherActivity extends AppCompatActivity {
                                 cloudTv.setText(cloudState);
                                 tempTv.setText(tempState);
                                 moonPhaseTv.setText(moonPhaseState);
-                                fineDustTv.setText(fineDustText);
+                                Log.d("dustNoInfo1", String.valueOf(dustNoInfo));
+
+                                if (dustNoCheck == 1) {
+                                    fineDustTv.setText("정보없음");
+                                } else {
+                                    fineDustTv.setText(fineDustState);
+                                }
+
                                 windTv.setText(windState);
                                 humidityTv.setText(humidityState);
                                 precipitationTv.setText(precipState);
@@ -1328,7 +1410,14 @@ public class WeatherActivity extends AppCompatActivity {
 
                                 cloudTv.setText(cloudText);
                                 moonPhaseTv.setText(moonPhaseText);
-                                fineDustTv.setText(fineDustText);
+                                Log.d("dustNoInfo2", String.valueOf(dustNoInfo));
+
+                                if (dustNoCheck == 1) {
+                                    fineDustTv.setText("정보없음");
+                                } else {
+                                    fineDustTv.setText(fineDustText);
+                                }
+
                                 windTv.setText(windText);
                                 humidityTv.setText(humidityText);
                                 precipitationTv.setText(precipText);
@@ -1441,7 +1530,8 @@ public class WeatherActivity extends AppCompatActivity {
                             Log.d("dustDateTime", data.getResponse().getBody().getItems().get(i).getDataTime());
                             Log.d("dustInformData", data.getResponse().getBody().getItems().get(i).getInformData());
                             dustNoInfo = 1;
-                            Log.d("dustNoInfo", String.valueOf(dustNoInfo));
+                            dustNoCheck = 0;
+                            Log.d("dustNoInfo3", String.valueOf(dustNoInfo));
                             break;
                         }
                     }
@@ -1559,11 +1649,13 @@ public class WeatherActivity extends AppCompatActivity {
                 fineDust = fineDustText;
                 if (dustNoInfo == 0) {
                     fineDust = "좋음";
+                    dustNoCheck = 1;
                     fineDustTv.setText("정보없음");
-                    Log.d("dustNoInfo", String.valueOf(dustNoInfo));
+                    Log.d("dustNoInfo4", String.valueOf(dustNoInfo));
                     Log.d("obFitCheckWhenDustNo", fineDust);
                 }
                 dustNoInfo = 0;
+                Log.d("dustNoInfo7", String.valueOf(dustNoInfo));
             }
 
             @Override
@@ -1780,7 +1872,9 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (fineDust.equals("보통")) {
             fineDustValue = -5;
         } else if (fineDust.equals("나쁨")) {
-            fineDustValue = -20;
+            fineDustValue = -15;
+        } else if (fineDust.equals("매우나쁨")) {
+            fineDustValue = -30;
         }
         precipitationProbabilityValue = Math.round(100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556)) * 100) / 100.0;
 
@@ -2286,7 +2380,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     //구름
-    public void setDetailState(Double cloud, Double temp, Double humidity, Double moonAge, Double wind, Double precip, Double lightPol) {
+    public void setDetailState(Double cloud, Double temp, Double humidity, Double moonAge, Double wind, Double precip, Double lightPol, String fineDust) {
         if (cloud < 11) {
             cloudState = "매우좋음";
         } else if (cloud < 21) {
@@ -2369,6 +2463,16 @@ public class WeatherActivity extends AppCompatActivity {
             lightPolState = "나쁨";
         } else {
             lightPolState = "메우나쁨";
+        }
+
+        if (fineDust.equals("좋음")) {
+            fineDustState = "0~30㎍/㎥";
+        } else if (fineDust.equals("보통")) {
+            fineDustState = "31~80㎍/㎥";
+        } else if (fineDust.equals("나쁨")) {
+            fineDustState = "81~150㎍/㎥";
+        } else {
+            fineDustState = "151㎍/㎥ 이상";
         }
     }
 }
