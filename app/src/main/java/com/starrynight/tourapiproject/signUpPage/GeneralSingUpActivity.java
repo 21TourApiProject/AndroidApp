@@ -85,6 +85,14 @@ public class GeneralSingUpActivity extends AppCompatActivity {
         isMarketing = false;
         isAllAgree = false;
 
+        Button generalBack = findViewById(R.id.generalBack);
+        generalBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //성별
         male = findViewById(R.id.male);
         female = findViewById(R.id.female);

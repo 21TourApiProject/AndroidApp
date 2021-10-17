@@ -156,6 +156,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="14dp"
                         android:ems="20"
+                        android:fontFamily="@font/spoqahansansneoregular"
                         android:hint="제목을 입력해주세요"
                         android:inputType="textPersonName"
                         android:textSize="12sp" />

@@ -135,7 +135,6 @@ public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
             nearOverviewSim.setText(item.getOverviewSim());
             nearHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
             nearHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            nearHashTag.setHasFixedSize(true);
         }
 
     }

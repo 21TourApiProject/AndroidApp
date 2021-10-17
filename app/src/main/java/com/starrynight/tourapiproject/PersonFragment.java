@@ -151,7 +151,6 @@ public class PersonFragment extends Fragment {
         myHashTagResult = new ArrayList<>();
         LinearLayoutManager myHashTagLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myHashTag.setLayoutManager(myHashTagLayoutManager);
-        myHashTag.setHasFixedSize(true);
 
         Call<List<String>> call3 = RetrofitClient.getApiService().getMyHashTag(userId);
         call3.enqueue(new Callback<List<String>>() {

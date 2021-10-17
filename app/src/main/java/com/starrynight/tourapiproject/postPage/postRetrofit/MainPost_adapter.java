@@ -331,7 +331,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
             for (int i = 0; i < indicators.length; i++) {
                 indicators[i] = new ImageView(indicator.getContext());
                 indicators[i].setImageDrawable(ContextCompat.getDrawable(indicator.getContext(),
-                        R.drawable.post__indicator_inactive));
+                        R.drawable.observe__indicator_inactive));
                 indicators[i].setLayoutParams(params);
                 indicator.addView(indicators[i]);
             }

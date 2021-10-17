@@ -78,7 +78,6 @@ public class MyWishActivity extends AppCompatActivity {
 
         LinearLayoutManager myWishLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         myWishRecyclerview.setLayoutManager(myWishLayoutManager);
-        myWishRecyclerview.setHasFixedSize(true);
         obResult = new ArrayList<>();
         tpResult = new ArrayList<>();
         postResult = new ArrayList<>();

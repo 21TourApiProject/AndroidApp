@@ -8,6 +8,11 @@
         <item name="android:background">@color/content_blue</item>
     </style>
 
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@null</item>
+        <item name="queryBackground">@null</item>
+    </style>
+
     <style name="StarryNight" parent="Theme.AppCompat.NoActionBar">
         // Attributes from material theme
         <item name="colorPrimary">@color/content_blue</item>
@@ -27,6 +32,11 @@
         <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
         <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
 
+    </style>
+
+    <style name="AppSearchView" parent="Widget.AppCompat.SearchView" >
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/spoqahansansneoregular</item>
     </style>
 
 

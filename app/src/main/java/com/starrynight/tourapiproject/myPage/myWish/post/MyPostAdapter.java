@@ -122,7 +122,6 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
             myWishPostWriter.setText(item.getNickName());
             myWishPostHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
             myWishPostHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            myWishPostHashTag.setHasFixedSize(true);
 
         }
     }
