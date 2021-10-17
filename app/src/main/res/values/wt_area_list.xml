@@ -142,7 +142,7 @@
         <item>홍성군</item>
     </string-array>
 
-    <string-array name="wt_cDaejeonSejong">
+    <string-array name="wt_DaejeonSejong">
         <!--        <string-array name="wt_Daejeon">-->
         <item>대덕구</item>
         <item>동구</item>
