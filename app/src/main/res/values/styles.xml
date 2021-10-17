@@ -9,7 +9,7 @@
     </style>
 
     <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <item name="searchIcon">@drawable/postwrite_observationsearch</item>
+        <item name="searchIcon">@null</item>
         <item name="queryBackground">@null</item>
     </style>
 
