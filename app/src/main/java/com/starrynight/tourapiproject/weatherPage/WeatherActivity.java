@@ -116,11 +116,13 @@ public class WeatherActivity extends AppCompatActivity {
     double precipitationProbabilityValue;
     double lightPollution;
     double lightPollutionValue;
+    double obFitFinal;
 
     private TextView datePicker;
     private DatePickerDialog.OnDateSetListener dateListener;
     private TextView timePicker;
     private TimePickerDialog.OnTimeSetListener timeListener;
+
 
     TextView wtTimePickerHour;
 
@@ -1889,7 +1891,13 @@ public class WeatherActivity extends AppCompatActivity {
         }
         observationalFitDegree = 100 + cloudVolumeValue + feel_likeValue + moonAgeValue + fineDustValue + precipitationProbabilityValue + lightPollutionValue;
 
-        return Math.round(observationalFitDegree * 100) / 100.0;
+        obFitFinal = Math.round(observationalFitDegree * 100) / 100.0;
+
+        if (obFitFinal < 0) {
+            return 0;
+        } else {
+            return obFitFinal;
+        }
     }
 
     //시,도 Spinner 동작
