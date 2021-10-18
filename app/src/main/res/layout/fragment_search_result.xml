@@ -23,44 +23,57 @@
                 android:paddingHorizontal="24dp"
                 android:weightSum="7">
 
-                <androidx.appcompat.widget.SearchView
-                    android:id="@+id/search2"
-                    style="@style/MySearchViewStyle"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:layout_marginEnd="18dp"
-                    android:layout_marginBottom="14dp"
+                    android:layout_marginEnd="13dp"
+                    android:layout_marginBottom="38dp"
                     android:layout_weight="7"
-                    android:background="@drawable/postwrite__search_bar"
-                    app:theme="@style/AppSearchView"
-                    android:queryHint="검색어를 입력하세요">
+                    android:background="@drawable/postwrite__search_bar">
 
-                </androidx.appcompat.widget.SearchView>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/postwrite_observationsearch" />
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/search2"
+                        style="@style/MySearchViewStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="18dp"
+                        android:queryHint="검색어를 입력하세요"
+                        app:theme="@style/AppSearchView">
+
+                    </androidx.appcompat.widget.SearchView>
+                </FrameLayout>
 
                 <ImageButton
                     android:id="@+id/mapBtn2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="17dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:padding="5dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
                     android:background="@color/empty"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/search__map_btn" />
 
                 <ImageButton
                     android:id="@+id/filterBtn2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="17dp"
                     android:layout_weight="1"
-                    android:padding="5dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
                     android:background="@color/empty"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/search__filter_btn" />
 
             </LinearLayout>
