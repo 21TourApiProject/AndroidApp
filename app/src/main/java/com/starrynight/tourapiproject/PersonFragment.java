@@ -46,7 +46,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PersonFragment extends Fragment {
-    //test용 주석
 
     private static final String TAG = "PersonFragment";
     private static final int HAVE_TO_REFRESH = 20;
