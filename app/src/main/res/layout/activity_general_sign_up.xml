@@ -242,7 +242,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="70dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
                 </LinearLayout>
@@ -269,7 +269,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="70dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 
@@ -312,7 +312,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="70dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 
@@ -355,7 +355,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="70dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 
@@ -397,7 +397,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="70dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
                 </LinearLayout>
@@ -424,7 +424,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="70dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 

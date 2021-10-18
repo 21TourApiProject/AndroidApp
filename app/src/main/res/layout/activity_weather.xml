@@ -79,7 +79,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/wt_timePicker_linear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -126,7 +125,7 @@
 
                 <Spinner
                     android:id="@+id/wt_citySpinner"
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2" />
 
@@ -476,7 +475,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="9dp"
-                            android:text="광공해(최저/최고)" />
+                            android:text="광공해" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -661,7 +660,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:text="최저기온"
-                                android:textColor="@color/point_purple"
+                                android:textColor="@color/point_pink"
                                 android:visibility="gone" />
 
                             <TextView
@@ -681,7 +680,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:text="최고기온"
-                                android:textColor="@color/point_pink"
+                                android:textColor="@color/point_purple"
                                 android:visibility="gone" />
                         </LinearLayout>
                     </LinearLayout>
