@@ -47,6 +47,7 @@ import retrofit2.Response;
 
 public class SearchResultFragment extends Fragment {
 
+    //
     private static final String TAG = "search fragment";
 
     Long[] areaCode = {1L, 31L, 2L, 32L, 33L, 34L, 3L, 8L, 37L, 5L, 38L, 35L, 4L, 36L, 6L, 7L, 39L}; //관광지 지역코드
