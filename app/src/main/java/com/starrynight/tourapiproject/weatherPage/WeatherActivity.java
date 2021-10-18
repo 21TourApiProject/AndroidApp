@@ -305,6 +305,7 @@ public class WeatherActivity extends AppCompatActivity {
             WT_FINE_DUST_API_KEY = URLDecoder.decode("%2BbGNCh8qjhDibGZBmk6VZpWQNDaE9ePej4RbIqtZWnGBScQJshf4ELZgbQj5pqfAtnJPGU7ggOsyK0RmLDJlTQ%3D%3D", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            
         }
     }
 
