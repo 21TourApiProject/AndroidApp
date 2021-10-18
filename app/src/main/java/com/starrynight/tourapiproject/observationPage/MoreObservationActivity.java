@@ -43,7 +43,6 @@ public class MoreObservationActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.morePostRecycler);
         LinearLayoutManager myPostLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(myPostLayoutManager);
-        recyclerView.setHasFixedSize(true);
 
         Call<List<MyPost>>call = RetrofitClient.getApiService().getRelatePost(observationId);
         call.enqueue(new Callback<List<MyPost>>() {

@@ -220,7 +220,8 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragment instanceof SearchResultFragment) {
+        if (searchResult != null && fragment instanceof SearchResultFragment) {
+            System.out.println("1번이니");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.beginTransaction().remove(fragment).commit();
                 bottomNavigationView.setSelectedItemId(R.id.navigation_search);
@@ -228,11 +229,15 @@ public class MainActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
 //                fragmentManager.popBackStackImmediate("result", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        } else if (fragment instanceof FilterFragment) {
+        } else if (filter!=null && fragment instanceof FilterFragment) {
+            System.out.println("2번이니");
+            fragmentManager.beginTransaction().hide(fragment).commit();
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {
+                super.onBackPressed();
             }
+            showBottom();
         } else if (fragment instanceof MapFragment) {
             fragmentManager.beginTransaction().remove(fragment).commit();
             if (fragmentManager.getBackStackEntryCount() > 0) {
@@ -261,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
 //                finish();
             }
         } else if (bottomNavigationView.getSelectedItemId() == R.id.navigation_person || bottomNavigationView.getSelectedItemId() == R.id.navigation_search) {
+            System.out.println("3번이니");
             if (map != null || searchResult != null) {
                 if (fragmentManager.getBackStackEntryCount() > 0) {
                     bottomNavigationView.setSelectedItemId(R.id.navigation_search);
@@ -271,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
                 bottomNavigationView.setSelectedItemId(R.id.navigation_main);
             }
         } else {
+            System.out.println("4번이니");
             if (fragmentManager.getBackStackEntryCount() > 0) {
                 fragmentManager.popBackStack();
             } else {

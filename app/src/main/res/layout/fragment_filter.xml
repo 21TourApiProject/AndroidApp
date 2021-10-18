@@ -22,14 +22,16 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageButton
                     android:id="@+id/backFilter"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
                     android:layout_gravity="center"
-                    android:layout_marginStart="29dp"
-                    android:layout_marginEnd="21dp"
-                    android:background="@drawable/filter_x_btn" />
+                    android:layout_marginStart="22dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="@color/empty"
+                    android:src="@drawable/filter_x_btn" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -45,6 +47,9 @@
                     android:id="@+id/submitFilter"
                     android:layout_width="30dp"
                     android:layout_height="17dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/filter__adapt"

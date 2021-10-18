@@ -14,7 +14,7 @@
         android:gravity="center"
         android:paddingHorizontal="6dp"
         android:text="#해쉬태그"
-        android:textColor="@color/white"
+        android:textColor="@color/point_pink"
         android:textSize="10sp" />
 
     <ImageView
