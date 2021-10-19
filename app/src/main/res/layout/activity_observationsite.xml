@@ -41,6 +41,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/scdream_light"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="17sp" />
             </LinearLayout>
 
