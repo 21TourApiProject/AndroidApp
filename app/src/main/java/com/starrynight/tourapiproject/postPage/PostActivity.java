@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -372,7 +373,7 @@ public class PostActivity extends AppCompatActivity {
                         }
                     });
                     //뒤로 버튼
-                    LinearLayout back = findViewById(R.id.back_btn_layout);
+                    FrameLayout back = findViewById(R.id.back_btn_layout);
                     back.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
