@@ -24,15 +24,6 @@ public class SettingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
 
-        //오픈소스 라이센스
-        LinearLayout opensource = findViewById(R.id.opensource);
-        opensource.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SettingActivity.this, OssLicensesMenuActivity.class));
-            }
-        });
-
         //뒤로 가기
         FrameLayout settingBack = findViewById(R.id.settingBack);
         settingBack.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +111,24 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://luxuriant-router-7fe.notion.site/f3305181536d41a9997961f6516d57ac"));
                 startActivity(intent);
+            }
+        });
+
+        //오픈소스 라이센스
+        LinearLayout opensource = findViewById(R.id.opensource);
+        opensource.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this, OssLicensesMenuActivity.class));
+            }
+        });
+
+        //기여한 사람
+        LinearLayout thanksTo = findViewById(R.id.thanksTo);
+        thanksTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this, ThanksToActivity.class));
             }
         });
 
