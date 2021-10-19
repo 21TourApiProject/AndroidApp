@@ -22,17 +22,19 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <Button
+                <FrameLayout
                     android:id="@+id/settingBack"
-                    android:layout_width="16sp"
-                    android:layout_height="16sp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_marginLeft="29dp"
-                    android:layout_marginRight="21dp"
-                    android:background="@drawable/mypost_back" />
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginRight="21dp">
+
+                    <Button
+                        android:layout_width="16sp"
+                        android:layout_height="16sp"
+                        android:background="@drawable/mypost_back"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -305,6 +307,35 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="43dp"
                     android:text="오픈소스 라이센스"
+                    android:textSize="12sp" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center|end"
+                        android:layout_marginRight="37dp"
+                        android:background="@drawable/setting_more" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/thanksTo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="18dp"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="43dp"
+                    android:text="기여한 사람"
                     android:textSize="12sp" />
 
                 <FrameLayout

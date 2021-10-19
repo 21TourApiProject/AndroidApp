@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class MyDataActivity extends AppCompatActivity {
         profileImage2.setClipToOutline(true);
 
         //뒤로 가기
-        Button myDataBack = findViewById(R.id.myDataBack);
+        FrameLayout myDataBack = findViewById(R.id.myDataBack);
         myDataBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

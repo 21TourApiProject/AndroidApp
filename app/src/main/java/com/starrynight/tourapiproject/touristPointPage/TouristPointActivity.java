@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -145,7 +146,7 @@ public class TouristPointActivity extends AppCompatActivity {
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
 
-        Button tpBack = findViewById(R.id.tpBack);
+        FrameLayout tpBack = findViewById(R.id.tpBack);
         tpBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

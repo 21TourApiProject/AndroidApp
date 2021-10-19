@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -68,7 +69,7 @@ public class MyWishActivity extends AppCompatActivity {
         myWishRecyclerview = findViewById(R.id.myWishs);
 
         //뒤로 가기
-        Button myWishBack = findViewById(R.id.myWishBack);
+        FrameLayout myWishBack = findViewById(R.id.myWishBack);
         myWishBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

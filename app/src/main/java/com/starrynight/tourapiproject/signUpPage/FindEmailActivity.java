@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,7 +76,7 @@ public class FindEmailActivity extends AppCompatActivity implements
 
 
         //뒤로 가기
-        Button findEmailBack = findViewById(R.id.findEmailBack);
+        FrameLayout findEmailBack = findViewById(R.id.findEmailBack);
         findEmailBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
