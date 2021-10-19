@@ -169,18 +169,18 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 }
             }
         });
-        if (item.getProfileImage() != null) {
-            if (item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")) {
-                beforeImage = null;
-                Glide.with(viewHolder.itemView.getContext()).load(item.getProfileImage()).into(viewHolder.profileimage);
-            } else {
-                String fileName = item.getProfileImage();
-                fileName = fileName.substring(1, fileName.length() - 1);
-                Glide.with(viewHolder.itemView.getContext())
-                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName)
-                        .into(viewHolder.profileimage);
-            }
-        }
+//        if (item.getProfileImage() != null) {
+//            if (item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")) {
+//                beforeImage = null;
+//                Glide.with(viewHolder.itemView.getContext()).load(item.getProfileImage()).into(viewHolder.profileimage);
+//            } else {
+//                String fileName = item.getProfileImage();
+//                fileName = fileName.substring(1, fileName.length() - 1);
+//                Glide.with(viewHolder.itemView.getContext())
+//                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName)
+//                        .into(viewHolder.profileimage);
+//            }
+//        }
 
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewHolder.hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -271,8 +271,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
         RecyclerView hashTagRecyclerView;
         TextView title;
-        TextView nickname;
-        ImageView profileimage;
         ViewPager2 mainslider;
         LinearLayout indicator;
         Button bookmark;
@@ -283,14 +281,12 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
 
             hashTagRecyclerView = itemView.findViewById(R.id.mainRecyclerView);
             title = itemView.findViewById(R.id.mainpost_title);
-            nickname = itemView.findViewById(R.id.nickname);
-            profileimage = itemView.findViewById(R.id.mainprofileimage);
             mainslider = itemView.findViewById(R.id.mainslider);
             indicator = itemView.findViewById(R.id.mainindicator);
             bookmark = itemView.findViewById(R.id.mainplus_btn);
             titleLinear = itemView.findViewById(R.id.linear_title);
-            profileimage.setBackground(new ShapeDrawable(new OvalShape()));
-            profileimage.setClipToOutline(true);
+//            profileimage.setBackground(new ShapeDrawable(new OvalShape()));
+//            profileimage.setClipToOutline(true);
             itemView.setClickable(true);
         }
 
@@ -305,7 +301,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                     ((Activity) context).startActivityForResult(intent, 101);
                 }
             });
-            nickname.setText(item.getMainNickName());
+//            nickname.setText(item.getMainNickName());
             mainslider.setOffscreenPageLimit(3);
 
             ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(mainslider.getContext(), item.getImages());

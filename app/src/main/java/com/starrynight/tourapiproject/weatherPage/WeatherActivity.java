@@ -116,6 +116,8 @@ public class WeatherActivity extends AppCompatActivity {
     double precipitationProbabilityValue;
     double lightPollution;
     double lightPollutionValue;
+    double biggestValue;
+    double averageValue;
     double obFitFinal;
 
     private TextView datePicker;
@@ -1888,7 +1890,23 @@ public class WeatherActivity extends AppCompatActivity {
         } else {
             lightPollutionValue = Math.round(-(1 / (-(0.01) * (lightPollution - 71)) + 100) * 100) / 100.0;
         }
-        observationalFitDegree = 100 + cloudVolumeValue + feel_likeValue + moonAgeValue + fineDustValue + precipitationProbabilityValue + lightPollutionValue;
+        if (cloudVolumeValue<feel_likeValue&&cloudVolumeValue<moonAgeValue&&cloudVolumeValue<fineDustValue&&cloudVolumeValue<precipitationProbabilityValue&&cloudVolumeValue<lightPollutionValue){
+            biggestValue=cloudVolumeValue;
+        }else if (feel_likeValue<cloudVolumeValue&&feel_likeValue<moonAgeValue&&feel_likeValue<fineDustValue&&feel_likeValue<precipitationProbabilityValue&&feel_likeValue<lightPollutionValue){
+            biggestValue = feel_likeValue;
+        }else if (moonAgeValue<cloudVolumeValue&&moonAgeValue<feel_likeValue&&moonAgeValue<fineDustValue&&moonAgeValue<precipitationProbabilityValue&&moonAgeValue<lightPollutionValue){
+            biggestValue=moonAgeValue;
+        }else if (fineDustValue<cloudVolumeValue&&fineDustValue<feel_likeValue&&fineDustValue<moonAgeValue&&fineDustValue<precipitationProbabilityValue&&fineDustValue<lightPollutionValue){
+            biggestValue=fineDustValue;
+        }else if (precipitationProbabilityValue<cloudVolumeValue&&precipitationProbabilityValue<feel_likeValue&&precipitationProbabilityValue<moonAgeValue&&precipitationProbabilityValue<fineDustValue&&precipitationProbabilityValue<lightPollutionValue){
+            biggestValue=precipitationProbabilityValue;
+        }else{
+            biggestValue=lightPollutionValue;
+        }
+        averageValue= (cloudVolumeValue+feel_likeValue+moonAgeValue+fineDustValue+precipitationProbabilityValue+lightPollutionValue-biggestValue)/6;
+        if (100+(biggestValue+averageValue*0.3)>0){
+            observationalFitDegree=100+(biggestValue+averageValue*0.3);
+        }else{observationalFitDegree=0;}
 
         obFitFinal = Math.round(observationalFitDegree * 100) / 100.0;
 
