@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -219,7 +220,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
 
         //뒤로 가기
-        Button back = findViewById(R.id.back);
+        FrameLayout back = findViewById(R.id.profileBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

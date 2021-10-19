@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -118,7 +119,7 @@ public class SelectMyHashTagActivity extends AppCompatActivity {
             }
         }
 
-        Button selectHashTagBack = findViewById(R.id.selectHashTagBack); //뒤로가기
+        FrameLayout selectHashTagBack = findViewById(R.id.selectHashTagBack); //뒤로가기
 
         if (email == null) {
             selectHashTagBack.setVisibility(View.VISIBLE);

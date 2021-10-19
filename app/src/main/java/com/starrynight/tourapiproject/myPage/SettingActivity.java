@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,7 @@ public class SettingActivity extends AppCompatActivity {
         });
 
         //뒤로 가기
-        Button settingBack = findViewById(R.id.settingBack);
+        FrameLayout settingBack = findViewById(R.id.settingBack);
         settingBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

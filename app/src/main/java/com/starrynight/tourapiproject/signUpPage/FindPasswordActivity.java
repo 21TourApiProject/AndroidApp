@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,7 +78,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
 
 
         //뒤로 가기
-        Button findPasswordBack = findViewById(R.id.findPasswordBack);
+        FrameLayout findPasswordBack = findViewById(R.id.passwordBack);
         findPasswordBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
