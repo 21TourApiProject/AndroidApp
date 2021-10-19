@@ -515,7 +515,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 }
             }
         });
-        Button back_btn = findViewById(R.id.obs_back_btn);
+        FrameLayout back_btn = findViewById(R.id.obs_back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
