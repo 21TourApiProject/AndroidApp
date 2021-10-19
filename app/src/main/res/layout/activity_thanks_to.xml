@@ -24,7 +24,7 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:id="@+id/settingBack"
+                    android:id="@+id/thanksToBack"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
@@ -42,7 +42,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="69dp"
+                android:layout_marginTop="50dp"
                 app:srcCompat="@drawable/signup_logo" />
 
             <Button
