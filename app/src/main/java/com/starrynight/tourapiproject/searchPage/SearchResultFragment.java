@@ -115,8 +115,6 @@ public class SearchResultFragment extends Fragment {
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
         dialog = new SearchLoadingDialog(getContext());
-
-
         //필터 결과 리사이클러뷰
         searchResult = v.findViewById(R.id.searchResult);
         searchResult2 = v.findViewById(R.id.searchResult2);
