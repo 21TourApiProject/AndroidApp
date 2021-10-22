@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -51,7 +52,7 @@ public class AlarmActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
-        Button back_btn = findViewById(R.id.alarm_back_btn);
+        FrameLayout back_btn = findViewById(R.id.alarmBack);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

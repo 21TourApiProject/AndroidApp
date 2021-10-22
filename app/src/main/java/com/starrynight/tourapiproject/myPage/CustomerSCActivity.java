@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,7 +35,7 @@ public class CustomerSCActivity extends AppCompatActivity {
             }
         });
 
-        Button csBack = findViewById(R.id.csBack);
+        FrameLayout csBack = findViewById(R.id.csBack);
         csBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

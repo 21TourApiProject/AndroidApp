@@ -347,6 +347,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
 //                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
                             intent.putExtra("FromWhere", Activities.OBSERVATION);
                             intent.putExtra("BalloonObject", balloonObject);
+                            intent.putExtra("isWished", isWish);
                             startActivity(intent);
 
                         }
@@ -515,7 +516,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 }
             }
         });
-        Button back_btn = findViewById(R.id.obs_back_btn);
+        FrameLayout back_btn = findViewById(R.id.obs_back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

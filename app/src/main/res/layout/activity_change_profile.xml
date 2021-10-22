@@ -22,17 +22,19 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/back"
-                    android:layout_width="16sp"
-                    android:layout_height="16sp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="10dp"
-                    android:layout_marginLeft="29dp"
-                    android:layout_marginRight="21dp"
-                    android:background="@drawable/mypost_back" />
+                <FrameLayout
+                    android:id="@+id/profileBack"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginRight="21dp">
+
+                    <Button
+                        android:layout_width="16sp"
+                        android:layout_height="16sp"
+                        android:background="@drawable/mypost_back"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -58,8 +60,8 @@
                     app:srcCompat="@drawable/profile_default_image" />
 
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="16sp"
+                    android:layout_height="16sp"
                     android:layout_marginStart="44dp"
                     android:layout_marginTop="44dp"
                     app:srcCompat="@drawable/mydata_edit" />
@@ -83,14 +85,6 @@
                 android:inputType="textPersonName"
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />
-
-            <!--            <EditText-->
-<!--                android:id="@+id/changeNickname"-->
-<!--                android:layout_width="300dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:ems="10"-->
-<!--                android:inputType="textPersonName" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"

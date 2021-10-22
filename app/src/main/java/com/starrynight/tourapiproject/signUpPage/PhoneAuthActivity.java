@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,7 +96,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         pass.setVisibility(View.GONE);
 
         //뒤로 가기
-        Button authBack = findViewById(R.id.authBack);
+        FrameLayout authBack = findViewById(R.id.authBack);
         authBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
