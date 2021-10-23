@@ -15,14 +15,11 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,14 +29,12 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.ortiz.touchview.TouchImageView;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.starPage.constNameRetrofit.ConstellationParams2;
 import com.starrynight.tourapiproject.starPage.horItemPage.HorItem;
 import com.starrynight.tourapiproject.starPage.horItemPage.HoroscopeAdapter;
 import com.starrynight.tourapiproject.starPage.horPageRetriofit.Horoscope;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
-import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
@@ -61,6 +56,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     //bottomSheet 관련
     private LinearLayout bottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
+    LinearLayout topBar;
 
     //나침반 관련
     private SensorManager mSensorManger;
@@ -79,10 +75,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     StarViewAdapter constAdapter;
 
     RecyclerView allConstList;
-    TextView allConstBtn;
-
-    Long constId;
-    Constellation constellation;
+    LinearLayout allConstBtn;
 
     //도움말
     LinearLayout imgClick;
@@ -94,7 +87,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     ImageView helpBtn;
     ImageView compass;
     ImageView starBackBtn;
-    ImageView todayWeather;
+    ConstraintLayout todayWeather;
 
 
     LinearLayout helpInfo;
@@ -126,10 +119,9 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
     private HoroscopeAdapter horAdapter;
     private ViewPager2 horViewpager;
-    Long horId;
+
     String todayMonth;
     String horDesc;
-    int horCnt = 0;
 
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formatMonth = new SimpleDateFormat("MM");
@@ -137,11 +129,11 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     Calendar cal = Calendar.getInstance();
 
     //검색
-    SearchView constSearch;
-    ListView searchList;
-    List<String> nameList = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter;
-    String itemClickId;
+//    SearchView constSearch;
+//    ListView searchList;
+//    List<String> nameList = new ArrayList<>();
+//    ArrayAdapter<String> arrayAdapter;
+//    String itemClickId;
 
 
     Integer compareDataSpring, compareDataSummer, compareDataFall, compareDataWinter, compareDataYearEnd, compareDataYearStart;
@@ -204,79 +196,79 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
 
         //별자리 검색
-        constSearch = v.findViewById(R.id.edit_search);
-        searchList = v.findViewById(R.id.const_list_view);
+//        constSearch = v.findViewById(R.id.edit_search);
+//        searchList = v.findViewById(R.id.const_list_view);
+//
+//        constSearch.setQueryHint("검색");
+//
+//        constSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                constSearch.setIconified(false);
+//            }
+//        });
 
-        constSearch.setQueryHint("검색");
 
-        constSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                constSearch.setIconified(false);
-            }
-        });
-
-
-        //모든 별자리 이름 호출
-        Call<List<ConstellationParams2>> constNameCall = RetrofitClient.getApiService().getConstNames();
-        constNameCall.enqueue(new Callback<List<ConstellationParams2>>() {
-            @Override
-            public void onResponse(Call<List<ConstellationParams2>> call, Response<List<ConstellationParams2>> response) {
-                if (response.isSuccessful()) {
-                    List<ConstellationParams2> result = response.body();
-
-                    for (ConstellationParams2 cp2 : result) {
-                        String constName = cp2.getConstName();
-                        nameList.add(constName);
-                    }
-
-                } else {
-                    Log.d("constName", "전체 별자리 이름 불러오기 실패");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<ConstellationParams2>> call, Throwable t) {
-                Log.e("연결실패", t.getMessage());
-            }
-        });
-
-        //별자리 눌렀을 때 해당 별자리 페이지로 이동
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, nameList);
-        searchList.setAdapter(arrayAdapter);
-        searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemClickId = parent.getItemAtPosition(position).toString();
-                Intent intent = new Intent(Objects.requireNonNull(getActivity()).getApplicationContext(), StarActivity.class);
-                intent.putExtra("constName", itemClickId);
-                Log.d("constName", itemClickId);
-                startActivity(intent);
-                //Toast.makeText(getActivity().getApplicationContext(), "You Click -" + parent.getItemAtPosition(position).toString() + parent.getItemIdAtPosition(position), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //별자리 텍스트 검색 변화
-        constSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //검색 버튼 누를 때 호출
-                TonightSkyFragment.this.arrayAdapter.getFilter().filter(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                // 검색 창에서 글자가 변경이 일어날 때마다 호출
-                TonightSkyFragment.this.arrayAdapter.getFilter().filter(newText);
-                if (newText.equals("")) {
-                    searchList.setVisibility(View.GONE);
-                } else {
-                    searchList.setVisibility(View.VISIBLE);
-                }
-                return false;
-            }
-        });
+//        //모든 별자리 이름 호출
+//        Call<List<ConstellationParams2>> constNameCall = RetrofitClient.getApiService().getConstNames();
+//        constNameCall.enqueue(new Callback<List<ConstellationParams2>>() {
+//            @Override
+//            public void onResponse(Call<List<ConstellationParams2>> call, Response<List<ConstellationParams2>> response) {
+//                if (response.isSuccessful()) {
+//                    List<ConstellationParams2> result = response.body();
+//
+//                    for (ConstellationParams2 cp2 : result) {
+//                        String constName = cp2.getConstName();
+//                        nameList.add(constName);
+//                    }
+//
+//                } else {
+//                    Log.d("constName", "전체 별자리 이름 불러오기 실패");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<ConstellationParams2>> call, Throwable t) {
+//                Log.e("연결실패", t.getMessage());
+//            }
+//        });
+//
+//        //별자리 눌렀을 때 해당 별자리 페이지로 이동
+//        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, nameList);
+//        searchList.setAdapter(arrayAdapter);
+//        searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                itemClickId = parent.getItemAtPosition(position).toString();
+//                Intent intent = new Intent(Objects.requireNonNull(getActivity()).getApplicationContext(), StarActivity.class);
+//                intent.putExtra("constName", itemClickId);
+//                Log.d("constName", itemClickId);
+//                startActivity(intent);
+//                //Toast.makeText(getActivity().getApplicationContext(), "You Click -" + parent.getItemAtPosition(position).toString() + parent.getItemIdAtPosition(position), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        //별자리 텍스트 검색 변화
+//        constSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                //검색 버튼 누를 때 호출
+//                TonightSkyFragment.this.arrayAdapter.getFilter().filter(query);
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                // 검색 창에서 글자가 변경이 일어날 때마다 호출
+//                TonightSkyFragment.this.arrayAdapter.getFilter().filter(newText);
+//                if (newText.equals("")) {
+//                    searchList.setVisibility(View.GONE);
+//                } else {
+//                    searchList.setVisibility(View.VISIBLE);
+//                }
+//                return false;
+//            }
+//        });
 
 //        constSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
@@ -307,13 +299,14 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         mAcclerometer = mSensorManger.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagnetometer = mSensorManger.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
+        topBar = v.findViewById(R.id.top_bar);
         // bottomSheet 설정
-        constSearch.getViewTreeObserver().addOnGlobalLayoutListener(
+        topBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        constSearch.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        bottomSheetBehavior.setPeekHeight(constSearch.getBottom() + 50);
+                        topBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        bottomSheetBehavior.setPeekHeight(topBar.getBottom() + 50);
                     }
                 }
         );
@@ -321,7 +314,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         bottomSheet = v.findViewById(R.id.bottom_sheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
-        bottomSheetBehavior.setPeekHeight(constSearch.getBottom());
+      //  bottomSheetBehavior.setPeekHeight(constSearch.getBottom());
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
 
@@ -551,7 +544,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         starBackBtn.setEnabled(state);
         helpBtn.setEnabled(state);
         bottomSheetBehavior.setDraggable(state);
-        constSearch.setEnabled(state);
+   //     constSearch.setEnabled(state);
     }
 
     //별자리 운세
