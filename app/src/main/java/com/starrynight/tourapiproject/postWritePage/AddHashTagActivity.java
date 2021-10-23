@@ -256,6 +256,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         if (button.getTag() == "isClicked") {
             button.setTag("");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag_non));
+            button.setTextColor(ContextCompat.getColor(this,R.color.name_purple));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
@@ -263,6 +264,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         } else {
             button.setTag("isClicked");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
+            button.setTextColor(ContextCompat.getColor(this,R.color.bg_dark_indigo));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
