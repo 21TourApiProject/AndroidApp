@@ -20,8 +20,8 @@
             android:id="@+id/weather_button"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@color/empty"
             android:layout_centerVertical="true"
+            android:background="@drawable/mainpage__weather_btn"
             android:src="@drawable/main__weather" />
 
         <ImageView
