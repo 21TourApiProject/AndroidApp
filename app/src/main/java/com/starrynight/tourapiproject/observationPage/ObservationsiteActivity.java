@@ -606,11 +606,11 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
     private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
+        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
         RecyclerView hashTagsrecyclerView = findViewById(R.id.obs_hashtags_layout);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
-
+        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
         recyclerHashTagAdapter = new RecyclerHashTagAdapter();
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }

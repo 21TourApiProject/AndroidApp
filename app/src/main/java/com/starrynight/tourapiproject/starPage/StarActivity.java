@@ -1,6 +1,5 @@
 package com.starrynight.tourapiproject.starPage;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,16 +19,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StarActivity extends AppCompatActivity {
-    Context context;
-
-    // 별자리 상세정보 제목
-    TextView constMtdTl, constBestMonthTl;
-
-    // 별자리 상세정보 내용
-    TextView constName, constStory, constMtd, constBestMonth, constPeriod, constPersonality, constTravel, constGuard;
+    TextView constName;
 
     // 별자리 상세정보 뷰
-    View constMtdTv, constBestMonthTv, constGuardTv, constPersonalityTv;
+    TextView constMtdTv, constBestMonthTv, constStoryTv;
     ImageView constImage, constFeature1, constFeature2, constFeature3;
 
     String intentConstName;
@@ -52,26 +45,9 @@ public class StarActivity extends AppCompatActivity {
         constFeature2 = findViewById(R.id.const_feature2);
         constFeature3 = findViewById(R.id.const_feature3);
 
-        constStory = findViewById(R.id.const_story);
-
+        constStoryTv = findViewById(R.id.const_story);
         constMtdTv = findViewById(R.id.const_mtd_tv);
-        constMtdTl = constMtdTv.findViewById(R.id.star_title_text);
-        constMtd = constMtdTv.findViewById(R.id.star_content_text);
-
         constBestMonthTv = findViewById(R.id.const_best_month_tv);
-        constBestMonth = constBestMonthTv.findViewById(R.id.star_content_text);
-        constBestMonthTl = constBestMonthTv.findViewById(R.id.star_title_text);
-
-        constPersonalityTv = findViewById(R.id.const_personality_tv);
-        constPersonality = findViewById(R.id.const_personality);
-        constPeriod = findViewById(R.id.const_period);
-        constTravel = findViewById(R.id.const_travel);
-
-        constGuardTv = findViewById(R.id.const_guard_tv);
-        constGuard = constGuardTv.findViewById(R.id.star_content_text);
-
-        constMtdTl.setText("별자리 관측 정보");
-        constBestMonthTl.setText("가장 보기 좋은 달");
 
         // 별자리 클릭 후 상세 정보 불러오는 api
         Call<Constellation> detailConstCall = RetrofitClient.getApiService().getDetailConst(intentConstName);
@@ -83,9 +59,9 @@ public class StarActivity extends AppCompatActivity {
                     constData = response.body();
                     Glide.with(StarActivity.this).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/constDetailImage/b_" + constData.getConstEng() + ".png").fitCenter().into(constImage);
                     constName.setText(constData.getConstName());
-                    constStory.setText(constData.getConstStory());
-                    constMtd.setText(constData.getConstMtd());
-                    constBestMonth.setText(constData.getConstBestMonth());
+                    constStoryTv.setText(constData.getConstStory());
+                    constMtdTv.setText(constData.getConstMtd());
+                    constBestMonthTv.setText(constData.getConstBestMonth());
 
                     if (constData.getConstFeature1() == null) {
                         constFeature1.setVisibility(View.GONE);
@@ -103,22 +79,6 @@ public class StarActivity extends AppCompatActivity {
                         constFeature3.setVisibility(View.GONE);
                     } else {
                         Glide.with(StarActivity.this).load(constData.getConstFeature3()).fitCenter().into(constFeature3);
-                    }
-
-                    if (constData.getConstPersonality() == null) {
-                        constPersonalityTv.setVisibility(View.GONE);
-                    } else {
-                        constPersonalityTv.setVisibility(View.VISIBLE);
-                        constPersonality.setText(constData.getConstPersonality());
-                        constPeriod.setText(constData.getConstPeriod());
-                        constTravel.setText(constData.getConstTravel());
-                    }
-
-                    if (constData.getConstGuard() == null) {
-                        constGuardTv.setVisibility(View.GONE);
-                    } else {
-                        constGuardTv.setVisibility(View.VISIBLE);
-                        constGuard.setText(constData.getConstGuard());
                     }
                 } else {
                 }

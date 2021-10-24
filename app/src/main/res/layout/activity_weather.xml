@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".weatherPage.WeatherActivity">
 
     <ScrollView
@@ -795,7 +794,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="80dp"
                 android:paddingVertical="8dp"
-                android:text="오늘의 구름지도>"
+                android:text="실시간 구름지도>"
                 android:textColor="@color/point_purple"
                 android:textSize="14sp" />
         </LinearLayout>

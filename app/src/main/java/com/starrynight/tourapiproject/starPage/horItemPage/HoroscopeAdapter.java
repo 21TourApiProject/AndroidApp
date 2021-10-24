@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -65,6 +66,9 @@ public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorV
         TextView horKrTitle;
         TextView horPeriod;
         TextView horDesc;
+        TextView horGuard;
+        TextView horPersonality;
+        TextView horTravel;
 
         public HorViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -73,6 +77,9 @@ public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorV
             horKrTitle = itemView.findViewById(R.id.hor_kr_name);
             horPeriod = itemView.findViewById(R.id.hor_period);
             horDesc = itemView.findViewById(R.id.hor_desc);
+            horGuard = itemView.findViewById(R.id.hor_guard);
+            horPersonality = itemView.findViewById(R.id.hor_personality);
+            horTravel = itemView.findViewById(R.id.hor_travel);
 
             itemView.setClickable(false);
         }
@@ -82,6 +89,9 @@ public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorV
             horKrTitle.setText(horItem.getHorKrTitle());
             horPeriod.setText(horItem.getHorPeriod());
             horDesc.setText(horItem.getHorDesc());
+            horGuard.setText(horItem.getHorGuard());
+            horPersonality.setText(horItem.getHorPersonality());
+            horTravel.setText(horItem.getHorTravel());
         }
     }
 }

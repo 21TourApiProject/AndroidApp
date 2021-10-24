@@ -192,7 +192,7 @@
                             android:paddingEnd="20dp"
                             android:text="년도/월/일     "
                             android:textAlignment="center"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/white"
                             android:textSize="14sp" />
 
                         <TextView
@@ -207,7 +207,7 @@
                             android:paddingEnd="10dp"
                             android:text="시간"
                             android:textAlignment="center"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/white"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -260,7 +260,7 @@
                             android:hint="관측지역"
                             android:paddingEnd="5dp"
                             android:textAlignment="center"
-                            android:textColor="@color/gray"
+                            android:textColor="@color/white"
                             android:textSize="11sp" />
                     </LinearLayout>
 

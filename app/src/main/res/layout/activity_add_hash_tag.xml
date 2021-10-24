@@ -27,10 +27,11 @@
                     android:layout_height="12dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="29dp"
+                    android:layout_marginEnd="25dp"
                     android:background="@drawable/signup_back" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="1dp"
@@ -40,13 +41,17 @@
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <Button
+                <TextView
                     android:id="@+id/finish_add_hashTag"
-                    android:layout_width="31dp"
-                    android:layout_height="21dp"
+                    android:padding="10dp"
+                    android:layout_width="51dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/postwrite__complete" />
+                    android:layout_marginEnd="10dp"
+                    android:text="완성"
+                    android:fontFamily="@font/scdream_light"
+                    android:textColor="@color/point_purple"
+                    android:textSize="15sp"/>
             </LinearLayout>
 
             <LinearLayout
