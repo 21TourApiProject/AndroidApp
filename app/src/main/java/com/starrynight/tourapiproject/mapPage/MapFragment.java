@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
+import com.starrynight.tourapiproject.observationPage.RecyclerDecoration;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagAdapter;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagItem;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
@@ -442,8 +443,8 @@ public class MapFragment extends Fragment {
                         textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -457,8 +458,8 @@ public class MapFragment extends Fragment {
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -600,8 +601,8 @@ public class MapFragment extends Fragment {
                         textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -615,8 +616,8 @@ public class MapFragment extends Fragment {
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -1090,11 +1091,10 @@ public class MapFragment extends Fragment {
 
     private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
-
-
+        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
-
+        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
         recyclerHashTagAdapter = new RecyclerHashTagAdapter();
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }
