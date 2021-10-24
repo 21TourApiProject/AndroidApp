@@ -18,15 +18,6 @@ public class Constellation {
     @SerializedName("constBestMonth")
     private String constBestMonth;
 
-    @SerializedName("constPersonality")
-    private String constPersonality;
-
-    @SerializedName("constTravel")
-    private String constTravel;
-
-    @SerializedName("constPeriod")
-    private String constPeriod;
-
     @SerializedName("constFeature1")
     private String constFeature1;
 
@@ -36,20 +27,17 @@ public class Constellation {
     @SerializedName("constFeature3")
     private String constFeature3;
 
-    @SerializedName("startDate")
-    private String startDate;
-
-    @SerializedName("endDate")
-    private String endDate;
-
-    @SerializedName("constGuard")
-    private String constGuard;
-
     @SerializedName("startDate1")
     private String startDate1;
 
+    @SerializedName("endDate1")
+    private String endDate1;
+
+    @SerializedName("startDate2")
+    private String startDate2;
+
     @SerializedName("endDate2")
-    private String endDat2;
+    private String endDate2;
 
     @SerializedName("constEng")
     private String constEng;
@@ -73,22 +61,6 @@ public class Constellation {
         this.constName = constName;
     }
 
-//    public String getConstBigImage() {
-//        return constBigImage;
-//    }
-//
-//    public void setConstBigImage(String constBigImage) {
-//        this.constBigImage = constBigImage;
-//    }
-//
-//    public String getConstSmallImage() {
-//        return constSmallImage;
-//    }
-//
-//    public void setConstSmallImage(String constSmallImage) {
-//        this.constSmallImage = constSmallImage;
-//    }
-
     public String getConstStory() {
         return constStory;
     }
@@ -111,30 +83,6 @@ public class Constellation {
 
     public void setConstBestMonth(String constBestMonth) {
         this.constBestMonth = constBestMonth;
-    }
-
-    public String getConstPersonality() {
-        return constPersonality;
-    }
-
-    public void setConstPersonality(String constPersonality) {
-        this.constPersonality = constPersonality;
-    }
-
-    public String getConstTravel() {
-        return constTravel;
-    }
-
-    public void setConstTravel(String constTravel) {
-        this.constTravel = constTravel;
-    }
-
-    public String getConstPeriod() {
-        return constPeriod;
-    }
-
-    public void setConstPeriod(String constPeriod) {
-        this.constPeriod = constPeriod;
     }
 
     public String getConstFeature1() {
@@ -161,44 +109,36 @@ public class Constellation {
         this.constFeature3 = constFeature3;
     }
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getConstGuard() {
-        return constGuard;
-    }
-
-    public void setConstGuard(String constGuard) {
-        this.constGuard = constGuard;
-    }
-
-    public String getEndDat2() {
-        return endDat2;
-    }
-
     public String getStartDate1() {
         return startDate1;
     }
 
-    public void setEndDat2(String endDat2) {
-        this.endDat2 = endDat2;
-    }
-
     public void setStartDate1(String startDate1) {
         this.startDate1 = startDate1;
+    }
+
+    public String getEndDate1() {
+        return endDate1;
+    }
+
+    public void setEndDate1(String endDate1) {
+        this.endDate1 = endDate1;
+    }
+
+    public String getEndDate2() {
+        return endDate2;
+    }
+
+    public String getStartDate2() {
+        return startDate2;
+    }
+
+    public void setEndDate2(String endDate2) {
+        this.endDate2 = endDate2;
+    }
+
+    public void setStartDate2(String startDate2) {
+        this.startDate2 = startDate2;
     }
 
     public String getConstEng() {

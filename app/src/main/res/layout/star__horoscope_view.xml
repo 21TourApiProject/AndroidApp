@@ -2,57 +2,115 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/hor_kr_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="황소자리"
+        android:fontFamily="@font/spoqahansansneobold"
+        android:textColor="@color/point_purple"
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/hor_image"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="45dp" />
 
     <TextView
         android:id="@+id/hor_eng_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="SAGITTARIUS"
         android:fontFamily="@font/notosanskr_regular"
+        android:text="SAGITTARIUS"
         android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/hor_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4/20 ~ 5/20"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/hor_kr_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="황소"
+            android:layout_marginTop="7dp"
+            android:text="수호성 : "
+            android:textColor="@color/gray"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/hor_period"
+            android:id="@+id/hor_guard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="4/20 ~ 5/20"
+            android:layout_marginTop="7dp"
+            android:text="금성"
             android:textColor="@color/gray"
             android:textSize="14sp" />
+
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/spoqahansansneobold"
+        android:text="이달의 별자리 운세"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/hor_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:text="충분히 스스로에게 자신감을 가져도 된다."
         android:textAlignment="center"
-        android:layout_marginBottom="24dp"
-        android:text="별자리운세"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:fontFamily="@font/spoqahansansneobold"
+        android:text="별자리 성격"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/hor_personality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="참을성이 좋고 헌신적입니다."
+        android:textAlignment="center"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:fontFamily="@font/spoqahansansneobold"
+        android:text="별자리 여행취향"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/hor_travel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="풍요롭고 나른한 휴양지를 선호합니다."
+        android:layout_marginBottom="30dp"
+        android:textAlignment="center"
         android:textSize="14sp" />
 
 </LinearLayout>

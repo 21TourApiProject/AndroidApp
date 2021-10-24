@@ -78,6 +78,10 @@
         <item name="android:padding">4dp</item>
     </style>
 
+    <style name="ImageButton.size24.pad10">
+        <item name="android:padding">10dp</item>
+    </style>
+
     <style name="ImageButton.size21.pad12">
         <item name="android:padding">12dp</item>
     </style>

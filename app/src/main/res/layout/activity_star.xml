@@ -105,9 +105,9 @@
                     android:layout_gravity="start"
                     android:layout_marginVertical="15sp"
                     android:layout_marginStart="26dp"
+                    android:text="(출처:한국천문연구원-별자리전설)"
                     android:textColor="@color/gray"
-                    android:textSize="12sp"
-                    android:text="(출처:한국천문연구원-별자리전설)" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -117,62 +117,6 @@
 
             <include
                 android:id="@+id/const_best_month_tv"
-                layout="@layout/star__detail_view" />
-
-            <LinearLayout
-                android:id="@+id/const_personality_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/wt__card_view_round"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wt__card_view_top"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="17dp"
-                        android:paddingVertical="3dp"
-                        android:text="별자리 성격"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/const_period"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:text="07.22~08.15"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/const_personality"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginVertical="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/const_travel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="26dp"
-                    android:layout_marginVertical="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <include
-                android:id="@+id/const_guard_tv"
                 layout="@layout/star__detail_view" />
 
         </LinearLayout>
