@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tonight__gradation_light"
     tools:context=".starPage.TonightSkyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,39 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/tonight__star_texture"/>
-
         <com.ortiz.touchview.TouchImageView
             android:id="@+id/touchImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
             android:src="@drawable/star__fall" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/tonight__gradation_dark"/>
-
-        <ImageView
-            android:id="@+id/help_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="22dp"
-            android:background="@drawable/tonight__question"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/star_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="13dp"
             android:background="@drawable/tonight__back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,11 +32,11 @@
             android:id="@+id/compass_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
             android:background="@drawable/tonight__compass_body"
             android:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="@id/star_back_btn"
-            app:layout_constraintTop_toBottomOf="@id/star_back_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_editor_absoluteX="0dp"
             app:layout_editor_absoluteY="56dp" />
 
@@ -71,6 +50,25 @@
             app:layout_constraintStart_toStartOf="@id/compass_body"
             app:layout_constraintTop_toTopOf="@id/compass_body" />
 
+        <ImageView
+            android:id="@+id/star_help_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/tonight__question"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/star_back_btn" />
+
+        <ImageView
+            android:id="@+id/star_search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/tonight__search_icon"
+            app:layout_constraintEnd_toEndOf="@id/star_help_btn"
+            app:layout_constraintStart_toStartOf="@id/star_help_btn"
+            app:layout_constraintTop_toBottomOf="@id/star_help_btn" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -83,62 +81,115 @@
         android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/star__ic_remove" />
-
-        <SearchView
-            android:id="@+id/edit_search"
+        <LinearLayout
+            android:id="@+id/top_bar"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginHorizontal="17dp"
-            android:layout_marginVertical="17dp"
-            android:background="@drawable/postwrite__search_bar"
-            android:windowSoftInputMode="adjustResize" />
+            android:layout_height="50dp"
+            android:background="@drawable/star__rounded"
+            android:backgroundTint="@color/sub_blue"
+            android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/const_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/tonight__bottom_down" />
+        </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-                <ImageView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/tonight_weather"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:src="@drawable/tonight__check_today_weather" />
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="22dp"
+                    android:background="@color/sub_blue">
+
+                    <ImageView
+                        android:id="@+id/star__today_weather_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/tonight__today_weather_image"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/star__today_weather_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="13dp"
+                        android:text="오늘의 날씨 확인하기"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/star__today_weather_image"
+                        app:layout_constraintStart_toStartOf="@id/star__today_weather_image"
+                        app:layout_constraintTop_toBottomOf="@id/star__today_weather_image" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:src="@drawable/tonight__right_arrow"
+                        app:layout_constraintBottom_toBottomOf="@id/star__today_weather_txt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/star__today_weather_txt" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <include
                     layout="@layout/star__today_cel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <LinearLayout
+                    android:id="@+id/all_const_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="30dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:text="모든 천체 보기"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/tonight__right_arrow" />
+
+                </LinearLayout>
+
                 <include
                     layout="@layout/star__horoscope"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="60dp" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="22dp" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
+
 
     <!--        <ListView-->
     <!--            android:id="@+id/const_list_view"-->

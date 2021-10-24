@@ -54,6 +54,15 @@ public class Horoscope {
     @SerializedName("horDesc12")
     private String horDesc12;
 
+    @SerializedName("horGuard")
+    private String horGuard;
+
+    @SerializedName("horPersonality")
+    private String horPersonality;
+
+    @SerializedName("horTravel")
+    private String horTravel;
+
     public Long getHorId() {
         return horId;
     }
@@ -120,5 +129,17 @@ public class Horoscope {
 
     public String getHorDesc12() {
         return horDesc12;
+    }
+
+    public String getHorGuard() {
+        return horGuard;
+    }
+
+    public String getHorPersonality() {
+        return horPersonality;
+    }
+
+    public String getHorTravel() {
+        return horTravel;
     }
 }
