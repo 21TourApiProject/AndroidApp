@@ -23,7 +23,7 @@
         android:gravity="center"
         android:paddingHorizontal="4dp"
         android:text="#해쉬태그"
-        android:textColor="@color/point_purple"
+        android:textColor="@color/white"
         android:textSize="10sp" />
 
 </LinearLayout>

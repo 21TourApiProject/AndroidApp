@@ -136,7 +136,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
         optionHashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20));
         optionHashTagRecyclerView.setAdapter(adapter);
-        Button plusHashTag = findViewById(R.id.finish_add_hashTag);
+        TextView plusHashTag = findViewById(R.id.finish_add_hashTag);
         plusHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
