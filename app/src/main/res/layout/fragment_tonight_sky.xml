@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tonight__gradation_light"
     tools:context=".starPage.TonightSkyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,22 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/tonight__star_texture" />
-
         <com.ortiz.touchview.TouchImageView
             android:id="@+id/touchImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
             android:src="@drawable/star__fall" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/tonight__gradation_dark" />
 
         <ImageView
             android:id="@+id/star_back_btn"
