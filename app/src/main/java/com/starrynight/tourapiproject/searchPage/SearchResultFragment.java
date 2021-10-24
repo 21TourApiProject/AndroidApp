@@ -149,7 +149,7 @@ public class SearchResultFragment extends Fragment {
                         TextView textView = new TextView(getContext());
                         textView.setText(" " + areaName[i] + " ");
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
@@ -163,7 +163,7 @@ public class SearchResultFragment extends Fragment {
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
@@ -217,7 +217,7 @@ public class SearchResultFragment extends Fragment {
                         TextView textView = new TextView(getContext());
                         textView.setText(" " + areaName[i] + " ");
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
@@ -231,7 +231,7 @@ public class SearchResultFragment extends Fragment {
                         TextView textView = new TextView(getContext());
                         textView.setText("#" + hashTagName[i]);
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;

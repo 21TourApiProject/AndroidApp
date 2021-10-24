@@ -68,7 +68,8 @@
             android:layout_width="14dp"
             android:layout_height="15dp"
             android:layout_gravity="center"
-            android:background="@drawable/setting_more" />
+            android:background="@drawable/setting_more"
+            android:clickable="false" />
 
     </LinearLayout>
 

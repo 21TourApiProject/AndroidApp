@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
@@ -54,9 +55,11 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
                 if (viewHolder.alarmOpen.getVisibility() == View.GONE) { //닫혀있으면 열기
                     viewHolder.alarmBtn.setRotation(90);
                     viewHolder.alarmOpen.setVisibility(View.VISIBLE);
+                    viewHolder.alarmtitle.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(),R.color.name_purple));
                 } else { //열려있으면 닫기
                     viewHolder.alarmBtn.setRotation(360);
                     viewHolder.alarmOpen.setVisibility(View.GONE);
+                    viewHolder.alarmtitle.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(),R.color.white));
                 }
             }
         });
