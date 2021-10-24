@@ -40,7 +40,7 @@
         android:id="@+id/alarmOpen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/content_blue"
+        android:background="@drawable/custom_gradient"
         android:orientation="vertical"
         android:visibility="gone">
 

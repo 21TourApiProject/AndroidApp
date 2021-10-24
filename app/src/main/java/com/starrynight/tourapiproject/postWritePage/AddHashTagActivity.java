@@ -136,7 +136,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         PostWriteHashTagItemAdapter adapter = new PostWriteHashTagItemAdapter();
         optionHashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20));
         optionHashTagRecyclerView.setAdapter(adapter);
-        Button plusHashTag = findViewById(R.id.finish_add_hashTag);
+        TextView plusHashTag = findViewById(R.id.finish_add_hashTag);
         plusHashTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,6 +256,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         if (button.getTag() == "isClicked") {
             button.setTag("");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag_non));
+            button.setTextColor(ContextCompat.getColor(this,R.color.name_purple));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));
@@ -263,6 +264,7 @@ public class AddHashTagActivity extends AppCompatActivity {
         } else {
             button.setTag("isClicked");
             button.setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
+            button.setTextColor(ContextCompat.getColor(this,R.color.bg_dark_indigo));
 
             String viewId = view.getResources().getResourceEntryName(view.getId());
             int id = Integer.parseInt(viewId.substring(2));

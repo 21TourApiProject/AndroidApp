@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
+import com.starrynight.tourapiproject.observationPage.RecyclerDecoration;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagAdapter;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagItem;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
@@ -442,8 +443,8 @@ public class MapFragment extends Fragment {
                         textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -457,8 +458,8 @@ public class MapFragment extends Fragment {
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -600,8 +601,8 @@ public class MapFragment extends Fragment {
                         textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -615,8 +616,8 @@ public class MapFragment extends Fragment {
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -1015,7 +1016,7 @@ public class MapFragment extends Fragment {
             mMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
             mMarker.setCustomImageResourceId(R.drawable.map__custompin); //마커타입을 커스텀으로 지정 후 이용
             mMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
-            mMarker.setCustomImageAnchor(0.5f, 0.5f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+            mMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
         } else {
             mMarker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 마커타입을 지정
         }
@@ -1040,7 +1041,7 @@ public class MapFragment extends Fragment {
             mMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
             mMarker.setCustomImageResourceId(R.drawable.map__custompin); //마커타입을 커스텀으로 지정 후 이용
             mMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
-            mMarker.setCustomImageAnchor(0.5f, 0.5f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+            mMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
         } else {
             mMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커타입을 지정
         }
@@ -1090,11 +1091,10 @@ public class MapFragment extends Fragment {
 
     private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
-
-
+        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
-
+        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
         recyclerHashTagAdapter = new RecyclerHashTagAdapter();
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }
