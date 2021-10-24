@@ -12,10 +12,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,6 +75,12 @@ public class SearchResultFragment extends Fragment {
     RecyclerView searchResult2;
     RecyclerView searchResult3;
 
+    NestedScrollView nestedScrollView;
+    ProgressBar searchProgressBar;
+    int count = 10, start = 0, end= 10, limit = 0; // 1페이지에 10개씩 데이터를 불러온다(관광지)
+    Boolean tpResultFin = false;
+    SearchResultAdapter2 searchResultAdapter2; //관광지 검색결과 어댑터
+
     LinearLayout selectFilterItem; //선택한 필터들이 보이는 레이아웃
 
     List<SearchParams1> obResult; //관측지 필터 결과
@@ -120,6 +128,8 @@ public class SearchResultFragment extends Fragment {
         searchResult = v.findViewById(R.id.searchResult);
         searchResult2 = v.findViewById(R.id.searchResult2);
         searchResult3 = v.findViewById(R.id.searchResult3);
+        nestedScrollView = v.findViewById(R.id.scroll_view);
+        searchProgressBar = v.findViewById(R.id.searchProgressBar);
         LinearLayoutManager searchLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager searchLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager searchLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -536,7 +546,7 @@ public class SearchResultFragment extends Fragment {
                 searchResult3.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
-                postline.setVisibility(View.GONE);
+                postline.setVisibility(View.GONE); //로딩바
                 allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
                 obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
@@ -571,7 +581,15 @@ public class SearchResultFragment extends Fragment {
                             tpResult = response.body();
                             task.cancel(true);
 
-                            SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(tpResult, getContext());
+                            limit = tpResult.size();
+                            if (limit < end){
+                                tpResultFin = true;
+                            }
+                            List<SearchParams1> searchParams1s = tpResult.subList(start, Math.min(end, limit)); //10개씩
+                            start += count;
+                            end += count;
+
+                            searchResultAdapter2 = new SearchResultAdapter2(searchParams1s, getContext());
                             searchResult.setAdapter(searchResultAdapter2);
                             searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
                                 @Override
@@ -592,6 +610,28 @@ public class SearchResultFragment extends Fragment {
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
+                    }
+                });
+
+                nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                    @Override
+                    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                        if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())
+                        {
+                            if (!tpResultFin){
+                                searchProgressBar.setVisibility(View.VISIBLE);
+                                if (limit < end){
+                                    tpResultFin = true;
+                                }
+                                List<SearchParams1> searchParams1s = tpResult.subList(start, Math.min(end, Math.min(end, limit))); //10개씩
+                                start += count;
+                                end += count;
+                                searchResultAdapter2 = new SearchResultAdapter2(searchParams1s, getContext());
+                                searchResult.setAdapter(searchResultAdapter2);
+                                searchProgressBar.setVisibility(View.GONE);
+                            }
+
+                        }
                     }
                 });
             }
