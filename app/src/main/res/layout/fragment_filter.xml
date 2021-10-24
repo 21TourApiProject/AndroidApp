@@ -79,8 +79,9 @@
 
                         <LinearLayout
                             android:id="@+id/area1"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -105,8 +106,9 @@
 
                         <LinearLayout
                             android:id="@+id/area2"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -138,8 +140,9 @@
 
                         <LinearLayout
                             android:id="@+id/area3"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -164,8 +167,9 @@
 
                         <LinearLayout
                             android:id="@+id/area4"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -197,8 +201,9 @@
 
                         <LinearLayout
                             android:id="@+id/area5"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -223,8 +228,9 @@
 
                         <LinearLayout
                             android:id="@+id/area6"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -255,8 +261,9 @@
 
                         <LinearLayout
                             android:id="@+id/area7"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -281,8 +288,9 @@
 
                         <LinearLayout
                             android:id="@+id/area8"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -313,8 +321,9 @@
 
                         <LinearLayout
                             android:id="@+id/area9"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -339,8 +348,9 @@
 
                         <LinearLayout
                             android:id="@+id/area10"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -371,8 +381,9 @@
 
                         <LinearLayout
                             android:id="@+id/area11"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -397,8 +408,9 @@
 
                         <LinearLayout
                             android:id="@+id/area12"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -429,8 +441,9 @@
 
                         <LinearLayout
                             android:id="@+id/area13"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -447,7 +460,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -455,8 +467,9 @@
 
                         <LinearLayout
                             android:id="@+id/area14"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -473,7 +486,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -487,8 +499,9 @@
 
                         <LinearLayout
                             android:id="@+id/area15"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -505,7 +518,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -513,8 +525,9 @@
 
                         <LinearLayout
                             android:id="@+id/area16"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -531,7 +544,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -545,8 +557,9 @@
 
                         <LinearLayout
                             android:id="@+id/area17"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_weight="1"
                             android:orientation="horizontal">
 
                             <TextView
@@ -563,28 +576,38 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"></LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/areaLinearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
-                    android:background="@drawable/filter__close_bar"
                     android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/filter__close_bar">
+                    </ImageView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+
                         android:layout_marginStart="70dp"
                         android:layout_marginTop="8dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:text="지역"
                         android:textSize="13sp" />
@@ -593,12 +616,12 @@
                         android:id="@+id/areaBtn"
                         android:layout_width="12dp"
                         android:layout_height="14dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
+                        android:layout_gravity="end|center_vertical"
                         android:layout_marginEnd="27dp"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/filter__close"
                         android:clickable="false" />
-                </LinearLayout>
+                </FrameLayout>
             </FrameLayout>
 
             <FrameLayout
@@ -1257,18 +1280,21 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/hashTagLinearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="24dp"
-                    android:background="@drawable/filter__close_bar"
                     android:orientation="horizontal">
-
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/filter__close_bar">
+                    </ImageView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="70dp"
                         android:layout_marginTop="8dp"
                         android:layout_weight="1"
@@ -1279,12 +1305,12 @@
                         android:id="@+id/hashTagBtn"
                         android:layout_width="12dp"
                         android:layout_height="14dp"
-                        android:layout_gravity="center"
+                        android:layout_gravity="end|center_vertical"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="27dp"
                         android:background="@drawable/filter__close"
                         android:clickable="false" />
-                </LinearLayout>
+                </FrameLayout>
             </FrameLayout>
 
         </LinearLayout>
