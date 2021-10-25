@@ -29,5 +29,7 @@
     <color name="ripple_grey">#22222222</color>
     <color name="transparent_black">#86000000</color>
     <color name="transparent">#00000000</color>
+    <color name = "gradient_start">#18183A</color>
+    <color name = "gradient_end">#262668</color>
 
 </resources>

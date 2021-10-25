@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.mapPage.BalloonObject;
+import com.starrynight.tourapiproject.observationPage.RecyclerDecoration;
 import com.starrynight.tourapiproject.touristPointPage.search.OnSearchItemClickListener;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchAdapter;
 import com.starrynight.tourapiproject.touristPointPage.search.SearchData;
@@ -145,7 +147,7 @@ public class TouristPointActivity extends AppCompatActivity {
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
 
-        Button tpBack = findViewById(R.id.tpBack);
+        FrameLayout tpBack = findViewById(R.id.tpBack);
         tpBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -591,9 +593,11 @@ public class TouristPointActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 if (response.isSuccessful()) {
+                    RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
                     hashTagResult = response.body();
                     HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
                     hashTagRecyclerview.setAdapter(hashTagAdapter);
+                    hashTagRecyclerview.addItemDecoration(hashtagDecoration);
                     balloonObject.setHashtags(hashTagResult);
                 } else {
                     Log.e(TAG, "관광지 해시태그 불러오기 실패");

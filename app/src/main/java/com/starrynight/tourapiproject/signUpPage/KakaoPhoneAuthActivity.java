@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -130,7 +131,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
-        Button authBack = findViewById(R.id.kko_authBack);
+        FrameLayout authBack = findViewById(R.id.kko_authBack);
         authBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

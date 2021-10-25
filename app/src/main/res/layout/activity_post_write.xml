@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#313063"
+    android:background="@color/bg_dark_indigo"
     android:textAlignment="textEnd"
     tools:context=".postWritePage.PostWriteActivity">
 
@@ -34,30 +34,26 @@
                     android:layout_width="16sp"
                     android:layout_height="16sp"
                     android:layout_marginLeft="29dp"
-                    android:layout_marginRight="21dp"
                     android:background="@drawable/mypost_back" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
                     android:fontFamily="@font/scdream_light"
-                    android:text="게시글 작성"
+                    android:text="게시글 올리기"
+                    android:textAlignment="center"
                     android:textSize="17sp" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <Button
-                        android:id="@+id/save"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center"
-                        android:textColor="@color/point_purple"
-                        android:fontFamily="@font/scdream_light"
-                        android:text="완료" />
-                </FrameLayout>
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="31dp"
+                    android:layout_height="21dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/postwrite__complete"
+                    android:fontFamily="@font/scdream_light"
+                    android:textColor="@color/point_purple" />
 
             </LinearLayout>
 
@@ -170,9 +166,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:orientation="vertical"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginStart="16dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -196,6 +192,7 @@
                             android:paddingEnd="20dp"
                             android:text="년도/월/일     "
                             android:textAlignment="center"
+                            android:textColor="@color/white"
                             android:textSize="14sp" />
 
                         <TextView
@@ -210,6 +207,7 @@
                             android:paddingEnd="10dp"
                             android:text="시간"
                             android:textAlignment="center"
+                            android:textColor="@color/white"
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -262,6 +260,7 @@
                             android:hint="관측지역"
                             android:paddingEnd="5dp"
                             android:textAlignment="center"
+                            android:textColor="@color/white"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -355,9 +354,9 @@
                         android:id="@+id/postContentText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="1dp"
+                        android:background="@null"
                         android:ems="0"
                         android:fontFamily="@font/spoqahansansneoregular"
                         android:gravity="top"

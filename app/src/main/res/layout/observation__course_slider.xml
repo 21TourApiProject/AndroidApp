@@ -47,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="개요"
+            android:lineSpacingExtra="4dp"
             android:maxLines="4"
             android:textSize="12sp"
             android:ellipsize="end" />
@@ -72,6 +73,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
             android:layout_alignParentTop="true">
             <ImageView
                 android:layout_width="wrap_content"
@@ -95,6 +97,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
             android:layout_alignTop="@id/course_tpoperating_txt">
             <ImageView
                 android:layout_width="wrap_content"
@@ -117,10 +120,12 @@
             style="@style/Textview_observation_details"
             android:layout_below="@id/course_tpaddress_txt"
             android:layout_alignLeft="@id/course_tpaddress_txt"/>
+
         <LinearLayout
             android:id="@+id/course_tpmenu_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
             android:visibility="gone"
             tools:visibility="visible"
             android:layout_alignTop="@id/course_tpmenu_txt">
@@ -155,7 +160,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-            android:layout_marginRight="5.33dp"
+            android:layout_marginRight="4.33dp"
             android:src="@drawable/observation__facillity"/>
         <TextView
             android:layout_width="wrap_content"

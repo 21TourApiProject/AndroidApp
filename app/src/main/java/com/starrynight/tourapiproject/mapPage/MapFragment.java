@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
+import com.starrynight.tourapiproject.observationPage.RecyclerDecoration;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagAdapter;
 import com.starrynight.tourapiproject.observationPage.RecyclerHashTagItem;
 import com.starrynight.tourapiproject.searchPage.FilterFragment;
@@ -51,6 +52,11 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,6 +69,9 @@ import retrofit2.Response;
 public class MapFragment extends Fragment {
 
     private static final String TAG = "map page";
+
+    private Long userId;
+    Boolean isWish;
 
     private MapView mapView;
     ViewGroup mapViewContainer;
@@ -193,6 +202,7 @@ public class MapFragment extends Fragment {
                         .load(bobject.getImage())
                         .into(main_img);
             } else {
+                main_img.setImageResource(R.drawable.default_image);
                 Log.e(TAG, "이미지 비었음");
             }
 
@@ -386,6 +396,10 @@ public class MapFragment extends Fragment {
         mapView.setPOIItemEventListener(markereventListner);
         mapView.setMapViewEventListener(mapeventListner);
 
+        check_userId();
+        observePOIItems.clear();
+        tourPOIItems.clear();
+
         //검색관련 설정
         obResult = new ArrayList<>();
         tpResult = new ArrayList<>();
@@ -405,10 +419,10 @@ public class MapFragment extends Fragment {
                 if (singleBalloonObject != null) {
                     if (singleBalloonObject.getTag() == 1) {
                         observationBalloonObjects.add(singleBalloonObject);
-                        createObserveMarker(mapView, singleBalloonObject);
+                        createObserveMarker(mapView, singleBalloonObject,false);
                     } else if (singleBalloonObject.getTag() == 2) {
                         tourBalloonObjects.add(singleBalloonObject);
-                        createTourMarker(mapView, singleBalloonObject);
+                        createTourMarker(mapView, singleBalloonObject, false);
                     }
                 } else {
                     Log.e(TAG, "번들에 balloon 없음");
@@ -429,8 +443,8 @@ public class MapFragment extends Fragment {
                         textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -444,8 +458,8 @@ public class MapFragment extends Fragment {
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -486,7 +500,28 @@ public class MapFragment extends Fragment {
                             for (SearchParams1 params1 : obResult) {
                                 BalloonObject balloonObject = setupMaker(params1, 1);
                                 observationBalloonObjects.add(balloonObject);
-                                createObserveMarker(mapView, balloonObject);
+
+                                Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, balloonObject.getId(), 0);
+                                call0.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body()) {
+                                                Log.e(TAG, "찜해놓음");
+                                                createObserveMarker(mapView, balloonObject,true);
+                                            } else {
+                                                createObserveMarker(mapView, balloonObject,false);
+                                            }
+                                        } else {
+                                            Log.d(TAG, "내 찜 조회하기 실패");
+                                            createObserveMarker(mapView, balloonObject,false);
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.e("연결실패", t.getMessage());
+                                    }
+                                });
                             }
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
@@ -509,9 +544,29 @@ public class MapFragment extends Fragment {
 
                             for (SearchParams1 params1 : tpResult) {
                                 BalloonObject balloonObject = setupMaker(params1, 2);
-
                                 tourBalloonObjects.add(balloonObject);
-                                createTourMarker(mapView, balloonObject);
+
+                                Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, balloonObject.getId(), 1);
+                                call0.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body()) {
+                                                Log.e(TAG, "찜해놓음");
+                                                createTourMarker(mapView, balloonObject, true);
+                                            } else {
+                                                createTourMarker(mapView, balloonObject, false);
+                                            }
+                                        } else {
+                                            Log.d(TAG, "내 찜 조회하기 실패");
+                                            createTourMarker(mapView, balloonObject, false);
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.e("연결실패", t.getMessage());
+                                    }
+                                });
                             }
                         } else {
                             Log.e(TAG, "관광지 필터 검색 실패");
@@ -546,8 +601,8 @@ public class MapFragment extends Fragment {
                         textView.setText(" " + areaName[i] + " ");
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -561,8 +616,8 @@ public class MapFragment extends Fragment {
                         textView.setText("#" + hashTagName[i]);
 
                         textView.setTextSize(10);
-                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.name_purple));
-                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtags_empty));
+                        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                        textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.hashtag_background));
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.rightMargin = 20;
                         textView.setLayoutParams(params);
@@ -603,7 +658,27 @@ public class MapFragment extends Fragment {
                             for (SearchParams1 params1 : obResult) {
                                 BalloonObject balloonObject = setupMaker(params1, 1);
                                 observationBalloonObjects.add(balloonObject);
-                                createObserveMarker(mapView, balloonObject);
+                                Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, balloonObject.getId(), 0);
+                                call0.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body()) {
+                                                Log.e(TAG, "찜해놓음");
+                                                createObserveMarker(mapView, balloonObject,true);
+                                            } else {
+                                                createObserveMarker(mapView, balloonObject,false);
+                                            }
+                                        } else {
+                                            Log.d(TAG, "내 찜 조회하기 실패");
+                                            createObserveMarker(mapView, balloonObject,false);
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.e("연결실패", t.getMessage());
+                                    }
+                                });
                             }
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
@@ -630,7 +705,27 @@ public class MapFragment extends Fragment {
                                 BalloonObject balloonObject = setupMaker(params1, 2);
 
                                 tourBalloonObjects.add(balloonObject);
-                                createTourMarker(mapView, balloonObject);
+                                Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, balloonObject.getId(), 1);
+                                call0.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body()) {
+                                                Log.e(TAG, "찜해놓음");
+                                                createTourMarker(mapView, balloonObject, true);
+                                            } else {
+                                                createTourMarker(mapView, balloonObject, false);
+                                            }
+                                        } else {
+                                            Log.d(TAG, "내 찜 조회하기 실패");
+                                            createTourMarker(mapView, balloonObject, false);
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.e("연결실패", t.getMessage());
+                                    }
+                                });
                             }
                         } else {
                             Log.e(TAG, "관광지 필터 검색 실패");
@@ -683,7 +778,27 @@ public class MapFragment extends Fragment {
                             for (SearchParams1 params1 : obResult) {
                                 BalloonObject balloonObject = setupMaker(params1, 1);
                                 observationBalloonObjects.add(balloonObject);
-                                createObserveMarker(mapView, balloonObject);
+                                Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, balloonObject.getId(), 0);
+                                call0.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body()) {
+                                                Log.e(TAG, "찜해놓음");
+                                                createObserveMarker(mapView, balloonObject,true);
+                                            } else {
+                                                createObserveMarker(mapView, balloonObject,false);
+                                            }
+                                        } else {
+                                            Log.d(TAG, "내 찜 조회하기 실패");
+                                            createObserveMarker(mapView, balloonObject,false);
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.e("연결실패", t.getMessage());
+                                    }
+                                });
                             }
                         } else {
                             Log.e(TAG, "관측지 검색 실패");
@@ -708,7 +823,27 @@ public class MapFragment extends Fragment {
                                 BalloonObject balloonObject = setupMaker(params1, 2);
 
                                 tourBalloonObjects.add(balloonObject);
-                                createTourMarker(mapView, balloonObject);
+                                Call<Boolean> call0 = com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient.getApiService().isThereMyWish(userId, balloonObject.getId(), 1);
+                                call0.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if (response.isSuccessful()) {
+                                            if (response.body()) {
+                                                Log.e(TAG, "찜해놓음");
+                                                createTourMarker(mapView, balloonObject, true);
+                                            } else {
+                                                createTourMarker(mapView, balloonObject, false);
+                                            }
+                                        } else {
+                                            Log.d(TAG, "내 찜 조회하기 실패");
+                                            createTourMarker(mapView, balloonObject, false);
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.e("연결실패", t.getMessage());
+                                    }
+                                });
                             }
                         } else {
                             Log.e(TAG, "관광지 필터 검색 실패");
@@ -804,15 +939,14 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 if (observe_ckb.isChecked()) {
                     //관측지필터 체크시
-                    for (BalloonObject p : observationBalloonObjects) {
-                        createObserveMarker(mapView, p);
+                    for (MapPOIItem p : observePOIItems) {
+                        mapView.addPOIItem(p);
                     }
-                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 2000);
-                    task.execute();
+//                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 2000);
+//                    task.execute();
                 } else {
                     for (MapPOIItem p : observePOIItems)
                         mapView.removePOIItem(p);
-                    observePOIItems.clear();
                 }
 
             }
@@ -824,15 +958,14 @@ public class MapFragment extends Fragment {
             public void onClick(View v) {
                 if (tour_ckb.isChecked()) {
                     //관광지 필터 체크시
-                    for (BalloonObject p : tourBalloonObjects) {
-                        createTourMarker(mapView, p);
+                    for (MapPOIItem p : tourPOIItems) {
+                        mapView.addPOIItem(p);
                     }
-                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 5000);
-                    task.execute();
+//                    LoadingAsyncTask task = new LoadingAsyncTask(getActivity(), 5000);
+//                    task.execute();
                 } else {
                     for (MapPOIItem p : tourPOIItems)
                         mapView.removePOIItem(p);
-                    tourPOIItems.clear();
                 }
             }
         });
@@ -871,40 +1004,50 @@ public class MapFragment extends Fragment {
     }
 
 
-    private void createObserveMarker(MapView mapView, BalloonObject balloonObject) {
+    private void createObserveMarker(MapView mapView, BalloonObject balloonObject, Boolean isWished) {
         //관측지 마커 생성, 태그는 1번, 파란핀
         mMarker = new MapPOIItem();
         mMarker.setItemName(balloonObject.getName());
         mMarker.setTag(1);
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(balloonObject.getLatitude(), balloonObject.getLongitude());
         mMarker.setMapPoint(MARKER_POINT);
-        mMarker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 마커타입을 지정
+
+        if (isWished) {
+            mMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            mMarker.setCustomImageResourceId(R.drawable.map__custompin); //마커타입을 커스텀으로 지정 후 이용
+            mMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
+            mMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+        } else {
+            mMarker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 마커타입을 지정
+        }
         mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
         mMarker.setUserObject(balloonObject);
-//        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red); //마커타입을 커스텀으로 지정 후 이용
-//        mCustomMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
-//        mCustomMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
         observePOIItems.add(mMarker);
 
         mapView.addPOIItem(mMarker);
         mapView.selectPOIItem(mMarker, true);
         mapView.setMapCenterPoint(MARKER_POINT, false);
+
     }
 
-    private void createTourMarker(MapView mapView, BalloonObject balloonObject) {
+    private void createTourMarker(MapView mapView, BalloonObject balloonObject, Boolean isWished) {
         //관광지 마커 생성, 태그는 2번, 노란핀
         mMarker = new MapPOIItem();
         mMarker.setItemName(balloonObject.getName());
         mMarker.setTag(2);
         MapPoint MARKER_POINT = MapPoint.mapPointWithGeoCoord(balloonObject.getLatitude(), balloonObject.getLongitude());
         mMarker.setMapPoint(MARKER_POINT);
-        mMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커타입을 지정
-        mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-        mMarker.setUserObject(balloonObject);   //
+        if (isWished) {
+            mMarker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            mMarker.setCustomImageResourceId(R.drawable.map__custompin); //마커타입을 커스텀으로 지정 후 이용
+            mMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
+            mMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+        } else {
+            mMarker.setMarkerType(MapPOIItem.MarkerType.YellowPin); // 마커타입을 지정
+        }
 
-//        mCustomMarker.setCustomImageResourceId(R.drawable.custom_marker_red); //마커타입을 커스텀으로 지정 후 이용
-//        mCustomMarker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
-//        mCustomMarker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+        mMarker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        mMarker.setUserObject(balloonObject);
         tourPOIItems.add(mMarker);
 
         mapView.addPOIItem(mMarker);
@@ -940,7 +1083,7 @@ public class MapFragment extends Fragment {
         balloon_Object.setTag(t);
         balloon_Object.setLatitude(params1.getLatitude());
         balloon_Object.setLongitude(params1.getLongitude());
-
+        balloon_Object.setImage(params1.getThumbnail());
         balloon_Object.setHashtags(params1.getHashTagNames());
 
         return balloon_Object;
@@ -948,11 +1091,10 @@ public class MapFragment extends Fragment {
 
     private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
-
-
+        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
-
+        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
         recyclerHashTagAdapter = new RecyclerHashTagAdapter();
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }
@@ -1000,4 +1142,21 @@ public class MapFragment extends Fragment {
             dialog.dismiss();
         }
     }
+
+
+    private void check_userId() {
+        try {
+            String fileName = "userId";
+            FileInputStream fis = getActivity().openFileInput(fileName);
+            String line = new BufferedReader(new InputStreamReader(fis)).readLine();
+            userId = Long.parseLong(line);
+            fis.close();
+        } catch (
+                FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

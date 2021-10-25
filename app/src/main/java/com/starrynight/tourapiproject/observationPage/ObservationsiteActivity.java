@@ -347,6 +347,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
 //                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);   //액티비티가 스택 맨위에 있으면 재활용
                             intent.putExtra("FromWhere", Activities.OBSERVATION);
                             intent.putExtra("BalloonObject", balloonObject);
+                            intent.putExtra("isWished", isWish);
                             startActivity(intent);
 
                         }
@@ -515,7 +516,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 }
             }
         });
-        Button back_btn = findViewById(R.id.obs_back_btn);
+        FrameLayout back_btn = findViewById(R.id.obs_back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -605,11 +606,11 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
     private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
+        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
         RecyclerView hashTagsrecyclerView = findViewById(R.id.obs_hashtags_layout);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
-
+        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
         recyclerHashTagAdapter = new RecyclerHashTagAdapter();
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }

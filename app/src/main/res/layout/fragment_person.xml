@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -253,7 +253,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -284,6 +284,7 @@
                 android:layout_height="140dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -296,15 +297,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myPostImage1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -313,9 +314,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/gray"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
 
                 </LinearLayout>
@@ -330,15 +331,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myPostImage2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -347,9 +348,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/gray"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -363,15 +364,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myPostImage3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -380,9 +381,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/gray"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
 
                 </LinearLayout>
@@ -391,7 +392,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 app:srcCompat="@drawable/mypage_line" />
 
             <FrameLayout
