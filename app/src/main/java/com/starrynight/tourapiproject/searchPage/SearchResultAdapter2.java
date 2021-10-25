@@ -73,6 +73,16 @@ public class SearchResultAdapter2 extends RecyclerView.Adapter<SearchResultAdapt
         this.listener = listener;
     }
 
+    public void addItemMore(List<SearchParams1> subTpResult) {
+        int start = items.size();
+        System.out.println("어댑터");
+        for (int i =0; i<subTpResult.size();i++){
+            System.out.println(i + subTpResult.get(i).getTitle());
+        }
+        items.addAll(subTpResult);
+        notifyItemRangeChanged(start, 10);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView obTpImage;
