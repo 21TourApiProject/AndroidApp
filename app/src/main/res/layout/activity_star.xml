@@ -36,6 +36,7 @@
                     android:layout_height="wrap_content"
                     android:text="사자자리"
                     android:textSize="17sp"
+                    android:fontFamily="@font/scdream"
                     app:layout_constraintBottom_toBottomOf="@id/detail_star_back_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/detail_star_back_btn"

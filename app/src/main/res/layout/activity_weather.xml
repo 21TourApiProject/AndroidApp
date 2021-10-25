@@ -13,51 +13,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="10dp"
-                android:paddingStart="24dp">
+                android:layout_height="49dp">
 
                 <ImageView
                     android:id="@+id/wt_back_btn"
+                    style="@style/ImageButton.size49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="10dp"
-                    android:src="@drawable/tonight__help_close" />
+                    android:padding="18dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="14dp"
-                    android:fontFamily="@font/scdream_light"
                     android:text="날씨"
-                    android:textSize="17sp" />
+                    android:fontFamily="@font/scdream"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/wt_back_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/wt_back_btn"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="21dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/wt__card_view_top"
-                    android:backgroundTint="@color/content_blue"
+                    android:background="@drawable/wt__picker_bg"
                     android:onClick="wtClickDatePicker"
                     android:orientation="horizontal"
                     android:paddingHorizontal="11dp"
-                    android:paddingVertical="2dp">
+                    android:paddingVertical="4dp">
 
                     <TextView
                         android:id="@+id/wt_datePicker"
@@ -72,7 +72,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="7dp"
                         android:text="일"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -83,11 +83,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
-                    android:background="@drawable/wt__card_view_top"
-                    android:backgroundTint="@color/content_blue"
+                    android:background="@drawable/wt__picker_bg"
                     android:orientation="horizontal"
                     android:paddingHorizontal="18dp"
-                    android:paddingVertical="2dp">
+                    android:paddingVertical="4dp">
 
                     <TextView
                         android:id="@+id/wt_timePicker"
@@ -103,7 +102,7 @@
                         android:id="@+id/wt_timePicker_hour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="7dp"
                         android:text="시" />
                 </LinearLayout>
             </LinearLayout>
@@ -113,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="23dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -166,7 +165,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
+                android:layout_marginTop="41dp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="24dp">
 
@@ -183,23 +182,23 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:text="날씨"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/wt_today_weather_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="9dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="맑음"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginHorizontal="20dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -210,7 +209,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:text="별 관측 적합도"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/wt_star_ob_fit_info"
@@ -219,7 +218,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="9dp"
                         android:text="100%"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -234,8 +233,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
-                        android:text="최고의 관측 시간"
-                        android:textSize="12sp" />
+                        android:text="관측 최적 시간"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/wt_best_ob_time_info"
@@ -244,7 +243,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="9dp"
                         android:text="23:45"
-                        android:textSize="20sp" />
+                        android:textSize="22sp" />
 
                 </LinearLayout>
 
@@ -254,8 +253,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="41dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="44dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -291,7 +290,7 @@
                             android:id="@+id/sunrise_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="6dp"
                             android:text="05:36"
                             android:textSize="14sp"
                             app:layout_constraintStart_toEndOf="@id/sunrise"
@@ -312,7 +311,7 @@
                             android:id="@+id/sunset_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="6dp"
                             android:text="05:36"
                             android:textSize="14sp"
                             app:layout_constraintStart_toEndOf="@id/sunset"
@@ -355,7 +354,7 @@
                             android:id="@+id/moonrise_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="6dp"
                             android:text="18:05"
                             android:textSize="14sp"
                             app:layout_constraintStart_toEndOf="@id/moonrise"
@@ -376,7 +375,7 @@
                             android:id="@+id/moonset_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="6dp"
                             android:text="05:36"
                             android:textSize="14sp"
                             app:layout_constraintStart_toEndOf="@id/moonset"
@@ -390,17 +389,18 @@
                 android:id="@+id/ob_fit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="58dp"
                 android:background="@drawable/wt__card_view_round"
                 android:orientation="vertical">
 
                 <TextView
+                    android:gravity="center"
+                    android:fontFamily="@font/spoqahansansneobold"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="37dp"
                     android:background="@drawable/wt__card_view_top"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="3dp"
+                    android:paddingVertical="9dp"
                     android:text="시간 별 관측 적합도"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -408,7 +408,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ob_fit_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -416,39 +416,40 @@
                 android:id="@+id/detail_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="22dp"
+                android:layout_marginTop="34dp"
                 android:background="@drawable/wt__card_view_round"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:background="@drawable/wt__card_view_top"
-                    android:orientation="horizontal">
+                    android:layout_height="37dp">
 
                     <TextView
+                        android:gravity="center"
+                        android:fontFamily="@font/spoqahansansneobold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="3dp"
-                        android:paddingStart="16dp"
                         android:text="상세 날씨 정보"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        android:id="@+id/wt_help"
+                        android:layout_marginEnd="7dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginVertical="2dp"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/wt__help" />
-                </LinearLayout>
+                        android:src="@drawable/wt__help"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -780,23 +781,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginBottom="14dp"
                     android:text="터치해서 요약 정보를 확인해보세요!"
                     android:textColor="@color/gray" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/wt_today_cloud"
+            <LinearLayout
+                android:layout_marginEnd="27dp"
+                android:layout_marginBottom="19dp"
+                android:layout_gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="80dp"
-                android:paddingVertical="8dp"
-                android:text="실시간 구름지도>"
-                android:textColor="@color/point_purple"
-                android:textSize="14sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/wt_today_cloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:paddingVertical="11dp"
+                    android:text="실시간 날씨지도"
+                    android:fontFamily="@font/spoqahansansneobold"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/tonight__right_arrow"/>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
