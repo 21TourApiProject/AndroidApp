@@ -162,6 +162,15 @@
                     android:background="@drawable/search_tap_non" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/no_result_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="23dp"
+                android:text="검색 결과가 없습니다."
+                android:textAlignment="center"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResult"
                 android:layout_width="match_parent"

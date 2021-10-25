@@ -12,12 +12,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -57,7 +55,7 @@ public class SearchResultFragment extends Fragment {
     String[] hashTagName = {"공기 좋은", "깔끔한", "감성적인", "이색적인", "인생샷", "전문적인", "캠핑", "차박", "뚜벅이", "드라이브",
             "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
 
-    TextView moreObText, moreTpText, morePostText;
+    TextView moreObText, moreTpText, morePostText,no_result;
     Button obBtn;
     Button tpBtn;
     Button postBtn;
@@ -74,12 +72,6 @@ public class SearchResultFragment extends Fragment {
     RecyclerView searchResult;
     RecyclerView searchResult2;
     RecyclerView searchResult3;
-
-    NestedScrollView nestedScrollView;
-    ProgressBar searchProgressBar;
-    int count = 10, start, end, limit; // 1페이지에 10개씩 데이터를 불러온다(관광지)
-    Boolean noMoreTp;
-    SearchResultAdapter2 tpAdapter; //관광지 검색결과 어댑터
 
     LinearLayout selectFilterItem; //선택한 필터들이 보이는 레이아웃
 
@@ -124,12 +116,11 @@ public class SearchResultFragment extends Fragment {
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
         dialog = new SearchLoadingDialog(getContext());
+        no_result= v.findViewById(R.id.no_result_text);
         //필터 결과 리사이클러뷰
         searchResult = v.findViewById(R.id.searchResult);
         searchResult2 = v.findViewById(R.id.searchResult2);
         searchResult3 = v.findViewById(R.id.searchResult3);
-        nestedScrollView = v.findViewById(R.id.scroll_view);
-        searchProgressBar = v.findViewById(R.id.searchProgressBar);
         LinearLayoutManager searchLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager searchLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager searchLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -444,6 +435,9 @@ public class SearchResultFragment extends Fragment {
                             //게시물은 어댑터 따로 만들어야 함
                             SearchResultAdapter searchResultAdapter = new SearchResultAdapter(obResult, getContext());
                             searchResult.setAdapter(searchResultAdapter);
+                            if (obResult.isEmpty()){
+                                no_result.setVisibility(View.VISIBLE);
+                            }else{no_result.setVisibility(View.GONE);}
                             searchResultAdapter.setOnSearchResultItemClickListener(new OnSearchResultItemClickListener() {
                                 @Override
                                 public void onItemClick(SearchResultAdapter.ViewHolder holder, View view, int position) {
@@ -509,6 +503,9 @@ public class SearchResultFragment extends Fragment {
                             postResult = response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
                             searchResult.setAdapter(postAdapter);
+                            if (postResult.isEmpty()){
+                                no_result.setVisibility(View.VISIBLE);
+                            }else{no_result.setVisibility(View.GONE);}
                             postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                                 @Override
                                 public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
@@ -539,8 +536,6 @@ public class SearchResultFragment extends Fragment {
         tpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("ㄱㄱㅈ 클릭");
-
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
@@ -555,8 +550,8 @@ public class SearchResultFragment extends Fragment {
                 postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
-//                LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
-//                task.execute();
+                LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
+                task.execute();
 
 //                areaCodeList.add(0L);
 //                hashTagIdList.add(0L);
@@ -581,39 +576,22 @@ public class SearchResultFragment extends Fragment {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
                             tpResult = response.body();
+                            task.cancel(true);
 
-                            start = 0;
-                            end = count;
-                            limit = 0;
-                            noMoreTp = false;
-
-//                            task.cancel(true);
-
-                            limit = tpResult.size();
-                            System.out.println("총 개수 : " + limit);
-
-                            if (!noMoreTp){
-                                if (limit < end){
-                                    noMoreTp = true;
+                            SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(tpResult, getContext());
+                            searchResult.setAdapter(searchResultAdapter2);
+                            if (tpResult.isEmpty()){
+                                no_result.setVisibility(View.VISIBLE);
+                            }else{no_result.setVisibility(View.GONE);}
+                            searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
+                                @Override
+                                public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
+                                    SearchParams1 item = searchResultAdapter2.getItem(position);
+                                    Intent intent = new Intent(getContext(), TouristPointActivity.class);
+                                    intent.putExtra("contentId", item.getItemId());
+                                    startActivity(intent);
                                 }
-
-                                tpAdapter = new SearchResultAdapter2(tpResult.subList(start, Math.min(end, limit)), getContext());
-                                searchResult.setAdapter(tpAdapter);
-
-                                tpAdapter.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
-                                    @Override
-                                    public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
-                                        SearchParams1 item = tpAdapter.getItem(position);
-                                        Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                                        intent.putExtra("contentId", item.getItemId());
-                                        startActivity(intent);
-                                    }
-                                });
-
-                                start += count;
-                                end += count;
-                            }
-
+                            });
                         } else {
                             Log.d(TAG, "관광지 검색 실패");
                             moreTpText.setVisibility(View.GONE);
@@ -624,21 +602,6 @@ public class SearchResultFragment extends Fragment {
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
-                    }
-                });
-
-                nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-                    @Override
-                    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                        if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())
-                        {
-                            if (!noMoreTp){
-                                searchProgressBar.setVisibility(View.VISIBLE);
-                                List<SearchParams1> subTp = getSubTp();
-                                tpAdapter.addItemMore(subTp);
-                                searchProgressBar.setVisibility(View.GONE);
-                            }
-                        }
                     }
                 });
             }
@@ -849,30 +812,17 @@ public class SearchResultFragment extends Fragment {
         return v;
     }
 
-    private List<SearchParams1> getSubTp() {
-        List<SearchParams1> result = tpResult.subList(20, 30);
-        System.out.println(start + " " +end);
-        for (int i =0; i<end;i++){
-            System.out.println(i + tpResult.get(i).getTitle());
-        }
-
-        if (limit < end){
-            noMoreTp = true;
-        }
-
-        start += count;
-        end += count;
-        return result;
-    }
-
     private void searchEverything(SearchKey searchKey) {
         searchResult2.removeAllViews();
         finalTpResult.clear();
         moreTpText.setVisibility(View.VISIBLE);
         tpline.setVisibility(View.VISIBLE);
         allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
-//        LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
-//        task.execute();
+        postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+        tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+        obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+        LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
+        task.execute();
         Call<List<SearchParams1>> call = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
         call.enqueue(new Callback<List<SearchParams1>>() {
             @Override
@@ -880,7 +830,7 @@ public class SearchResultFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "관광지 검색 성공");
                     tpResult = response.body();
-//                    task.cancel(true);
+                    task.cancel(true);
                     if (tpResult.size() <= 3) {
                         moreTpText.setVisibility(View.GONE);
                     }
@@ -899,6 +849,9 @@ public class SearchResultFragment extends Fragment {
                     }
                     SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(finalTpResult, getContext());
                     searchResult2.setAdapter(searchResultAdapter2);
+                    if (finalTpResult.isEmpty()){
+                        no_result.setVisibility(View.VISIBLE);
+                    }else{no_result.setVisibility(View.GONE);}
                     searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
                         @Override
                         public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
@@ -950,6 +903,9 @@ public class SearchResultFragment extends Fragment {
                     //게시물은 어댑터 따로 만들어야 함
                     SearchResultAdapter searchResultAdapter = new SearchResultAdapter(finalObResult, getContext());
                     searchResult.setAdapter(searchResultAdapter);
+                    if (finalObResult.isEmpty()){
+                        no_result.setVisibility(View.VISIBLE);
+                    }else{no_result.setVisibility(View.GONE);}
                     searchResultAdapter.setOnSearchResultItemClickListener(new OnSearchResultItemClickListener() {
                         @Override
                         public void onItemClick(SearchResultAdapter.ViewHolder holder, View view, int position) {
@@ -1000,6 +956,9 @@ public class SearchResultFragment extends Fragment {
                     }
                     MyPostAdapter postAdapter = new MyPostAdapter(finalPostResult, getContext());
                     searchResult3.setAdapter(postAdapter);
+                    if (finalPostResult.isEmpty()){
+                        no_result.setVisibility(View.VISIBLE);
+                    }else{no_result.setVisibility(View.GONE);}
                     postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                         @Override
                         public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
