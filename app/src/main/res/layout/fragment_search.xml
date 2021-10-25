@@ -125,7 +125,7 @@
                     android:src="@drawable/alarm__line" />
 
                 <LinearLayout
-                    android:id="@+id/walkinglinearlayout"
+                    android:id="@+id/instalinearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -138,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="뚜벅이를 위한"
+                        android:text="인스타 감성"
                         android:textSize="17sp" />
 
                     <TextView
@@ -151,15 +151,51 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/walkingRecyclerview"
+                    android:id="@+id/instagramrecylcerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:visibility="visible" />
+                    android:layout_marginBottom="24dp" />
 
                 <ImageView
-                    android:id="@+id/imageView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/alarm__line" />
+
+                <LinearLayout
+                    android:id="@+id/campinglinearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="캠핑족을 위한"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="8dp"
+                        android:text="밤하늘 명소" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/campingrecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="24dp" />
+
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/alarm__line" />
@@ -243,7 +279,7 @@
                     android:src="@drawable/alarm__line" />
 
                 <LinearLayout
-                    android:id="@+id/instalinearlayout"
+                    android:id="@+id/walkinglinearlayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -256,7 +292,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="인스타 감성"
+                        android:text="뚜벅이를 위한"
                         android:textSize="17sp" />
 
                     <TextView
@@ -269,51 +305,15 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/instagramrecylcerview"
+                    android:id="@+id/walkingRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="24dp"
-                    android:layout_marginBottom="24dp" />
+                    android:layout_marginBottom="24dp"
+                    android:visibility="visible" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/alarm__line" />
-
-                <LinearLayout
-                    android:id="@+id/campinglinearlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="16dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="캠핑족을 위한"
-                        android:textSize="17sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="8dp"
-                        android:text="밤하늘 명소" />
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/campingrecyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginBottom="24dp" />
-
-                <ImageView
+                    android:id="@+id/imageView12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/alarm__line" />
