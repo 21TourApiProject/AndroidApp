@@ -319,6 +319,7 @@ public class WeatherActivity extends AppCompatActivity {
         setTextView();
         onClickBackBtn();
         onClickCloudInfo();
+        onClickHelpBtn();
 
         onSetDatePicker();
         onSetTimePicker();
@@ -437,7 +438,8 @@ public class WeatherActivity extends AppCompatActivity {
         wtHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(), WtHelpActivity.class);
+                startActivity(intent);
             }
         });
     }
