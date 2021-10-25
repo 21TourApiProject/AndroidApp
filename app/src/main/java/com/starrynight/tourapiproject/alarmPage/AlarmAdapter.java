@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,10 +57,12 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
                     viewHolder.alarmBtn.setRotation(90);
                     viewHolder.alarmOpen.setVisibility(View.VISIBLE);
                     viewHolder.alarmtitle.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(),R.color.name_purple));
+                    viewHolder.star.setImageDrawable(ContextCompat.getDrawable(viewHolder.itemView.getContext(),R.drawable.alarm__star));
                 } else { //열려있으면 닫기
                     viewHolder.alarmBtn.setRotation(360);
                     viewHolder.alarmOpen.setVisibility(View.GONE);
                     viewHolder.alarmtitle.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(),R.color.white));
+                    viewHolder.star.setImageDrawable(ContextCompat.getDrawable(viewHolder.itemView.getContext(),R.drawable.alarm__star_non));
                 }
             }
         });
@@ -81,6 +84,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
         TextView alarmcontent;
         Button alarmBtn;
         LinearLayout alarmOpen;
+        ImageView star;
 
         public ViewHolder(View itemView, final OnAlarmClickListener listener) {
             super(itemView);
@@ -90,6 +94,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.ViewHolder> 
             alarmcontent = itemView.findViewById(R.id.alarm_content);
             alarmBtn = itemView.findViewById(R.id.scroll_btn);
             alarmOpen = itemView.findViewById(R.id.alarmOpen);
+            star = itemView.findViewById(R.id.alarm_star);
 
         }
 

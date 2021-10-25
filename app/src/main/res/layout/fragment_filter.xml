@@ -70,7 +70,7 @@
                     android:background="@drawable/filter__layout_background"
                     android:orientation="vertical"
                     android:paddingTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -98,7 +98,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -125,7 +124,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -159,7 +157,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -186,7 +183,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -220,7 +216,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -247,7 +242,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -280,7 +274,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -307,7 +300,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -340,7 +332,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -367,7 +358,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -400,7 +390,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -427,7 +416,6 @@
                                 android:layout_width="16dp"
                                 android:layout_height="16dp"
                                 android:layout_gravity="center"
-                                android:layout_marginStart="74dp"
                                 android:layout_marginEnd="30dp"
                                 android:background="@drawable/filter__checkbox_non"
                                 android:clickable="false" />
@@ -639,7 +627,7 @@
                     android:background="@drawable/filter__layout_background"
                     android:orientation="vertical"
                     android:paddingTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
