@@ -22,10 +22,12 @@ public class SearchParams1 {
     Double longitude;  //경도
     @SerializedName("latitude")
     Double latitude; //위도
+    @SerializedName("light")
+    Double light; //광공해
     @SerializedName("hashTagNames")
     List<String> hashTagNames; //해시태그 배열
 
-    public SearchParams1(Long itemId, String thumbnail, String title, String address, String contentType, String intro, Double longitude, Double latitude, List<String> hashTagNames) {
+    public SearchParams1(Long itemId, String thumbnail, String title, String address, String contentType, String intro, Double longitude, Double latitude, Double light, List<String> hashTagNames) {
         this.itemId = itemId;
         this.thumbnail = thumbnail;
         this.title = title;
@@ -34,6 +36,7 @@ public class SearchParams1 {
         this.intro = intro;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.light = light;
         this.hashTagNames = hashTagNames;
     }
 
@@ -99,6 +102,14 @@ public class SearchParams1 {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
+    }
+
+    public Double getLight() {
+        return light;
+    }
+
+    public void setLight(Double light) {
+        this.light = light;
     }
 
     public List<String> getHashTagNames() {
