@@ -79,6 +79,7 @@ public class WeatherActivity extends AppCompatActivity {
     int mDay = c.get(Calendar.DAY_OF_MONTH);
 
     LinearLayout timePickerLinear;
+    ImageView wtHelp;
 
     int cntClick = 0;
 
@@ -417,12 +418,23 @@ public class WeatherActivity extends AppCompatActivity {
 
         wtTimePickerHour = findViewById(R.id.wt_timePicker_hour);
         timePickerLinear = findViewById(R.id.wt_timePicker_linear);
+        wtHelp = findViewById(R.id.wt_help);
     }
 
     //뒤로가기 버튼 이벤트
     public void onClickBackBtn() {
         ImageView button = findViewById(R.id.wt_back_btn);
         button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    //도움말 버튼 이벤트
+    public void onClickHelpBtn() {
+        wtHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

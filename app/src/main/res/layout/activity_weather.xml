@@ -32,8 +32,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="날씨"
                     android:fontFamily="@font/scdream"
+                    android:text="날씨"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@id/wt_back_btn"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -253,7 +253,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="44dp"
                 android:orientation="vertical">
 
@@ -395,11 +395,11 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:gravity="center"
-                    android:fontFamily="@font/spoqahansansneobold"
                     android:layout_width="match_parent"
                     android:layout_height="37dp"
                     android:background="@drawable/wt__card_view_top"
+                    android:fontFamily="@font/spoqahansansneobold"
+                    android:gravity="center"
                     android:paddingVertical="9dp"
                     android:text="시간 별 관측 적합도"
                     android:textColor="@color/white"
@@ -413,7 +413,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/detail_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="22dp"
@@ -423,395 +422,401 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:background="@drawable/wt__card_view_top"
-                    android:layout_height="37dp">
+                    android:layout_height="37dp"
+                    android:background="@drawable/wt__card_view_top">
 
                     <TextView
-                        android:gravity="center"
-                        android:fontFamily="@font/spoqahansansneobold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneobold"
+                        android:gravity="center"
                         android:text="상세 날씨 정보"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/wt_help"
-                        android:layout_marginEnd="7dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="7dp"
                         android:src="@drawable/wt__help"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
+                    android:id="@+id/detail_weather"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="20dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/wt__detail_light" />
-
-                        <TextView
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="광공해(최저/최고)" />
+                        android:layout_marginTop="23dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:orientation="horizontal">
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/wt_light_pol"
-                                style="@style/Wt_detail_txt"
+                            <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                android:src="@drawable/wt__detail_light" />
+
+                            <TextView
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="9dp"
+                                android:text="광공해(최저/최고)" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/wt_light_pol"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="적음"
+                                    android:textColor="@color/point_purple"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/wt_min_light_pol"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="최저"
+                                    android:textColor="@color/point_purple" />
+
+                                <TextView
+                                    android:id="@+id/wt_light_slash"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="1dp"
+                                    android:text="/"
+                                    android:textColor="@color/point_purple" />
+
+                                <TextView
+                                    android:id="@+id/wt_max_light_pol"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="최고"
+                                    android:textColor="@color/point_purple" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/wt__detail_moon_phase" />
+
+                            <TextView
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="9dp"
+                                android:text="월령" />
+
+                            <TextView
+                                android:id="@+id/wt_moon_phase"
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
                                 android:text="적음"
-                                android:textColor="@color/point_purple"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:id="@+id/wt_min_light_pol"
-                                style="@style/Wt_detail_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="최저"
                                 android:textColor="@color/point_purple" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/wt__detail_cloud" />
 
                             <TextView
-                                android:id="@+id/wt_light_slash"
                                 style="@style/Wt_detail_txt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="1dp"
-                                android:text="/"
+                                android:layout_marginTop="9dp"
+                                android:text="구름량" />
+
+                            <TextView
+                                android:id="@+id/wt_cloud"
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="적음"
                                 android:textColor="@color/point_purple" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/wt__detail_procip" />
 
                             <TextView
-                                android:id="@+id/wt_max_light_pol"
                                 style="@style/Wt_detail_txt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="최고"
+                                android:layout_marginTop="9dp"
+                                android:text="강수 확률" />
+
+                            <TextView
+                                android:id="@+id/wt_precipitation"
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="적음"
                                 android:textColor="@color/point_purple" />
                         </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_marginTop="27dp"
+                        android:layout_marginBottom="21dp"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="20dp">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/wt__detail_moon_phase" />
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <TextView
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="월령" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/wt__detail_temp" />
 
-                        <TextView
-                            android:id="@+id/wt_moon_phase"
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/wt_temp_text"
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="9dp"
+                                android:text="기온" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/wt_temp"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="적음"
+                                    android:textColor="@color/point_purple" />
+
+                                <TextView
+                                    android:id="@+id/wt_min_temp"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="최저기온"
+                                    android:textColor="@color/point_purple"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/wt_temp_slash"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginHorizontal="1dp"
+                                    android:layout_marginTop="4dp"
+                                    android:text="/"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/wt_max_temp"
+                                    style="@style/Wt_detail_txt"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="4dp"
+                                    android:text="최고기온"
+                                    android:textColor="@color/point_pink"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="적음"
-                            android:textColor="@color/point_purple" />
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/wt__detail_humidity" />
+
+                            <TextView
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="9dp"
+                                android:text="습도" />
+
+                            <TextView
+                                android:id="@+id/wt_humidity"
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="적음"
+                                android:textColor="@color/point_purple" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/wt__detail_wind" />
+
+                            <TextView
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="9dp"
+                                android:text="풍속" />
+
+                            <TextView
+                                android:id="@+id/wt_wind"
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="적음"
+                                android:textColor="@color/point_purple" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/wt__detail_fine_dust" />
+
+                            <TextView
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="9dp"
+                                android:text="미세먼지" />
+
+                            <TextView
+                                android:id="@+id/wt_find_dust"
+                                style="@style/Wt_detail_txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="적음"
+                                android:textColor="@color/point_purple" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/wt_detail_ment"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/wt__detail_cloud" />
-
-                        <TextView
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="구름량" />
-
-                        <TextView
-                            android:id="@+id/wt_cloud"
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="적음"
-                            android:textColor="@color/point_purple" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/wt__detail_procip" />
-
-                        <TextView
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="강수 확률" />
-
-                        <TextView
-                            android:id="@+id/wt_precipitation"
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="적음"
-                            android:textColor="@color/point_purple" />
-                    </LinearLayout>
+                        android:layout_gravity="center"
+                        android:layout_marginTop="21dp"
+                        android:layout_marginBottom="14dp"
+                        android:text="터치해서 요약 정보를 확인해보세요!"
+                        android:textColor="@color/gray" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="27dp"
-                    android:layout_marginBottom="21dp"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="20dp">
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="27dp"
+                    android:layout_marginBottom="19dp"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/wt_today_cloud"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_marginEnd="12dp"
+                        android:fontFamily="@font/spoqahansansneobold"
+                        android:paddingVertical="11dp"
+                        android:text="실시간 날씨지도"
+                        android:textSize="14sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/wt__detail_temp" />
-
-                        <TextView
-                            android:id="@+id/wt_temp_text"
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="기온" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/wt_temp"
-                                style="@style/Wt_detail_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="적음"
-                                android:textColor="@color/point_purple" />
-
-                            <TextView
-                                android:id="@+id/wt_min_temp"
-                                style="@style/Wt_detail_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="최저기온"
-                                android:textColor="@color/point_purple"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:id="@+id/wt_temp_slash"
-                                style="@style/Wt_detail_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="1dp"
-                                android:layout_marginTop="4dp"
-                                android:text="/"
-                                android:visibility="gone" />
-
-                            <TextView
-                                android:id="@+id/wt_max_temp"
-                                style="@style/Wt_detail_txt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="4dp"
-                                android:text="최고기온"
-                                android:textColor="@color/point_pink"
-                                android:visibility="gone" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/wt__detail_humidity" />
-
-                        <TextView
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="습도" />
-
-                        <TextView
-                            android:id="@+id/wt_humidity"
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="적음"
-                            android:textColor="@color/point_purple" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/wt__detail_wind" />
-
-                        <TextView
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="풍속" />
-
-                        <TextView
-                            android:id="@+id/wt_wind"
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="적음"
-                            android:textColor="@color/point_purple" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/wt__detail_fine_dust" />
-
-                        <TextView
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="9dp"
-                            android:text="미세먼지" />
-
-                        <TextView
-                            android:id="@+id/wt_find_dust"
-                            style="@style/Wt_detail_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="적음"
-                            android:textColor="@color/point_purple" />
-                    </LinearLayout>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/tonight__right_arrow" />
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/wt_detail_ment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="21dp"
-                    android:layout_marginBottom="14dp"
-                    android:text="터치해서 요약 정보를 확인해보세요!"
-                    android:textColor="@color/gray" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginEnd="27dp"
-                android:layout_marginBottom="19dp"
-                android:layout_gravity="end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/wt_today_cloud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
-                    android:paddingVertical="11dp"
-                    android:text="실시간 날씨지도"
-                    android:fontFamily="@font/spoqahansansneobold"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/tonight__right_arrow"/>
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
