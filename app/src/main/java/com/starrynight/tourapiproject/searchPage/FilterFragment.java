@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -55,7 +56,7 @@ public class FilterFragment extends Fragment {
 
         //지역
         Button areaBtn = v.findViewById(R.id.areaBtn);
-        LinearLayout areaLinearLayout = v.findViewById(R.id.areaLinearLayout);
+        FrameLayout areaLinearLayout = v.findViewById(R.id.areaLinearLayout);
         areaLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +74,7 @@ public class FilterFragment extends Fragment {
 
         //여행 테마
         Button hashTagBtn = v.findViewById(R.id.hashTagBtn);
-        LinearLayout hashTagLinearLayout = v.findViewById(R.id.hashTagLinearLayout);
+        FrameLayout hashTagLinearLayout = v.findViewById(R.id.hashTagLinearLayout);
         hashTagLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
