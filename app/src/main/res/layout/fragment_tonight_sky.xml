@@ -96,7 +96,7 @@
                 android:layout_gravity="center|top"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/tonight__bottom_down" />
+                android:src="@drawable/tonight__bottom_up" />
         </LinearLayout>
 
         <androidx.core.widget.NestedScrollView

@@ -16,25 +16,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
+                android:layout_height="50dp">
 
                 <Button
                     android:id="@+id/addHashTag_back"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:layout_gravity="center"
                     android:layout_marginStart="29dp"
-                    android:layout_marginEnd="25dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/signup_back" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginTop="1dp"
+                    android:layout_centerInParent="true"
                     android:layout_weight="1"
                     android:fontFamily="@font/scdream_light"
                     android:text="해시태그 설정"
@@ -43,16 +42,17 @@
 
                 <TextView
                     android:id="@+id/finish_add_hashTag"
-                    android:padding="10dp"
-                    android:layout_width="51dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginEnd="10dp"
-                    android:text="완성"
                     android:fontFamily="@font/scdream_light"
+                    android:padding="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="완성"
                     android:textColor="@color/point_purple"
-                    android:textSize="15sp"/>
-            </LinearLayout>
+                    android:textSize="15sp" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

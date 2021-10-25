@@ -81,6 +81,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         TextView obTpCat3Name;
         TextView obTpOverviewSim;
         RecyclerView obTpHashTag;
+        TextView obTpLight;
 
         public ViewHolder(View itemView, final OnSearchResultItemClickListener listener) {
             super(itemView);
@@ -91,6 +92,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             obTpCat3Name = itemView.findViewById(R.id.myWishObTpCat3Name);
             obTpOverviewSim = itemView.findViewById(R.id.myWishObTpOverviewSim);
             obTpHashTag = itemView.findViewById(R.id.myWishObTpHashTag);
+            obTpLight = itemView.findViewById(R.id.myWishObTpLight);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,6 +115,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             obTpOverviewSim.setText(item.getIntro());
             obTpHashTag.setAdapter(new HashTagAdapter2(item.getHashTagNames()));
             obTpHashTag.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+            if (item.getLight() != null) {
+                obTpLight.setVisibility(View.VISIBLE);
+                obTpLight.setText("광공해도 "+item.getLight());
+            }
         }
 
     }
