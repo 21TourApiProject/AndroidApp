@@ -24,7 +24,10 @@
                     style="@style/ImageButton.size49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="18dp"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
                     android:src="@drawable/star__search_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -152,15 +155,15 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/scdream"
-                android:textSize="27sp" />
+                android:layout_marginHorizontal="20dp"
+                android:textSize="25sp" />
 
             <ImageView
                 android:id="@+id/wt_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="29dp"
-                android:src="@drawable/wt__good" />
+                android:layout_marginTop="29dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -788,8 +791,8 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="21dp"
                         android:layout_marginBottom="14dp"
-                        android:textSize="14sp"
-                        android:text="터치해서 요약 정보를 확인해보세요!"/>
+                        android:text="터치해서 요약 정보를 확인해보세요!"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 

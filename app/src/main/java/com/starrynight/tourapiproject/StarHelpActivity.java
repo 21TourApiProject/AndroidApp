@@ -61,7 +61,7 @@ public class StarHelpActivity extends AppCompatActivity {
 
     }
 
-    private void onClickBackBtn() {
+    public void onClickBackBtn() {
         helpBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
