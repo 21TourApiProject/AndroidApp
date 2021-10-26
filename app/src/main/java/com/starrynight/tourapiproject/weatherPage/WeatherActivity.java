@@ -79,6 +79,7 @@ public class WeatherActivity extends AppCompatActivity {
     int mDay = c.get(Calendar.DAY_OF_MONTH);
 
     LinearLayout timePickerLinear;
+    ImageView wtHelp;
 
     int cntClick = 0;
 
@@ -111,6 +112,7 @@ public class WeatherActivity extends AppCompatActivity {
     double moonAge;
     double moonAgeValue;
     String fineDust;
+    String fineDustSt;
     double fineDustValue;
     double precipitationProbability;
     double precipitationProbabilityValue;
@@ -317,6 +319,7 @@ public class WeatherActivity extends AppCompatActivity {
         setTextView();
         onClickBackBtn();
         onClickCloudInfo();
+        onClickHelpBtn();
 
         onSetDatePicker();
         onSetTimePicker();
@@ -416,6 +419,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         wtTimePickerHour = findViewById(R.id.wt_timePicker_hour);
         timePickerLinear = findViewById(R.id.wt_timePicker_linear);
+        wtHelp = findViewById(R.id.wt_help);
     }
 
     //뒤로가기 버튼 이벤트
@@ -425,6 +429,17 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+
+    //도움말 버튼 이벤트
+    public void onClickHelpBtn() {
+        wtHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), WtHelpActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -894,7 +909,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, Double.parseDouble(tempValue),
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDustSt);
 
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
@@ -950,7 +965,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, tempValueDouble,
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDustSt);
 
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
@@ -1005,7 +1020,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, Double.parseDouble(tempValue),
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDustSt);
 
                                     cloudTv.setText(cloudText);
                                     tempTv.setText(tempText);
@@ -1061,7 +1076,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                     setDetailState(cloudVolume, tempValueDouble,
                                             Double.parseDouble(humidityValue), moonAge,
-                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDust);
+                                            Double.parseDouble(windValue), doublePrecip, lightPollution, fineDustSt);
 
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
@@ -1419,7 +1434,7 @@ public class WeatherActivity extends AppCompatActivity {
                                 if (dustNoCheck == 1) {
                                     fineDustTv.setText("정보없음");
                                 } else {
-                                    fineDustTv.setText(fineDustText);
+                                    fineDustTv.setText(fineDustSt);
                                 }
 
                                 windTv.setText(windText);
@@ -1648,7 +1663,8 @@ public class WeatherActivity extends AppCompatActivity {
                     Log.d("dustError", "else로 빠짐");
                 }
 
-                fineDustTv.setText(fineDustText);
+                fineDustSt = setFineDustValue(fineDustText);
+                fineDustTv.setText(fineDustSt);
                 fineDust = fineDustText;
                 if (dustNoInfo == 0) {
                     fineDust = "좋음";
@@ -1783,7 +1799,7 @@ public class WeatherActivity extends AppCompatActivity {
                 } else if (cityName.equals("부산·울산")) {
                     //울산
                     if (provName.equals("남구") || provName.equals("동구") || provName.equals("북구") || provName.equals("울주군") || provName.equals("중구")) {
-                        fineDustText = dustStateArray2[7];
+                        fineDustText2 = dustStateArray2[7];
                         Log.d("dust", "7");
                     }
                     //부산
@@ -1841,6 +1857,7 @@ public class WeatherActivity extends AppCompatActivity {
                     Log.d("dustError", "else로 빠짐");
                 }
 
+                fineDustSt = setFineDustValue(fineDustText2);
                 fineDust = fineDustText2;
                 Log.d("obFitCheckWhenDustNo", fineDust);
             }
@@ -2430,7 +2447,6 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
-    //구름
     public void setDetailState(Double cloud, Double temp, Double humidity, Double moonAge, Double wind, Double precip, Double lightPol, String fineDust) {
         if (cloud < 11) {
             cloudState = "매우좋음";
@@ -2489,7 +2505,7 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (wind <= 10) {
             windState = "나쁨";
         } else {
-            windState = "메우나쁨";
+            windState = "매우나쁨";
         }
 
         if (precip < 16) {
@@ -2501,7 +2517,7 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (precip < 61) {
             precipState = "나쁨";
         } else {
-            precipState = "메우나쁨";
+            precipState = "매우나쁨";
         }
 
         if (lightPol <= 1) {
@@ -2513,17 +2529,30 @@ public class WeatherActivity extends AppCompatActivity {
         } else if (lightPol <= 80) {
             lightPolState = "나쁨";
         } else {
-            lightPolState = "메우나쁨";
+            lightPolState = "매우나쁨";
         }
 
-        if (fineDust.equals("좋음")) {
-            fineDustState = "0~30㎍/㎥";
-        } else if (fineDust.equals("보통")) {
-            fineDustState = "31~80㎍/㎥";
-        } else if (fineDust.equals("나쁨")) {
-            fineDustState = "81~150㎍/㎥";
+        if (fineDust.equals("151㎍/㎥ 이상")) {
+            fineDustState = "매우나쁨";
+        } else if (fineDust.equals("31~80㎍/㎥")) {
+            fineDustState = "보통";
+        } else if (fineDust.equals("81~150㎍/㎥")) {
+            fineDustState = "나쁨";
         } else {
-            fineDustState = "151㎍/㎥ 이상";
+            fineDustState = "좋음";
         }
+    }
+
+    public String setFineDustValue(String fineDustApiValue){
+        if (fineDustApiValue.equals("좋음")) {
+            fineDust = "0~30㎍/㎥";
+        } else if (fineDustApiValue.equals("보통")) {
+            fineDust = "31~80㎍/㎥";
+        } else if (fineDustApiValue.equals("나쁨")) {
+            fineDust = "81~150㎍/㎥";
+        } else {
+            fineDust = "151㎍/㎥ 이상";
+        }
+        return fineDust;
     }
 }

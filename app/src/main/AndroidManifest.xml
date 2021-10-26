@@ -24,7 +24,9 @@
         android:theme="@style/StarryNight"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".starPage.StarSearchActivity"></activity>
+        <activity android:name=".StarHelpActivity"></activity>
+        <activity android:name=".weatherPage.WtHelpActivity" />
+        <activity android:name=".starPage.StarSearchActivity" />
         <activity android:name=".myPage.ThanksToActivity" />
         <activity android:name=".observationPage.MoreObservationActivity" />
         <activity android:name=".myPage.MyPostActivity" />
