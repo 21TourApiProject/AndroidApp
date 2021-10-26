@@ -463,7 +463,9 @@ public class PostActivity extends AppCompatActivity {
                                         post_point_item item = adapter.getItem(position);
 
                                         Intent intent1 = new Intent(PostActivity.this, PostActivity.class);
-                                        intent1.putExtra("postId", relateImageList.get(position).getPostId());
+                                        if (relateImageList.get(position).getPostId() != post.getPostId()){
+                                        intent1.putExtra("postId", relateImageList.get(position).getPostId());}
+                                        else{intent1.putExtra("postId", relateImageList.get(position+1).getPostId());}
                                         startActivity(intent1);
                                     }
                                 });
