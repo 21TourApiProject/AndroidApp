@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/observe_easily_layout"
+                        android:id="@+id/help_light_pol_layout"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:src="@drawable/wt__card_view_top"
@@ -80,10 +80,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="별 쉽게 관찰하기"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@id/observe_easily_layout"
+                        app:layout_constraintBottom_toBottomOf="@id/help_light_pol_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/observe_easily_layout" />
+                        app:layout_constraintTop_toTopOf="@id/help_light_pol_layout" />
 
                     <ImageView
                         android:id="@+id/observe_easily_arrow"
@@ -91,9 +91,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="@id/observe_easily_layout"
+                        app:layout_constraintBottom_toBottomOf="@id/help_light_pol_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/observe_easily_layout"/>
+                        app:layout_constraintTop_toTopOf="@id/help_light_pol_layout"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/look_milkyWay_layout"
+                        android:id="@+id/help_moon_phase_layout"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:src="@drawable/wt__card_view_top"
@@ -140,10 +140,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="은하수를 보는 법"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@id/look_milkyWay_layout"
+                        app:layout_constraintBottom_toBottomOf="@id/help_moon_phase_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/look_milkyWay_layout" />
+                        app:layout_constraintTop_toTopOf="@id/help_moon_phase_layout" />
 
                     <ImageView
                         android:id="@+id/look_milkyWay_arrow"
@@ -151,9 +151,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="@id/look_milkyWay_layout"
+                        app:layout_constraintBottom_toBottomOf="@id/help_moon_phase_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/look_milkyWay_layout" />
+                        app:layout_constraintTop_toTopOf="@id/help_moon_phase_layout" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -237,7 +237,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/observe_preparation_layout"
+                        android:id="@+id/help_wind_layout"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:src="@drawable/wt__card_view_top"
@@ -260,10 +260,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="별 관측 준비물"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/observe_preparation_layout"
+                        app:layout_constraintBottom_toBottomOf="@+id/help_wind_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/observe_preparation_layout"/>
+                        app:layout_constraintTop_toTopOf="@+id/help_wind_layout"/>
 
                     <ImageView
                         android:id="@+id/observe_preparation_arrow"
@@ -271,9 +271,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="@+id/observe_preparation_layout"
+                        app:layout_constraintBottom_toBottomOf="@+id/help_wind_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/observe_preparation_layout"/>
+                        app:layout_constraintTop_toTopOf="@+id/help_wind_layout"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -298,7 +298,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/observe_etiquette_layout"
+                        android:id="@+id/help_fine_dust_layout"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:src="@drawable/wt__card_view_top"
@@ -321,10 +321,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="별 관측 에티켓"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/observe_etiquette_layout"
+                        app:layout_constraintBottom_toBottomOf="@+id/help_fine_dust_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/observe_etiquette_layout"/>
+                        app:layout_constraintTop_toTopOf="@+id/help_fine_dust_layout"/>
 
                     <ImageView
                         android:id="@+id/observe_etiquette_arrow"
@@ -332,9 +332,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="@+id/observe_etiquette_layout"
+                        app:layout_constraintBottom_toBottomOf="@+id/help_fine_dust_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/observe_etiquette_layout"/>
+                        app:layout_constraintTop_toTopOf="@+id/help_fine_dust_layout"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
