@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,7 +79,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
 
 
         //뒤로 가기
-        FrameLayout findPasswordBack = findViewById(R.id.passwordBack);
+        ImageView findPasswordBack = findViewById(R.id.passwordBack);
         findPasswordBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +145,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
@@ -163,7 +164,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(testPhoneNum)
+                        .setPhoneNumber(phoneNumber)
                         .setTimeout(120L, TimeUnit.SECONDS)
                         .setActivity(this)
                         .setCallbacks(mCallbacks)
