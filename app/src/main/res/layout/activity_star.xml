@@ -34,9 +34,9 @@
                     android:id="@+id/detail_const_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/scdream"
                     android:text="사자자리"
                     android:textSize="17sp"
-                    android:fontFamily="@font/scdream"
                     app:layout_constraintBottom_toBottomOf="@id/detail_star_back_btn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/detail_star_back_btn"
@@ -84,7 +84,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:src="@drawable/star__best_month" />
+                    android:src="@drawable/star__character_planet" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/spoqahansansneobold"
+                    android:text="가장 보기 좋은 달"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/const_best_month_tv"
@@ -110,7 +118,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="22dp"
-                    android:src="@drawable/star__const_story" />
+                    android:src="@drawable/star__character_star" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/spoqahansansneobold"
+                    android:text="별자리 이야기"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/const_story"
@@ -145,15 +161,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:src="@drawable/star__best_month" />
+                    android:src="@drawable/star__character_planet" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/spoqahansansneobold"
+                    android:text="별자리 관측 정보"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/const_mtd_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:paddingHorizontal="22dp"
                     android:layout_marginBottom="26dp"
+                    android:paddingHorizontal="22dp"
                     android:text="봄철 저녁"
                     android:textSize="12sp" />
 

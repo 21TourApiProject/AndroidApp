@@ -30,6 +30,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.ortiz.touchview.TouchImageView;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.StarHelpActivity;
 import com.starrynight.tourapiproject.starPage.horItemPage.HorItem;
 import com.starrynight.tourapiproject.starPage.horItemPage.HoroscopeAdapter;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
@@ -37,6 +38,7 @@ import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
+import com.starrynight.tourapiproject.weatherPage.WtHelpActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -78,13 +80,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     RecyclerView allConstList;
     LinearLayout allConstBtn;
 
-    //도움말
-    LinearLayout imgClick;
-    TextView openView;
-
-    LinearLayout imgClick1;
-    TextView openView1;
-
     ImageView helpBtn;
     ImageView compass;
     ImageView starBackBtn;
@@ -94,7 +89,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
     LinearLayout helpInfo;
     ImageView helpBackBtn;
-    View dim;
 
     TouchImageView touchImageView;
 
@@ -293,45 +287,8 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             }
         });
 
-        //도움말 textView open
-        imgClick = v.findViewById(R.id.imgClick);
-        openView = v.findViewById(R.id.layout_expand);
-        ImageView arrow = v.findViewById(R.id.arrow);
-
-        imgClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (openView.getVisibility() == View.VISIBLE) {
-                    openView.setVisibility(View.GONE);
-                    arrow.animate().setDuration(200).rotation(0f);
-                } else {
-                    openView.setVisibility(View.VISIBLE);
-                    arrow.animate().setDuration(200).rotation(90f);
-                }
-            }
-        });
-
-        imgClick1 = v.findViewById(R.id.imgClick1);
-        openView1 = v.findViewById(R.id.layout_expand1);
-        ImageView arrow1 = v.findViewById(R.id.arrow1);
-
-        imgClick1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (openView1.getVisibility() == View.VISIBLE) {
-                    openView1.setVisibility(View.GONE);
-                    arrow1.animate().setDuration(200).rotation(0f);
-                } else {
-                    openView1.setVisibility(View.VISIBLE);
-                    arrow1.animate().setDuration(200).rotation(90f);
-                }
-            }
-        });
 
         helpBtn = v.findViewById(R.id.star_help_btn);
-        helpInfo = v.findViewById(R.id.help_info);
-        helpBackBtn = v.findViewById(R.id.help_back_btn);
-        dim = v.findViewById(R.id.dim);
         touchImageView = v.findViewById(R.id.touchImage);
         compass = v.findViewById(R.id.compass_needle);
         starBackBtn = v.findViewById(R.id.star_back_btn);
@@ -339,18 +296,8 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         helpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helpInfo.setVisibility(View.VISIBLE);
-                dim.setAlpha(1);
-                stateButton(false);
-            }
-        });
-
-        helpBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                helpInfo.setVisibility(View.GONE);
-                dim.setAlpha(0);
-                stateButton(true);
+                Intent intent = new Intent(getActivity().getApplicationContext(), StarHelpActivity.class);
+                startActivity(intent);
             }
         });
 
