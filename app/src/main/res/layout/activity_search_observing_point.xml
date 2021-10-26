@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_purple"
+    android:background="@color/bg_dark_indigo"
     tools:context=".postWritePage.SearchObservingPointActivity">
 
     <LinearLayout
@@ -20,21 +20,26 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/search__back_btn"
-                android:layout_width="16sp"
-                android:layout_height="16sp"
-                android:layout_marginLeft="29dp"
-                android:layout_marginRight="21dp"
-                android:background="@drawable/mypost_back" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@font/scdream_light"
-                android:text="장소 설정"
-                android:textSize="17sp" />
+                <Button
+                    android:id="@+id/search__back_btn"
+                    android:layout_width="16sp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="29dp"
+                    android:background="@drawable/mypost_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/scdream_light"
+                    android:text="장소 설정"
+                    android:textSize="17sp" />
+            </FrameLayout>
 
         </LinearLayout>
 
