@@ -618,15 +618,15 @@ public class TouristPointActivity extends AppCompatActivity {
         moreInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (moreInfo.getText() == "+ 더 보기") {
-                    moreInfo.setText("- 축소하기");
+                if (moreInfo.getText() == "더 보기") {
+                    moreInfo.setText("축소하기");
                     if (isTp) {
                         tpInfo2.setVisibility(View.VISIBLE);
                     } else {
                         foodInfo2.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    moreInfo.setText("+ 더 보기");
+                    moreInfo.setText("더 보기");
                     if (isTp) {
                         tpInfo2.setVisibility(View.GONE);
                     } else {

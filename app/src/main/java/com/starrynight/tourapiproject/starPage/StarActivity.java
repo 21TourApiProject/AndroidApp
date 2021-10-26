@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.kakao.sdk.newtoneapi.TextToSpeechClient;
+import com.kakao.sdk.newtoneapi.TextToSpeechListener;
+import com.kakao.sdk.newtoneapi.TextToSpeechManager;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.Constellation;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
@@ -19,19 +23,25 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StarActivity extends AppCompatActivity {
+    private static final String TAG = "Star page";
     TextView constName;
 
     // 별자리 상세정보 뷰
     TextView constMtdTv, constBestMonthTv, constStoryTv;
     ImageView constImage, constFeature1, constFeature2, constFeature3;
+    Button story_play_btn;
 
     String intentConstName;
     Constellation constData;
+
+    private TextToSpeechClient ttsClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star);
+
+        TextToSpeechManager.getInstance().initializeLibrary(getApplicationContext());   //카카오 음성
 
         // 넘겨준 constId 받기
         Intent intent = getIntent();
@@ -49,6 +59,15 @@ public class StarActivity extends AppCompatActivity {
         constMtdTv = findViewById(R.id.const_mtd_tv);
         constBestMonthTv = findViewById(R.id.const_best_month_tv);
 
+        story_play_btn = findViewById(R.id.story_play_btn);
+
+        ttsClient = new TextToSpeechClient.Builder()
+                .setSpeechMode(TextToSpeechClient.NEWTONE_TALK_1)     // 음성합성방식
+                .setSpeechSpeed(1.0)            // 발음 속도(0.5~4.0)
+                .setSpeechVoice(TextToSpeechClient.VOICE_WOMAN_READ_CALM)  //TTS 음색 모드 설정(여성 차분한 낭독체)
+                .setListener(ttsListener)
+                .build();
+
         // 별자리 클릭 후 상세 정보 불러오는 api
         Call<Constellation> detailConstCall = RetrofitClient.getApiService().getDetailConst(intentConstName);
         detailConstCall.enqueue(new Callback<Constellation>() {
@@ -62,6 +81,8 @@ public class StarActivity extends AppCompatActivity {
                     constStoryTv.setText(constData.getConstStory());
                     constMtdTv.setText(constData.getConstMtd());
                     constBestMonthTv.setText(constData.getConstBestMonth());
+
+                    ttsClient.setSpeechText(constData.getConstStory());   //뉴톤톡 하고자 하는 문자열을 미리 세팅.
 
                     if (constData.getConstFeature1() == null) {
                         constFeature1.setVisibility(View.GONE);
@@ -90,6 +111,17 @@ public class StarActivity extends AppCompatActivity {
             }
         });
 
+        story_play_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ttsClient.isPlaying()) {
+                    ttsClient.stop();
+                } else {
+                    ttsClient.play();
+                }
+            }
+        });
+
         // 뒤로 가기 버튼 이벤트
         ImageView backBtn = findViewById(R.id.detail_star_back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,5 +130,27 @@ public class StarActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private TextToSpeechListener ttsListener = new TextToSpeechListener() {
+        @Override
+        public void onFinished() {
+            int intSentSize = ttsClient.getSentDataSize();      //세션 중에 전송한 데이터 사이즈
+            int intRecvSize = ttsClient.getReceivedDataSize();  //세션 중에 전송받은 데이터 사이즈
+
+            final String strInacctiveText = "handleFinished() SentSize : " + intSentSize + "  RecvSize : " + intRecvSize;
+
+            Log.i(TAG, strInacctiveText);
+        }
+
+        @Override
+        public void onError(int code, String message) {
+            Log.e(TAG, "카카오음성오류: " + message);
+        }
+    };
+
+    public void onDestroy() {
+        super.onDestroy();
+        TextToSpeechManager.getInstance().finalizeLibrary();
     }
 }

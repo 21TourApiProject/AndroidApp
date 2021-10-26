@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/custom_gradient"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/alarm_content"

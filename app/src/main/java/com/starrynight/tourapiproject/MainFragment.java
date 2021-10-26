@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost;
 import com.starrynight.tourapiproject.postPage.postRetrofit.MainPost_adapter;
 import com.starrynight.tourapiproject.postPage.postRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.postWritePage.PostWriteActivity;
+import com.starrynight.tourapiproject.searchPage.SearchResultAdapter2;
 import com.starrynight.tourapiproject.searchPage.searchPageRetrofit.Filter;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
@@ -48,9 +50,15 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     String[] filename2 = new String[10];
     private ArrayList<String> urls = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
-    ScrollView scrollView;
+    NestedScrollView nestedScrollView;
     List<Long> myhashTagIdList;
-
+    int count = 20, end, limit;
+    List<MainPost> mainPostList;
+    List<MainPost> result;
+    Boolean noMorePost;
+    RecyclerView recyclerView;
+    MainPost_adapter adapter;
+    ProgressBar progressBar;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -77,6 +85,11 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
         myhashTagIdList = new ArrayList<>();
+        nestedScrollView = v.findViewById(R.id.scroll_layout);
+        recyclerView = v.findViewById(R.id.recyclerView);
+        progressBar = v.findViewById(R.id.mainProgressBar);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
         String fileName = "userId";
         try {
             FileInputStream fis = getActivity().openFileInput(fileName);
@@ -100,13 +113,13 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         @Override
                         public void onResponse(Call<List<MainPost>> call, Response<List<MainPost>> response) {
                             if (response.isSuccessful()) {
-                                List<MainPost> result = response.body();
-                                RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-                                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                                layoutManager.setReverseLayout(true);
-                                layoutManager.setStackFromEnd(true);
-                                recyclerView.setLayoutManager(layoutManager);
-                                MainPost_adapter adapter = new MainPost_adapter(result, getContext());
+                                result = response.body();
+                                end = count;
+                                noMorePost = false;
+                                limit = result.size();
+                                mainPostList = new ArrayList<>();
+                                if (limit < end) { noMorePost = true; }
+                                adapter = new MainPost_adapter(result.subList(0, Math.min(end, limit)), getContext());
                                 recyclerView.setAdapter(adapter);
                             }
                         }
@@ -114,6 +127,22 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         @Override
                         public void onFailure(Call<List<MainPost>> call, Throwable t) {
                             Log.d("mainPostList", "인터넷 오류");
+                        }
+                    });
+                    nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                        @Override
+                        public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                            if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())
+                            {
+                                if (!noMorePost){
+                                    progressBar.setVisibility(View.VISIBLE);
+                                    end += count;
+                                    if (limit < end) { noMorePost = true; }
+                                    adapter = new MainPost_adapter(result.subList(0, Math.min(end, limit)), getContext());
+                                    recyclerView.setAdapter(adapter);
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            }
                         }
                     });
 
