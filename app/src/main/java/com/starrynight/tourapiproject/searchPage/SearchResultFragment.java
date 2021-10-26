@@ -409,7 +409,8 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
-                searchResult2.setVisibility(View.GONE);
+                searchResult.setVisibility(View.GONE);
+                searchResult2.setVisibility(View.VISIBLE);
                 searchResult3.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
@@ -446,7 +447,7 @@ public class SearchResultFragment extends Fragment {
 
                             //게시물은 어댑터 따로 만들어야 함
                             SearchResultAdapter searchResultAdapter = new SearchResultAdapter(obResult, getContext());
-                            searchResult.setAdapter(searchResultAdapter);
+                            searchResult2.setAdapter(searchResultAdapter);
                             if (obResult.isEmpty()){
                                 no_result.setVisibility(View.VISIBLE);
                             }else{no_result.setVisibility(View.GONE);}
@@ -482,8 +483,9 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                searchResult.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
-                searchResult3.setVisibility(View.GONE);
+                searchResult3.setVisibility(View.VISIBLE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -514,7 +516,7 @@ public class SearchResultFragment extends Fragment {
                             Log.d("searchPost", "검색 게시물 업로드 성공");
                             postResult = response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
-                            searchResult.setAdapter(postAdapter);
+                            searchResult3.setAdapter(postAdapter);
                             if (postResult.isEmpty()){
                                 no_result.setVisibility(View.VISIBLE);
                             }else{no_result.setVisibility(View.GONE);}
@@ -553,6 +555,7 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                searchResult.setVisibility(View.VISIBLE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
@@ -652,7 +655,8 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
-                searchResult2.setVisibility(View.GONE);
+                searchResult.setVisibility(View.GONE);
+                searchResult2.setVisibility(View.VISIBLE);
                 searchResult3.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
@@ -691,7 +695,7 @@ public class SearchResultFragment extends Fragment {
 
                             //게시물은 어댑터 따로 만들어야 함
                             SearchResultAdapter searchResultAdapter = new SearchResultAdapter(obResult, getContext());
-                            searchResult.setAdapter(searchResultAdapter);
+                            searchResult2.setAdapter(searchResultAdapter);
                             searchResultAdapter.setOnSearchResultItemClickListener(new OnSearchResultItemClickListener() {
                                 @Override
                                 public void onItemClick(SearchResultAdapter.ViewHolder holder, View view, int position) {
@@ -722,8 +726,9 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                searchResult.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
-                searchResult3.setVisibility(View.GONE);
+                searchResult3.setVisibility(View.VISIBLE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -754,7 +759,7 @@ public class SearchResultFragment extends Fragment {
                             Log.d("searchPost", "검색 게시물 업로드 성공");
                             postResult = response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
-                            searchResult.setAdapter(postAdapter);
+                            searchResult3.setAdapter(postAdapter);
                             postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                                 @Override
                                 public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
@@ -789,6 +794,7 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
+                searchResult.setVisibility(View.VISIBLE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
