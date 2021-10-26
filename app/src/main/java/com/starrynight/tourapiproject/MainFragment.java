@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,7 +49,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     String[] filename2 = new String[10];
     private ArrayList<String> urls = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
-    ScrollView scrollView;
+    NestedScrollView nestedScrollView;
     List<Long> myhashTagIdList;
 
     public MainFragment() {
@@ -77,6 +78,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
         myhashTagIdList = new ArrayList<>();
+        nestedScrollView = v.findViewById(R.id.scroll_layout);
         String fileName = "userId";
         try {
             FileInputStream fis = getActivity().openFileInput(fileName);

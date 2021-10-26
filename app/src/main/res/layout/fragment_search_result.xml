@@ -186,7 +186,7 @@
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:text="+관측지 더보기"
-                android:textColor="@color/sub_blue" />
+                android:textColor="@color/name_purple" />
 
             <ImageView
                 android:id="@+id/ob_line"
@@ -206,10 +206,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
                 android:layout_marginBottom="5dp"
+                android:gravity="center"
                 android:text="+관광지 더보기"
-                android:textColor="@color/sub_blue" />
+                android:textColor="@color/name_purple" />
 
             <ImageView
                 android:id="@+id/tp_line"
@@ -232,7 +232,7 @@
                 android:layout_marginBottom="5dp"
                 android:gravity="center"
                 android:text="+ 게시물 더보기"
-                android:textColor="@color/sub_blue" />
+                android:textColor="@color/name_purple" />
 
             <ImageView
                 android:id="@+id/post_line"
