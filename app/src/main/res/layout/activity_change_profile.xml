@@ -18,31 +18,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:layout_marginTop="22dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <FrameLayout
                     android:id="@+id/profileBack"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginRight="21dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <Button
                         android:layout_width="16sp"
                         android:layout_height="16sp"
-                        android:background="@drawable/mypost_back"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="29dp"
+                        android:background="@drawable/mypost_back" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/scdream"
+                        android:text="프로필 수정"
+                        android:textSize="17sp" />
                 </FrameLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="@font/scdream_light"
-                    android:text="프로필 편집"
-                    android:textSize="17sp" />
             </LinearLayout>
 
             <FrameLayout
@@ -53,17 +53,17 @@
 
                 <ImageView
                     android:id="@+id/profileImage3"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="82.54dp"
+                    android:layout_height="82.54dp"
                     android:layout_gravity="center"
                     android:scaleType="center"
-                    app:srcCompat="@drawable/profile_default_image" />
+                    app:srcCompat="@drawable/profile_default_image2" />
 
                 <ImageView
                     android:layout_width="16sp"
                     android:layout_height="16sp"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="44dp"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginTop="64dp"
                     app:srcCompat="@drawable/mydata_edit" />
             </FrameLayout>
 
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="60dp"
                     android:textSize="11sp" />
 
                 <TextView

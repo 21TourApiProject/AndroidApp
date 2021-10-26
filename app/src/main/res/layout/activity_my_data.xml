@@ -18,54 +18,41 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:layout_marginTop="22dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <FrameLayout
                     android:id="@+id/myDataBack"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginRight="21dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
                     <Button
                         android:layout_width="16sp"
                         android:layout_height="16sp"
-                        android:background="@drawable/mypost_back"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="29dp"
+                        android:background="@drawable/mypost_back" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/scdream"
+                        android:text="내 프로필"
+                        android:textSize="17sp" />
                 </FrameLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/scdream_light"
-                    android:text="내 정보"
-                    android:textSize="17sp" />
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/profileImage2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="22dp">
-
-                <ImageView
-                    android:id="@+id/profileImage2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/profile_default_image" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="44dp"
-                    app:srcCompat="@drawable/mydata_edit" />
-            </FrameLayout>
+                android:layout_marginTop="40.48dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/profile_default_image" />
 
             <TextView
                 android:id="@+id/nickName2"
@@ -76,16 +63,18 @@
                 android:textSize="17sp" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                app:srcCompat="@drawable/setting_line" />
+                android:id="@+id/changeProfile"
+                android:layout_width="25.04dp"
+                android:layout_height="25.04dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="11.19dp"
+                app:srcCompat="@drawable/mydata_edit" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="42dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="43.29dp"
                 android:orientation="horizontal">
 
                 <TextView
