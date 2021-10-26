@@ -901,7 +901,7 @@ public class MapFragment extends Fragment {
                 int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);    //denied면 -1
 
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    getMyLocaiton();
+                    getMyLocation();
 
                 } else if (permissionCheck == PackageManager.PERMISSION_DENIED) {
                     Log.d(TAG, "permission denied");
@@ -985,7 +985,7 @@ public class MapFragment extends Fragment {
 
     }
 
-    private void getMyLocaiton() {
+    private void getMyLocation() {
         String provider = lm.getBestProvider(criteria, true);
 
         try {

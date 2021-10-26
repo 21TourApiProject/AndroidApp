@@ -1,10 +1,16 @@
 package com.starrynight.tourapiproject.weatherPage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +44,7 @@ import com.starrynight.tourapiproject.weatherPage.wtObFit.ObFitItem;
 import com.starrynight.tourapiproject.weatherPage.wtObFit.ObFitViewAdapter;
 import com.starrynight.tourapiproject.weatherPage.wtTodayRetrofit.WtTodayParams;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.ParseException;
@@ -43,6 +54,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -296,6 +308,20 @@ public class WeatherActivity extends AppCompatActivity {
     String todayWtName2;
     String todayWtName;
 
+    //현위치
+    private GpsTracker gpsTracker;
+
+    String nowLocation;
+    private static final int GPS_ENABLE_REQUEST_CODE = 2001;
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
+
+    Double nowLatitude;
+    Double nowLongitude;
+
+    String nowCity = "서울";
+    String nowProvince = "강남구";
 
     {
         try {
@@ -313,9 +339,30 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        if (!checkLocationServicesStatus()) {
+            //gps 동의
+            showDialogForLocationServiceSetting();
+            Log.d("checkLocationCancel", "0");
+        } else {
+            Log.d("checkLocationCancel", "1");
+            checkRunTimePermission();
+        }
+
+        gpsTracker = new GpsTracker(WeatherActivity.this);
+
+        nowLatitude = gpsTracker.getLatitude();
+        nowLongitude = gpsTracker.getLongitude();
+
+        nowLocation = getCurrentAddress(nowLatitude, nowLongitude);
+        Log.d("nowLocationResult", nowLocation);
+        Log.d("nowCityProv1", nowCity + " " + nowProvince);
+
+        setCityName();
 
         setTextView();
         onClickBackBtn();
@@ -827,7 +874,7 @@ public class WeatherActivity extends AppCompatActivity {
                 .getMetData(latitude, longitude, "minutely,current", WT_MET_API_KEY, "metric");
 
         getWeatherInstance.enqueue(new Callback<WtMetModel>() {
-            @SuppressLint({"DefaultLocale", "SetTextI18n"})
+            @SuppressLint({"DefaultLocale", "SetTextI18n", "LongLogTag"})
             @Override
             public void onResponse(Call<WtMetModel> call, Response<WtMetModel> response) {
 
@@ -1812,21 +1859,20 @@ public class WeatherActivity extends AppCompatActivity {
                 } else if (cityName.equals("충북")) {
                     fineDustText2 = dustStateArray2[11];
                     Log.d("dust", "11");
-                } else if (cityName.equals("충남·대전·세종")) {
+                } else if (cityName.equals("충남")) {
+                    //충남
+                    fineDustText2 = dustStateArray2[10];
+                    Log.d("dust", "10");
+                } else if (cityName.equals("대전·세종")) {
                     //대전
                     if (provName.equals("대덕구") || provName.equals("동구") || provName.equals("서구") || provName.equals("유성구") || provName.equals("중구")) {
                         fineDustText2 = dustStateArray2[13];
                         Log.d("dust", "13");
                     }
                     //세종
-                    else if (provName.equals("세종")) {
+                    else {
                         fineDustText2 = dustStateArray2[12];
                         Log.d("dust", "12");
-                    }
-                    //충남
-                    else {
-                        fineDustText2 = dustStateArray2[10];
-                        Log.d("dust", "10");
                     }
                 } else if (cityName.equals("인천")) {
                     fineDustText2 = dustStateArray2[18];
@@ -1909,23 +1955,25 @@ public class WeatherActivity extends AppCompatActivity {
         } else {
             lightPollutionValue = Math.round(-(1 / (-(0.01) * (lightPollution - 71)) + 100) * 100) / 100.0;
         }
-        if (cloudVolumeValue<feel_likeValue&&cloudVolumeValue<moonAgeValue&&cloudVolumeValue<fineDustValue&&cloudVolumeValue<precipitationProbabilityValue&&cloudVolumeValue<lightPollutionValue){
-            biggestValue=cloudVolumeValue;
-        }else if (feel_likeValue<cloudVolumeValue&&feel_likeValue<moonAgeValue&&feel_likeValue<fineDustValue&&feel_likeValue<precipitationProbabilityValue&&feel_likeValue<lightPollutionValue){
+        if (cloudVolumeValue < feel_likeValue && cloudVolumeValue < moonAgeValue && cloudVolumeValue < fineDustValue && cloudVolumeValue < precipitationProbabilityValue && cloudVolumeValue < lightPollutionValue) {
+            biggestValue = cloudVolumeValue;
+        } else if (feel_likeValue < cloudVolumeValue && feel_likeValue < moonAgeValue && feel_likeValue < fineDustValue && feel_likeValue < precipitationProbabilityValue && feel_likeValue < lightPollutionValue) {
             biggestValue = feel_likeValue;
-        }else if (moonAgeValue<cloudVolumeValue&&moonAgeValue<feel_likeValue&&moonAgeValue<fineDustValue&&moonAgeValue<precipitationProbabilityValue&&moonAgeValue<lightPollutionValue){
-            biggestValue=moonAgeValue;
-        }else if (fineDustValue<cloudVolumeValue&&fineDustValue<feel_likeValue&&fineDustValue<moonAgeValue&&fineDustValue<precipitationProbabilityValue&&fineDustValue<lightPollutionValue){
-            biggestValue=fineDustValue;
-        }else if (precipitationProbabilityValue<cloudVolumeValue&&precipitationProbabilityValue<feel_likeValue&&precipitationProbabilityValue<moonAgeValue&&precipitationProbabilityValue<fineDustValue&&precipitationProbabilityValue<lightPollutionValue){
-            biggestValue=precipitationProbabilityValue;
-        }else{
-            biggestValue=lightPollutionValue;
+        } else if (moonAgeValue < cloudVolumeValue && moonAgeValue < feel_likeValue && moonAgeValue < fineDustValue && moonAgeValue < precipitationProbabilityValue && moonAgeValue < lightPollutionValue) {
+            biggestValue = moonAgeValue;
+        } else if (fineDustValue < cloudVolumeValue && fineDustValue < feel_likeValue && fineDustValue < moonAgeValue && fineDustValue < precipitationProbabilityValue && fineDustValue < lightPollutionValue) {
+            biggestValue = fineDustValue;
+        } else if (precipitationProbabilityValue < cloudVolumeValue && precipitationProbabilityValue < feel_likeValue && precipitationProbabilityValue < moonAgeValue && precipitationProbabilityValue < fineDustValue && precipitationProbabilityValue < lightPollutionValue) {
+            biggestValue = precipitationProbabilityValue;
+        } else {
+            biggestValue = lightPollutionValue;
         }
-        averageValue= (cloudVolumeValue+feel_likeValue+moonAgeValue+fineDustValue+precipitationProbabilityValue+lightPollutionValue-biggestValue)/6;
-        if (100+(biggestValue+averageValue*0.3)>0){
-            observationalFitDegree=100+(biggestValue+averageValue*0.3);
-        }else{observationalFitDegree=0;}
+        averageValue = (cloudVolumeValue + feel_likeValue + moonAgeValue + fineDustValue + precipitationProbabilityValue + lightPollutionValue - biggestValue) / 6;
+        if (100 + (biggestValue + averageValue * 0.3) > 0) {
+            observationalFitDegree = 100 + (biggestValue + averageValue * 0.3);
+        } else {
+            observationalFitDegree = 0;
+        }
 
         obFitFinal = Math.round(observationalFitDegree * 100) / 100.0;
 
@@ -1945,28 +1993,31 @@ public class WeatherActivity extends AppCompatActivity {
         cityAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         citySpinner.setAdapter(cityAdSpin);
 
-        choice_do = "서울";
-        choice_se = "강남구";
+        //default
+//        choice_do = "서울";
+//        choice_se = "강남구";
+//
+//        cityName = choice_do;
+//        provName = choice_se;
 
-        cityName = choice_do;
-        provName = choice_se;
+//        latitude = 37.5006;
+//        longitude = 127.0508;
 
-        latitude = 37.5006;
-        longitude = 127.0508;
-
+        citySpinner.setSelection(getIndex(citySpinner, cityName));
+        Log.d("nowCityName", cityName);
 
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (cityAdSpin.getItem(position).equals("서울")) {
-                    choice_do = "서울";
-                    cityName = choice_do;
+                    cityName = "서울";
 
-                    choice_se = "강남구";
-                    provName = choice_se;
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Seoul, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1984,15 +2035,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("경기")) {
-                    choice_do = "경기";
-                    cityName = choice_do;
-
-                    choice_se = "가평군";
-                    provName = choice_se;
+                    cityName = "경기";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gyeonggi, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2010,15 +2060,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("인천")) {
-                    choice_do = "인천";
-                    cityName = choice_do;
-
-                    choice_se = "강화군";
-                    provName = choice_se;
+                    cityName = "인천";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Incheon, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2036,15 +2085,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("강원")) {
-                    choice_do = "강원";
-                    cityName = choice_do;
-
-                    choice_se = "강릉시";
-                    provName = choice_se;
+                    cityName = "강원";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gangwon, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2065,15 +2113,14 @@ public class WeatherActivity extends AppCompatActivity {
                     Log.d("cityName", cityName);
                     Log.d("provName", provName);
                 } else if (cityAdSpin.getItem(position).equals("충북")) {
-                    choice_do = "충북";
-                    cityName = choice_do;
-
-                    choice_se = "괴산군";
-                    provName = choice_se;
+                    cityName = "충북";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Chungbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2091,15 +2138,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("충남")) {
-                    choice_do = "충남";
-                    cityName = choice_do;
-
-                    choice_se = "계룡시";
-                    provName = choice_se;
+                    cityName = "충남";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Chungnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2117,15 +2163,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("대전·세종")) {
-                    choice_do = "대전·세종";
-                    cityName = choice_do;
-
-                    choice_se = "대덕구";
-                    provName = choice_se;
+                    cityName = "대전·세종";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_DaejeonSejong, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2143,15 +2188,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("광주·전북")) {
-                    choice_do = "광주·전북";
-                    cityName = choice_do;
-
-                    choice_se = "광산구";
-                    provName = choice_se;
+                    cityName = "광주·전북";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_GwangjuJeonbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2169,15 +2213,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("전남")) {
-                    choice_do = "전남";
-                    cityName = choice_do;
-
-                    choice_se = "강진군";
-                    provName = choice_se;
+                    cityName = "전남";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Jeonnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2195,15 +2238,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("대구·경북")) {
-                    choice_do = "대구·경북";
-                    cityName = choice_do;
-
-                    choice_se = "중가";
-                    provName = choice_se;
+                    cityName = "대구·경북";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_DaeguGyeongbuk, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2221,15 +2263,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("경남")) {
-                    choice_do = "경남";
-                    cityName = choice_do;
-
-                    choice_se = "거제시";
-                    provName = choice_se;
+                    cityName = "경남";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Gyeongnam, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2247,15 +2288,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("부산·울산")) {
-                    choice_do = "부산·울산";
-                    cityName = choice_do;
-
-                    choice_se = "강서구";
-                    provName = choice_se;
+                    cityName = "부산·울산";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_BusanUlsan, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2273,15 +2313,14 @@ public class WeatherActivity extends AppCompatActivity {
                         }
                     });
                 } else if (cityAdSpin.getItem(position).equals("제주")) {
-                    choice_do = "제주";
-                    cityName = choice_do;
-
-                    choice_se = "제주시";
-                    provName = choice_se;
+                    cityName = "제주";
 
                     provAdSpin = ArrayAdapter.createFromResource(WeatherActivity.this, R.array.wt_Jeju, android.R.layout.simple_spinner_dropdown_item);
                     provAdSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     provSpinner.setAdapter(provAdSpin);
+                    provSpinner.setSelection(getIndex(provSpinner, provName));
+                    Log.d("nowProvName", provName);
+
                     provSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2550,7 +2589,7 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
-    public String setFineDustValue(String fineDustApiValue){
+    public String setFineDustValue(String fineDustApiValue) {
         if (fineDustApiValue.equals("좋음")) {
             fineDust = "0~30㎍/㎥";
         } else if (fineDustApiValue.equals("보통")) {
@@ -2561,5 +2600,287 @@ public class WeatherActivity extends AppCompatActivity {
             fineDust = "151㎍/㎥ 이상";
         }
         return fineDust;
+    }
+
+    /*
+     * ActivityCompat.requestPermissions를 사용한 퍼미션 요청의 결과를 리턴받는 메소드입니다.
+     */
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grandResults) {
+
+        if (permsRequestCode == PERMISSIONS_REQUEST_CODE && grandResults.length == REQUIRED_PERMISSIONS.length) {
+
+            // 요청 코드가 PERMISSIONS_REQUEST_CODE 이고, 요청한 퍼미션 개수만큼 수신되었다면
+
+            boolean check_result = true;
+
+            Log.d("nowCityProv7", nowCity + " " + nowProvince);
+            // 모든 퍼미션을 허용했는지 체크합니다.
+
+            for (int result : grandResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    check_result = false;
+                    Log.d("nowCityProv8 ", nowCity + " " + nowProvince);
+                    break;
+                }
+            }
+
+            if (check_result) {
+                //위치 권한 허용
+                gpsTracker = new GpsTracker(WeatherActivity.this);
+
+                nowLatitude = gpsTracker.getLatitude();
+                nowLongitude = gpsTracker.getLongitude();
+
+                nowLocation = getCurrentAddress(nowLatitude, nowLongitude);
+
+                Log.d("nowLocationResult", nowLocation);
+                Log.d("nowCityProv6", nowCity + " " + nowProvince);
+
+                setCityName();
+
+                setTextView();
+                onClickBackBtn();
+                onClickCloudInfo();
+                onClickHelpBtn();
+
+                //setMyLocation();
+
+                onSetDatePicker();
+                onSetTimePicker();
+
+                //지역 선택 Spinner
+                onSetAreaSpinner();
+
+                selectDateTime = selectDate + selectTime;
+            } else {
+                // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있습니다.
+                // 위치 권한 거부
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this, REQUIRED_PERMISSIONS[1])) {
+
+                    nowCity = "서울";
+                    nowProvince = "강남구";
+
+                    Log.d("nowCityProv2", nowCity + " " + nowProvince);
+
+                } else {
+                    Toast.makeText(WeatherActivity.this, "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+        }
+    }
+
+    void checkRunTimePermission() {
+        //런타임 퍼미션 처리
+        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
+        int hasFineLocationPermission = ContextCompat.checkSelfPermission(WeatherActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(WeatherActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        Log.d("LocationAllow", "1");
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+                hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
+
+            // 2. 이미 퍼미션을 가지고 있다면
+            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
+            Log.d("LocationAllow", "0");
+
+            // 3.  위치 값을 가져올 수 있음
+
+
+        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
+
+            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
+            if (ActivityCompat.shouldShowRequestPermissionRationale(WeatherActivity.this, REQUIRED_PERMISSIONS[0])) {
+                Log.d("LocationAllow", "3");
+                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
+                Toast.makeText(WeatherActivity.this, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG).show();
+                // 3-3. 사용자에게 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                ActivityCompat.requestPermissions(WeatherActivity.this, REQUIRED_PERMISSIONS,
+                        PERMISSIONS_REQUEST_CODE);
+
+            } else {
+                Log.d("LocationAllow", "4");
+                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
+                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                ActivityCompat.requestPermissions(WeatherActivity.this, REQUIRED_PERMISSIONS,
+                        PERMISSIONS_REQUEST_CODE);
+            }
+
+        }
+
+    }
+
+    public String getCurrentAddress(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses;
+
+        try {
+            addresses = geocoder.getFromLocation(
+                    latitude,
+                    longitude,
+                    1
+            );
+        } catch (IOException ioException) {
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return "지오코더 서비스 사용불가";
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
+        }
+
+        if (addresses == null || addresses.size() == 00) {
+            return "";
+        }
+
+        Address address = addresses.get(0);
+        nowCity = address.getAdminArea();
+        nowProvince = address.getSubLocality();
+        Log.d("nowCityProv3", nowCity + " " + nowProvince);
+
+        setCityName();
+
+        return address.getAddressLine(0).toString() + "\n";
+    }
+
+    //여기부터는 GPS 활성화를 위한 메소드들
+    private void showDialogForLocationServiceSetting() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(WeatherActivity.this);
+        builder.setTitle("위치 서비스 비활성화");
+        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
+                + "위치 설정을 수정하시겠습니까?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Intent callGPSSettingIntent
+                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
+
+                gpsTracker = new GpsTracker(WeatherActivity.this);
+
+                nowLatitude = gpsTracker.getLatitude();
+                nowLongitude = gpsTracker.getLongitude();
+
+                nowLocation = getCurrentAddress(nowLatitude, nowLongitude);
+                Log.d("nowLocationResult", nowLocation);
+                Log.d("nowCityProv4", nowCity + " " + nowProvince);
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                nowCity = "서울";
+                nowProvince = "강남구";
+                Log.d("nowCityProv5", nowCity + " " + nowProvince);
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+
+            case GPS_ENABLE_REQUEST_CODE:
+
+                //사용자가 GPS 활성 시켰는지 검사
+                if (checkLocationServicesStatus()) {
+                    if (checkLocationServicesStatus()) {
+                        gpsTracker = new GpsTracker(WeatherActivity.this);
+
+                        nowLatitude = gpsTracker.getLatitude();
+                        nowLongitude = gpsTracker.getLongitude();
+
+                        nowLocation = getCurrentAddress(nowLatitude, nowLongitude);
+
+                        Log.d("nowLocationResult", nowLocation);
+                        Log.d("nowCityProv6", nowCity + " " + nowProvince);
+
+                        setCityName();
+
+                        setTextView();
+                        onClickBackBtn();
+                        onClickCloudInfo();
+                        onClickHelpBtn();
+
+
+                        onSetDatePicker();
+                        onSetTimePicker();
+
+                        //지역 선택 Spinner
+                        onSetAreaSpinner();
+
+                        selectDateTime = selectDate + selectTime;
+                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음");
+                        checkRunTimePermission();
+                        return;
+                    }
+                }
+                break;
+        }
+    }
+
+    public boolean checkLocationServicesStatus() {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    public void setCityName() {
+        if (nowCity.equals("경기도")) {
+            nowCity = "경기";
+        } else if (nowCity.equals("인쳔광역시")) {
+            nowCity = "인천";
+        } else if (nowCity.equals("강원도")) {
+            nowCity = "강원";
+        } else if (nowCity.equals("충청북도")) {
+            nowCity = "충북";
+        } else if (nowCity.equals("충청남도")) {
+            nowCity = "충남";
+        } else if (nowCity.equals("대전광역시") || nowCity.equals("세종특별자치시")) {
+            nowCity = "대전·세종";
+        } else if (nowCity.equals("광주광역시") || nowCity.equals("전라북도")) {
+            nowCity = "광주·전북";
+        } else if (nowCity.equals("전라남도")) {
+            nowCity = "전남";
+        } else if (nowCity.equals("대구광역시") || nowCity.equals("경상북도")) {
+            nowCity = "대구·경북";
+        } else if (nowCity.equals("경상남도")) {
+            nowCity = "경남";
+        } else if (nowCity.equals("부산광역시") || nowCity.equals("울산광역시")) {
+            nowCity = "부산·울산";
+        } else if (nowCity.equals("제주특별자치도")) {
+            nowCity = "제주";
+        } else {
+            nowCity = "서울";
+        }
+
+        cityName = nowCity;
+        provName = nowProvince;
+
+        Log.d("nowCityProv8", cityName + provName);
+    }
+
+    private int getIndex(Spinner spinner, String myString) {
+
+        int index = 0;
+
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(myString)) {
+                index = i;
+            }
+        }
+        return index;
     }
 }
