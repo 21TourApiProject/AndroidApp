@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         newPwdCheck = findViewById(R.id.newPwdCheck);
         newPwdGuide = findViewById(R.id.newPwdGuide);
         newPwdCheckGuide = findViewById(R.id.newPwdCheckGuide);
+
+        //뒤로 가기
+        ImageView passwordBack = findViewById(R.id.passwordBack);
+        passwordBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         newPwd.addTextChangedListener(new TextWatcher() {
             @Override
