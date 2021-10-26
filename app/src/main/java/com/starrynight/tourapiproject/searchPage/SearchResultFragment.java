@@ -55,7 +55,7 @@ public class SearchResultFragment extends Fragment {
     String[] hashTagName = {"공기 좋은", "깔끔한", "감성적인", "이색적인", "인생샷", "전문적인", "캠핑", "차박", "뚜벅이", "드라이브",
             "반려동물", "한적한", "근교", "도심 속", "연인", "가족", "친구", "혼자", "가성비", "소확행", "럭셔리한", "경치 좋은"};
 
-    TextView moreObText, moreTpText, morePostText;
+    TextView moreObText, moreTpText, morePostText,no_result;
     Button obBtn;
     Button tpBtn;
     Button postBtn;
@@ -116,6 +116,7 @@ public class SearchResultFragment extends Fragment {
         selectFilterItem = v.findViewById(R.id.selectFilterItem);
         selectFilterItem.removeAllViews(); //초기화
         dialog = new SearchLoadingDialog(getContext());
+        no_result= v.findViewById(R.id.no_result_text);
         //필터 결과 리사이클러뷰
         searchResult = v.findViewById(R.id.searchResult);
         searchResult2 = v.findViewById(R.id.searchResult2);
@@ -434,6 +435,9 @@ public class SearchResultFragment extends Fragment {
                             //게시물은 어댑터 따로 만들어야 함
                             SearchResultAdapter searchResultAdapter = new SearchResultAdapter(obResult, getContext());
                             searchResult.setAdapter(searchResultAdapter);
+                            if (obResult.isEmpty()){
+                                no_result.setVisibility(View.VISIBLE);
+                            }else{no_result.setVisibility(View.GONE);}
                             searchResultAdapter.setOnSearchResultItemClickListener(new OnSearchResultItemClickListener() {
                                 @Override
                                 public void onItemClick(SearchResultAdapter.ViewHolder holder, View view, int position) {
@@ -499,6 +503,9 @@ public class SearchResultFragment extends Fragment {
                             postResult = response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
                             searchResult.setAdapter(postAdapter);
+                            if (postResult.isEmpty()){
+                                no_result.setVisibility(View.VISIBLE);
+                            }else{no_result.setVisibility(View.GONE);}
                             postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                                 @Override
                                 public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
@@ -573,6 +580,9 @@ public class SearchResultFragment extends Fragment {
 
                             SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(tpResult, getContext());
                             searchResult.setAdapter(searchResultAdapter2);
+                            if (tpResult.isEmpty()){
+                                no_result.setVisibility(View.VISIBLE);
+                            }else{no_result.setVisibility(View.GONE);}
                             searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
                                 @Override
                                 public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
@@ -808,6 +818,9 @@ public class SearchResultFragment extends Fragment {
         moreTpText.setVisibility(View.VISIBLE);
         tpline.setVisibility(View.VISIBLE);
         allContentBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap));
+        postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+        tpBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
+        obBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
         LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
         task.execute();
         Call<List<SearchParams1>> call = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
@@ -836,6 +849,9 @@ public class SearchResultFragment extends Fragment {
                     }
                     SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(finalTpResult, getContext());
                     searchResult2.setAdapter(searchResultAdapter2);
+                    if (finalTpResult.isEmpty()){
+                        no_result.setVisibility(View.VISIBLE);
+                    }else{no_result.setVisibility(View.GONE);}
                     searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
                         @Override
                         public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
@@ -887,6 +903,9 @@ public class SearchResultFragment extends Fragment {
                     //게시물은 어댑터 따로 만들어야 함
                     SearchResultAdapter searchResultAdapter = new SearchResultAdapter(finalObResult, getContext());
                     searchResult.setAdapter(searchResultAdapter);
+                    if (finalObResult.isEmpty()){
+                        no_result.setVisibility(View.VISIBLE);
+                    }else{no_result.setVisibility(View.GONE);}
                     searchResultAdapter.setOnSearchResultItemClickListener(new OnSearchResultItemClickListener() {
                         @Override
                         public void onItemClick(SearchResultAdapter.ViewHolder holder, View view, int position) {
@@ -937,6 +956,9 @@ public class SearchResultFragment extends Fragment {
                     }
                     MyPostAdapter postAdapter = new MyPostAdapter(finalPostResult, getContext());
                     searchResult3.setAdapter(postAdapter);
+                    if (finalPostResult.isEmpty()){
+                        no_result.setVisibility(View.VISIBLE);
+                    }else{no_result.setVisibility(View.GONE);}
                     postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                         @Override
                         public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
