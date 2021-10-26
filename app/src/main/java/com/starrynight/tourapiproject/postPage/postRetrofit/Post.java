@@ -45,6 +45,8 @@ public class Post {
     Long userId;
     @SerializedName("observationId")
     Long observationId;
+    @SerializedName("areaCode")
+    Long areaCode;
 
     public Post() {
     }
@@ -133,4 +135,11 @@ public class Post {
         return postImages;
     }
 
+    public Long getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(Long areaCode) {
+        this.areaCode = areaCode;
+    }
 }
