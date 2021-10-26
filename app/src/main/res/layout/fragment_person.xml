@@ -63,10 +63,11 @@
                     android:textSize="17sp" />
 
                 <ImageView
+                    android:id="@+id/pencil"
                     android:layout_width="25.04dp"
                     android:layout_height="25.04dp"
-                    android:layout_marginStart="7.45dp"
                     android:layout_gravity="center"
+                    android:layout_marginStart="7.45dp"
                     app:srcCompat="@drawable/mydata_edit" />
             </LinearLayout>
 

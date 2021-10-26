@@ -246,7 +246,7 @@
                 android:layout_marginEnd="42dp"
                 android:text="비밀번호 변경"
                 android:fontFamily="@font/spoqahansansneobold"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:background="@drawable/round_btn" />
 
             <FrameLayout

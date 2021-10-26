@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="공지사항"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="이용 가이드"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="고객센터"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="이용약관"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -226,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="개인정보 처리방침"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -256,7 +256,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="운영정책"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -286,7 +286,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="위치기반서비스 이용약관"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -316,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="오픈소스 라이센스"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout
@@ -346,7 +346,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45.48dp"
                     android:text="기여한 사람"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:textSize="14sp" />
 
                 <FrameLayout

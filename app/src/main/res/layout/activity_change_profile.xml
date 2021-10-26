@@ -80,7 +80,7 @@
             <EditText
                 android:id="@+id/changeNickname"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="42dp"
                 android:layout_marginEnd="42dp"
@@ -124,7 +124,7 @@
                 android:layout_marginEnd="42dp"
                 android:text="완료"
                 android:fontFamily="@font/spoqahansansneobold"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:background="@drawable/round_btn" />
 
 

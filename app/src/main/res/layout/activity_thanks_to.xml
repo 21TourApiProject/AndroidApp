@@ -51,7 +51,7 @@
                 android:text="기획"
                 android:fontFamily="@font/spoqahansansneoregular"
                 android:textColor="@color/point_purple"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
                 android:text="개발"
                 android:fontFamily="@font/spoqahansansneoregular"
                 android:textColor="@color/point_purple"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                 android:text="디자인"
                 android:fontFamily="@font/spoqahansansneoregular"
                 android:textColor="@color/point_purple"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
