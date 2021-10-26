@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +43,7 @@ public class MyPostActivity extends AppCompatActivity {
         userId = (Long) intent.getSerializableExtra("userId"); //전 페이지에서 받아온 사용자 id
 
         //뒤로 가기
-        FrameLayout myPostBack = findViewById(R.id.myPostBack);
+        ImageView myPostBack = findViewById(R.id.myPostBack);
         myPostBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

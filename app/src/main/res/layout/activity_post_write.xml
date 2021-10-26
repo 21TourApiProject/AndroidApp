@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/scdream_light"
+                        android:fontFamily="@font/scdream"
                         android:text="게시글 올리기"
                         android:textAlignment="center"
                         android:textSize="17sp" />

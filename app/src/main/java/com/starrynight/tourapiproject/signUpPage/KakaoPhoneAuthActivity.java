@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,39 +79,39 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kakao_phone_auth);
 
-        TextView skip_btn = findViewById(R.id.kko_pass);
+//        TextView skip_btn = findViewById(R.id.kko_pass);
 //        skip_btn.setVisibility(View.VISIBLE);
-        skip_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isAge) {
-                    Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            Log.d("kakaoSignup", "회원가입 성공");
-                            signOut();
-
-                            //선호 해시태그 선택 창으로 전환
-                            Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
-                            intent.putExtra("email", userParams.getEmail());
-                            startActivityForResult(intent, SELECT_HASH_TAG);
-                        } else {
-                            Log.d("kakaoSignup", "회원가입 실패");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Log.e("연결실패", t.getMessage());
-                    }
-                });
-            }
-        });
+//        skip_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!isAge) {
+//                    Toast.makeText(getApplicationContext(), "만 14세 미만은 이용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                Call<Void> call = RetrofitClient.getApiService().kakaoSignUp(userParams);
+//                call.enqueue(new Callback<Void>() {
+//                    @Override
+//                    public void onResponse(Call<Void> call, Response<Void> response) {
+//                        if (response.isSuccessful()) {
+//                            Log.d("kakaoSignup", "회원가입 성공");
+//                            signOut();
+//
+//                            //선호 해시태그 선택 창으로 전환
+//                            Intent intent = new Intent(KakaoPhoneAuthActivity.this, SelectMyHashTagActivity.class);
+//                            intent.putExtra("email", userParams.getEmail());
+//                            startActivityForResult(intent, SELECT_HASH_TAG);
+//                        } else {
+//                            Log.d("kakaoSignup", "회원가입 실패");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Void> call, Throwable t) {
+//                        Log.e("연결실패", t.getMessage());
+//                    }
+//                });
+//            }
+//        });
 
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
@@ -131,7 +132,7 @@ public class KakaoPhoneAuthActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
-        FrameLayout authBack = findViewById(R.id.kko_authBack);
+        ImageView authBack = findViewById(R.id.kko_authBack);
         authBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -29,10 +29,11 @@
                     android:layout_height="match_parent"
                     android:visibility="gone">
 
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:background="@drawable/mypost_back"
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star__search_back"
+                        style="@style/ImageButton.size49"
                         android:layout_gravity="center"/>
                 </FrameLayout>
 
@@ -41,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/scdream_light"
+                    android:fontFamily="@font/scdream"
                     android:text="관심사를 골라보세요!"
                     android:textSize="17sp" />
 
@@ -54,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|center"
-                        android:fontFamily="@font/scdream_light"
+                        android:fontFamily="@font/scdream"
                         android:text="완료" />
                 </FrameLayout>
 

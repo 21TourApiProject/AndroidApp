@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,11 +93,11 @@ public class PhoneAuthActivity extends AppCompatActivity implements
         resendAuth.setOnClickListener(this);
         verify.setOnClickListener(this);
 
-        TextView pass = findViewById(R.id.pass);
-        pass.setVisibility(View.GONE);
+//        TextView pass = findViewById(R.id.pass);
+//        pass.setVisibility(View.GONE);
 
         //뒤로 가기
-        FrameLayout authBack = findViewById(R.id.authBack);
+        ImageView authBack = findViewById(R.id.authBack);
         authBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
