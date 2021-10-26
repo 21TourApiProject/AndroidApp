@@ -45,7 +45,7 @@
             android:paddingHorizontal="26dp">
 
             <LinearLayout
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="11dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -53,17 +53,26 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/observe_easily_open"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wt__card_view_top">
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/observe_easily_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:src="@drawable/wt__card_view_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:paddingVertical="5dp"
                         android:src="@drawable/star__character_star"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_marginBottom="6dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -71,10 +80,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="별 쉽게 관찰하기"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/observe_easily_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/observe_easily_layout" />
 
                     <ImageView
                         android:id="@+id/observe_easily_arrow"
@@ -82,9 +91,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/observe_easily_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/observe_easily_layout"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -97,7 +106,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -105,17 +114,25 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/look_milkyWay_open"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wt__card_view_top">
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/look_milkyWay_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:src="@drawable/wt__card_view_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="43dp"
                         android:layout_marginStart="10dp"
-                        android:paddingVertical="5dp"
+                        android:layout_marginBottom="6dp"
                         android:src="@drawable/star__character_planet"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,10 +140,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="은하수를 보는 법"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/look_milkyWay_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/look_milkyWay_layout" />
 
                     <ImageView
                         android:id="@+id/look_milkyWay_arrow"
@@ -134,9 +151,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/look_milkyWay_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/look_milkyWay_layout" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -149,7 +166,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -157,17 +174,25 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/star_photo_open"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wt__card_view_top">
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/star_photo_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:src="@drawable/wt__card_view_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="43dp"
                         android:layout_marginStart="10dp"
-                        android:paddingVertical="5dp"
+                        android:layout_marginBottom="6dp"
                         android:src="@drawable/star__character_star"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -175,10 +200,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="별 사진 제대로 찍기"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/star_photo_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/star_photo_layout" />
 
                     <ImageView
                         android:id="@+id/star_photo_arrow"
@@ -186,9 +211,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/star_photo_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/star_photo_layout" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,7 +226,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -209,17 +234,25 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/observe_preparation_open"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wt__card_view_top">
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/observe_preparation_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:src="@drawable/wt__card_view_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="43dp"
                         android:layout_marginStart="10dp"
-                        android:paddingVertical="5dp"
+                        android:layout_marginBottom="6dp"
                         android:src="@drawable/star__character_planet"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -227,10 +260,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="별 관측 준비물"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/observe_preparation_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/observe_preparation_layout"/>
 
                     <ImageView
                         android:id="@+id/observe_preparation_arrow"
@@ -238,9 +271,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/observe_preparation_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/observe_preparation_layout"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -254,7 +287,7 @@
 
             <LinearLayout
                 android:layout_marginBottom="37dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="14dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -262,17 +295,25 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/observe_etiquette_open"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wt__card_view_top">
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/observe_etiquette_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:src="@drawable/wt__card_view_top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="43dp"
                         android:layout_marginStart="10dp"
-                        android:paddingVertical="5dp"
+                        android:layout_marginBottom="6dp"
                         android:src="@drawable/star__character_star"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -280,10 +321,10 @@
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="별 관측 에티켓"
                         android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/observe_etiquette_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/observe_etiquette_layout"/>
 
                     <ImageView
                         android:id="@+id/observe_etiquette_arrow"
@@ -291,9 +332,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="18dp"
                         android:src="@drawable/tonight__right_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/observe_etiquette_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@+id/observe_etiquette_layout"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
