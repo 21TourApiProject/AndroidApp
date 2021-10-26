@@ -80,6 +80,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     LinearLayout timePickerLinear;
     ImageView wtHelp;
+    ImageView wtWeather;
 
     int cntClick = 0;
 
@@ -420,6 +421,7 @@ public class WeatherActivity extends AppCompatActivity {
         wtTimePickerHour = findViewById(R.id.wt_timePicker_hour);
         timePickerLinear = findViewById(R.id.wt_timePicker_linear);
         wtHelp = findViewById(R.id.wt_help);
+        wtWeather = findViewById(R.id.wt_weather);
     }
 
     //뒤로가기 버튼 이벤트
@@ -2436,14 +2438,19 @@ public class WeatherActivity extends AppCompatActivity {
     public void setObFitComment(Double obFitValueSelect) {
         if (obFitValueSelect < 40) {
             commentTv.setText("오늘은 별을 보기 어려워요");
+            wtWeather.setImageResource(R.drawable.wt__very_bad);
         } else if (obFitValueSelect < 60) {
             commentTv.setText("별 보기 조금 아쉽네요");
+            wtWeather.setImageResource(R.drawable.wt__bad);
         } else if (obFitValueSelect < 70) {
             commentTv.setText("별 보기 적당한 날이네요");
+            wtWeather.setImageResource(R.drawable.wt__average);
         } else if (obFitValueSelect < 85) {
             commentTv.setText("별 보기 좋은 날이에요!");
+            wtWeather.setImageResource(R.drawable.wt__good);
         } else {
             commentTv.setText("별 보기 최고의 날이네요!");
+            wtWeather.setImageResource(R.drawable.wt__very_good);
         }
     }
 
