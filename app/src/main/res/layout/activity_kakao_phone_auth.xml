@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".signUpPage.PhoneAuthActivity">
 
     <ScrollView
@@ -14,54 +15,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginTop="22dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="49dp">
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/kko_authBack"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginRight="21dp">
-
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:background="@drawable/mypost_back"
-                        android:layout_gravity="center"/>
-                </FrameLayout>
+                    style="@style/ImageButton.size49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="@font/scdream_light"
+                    android:fontFamily="@font/scdream"
                     android:text="본인 인증"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/kko_authBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/kko_authBack"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <TextView
-                        android:id="@+id/kko_pass"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|end"
-                        android:layout_marginEnd="20dp"
-                        android:visibility="gone"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/scdream_light"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:text="건너뛰기" />
-                </FrameLayout>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,8 +86,9 @@
                         android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/wt__card_view_round"
-                        android:backgroundTint="@color/sub_blue"
+                        android:background="@drawable/round_btn"
+                        android:backgroundTint="@color/point_dark"
+                        android:fontFamily="@font/spoqahansansneoregular"
                         android:text="인증 요청"
                         android:textSize="12sp"
                         android:visibility="visible" />
@@ -116,8 +100,9 @@
                         android:layout_gravity="end"
                         android:layout_marginLeft="14dp"
                         android:layout_weight="1"
-                        android:background="@drawable/wt__card_view_round"
-                        android:backgroundTint="@color/sub_blue"
+                        android:background="@drawable/round_btn"
+                        android:backgroundTint="@color/point_dark"
+                        android:fontFamily="@font/spoqahansansneoregular"
                         android:text="인증 재요청"
                         android:textSize="12sp"
                         android:visibility="gone" />
@@ -141,10 +126,10 @@
 
                 <EditText
                     android:id="@+id/kko_authCode"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:background="@drawable/findemail_write2"
+                    android:background="@drawable/signup_box1"
                     android:hint="숫자 6자리"
                     android:inputType="number"
                     android:paddingLeft="10dp"
@@ -179,12 +164,14 @@
 
             <Button
                 android:id="@+id/kko_verify"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="42dp"
+                android:layout_marginEnd="42dp"
                 android:layout_marginTop="100dp"
                 android:text="완료"
-                android:fontFamily="@font/scdream"
+                android:fontFamily="@font/spoqahansansneobold"
                 android:background="@drawable/round_btn" />
 
         </LinearLayout>

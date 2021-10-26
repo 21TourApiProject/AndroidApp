@@ -2,9 +2,12 @@ package com.starrynight.tourapiproject.myPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.starrynight.tourapiproject.R;
 
@@ -15,7 +18,7 @@ public class ThanksToActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thanks_to);
 
-        FrameLayout thanksToBack = findViewById(R.id.thanksToBack);
+        ImageView thanksToBack = findViewById(R.id.thanksToBack);
         thanksToBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

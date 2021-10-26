@@ -220,7 +220,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
 
 
         //뒤로 가기
-        FrameLayout back = findViewById(R.id.profileBack);
+        ImageView back = findViewById(R.id.profileBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
