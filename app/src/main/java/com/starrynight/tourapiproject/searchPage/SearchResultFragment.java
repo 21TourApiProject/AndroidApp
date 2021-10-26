@@ -79,6 +79,7 @@ public class SearchResultFragment extends Fragment {
 
     List<SearchParams1> obResult; //관측지 필터 결과
     List<SearchParams1> tpResult; //관광지 필터 결과
+
     List<SearchParams1> finalTpResult = new ArrayList<>();
     List<SearchParams1> finalObResult = new ArrayList<>();
     List<MyPost> postResult;//게시물 필터 결과
@@ -88,9 +89,10 @@ public class SearchResultFragment extends Fragment {
 
     NestedScrollView nestedScrollView;
     ProgressBar searchProgressBar;
-    int count = 10, start, end, limit; // 1페이지에 10개씩 데이터를 불러온다(관광지)
+    int count = 10, end, limit; // 1페이지에 10개씩 데이터를 불러온다(관광지)
     Boolean noMoreTp;
     SearchResultAdapter2 tpAdapter; //관광지 검색결과 어댑터
+    List<SearchParams1> subTpResult;
 
     List<Long> areaCodeList;
     List<Long> hashTagIdList;
@@ -546,7 +548,8 @@ public class SearchResultFragment extends Fragment {
         tpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("ㄱㄱㅈ 클릭");
+                LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
+                task.execute();
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
@@ -562,8 +565,6 @@ public class SearchResultFragment extends Fragment {
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
 
-//                areaCodeList.add(0L);
-//                hashTagIdList.add(0L);
 
                 for (int i = 0; i < 17; i++) {
                     if (area.get(i) == 1) { //선택했으면
@@ -584,49 +585,41 @@ public class SearchResultFragment extends Fragment {
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
+                            task.cancel(true);
                             tpResult = response.body();
                             if (tpResult.isEmpty()){
                                 no_result.setVisibility(View.VISIBLE);
-                            } else{
-                                start = 0;
+                            } else {
+                                no_result.setVisibility(View.GONE);
+
+                                //페이징 변수 초기화
                                 end = count;
-                                limit = 0;
                                 noMoreTp = false;
-
                                 limit = tpResult.size();
-                                System.out.println("총 개수 : " + limit);
+                                subTpResult = new ArrayList<>();
 
-                                if (!noMoreTp) {
-                                    if (limit < end) {
-                                        noMoreTp = true;
+                                System.out.println("1 총 개수 : " + tpResult.size());
+
+                                if (limit < end) { noMoreTp = true; }
+
+                                tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
+
+                                searchResult.setAdapter(tpAdapter);
+                                tpAdapter.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
+                                    @Override
+                                    public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
+                                        SearchParams1 item = tpAdapter.getItem(position);
+                                        Intent intent = new Intent(getContext(), TouristPointActivity.class);
+                                        intent.putExtra("contentId", item.getItemId());
+                                        startActivity(intent);
                                     }
-
-                                    tpAdapter = new SearchResultAdapter2(tpResult.subList(start, Math.min(end, limit)), getContext());
-                                    searchResult.setAdapter(tpAdapter);
-
-                                    tpAdapter.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
-                                        @Override
-                                        public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
-                                            SearchParams1 item = tpAdapter.getItem(position);
-                                            Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                                            intent.putExtra("contentId", item.getItemId());
-                                            startActivity(intent);
-                                        }
-                                    });
-
-                                    start += count;
-                                    end += count;
-
-                                }
+                                });
                             }
 
                         } else {
                             Log.d(TAG, "관광지 검색 실패");
-                            moreTpText.setVisibility(View.GONE);
-                            tpline.setVisibility(View.GONE);
                         }
                     }
-
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
@@ -640,8 +633,11 @@ public class SearchResultFragment extends Fragment {
                         {
                             if (!noMoreTp){
                                 searchProgressBar.setVisibility(View.VISIBLE);
-                                List<SearchParams1> subTp = getSubTp();
-                                tpAdapter.addItemMore(subTp);
+
+                                end += count;
+                                if (limit < end) { noMoreTp = true; }
+                                tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
+                                searchResult.setAdapter(tpAdapter);
                                 searchProgressBar.setVisibility(View.GONE);
                             }
                         }
@@ -787,6 +783,9 @@ public class SearchResultFragment extends Fragment {
         moreTpText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoadingAsyncTask task = new LoadingAsyncTask(getContext(), 10000);
+                task.execute();
+
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
@@ -801,8 +800,7 @@ public class SearchResultFragment extends Fragment {
                 postBtnTap.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.search_tap_non));
                 areaCodeList = new ArrayList<>();
                 hashTagIdList = new ArrayList<>();
-//                areaCodeList.add(0L);
-//                hashTagIdList.add(0L);
+
 
                 for (int i = 0; i < 17; i++) {
                     if (area.get(i) == 1) { //선택했으면
@@ -823,52 +821,68 @@ public class SearchResultFragment extends Fragment {
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
                         if (response.isSuccessful()) {
                             Log.d(TAG, "관광지 검색 성공");
+                            task.cancel(true);
                             tpResult = response.body();
+                            if (tpResult.isEmpty()){
+                                no_result.setVisibility(View.VISIBLE);
+                            } else {
+                                no_result.setVisibility(View.GONE);
 
-                            SearchResultAdapter2 searchResultAdapter2 = new SearchResultAdapter2(tpResult, getContext());
-                            searchResult.setAdapter(searchResultAdapter2);
-                            searchResultAdapter2.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
-                                @Override
-                                public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
-                                    SearchParams1 item = searchResultAdapter2.getItem(position);
-                                    Intent intent = new Intent(getContext(), TouristPointActivity.class);
-                                    intent.putExtra("contentId", item.getItemId());
-                                    startActivity(intent);
-                                }
-                            });
+                                //페이징 변수 초기화
+                                end = count;
+                                noMoreTp = false;
+                                limit = tpResult.size();
+                                subTpResult = new ArrayList<>();
+
+                                System.out.println("1 총 개수 : " + tpResult.size());
+
+                                if (limit < end) { noMoreTp = true; }
+
+                                tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
+
+                                searchResult.setAdapter(tpAdapter);
+                                tpAdapter.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
+                                    @Override
+                                    public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
+                                        SearchParams1 item = tpAdapter.getItem(position);
+                                        Intent intent = new Intent(getContext(), TouristPointActivity.class);
+                                        intent.putExtra("contentId", item.getItemId());
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+
                         } else {
                             Log.d(TAG, "관광지 검색 실패");
-                            moreTpText.setVisibility(View.GONE);
-                            tpline.setVisibility(View.GONE);
                         }
                     }
-
                     @Override
                     public void onFailure(Call<List<SearchParams1>> call, Throwable t) {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
+
+                nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+                    @Override
+                    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                        if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())
+                        {
+                            if (!noMoreTp){
+                                searchProgressBar.setVisibility(View.VISIBLE);
+
+                                end += count;
+                                if (limit < end) { noMoreTp = true; }
+                                tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
+                                searchResult.setAdapter(tpAdapter);
+                                searchProgressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                });
             }
         });
 
-
         return v;
-    }
-
-    private List<SearchParams1> getSubTp() {
-        List<SearchParams1> result = tpResult.subList(20, 30);
-        System.out.println(start + " " +end);
-        for (int i =0; i<end;i++){
-            System.out.println(i + tpResult.get(i).getTitle());
-        }
-
-        if (limit < end){
-            noMoreTp = true;
-        }
-
-        start += count;
-        end += count;
-        return result;
     }
 
     private void searchEverything(SearchKey searchKey) {

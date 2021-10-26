@@ -190,11 +190,11 @@
                 android:id="@+id/moreOb_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="4.3dp"
                 android:gravity="center"
-                android:text="+관측지 더보기"
-                android:textColor="@color/gray" />
+                android:text="관측지 더보기"
+                android:textColor="@color/point_purple" />
 
             <ImageView
                 android:id="@+id/ob_line"
@@ -213,11 +213,11 @@
                 android:id="@+id/moreTp_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="4.3dp"
                 android:gravity="center"
-                android:text="+관광지 더보기"
-                android:textColor="@color/gray" />
+                android:text="관광지 더보기"
+                android:textColor="@color/point_purple" />
 
             <ImageView
                 android:id="@+id/tp_line"
@@ -236,11 +236,11 @@
                 android:id="@+id/morePost_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="4.3dp"
                 android:gravity="center"
-                android:text="+ 게시물 더보기"
-                android:textColor="@color/gray" />
+                android:text="게시물 더보기"
+                android:textColor="@color/point_purple" />
 
             <ImageView
                 android:id="@+id/post_line"
