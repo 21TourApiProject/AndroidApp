@@ -16,7 +16,10 @@
             style="@style/ImageButton.size49"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dp"
+            android:layout_marginStart="7dp"
+            android:paddingVertical="18dp"
+            android:paddingStart="22dp"
+            android:paddingEnd="21dp"
             android:src="@drawable/star__search_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -345,7 +348,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/help_temp_layout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/help_temp_layout"/>
+                        app:layout_constraintTop_toTopOf="@+id/help_temp_layout" />
 
                     <ImageView
                         android:id="@+id/help_temp_arrow"
@@ -355,7 +358,7 @@
                         android:src="@drawable/tonight__right_arrow"
                         app:layout_constraintBottom_toBottomOf="@+id/help_temp_layout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/help_temp_layout"/>
+                        app:layout_constraintTop_toTopOf="@+id/help_temp_layout" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
