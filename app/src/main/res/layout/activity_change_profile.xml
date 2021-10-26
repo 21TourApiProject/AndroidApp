@@ -15,41 +15,41 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="49dp">
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/profileBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    style="@style/ImageButton.size49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="29dp"
-                        android:background="@drawable/mypost_back" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/scdream"
+                    android:text="프로필 수정"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/profileBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/profileBack"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:fontFamily="@font/scdream"
-                        android:text="프로필 수정"
-                        android:textSize="17sp" />
-                </FrameLayout>
-
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="22dp">
+                android:layout_marginTop="60.46dp">
 
                 <ImageView
                     android:id="@+id/profileImage3"
@@ -79,18 +79,21 @@
 
             <EditText
                 android:id="@+id/changeNickname"
-                android:layout_width="300dp"
-                android:layout_height="27dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="42dp"
+                android:layout_marginEnd="42dp"
                 android:background="@drawable/changeprofile_write"
                 android:inputType="textPersonName"
+                android:fontFamily="@font/spoqahansansneomedium"
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10.44dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -98,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textColor="@color/point_purple"
                     android:layout_marginLeft="60dp"
                     android:textSize="11sp" />
 
@@ -112,11 +116,17 @@
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="42dp"
-                android:background="@drawable/changeprofile_complete" />
+                android:layout_marginTop="100dp"
+                android:layout_marginStart="42dp"
+                android:layout_marginEnd="42dp"
+                android:text="완료"
+                android:fontFamily="@font/spoqahansansneobold"
+                android:textSize="17dp"
+                android:background="@drawable/round_btn" />
+
 
         </LinearLayout>
     </ScrollView>

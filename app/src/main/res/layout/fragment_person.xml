@@ -27,6 +27,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_marginEnd="17.41dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/mypage__plus" />
 
                 <Button
@@ -34,6 +35,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="15.28dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/mypage__setting" />
             </LinearLayout>
 
@@ -49,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="5.98dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -57,7 +59,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:text="닉네임"
                     android:textSize="17sp" />
 
@@ -65,6 +66,7 @@
                     android:layout_width="25.04dp"
                     android:layout_height="25.04dp"
                     android:layout_marginStart="7.45dp"
+                    android:layout_gravity="center"
                     app:srcCompat="@drawable/mydata_edit" />
             </LinearLayout>
 
@@ -97,8 +99,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="40.95dp"
+                android:layout_marginBottom="15dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -236,7 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="33.59dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 

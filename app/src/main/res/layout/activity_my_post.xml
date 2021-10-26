@@ -11,35 +11,35 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="49dp">
 
-            <FrameLayout
+            <ImageView
                 android:id="@+id/myPostBack"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                style="@style/ImageButton.size49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:paddingVertical="18dp"
+                android:paddingStart="22dp"
+                android:paddingEnd="21dp"
+                android:src="@drawable/star__search_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:layout_width="16sp"
-                    android:layout_height="16sp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="29dp"
-                    android:background="@drawable/mypost_back" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/scdream"
+                android:text="내가 쓴 게시글"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@id/myPostBack"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/myPostBack"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/scdream"
-                    android:text="내가 쓴 게시글"
-                    android:textSize="17sp" />
-            </FrameLayout>
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"

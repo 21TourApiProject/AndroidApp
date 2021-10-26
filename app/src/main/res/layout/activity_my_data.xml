@@ -15,35 +15,35 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="49dp">
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/myDataBack"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    style="@style/ImageButton.size49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="29dp"
-                        android:background="@drawable/mypost_back" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/scdream"
+                    android:text="내 프로필"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/myDataBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/myDataBack"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:fontFamily="@font/scdream"
-                        android:text="내 프로필"
-                        android:textSize="17sp" />
-                </FrameLayout>
-
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/profileImage2"
@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/spoqahansansneomedium"
                 android:textSize="17sp" />
 
             <ImageView
@@ -82,12 +83,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="61dp"
                     android:text="이름"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textColor="@color/gray"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -104,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="42dp"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="41dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -112,12 +116,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="50dp"
                     android:text="이메일"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textColor="@color/gray"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -134,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="42dp"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="41dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -142,12 +149,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="39dp"
                     android:text="전화번호"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/mobilePhoneNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textColor="@color/gray"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -164,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="42dp"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="41dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -172,12 +182,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="61dp"
                     android:text="생일"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/birth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textColor="@color/gray"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -194,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="42dp"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="41dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -202,12 +215,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="61dp"
                     android:text="성별"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:textColor="@color/gray"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -220,37 +236,18 @@
                 android:layout_marginEnd="42dp"
                 app:srcCompat="@drawable/setting_line" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/changePwd"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
                 android:layout_marginStart="42dp"
-                android:layout_marginTop="29dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="39dp"
-                    android:text="비밀번호"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/changePwd"
-                    android:layout_width="90dp"
-                    android:layout_height="28dp"
-                    android:background="@drawable/round_passwordbtn"
-                    android:text="변경하기"
-                    android:textSize="11sp" />
-
-            </LinearLayout>
-
-<!--            <Button-->
-<!--                android:id="@+id/changePwd"-->
-<!--                android:layout_width="105dp"-->
-<!--                android:layout_height="36dp"-->
-<!--                android:layout_marginStart="125dp"-->
-<!--                android:layout_marginTop="40dp"-->
-<!--                android:background="@drawable/mydata_changepassword" />-->
+                android:layout_marginEnd="42dp"
+                android:text="비밀번호 변경"
+                android:fontFamily="@font/spoqahansansneobold"
+                android:textSize="17dp"
+                android:background="@drawable/round_btn" />
 
             <FrameLayout
                 android:layout_width="match_parent"

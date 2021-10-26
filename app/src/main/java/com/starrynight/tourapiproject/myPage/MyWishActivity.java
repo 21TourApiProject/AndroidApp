@@ -69,7 +69,7 @@ public class MyWishActivity extends AppCompatActivity {
         myWishRecyclerview = findViewById(R.id.myWishs);
 
         //뒤로 가기
-        FrameLayout myWishBack = findViewById(R.id.myWishBack);
+        ImageView myWishBack = findViewById(R.id.myWishBack);
         myWishBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -44,7 +44,7 @@ public class MyDataActivity extends AppCompatActivity {
         profileImage2.setClipToOutline(true);
 
         //뒤로 가기
-        FrameLayout myDataBack = findViewById(R.id.myDataBack);
+        ImageView myDataBack = findViewById(R.id.myDataBack);
         myDataBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
