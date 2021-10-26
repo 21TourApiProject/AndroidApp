@@ -146,6 +146,11 @@
                     android:text="(출처:한국천문연구원-별자리전설)"
                     android:textColor="@color/gray"
                     android:textSize="12sp" />
+                <Button
+                    android:id="@+id/story_play_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="재생"/>
             </LinearLayout>
 
             <LinearLayout

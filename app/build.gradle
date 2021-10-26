@@ -87,11 +87,9 @@ dependencies {
     implementation 'com.amazonaws:aws-android-sdk-s3:2.13.5'
 
     implementation "com.kakao.sdk:v2-user:2.5.2" // 카카오 로그인
-    implementation "com.kakao.sdk:v2-talk:2.5.2" // 친구, 메시지(카카오톡)
-    implementation "com.kakao.sdk:v2-story:2.5.2" // 카카오스토리
-    implementation "com.kakao.sdk:v2-link:2.5.2" // 메시지(카카오링크)
-    implementation "com.kakao.sdk:v2-navi:2.5.2" // 카카오내비
     implementation group: project.KAKAO_SDK_GROUP, name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    implementation 'com.kakao.sdk:newtone:6.0.1'
+    implementation group: project.KAKAO_SDK_GROUP, name: 'newtone', version: project.KAKAO_SPEECH_VERSION
     implementation files('..\\libs\\json-simple-1.1.1.jar')
     //noinspection GradleCompatible
     implementation 'com.android.support:cardview-v7:28.0.0'

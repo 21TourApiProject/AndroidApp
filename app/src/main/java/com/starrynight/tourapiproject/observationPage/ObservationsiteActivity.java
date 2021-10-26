@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -310,7 +311,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     });
 
                     //지도버튼 설정
-                    Button map_btn = findViewById(R.id.obs_location_btn);
+                    ImageButton map_btn = findViewById(R.id.obs_location_btn);
                     //Long id, int tag, double longitude, double latitude, String name, String address, String point_type, String intro
                     //BallonObject에 내용넣음
 
@@ -516,7 +517,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
                 }
             }
         });
-        FrameLayout back_btn = findViewById(R.id.obs_back_btn);
+        ImageButton back_btn = findViewById(R.id.obs_back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
