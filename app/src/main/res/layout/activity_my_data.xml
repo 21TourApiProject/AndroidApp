@@ -38,9 +38,9 @@
                     android:fontFamily="@font/scdream"
                     android:text="내 프로필"
                     android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/myDataBack"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/myDataBack"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
