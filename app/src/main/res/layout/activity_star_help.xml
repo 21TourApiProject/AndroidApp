@@ -53,7 +53,7 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="26dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
@@ -112,9 +112,9 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/star__help_observe_easily"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -172,9 +172,9 @@
                         android:layout_height="match_parent"
                         android:src="@drawable/star__help_look_milkyway"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -232,9 +232,9 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/star__help_star_photo"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -292,9 +292,9 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/star__help_observe_preparation"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
@@ -353,7 +353,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/star__help_observe_etiquette"
                         android:visibility="gone" />
-                </LinearLayout>
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
