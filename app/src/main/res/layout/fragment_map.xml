@@ -205,21 +205,24 @@
             android:hint="필터" />
 
     </LinearLayout>
+
     <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_layout"
-        android:scrollbars="none">
-    <LinearLayout
-        android:id="@+id/map_selectFilterItem"
+        android:id="@+id/map_selectFilterScrollView"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:paddingHorizontal="25dp"
-        android:paddingBottom="12dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:orientation="horizontal"
-        android:background="@color/bg_dark_indigo"/>
+        android:layout_below="@id/search_layout"
+        android:background="@color/bg_dark_indigo"
+        android:scrollbars="none"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/map_selectFilterItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="24dp"
+            android:background="@color/bg_dark_indigo"
+            android:orientation="horizontal" />
 
     </HorizontalScrollView>
 
