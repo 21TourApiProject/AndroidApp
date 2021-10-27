@@ -125,6 +125,7 @@ public class AddHashTagActivity extends AppCompatActivity {
             if (!clicked[i].equals("")) {
                 buttons[i].setTag("isClicked");
                 buttons[i].setBackground(ContextCompat.getDrawable(this, R.drawable.selectmyhashtag_hashtag));
+                buttons[i].setTextColor(ContextCompat.getColor(this,R.color.bg_dark_indigo));
             }
         }
 
