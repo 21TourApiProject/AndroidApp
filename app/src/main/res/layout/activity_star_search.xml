@@ -34,18 +34,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/star_search_back_btn"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/off_searchList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:text="리스트 끄기"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/star_search_back_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/star_search_back_btn" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <SearchView

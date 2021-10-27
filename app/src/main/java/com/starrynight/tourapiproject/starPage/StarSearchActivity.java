@@ -40,10 +40,6 @@ public class StarSearchActivity extends AppCompatActivity {
     ListView searchList;
     LinearLayout searchWordLayout;
     ImageView backBtn;
-    TextView searchHint;
-    TextView offSearchList;
-
-    int hintId;
 
     List<String> nameList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
@@ -69,7 +65,6 @@ public class StarSearchActivity extends AppCompatActivity {
 
         constSearch.setIconifiedByDefault(false);
         constSearch.setQueryHint("궁금한 별자리를 입력해보세요");
-        offSearchList = findViewById(R.id.off_searchList);
 
         // 오늘 볼 수 있는 별자리 이름 recyclerview
         constNameRecycler = findViewById(R.id.star_search_today_list);
@@ -88,16 +83,7 @@ public class StarSearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 searchList.setVisibility(View.VISIBLE);
-                offSearchList.setVisibility(View.VISIBLE);
                 searchWordLayout.setVisibility(View.GONE);
-            }
-        });
-
-        offSearchList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchList.setVisibility(View.GONE);
-                searchWordLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -107,7 +93,6 @@ public class StarSearchActivity extends AppCompatActivity {
                 if (hasFocus) {
                     Log.d("hasFocus", "0");
                     searchList.setVisibility(View.VISIBLE);
-                    offSearchList.setVisibility(View.VISIBLE);
                     searchWordLayout.setVisibility(View.GONE);
                 }
 
