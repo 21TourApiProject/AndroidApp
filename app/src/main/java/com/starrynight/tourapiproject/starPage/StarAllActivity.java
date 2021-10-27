@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,12 +30,25 @@ public class StarAllActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     StarViewAdapter constAdapter;
+    StarViewAdapter constTodayAdapter;
     CardView starCardView;
+
+    LinearLayout allTodayConst;
+    RecyclerView constTodayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_star_all);
+
+        // 뒤로가기 버튼 클릭 이벤트
+        ImageView backBtn = findViewById(R.id.all_star_back_btn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //recyclerView 설정
         recyclerView = findViewById(R.id.all_const_recycler);
@@ -74,17 +89,51 @@ public class StarAllActivity extends AppCompatActivity {
                 StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getApplicationContext(), StarActivity.class);
                 intent.putExtra("constName", item.getConstName());
-                //Log.d("constId출력", item.getConstId().toString());
                 startActivity(intent);
             }
         });
 
-        // 뒤로가기 버튼 클릭 이벤트
-        ImageView backBtn = findViewById(R.id.all_star_back_btn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        allTodayConst = findViewById(R.id.all_today_const);
+        allTodayConst.findViewById(R.id.star_today_const_notice).setVisibility(View.GONE);
+
+        constTodayList = findViewById(R.id.today_cel_recycler);
+        gridLayoutManager = new GridLayoutManager(this, 3);
+        constTodayList.addItemDecoration(new StarRecyclerViewWidth(24));
+        constTodayList.addItemDecoration(new StarRecyclerViewHeight(16));
+        constTodayList.setLayoutManager(gridLayoutManager);
+        constTodayAdapter = new StarViewAdapter();
+        constTodayList.setAdapter(constTodayAdapter);
+
+        // 오늘 볼 수 있는 별자리 리스트 api
+        Call<List<StarItem>> todayConstCall = RetrofitClient.getApiService().getTodayConst();
+        todayConstCall.enqueue(new Callback<List<StarItem>>() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onResponse(@NonNull Call<List<StarItem>> call, Response<List<StarItem>> response) {
+                if (response.isSuccessful()) {
+                    List<StarItem> result = response.body();
+                    for (StarItem si : result) {
+                        constTodayAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstEng()));
+                    }
+                    constTodayList.setAdapter(constTodayAdapter);
+                } else {
+                    Log.d("todayConst", "오늘의 별자리 불러오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<StarItem>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+
+        // item 클릭 시 해당 아이템 constId 넘겨주기
+        constTodayAdapter.setOnItemClickListener(new OnStarItemClickListener() {
+            @Override
+            public void onItemClick(StarViewAdapter.ViewHolder holder, View view, int position) {
+                StarItem item = constTodayAdapter.getItem(position);
+                Intent intent = new Intent(getApplicationContext(), StarActivity.class);
+                intent.putExtra("constName", item.getConstName());
+                startActivity(intent);
             }
         });
     }
