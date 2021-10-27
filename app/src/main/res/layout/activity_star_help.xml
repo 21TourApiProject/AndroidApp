@@ -25,7 +25,10 @@
                     style="@style/ImageButton.size49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="18dp"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
                     android:src="@drawable/star__search_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +39,9 @@
                     android:fontFamily="@font/scdream"
                     android:text="도움말"
                     android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/star_help_back_btn"
+                    app:layout_constraintBottom_toBottomOf="@+id/star_help_back_btn"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/star_help_back_btn"
+                    app:layout_constraintStart_toStartOf="@+id/star_help_back_btn"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -106,7 +109,7 @@
                     <ImageView
                         android:id="@+id/observe_easily_content"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:src="@drawable/star__help_observe_easily"
                         android:visibility="gone" />
                 </LinearLayout>
@@ -165,9 +168,9 @@
 
                     <ImageView
                         android:id="@+id/look_milkyWay_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/star__help_observe_easily"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/star__help_look_milkyway"
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -227,7 +230,7 @@
                         android:id="@+id/star_photo_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/star__help_observe_easily"
+                        android:src="@drawable/star__help_star_photo"
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -287,7 +290,7 @@
                         android:id="@+id/observe_preparation_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/star__help_observe_easily"
+                        android:src="@drawable/star__help_observe_preparation"
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -348,7 +351,7 @@
                         android:id="@+id/observe_etiquette_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/star__help_observe_easily"
+                        android:src="@drawable/star__help_observe_etiquette"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class StarSearchActivity extends AppCompatActivity {
 
     SearchView constSearch;
     ListView searchList;
+    LinearLayout searchWordLayout;
     ImageView backBtn;
     TextView searchHint;
     TextView offSearchList;
@@ -63,6 +65,7 @@ public class StarSearchActivity extends AppCompatActivity {
         //별자리 검색
         constSearch = findViewById(R.id.edit_search);
         searchList = findViewById(R.id.const_list_view);
+        searchWordLayout = findViewById(R.id.search_word_layout);
 
         constSearch.setIconifiedByDefault(false);
         constSearch.setQueryHint("궁금한 별자리를 입력해보세요");
@@ -86,6 +89,7 @@ public class StarSearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 searchList.setVisibility(View.VISIBLE);
                 offSearchList.setVisibility(View.VISIBLE);
+                searchWordLayout.setVisibility(View.GONE);
             }
         });
 
@@ -93,6 +97,7 @@ public class StarSearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 searchList.setVisibility(View.GONE);
+                searchWordLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -103,6 +108,7 @@ public class StarSearchActivity extends AppCompatActivity {
                     Log.d("hasFocus", "0");
                     searchList.setVisibility(View.VISIBLE);
                     offSearchList.setVisibility(View.VISIBLE);
+                    searchWordLayout.setVisibility(View.GONE);
                 }
 
             }
@@ -229,6 +235,7 @@ public class StarSearchActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (searchList.getVisibility() == View.VISIBLE) {
             searchList.setVisibility(View.GONE);
+            searchWordLayout.setVisibility(View.VISIBLE);
         } else {
             finish();
         }
