@@ -33,17 +33,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/obs_banner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/scdream"
-                    android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/obs_back_btn"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/obs_back_btn"
-                    app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
@@ -109,7 +98,7 @@
                     android:layout_toRightOf="@id/obs_location_btn"
                     android:fontFamily="@font/spoqahansansneobold"
                     android:text="관측지 이름"
-                    android:textSize="18sp" />
+                    android:textSize="17sp" />
 
                 <Button
                     android:id="@+id/obs_save_btn"
@@ -120,16 +109,16 @@
                     android:layout_marginRight="5dp"
                     android:background="@drawable/bookmark_non" />
 
-                    <TextView
-                        android:id="@+id/obs_type_txt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="관측지 타입"
-                        android:textSize="14sp"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginTop="9dp"
-                        android:textColor="@color/gray"
-                        android:layout_below="@id/obs_name_txt" />
+                <TextView
+                    android:id="@+id/obs_type_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/obs_name_txt"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="9dp"
+                    android:text="관측지 타입"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/obs_hashtags_layout"
@@ -143,13 +132,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/obs_hashtags_layout"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="23dp"
                     android:ellipsize="end"
+                    android:fontFamily="@font/spoqahansansneomedium"
                     android:lineSpacingExtra="4dp"
                     android:maxLines="4"
                     android:text="개요"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/obs_outline_btn"
@@ -162,7 +151,7 @@
                     android:paddingRight="20dp"
                     android:text="자세히 보기 >"
                     android:textColor="@color/point_purple"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:visibility="gone"
                     tools:visibility="visible" />
                 </RelativeLayout>

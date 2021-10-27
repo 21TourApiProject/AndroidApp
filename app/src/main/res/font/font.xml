@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">>
 
     <font android:fontStyle="normal"
-        android:fontWeight="400"
+        android:fontWeight="500"
         android:font="@font/spoqahansansneoregular"
         app:fontStyle="normal"
-        app:fontWeight="400"
+        app:fontWeight="500"
         app:font="@font/spoqahansansneoregular"
         />
 
