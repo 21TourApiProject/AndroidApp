@@ -7,43 +7,61 @@
     android:orientation="vertical"
     tools:context=".starPage.StarAllActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="49dp">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/all_star_back_btn"
-            style="@style/ImageButton.size49"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:paddingVertical="18dp"
-            android:paddingStart="22dp"
-            android:paddingEnd="21dp"
-            android:src="@drawable/star__search_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/scdream"
-            android:text="모든 천체 보기"
-            android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="@+id/all_star_back_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/all_star_back_btn"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/all_star_back_btn"
+                    style="@style/ImageButton.size49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/all_const_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="30dp"
-        android:paddingBottom="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/scdream"
+                    android:text="모든 천체 보기"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/all_star_back_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/all_star_back_btn"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <include
+                android:id="@+id/all_today_const"
+                layout="@layout/star__today_cel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/all_const_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                android:layout_marginTop="27dp"
+                android:paddingBottom="30dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
