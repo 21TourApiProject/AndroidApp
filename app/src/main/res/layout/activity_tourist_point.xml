@@ -105,7 +105,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9.63dp"
                     android:text="관광지 타입"
-                    android:textSize="11sp" />
+                    android:textColor="@color/gray"
+                    android:textSize="12sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tpHashTag"
@@ -129,9 +130,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/spoqahansansneobold"
                     android:text="자세히 보기 >"
                     android:textColor="@color/point_purple"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:id="@+id/congestionLayout"
@@ -152,6 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="48dp"
                         android:text="혼잡도"
+                        android:fontFamily="@font/spoqahansansneomedium"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -182,6 +185,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="61dp"
                         android:text="주소"
+                        android:fontFamily="@font/spoqahansansneomedium"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -213,6 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="61dp"
                         android:text="문의"
+                        android:fontFamily="@font/spoqahansansneomedium"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -249,6 +254,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
                             android:text="이용시간"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -277,6 +283,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
                             android:text="휴무일"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -314,6 +321,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="영업시간"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -342,6 +350,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
                             android:text="휴무일"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -379,6 +388,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
                             android:text="체험안내"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -407,6 +417,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
                             android:text="주차시설"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -435,6 +446,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="반려동물"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -463,6 +475,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="40dp"
                             android:text="홈페이지"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -500,6 +513,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="대표메뉴"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -528,6 +542,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="취급메뉴"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -556,6 +571,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="61dp"
                             android:text="포장"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -584,6 +600,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="61dp"
                             android:text="주차"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 

@@ -36,12 +36,13 @@
     </style>
 
     <style name="Textview_observation_details" parent="">
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_marginBottom">7dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="Textview_observation_details_title" parent="">
-        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/spoqahansansneomedium</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/point_purple</item>
     </style>
 

@@ -114,9 +114,6 @@ public class ObservationsiteActivity extends AppCompatActivity {
                     Log.d(TAG, "관측지 호출 성공");
                     observation = response.body();
 
-                    TextView obs_banner = findViewById(R.id.obs_banner);
-                    obs_banner.setText(observation.getObservationName());
-
                     Call<List<ObserveImageInfo>> call3 = RetrofitClient.getApiService().getObserveImageInfo(observationId);
                     call3.enqueue(new Callback<List<ObserveImageInfo>>() {
                         @Override
