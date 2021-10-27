@@ -74,6 +74,9 @@ public class SearchResultFragment extends Fragment {
     RecyclerView searchResult;
     RecyclerView searchResult2;
     RecyclerView searchResult3;
+    RecyclerView searchResult4;
+    RecyclerView searchResult5;
+    RecyclerView searchResult6;
 
     LinearLayout selectFilterItem; //선택한 필터들이 보이는 레이아웃
 
@@ -131,15 +134,27 @@ public class SearchResultFragment extends Fragment {
         searchResult = v.findViewById(R.id.searchResult);
         searchResult2 = v.findViewById(R.id.searchResult2);
         searchResult3 = v.findViewById(R.id.searchResult3);
+        searchResult4 = v.findViewById(R.id.searchResult4);
+        searchResult5 = v.findViewById(R.id.searchResult5);
+        searchResult6 = v.findViewById(R.id.searchResult6);
         LinearLayoutManager searchLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager searchLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager searchLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager searchLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager searchLayoutManager5 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager searchLayoutManager6 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         searchLayoutManager.isAutoMeasureEnabled();
         searchLayoutManager2.isAutoMeasureEnabled();
         searchLayoutManager3.isAutoMeasureEnabled();
+        searchLayoutManager4.isAutoMeasureEnabled();
+        searchLayoutManager5.isAutoMeasureEnabled();
+        searchLayoutManager6.isAutoMeasureEnabled();
         searchResult.setLayoutManager(searchLayoutManager);
         searchResult2.setLayoutManager(searchLayoutManager2);
         searchResult3.setLayoutManager(searchLayoutManager3);
+        searchResult4.setLayoutManager(searchLayoutManager4);
+        searchResult5.setLayoutManager(searchLayoutManager5);
+        searchResult6.setLayoutManager(searchLayoutManager6);
         obResult = new ArrayList<>();
         tpResult = new ArrayList<>();
         postResult = new ArrayList<>();
@@ -283,8 +298,12 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.VISIBLE);
                 moreTpText.setVisibility(View.VISIBLE);
                 morePostText.setVisibility(View.VISIBLE);
+                searchResult.setVisibility(View.VISIBLE);
                 searchResult2.setVisibility(View.VISIBLE);
                 searchResult3.setVisibility(View.VISIBLE);
+                searchResult4.setVisibility(View.GONE);
+                searchResult5.setVisibility(View.GONE);
+                searchResult6.setVisibility(View.GONE);
                 obline.setVisibility(View.VISIBLE);
                 tpline.setVisibility(View.VISIBLE);
                 postline.setVisibility(View.VISIBLE);
@@ -410,8 +429,11 @@ public class SearchResultFragment extends Fragment {
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
                 searchResult.setVisibility(View.GONE);
-                searchResult2.setVisibility(View.VISIBLE);
+                searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                searchResult4.setVisibility(View.VISIBLE);
+                searchResult5.setVisibility(View.GONE);
+                searchResult6.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -447,7 +469,7 @@ public class SearchResultFragment extends Fragment {
 
                             //게시물은 어댑터 따로 만들어야 함
                             SearchResultAdapter searchResultAdapter = new SearchResultAdapter(obResult, getContext());
-                            searchResult2.setAdapter(searchResultAdapter);
+                            searchResult4.setAdapter(searchResultAdapter);
                             if (obResult.isEmpty()){
                                 no_result.setVisibility(View.VISIBLE);
                             }else{no_result.setVisibility(View.GONE);}
@@ -485,7 +507,10 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
-                searchResult3.setVisibility(View.VISIBLE);
+                searchResult3.setVisibility(View.GONE);
+                searchResult4.setVisibility(View.GONE);
+                searchResult5.setVisibility(View.GONE);
+                searchResult6.setVisibility(View.VISIBLE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -516,7 +541,7 @@ public class SearchResultFragment extends Fragment {
                             Log.d("searchPost", "검색 게시물 업로드 성공");
                             postResult = response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
-                            searchResult3.setAdapter(postAdapter);
+                            searchResult6.setAdapter(postAdapter);
                             if (postResult.isEmpty()){
                                 no_result.setVisibility(View.VISIBLE);
                             }else{no_result.setVisibility(View.GONE);}
@@ -555,9 +580,12 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
-                searchResult.setVisibility(View.VISIBLE);
+                searchResult.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                searchResult4.setVisibility(View.GONE);
+                searchResult5.setVisibility(View.VISIBLE);
+                searchResult6.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -607,7 +635,7 @@ public class SearchResultFragment extends Fragment {
 
                                 tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
 
-                                searchResult.setAdapter(tpAdapter);
+                                searchResult5.setAdapter(tpAdapter);
                                 tpAdapter.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
                                     @Override
                                     public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
@@ -649,7 +677,7 @@ public class SearchResultFragment extends Fragment {
                                         startActivity(intent);
                                     }
                                 });
-                                searchResult.setAdapter(tpAdapter);
+                                searchResult5.setAdapter(tpAdapter);
                                 searchProgressBar.setVisibility(View.GONE);
                             }
                         }
@@ -665,8 +693,11 @@ public class SearchResultFragment extends Fragment {
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
                 searchResult.setVisibility(View.GONE);
-                searchResult2.setVisibility(View.VISIBLE);
+                searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                searchResult4.setVisibility(View.VISIBLE);
+                searchResult5.setVisibility(View.GONE);
+                searchResult6.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -704,7 +735,7 @@ public class SearchResultFragment extends Fragment {
 
                             //게시물은 어댑터 따로 만들어야 함
                             SearchResultAdapter searchResultAdapter = new SearchResultAdapter(obResult, getContext());
-                            searchResult2.setAdapter(searchResultAdapter);
+                            searchResult4.setAdapter(searchResultAdapter);
                             searchResultAdapter.setOnSearchResultItemClickListener(new OnSearchResultItemClickListener() {
                                 @Override
                                 public void onItemClick(SearchResultAdapter.ViewHolder holder, View view, int position) {
@@ -737,7 +768,10 @@ public class SearchResultFragment extends Fragment {
                 morePostText.setVisibility(View.GONE);
                 searchResult.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
-                searchResult3.setVisibility(View.VISIBLE);
+                searchResult3.setVisibility(View.GONE);
+                searchResult4.setVisibility(View.GONE);
+                searchResult5.setVisibility(View.GONE);
+                searchResult6.setVisibility(View.VISIBLE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -768,7 +802,7 @@ public class SearchResultFragment extends Fragment {
                             Log.d("searchPost", "검색 게시물 업로드 성공");
                             postResult = response.body();
                             MyPostAdapter postAdapter = new MyPostAdapter(postResult, getContext());
-                            searchResult3.setAdapter(postAdapter);
+                            searchResult6.setAdapter(postAdapter);
                             postAdapter.setOnMyWishPostItemClickListener(new OnMyPostItemClickListener() {
                                 @Override
                                 public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
@@ -803,9 +837,12 @@ public class SearchResultFragment extends Fragment {
                 moreObText.setVisibility(View.GONE);
                 moreTpText.setVisibility(View.GONE);
                 morePostText.setVisibility(View.GONE);
-                searchResult.setVisibility(View.VISIBLE);
+                searchResult.setVisibility(View.GONE);
                 searchResult2.setVisibility(View.GONE);
                 searchResult3.setVisibility(View.GONE);
+                searchResult4.setVisibility(View.GONE);
+                searchResult5.setVisibility(View.VISIBLE);
+                searchResult6.setVisibility(View.GONE);
                 obline.setVisibility(View.GONE);
                 tpline.setVisibility(View.GONE);
                 postline.setVisibility(View.GONE);
@@ -855,7 +892,7 @@ public class SearchResultFragment extends Fragment {
 
                                 tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
 
-                                searchResult.setAdapter(tpAdapter);
+                                searchResult5.setAdapter(tpAdapter);
                                 tpAdapter.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
                                     @Override
                                     public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
@@ -888,7 +925,7 @@ public class SearchResultFragment extends Fragment {
                                 end += count;
                                 if (limit < end) { noMoreTp = true; }
                                 tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
-                                searchResult.setAdapter(tpAdapter);
+                                searchResult5.setAdapter(tpAdapter);
                                 searchProgressBar.setVisibility(View.GONE);
                             }
                         }
@@ -901,6 +938,9 @@ public class SearchResultFragment extends Fragment {
     }
 
     private void searchEverything(SearchKey searchKey) {
+        searchResult4.removeAllViews();
+        searchResult5.removeAllViews();
+        searchResult6.removeAllViews();
         searchResult2.removeAllViews();
         finalTpResult.clear();
         moreTpText.setVisibility(View.VISIBLE);
