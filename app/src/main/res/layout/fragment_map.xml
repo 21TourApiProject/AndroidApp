@@ -129,13 +129,13 @@
                 android:id="@+id/map_image_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 app:cardCornerRadius="5dp">
 
                 <ImageView
                     android:id="@+id/main_img"
                     android:layout_width="104dp"
                     android:layout_height="104dp"
-                    android:layout_centerVertical="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_image" />
             </androidx.cardview.widget.CardView>
