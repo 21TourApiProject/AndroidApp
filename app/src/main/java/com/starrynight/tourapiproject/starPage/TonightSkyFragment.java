@@ -274,7 +274,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
                 intent.putExtra("constName", item.getConstName());
-                //Log.d("constId 출력", item.getConstId().toString());
                 startActivity(intent);
             }
         });
