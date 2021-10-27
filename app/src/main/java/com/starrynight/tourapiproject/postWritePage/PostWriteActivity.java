@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -293,14 +294,14 @@ public class PostWriteActivity extends AppCompatActivity {
         });
 
         //뒤로가기 버튼
-        Button back = findViewById(R.id.postWrite_back_btn);
+        ImageView back = findViewById(R.id.postWrite_back_btn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        Button save_btn = findViewById(R.id.save);
+        TextView save_btn = findViewById(R.id.save);
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

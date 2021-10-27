@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -131,7 +132,7 @@ public class SearchObservingPointActivity extends AppCompatActivity {
             }
         });
 
-        Button back_btn = findViewById(R.id.search__back_btn);
+        ImageView back_btn = findViewById(R.id.search__back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

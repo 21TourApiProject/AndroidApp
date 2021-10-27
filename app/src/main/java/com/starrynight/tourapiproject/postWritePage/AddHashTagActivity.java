@@ -7,6 +7,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -173,7 +175,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Button back = findViewById(R.id.addHashTag_back);
+        ImageView back = findViewById(R.id.addHashTag_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
