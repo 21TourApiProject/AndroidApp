@@ -49,6 +49,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <SearchView
+        style="@style/AppSearchView"
         android:id="@+id/edit_search"
         android:layout_width="match_parent"
         android:layout_height="36dp"
