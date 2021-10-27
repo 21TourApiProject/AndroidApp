@@ -25,7 +25,10 @@
                     style="@style/ImageButton.size49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="18dp"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
                     android:src="@drawable/star__search_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +39,9 @@
                     android:fontFamily="@font/scdream"
                     android:text="도움말"
                     android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/star_help_back_btn"
+                    app:layout_constraintBottom_toBottomOf="@+id/star_help_back_btn"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/star_help_back_btn"
+                    app:layout_constraintStart_toStartOf="@+id/star_help_back_btn"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
