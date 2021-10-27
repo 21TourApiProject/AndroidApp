@@ -533,7 +533,7 @@ public class MapFragment extends Fragment {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
-                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilterforMap(searchKey);
                 call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
@@ -692,7 +692,7 @@ public class MapFragment extends Fragment {
                 });
 
                 //관광지 추가해야함
-                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilterforMap(searchKey);
                 call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
@@ -811,7 +811,7 @@ public class MapFragment extends Fragment {
                     }
                 });
 
-                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilterforMap(searchKey);
                 call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
