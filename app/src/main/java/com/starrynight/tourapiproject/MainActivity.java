@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                             personFragment = new PersonFragment();
                             getSupportFragmentManager().beginTransaction().add(R.id.main_view, personFragment).commit();
                         }
+                        getSupportFragmentManager().beginTransaction().detach(personFragment).attach(personFragment).commit();
                         if (mainFragment != null)
                             getSupportFragmentManager().beginTransaction().hide(mainFragment).commit();
                         if (searchFragment != null)

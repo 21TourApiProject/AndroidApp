@@ -86,7 +86,7 @@
                 android:layout_marginEnd="42dp"
                 android:background="@drawable/changeprofile_write"
                 android:inputType="textPersonName"
-                android:fontFamily="@font/spoqahansansneomedium"
+                android:fontFamily="@font/spoqahansansneoregular"
                 android:paddingLeft="10dp"
                 android:textSize="14sp" />
 
