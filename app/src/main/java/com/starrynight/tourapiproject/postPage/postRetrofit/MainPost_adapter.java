@@ -298,7 +298,7 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PostActivity.class);
                     intent.putExtra("postId", item.getPostId());
-                    ((Activity) context).startActivityForResult(intent, 101);
+                    ((Activity) context).startActivity(intent);
                 }
             });
 //            nickname.setText(item.getMainNickName());
