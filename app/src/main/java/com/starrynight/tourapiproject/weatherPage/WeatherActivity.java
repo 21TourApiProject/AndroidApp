@@ -2009,6 +2009,8 @@ public class WeatherActivity extends AppCompatActivity {
         if (nowCity == null || provName == null) {
             nowCity = "서울";
             provName = "강남구";
+            Toast.makeText(WeatherActivity.this, "현재 위치가 인식되지 않습니다.", Toast.LENGTH_LONG).show();
+
         }
 
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
