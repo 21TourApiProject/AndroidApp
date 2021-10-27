@@ -2875,11 +2875,6 @@ public class WeatherActivity extends AppCompatActivity {
             nowCity = "제주";
         }
 
-        if (nowCity == null) {
-            nowCity = "서울";
-        }
-
-
         cityName = nowCity;
         provName = nowProvince;
 
