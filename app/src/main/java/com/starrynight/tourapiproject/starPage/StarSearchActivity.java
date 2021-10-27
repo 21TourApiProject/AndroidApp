@@ -18,8 +18,11 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.starPage.constNameRetrofit.ConstNameAdapter;
 import com.starrynight.tourapiproject.starPage.constNameRetrofit.ConstellationParams2;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
@@ -44,6 +47,11 @@ public class StarSearchActivity extends AppCompatActivity {
     ArrayAdapter<String> arrayAdapter;
     String itemClickId;
 
+    String constName;
+
+    ConstNameAdapter constNameAdapter;
+    RecyclerView constNameRecycler;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,14 @@ public class StarSearchActivity extends AppCompatActivity {
         constSearch.setQueryHint("궁금한 별자리를 입력해보세요");
         offSearchList = findViewById(R.id.off_searchList);
 
+        // 오늘 볼 수 있는 별자리 이름 recyclerview
+        constNameRecycler = findViewById(R.id.star_search_today_list);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        constNameRecycler.setLayoutManager(linearLayoutManager);
+        constNameAdapter = new ConstNameAdapter();
+        constNameRecycler.setAdapter(constNameAdapter);
+
+        callTodayConstName();
         callAllConstName();
         connectClickConst();
         changeConstSearchText();
@@ -93,6 +109,32 @@ public class StarSearchActivity extends AppCompatActivity {
         });
     }
 
+    //오늘의 별자리 이름 리스트 불러오는  api
+    public void callTodayConstName() {
+        Call<List<ConstellationParams2>> todayConstNameCall = RetrofitClient.getApiService().getTodayConstName();
+        todayConstNameCall.enqueue(new Callback<List<ConstellationParams2>>() {
+            @Override
+            public void onResponse(Call<List<ConstellationParams2>> call, Response<List<ConstellationParams2>> response) {
+                if (response.isSuccessful()) {
+                    List<ConstellationParams2> result = response.body();
+
+                    for (ConstellationParams2 cp2 : result) {
+                        ;
+                        constNameAdapter.addItem(new ConstellationParams2(cp2.getConstName()));
+                    }
+                    constNameRecycler.setAdapter(constNameAdapter);
+                } else {
+                    Log.d("todayConst", "오늘의 별자리 이름 불러오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ConstellationParams2>> call, Throwable t) {
+                Log.e("연결실패", t.getMessage());
+            }
+        });
+    }
+
     // 모든 별자리 이름 호출
     public void callAllConstName() {
         Call<List<ConstellationParams2>> constNameCall = RetrofitClient.getApiService().getConstNames();
@@ -103,7 +145,7 @@ public class StarSearchActivity extends AppCompatActivity {
                     List<ConstellationParams2> result = response.body();
 
                     for (ConstellationParams2 cp2 : result) {
-                        String constName = cp2.getConstName();
+                        constName = cp2.getConstName();
                         nameList.add(constName);
                     }
 

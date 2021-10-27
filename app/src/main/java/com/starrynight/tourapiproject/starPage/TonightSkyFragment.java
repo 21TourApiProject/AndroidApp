@@ -17,7 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,12 +37,6 @@ import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
-import com.starrynight.tourapiproject.weatherPage.WtHelpActivity;
-
-
-//import org.jetbrains.annotations.NotNull;
-
-//import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,10 +81,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     ImageView starBackBtn;
     ImageView starSearchBtn;
     ConstraintLayout todayWeather;
-
-
-    LinearLayout helpInfo;
-    ImageView helpBackBtn;
 
     TouchImageView touchImageView;
 
@@ -339,7 +328,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         }
         // 가을(9/23 ~ 12/20)
         else if ((compareDataFall == 1 || compareDataFall == 0) && compareDataWinter == -1) {
-            touchImageView.setImageResource(R.drawable.star__fall);
+            touchImageView.setImageResource(R.drawable.star__spring1);
         }
         // 겨울(12/21 ~ 12/31)
         else if ((compareDataWinter == 1 || compareDataWinter == 0) && compareDataYearEnd == -1) {
@@ -352,8 +341,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
 
         return v;
-
-
     }
 
 
@@ -394,15 +381,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             compass.startAnimation(ra);
             mCurrentDegree = -azimuthinDegress;
         }
-    }
-
-    public void stateButton(boolean state) {
-        touchImageView.setEnabled(state);
-        compass.setEnabled(state);
-        starBackBtn.setEnabled(state);
-        helpBtn.setEnabled(state);
-        bottomSheetBehavior.setDraggable(state);
-        //     constSearch.setEnabled(state);
     }
 
     //별자리 운세
