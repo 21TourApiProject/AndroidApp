@@ -640,6 +640,15 @@ public class SearchResultFragment extends Fragment {
                                 end += count;
                                 if (limit < end) { noMoreTp = true; }
                                 tpAdapter = new SearchResultAdapter2(tpResult.subList(0, Math.min(end, limit)), getContext());
+                                tpAdapter.setOnSearchResultItemClickListener2(new OnSearchResultItemClickListener2() {
+                                    @Override
+                                    public void onItemClick(SearchResultAdapter2.ViewHolder holder, View view, int position) {
+                                        SearchParams1 item = tpAdapter.getItem(position);
+                                        Intent intent = new Intent(getContext(), TouristPointActivity.class);
+                                        intent.putExtra("contentId", item.getItemId());
+                                        startActivity(intent);
+                                    }
+                                });
                                 searchResult.setAdapter(tpAdapter);
                                 searchProgressBar.setVisibility(View.GONE);
                             }

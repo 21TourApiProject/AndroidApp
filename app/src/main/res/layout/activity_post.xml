@@ -25,29 +25,33 @@
                 android:orientation="horizontal">
 
                 <FrameLayout
-                    android:id="@+id/back_btn_layout"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginRight="21dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
+                    <TextView
+                        android:id="@+id/post_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@drawable/mypost_back" />
-                </FrameLayout>
+                        android:fontFamily="@font/scdream"
+                        android:text="게시글 상세 보기"
+                        android:textAlignment="center"
+                        android:textSize="17sp" />
 
-                <TextView
-                    android:id="@+id/post_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="@font/scdream_light"
-                    android:text="게시글 상세 보기"
-                    android:textAlignment="center"
-                    android:textSize="17sp" />
+                    <FrameLayout
+                        android:id="@+id/back_btn_layout"
+                        android:layout_width="45dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="8dp">
+
+                        <Button
+                            android:layout_width="16sp"
+                            android:layout_height="16sp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/mypost_back"
+                            android:clickable="false"/>
+                    </FrameLayout>
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -191,9 +195,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:lines="2"
-                    android:text="게시물 내용"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:text="게시물 내용\n- 개시물 내용"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="4dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

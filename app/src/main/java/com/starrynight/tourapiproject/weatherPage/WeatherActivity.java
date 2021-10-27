@@ -2006,6 +2006,13 @@ public class WeatherActivity extends AppCompatActivity {
         citySpinner.setSelection(getIndex(citySpinner, cityName));
         Log.d("nowCityName", cityName);
 
+        if (nowCity == null || provName == null) {
+            nowCity = "서울";
+            provName = "강남구";
+            Toast.makeText(WeatherActivity.this, "현재 위치가 인식되지 않습니다.", Toast.LENGTH_LONG).show();
+
+        }
+
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -2740,7 +2747,11 @@ public class WeatherActivity extends AppCompatActivity {
 
         Address address = addresses.get(0);
         nowCity = address.getAdminArea();
-        nowProvince = address.getSubLocality();
+        nowProvince = address.getLocality();
+
+        if (nowProvince == null) {
+            nowProvince = address.getSubLocality();
+        }
         Log.d("nowCityProv3", nowCity + " " + nowProvince);
 
         setCityName();
@@ -2838,7 +2849,9 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     public void setCityName() {
-        if (nowCity.equals("경기도")) {
+        if (nowCity.equals("서울특별시")) {
+            nowCity = "서울";
+        } else if (nowCity.equals("경기도")) {
             nowCity = "경기";
         } else if (nowCity.equals("인쳔광역시")) {
             nowCity = "인천";
@@ -2862,8 +2875,6 @@ public class WeatherActivity extends AppCompatActivity {
             nowCity = "부산·울산";
         } else if (nowCity.equals("제주특별자치도")) {
             nowCity = "제주";
-        } else {
-            nowCity = "서울";
         }
 
         cityName = nowCity;
