@@ -17,6 +17,7 @@
 
     <color name="bg_dark_indigo">#18183A</color>
     <color name="point_purple">#AAB2FF</color>
+    <color name="point_purple2">#6363D3</color>
     <color name="point_pink"> #FFC2C2</color>
     <color name="point_dark"> #6363D3</color>
     <color name="content_blue">#52528B</color>

@@ -25,7 +25,10 @@
                     style="@style/ImageButton.size49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="18dp"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
                     android:src="@drawable/star__search_back"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -37,12 +40,13 @@
                     android:fontFamily="@font/scdream"
                     android:text="사자자리"
                     android:textSize="17sp"
-                    app:layout_constraintBottom_toBottomOf="@id/detail_star_back_btn"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_star_back_btn"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/detail_star_back_btn"
+                    app:layout_constraintStart_toStartOf="@+id/detail_star_back_btn"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <ImageView
                 android:id="@+id/detail_const_image"
@@ -100,7 +104,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="24dp"
+                    android:paddingHorizontal="24dp"
                     android:text="4월 ~ 6월"
+                    android:textAlignment="center"
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -134,6 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="21dp"
+                    android:lineSpacingExtra="5dp"
                     android:paddingHorizontal="24dp"
                     android:textSize="12sp" />
 
@@ -146,11 +153,12 @@
                     android:text="(출처:한국천문연구원-별자리전설)"
                     android:textColor="@color/gray"
                     android:textSize="12sp" />
+
                 <Button
                     android:id="@+id/story_play_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="재생"/>
+                    android:text="재생" />
             </LinearLayout>
 
             <LinearLayout
@@ -182,6 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="26dp"
+                    android:lineSpacingExtra="5dp"
                     android:paddingHorizontal="22dp"
                     android:text="봄철 저녁"
                     android:textSize="12sp" />

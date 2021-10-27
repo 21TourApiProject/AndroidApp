@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -107,7 +108,7 @@ public class TouristPointActivity extends AppCompatActivity {
         CongestionThread thread = new CongestionThread();
         thread.start();
 
-        tpBanner = findViewById(R.id.tpBanner);
+//        tpBanner = findViewById(R.id.tpBanner);
         tpWish = findViewById(R.id.tpWish);
         tpCongestion = findViewById(R.id.tpCongestion);
         tpTitle = findViewById(R.id.tpTitle);
@@ -147,7 +148,7 @@ public class TouristPointActivity extends AppCompatActivity {
         packingLayout = findViewById(R.id.packingLayout);
         parkingFoodLayout = findViewById(R.id.parkingFoodLayout);
 
-        FrameLayout tpBack = findViewById(R.id.tpBack);
+        ImageView tpBack = findViewById(R.id.tpBack);
         tpBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,7 +293,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                         balloonObject.setImage(tpData.getFirstImage());
                                         Glide.with(getApplicationContext()).load(tpData.getFirstImage()).into(slider);
                                     }
-                                    tpBanner.setText(tpData.getTitle());
+//                                    tpBanner.setText(tpData.getTitle());
                                     tpTitle.setText(tpData.getTitle());
                                     daumSearchWord = tpData.getTitle();
 
@@ -455,7 +456,7 @@ public class TouristPointActivity extends AppCompatActivity {
                                         balloonObject.setImage(foodData.getFirstImage());
                                         Glide.with(getApplicationContext()).load(foodData.getFirstImage()).into(slider);
                                     }
-                                    tpBanner.setText(foodData.getTitle());
+//                                    tpBanner.setText(foodData.getTitle());
                                     tpTitle.setText(foodData.getTitle());
                                     daumSearchWord = foodData.getTitle();
                                     //다음 블로그 검색결과
@@ -595,6 +596,8 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
                     hashTagResult = response.body();
+                    if (hashTagResult.isEmpty())
+                        hashTagRecyclerview.setVisibility(View.GONE);
                     HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
                     hashTagRecyclerview.setAdapter(hashTagAdapter);
                     hashTagRecyclerview.addItemDecoration(hashtagDecoration);
@@ -693,7 +696,7 @@ public class TouristPointActivity extends AppCompatActivity {
 
 
         //지도 버튼
-        Button tpGps = findViewById(R.id.tpGps);
+        ImageButton tpGps = findViewById(R.id.tpGps);
         tpGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
