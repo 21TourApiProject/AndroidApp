@@ -757,15 +757,15 @@ public class TouristPointActivity extends AppCompatActivity {
                         public void run() {
                             congestionLayout.setVisibility(View.VISIBLE);
                             if (code == 1) {
-                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con1));
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp__1));
                             } else if (code == 2) {
-                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con2));
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp__2));
                             } else if (code == 3) {
-                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con3));
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp__3));
                             } else if (code == 4) {
-                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con4));
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp__4));
                             } else if (code == 5) {
-                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp_con5));
+                                tpCongestion.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tp__5));
                             }
                         }
                     });
