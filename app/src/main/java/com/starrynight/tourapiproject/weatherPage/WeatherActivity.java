@@ -2745,10 +2745,10 @@ public class WeatherActivity extends AppCompatActivity {
 
         Address address = addresses.get(0);
         nowCity = address.getAdminArea();
-        nowProvince = address.getSubLocality();
+        nowProvince = address.getLocality();
 
         if (nowProvince == null) {
-            nowProvince = address.getLocality();
+            nowProvince = address.getSubLocality();
         }
         Log.d("nowCityProv3", nowCity + " " + nowProvince);
 
