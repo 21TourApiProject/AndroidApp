@@ -596,6 +596,8 @@ public class TouristPointActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
                     hashTagResult = response.body();
+                    if (hashTagResult.isEmpty())
+                        hashTagRecyclerview.setVisibility(View.GONE);
                     HashTagAdapter hashTagAdapter = new HashTagAdapter(hashTagResult);
                     hashTagRecyclerview.setAdapter(hashTagAdapter);
                     hashTagRecyclerview.addItemDecoration(hashtagDecoration);
