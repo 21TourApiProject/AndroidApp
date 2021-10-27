@@ -75,7 +75,6 @@
                         android:background="@color/empty"
                         android:src="@drawable/location_btn" />
 
-
                     <TextView
                         android:id="@+id/tpTitle"
                         android:layout_width="wrap_content"
@@ -670,7 +669,7 @@
             <LinearLayout
                 android:id="@+id/nearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical">
@@ -680,8 +679,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="주변에 가볼만한 곳"
                     android:fontFamily="@font/spoqahansansneobold"
+                    android:text="주변에 가볼만한 곳"
                     android:textSize="14sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -699,7 +698,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:orientation="vertical">
@@ -713,8 +712,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="다음 블로그 검색결과"
                         android:fontFamily="@font/spoqahansansneobold"
+                        android:text="다음 블로그 검색결과"
                         android:textSize="14sp" />
 
                     <FrameLayout
@@ -729,8 +728,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|end"
-                        android:text="더 보기"
                         android:fontFamily="@font/spoqahansansneobold"
+                        android:text="더 보기"
                         android:textSize="11sp" />
 
                     <Button
