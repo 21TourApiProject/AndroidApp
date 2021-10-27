@@ -63,7 +63,7 @@
         android:id="@+id/alarmOpen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_gradient"
+        android:background="@drawable/custom_gradient_90"
         android:orientation="vertical"
         android:visibility="gone">
 

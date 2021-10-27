@@ -33,7 +33,8 @@
                         android:layout_width="16sp"
                         android:layout_height="16sp"
                         android:background="@drawable/mypost_back"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:clickable="false"/>
                 </FrameLayout>
 
                 <TextView
