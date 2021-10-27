@@ -184,7 +184,6 @@
                         android:id="@+id/hashTagRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:orientation="horizontal"
                         tools:itemCount="4" />
 
@@ -212,6 +211,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:hint="2021-09-28"
+                        android:textColor="@color/gray"
                         android:textSize="10sp" />
 
                     <TextView
@@ -220,6 +220,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:hint="15:30"
+                        android:textColor="@color/gray"
                         android:textSize="10sp" />
                 </LinearLayout>
 
@@ -238,7 +239,7 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="13dp"
                     android:fontFamily="@font/spoqahansansneobold"
-                    android:text="관련 게시물"
+                    android:text="관련 게시글"
                     android:textSize="12sp" />
 
                 <LinearLayout
