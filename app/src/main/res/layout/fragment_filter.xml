@@ -19,42 +19,46 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="49dp"
                 android:layout_marginBottom="32dp"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/backFilter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginEnd="14dp"
-                    android:background="@color/empty"
-                    android:padding="7dp"
-                    android:src="@drawable/filter_x_btn" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/scdream_light"
-                    android:text="필터"
-                    android:textAlignment="gravity"
-                    android:textSize="17sp" />
+                    <ImageButton
+                        android:id="@+id/backFilter"
+                        style="@style/ImageButton.size49"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:paddingVertical="18dp"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="21dp"
+                        android:src="@drawable/filter_x_btn"/>
 
-                <Button
-                    android:id="@+id/submitFilter"
-                    android:layout_width="30dp"
-                    android:layout_height="17dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/filter__adapt"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/scdream"
+                        android:text="검색 필터"
+                        android:textSize="17sp" />
+
+                    <Button
+                        android:id="@+id/submitFilter"
+                        android:layout_width="30dp"
+                        android:layout_height="17dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/filter__adapt"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="10dp" />
+                </FrameLayout>
+
             </LinearLayout>
 
             <FrameLayout

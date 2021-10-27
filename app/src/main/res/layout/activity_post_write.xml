@@ -32,32 +32,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <Button
+                    <ImageView
                         android:id="@+id/postWrite_back_btn"
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="29dp"
-                        android:background="@drawable/mypost_back" />
+                        style="@style/ImageButton.size49"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="7dp"
+                        android:paddingVertical="18dp"
+                        android:paddingStart="22dp"
+                        android:paddingEnd="21dp"
+                        android:src="@drawable/star__search_back" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="@font/scdream_light"
+                        android:fontFamily="@font/scdream"
                         android:text="게시글 올리기"
                         android:textAlignment="center"
                         android:textSize="17sp" />
 
-                    <Button
+                    <TextView
                         android:id="@+id/save"
-                        android:layout_width="31dp"
-                        android:layout_height="21dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
                         android:layout_gravity="center_vertical|end"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/postwrite__complete"
-                        android:fontFamily="@font/scdream_light"
-                        android:textColor="@color/point_purple" />
+                        android:fontFamily="@font/scdream"
+                        android:padding="10dp"
+                        android:text="게시"
+                        android:textColor="@color/point_purple"
+                        android:textSize="15sp" />
                 </FrameLayout>
 
             </LinearLayout>
