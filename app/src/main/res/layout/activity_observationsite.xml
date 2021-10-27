@@ -208,6 +208,7 @@
                             android:layout_width="55dp"
                             android:layout_height="20dp"
                             android:layout_alignParentTop="true"
+                            android:layout_marginTop="3dp"
                             android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@id/obs_light_txt"
                             android:src="@drawable/observation__light_worst" />
