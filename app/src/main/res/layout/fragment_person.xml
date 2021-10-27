@@ -131,7 +131,8 @@
                 android:layout_height="130dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -143,15 +144,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myWishImage1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -160,9 +161,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/gray"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -176,9 +177,9 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myWishImage2"
@@ -193,8 +194,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
                         android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -210,15 +211,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myWishImage3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -227,27 +228,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/gray"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:srcCompat="@drawable/setting_line" />
 
             <LinearLayout
                 android:id="@+id/myPostBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="33.59dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="내 게시물"
                     android:fontFamily="@font/spoqahansansneomedium"
+                    android:text="내 게시물"
                     android:textSize="17sp" />
 
                 <FrameLayout
@@ -381,7 +388,6 @@
                 android:layout_height="@dimen/bottom_nav_size">
 
             </FrameLayout>
-
 
         </LinearLayout>
     </ScrollView>
