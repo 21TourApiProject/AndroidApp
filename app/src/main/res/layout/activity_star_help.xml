@@ -108,8 +108,9 @@
 
                     <ImageView
                         android:id="@+id/observe_easily_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/star__help_observe_easily"
                         android:visibility="gone" />
                 </FrameLayout>
@@ -168,8 +169,9 @@
 
                     <ImageView
                         android:id="@+id/look_milkyWay_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/star__help_look_milkyway"
                         android:visibility="gone" />
                 </FrameLayout>
@@ -230,6 +232,7 @@
                         android:id="@+id/star_photo_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/star__help_star_photo"
                         android:visibility="gone" />
                 </FrameLayout>
@@ -290,6 +293,7 @@
                         android:id="@+id/observe_preparation_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/star__help_observe_preparation"
                         android:visibility="gone" />
                 </FrameLayout>
@@ -351,6 +355,7 @@
                         android:id="@+id/observe_etiquette_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/star__help_observe_etiquette"
                         android:visibility="gone" />
                 </FrameLayout>
