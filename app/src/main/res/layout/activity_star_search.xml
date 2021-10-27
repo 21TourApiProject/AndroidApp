@@ -49,8 +49,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <SearchView
-        style="@style/AppSearchView"
         android:id="@+id/edit_search"
+        style="@style/AppSearchView"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginHorizontal="32dp"
@@ -75,22 +75,82 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
             android:layout_marginTop="57dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
                 android:fontFamily="@font/spoqahansansneobold"
                 android:text="인기 검색어"
                 android:textSize="16sp" />
 
-            <ListView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="35dp"
-                android:visibility="gone" />
+                android:layout_marginTop="33dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="@color/point_purple2"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="작은곰자리"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:textColor="@color/point_purple2"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="카이오페이아자리"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:textColor="@color/point_purple2"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="페가수스자리"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <ImageView
@@ -119,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="35dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="22dp"
                 android:layout_marginBottom="70dp" />
         </LinearLayout>
     </LinearLayout>
