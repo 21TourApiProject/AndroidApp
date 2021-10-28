@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,21 +170,22 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         mMagnetometer = mSensorManger.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
         topBar = v.findViewById(R.id.top_bar);
+        bottomSheet = v.findViewById(R.id.bottom_sheet);
+        topIcon = v.findViewById(R.id.icon);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
         // bottomSheet 설정
         topBar.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         topBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                        bottomSheetBehavior.setPeekHeight(topBar.getBottom() + 38);
+//                        bottomSheetBehavior.setPeekHeight(50);
+                        bottomSheetBehavior.setPeekHeight((int) TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP, 50.f, getResources().getDisplayMetrics()));
                     }
                 }
         );
-
-        bottomSheet = v.findViewById(R.id.bottom_sheet);
-        topIcon = v.findViewById(R.id.icon);
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        //  bottomSheetBehavior.setPeekHeight(constSearch.getBottom());
 
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -237,9 +239,9 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
         // recyclerview 설정
         constList = v.findViewById(R.id.today_cel_recycler);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
-        constList.addItemDecoration(new StarRecyclerViewWidth(24));
-        constList.addItemDecoration(new StarRecyclerViewHeight(16));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
+//        constList.addItemDecoration(new StarRecyclerViewWidth(24));
+//        constList.addItemDecoration(new StarRecyclerViewHeight(16));
         constList.setLayoutManager(gridLayoutManager);
         constAdapter = new StarViewAdapter();
         constList.setAdapter(constAdapter);

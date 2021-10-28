@@ -32,20 +32,44 @@
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="@+id/star_search_back_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/star_search_back_btn"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <SearchView
-        android:id="@+id/edit_search"
-        style="@style/AppSearchView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="17dp"
         android:background="@drawable/star__search_bar"
-        android:queryBackground="@android:color/transparent"
-        android:windowSoftInputMode="adjustResize" />
+        android:paddingHorizontal="22dp">
+
+        <ImageView
+            android:id="@+id/search_view_icon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/postwrite_observationsearch"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/edit_search"
+            style="@style/MySearchViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:paddingStart="28dp"
+            android:queryHint="궁금한 별자리를 입력해보세요"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/search_view_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/StarSearchView">
+
+        </androidx.appcompat.widget.SearchView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
         android:id="@+id/const_list_view"

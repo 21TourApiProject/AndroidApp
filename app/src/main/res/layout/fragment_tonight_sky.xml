@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/black"
     android:layout_height="match_parent"
     tools:context=".starPage.TonightSkyFragment">
 
@@ -168,7 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
-                        android:text="모든 천체 보기"
+                        android:text="모든 별자리 보기"
                         android:textSize="14sp" />
 
                     <ImageView

@@ -41,8 +41,6 @@
 
     <style name="StarSearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/gray</item>
-        <item name="android:paddingVertical">6dp</item>
         <item name="android:fontFamily">@font/spoqahansansneoregular</item>
     </style>
 
