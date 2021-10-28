@@ -44,7 +44,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spoqahansansneobold"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -78,7 +80,9 @@
             android:id="@+id/myWishObTpOverviewSim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myWishObTpHashTag"
