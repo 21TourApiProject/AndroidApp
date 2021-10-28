@@ -322,10 +322,14 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    public void replaceFragment(Fragment fragment) {
+    public void replaceFragment() {
+        super.onResume();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.main_view, fragment).commitAllowingStateLoss();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_view, fragment).commitAllowingStateLoss();
+        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
     }
 
 
@@ -336,14 +340,14 @@ public class MainActivity extends AppCompatActivity {
     public void showBottom() {
         bottom.setVisibility(View.VISIBLE);
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
-    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
+//    }
 
     public Fragment getMap() {
         return map;

@@ -464,7 +464,7 @@ public class PostWriteActivity extends AppCompatActivity {
                                         }
                                     });
                                 } else {
-                                    Log.d("post", "게시물 작성 성공");
+                                    Log.d("post", "게시물 작성 실패");
                                     ;
                                 }
                             }
