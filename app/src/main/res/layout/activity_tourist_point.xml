@@ -7,9 +7,10 @@
     tools:context=".touristPointPage.TouristPointActivity">
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -240,147 +241,135 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
+
                 <LinearLayout
+                    android:id="@+id/useTimeLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-                    <LinearLayout
-                        android:id="@+id/useTimeLayout"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:layout_marginRight="5.33dp"
+                        app:srcCompat="@drawable/tp_usetime" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5.33dp"
-                            app:srcCompat="@drawable/tp_usetime" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="39.5dp"
-                            android:fontFamily="@font/spoqahansansneomedium"
-                            android:text="이용시간"
-                            android:textColor="@color/point_purple"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tpUseTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/spoqahansansneoregular"
-
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/restDateLayout"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:layout_marginRight="39.5dp"
+                        android:fontFamily="@font/spoqahansansneomedium"
+                        android:text="이용시간"
+                        android:textColor="@color/point_purple"
+                        android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="6dp"
-                            app:srcCompat="@drawable/tp_restday" />
+                    <TextView
+                        android:id="@+id/tpUseTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneoregular"
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="50dp"
-                            android:fontFamily="@font/spoqahansansneomedium"
-                            android:text="휴무일"
-                            android:textColor="@color/point_purple"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tpRestDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/spoqahansansneoregular"
-
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/restDateLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="40dp"
-                    android:orientation="vertical">
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-                    <LinearLayout
-                        android:id="@+id/openTimeFoodLayout"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:layout_marginRight="6dp"
+                        app:srcCompat="@drawable/tp_restday" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5.33dp"
-                            app:srcCompat="@drawable/tp_usetime" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="39dp"
-                            android:fontFamily="@font/spoqahansansneomedium"
-                            android:text="영업시간"
-                            android:textColor="@color/point_purple"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tpOpenTimeFood"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/spoqahansansneoregular"
-
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/restDateFoodLayout"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:layout_marginRight="50dp"
+                        android:fontFamily="@font/spoqahansansneomedium"
+                        android:text="휴무일"
+                        android:textColor="@color/point_purple"
+                        android:textSize="12sp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5.33dp"
-                            app:srcCompat="@drawable/tp_restday" />
+                    <TextView
+                        android:id="@+id/tpRestDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneoregular"
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="50dp"
-                            android:fontFamily="@font/spoqahansansneomedium"
-                            android:text="휴무일"
-                            android:textColor="@color/point_purple"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tpRestDateFood"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/spoqahansansneoregular"
-
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                        android:textSize="12sp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/openTimeFoodLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5.33dp"
+                        app:srcCompat="@drawable/tp_usetime" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="39dp"
+                        android:fontFamily="@font/spoqahansansneomedium"
+                        android:text="영업시간"
+                        android:textColor="@color/point_purple"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tpOpenTimeFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneoregular"
+
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/restDateFoodLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5.33dp"
+                        app:srcCompat="@drawable/tp_restday" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="50dp"
+                        android:fontFamily="@font/spoqahansansneomedium"
+                        android:text="휴무일"
+                        android:textColor="@color/point_purple"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tpRestDateFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneoregular"
+
+                        android:textSize="12sp" />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/tpInfo2"
@@ -763,6 +752,6 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
