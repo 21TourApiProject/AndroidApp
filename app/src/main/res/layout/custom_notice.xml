@@ -87,6 +87,7 @@
             android:layout_marginBottom="39.88dp"
             android:fontFamily="@font/spoqahansansneoregular"
             android:text="공지사항 내용"
+            android:lineSpacingExtra="4dp"
             android:textColor="@color/white"
             android:textSize="13sp" />
     </LinearLayout>
