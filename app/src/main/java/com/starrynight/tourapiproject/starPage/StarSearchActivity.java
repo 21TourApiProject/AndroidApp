@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,7 +34,7 @@ import retrofit2.Response;
 
 public class StarSearchActivity extends AppCompatActivity {
 
-    SearchView constSearch;
+    androidx.appcompat.widget.SearchView constSearch;
     ListView searchList;
     LinearLayout searchWordLayout;
     ImageView backBtn;
@@ -154,7 +152,7 @@ public class StarSearchActivity extends AppCompatActivity {
 
     //별자리 눌렀을 때 해당 별자리 페이지로 이동
     public void connectClickConst() {
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nameList);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.star__search_list_item, nameList);
         searchList.setAdapter(arrayAdapter);
         searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -164,14 +162,13 @@ public class StarSearchActivity extends AppCompatActivity {
                 intent.putExtra("constName", itemClickId);
                 Log.d("constName", itemClickId);
                 startActivity(intent);
-                //Toast.makeText(getActivity().getApplicationContext(), "You Click -" + parent.getItemAtPosition(position).toString() + parent.getItemIdAtPosition(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     //별자리 텍스트 검색 변화
     public void changeConstSearchText() {
-        constSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        constSearch.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //검색 버튼 누를 때 호출
@@ -221,6 +218,7 @@ public class StarSearchActivity extends AppCompatActivity {
         if (searchList.getVisibility() == View.VISIBLE) {
             searchList.setVisibility(View.GONE);
             searchWordLayout.setVisibility(View.VISIBLE);
+            constSearch.clearFocus();
         } else {
             finish();
         }
