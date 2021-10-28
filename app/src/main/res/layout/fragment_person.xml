@@ -166,7 +166,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@color/gray"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -199,7 +199,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@color/gray"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -233,7 +233,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@color/gray"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -313,7 +313,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@color/gray"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -347,7 +347,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@color/gray"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -380,7 +380,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@color/gray"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
             </LinearLayout>

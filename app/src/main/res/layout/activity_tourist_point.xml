@@ -64,7 +64,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <ImageButton
@@ -112,7 +112,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tpHashTag"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="16dp" />
 
                 <TextView
@@ -130,9 +130,8 @@
                     android:id="@+id/overviewPop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/spoqahansansneobold"
+                    android:fontFamily="@font/spoqahansansneomedium"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
                     android:paddingEnd="10dp"
@@ -143,26 +142,26 @@
                 <LinearLayout
                     android:id="@+id/congestionLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="40dp"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="6dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginRight="6dp"
                         app:srcCompat="@drawable/tp_congestion" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="48dp"
-                        android:text="혼잡도"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginRight="48dp"
                         android:fontFamily="@font/spoqahansansneomedium"
+                        android:text="혼잡도"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -177,10 +176,11 @@
                 <LinearLayout
                     android:id="@+id/addressLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="40dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -192,8 +192,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="61dp"
-                        android:text="주소"
                         android:fontFamily="@font/spoqahansansneomedium"
+                        android:text="주소"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -202,18 +202,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/spoqahansansneoregular"
-                        
+
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/telLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="40dp"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -226,8 +226,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="61dp"
-                        android:text="문의"
                         android:fontFamily="@font/spoqahansansneomedium"
+                        android:text="문의"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -236,24 +236,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/spoqahansansneoregular"
-                        
+
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/tpInfo1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="40dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/useTimeLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -282,9 +281,10 @@
                     <LinearLayout
                         android:id="@+id/restDateLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -296,8 +296,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
-                            android:text="휴무일"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="휴무일"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -312,19 +312,18 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/foodInfo1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="40dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/openTimeFoodLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -336,8 +335,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
-                            android:text="영업시간"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="영업시간"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -353,9 +352,10 @@
                     <LinearLayout
                         android:id="@+id/restDateFoodLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -367,8 +367,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
-                            android:text="휴무일"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="휴무일"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -385,7 +385,7 @@
                 <LinearLayout
                     android:id="@+id/tpInfo2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="40dp"
                     android:orientation="vertical"
                     android:visibility="gone">
@@ -393,9 +393,10 @@
                     <LinearLayout
                         android:id="@+id/expGuideLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -407,8 +408,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
-                            android:text="체험안내"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="체험안내"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -424,9 +425,10 @@
                     <LinearLayout
                         android:id="@+id/parkingLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -438,8 +440,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
-                            android:text="주차시설"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="주차시설"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -455,9 +457,10 @@
                     <LinearLayout
                         android:id="@+id/chkPetLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -469,8 +472,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
-                            android:text="반려동물"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="반려동물"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -486,9 +489,10 @@
                     <LinearLayout
                         android:id="@+id/homePageLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -500,8 +504,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="40dp"
-                            android:text="홈페이지"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="홈페이지"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -518,7 +522,7 @@
                 <LinearLayout
                     android:id="@+id/foodInfo2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="40dp"
                     android:orientation="vertical"
                     android:visibility="gone">
@@ -526,9 +530,10 @@
                     <LinearLayout
                         android:id="@+id/firstMenuLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -540,8 +545,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
-                            android:text="대표메뉴"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="대표메뉴"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -557,9 +562,10 @@
                     <LinearLayout
                         android:id="@+id/treatMenuLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -571,8 +577,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
-                            android:text="취급메뉴"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="취급메뉴"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -588,9 +594,10 @@
                     <LinearLayout
                         android:id="@+id/packingLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -602,8 +609,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="61dp"
-                            android:text="포장"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="포장"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -619,9 +626,10 @@
                     <LinearLayout
                         android:id="@+id/parkingFoodLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -633,8 +641,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="61dp"
-                            android:text="주차"
                             android:fontFamily="@font/spoqahansansneomedium"
+                            android:text="주차"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -666,6 +674,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/nearLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1.99dp"
@@ -674,13 +683,12 @@
             <LinearLayout
                 android:id="@+id/nearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/nearText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -691,7 +699,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/nearRecyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="29dp" />
 
             </LinearLayout>
@@ -749,7 +757,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/daumRecyclerview"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="29dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
