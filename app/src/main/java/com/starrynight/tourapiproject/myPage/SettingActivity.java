@@ -55,15 +55,15 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        //이용 가이드
-        LinearLayout usageGuide = findViewById(R.id.usageGuide);
-        usageGuide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, UsageGuideActivity.class);
-                startActivity(intent);
-            }
-        });
+//        //이용 가이드
+//        LinearLayout usageGuide = findViewById(R.id.usageGuide);
+//        usageGuide.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, UsageGuideActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         //고객센터
         LinearLayout customerSC = findViewById(R.id.customerSC);
