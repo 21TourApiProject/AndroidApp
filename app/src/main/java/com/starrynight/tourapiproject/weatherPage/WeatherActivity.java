@@ -401,11 +401,18 @@ public class WeatherActivity extends AppCompatActivity {
                 Log.d("obFitMaxCheck", String.valueOf(obFitMaxId));
             }
 
-            if (obFitList.get(i) > 60.0) {
-                obFitImageList.add(R.drawable.wt__ob_fit_good);
+            if (obFitList.get(i) < 40) {
+                obFitImageList.add(R.drawable.wt__hour_very_bad);
+            } else if (obFitList.get(i) < 60) {
+                obFitImageList.add(R.drawable.wt__hour_bad);
+            } else if (obFitList.get(i) < 70) {
+                obFitImageList.add(R.drawable.wt__hour_average);
+            } else if (obFitList.get(i) < 85) {
+                obFitImageList.add(R.drawable.wt__hour_good);
             } else {
-                obFitImageList.add(R.drawable.wt__ob_fit_bad);
+                obFitImageList.add(R.drawable.wt__hour_very_good);
             }
+
         }
         obFitMaxId += obFitHourId;
         Log.d("obFitMaxCheck11", String.valueOf(obFitMaxId));
@@ -1019,7 +1026,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
-                                    tempTextTv.setText("기온(최저/최고)");
+                                    tempTextTv.setText("기온\n(최저/최고)");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -1130,7 +1137,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     cloudTv.setText(cloudText);
                                     minTempTv.setText(tempMinText);
                                     maxTempTv.setText(tempMaxText);
-                                    tempTextTv.setText("기온(최저/최고)");
+                                    tempTextTv.setText("기온\n(최저/최고)");
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
@@ -1463,7 +1470,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                                         minTempTv.setText(tempMinText);
                                         maxTempTv.setText(tempMaxText);
-                                        tempTextTv.setText("기온(최저/최고)");
+                                        tempTextTv.setText("기온\n(최저/최고)");
                                     }
                                 } else {
                                     if (selectDate.equals(todayDate) || selectDate.equals(plusDay) || selectDate.equals(plusTwoDay)) {

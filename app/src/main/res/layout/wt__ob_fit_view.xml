@@ -6,12 +6,12 @@
 
     <ImageView
         android:layout_marginHorizontal="17dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="19dp"
         android:id="@+id/ob_fit_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/wt__ob_fit_good" />
+        android:src="@drawable/wt__hour_average" />
 
     <TextView
         android:id="@+id/ob_fit_time"
@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="10sp"
-        android:layout_marginTop="5dp"
         android:text="18시" />
 
     <TextView
