@@ -40,7 +40,7 @@
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@id/wt_back_btn"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/wt_back_btn"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,10 +153,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/scdream"
-                android:layout_marginHorizontal="20dp"
-                android:textSize="25sp" />
+                android:textSize="23sp" />
 
             <ImageView
                 android:id="@+id/wt_weather"
@@ -195,7 +195,7 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="맑음"
-                        android:textSize="22sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -211,7 +211,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
+                        android:gravity="center"
                         android:text="별 관측 적합도"
+                        android:textAlignment="center"
                         android:textSize="14sp" />
 
                     <TextView
@@ -219,9 +221,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="9dp"
+                        android:layout_marginTop="10dp"
                         android:text="100%"
-                        android:textSize="22sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -236,7 +238,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
+                        android:gravity="center"
                         android:text="관측 최적 시간"
+                        android:textAlignment="center"
                         android:textSize="14sp" />
 
                     <TextView
@@ -244,9 +248,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="9dp"
+                        android:layout_marginTop="10dp"
                         android:text="23:45"
-                        android:textSize="22sp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -256,7 +260,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="30dp"
+                android:layout_marginHorizontal="35dp"
                 android:layout_marginTop="44dp"
                 android:orientation="vertical">
 
@@ -273,6 +277,7 @@
                             android:id="@+id/sun_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingVertical="3dp"
                             android:src="@drawable/wt__sun"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -281,7 +286,7 @@
                             android:id="@+id/sunrise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="12dp"
                             android:layout_marginTop="2dp"
                             android:text="일출"
                             android:textColor="@color/point_purple"
@@ -337,6 +342,7 @@
                             android:id="@+id/moon_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingVertical="3dp"
                             android:src="@drawable/wt__moon"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -345,7 +351,7 @@
                             android:id="@+id/moonrise"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
+                            android:layout_marginStart="12dp"
                             android:layout_marginTop="2dp"
                             android:text="월출"
                             android:textColor="@color/point_purple"
@@ -397,16 +403,25 @@
                 android:background="@drawable/wt__card_view_round"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="37dp"
-                    android:background="@drawable/wt__card_view_top"
-                    android:fontFamily="@font/spoqahansansneobold"
-                    android:gravity="center"
-                    android:paddingVertical="9dp"
-                    android:text="시간 별 관측 적합도"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:background="@drawable/wt__card_view_top">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneobold"
+                        android:gravity="center"
+                        android:text="시간 별 관측 적합도"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ob_fit_recycler"
@@ -484,7 +499,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="9dp"
-                                android:text="광공해(최저/최고)" />
+                                android:text="광공해\n(최저/최고)"
+                                android:textAlignment="center" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -531,7 +547,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -561,7 +577,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -590,7 +606,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -629,7 +645,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -646,7 +662,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="9dp"
-                                android:text="기온" />
+                                android:text="기온"
+                                android:textAlignment="center" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -696,7 +713,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -726,7 +743,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -755,7 +772,7 @@
 
                         <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:orientation="vertical">
