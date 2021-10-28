@@ -156,7 +156,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/scdream_light"
-                android:textSize="23sp" />
+                android:textSize="25sp" />
 
             <ImageView
                 android:id="@+id/wt_weather"
