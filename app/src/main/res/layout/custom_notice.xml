@@ -8,60 +8,87 @@
     <LinearLayout
         android:id="@+id/noticeLayout"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:orientation="horizontal">
+        android:layout_height="71.69dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18.01dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="20.76dp"
+                app:srcCompat="@drawable/alarm__star" />
+
+            <TextView
+                android:id="@+id/noticeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="17.02dp"
+                android:fontFamily="@font/spoqahansansneomedium"
+                android:text="공지사항 제목"
+                android:textColor="@color/point_purple"
+                android:textSize="16sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/noticeBtn"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="21.85dp"
+                    android:background="@drawable/notice_arrow" />
+            </FrameLayout>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/noticeTitle"
+            android:id="@+id/noticeDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="24dp"
-            android:text="공지사항 제목"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/noticeBtn"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:background="@drawable/setting_more" />
+            android:layout_marginLeft="59.8dp"
+            android:layout_marginTop="6.89dp"
+            android:fontFamily="@font/spoqahansansneoregular"
+            android:text="공지사항 날짜"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/mypage_line" />
+        app:srcCompat="@drawable/setting_line" />
 
     <LinearLayout
         android:id="@+id/noticeOpen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/content_blue"
+        android:background="@drawable/custom_gradient_90"
         android:orientation="vertical"
         android:visibility="gone">
-
-        <TextView
-            android:id="@+id/noticeDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="7dp"
-            android:text="공지사항 날짜"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/noticeContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="53.95dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="23.23dp"
+            android:layout_marginBottom="39.88dp"
+            android:fontFamily="@font/spoqahansansneoregular"
             android:text="공지사항 내용"
-            android:textSize="12sp" />
+            android:textColor="@color/white"
+            android:textSize="13sp" />
     </LinearLayout>
 
 </LinearLayout>

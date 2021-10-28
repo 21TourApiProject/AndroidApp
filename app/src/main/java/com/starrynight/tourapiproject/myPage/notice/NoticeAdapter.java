@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.myPage.notice;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
@@ -99,7 +101,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
         public void setItem(Notice item) {
             noticeTitle.setText(item.getNoticeTitle());
-            noticeContent.setText(item.getNoticeContent());
+            noticeContent.setText(Html.fromHtml(item.getNoticeContent(), HtmlCompat.FROM_HTML_MODE_LEGACY));
             noticeDate.setText(item.getNoticeDate());
             noticeOpen.setVisibility(View.GONE);
         }
