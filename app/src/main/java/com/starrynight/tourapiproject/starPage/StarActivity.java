@@ -1,6 +1,7 @@
 package com.starrynight.tourapiproject.starPage;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +30,7 @@ public class StarActivity extends AppCompatActivity {
     // 별자리 상세정보 뷰
     TextView constMtdTv, constBestMonthTv, constStoryTv;
     ImageView constImage, constFeature1, constFeature2, constFeature3;
-    Button story_play_btn;
+    ImageView story_play_btn;
 
     String intentConstName;
     Constellation constData;
