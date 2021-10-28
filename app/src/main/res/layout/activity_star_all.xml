@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".starPage.StarAllActivity">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -54,14 +54,13 @@
                 android:layout_marginTop="12dp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginHorizontal="25dp"
                 android:id="@+id/all_const_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="23dp"
                 android:layout_marginTop="27dp"
                 android:paddingBottom="30dp">
-
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>
