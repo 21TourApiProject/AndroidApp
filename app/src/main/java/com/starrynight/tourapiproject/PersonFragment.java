@@ -373,8 +373,8 @@ public class PersonFragment extends Fragment {
                 startActivityForResult(intent, HAVE_TO_REFRESH);
             }
         });
-        TextView nickName = v.findViewById(R.id.nickName);
-        nickName.setOnClickListener(new View.OnClickListener() {
+        ImageView pencil = v.findViewById(R.id.pencil);
+        pencil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ChangeProfileActivity.class);

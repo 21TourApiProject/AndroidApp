@@ -19,6 +19,11 @@ public interface StarPageRetrofitService {
     @GET("constellation/todayConst")
     Call<List<StarItem>> getTodayConst();
 
+    @GET("constellation/todayConstName")
+    Call<List<ConstellationParams2>> getTodayConstName();
+
     @GET("constellation/{constName}")
     Call<Constellation> getDetailConst(@Path("constName") String constName);
+
+
 }

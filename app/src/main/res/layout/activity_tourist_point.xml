@@ -16,37 +16,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="49dp">
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/tpBack"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginRight="21dp">
-
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:background="@drawable/mypost_back"
-                        android:layout_gravity="center"/>
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/tpBanner"
+                    style="@style/ImageButton.size49"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="@font/scdream_light"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textSize="17sp" />
-            </LinearLayout>
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tpBanner"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/scdream"-->
+<!--                    android:textSize="17sp"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:ellipsize="end"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/tpBack"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="@id/tpBack"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/tpSlider"
@@ -58,7 +58,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="19.38dp"
                 android:layout_marginTop="19.27dp"
                 android:orientation="vertical">
 
@@ -67,34 +67,34 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
+                    <ImageButton
+                        android:id="@+id/tpGps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/empty"
+                        android:src="@drawable/location_btn" />
+
                     <TextView
                         android:id="@+id/tpTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
+                        android:layout_marginStart="6.5dp"
                         android:fontFamily="@font/spoqahansansneobold"
                         android:text="제목"
-                        android:textSize="17sp" />
-
-                    <Button
-                        android:id="@+id/tpGps"
-                        android:layout_width="16dp"
-                        android:layout_height="19dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:background="@drawable/location_btn" />
+                        android:textSize="18sp" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="10dp">
+                        android:layout_height="match_parent">
 
                         <Button
                             android:id="@+id/tpWish"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="5dp"
+                            android:layout_marginRight="21.16dp"
                             android:background="@drawable/bookmark_non" />
                     </FrameLayout>
 
@@ -102,11 +102,12 @@
 
                 <TextView
                     android:id="@+id/cat3Name"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="9.63dp"
                     android:text="관광지 타입"
-                    android:textSize="11sp" />
+                    android:textColor="@color/gray"
+                    android:textSize="12sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tpHashTag"
@@ -119,33 +120,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:lineSpacingExtra="4dp"
                     android:layout_marginRight="15dp"
+                    android:lineSpacingExtra="4dp"
                     android:textSize="12sp"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/overviewPop"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginTop="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/spoqahansansneobold"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:paddingEnd="10dp"
                     android:text="자세히 보기 >"
                     android:textColor="@color/point_purple"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:id="@+id/congestionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="12dp"
                     android:layout_marginEnd="40dp"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="4dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_gravity="center_vertical"
                         app:srcCompat="@drawable/tp_congestion" />
 
                     <TextView
@@ -153,14 +161,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="48dp"
                         android:text="혼잡도"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/spoqahansansneomedium"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
                     <ImageView
                         android:id="@+id/tpCongestion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/tp_con1"/>
+                        android:layout_width="55dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/tp__1" />
 
                 </LinearLayout>
 
@@ -183,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="61dp"
                         android:text="주소"
+                        android:fontFamily="@font/spoqahansansneomedium"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -190,6 +201,8 @@
                         android:id="@+id/tpAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneoregular"
+                        
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -214,6 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="61dp"
                         android:text="문의"
+                        android:fontFamily="@font/spoqahansansneomedium"
                         android:textColor="@color/point_purple"
                         android:textSize="12sp" />
 
@@ -221,6 +235,8 @@
                         android:id="@+id/tpTel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneoregular"
+                        
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -249,6 +265,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:text="이용시간"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
@@ -257,6 +274,8 @@
                             android:id="@+id/tpUseTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -278,6 +297,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
                             android:text="휴무일"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -285,6 +305,8 @@
                             android:id="@+id/tpRestDate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -315,6 +337,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="영업시간"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -322,6 +345,8 @@
                             android:id="@+id/tpOpenTimeFood"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -343,6 +368,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="50dp"
                             android:text="휴무일"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -350,6 +376,8 @@
                             android:id="@+id/tpRestDateFood"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -380,6 +408,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
                             android:text="체험안내"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -387,6 +416,8 @@
                             android:id="@+id/tpExpGuide"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -408,6 +439,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39.5dp"
                             android:text="주차시설"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -415,6 +447,8 @@
                             android:id="@+id/tpParking"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -436,6 +470,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="반려동물"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -443,6 +478,8 @@
                             android:id="@+id/tpChkPet"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -464,6 +501,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="40dp"
                             android:text="홈페이지"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -471,6 +509,8 @@
                             android:id="@+id/tpHomePage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -501,6 +541,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="대표메뉴"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -508,6 +549,8 @@
                             android:id="@+id/tpFirstMenu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -529,6 +572,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="39dp"
                             android:text="취급메뉴"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -536,6 +580,8 @@
                             android:id="@+id/tpTreatMenu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -557,6 +603,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="61dp"
                             android:text="포장"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -564,6 +611,8 @@
                             android:id="@+id/tpPacking"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -585,6 +634,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="61dp"
                             android:text="주차"
+                            android:fontFamily="@font/spoqahansansneomedium"
                             android:textColor="@color/point_purple"
                             android:textSize="12sp" />
 
@@ -592,6 +642,8 @@
                             android:id="@+id/tpParkingFood"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqahansansneoregular"
+
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -606,22 +658,23 @@
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp"
-                    android:text="+ 더 보기"
+                    android:text="더 보기"
+                    android:fontFamily="@font/spoqahansansneobold"
                     android:textColor="@color/point_purple"
-                    android:textSize="11sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:srcCompat="@drawable/tp_line" />
+                android:layout_marginTop="1.99dp"
+                app:srcCompat="@drawable/mypage_line" />
 
             <LinearLayout
                 android:id="@+id/nearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical">
@@ -631,8 +684,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:fontFamily="@font/spoqahansansneobold"
                     android:text="주변에 가볼만한 곳"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/nearRecyclerview"
@@ -645,11 +699,11 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/tp_line" />
+                app:srcCompat="@drawable/mypage_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:orientation="vertical">
@@ -663,22 +717,32 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqahansansneobold"
                         android:text="다음 블로그 검색결과"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/daumMore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|end"
-                            android:text="+ 더 보기"
-                            android:textColor="@color/point_purple"
-                            android:textSize="11sp" />
                     </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/daumMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|end"
+                        android:fontFamily="@font/spoqahansansneobold"
+                        android:text="더 보기"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:layout_width="5dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginStart="12dp"
+                        android:background="@drawable/mypage_showmore" />
 
                 </LinearLayout>
 
@@ -686,7 +750,7 @@
                     android:id="@+id/daumRecyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="29dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>

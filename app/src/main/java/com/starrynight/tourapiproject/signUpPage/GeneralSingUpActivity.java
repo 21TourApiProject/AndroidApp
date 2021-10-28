@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,7 +87,7 @@ public class GeneralSingUpActivity extends AppCompatActivity {
         isMarketing = false;
         isAllAgree = false;
 
-        FrameLayout generalBack = findViewById(R.id.generalBack);
+        ImageView generalBack = findViewById(R.id.generalBack);
         generalBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

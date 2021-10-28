@@ -15,41 +15,41 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginTop="22dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="49dp">
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/settingBack"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginRight="21dp">
-
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:background="@drawable/mypost_back"
-                        android:layout_gravity="center"/>
-                </FrameLayout>
+                    style="@style/ImageButton.size49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:fontFamily="@font/scdream_light"
-                    android:text="환경 설정"
-                    android:textSize="17sp" />
-            </LinearLayout>
+                    android:fontFamily="@font/scdream"
+                    android:text="환경설정"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/settingBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/myData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="27dp"
                 android:layout_marginBottom="18dp"
                 android:orientation="horizontal"
                 android:paddingTop="10dp"
@@ -58,8 +58,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="29.48dp"
                     android:text="내 정보"
+                    android:fontFamily="@font/spoqahansansneomedium"
                     android:textSize="17sp" />
 
                 <FrameLayout
@@ -70,7 +71,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
 
@@ -84,16 +85,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="43dp"
+                android:layout_marginLeft="29.48dp"
                 android:layout_marginTop="28dp"
                 android:text="고객지원"
-                android:textSize="17dp" />
+                android:fontFamily="@font/spoqahansansneomedium"
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:id="@+id/notice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="19dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="18dp"
                 android:orientation="horizontal"
                 android:paddingTop="10dp"
@@ -102,9 +104,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="공지사항"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -114,7 +117,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -131,9 +134,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="이용 가이드"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -143,7 +147,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -160,9 +164,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="고객센터"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -172,7 +177,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -189,9 +194,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="이용약관"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -201,7 +207,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -218,9 +224,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="개인정보 처리방침"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -230,7 +237,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -247,9 +254,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="운영정책"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -259,7 +267,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -276,9 +284,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="위치기반서비스 이용약관"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -288,7 +297,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -305,9 +314,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="오픈소스 라이센스"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -317,7 +327,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -326,7 +336,7 @@
                 android:id="@+id/thanksTo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="18dp"
+                android:layout_marginBottom="20dp"
                 android:orientation="horizontal"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
@@ -334,9 +344,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="45.48dp"
                     android:text="기여한 사람"
-                    android:textSize="12sp" />
+                    android:fontFamily="@font/spoqahansansneoregular"
+                    android:textSize="14sp" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -346,7 +357,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -370,8 +381,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="29.48dp"
                     android:text="로그아웃"
+                    android:fontFamily="@font/spoqahansansneomedium"
                     android:textSize="17sp" />
 
                 <FrameLayout
@@ -382,7 +394,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>
@@ -405,8 +417,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="43dp"
+                    android:layout_marginLeft="29.48dp"
                     android:text="탈퇴하기"
+                    android:fontFamily="@font/spoqahansansneomedium"
                     android:textSize="17sp" />
 
                 <FrameLayout
@@ -417,7 +430,7 @@
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_gravity="center|end"
-                        android:layout_marginRight="37dp"
+                        android:layout_marginRight="33.23dp"
                         android:background="@drawable/setting_more" />
                 </FrameLayout>
             </LinearLayout>

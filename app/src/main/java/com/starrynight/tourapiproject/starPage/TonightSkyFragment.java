@@ -17,7 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,9 +37,6 @@ import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
-import com.starrynight.tourapiproject.weatherPage.WtHelpActivity;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,10 +81,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
     ImageView starBackBtn;
     ImageView starSearchBtn;
     ConstraintLayout todayWeather;
-
-
-    LinearLayout helpInfo;
-    ImageView helpBackBtn;
 
     TouchImageView touchImageView;
 
@@ -196,11 +188,11 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
-            public void onStateChanged(@NonNull @NotNull View bottomSheet, int newState) {
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
             }
 
             @Override
-            public void onSlide(@NonNull @NotNull View bottomSheet, float slideOffset) {
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
                 if (slideOffset >= 0.0 && slideOffset < 0.5) {
                     topIcon.setImageResource(R.drawable.tonight__bottom_up);
                 } else if (slideOffset >= 0.5 && slideOffset <= 1.0) {
@@ -257,7 +249,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         Call<List<StarItem>> todayConstCall = RetrofitClient.getApiService().getTodayConst();
         todayConstCall.enqueue(new Callback<List<StarItem>>() {
             @Override
-            public void onResponse(@NotNull Call<List<StarItem>> call, Response<List<StarItem>> response) {
+            public void onResponse(@NonNull Call<List<StarItem>> call, Response<List<StarItem>> response) {
                 if (response.isSuccessful()) {
                     List<StarItem> result = response.body();
                     for (StarItem si : result) {
@@ -282,7 +274,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
                 intent.putExtra("constName", item.getConstName());
-                //Log.d("constId 출력", item.getConstId().toString());
                 startActivity(intent);
             }
         });
@@ -349,8 +340,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
 
 
         return v;
-
-
     }
 
 
@@ -391,15 +380,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
             compass.startAnimation(ra);
             mCurrentDegree = -azimuthinDegress;
         }
-    }
-
-    public void stateButton(boolean state) {
-        touchImageView.setEnabled(state);
-        compass.setEnabled(state);
-        starBackBtn.setEnabled(state);
-        helpBtn.setEnabled(state);
-        bottomSheetBehavior.setDraggable(state);
-        //     constSearch.setEnabled(state);
     }
 
     //별자리 운세

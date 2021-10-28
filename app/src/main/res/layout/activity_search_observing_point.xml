@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_purple"
+    android:background="@color/bg_dark_indigo"
     tools:context=".postWritePage.SearchObservingPointActivity">
 
     <LinearLayout
@@ -15,26 +15,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:layout_marginTop="22dp"
             android:layout_marginBottom="40dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/search__back_btn"
-                android:layout_width="16sp"
-                android:layout_height="16sp"
-                android:layout_marginLeft="29dp"
-                android:layout_marginRight="21dp"
-                android:background="@drawable/mypost_back" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:fontFamily="@font/scdream_light"
-                android:text="장소 설정"
-                android:textSize="17sp" />
+                <ImageView
+                    android:id="@+id/search__back_btn"
+                    style="@style/ImageButton.size49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/scdream"
+                    android:text="장소 설정"
+                    android:textSize="17sp" />
+            </FrameLayout>
 
         </LinearLayout>
 

@@ -16,41 +16,41 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginTop="22dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="49dp">
 
-                <FrameLayout
+                <ImageView
                     android:id="@+id/generalBack"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginRight="21dp">
-
-                    <Button
-                        android:layout_width="16sp"
-                        android:layout_height="16sp"
-                        android:background="@drawable/mypost_back"
-                        android:layout_gravity="center"/>
-                </FrameLayout>
+                    style="@style/ImageButton.size49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:paddingVertical="18dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="21dp"
+                    android:src="@drawable/star__search_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/scdream_light"
+                    android:fontFamily="@font/scdream"
                     android:text="회원가입"
-                    android:textSize="17sp" />
-            </LinearLayout>
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@id/generalBack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="38.12dp"
                 android:layout_marginRight="42dp"
                 android:orientation="vertical">
 
@@ -121,19 +121,27 @@
                     android:inputType="textPassword"
                     android:textSize="14sp" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="56dp"
-                    app:srcCompat="@drawable/tp_line" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38.12dp"
+                app:srcCompat="@drawable/setting_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="39.77dp"
+                android:layout_marginRight="42dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:text="추가정보 입력"
-                    android:textColor="@color/point_purple"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -145,7 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="이름 :"
+                        android:text="이름"
                         android:textSize="12sp" />
 
                     <EditText
@@ -154,9 +162,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="52dp"
-                        android:paddingLeft="10dp"
                         android:background="@drawable/signup_box2"
                         android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -170,7 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="성별 :"
+                        android:text="성별"
                         android:textSize="12sp" />
 
                     <Button
@@ -206,7 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="생년월일 :"
+                        android:text="생년월일"
                         android:textSize="12sp" />
 
                     <TextView
@@ -222,44 +230,32 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35.77dp"
+                app:srcCompat="@drawable/setting_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="39.77dp"
+                android:layout_marginRight="42dp"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="전체 동의 :"
-                        android:textSize="12sp" />
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="18dp">
-
-                        <Button
-                            android:id="@+id/allAgree"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
-                            android:background="@drawable/signup_agree_non" />
-                    </FrameLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="만 14세 이상입니다 (필수) :"
+                        android:text="만 14세 이상입니다 (필수)"
                         android:textSize="12sp" />
 
                     <FrameLayout
@@ -271,7 +267,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="20dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 
@@ -280,7 +276,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="22dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -302,7 +298,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text=") :"
+                        android:text=")"
                         android:textSize="12sp" />
 
                     <FrameLayout
@@ -314,7 +310,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="20dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 
@@ -323,7 +319,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="22dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -345,8 +341,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="12sp"
-                        android:text=") :" />
+                        android:text=")"
+                        android:textSize="12sp" />
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -357,7 +353,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="20dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 
@@ -366,7 +362,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="22dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -388,8 +384,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="12sp"
-                        android:text=") :" />
+                        android:text=")"
+                        android:textSize="12sp" />
+
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="18dp">
@@ -399,7 +396,7 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="20dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
                 </LinearLayout>
@@ -407,14 +404,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="22dp"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="마케팅 정보 수신 동의 :"
+                        android:text="마케팅 정보 수신 동의"
                         android:textSize="12sp" />
 
                     <FrameLayout
@@ -426,21 +423,50 @@
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:layout_gravity="center|end"
-                            android:layout_marginRight="50dp"
+                            android:layout_marginRight="20dp"
                             android:background="@drawable/signup_agree_non" />
                     </FrameLayout>
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="전체 동의"
+                        android:textSize="14sp" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp">
+
+                        <Button
+                            android:id="@+id/allAgree"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center|end"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/signup_agree_non" />
+                    </FrameLayout>
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/next"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="51dp"
-                    android:layout_marginBottom="50dp"
+                    android:layout_height="46dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40.66dp"
+                    android:layout_marginBottom="35.34dp"
                     android:background="@drawable/round_btn"
-                    android:fontFamily="@font/scdream"
-                    android:text="완료" />
+                    android:fontFamily="@font/spoqahansansneobold"
+                    android:text="완료"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

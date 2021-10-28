@@ -30,35 +30,41 @@
             android:layout_weight="1" />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
             android:id="@+id/hor_prev_btn"
-            style="@style/ImageButton.size24.pad10"
+            style="@style/ImageButton.size24.pad3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:paddingHorizontal="10dp"
             android:src="@drawable/tonight__hor_back" />
 
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/hor_viewpager"
             android:layout_width="0dp"
-            android:layout_height="850dp"
+            android:layout_height="wrap_content"
             android:layout_weight="5"
             android:clipChildren="false"
             android:clipToPadding="false">
-
         </androidx.viewpager2.widget.ViewPager2>
 
 
         <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
             android:id="@+id/hor_next_btn"
-            style="@style/ImageButton.size24.pad10"
+            style="@style/ImageButton.size24.pad3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -67,4 +73,5 @@
             android:paddingHorizontal="10dp"
             android:src="@drawable/tonight__hor_next" />
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>

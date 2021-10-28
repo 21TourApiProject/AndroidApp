@@ -19,55 +19,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="15.5dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/goPostWrite"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="right"
-                    android:layout_marginEnd="18.27dp"
-                    android:background="@drawable/mypage_writepost" />
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginEnd="17.41dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/mypage__plus" />
 
                 <Button
                     android:id="@+id/goSetting"
-                    android:layout_width="19.45dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center|right"
-                    android:layout_marginEnd="24dp"
-                    android:background="@drawable/mypage_setting" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="15.28dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/mypage__setting" />
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="22dp">
+                android:scaleType="center"
+                app:srcCompat="@drawable/profile_default_image" />
 
-                <ImageView
-                    android:id="@+id/profileImage"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:scaleType="center"
-                    app:srcCompat="@drawable/profile_default_image" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="44dp"
-                    app:srcCompat="@drawable/mydata_edit" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/nickName"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:textSize="17sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="닉네임"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:id="@+id/pencil"
+                    android:layout_width="25.04dp"
+                    android:layout_height="25.04dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="7.45dp"
+                    app:srcCompat="@drawable/mydata_edit" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/changeMyHashTag"
@@ -89,46 +91,37 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
-                    android:layout_marginTop="1dp"
                     app:srcCompat="@drawable/mypage_morehashtag" />
 
             </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                app:srcCompat="@drawable/mypage_line" />
 
             <LinearLayout
                 android:id="@+id/myWishBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40.95dp"
+                android:layout_marginBottom="15dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="나의 여행 버킷리스트 "
+                    android:text="내 북마크"
+                    android:fontFamily="@font/spoqahansansneomedium"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="여행 박스"
-                    android:textSize="12sp" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <Button
-                    android:layout_width="4dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/mypage_showmore" />
+                    <Button
+                        android:layout_width="5dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginEnd="15.28dp"
+                        android:background="@drawable/mypage_showmore" />
+                </FrameLayout>
 
             </LinearLayout>
 
@@ -138,7 +131,8 @@
                 android:layout_height="130dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -150,15 +144,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myWishImage1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -167,9 +161,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/gray"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -183,9 +177,9 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myWishImage2"
@@ -200,8 +194,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
                         android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -217,15 +211,15 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
+                        app:cardBackgroundColor="@color/bg_dark_indigo"
                         app:cardCornerRadius="5dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/bg_dark_indigo">
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/myWishImage3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -234,9 +228,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="@color/gray"
-                        android:maxLines="1"
                         android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@color/gray"
                         android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -244,39 +238,39 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:srcCompat="@drawable/mypage_line" />
+                android:layout_marginTop="15dp"
+                app:srcCompat="@drawable/setting_line" />
 
             <LinearLayout
                 android:id="@+id/myPostBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="내 게시글 "
+                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:text="내 게시물"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="나의 여행 기록들"
-                    android:textSize="12sp" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <Button
-                    android:layout_width="4dp"
-                    android:layout_height="8dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/mypage_showmore" />
+                    <Button
+                        android:layout_width="5dp"
+                        android:layout_height="10dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginEnd="15.28dp"
+                        android:background="@drawable/mypage_showmore" />
+                </FrameLayout>
+
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/myPostLayout"
@@ -389,18 +383,11 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:srcCompat="@drawable/mypage_line" />
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bottom_nav_size">
 
             </FrameLayout>
-
 
         </LinearLayout>
     </ScrollView>

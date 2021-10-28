@@ -44,7 +44,7 @@ public class MyDataActivity extends AppCompatActivity {
         profileImage2.setClipToOutline(true);
 
         //뒤로 가기
-        FrameLayout myDataBack = findViewById(R.id.myDataBack);
+        ImageView myDataBack = findViewById(R.id.myDataBack);
         myDataBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,10 +126,9 @@ public class MyDataActivity extends AppCompatActivity {
                 startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
-
         //프로필 변경 페이지로 이동
-        TextView nickName = findViewById(R.id.nickName2);
-        nickName.setOnClickListener(new View.OnClickListener() {
+        ImageView changeProfile = findViewById(R.id.changeProfile);
+        changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyDataActivity.this, ChangeProfileActivity.class);
@@ -137,6 +136,7 @@ public class MyDataActivity extends AppCompatActivity {
                 startActivityForResult(intent, CHANGE_PROFILE);
             }
         });
+
     }
 
     @Override

@@ -41,6 +41,7 @@
     </style>
 
     <style name="Textview_observation_details_title" parent="">
+        <item name="fontFamily">@font/spoqahansansneomedium</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/point_purple</item>
     </style>
@@ -90,8 +91,8 @@
         <item name="android:padding">4dp</item>
     </style>
 
-    <style name="ImageButton.size24.pad10">
-        <item name="android:padding">10dp</item>
+    <style name="ImageButton.size24.pad3">
+        <item name="android:padding">3dp</item>
     </style>
 
     <style name="ImageButton.size21.pad12">

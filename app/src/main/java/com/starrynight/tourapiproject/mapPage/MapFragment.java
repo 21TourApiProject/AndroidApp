@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -118,6 +119,7 @@ public class MapFragment extends Fragment {
     RecyclerView hashTagsrecyclerView;
     ImageView main_img;
     LinearLayout selectFilterItem;
+    HorizontalScrollView horizontalScrollView;
     SearchView searchView;
 
     Long[] areaCode = {1L, 31L, 2L, 32L, 33L, 34L, 3L, 8L, 37L, 5L, 38L, 35L, 4L, 36L, 6L, 7L, 39L}; //관광지 지역코드
@@ -383,6 +385,7 @@ public class MapFragment extends Fragment {
         main_img = view.findViewById(R.id.main_img);
         searchView = view.findViewById(R.id.map_search);
         selectFilterItem = view.findViewById(R.id.map_selectFilterItem);
+        horizontalScrollView = view.findViewById(R.id.map_selectFilterScrollView);
         selectFilterItem.removeAllViews();
         //지도 띄우기
         mapView = new MapView(getActivity());
@@ -436,6 +439,7 @@ public class MapFragment extends Fragment {
                 task.execute();
 
                 selectFilterItem.setVisibility(View.VISIBLE);
+                horizontalScrollView.setVisibility(View.VISIBLE);
                 selectFilterItem.removeAllViews(); //초기화
                 for (int i = 0; i < 17; i++) {
                     if (area.get(i) == 1) {
@@ -533,7 +537,7 @@ public class MapFragment extends Fragment {
                         Log.e("연결실패", t.getMessage());
                     }
                 });
-                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilterforMap(searchKey);
                 call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
@@ -594,6 +598,7 @@ public class MapFragment extends Fragment {
                 task.execute();
 
                 selectFilterItem.setVisibility(View.VISIBLE);
+                horizontalScrollView.setVisibility(View.VISIBLE);
                 selectFilterItem.removeAllViews(); //초기화
                 for (int i = 0; i < 17; i++) {
                     if (area.get(i) == 1) {
@@ -692,7 +697,7 @@ public class MapFragment extends Fragment {
                 });
 
                 //관광지 추가해야함
-                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilterforMap(searchKey);
                 call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
@@ -811,7 +816,7 @@ public class MapFragment extends Fragment {
                     }
                 });
 
-                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilter(searchKey);
+                Call<List<SearchParams1>> call2 = RetrofitClient.getApiService().getTouristPointWithFilterforMap(searchKey);
                 call2.enqueue(new Callback<List<SearchParams1>>() {
                     @Override
                     public void onResponse(Call<List<SearchParams1>> call, Response<List<SearchParams1>> response) {
