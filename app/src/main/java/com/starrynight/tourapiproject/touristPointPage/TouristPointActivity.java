@@ -73,10 +73,10 @@ public class TouristPointActivity extends AppCompatActivity {
     Boolean isTp;
 
     TextView tpBanner, tpTitle, cat3Name, overview, tpAddress, tpTel, tpUseTime, tpRestDate, tpOpenTimeFood, tpRestDateFood,
-            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, nearText, overviewPop, daumMore;
+            tpExpGuide, tpParking, tpChkPet, tpHomePage, tpFirstMenu, tpTreatMenu, tpPacking, tpParkingFood, overviewPop, daumMore;
 
     Button tpWish;
-    ImageView tpCongestion;
+    ImageView tpCongestion, nearLine;
 
     LinearLayout congestionLayout, addressLayout, telLayout, useTimeLayout, restDateLayout, openTimeFoodLayout, restDateFoodLayout, expGuideLayout,
             parkingLayout, chkPetLayout, homePageLayout, firstMenuLayout, treatMenuLayout, packingLayout, parkingFoodLayout, nearLayout;
@@ -129,8 +129,8 @@ public class TouristPointActivity extends AppCompatActivity {
         tpTreatMenu = findViewById(R.id.tpTreatMenu);
         tpPacking = findViewById(R.id.tpPacking);
         tpParkingFood = findViewById(R.id.tpParkingFood);
-        nearText = findViewById(R.id.nearText);
         nearLayout = findViewById(R.id.nearLayout);
+        nearLine = findViewById(R.id.nearLine);
         daumMore = findViewById(R.id.daumMore);
         congestionLayout = findViewById(R.id.congestionLayout);
         addressLayout = findViewById(R.id.addressLayout);
@@ -247,9 +247,6 @@ public class TouristPointActivity extends AppCompatActivity {
         slider = findViewById(R.id.tpSlider);
 
         //관광지 정보 불러오기
-        LinearLayout tpInfo1 = findViewById(R.id.tpInfo1);
-        LinearLayout foodInfo1 = findViewById(R.id.foodInfo1);
-
         Call<Long> call = RetrofitClient.getApiService().getContentType(contentId);
         call.enqueue(new Callback<Long>() {
             @Override
@@ -265,7 +262,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     tpData = response.body();
                                     isTp = true;
-                                    tpInfo1.setVisibility(View.VISIBLE);
 
                                     balloonObject.setLongitude(tpData.getMapX());
                                     balloonObject.setLatitude(tpData.getMapY());
@@ -362,42 +358,36 @@ public class TouristPointActivity extends AppCompatActivity {
                                     }
                                     if (tpData.getAddr() != null) {
                                         tpAddress.setText(tpData.getAddr());
-                                    } else {
-                                        addressLayout.setVisibility(View.GONE);
+                                        addressLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (tpData.getTel() != null) {
                                         tpTel.setText(tpData.getTel());
-                                    } else {
-                                        telLayout.setVisibility(View.GONE);
+                                        telLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (tpData.getUseTime() != null) {
                                         tpUseTime.setText(tpData.getUseTime());
-                                    } else {
-                                        useTimeLayout.setVisibility(View.GONE);
+                                        useTimeLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (tpData.getRestDate() != null) {
                                         tpRestDate.setText(tpData.getRestDate());
-                                    } else {
-                                        restDateLayout.setVisibility(View.GONE);
+                                        restDateLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (tpData.getExpGuide() != null) {
                                         tpExpGuide.setText(tpData.getExpGuide());
-                                    } else {
-                                        expGuideLayout.setVisibility(View.GONE);
+                                        expGuideLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (tpData.getParking() != null) {
                                         tpParking.setText(tpData.getParking());
-                                    } else {
-                                        parkingLayout.setVisibility(View.GONE);
+                                        parkingLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (tpData.getChkPet() != null) {
                                         tpChkPet.setText(tpData.getChkPet());
-                                    } else {
-                                        chkPetLayout.setVisibility(View.GONE);
+                                        chkPetLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (tpData.getHomePage() != null) {
                                         String cleanHomepage = tpData.getHomePage();
                                         tpHomePage.setText(cleanHomepage);
+                                        homePageLayout.setVisibility(View.VISIBLE);
                                         tpHomePage.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -405,8 +395,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                             }
                                         });
-                                    } else {
-                                        homePageLayout.setVisibility(View.GONE);
                                     }
 
                                 } else {
@@ -428,7 +416,6 @@ public class TouristPointActivity extends AppCompatActivity {
                                 if (response.isSuccessful()) {
                                     foodData = response.body();
                                     isTp = false;
-                                    foodInfo1.setVisibility(View.VISIBLE);
 
                                     balloonObject.setLongitude(foodData.getMapX());
                                     balloonObject.setLatitude(foodData.getMapY());
@@ -520,43 +507,35 @@ public class TouristPointActivity extends AppCompatActivity {
                                     }
                                     if (foodData.getAddr() != null) {
                                         tpAddress.setText(foodData.getAddr());
-                                    } else {
-                                        addressLayout.setVisibility(View.GONE);
+                                        addressLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (foodData.getTel() != null) {
                                         tpTel.setText(foodData.getTel());
-                                    } else {
-                                        telLayout.setVisibility(View.GONE);
+                                        telLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (foodData.getOpenTimeFood() != null) {
                                         tpOpenTimeFood.setText(foodData.getOpenTimeFood());
-                                    } else {
-                                        openTimeFoodLayout.setVisibility(View.GONE);
+                                        openTimeFoodLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (foodData.getRestDateFood() != null) {
                                         tpRestDateFood.setText(foodData.getRestDateFood());
-                                    } else {
-                                        restDateFoodLayout.setVisibility(View.GONE);
+                                        restDateFoodLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (foodData.getFirstMenu() != null) {
                                         tpFirstMenu.setText(foodData.getFirstMenu());
-                                    } else {
-                                        firstMenuLayout.setVisibility(View.GONE);
+                                        firstMenuLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (foodData.getTreatMenu() != null) {
                                         tpTreatMenu.setText(foodData.getTreatMenu());
-                                    } else {
-                                        treatMenuLayout.setVisibility(View.GONE);
+                                        treatMenuLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (foodData.getPacking() != null) {
                                         tpPacking.setText(foodData.getPacking());
-                                    } else {
-                                        packingLayout.setVisibility(View.GONE);
+                                        packingLayout.setVisibility(View.VISIBLE);
                                     }
                                     if (foodData.getParkingFood() != null) {
                                         tpParkingFood.setText(foodData.getParkingFood());
-                                    } else {
-                                        parkingFoodLayout.setVisibility(View.GONE);
+                                        parkingFoodLayout.setVisibility(View.VISIBLE);
                                     }
 
                                 } else {
@@ -651,7 +630,13 @@ public class TouristPointActivity extends AppCompatActivity {
 
         //주변에 가볼만한 곳
         RecyclerView nearRecyclerview = findViewById(R.id.nearRecyclerview);
-        LinearLayoutManager nearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//        LinearLayoutManager nearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager nearLayoutManager = new LinearLayoutManager(getApplicationContext()){
+            @Override public boolean canScrollVertically() {
+                return false;
+            }
+        };
+
         nearRecyclerview.setLayoutManager(nearLayoutManager);
         nearResult = new ArrayList<>();
 
@@ -663,26 +648,27 @@ public class TouristPointActivity extends AppCompatActivity {
                     nearResult = response.body();
                     int len = nearResult.size();
                     if (len == 0) {
-                        nearText.setVisibility(View.GONE);
                         nearLayout.setVisibility(View.GONE);
-                        return;
+                        nearLine.setVisibility(View.GONE);
                     }
-                    String[] nearImages = new String[len];
-                    for (int i = 0; i < len; i++) {
-                        nearImages[i] = nearResult.get(i).getFirstImage();
-                    }
-
-                    NearAdapter nearAdapter = new NearAdapter(nearResult, nearImages, TouristPointActivity.this);
-                    nearRecyclerview.setAdapter(nearAdapter);
-                    nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener() {
-                        @Override
-                        public void onItemClick(NearAdapter.ViewHolder holder, View view, int position) {
-                            Near item = nearAdapter.getItem(position);
-                            Intent intent = new Intent(TouristPointActivity.this, TouristPointActivity.class);
-                            intent.putExtra("contentId", item.getContentId());
-                            startActivityForResult(intent, NEAR);
+                    else {
+                        String[] nearImages = new String[len];
+                        for (int i = 0; i < len; i++) {
+                            nearImages[i] = nearResult.get(i).getFirstImage();
                         }
-                    });
+
+                        NearAdapter nearAdapter = new NearAdapter(nearResult, nearImages, TouristPointActivity.this);
+                        nearRecyclerview.setAdapter(nearAdapter);
+                        nearAdapter.setOnNearItemClickListener(new OnNearItemClickListener() {
+                            @Override
+                            public void onItemClick(NearAdapter.ViewHolder holder, View view, int position) {
+                                Near item = nearAdapter.getItem(position);
+                                Intent intent = new Intent(TouristPointActivity.this, TouristPointActivity.class);
+                                intent.putExtra("contentId", item.getContentId());
+                                startActivityForResult(intent, NEAR);
+                            }
+                        });
+                    }
                 } else {
                     Log.e(TAG, "주변 관광지 불러오기 실패");
                 }

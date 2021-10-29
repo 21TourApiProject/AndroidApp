@@ -6,15 +6,15 @@
     android:orientation="vertical">
 
     <ScrollView
-        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/hor_kr_name"
@@ -33,10 +33,10 @@
                 android:layout_marginTop="20dp" />
 
             <TextView
-                android:layout_marginTop="14dp"
                 android:id="@+id/hor_eng_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
                 android:fontFamily="@font/amarante_regular"
                 android:text="SAGITTARIUS"
                 android:textSize="22sp" />
@@ -45,8 +45,8 @@
                 android:id="@+id/hor_period"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4/20 ~ 5/20"
                 android:layout_marginTop="12dp"
+                android:text="4/20 ~ 5/20"
                 android:textColor="@color/gray"
                 android:textSize="14sp" />
 
@@ -87,10 +87,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:lineSpacingExtra="3dp"
+                android:lineSpacingExtra="4dp"
                 android:text="충분히 스스로에게 자신감을 가져도 된다."
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,10 +105,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:lineSpacingExtra="3dp"
+                android:lineSpacingExtra="4dp"
                 android:text="참을성이 좋고 헌신적입니다."
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,10 +124,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="30dp"
-                android:lineSpacingExtra="3dp"
+                android:lineSpacingExtra="4dp"
                 android:text="풍요롭고 나른한 휴양지를 선호합니다."
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

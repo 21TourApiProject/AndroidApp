@@ -20,19 +20,19 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqahansansneobold"
-                android:textSize="14sp"
-                android:text="오늘 볼 수 있는 별자리" />
+                android:text="오늘 볼 수 있는 별자리"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
         </LinearLayout>
 
         <TextView
@@ -41,15 +41,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginVertical="17dp"
-            android:textSize="14sp"
-            android:text="별자리를 눌러 설명을 읽어보세요!" />
+            android:text="별자리를 눌러 설명을 읽어보세요!"
+            android:textSize="14sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/today_cel_recycler"
-            android:paddingBottom="16dp"
-            android:paddingStart="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="16dp">
 
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>

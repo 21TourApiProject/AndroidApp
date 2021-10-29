@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +17,7 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
+import com.starrynight.tourapiproject.starPage.starPageRetrofit.GridItemDecoration;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 
 import java.util.List;
@@ -31,7 +31,6 @@ public class StarAllActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     StarViewAdapter constAdapter;
     StarViewAdapter constTodayAdapter;
-    CardView starCardView;
 
     LinearLayout allTodayConst;
     RecyclerView constTodayList;
@@ -52,8 +51,8 @@ public class StarAllActivity extends AppCompatActivity {
 
         //recyclerView 설정
         recyclerView = findViewById(R.id.all_const_recycler);
-        starCardView = findViewById(R.id.star_card_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+        recyclerView.addItemDecoration(new GridItemDecoration(this));
         recyclerView.setLayoutManager(gridLayoutManager);
         constAdapter = new StarViewAdapter();
         recyclerView.setAdapter(constAdapter);
@@ -70,8 +69,6 @@ public class StarAllActivity extends AppCompatActivity {
                         constAdapter.addItem(new StarItem(si.getConstId(), si.getConstName(), si.getConstEng()));
                     }
                     recyclerView.setAdapter(constAdapter);
-                    recyclerView.addItemDecoration(new StarRecyclerViewWidth(24));
-                    recyclerView.addItemDecoration(new StarRecyclerViewHeight(16));
                 } else {
                 }
             }
@@ -97,9 +94,8 @@ public class StarAllActivity extends AppCompatActivity {
         allTodayConst.findViewById(R.id.star_today_const_notice).setVisibility(View.GONE);
 
         constTodayList = findViewById(R.id.today_cel_recycler);
-        gridLayoutManager = new GridLayoutManager(this, 3);
-        constTodayList.addItemDecoration(new StarRecyclerViewWidth(24));
-        constTodayList.addItemDecoration(new StarRecyclerViewHeight(16));
+        gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+        constTodayList.addItemDecoration(new GridItemDecoration(this));
         constTodayList.setLayoutManager(gridLayoutManager);
         constTodayAdapter = new StarViewAdapter();
         constTodayList.setAdapter(constTodayAdapter);
