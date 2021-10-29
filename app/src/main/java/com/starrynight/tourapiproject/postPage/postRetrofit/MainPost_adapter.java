@@ -169,20 +169,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                 }
             }
         });
-//        if (item.getProfileImage() != null) {
-//            if (item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")) {
-//                beforeImage = null;
-//                Glide.with(viewHolder.itemView.getContext()).load(item.getProfileImage()).into(viewHolder.profileimage);
-//            } else {
-//                String fileName = item.getProfileImage();
-//                fileName = fileName.substring(1, fileName.length() - 1);
-//                Glide.with(viewHolder.itemView.getContext())
-//                        .load("https://starry-night.s3.ap-northeast-2.amazonaws.com/profileImage/" + fileName)
-//                        .into(viewHolder.profileimage);
-//            }
-//        }
-
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(viewHolder.hashTagRecyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
         viewHolder.hashTagRecyclerView.setLayoutManager(layoutManager);
         PostHashTagItemAdapter adapter = new PostHashTagItemAdapter();

@@ -104,10 +104,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="24dp"
+                    android:lineSpacingExtra="4dp"
                     android:paddingHorizontal="24dp"
                     android:text="4월 ~ 6월"
                     android:textAlignment="center"
-                    android:textSize="20sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -163,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="28dp"
                     android:layout_marginBottom="21dp"
-                    android:lineSpacingExtra="5dp"
+                    android:lineSpacingExtra="4dp"
                     android:paddingHorizontal="24dp"
                     android:textSize="12sp" />
 
@@ -207,11 +208,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="26dp"
-                    android:lineSpacingExtra="5dp"
+                    android:lineSpacingExtra="4dp"
                     android:paddingHorizontal="22dp"
                     android:text="봄철 저녁"
                     android:textSize="12sp" />
-
             </LinearLayout>
 
         </LinearLayout>
