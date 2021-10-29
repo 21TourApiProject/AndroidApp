@@ -36,6 +36,7 @@ import com.starrynight.tourapiproject.starPage.horItemPage.HoroscopeAdapter;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarItem;
 import com.starrynight.tourapiproject.starPage.starItemPage.StarViewAdapter;
+import com.starrynight.tourapiproject.starPage.starPageRetrofit.GridItemDecoration;
 import com.starrynight.tourapiproject.starPage.starPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.weatherPage.WeatherActivity;
 
@@ -240,12 +241,10 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         // recyclerview 설정
         constList = v.findViewById(R.id.today_cel_recycler);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
-//        constList.addItemDecoration(new StarRecyclerViewWidth(24));
-//        constList.addItemDecoration(new StarRecyclerViewHeight(16));
+        constList.addItemDecoration(new GridItemDecoration(getContext()));
         constList.setLayoutManager(gridLayoutManager);
         constAdapter = new StarViewAdapter();
         constList.setAdapter(constAdapter);
-
 
         // 오늘의 별자리 리스트 불러오는 api
         Call<List<StarItem>> todayConstCall = RetrofitClient.getApiService().getTodayConst();
