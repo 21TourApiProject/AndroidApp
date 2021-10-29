@@ -2490,7 +2490,7 @@ public class WeatherActivity extends AppCompatActivity {
     //관측 적합도 멘트
     public void setObFitComment(Double obFitValueSelect) {
         if (obFitValueSelect < 40) {
-            commentTv.setText("오늘은 별을 보기 어려워요");
+            commentTv.setText("별을 보기 어려워요");
             wtWeather.setImageResource(R.drawable.wt__very_bad);
         } else if (obFitValueSelect < 60) {
             commentTv.setText("별 보기 조금 아쉽네요");
