@@ -134,7 +134,7 @@
                     android:layout_below="@id/obs_hashtags_layout"
                     android:layout_marginTop="23dp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/spoqahansansneomedium"
+                    android:fontFamily="@font/spoqahansansneoregular"
                     android:lineSpacingExtra="4dp"
                     android:maxLines="4"
                     android:text="개요"
@@ -207,13 +207,13 @@
                             android:id="@+id/obs_light_icon"
                             android:layout_width="55dp"
                             android:layout_height="20dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_toRightOf="@id/obs_light_txt"
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@id/obs_light_txt"
                             android:src="@drawable/observation__light_worst" />
                     </RelativeLayout>
 
@@ -487,26 +487,28 @@
                     android:id="@+id/obs_nature_light_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="102dp">
+                    android:layout_marginLeft="102dp"
+                    android:layout_marginBottom="10dp">
+
                     <TextView
                         android:id="@+id/obs_nature_light_txt"
+                        style="@style/Textview_observation_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="00.0"
+                        android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        style="@style/Textview_observation_details"
-                        android:layout_alignParentLeft="true" />
+                        android:text="00.0" />
 
 
                     <ImageView
                         android:id="@+id/obs_nature_light_icon"
                         android:layout_width="55dp"
                         android:layout_height="20dp"
-                        android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@id/obs_nature_light_txt"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
                         android:src="@drawable/observation__light_worst" />
                 </RelativeLayout>
 
@@ -526,14 +528,15 @@
                         style="@style/Textview_observation_details_title"
                         android:text="주소" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/obs_nature_address_txt"
+                    style="@style/Textview_observation_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ㅇㅇ군 ㅇㅇ시 ㅇㅇ동"
-                    style="@style/Textview_observation_details"
                     android:layout_below="@id/obs_nature_light_layout"
-                    android:layout_alignLeft="@id/obs_nature_light_layout"/>
+                    android:layout_alignLeft="@id/obs_nature_light_layout"
+                    android:text="ㅇㅇ군 ㅇㅇ시 ㅇㅇ동" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
