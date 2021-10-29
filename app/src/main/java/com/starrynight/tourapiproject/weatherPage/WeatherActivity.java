@@ -415,7 +415,7 @@ public class WeatherActivity extends AppCompatActivity {
             if (obFitList.get(i) < 40) {
                 obFitImageList.add(R.drawable.wt__hour_very_bad);
             } else if (obFitList.get(i) < 60) {
-                obFitImageList.add(R.drawable.wt__hour_bad);
+                obFitImageList.add(R.drawable.wt__hour_very_bad);
             } else if (obFitList.get(i) < 70) {
                 obFitImageList.add(R.drawable.wt__hour_average);
             } else if (obFitList.get(i) < 85) {
