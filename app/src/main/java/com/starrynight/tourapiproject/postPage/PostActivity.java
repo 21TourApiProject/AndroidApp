@@ -224,11 +224,12 @@ public class PostActivity extends AppCompatActivity {
                                                 for (int i = 0; i < adapter2.getItemCount(); i++) {
                                                     allsize += adapter2.getItem(i).getHashTagname().length();
                                                 }
-                                                if (allsize > 21 && allsize < 43) {
+
+                                                if (allsize > 20 && allsize < 41) {
                                                     staggeredGridLayoutManager.setSpanCount(2);
-                                                } else if (allsize > 42 && allsize < 64) {
+                                                } else if (allsize > 40 && allsize < 61) {
                                                     staggeredGridLayoutManager.setSpanCount(3);
-                                                } else if (allsize > 63) {
+                                                } else if (allsize > 60) {
                                                     staggeredGridLayoutManager.setSpanCount(4);
                                                 }
                                                 hashTagRecyclerView.setAdapter(adapter2);
@@ -299,11 +300,11 @@ public class PostActivity extends AppCompatActivity {
                                                 for (int i = 0; i < adapter.getItemCount(); i++) {
                                                     allsize += adapter.getItem(i).getHashTagname().length();
                                                 }
-                                                if (allsize > 21 && allsize < 43) {
+                                                if (allsize > 20 && allsize < 41) {
                                                     staggeredGridLayoutManager.setSpanCount(2);
-                                                } else if (allsize > 42 && allsize < 64) {
+                                                } else if (allsize > 40 && allsize < 61) {
                                                     staggeredGridLayoutManager.setSpanCount(3);
-                                                } else if (allsize > 63) {
+                                                } else if (allsize > 60) {
                                                     staggeredGridLayoutManager.setSpanCount(4);
                                                 }
                                                 hashTagRecyclerView.setAdapter(adapter);
