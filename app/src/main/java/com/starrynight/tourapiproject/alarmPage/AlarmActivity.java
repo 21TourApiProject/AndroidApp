@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.starrynight.tourapiproject.R;
+import com.starrynight.tourapiproject.myPage.NoticeActivity;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
+import com.starrynight.tourapiproject.myPage.notice.Notice;
+import com.starrynight.tourapiproject.myPage.notice.NoticeAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,20 +29,23 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-
+        List<Notice> finalAlarmList= new ArrayList<>();
         RecyclerView recyclerView = findViewById(R.id.alarm_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        AlarmAdapter adapter = new AlarmAdapter();
-        Call<List<Alarm>> call = RetrofitClient.getApiService().getAllAlarm();
-        call.enqueue(new Callback<List<Alarm>>() {
+        Call<List<Notice>> call = RetrofitClient.getApiService().getAllNotice();
+        call.enqueue(new Callback<List<Notice>>() {
             @Override
-            public void onResponse(Call<List<Alarm>> call, Response<List<Alarm>> response) {
+            public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
                 if (response.isSuccessful()) {
-                    List<Alarm> alarms = response.body();
-                    for (int i = 0; i < alarms.size(); i++) {
-                        adapter.addItem(new Alarm(alarms.get(i).getAlarmTitle(), alarms.get(i).getYearDate(), alarms.get(i).getAlarmContent()));
+                    List<Notice> alarms = response.body();
+                    for (int i=0;i<alarms.size();i++){
+                        if (alarms.get(i).getNoticeTitle().contains("$")){
+                            alarms.get(i).setNoticeTitle(alarms.get(i).getNoticeTitle().substring(1));
+                            finalAlarmList.add(alarms.get(i));
+                        }
                     }
+                    NoticeAdapter adapter = new NoticeAdapter(getApplicationContext(),finalAlarmList);
                     recyclerView.setAdapter(adapter);
                 } else {
                     Log.d("alarm", "알림 업로드 실패");
@@ -46,11 +53,10 @@ public class AlarmActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Alarm>> call, Throwable t) {
+            public void onFailure(Call<List<Notice>> call, Throwable t) {
                 Log.d("alarm", "알림 인터넷 오류");
             }
         });
-        recyclerView.setAdapter(adapter);
 
         FrameLayout back_btn = findViewById(R.id.alarmBack);
         back_btn.setOnClickListener(new View.OnClickListener() {
