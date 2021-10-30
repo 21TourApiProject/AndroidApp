@@ -236,7 +236,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         allConstBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                constAdapter = new StarViewAdapter();
                 Intent intent = new Intent(Objects.requireNonNull(getActivity()).getApplicationContext(), StarAllActivity.class);
                 startActivity(intent);
             }
@@ -290,6 +289,7 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getActivity().getApplicationContext(), StarActivity.class);
                 intent.putExtra("constName", item.getConstName());
+                Log.d("itemConstName", item.getConstName());
                 startActivity(intent);
             }
         });
