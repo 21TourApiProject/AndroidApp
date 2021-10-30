@@ -16,6 +16,7 @@ import com.starrynight.tourapiproject.myPage.myPageRetrofit.RetrofitClient;
 import com.starrynight.tourapiproject.myPage.notice.Notice;
 import com.starrynight.tourapiproject.myPage.notice.NoticeAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,7 +28,7 @@ public class NoticeActivity extends AppCompatActivity {
 
     private static final String TAG = "Notice";
     RecyclerView noticeRecyclerView;
-
+    List<Notice> finalAlarmList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,12 @@ public class NoticeActivity extends AppCompatActivity {
             public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
                 if (response.isSuccessful()) {
                     List<Notice> result = response.body();
-                    NoticeAdapter noticeAdapter = new NoticeAdapter(getApplicationContext(), result);
+                    for (int i=0;i<result.size();i++){
+                        if (!result.get(i).getNoticeTitle().contains("$")){
+                            finalAlarmList.add(result.get(i));
+                        }
+                    }
+                    NoticeAdapter noticeAdapter = new NoticeAdapter(getApplicationContext(), finalAlarmList);
                     noticeRecyclerView.setAdapter(noticeAdapter);
                 } else {
                     Log.e(TAG, "공지사항 실패");
