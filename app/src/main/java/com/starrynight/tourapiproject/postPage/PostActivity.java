@@ -224,12 +224,11 @@ public class PostActivity extends AppCompatActivity {
                                                 for (int i = 0; i < adapter2.getItemCount(); i++) {
                                                     allsize += adapter2.getItem(i).getHashTagname().length();
                                                 }
-
                                                 if (allsize > 20 && allsize < 41) {
                                                     staggeredGridLayoutManager.setSpanCount(2);
-                                                } else if (allsize > 40 && allsize < 61) {
+                                                } else if (allsize > 40 && allsize < 57) {
                                                     staggeredGridLayoutManager.setSpanCount(3);
-                                                } else if (allsize > 60) {
+                                                } else if (allsize > 56) {
                                                     staggeredGridLayoutManager.setSpanCount(4);
                                                 }
                                                 hashTagRecyclerView.setAdapter(adapter2);
@@ -302,9 +301,9 @@ public class PostActivity extends AppCompatActivity {
                                                 }
                                                 if (allsize > 20 && allsize < 41) {
                                                     staggeredGridLayoutManager.setSpanCount(2);
-                                                } else if (allsize > 40 && allsize < 61) {
+                                                } else if (allsize > 40 && allsize < 57) {
                                                     staggeredGridLayoutManager.setSpanCount(3);
-                                                } else if (allsize > 60) {
+                                                } else if (allsize > 56) {
                                                     staggeredGridLayoutManager.setSpanCount(4);
                                                 }
                                                 hashTagRecyclerView.setAdapter(adapter);
