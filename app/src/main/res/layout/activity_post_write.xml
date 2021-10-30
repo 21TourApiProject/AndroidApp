@@ -165,7 +165,7 @@
                         android:fontFamily="@font/spoqahansansneoregular"
                         android:hint="제목을 입력해주세요"
                         android:inputType="textPersonName"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <ImageView
@@ -365,7 +365,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="8dp"
                         android:background="@null"
                         android:ems="0"
                         android:fontFamily="@font/spoqahansansneoregular"
@@ -374,8 +374,7 @@
                         android:inputType="textLongMessage|textMultiLine"
                         android:lines="10"
                         android:scrollHorizontally="false"
-                        android:textSize="12sp"
-                        tools:layout_marginTop="9dp" />
+                        android:textSize="14sp"/>
                 </LinearLayout>
             </LinearLayout>
 
