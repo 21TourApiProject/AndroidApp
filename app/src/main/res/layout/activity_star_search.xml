@@ -42,7 +42,8 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="17dp"
         android:background="@drawable/star__search_bar"
-        android:paddingHorizontal="22dp">
+        android:paddingEnd="5dp"
+        android:paddingStart="22dp">
 
         <ImageView
             android:id="@+id/search_view_icon"
