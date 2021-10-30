@@ -189,9 +189,25 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
         );
 
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    topBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        }
+                    });
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    topBar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -203,7 +219,6 @@ public class TonightSkyFragment extends Fragment implements SensorEventListener 
                 }
             }
         });
-
 
         // 뒤로 가기 버튼 클릭 이벤트
         starBackBtn = v.findViewById(R.id.star_back_btn);
