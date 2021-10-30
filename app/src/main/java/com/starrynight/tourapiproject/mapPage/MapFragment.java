@@ -408,6 +408,8 @@ public class MapFragment extends Fragment {
         searchView.setIconifiedByDefault(false);
         area = new ArrayList<Integer>(Collections.nCopies(17, 0));
         hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
+        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
 
         if (getArguments() != null) {
             Activities fromWhere = (Activities) getArguments().getSerializable("FromWhere");
@@ -1095,10 +1097,8 @@ public class MapFragment extends Fragment {
 
     private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
-        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
-        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
         recyclerHashTagAdapter = new RecyclerHashTagAdapter();
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }
