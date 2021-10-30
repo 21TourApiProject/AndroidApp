@@ -154,4 +154,10 @@ public class StarActivity extends AppCompatActivity {
         super.onDestroy();
         TextToSpeechManager.getInstance().finalizeLibrary();
     }
+
+    public void onPause() {
+        super.onPause();
+        if (ttsClient.isPlaying())
+            ttsClient.stop();
+    }
 }
