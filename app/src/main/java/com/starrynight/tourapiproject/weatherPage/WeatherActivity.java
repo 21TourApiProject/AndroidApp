@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -62,6 +64,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WeatherActivity extends AppCompatActivity {
+    WeatherLoadingDialog dialog;
+    WeatherActivity.LoadingAsyncTask task;
 
     //Picker 관련
     Calendar c = Calendar.getInstance();
@@ -108,18 +112,15 @@ public class WeatherActivity extends AppCompatActivity {
     Double obFitValueSelect;
     int obFitApiId;
     int obFitApiPlusId;
-    String obFitTime;
-    int obFitImage;
     String obFitPercent;
 
     private String obFitHour[] = {"00", "01", "02", "03", "04", "05"
             , "06", "07", "08", "09", "10", "11", "12", "13", "14", "15"
-            , "16", "17", "18", "19", "20", "21", "22", "23", "00(+)", "01(+)", "02(+)", "03(+)", "04(+)", "05(+)"
-            , "06(+)", "07(+)", "08(+)", "09(+)", "10(+)", "11(+)", "12(+)", "13(+)", "14(+)", "15(+)"
-            , "16(+)", "17(+)", "18(+)", "19(+)", "20(+)", "21(+)", "22(+)", "23(+)"};
+            , "16", "17", "18", "19", "20", "21", "22", "23", "익일 00", "익일 01", "익일 02", "익일 03", "익일 04", "익일 05"
+            , "익일 06", "익일 07", "익일 08", "익일 09", "익일 10", "익일 11", "익일 12", "익일 13", "익일1 4", "익일 15"
+            , "익일 16", "익일 17", "익일 18", "익일 19", "익일 20", "익일 21", "익일 22", "익일 23"};
 
     List<String> obFitHourList = new ArrayList<>();
-    List<Integer> obFitNextDayList = new ArrayList<>();
 
     double observationalFitDegree;
     double cloudVolume;
@@ -155,7 +156,6 @@ public class WeatherActivity extends AppCompatActivity {
     String timePickerTxt;
 
     ArrayAdapter<CharSequence> cityAdSpin, provAdSpin;
-    String choice_do = "";
     String choice_se = "";
 
     // 선택한 날짜 + 시간
@@ -206,9 +206,6 @@ public class WeatherActivity extends AppCompatActivity {
     String sunriseHr;
     String sunsetHr;
     String selectHr;
-
-    Integer sunriseHrInt;
-    Integer sunsetHrInt;
     Integer selectHrInt;
 
     Date unixDate;
@@ -328,7 +325,6 @@ public class WeatherActivity extends AppCompatActivity {
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
-
     Double nowLatitude;
     Double nowLongitude;
 
@@ -355,6 +351,10 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
+        dialog = new WeatherLoadingDialog(WeatherActivity.this);
+        task = new LoadingAsyncTask(WeatherActivity.this, 5000);
+        task.execute();
 
         if (!checkLocationServicesStatus()) {
             //gps 동의
@@ -1340,6 +1340,7 @@ public class WeatherActivity extends AppCompatActivity {
                             precipitationProbability = Double.parseDouble(data.getHourly().get(i).getPop());
                             obFitValue = setObservationalFitDegree();
                             obFitList.add(obFitValue);
+                            Log.d("errorcheck", "0");
                         }
                         obFitHourList.addAll(Arrays.asList(obFitHour).subList(0, 7));
 
@@ -1351,9 +1352,10 @@ public class WeatherActivity extends AppCompatActivity {
                             precipitationProbability = Double.parseDouble(data.getHourly().get(i).getPop());
                             obFitValue = setObservationalFitDegree();
                             obFitList.add(obFitValue);
+                            Log.d("errorcheck", "1");
                         }
                         obFitHourList.addAll(Arrays.asList(obFitHour).subList(18, 24));
-
+                        Log.d("obFitApiid", "obFitApiId");
                         if (obFitApiId >= 1 && obFitApiId < 7) {
                             for (int i = obFitApiPlusId + 24; i < obFitApiPlusId + obFitApiId + 24; i++) {
                                 cloudVolume = Double.parseDouble(data.getHourly().get(i).getClouds());
@@ -1362,16 +1364,18 @@ public class WeatherActivity extends AppCompatActivity {
                                 precipitationProbability = Double.parseDouble(data.getHourly().get(i).getPop());
                                 obFitValue = setObservationalFitDegree();
                                 obFitList.add(obFitValue);
+                                Log.d("errorcheck", "2");
                             }
                             obFitHourList.addAll(Arrays.asList(obFitHour).subList(24, 24 + obFitApiId));
-                        } else {
-                            for (int i = obFitApiPlusId + 18; i < obFitApiPlusId + 31; i++) {
+                        } else if (obFitApiId >= 7) {
+                            for (int i = obFitApiPlusId + 24; i < obFitApiPlusId + 31; i++) {
                                 cloudVolume = Double.parseDouble(data.getHourly().get(i).getClouds());
                                 moonAge = Double.parseDouble(moonPhaseText);
                                 feel_like = Double.parseDouble(data.getHourly().get(i).getFeelsLike());
                                 precipitationProbability = Double.parseDouble(data.getHourly().get(i).getPop());
                                 obFitValue = setObservationalFitDegree();
                                 obFitList.add(obFitValue);
+                                Log.d("errorcheck", "3");
                             }
                             obFitHourList.addAll(Arrays.asList(obFitHour).subList(24, 31));
                         }
@@ -1380,7 +1384,6 @@ public class WeatherActivity extends AppCompatActivity {
                         obFit.setVisibility(View.GONE);
                         bestObTimeTv.setText("정보없음");
                     }
-
 
                     detailWeather.setOnClickListener(new View.OnClickListener() {
                         @SuppressLint("ClickableViewAccessibility")
@@ -2853,5 +2856,36 @@ public class WeatherActivity extends AppCompatActivity {
             }
         }
         return index;
+    }
+
+    private class LoadingAsyncTask extends AsyncTask<String, Long, Boolean> {
+        private Context mContext = null;
+        private Long mtime;
+
+        public LoadingAsyncTask(Context context, long time) {
+            mContext = WeatherActivity.this;
+            mtime = time;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+                Thread.sleep(mtime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return (true);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            dialog.dismiss();
+        }
     }
 }
