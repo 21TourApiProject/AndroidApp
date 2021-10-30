@@ -176,13 +176,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/wt_today_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:text="날씨"
                         android:textSize="14sp" />
@@ -191,7 +191,6 @@
                         android:id="@+id/wt_today_weather_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="맑음"
@@ -203,6 +202,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
@@ -211,7 +211,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
-                        android:gravity="center"
                         android:text="별 관측 적합도"
                         android:textAlignment="center"
                         android:textSize="14sp" />
@@ -230,6 +229,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
@@ -238,7 +238,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
-                        android:gravity="center"
                         android:text="관측 최적 시간"
                         android:textAlignment="center"
                         android:textSize="14sp" />
@@ -247,7 +246,6 @@
                         android:id="@+id/wt_best_ob_time_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:text="23:45"
                         android:textSize="20sp" />
