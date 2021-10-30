@@ -224,11 +224,12 @@ public class PostActivity extends AppCompatActivity {
                                                 for (int i = 0; i < adapter2.getItemCount(); i++) {
                                                     allsize += adapter2.getItem(i).getHashTagname().length();
                                                 }
-                                                if (allsize > 15 && allsize < 30) {
+
+                                                if (allsize > 20 && allsize < 41) {
                                                     staggeredGridLayoutManager.setSpanCount(2);
-                                                } else if (allsize > 31 && allsize < 60) {
+                                                } else if (allsize > 40 && allsize < 61) {
                                                     staggeredGridLayoutManager.setSpanCount(3);
-                                                } else if (allsize > 61) {
+                                                } else if (allsize > 60) {
                                                     staggeredGridLayoutManager.setSpanCount(4);
                                                 }
                                                 hashTagRecyclerView.setAdapter(adapter2);
@@ -299,11 +300,11 @@ public class PostActivity extends AppCompatActivity {
                                                 for (int i = 0; i < adapter.getItemCount(); i++) {
                                                     allsize += adapter.getItem(i).getHashTagname().length();
                                                 }
-                                                if (allsize > 15 && allsize < 35) {
+                                                if (allsize > 20 && allsize < 41) {
                                                     staggeredGridLayoutManager.setSpanCount(2);
-                                                } else if (allsize > 36 && allsize < 60) {
+                                                } else if (allsize > 40 && allsize < 61) {
                                                     staggeredGridLayoutManager.setSpanCount(3);
-                                                } else if (allsize > 61) {
+                                                } else if (allsize > 60) {
                                                     staggeredGridLayoutManager.setSpanCount(4);
                                                 }
                                                 hashTagRecyclerView.setAdapter(adapter);
@@ -529,7 +530,7 @@ public class PostActivity extends AppCompatActivity {
                                 isWish = true;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
-                                ((MainActivity) MainActivity.mContext).onResume();
+                                ((MainActivity) MainActivity.mContext).replaceFragment();
                             } else {
                                 Log.d("myWish", "관광지 찜 실패");
                             }
@@ -549,7 +550,7 @@ public class PostActivity extends AppCompatActivity {
                                 isWish = false;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                ((MainActivity) MainActivity.mContext).onResume();
+                                ((MainActivity) MainActivity.mContext).replaceFragment();
                             } else {
                                 Log.d("deleteMyWish", "관광지 찜 삭제 실패");
                             }

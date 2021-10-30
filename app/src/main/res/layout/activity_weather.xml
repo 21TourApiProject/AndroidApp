@@ -87,6 +87,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="12dp"
                     android:background="@drawable/wt__picker_bg"
+                    android:onClick="wtClickTimePicker"
                     android:orientation="horizontal"
                     android:paddingHorizontal="18dp"
                     android:paddingVertical="4dp">
@@ -96,7 +97,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:onClick="wtClickTimePicker"
                         android:text="14"
                         android:textColor="@color/point_purple"
                         android:textSize="14sp" />
@@ -156,7 +156,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/scdream_light"
-                android:textSize="23sp" />
+                android:textSize="25sp" />
 
             <ImageView
                 android:id="@+id/wt_weather"

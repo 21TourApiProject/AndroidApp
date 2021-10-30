@@ -30,7 +30,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spoqahansansneomedium"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -53,7 +55,9 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:fontFamily="@font/spoqahansansneobold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
         </LinearLayout>
 
