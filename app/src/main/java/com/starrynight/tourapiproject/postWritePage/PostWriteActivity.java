@@ -334,7 +334,7 @@ public class PostWriteActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        if (hashTagList.isEmpty() && optionhashTagList.get(0) == null) {
+                        if (hashTagList.isEmpty() && optionhashTagList.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show();
                             return;
                         }
