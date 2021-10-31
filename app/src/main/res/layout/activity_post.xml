@@ -91,11 +91,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/post_image_" />
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:background="@drawable/post_image_">
+                    android:layout_height="350dp">
 
                 </androidx.viewpager2.widget.ViewPager2>
 
