@@ -5,12 +5,13 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_marginHorizontal="17dp"
-        android:layout_marginTop="19dp"
         android:id="@+id/ob_fit_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/wt__hour_average" />
 
     <TextView
@@ -18,17 +19,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="10sp"
-        android:text="18시" />
+        android:text="18시"
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/ob_fit_percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="10sp"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="10dp"
+        android:text="90%"
         android:textColor="@color/point_purple"
-        android:text="90%" />
+        android:textSize="10sp" />
 
 </LinearLayout>

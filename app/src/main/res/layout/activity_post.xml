@@ -20,8 +20,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/custom_gradient"
                 android:orientation="horizontal">
 
                 <FrameLayout
@@ -49,7 +47,7 @@
                             android:layout_height="16sp"
                             android:layout_gravity="center"
                             android:background="@drawable/mypost_back"
-                            android:clickable="false"/>
+                            android:clickable="false" />
                     </FrameLayout>
                 </FrameLayout>
 
@@ -93,11 +91,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/post_image_" />
+
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:background="@drawable/post_image_">
+                    android:layout_height="350dp">
 
                 </androidx.viewpager2.widget.ViewPager2>
 

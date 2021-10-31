@@ -86,6 +86,7 @@ public class StarAllActivity extends AppCompatActivity {
                 StarItem item = constAdapter.getItem(position);
                 Intent intent = new Intent(getApplicationContext(), StarActivity.class);
                 intent.putExtra("constName", item.getConstName());
+                Log.d("itemConstNameAll", item.getConstName());
                 startActivity(intent);
             }
         });
@@ -129,6 +130,7 @@ public class StarAllActivity extends AppCompatActivity {
                 StarItem item = constTodayAdapter.getItem(position);
                 Intent intent = new Intent(getApplicationContext(), StarActivity.class);
                 intent.putExtra("constName", item.getConstName());
+                Log.d("itemConstNameAll", item.getConstName());
                 startActivity(intent);
             }
         });
