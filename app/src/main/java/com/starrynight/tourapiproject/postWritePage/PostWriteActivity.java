@@ -22,7 +22,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -104,6 +106,7 @@ public class PostWriteActivity extends AppCompatActivity {
     String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
     String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
+    EditText addContext;
 
     int PERMISSIONS_REQUEST_CODE = 100;
 
@@ -125,6 +128,7 @@ public class PostWriteActivity extends AppCompatActivity {
     private String todaydate;
     private String todaytime;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +137,7 @@ public class PostWriteActivity extends AppCompatActivity {
         ob_linear = findViewById(R.id.postwrite_ob_linear);
         examplelayout = findViewById(R.id.exampleLinear);
         dialog = new PostWriteLoadingDialog(PostWriteActivity.this);
+        addContext = findViewById(R.id.postContentText);
 
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
@@ -146,6 +151,21 @@ public class PostWriteActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        addContext.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(@SuppressLint("ClickableViewAccessibility") View v, MotionEvent event) {
+                if (addContext.hasFocus()) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_SCROLL:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            return true;
+                    }
+                }
+                return false;
+            }
+        });
 
         // + 버튼 클릭 이벤트
         addPicture = findViewById(R.id.addPicture);
@@ -845,5 +865,22 @@ public class PostWriteActivity extends AppCompatActivity {
             dialog.dismiss();
             finish();
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if (!rect.contains(x, y)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
