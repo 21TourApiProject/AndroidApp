@@ -154,7 +154,7 @@ public class PostWriteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 examplelayout.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
-                if (numOfPicture >= 10) {
+                if (numOfPicture > 10) {
                     Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -592,7 +592,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ClipData clipData = data.getClipData();
                     if (clipData != null) {
-                        if (numOfPicture + clipData.getItemCount() >= 10) {
+                        if (numOfPicture + clipData.getItemCount() > 10) {
                             Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_SHORT).show();
                             return;
                         }
