@@ -75,7 +75,6 @@ public class PostActivity extends AppCompatActivity {
     String[] filename2 = new String[10];
     String[] relatefilename = new String[4];
     ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
-    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
     String keyword;
 
     @Override
@@ -238,22 +237,26 @@ public class PostActivity extends AppCompatActivity {
                                                     public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
                                                         Intent intent1 = new Intent(PostActivity.this, MainActivity.class);
                                                         PostHashTagItem item = adapter2.getItem(position);
-                                                        if (item.getHashTagId() != null) {
-                                                            keyword = null;
-                                                            intent1.putExtra("keyword", keyword);
-                                                            int x = item.getHashTagId().intValue();
-                                                            hashTag.set(x - 1, 1);
-                                                            intent1.putExtra("area", area);
-                                                            intent1.putExtra("hashTag", hashTag);
-                                                            intent1.putExtra("FromWhere", Activities.POST);
-                                                            startActivity(intent1);
-                                                        } else {
-                                                            keyword = item.getHashTagname();
-                                                            intent1.putExtra("keyword", keyword);
-                                                            intent1.putExtra("area", area);
-                                                            intent1.putExtra("hashTag", hashTag);
-                                                            intent1.putExtra("FromWhere", Activities.POST);
-                                                            startActivity(intent1);
+                                                        if (position!=0) {
+                                                            if (item.getHashTagId() != null) {
+                                                                ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+                                                                keyword = null;
+                                                                intent1.putExtra("keyword", keyword);
+                                                                int x = item.getHashTagId().intValue();
+                                                                hashTag.set(x - 1, 1);
+                                                                intent1.putExtra("area", area);
+                                                                intent1.putExtra("hashTag", hashTag);
+                                                                intent1.putExtra("FromWhere", Activities.POST);
+                                                                startActivity(intent1);
+                                                            } else {
+                                                                ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+                                                                keyword = item.getHashTagname();
+                                                                intent1.putExtra("keyword", keyword);
+                                                                intent1.putExtra("area", area);
+                                                                intent1.putExtra("hashTag", hashTag);
+                                                                intent1.putExtra("FromWhere", Activities.POST);
+                                                                startActivity(intent1);
+                                                            }
                                                         }
                                                     }
                                                 });
@@ -314,6 +317,7 @@ public class PostActivity extends AppCompatActivity {
                                                         Intent intent1 = new Intent(PostActivity.this, MainActivity.class);
                                                         PostHashTagItem item = adapter.getItem(position);
                                                         if (item.getHashTagId() != null) {
+                                                            ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
                                                             keyword = null;
                                                             intent1.putExtra("keyword", keyword);
                                                             int x = item.getHashTagId().intValue();
