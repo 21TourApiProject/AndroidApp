@@ -189,6 +189,13 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return v;
     }
 
+    public void toTheTop() {
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+        if (linearLayoutManager != null) {
+            nestedScrollView.fullScroll(View.FOCUS_UP);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -210,5 +217,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         ft.detach(this).attach(this).commit();
         swipeRefreshLayout.setRefreshing(false);
     }
+
 
 }
