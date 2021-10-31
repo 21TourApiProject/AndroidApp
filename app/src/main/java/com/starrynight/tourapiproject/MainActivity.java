@@ -91,26 +91,31 @@ public class MainActivity extends AppCompatActivity {
         bottom = findViewById(R.id.bottom_nav_view);
 
 
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_main:
-                        if (mainFragment == null) {
-                            mainFragment = new MainFragment();
-                            getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
+                        if(bottomNavigationView.getSelectedItemId() == R.id.navigation_main) {
+                            mainFragment.toTheTop();
+                        }else{
+                            if (mainFragment == null) {
+                                mainFragment = new MainFragment();
+                                getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
+                            }
+                            if (mainFragment != null)
+                                getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
+                            if (searchFragment != null)
+                                getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
+                            if (tonightSkyFragment != null)
+                                getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
+                            if (personFragment != null)
+                                getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+                            showBottom();
+                            removeFragments();
                         }
-                        if (mainFragment != null)
-                            getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
-                        if (searchFragment != null)
-                            getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
-                        if (tonightSkyFragment != null)
-                            getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
-                        if (personFragment != null)
-                            getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
-                        showBottom();
-                        removeFragments();
                         return true;
                     case R.id.navigation_search:
                         if (searchFragment == null) {

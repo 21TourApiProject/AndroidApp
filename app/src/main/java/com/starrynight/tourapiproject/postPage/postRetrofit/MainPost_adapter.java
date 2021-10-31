@@ -53,7 +53,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     private static Context context;
     String beforeImage;
     ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
-    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
 
     public MainPost_adapter(List<MainPost> items, Context context) {
         this.items = items;
@@ -214,22 +213,26 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                         public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
                             Intent intent1 = new Intent(viewHolder.itemView.getContext(), MainActivity.class);
                             PostHashTagItem item1 = adapter.getItem(position);
-                            if (item1.getHashTagId() != null) {
-                                keyword[position] = null;
-                                intent1.putExtra("keyword", keyword[position]);
-                                int x = item1.getHashTagId().intValue();
-                                hashTag.set(x - 1, 1);
-                                intent1.putExtra("area", area);
-                                intent1.putExtra("hashTag", hashTag);
-                                intent1.putExtra("FromWhere", Activities.POST);
-                                viewHolder.itemView.getContext().startActivity(intent1);
-                            } else {
-                                keyword[position] = item1.getHashTagname();
-                                intent1.putExtra("keyword", keyword[position]);
-                                intent1.putExtra("area", area);
-                                intent1.putExtra("hashTag", hashTag);
-                                intent1.putExtra("FromWhere", Activities.POST);
-                                viewHolder.itemView.getContext().startActivity(intent1);
+                            if (position!=0) {
+                                if (item1.getHashTagId() != null) {
+                                    keyword[position] = null;
+                                    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+                                    intent1.putExtra("keyword", keyword[position]);
+                                    int x = item1.getHashTagId().intValue();
+                                    hashTag.set(x - 1, 1);
+                                    intent1.putExtra("area", area);
+                                    intent1.putExtra("hashTag", hashTag);
+                                    intent1.putExtra("FromWhere", Activities.POST);
+                                    viewHolder.itemView.getContext().startActivity(intent1);
+                                } else {
+                                    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+                                    keyword[position] = item1.getHashTagname();
+                                    intent1.putExtra("keyword", keyword[position]);
+                                    intent1.putExtra("area", area);
+                                    intent1.putExtra("hashTag", hashTag);
+                                    intent1.putExtra("FromWhere", Activities.POST);
+                                    viewHolder.itemView.getContext().startActivity(intent1);
+                                }
                             }
                         }
                     });
