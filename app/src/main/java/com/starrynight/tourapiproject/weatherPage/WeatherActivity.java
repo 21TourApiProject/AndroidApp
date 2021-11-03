@@ -1160,7 +1160,7 @@ public class WeatherActivity extends AppCompatActivity {
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
-                                    
+
                                     starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
                                     setObFitComment(obFitValueSelect);
                                     connectTodayWeather();
