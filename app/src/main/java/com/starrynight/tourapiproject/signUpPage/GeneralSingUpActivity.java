@@ -579,7 +579,7 @@ public class GeneralSingUpActivity extends AppCompatActivity {
 
     //생년월일 datePicker
     public void onClickBirthPicker(View view) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod, mYear, mMonth, mDay);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog_NoActionBar, callbackMethod, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setCalendarViewShown(false);
         datePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         datePickerDialog.show();

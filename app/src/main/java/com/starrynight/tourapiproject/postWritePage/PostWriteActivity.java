@@ -746,7 +746,7 @@ public class PostWriteActivity extends AppCompatActivity {
         todaytime = formatMin.format(c.getTime());
         int todayHour = Integer.parseInt(todaydate);
         int todayTime = Integer.parseInt(todaytime);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod2, todayHour, todayTime, false);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Dialog_NoActionBar, callbackMethod2, todayHour, todayTime, false);
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
     }
