@@ -1039,16 +1039,9 @@ public class WeatherActivity extends AppCompatActivity {
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
 
-                                    selectHr = selectTime;
-                                    selectHrInt = Integer.parseInt(selectHr);
-                                    Log.d("selectHr", selectHr);
-                                    if (selectHrInt >= 7 && selectHrInt < 18) {
-                                        starObFitTv.setText("0%");
-                                        setObFitComment(0.0);
-                                    } else {
-                                        starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
-                                        setObFitComment(obFitValueSelect);
-                                    }
+                                    starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
+                                    setObFitComment(obFitValueSelect);
+
                                     connectTodayWeather();
                                     Log.d("getIDaily", String.valueOf(i));
                                 }
@@ -1167,17 +1160,9 @@ public class WeatherActivity extends AppCompatActivity {
                                     windTv.setText(windText);
                                     humidityTv.setText(humidityText);
                                     precipitationTv.setText(precipText);
-
-                                    selectHr = selectTime;
-                                    Log.d("selectHr", selectHr);
-                                    selectHrInt = Integer.parseInt(selectHr);
-                                    if (selectHrInt >= 7 && selectHrInt < 18) {
-                                        starObFitTv.setText("0%");
-                                        setObFitComment(0.0);
-                                    } else {
-                                        starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
-                                        setObFitComment(obFitValueSelect);
-                                    }
+                                    
+                                    starObFitTv.setText(String.format("%.0f", obFitValueSelect) + "%");
+                                    setObFitComment(obFitValueSelect);
                                     connectTodayWeather();
                                     Log.d("getIDaily", String.valueOf(i));
                                 }
