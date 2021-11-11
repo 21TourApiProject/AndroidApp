@@ -619,12 +619,12 @@
                     android:id="@+id/writePost_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="방문소감쓰기"
+                    android:text="방문소감쓰기>"
                     android:textSize="14sp"
                     android:fontFamily="@font/spoqahansansneomedium"
                     android:textColor="@color/white"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="36dp"
+                    android:layout_marginRight="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/relatePostLinear"/>
 
