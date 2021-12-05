@@ -51,7 +51,7 @@
 <img src="https://user-images.githubusercontent.com/52451798/144734316-963671e4-6734-45d9-b5e5-5b50cc8beb0b.jpg" width="200" height="400" align="left"/>
 <p align="center"><img src="https://user-images.githubusercontent.com/52451798/144734313-8b17daba-012d-4944-8c43-ad10c6742cc2.jpg" width="200" height="400"/></p>
 <img src="https://user-images.githubusercontent.com/52451798/144734309-060d2266-c3a6-4a76-a5ca-840307d4080d.jpg" width="200" height="400" align="right"/>
-</br?
+</br>
 
 - 구글 플레이 스토어에 "별 헤는 밤" 검색을 한다.
 - 아래로 스크롤해서 "별 헤는 밤: 밤하늘, 별자리, 여행정보와 날씨예보까지" 를 클릭한다.
