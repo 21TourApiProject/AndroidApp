@@ -337,14 +337,10 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    public void replaceFragment() {
-        super.onResume();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.main_view, fragment).commitAllowingStateLoss();
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
+        fragmentTransaction.replace(R.id.main_view, fragment).commitAllowingStateLoss();
     }
 
 

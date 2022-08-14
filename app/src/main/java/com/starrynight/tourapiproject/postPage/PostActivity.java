@@ -26,6 +26,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.MainActivity;
+import com.starrynight.tourapiproject.MainFragment;
 import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.mapPage.Activities;
 import com.starrynight.tourapiproject.myPage.myPageRetrofit.User;
@@ -87,7 +88,7 @@ public class PostActivity extends AppCompatActivity {
     String[] relatefilename = new String[4];
     ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
     String keyword;
-
+    MainFragment mainFragment = new MainFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -550,7 +551,7 @@ public class PostActivity extends AppCompatActivity {
                                 isWish = true;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
-                                ((MainActivity) MainActivity.mContext).replaceFragment();
+                                ((MainActivity) MainActivity.mContext).replaceFragment(mainFragment);
                             } else {
                                 Log.d("myWish", "관광지 찜 실패");
                             }
@@ -570,7 +571,7 @@ public class PostActivity extends AppCompatActivity {
                                 isWish = false;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에서 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                ((MainActivity) MainActivity.mContext).replaceFragment();
+                                ((MainActivity) MainActivity.mContext).replaceFragment(mainFragment);
                             } else {
                                 Log.d("deleteMyWish", "관광지 찜 삭제 실패");
                             }
