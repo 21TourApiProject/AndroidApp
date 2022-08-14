@@ -15,7 +15,19 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.observationPage.ObservationsiteActivity;
 
 import java.util.ArrayList;
+/**
+* @className : PostHashTagItemAdapter
+* @description : 게시물 해시태그, 관측지 아이템 adpater 입니다.
+* @modification : jinhyeok (2022-08-14) 주석 수정
+* @author : 2022-08-14
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-14       주석 수정
 
+ */
 public class PostHashTagItemAdapter extends RecyclerView.Adapter<PostHashTagItemAdapter.ViewHolder> {
     ArrayList<PostHashTagItem> items = new ArrayList<PostHashTagItem>();
     OnPostHashTagClickListener listener;

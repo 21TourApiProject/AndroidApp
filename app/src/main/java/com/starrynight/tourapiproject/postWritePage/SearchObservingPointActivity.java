@@ -30,7 +30,19 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+/**
+* @className : SearchObservingPointActivity
+* @description : 게시물 작성시 관측지 기입 페이지 입니다.
+* @modification : jinhyeok (2022-08-14) 주석 수정
+* @author : 2022-08-14
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-14       주석 수정
 
+ */
 public class SearchObservingPointActivity extends AppCompatActivity {
     EditText findObservePoint;
     String observePoint;
@@ -119,7 +131,7 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        //관측지 선택 버튼
         Button addObservePoint = findViewById(R.id.addObservePoint);
         addObservePoint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,7 +143,7 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        //뒤로가기 버튼
         ImageView back_btn = findViewById(R.id.search__back_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +151,7 @@ public class SearchObservingPointActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        //임의 관측지 입력 칸
         editText = findViewById(R.id.findObservePoint);
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override

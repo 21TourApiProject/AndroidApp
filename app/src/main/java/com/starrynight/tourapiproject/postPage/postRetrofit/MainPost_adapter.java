@@ -45,7 +45,19 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+/**
+* @className : MainPost_adapter
+* @description : 메인 페이지 게시물 adapter
+* @modification : jinhyeok (2022-08-08) 주석 수정
+* @author : 2022-08-08
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-08       주석 수정
 
+ */
 public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.ViewHolder> {
     List<MainPost> items = new ArrayList<MainPost>();
     OnMainPostClickListener listener;

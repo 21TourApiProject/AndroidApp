@@ -13,7 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
+/**
+* @className : PostWriteHashTagItem2Adapter
+* @description : 게시물 작성 페이지에 필요한 해시태그 아이템 Adapter 입니다.
+* @modification : jinhyeok (2022-08-14) 주석 수정
+* @author : 2022-08-14
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-14       주석 수정
 
+ */
 public class PostWriteHashTagItem2Adapter extends RecyclerView.Adapter<PostWriteHashTagItem2Adapter.ViewHolder> {
     ArrayList<PostWriteHashTagItem2> items = new ArrayList<PostWriteHashTagItem2>();
 
