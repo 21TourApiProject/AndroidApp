@@ -3,7 +3,19 @@ package com.starrynight.tourapiproject.postPage.postRetrofit;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+/**
+* @className : Post
+* @description : 게시물 클래스 입니다.
+* @modification : jinhyeok (2022-08-08) 주석 수정
+* @author : 2022-08-08
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-08       주석 수정
 
+ */
 public class Post {
     @SerializedName("postId")
     Long postId;

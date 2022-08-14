@@ -13,7 +13,19 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
+/**
+* @className : ImageSliderAdapter
+* @description : 게시물 이미지 슬라이드 adpater 입니다.
+* @modification : jinhyeok (2022-08-12) 주석 수정
+* @author : 2022-08-12
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-12       주석 수정
 
+ */
 public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<String> sliderImage;

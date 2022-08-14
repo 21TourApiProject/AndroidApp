@@ -15,7 +15,19 @@ import com.bumptech.glide.Glide;
 import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
+/**
+* @className : Post_point_item_Adapter
+* @description : 검색 페이지, 게시물 페이지(관련 게시물)에 띄울 게시물 아이템 Adapter 입니다.
+* @modification : jinhyeok (2022-08-14) 주석 수정
+* @author : 2022-08-14
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-14       주석 수정
 
+ */
 public class Post_point_item_Adapter extends RecyclerView.Adapter<Post_point_item_Adapter.ViewHolder> {
     ArrayList<post_point_item> items = new ArrayList<post_point_item>();
     private Intent intent;

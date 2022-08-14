@@ -54,7 +54,18 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * className :   PostActivity
+ * description : 게시물 페이지 class입니다.
+ * modification : 2022.08.01(박진혁) 주석 수정
+ * author : jinhyeok
+ * date : 2022-08-01
+ * version : 1.0
+ * ====개정이력(Modification Information)====
+ * 수정일        수정자        수정내용
+ * -----------------------------------------
+ * 2022-08-01      jinhyeok      주석 수정
+ */
 public class PostActivity extends AppCompatActivity {
     private ViewPager2 sliderViewPager;
     private LinearLayout indicator;
@@ -97,7 +108,7 @@ public class PostActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        sliderViewPager = findViewById(R.id.slider);
+        sliderViewPager = findViewById(R.id.slider); // 이미지 좌우 슬라이드
         indicator = findViewById(R.id.indicator);
         //게시물 이미지 가져오는 get api
         Call<List<String>> call = RetrofitClient.getApiService().getPostImage(postId);
@@ -177,7 +188,7 @@ public class PostActivity extends AppCompatActivity {
                                                 Log.d("postHashTag", "게시물 해시태그 가져옴");
                                                 postHashTagList = response.body();
                                                 RecyclerView hashTagRecyclerView = findViewById(R.id.hashTagRecyclerView);
-                                                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+                                                StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL); // 해시태그 나열하는 Layout
                                                 hashTagRecyclerView.setLayoutManager(staggeredGridLayoutManager);
                                                 PostHashTagItemAdapter adapter2 = new PostHashTagItemAdapter();
                                                 if (!observation.getObservationName().equals("나만의 관측지")) {
@@ -220,6 +231,7 @@ public class PostActivity extends AppCompatActivity {
                                                 if (post.getOptionHashTag10() != null) {
                                                     adapter2.addItem(new PostHashTagItem(post.getOptionHashTag10(), null, null, null));
                                                 }
+                                                //해시태그 개수에 따라 레이아웃 변경
                                                 for (int i = 0; i < adapter2.getItemCount(); i++) {
                                                     allsize += adapter2.getItem(i).getHashTagname().length();
                                                 }
@@ -232,13 +244,14 @@ public class PostActivity extends AppCompatActivity {
                                                 }
                                                 hashTagRecyclerView.setAdapter(adapter2);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20, 20));
+                                                //게시물 해시태그 클릭 시 관련 게시물,관측지 검색 페이지로 이동
                                                 adapter2.setOnItemClicklistener(new OnPostHashTagClickListener() {
                                                     @Override
                                                     public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
                                                         Intent intent1 = new Intent(PostActivity.this, MainActivity.class);
                                                         PostHashTagItem item = adapter2.getItem(position);
                                                         if (position!=0) {
-                                                            if (item.getHashTagId() != null) {
+                                                            if (item.getHashTagId() != null) {//지정된 해시태그를 클릭했을 경우
                                                                 ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
                                                                 keyword = null;
                                                                 intent1.putExtra("keyword", keyword);
@@ -248,7 +261,7 @@ public class PostActivity extends AppCompatActivity {
                                                                 intent1.putExtra("hashTag", hashTag);
                                                                 intent1.putExtra("FromWhere", Activities.POST);
                                                                 startActivity(intent1);
-                                                            } else {
+                                                            } else {//임의의 해시태그를 클릭 했을 경우
                                                                 ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
                                                                 keyword = item.getHashTagname();
                                                                 intent1.putExtra("keyword", keyword);
@@ -299,6 +312,7 @@ public class PostActivity extends AppCompatActivity {
                                                 if (post.getOptionHashTag10() != null) {
                                                     adapter.addItem(new PostHashTagItem(post.getOptionHashTag10(), null, null, null));
                                                 }
+                                                //해시태그 갯수에 따라 레이아웃 변경
                                                 for (int i = 0; i < adapter.getItemCount(); i++) {
                                                     allsize += adapter.getItem(i).getHashTagname().length();
                                                 }
@@ -309,6 +323,7 @@ public class PostActivity extends AppCompatActivity {
                                                 } else if (allsize > 56) {
                                                     staggeredGridLayoutManager.setSpanCount(4);
                                                 }
+                                                // 해시태그 클릭시 페이지 이동
                                                 hashTagRecyclerView.setAdapter(adapter);
                                                 hashTagRecyclerView.addItemDecoration(new RecyclerViewDecoration(20, 20));
                                                 adapter.setOnItemClicklistener(new OnPostHashTagClickListener() {
@@ -437,6 +452,7 @@ public class PostActivity extends AppCompatActivity {
 
                     //관련 게시물
                     Call<List<PostImage>> call5 = RetrofitClient.getApiService().getRelatePostImageList(post.getObservationId());
+                    //관련 게시물 이미지
                     call5.enqueue(new Callback<List<PostImage>>() {
                         @Override
                         public void onResponse(Call<List<PostImage>> call, Response<List<PostImage>> response) {
@@ -460,6 +476,7 @@ public class PostActivity extends AppCompatActivity {
                                         adapter.addItem(new post_point_item("", "https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + relatefilename[i]));
                                     }
                                 }
+                                //관련 게시물 클릭 시 이동
                                 recyclerView.setAdapter(adapter);
                                 adapter.setOnItemClicklistener(new OnPostPointItemClickListener() {
                                     @Override
@@ -568,7 +585,7 @@ public class PostActivity extends AppCompatActivity {
             }
         });
     }
-
+    // 슬라이드 아래 indicator 양식
     private void setupIndicators(int count) {
         ImageView[] indicators = new ImageView[count];
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -585,7 +602,7 @@ public class PostActivity extends AppCompatActivity {
         }
         setCurrentIndicator(0);
     }
-
+    //슬라이드 이동 시 indicator 색 변화
     private void setCurrentIndicator(int position) {
         int childCount = indicator.getChildCount();
         for (int i = 0; i < childCount; i++) {

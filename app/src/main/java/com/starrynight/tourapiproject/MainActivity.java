@@ -32,7 +32,19 @@ import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 import java.util.ArrayList;
+/**
+* @className : MainActivity
+* @description : 메인 페이지 입니다.
+* @modification : jinhyeok (2022-08-14) 주석 수정
+* @author : 2022-08-14
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-14       주석 수정
 
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static Context mContext;
@@ -80,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
             ActivityCompat.requestPermissions(MainActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
         }
-
+        //메인 페이지 초기화 상태
         if (mainFragment == null) {
             mainFragment = new MainFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
@@ -89,9 +101,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
         bottom = findViewById(R.id.bottom_nav_view);
-
-
-
+        //바텀 네비게이션 버튼 클릭 시 이벤트
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -221,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.main_view, f);
         fragmentTransaction.commit();
     }
-
+    //뒤로가기 버튼 클릭 시
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
