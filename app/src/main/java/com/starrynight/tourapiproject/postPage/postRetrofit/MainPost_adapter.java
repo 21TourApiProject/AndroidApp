@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,6 +149,14 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                 isWish[position] = true;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(viewHolder.bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                viewHolder.bookmark.setEnabled(false);
+                                Handler handle = new Handler();
+                                handle.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        viewHolder.bookmark.setEnabled(true);
+                                    }
+                                },1500);
                             } else {
                                 Log.d("myWish", "게시물 찜 실패");
                             }

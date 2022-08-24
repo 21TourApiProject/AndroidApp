@@ -85,7 +85,7 @@ public class ObservationsiteActivity extends AppCompatActivity {
 
     private RecyclerFeeAdapter recyclerFeeAdapter;
     private List<ObserveFee> obs_fee_list;
-    private String[] relatefilename = new String[3];
+    private String[] relatefilename = new String[5];
 
 
     private BalloonObject balloonObject = new BalloonObject();   //mapfragment bundle
