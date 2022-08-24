@@ -19,7 +19,19 @@ import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter2;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+* @className : MyPostAdapter
+* @description : 찜목록 내 게시물, 내가 쓴 게시물, 관측지 관련 게시물 아이템 adpater 입니다.
+* @modification : jinhyeok (2022-08-16) 주석 수정
+* @author : 2022-08-16
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-16       주석 수정
 
+ */
 public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder> {
     private static List<MyPost> items;
     OnMyPostItemClickListener listener;
@@ -103,11 +115,12 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostAdapter.ViewHolder
         }
 
         public void setItem(MyPost item) {
+            //게시물 썸네일 가져오기
             if (item.getThumbnail() != null) {
                 Glide.with(context).load("https://starry-night.s3.ap-northeast-2.amazonaws.com/postImage/" + item.getThumbnail()).into(myWishPostImage);
                 myWishPostImage.setClipToOutline(true);
             }
-
+            //게시물 작성자 프로필 이미지 가져오기
             if (item.getProfileImage() != null) {
                 String imageName = item.getProfileImage();
                 if (item.getProfileImage().startsWith("http://") || item.getProfileImage().startsWith("https://")) {

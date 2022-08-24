@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -392,6 +393,7 @@ public class PostActivity extends AppCompatActivity {
 
                         }
                     });
+
                     //뒤로 버튼
                     FrameLayout back = findViewById(R.id.back_btn_layout);
                     back.setOnClickListener(new View.OnClickListener() {
@@ -552,6 +554,14 @@ public class PostActivity extends AppCompatActivity {
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(getApplicationContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
                                 ((MainActivity) MainActivity.mContext).replaceFragment(mainFragment);
+                                like_btn.setEnabled(false);
+                                Handler handle = new Handler();
+                                handle.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        like_btn.setEnabled(true);
+                                    }
+                                },1500);
                             } else {
                                 Log.d("myWish", "관광지 찜 실패");
                             }
