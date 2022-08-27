@@ -2,12 +2,13 @@ package com.starrynight.tourapiproject.weatherPage.wtMetModel;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.starrynight.tourapiproject.retrofitConfig.TaskServer;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WtMetRetrofit {
-    private static String BASE_URL = "https://api.openweathermap.org/data/2.5/";
+    private static String BASE_URL = TaskServer.openWeatherURL;
 
     public static WtMetInterface wtMetInterface() {
         return getWeatherInstance().create(WtMetInterface.class);

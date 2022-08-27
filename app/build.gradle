@@ -4,6 +4,9 @@ plugins {
     id 'com.google.android.gms.oss-licenses-plugin'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -17,6 +20,10 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        // 프로젝트 내에서 사용 가능한 변수
+        buildConfigField "String", "SPRING_SERVER_V1", properties['spring_server_v1']
+
     }
 
     buildTypes {
