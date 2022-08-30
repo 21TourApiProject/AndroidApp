@@ -65,6 +65,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+* @className : MapFragment.java
+* @description : 지도 프래그먼트
+* @modification : gyul chyoung (2022-08-30) 주석추가
+* @author : 2022-08-30
+* @date : gyul chyoung
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   gyul chyoung       2022-08-30       주석추가
+ */
 
 public class MapFragment extends Fragment {
 

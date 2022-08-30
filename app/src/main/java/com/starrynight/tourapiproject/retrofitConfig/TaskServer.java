@@ -2,6 +2,17 @@ package com.starrynight.tourapiproject.retrofitConfig;
 
 import com.starrynight.tourapiproject.BuildConfig;
 
+/**
+* @className : TaskServer.java
+* @description : Retrofit연결 서버주소 공통관리
+* @modification : gyul chyoung (2022-08-30) 주석생성
+* @author : 2022-08-30
+* @date : gyul chyoung
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   gyul chyoung       2022-08-30       주석생성
+ */
 public class TaskServer {
 
     public static final String v1Server = BuildConfig.SPRING_SERVER_V1;
