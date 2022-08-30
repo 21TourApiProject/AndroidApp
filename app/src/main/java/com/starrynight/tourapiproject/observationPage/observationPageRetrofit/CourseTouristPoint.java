@@ -2,6 +2,17 @@ package com.starrynight.tourapiproject.observationPage.observationPageRetrofit;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+* @className : CourseTouristPoint.java
+* @description : 관측지 코스 관광지 가져오는 DTO
+* @modification : gyul chyoung (2022-08-30) 주석추가
+* @author : 2022-08-30
+* @date : gyul chyoung
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   gyul chyoung       2022-08-30       주석추가
+ */
 public class CourseTouristPoint {
 
     @SerializedName("contentTypeId")
@@ -26,8 +37,6 @@ public class CourseTouristPoint {
 
     public CourseTouristPoint() {
     }
-
-    ;
 
     public Long getContentTypeId() {
         return contentTypeId;

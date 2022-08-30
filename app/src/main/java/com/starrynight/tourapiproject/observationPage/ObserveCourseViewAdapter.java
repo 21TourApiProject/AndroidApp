@@ -23,6 +23,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+* @className : ObserveCourseViewAdapter.java
+* @description : 관측지 코스 어댑터
+* @modification : gyul chyoung (2022-08-30) 주석추가
+* @author : 2022-08-30
+* @date : gyul chyoung
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   gyul chyoung       2022-08-30       주석추가
+ */
+
 public class ObserveCourseViewAdapter extends RecyclerView.Adapter<ObserveCourseViewAdapter.MyViewHolder> {
 
     private static final String TAG = "course adapter";

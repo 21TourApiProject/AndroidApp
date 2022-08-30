@@ -56,6 +56,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+* @className : ObservationsiteActivity.java
+* @description : 관측지페이지
+* @modification : gyul chyoung (2022-08-30) 주석추가
+* @author : 2022-08-30
+* @date : gyul chyoung
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   gyul chyoung       2022-08-30       주석추가
+ */
+
 public class ObservationsiteActivity extends AppCompatActivity {
     private Long userId;
     private Long postId;
@@ -469,7 +481,8 @@ public class ObservationsiteActivity extends AppCompatActivity {
             }
         });
 
-        save_btn.setOnClickListener(new View.OnClickListener() {
+        // 짐버튼 클릭 설정정
+       save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isWish) { //찜 안한 상태일때

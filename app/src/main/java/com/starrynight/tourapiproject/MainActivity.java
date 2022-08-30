@@ -384,6 +384,12 @@ public class MainActivity extends AppCompatActivity {
         this.filter = filter;
     }
 
+    /**
+         * TODO 남아있는 프래그먼트를 전부 없앰
+         * @param   -
+         * @return
+         * @throws
+     */
     private void removeFragments() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
