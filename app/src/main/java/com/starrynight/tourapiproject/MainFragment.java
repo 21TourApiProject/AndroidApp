@@ -48,14 +48,14 @@ import retrofit2.Response;
 /**
 * @className : MainFragment
 * @description : 홈 화면 Fragment 입니다.
-* @modification : jinhyeok (2022-08-14) 주석 수정
-* @author : 2022-08-14
-* @date : jinhyeok
+* @modification : 2022-09-02 (jinhyeok) 주석 수정
+* @author : jinhyeok
+* @date : 2022-09-02
 * @version : 1.0
    ====개정이력(Modification Information)====
   수정일        수정자        수정내용
    -----------------------------------------
-   jinhyeok      2022-08-14       주석 수정
+   2022-09-02      jinhyeok       주석 수정
 
  */
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
