@@ -29,7 +29,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+/**
+* @className : AddHashTagActivity
+* @description : 게시물 작성 페이지의 해시태그 추가 페이지 입니다.
+* @modification : 2022-09-02 (jinhyeok) 주석 수정
+* @author : jinhyeok
+* @date : 2022-09-02
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   2022-09-02      jinhyeok       주석 수정
 
+ */
 public class AddHashTagActivity extends AppCompatActivity {
     List<PostHashTagParams> postHashTagParams = new ArrayList<>();
     List<PostHashTagParams> postHashTagParams2 = new ArrayList<>();
@@ -149,8 +161,8 @@ public class AddHashTagActivity extends AppCompatActivity {
 
         Arrays.fill(hashTaglist, "");
         Arrays.fill(optionHashTagList, "");
-        final List<String> finallist = new ArrayList<>();
-        final List<String> optionFinalList = new ArrayList<>();
+        final List<String> finallist = new ArrayList<>(); //메인 해시태그 리스트
+        final List<String> optionFinalList = new ArrayList<>(); //임의 해시태그 리스트
         optionHashTagRecyclerView = findViewById(R.id.optionHashTagRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.HORIZONTAL, false);
         optionHashTagRecyclerView.setLayoutManager(layoutManager);
@@ -194,13 +206,8 @@ public class AddHashTagActivity extends AppCompatActivity {
                 finish();
             }
         });
-        ImageView back = findViewById(R.id.addHashTag_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+        // 임의 해시태그 작성하는 텍스트 칸
         editText = findViewById(R.id.findHashTag);
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -224,6 +231,8 @@ public class AddHashTagActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        //임의 해시태그 추가하는 버튼
         Button add_hashTag = findViewById(R.id.addHashTag);
         add_hashTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,6 +251,7 @@ public class AddHashTagActivity extends AppCompatActivity {
                 }
             }
         });
+
         //해시태그 삭제
         adapter.setOnItemClicklistener(new OnPostWriteHashTagItemAdapter() {
             @Override
@@ -249,6 +259,15 @@ public class AddHashTagActivity extends AppCompatActivity {
                 adapter.removeItem(position);
                 adapter.notifyDataSetChanged();
                 optionHashTagList[position] = "";
+            }
+        });
+
+        //뒤로 가기 버튼
+        ImageView back = findViewById(R.id.addHashTag_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

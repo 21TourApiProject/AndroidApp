@@ -3,7 +3,19 @@ package com.starrynight.tourapiproject.myPage.myWish.post;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+/**
+* @className : MyPost
+* @description : 찜목록 내 게시물, 내가 쓴 게시물 더 보기, 관측지 관련 게시물 아이템 클래스 입니다.
+* @modification : jinhyeok (2022-08-16) 주석 수정
+* @author : 2022-08-16
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-16       주석 수정
 
+ */
 public class MyPost {
 
     @SerializedName("itemId")

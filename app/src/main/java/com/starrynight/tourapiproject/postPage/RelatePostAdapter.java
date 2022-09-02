@@ -12,7 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.starrynight.tourapiproject.R;
 
 import java.util.ArrayList;
+/**
+* @className : RelatePostAdapter
+* @description : 관련 게시물 adapter입니다.
+* @modification : jinhyeok (2022-08-12) 주석 수정
+* @author : 2022-08-12
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-12       주석 수정
 
+ */
 public class RelatePostAdapter extends RecyclerView.Adapter<RelatePostAdapter.ViewHolder> {
     ArrayList<RelatePost> items = new ArrayList<RelatePost>();
     OnRelatePostItemClickListener listener;

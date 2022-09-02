@@ -347,9 +347,9 @@ public class SignUpActivity extends AppCompatActivity {
                         if (kakaoAccount.getGender() != null) {
                             Log.d(TAG2, "onSuccess:get Gender " + kakaoAccount.getGender());
                             if (kakaoAccount.getGender() == Gender.FEMALE)
-                                kakaoUserParams.setSex(true);
-                            else if (kakaoAccount.getGender() == Gender.MALE)
                                 kakaoUserParams.setSex(false);
+                            else if (kakaoAccount.getGender() == Gender.MALE)
+                                kakaoUserParams.setSex(true);
                         }
 
                         Profile profile = kakaoAccount.getProfile();

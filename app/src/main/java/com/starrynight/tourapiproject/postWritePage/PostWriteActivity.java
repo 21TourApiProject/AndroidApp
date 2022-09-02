@@ -82,6 +82,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * className :  PostWriteActivity
+ * description : 게시물 작성 페이지 class
+ * modification : 2022.08.01(박진혁) 주석 수정
+ * author : jinhyeok
+ * date : 2022-08-01
+ * version : 1.0
+ * ====개정이력(Modification Information)====
+ * 수정일        수정자        수정내용
+ * -----------------------------------------
+ * 2022-08-01      jinhyeok      주석 수정
+ */
 public class PostWriteActivity extends AppCompatActivity {
 
     final int PICK_IMAGE_SAMSUNG = 200;
@@ -746,7 +758,7 @@ public class PostWriteActivity extends AppCompatActivity {
         todaytime = formatMin.format(c.getTime());
         int todayHour = Integer.parseInt(todaydate);
         int todayTime = Integer.parseInt(todaytime);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod2, todayHour, todayTime, false);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Dialog_NoActionBar, callbackMethod2, todayHour, todayTime, false);
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
     }

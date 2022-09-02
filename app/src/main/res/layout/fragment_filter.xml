@@ -74,7 +74,7 @@
                     android:background="@drawable/filter__layout_background"
                     android:orientation="vertical"
                     android:paddingTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -631,7 +631,7 @@
                     android:background="@drawable/filter__layout_background"
                     android:orientation="vertical"
                     android:paddingTop="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
