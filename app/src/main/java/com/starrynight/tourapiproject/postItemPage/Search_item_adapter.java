@@ -13,7 +13,19 @@ import com.starrynight.tourapiproject.R;
 import com.starrynight.tourapiproject.postWritePage.SearchObservingPointActivity;
 
 import java.util.ArrayList;
+/**
+* @className : Search_item_adapter
+* @description : 관측지 검색 아이템 Adapter 입니다.
+* @modification : jinhyeok (2022-08-14) 주석 수정
+* @author : 2022-08-14
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-14       주석 수정
 
+ */
 public class Search_item_adapter extends RecyclerView.Adapter<Search_item_adapter.ViewHolder> {
     ArrayList<Search_item> searchItemArrayList;
     OnSearchItemClickListener listener;

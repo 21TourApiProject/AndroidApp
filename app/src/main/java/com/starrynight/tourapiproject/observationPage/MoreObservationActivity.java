@@ -22,8 +22,21 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+/**
+* @className : MoreObservationActivity
+* @description : 관측지 관련 게시물 더보기 페이지입니다.
+* @modification : jinhyeok (2022-08-16) 주석 수정
+* @author : 2022-08-16
+* @date : jinhyeok
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   jinhyeok      2022-08-16       주석 수정
 
+ */
 public class MoreObservationActivity extends AppCompatActivity {
+    private static final int POST = 103;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +70,10 @@ public class MoreObservationActivity extends AppCompatActivity {
                        @Override
                        public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
                            MyPost item = relatePostAdapter.getItem(position);
+                           Log.d("postId",""+item.getPostId());
                            Intent intent = new Intent(MoreObservationActivity.this, PostActivity.class);
                            intent.putExtra("postId", item.getPostId());
-                           startActivity(intent);
+                           startActivityForResult(intent, POST);
                        }
                    });
                }else{Log.d("relatePost","관련 게시물 업로드 실패");}

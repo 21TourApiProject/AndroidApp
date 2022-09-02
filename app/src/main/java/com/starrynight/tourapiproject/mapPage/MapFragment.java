@@ -65,6 +65,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+* @className : MapFragment.java
+* @description : 지도 프래그먼트
+* @modification : gyul chyoung (2022-08-30) 주석추가
+* @author : 2022-08-30
+* @date : gyul chyoung
+* @version : 1.0
+     ====개정이력(Modification Information)====
+  수정일        수정자        수정내용    -----------------------------------------
+   gyul chyoung       2022-08-30       주석추가
+ */
 
 public class MapFragment extends Fragment {
 
@@ -408,6 +419,8 @@ public class MapFragment extends Fragment {
         searchView.setIconifiedByDefault(false);
         area = new ArrayList<Integer>(Collections.nCopies(17, 0));
         hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
+        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
 
         if (getArguments() != null) {
             Activities fromWhere = (Activities) getArguments().getSerializable("FromWhere");
@@ -1095,10 +1108,8 @@ public class MapFragment extends Fragment {
 
     private void initHashtagRecycler() {
         //해쉬태그 리사이클러 초기화
-        RecyclerDecoration hashtagDecoration = new RecyclerDecoration(16);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         hashTagsrecyclerView.setLayoutManager(linearLayoutManager);
-        hashTagsrecyclerView.addItemDecoration(hashtagDecoration);
         recyclerHashTagAdapter = new RecyclerHashTagAdapter();
         hashTagsrecyclerView.setAdapter(recyclerHashTagAdapter);
     }

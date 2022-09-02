@@ -32,7 +32,19 @@ import com.starrynight.tourapiproject.searchPage.SearchResultFragment;
 import com.starrynight.tourapiproject.starPage.TonightSkyFragment;
 
 import java.util.ArrayList;
+/**
+* @className : MainActivity
+* @description : 메인 페이지 입니다.
+* @modification : 2022-09-02 (jinhyeok) 주석 수정
+* @author : jinhyeok
+* @date : 2022-09-02
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   2022-09-02      jinhyeok       주석 수정
 
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static Context mContext;
@@ -80,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, READ_PERMISSION, PERMISSIONS_REQUEST_CODE);
             ActivityCompat.requestPermissions(MainActivity.this, INTERNET_PERMISSION, PERMISSIONS_REQUEST_CODE);
         }
-
+        //메인 페이지 초기화 상태
         if (mainFragment == null) {
             mainFragment = new MainFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
@@ -89,28 +101,31 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav_view);
 
         bottom = findViewById(R.id.bottom_nav_view);
-
-
+        //바텀 네비게이션 버튼 클릭 시 이벤트
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_main:
-                        if (mainFragment == null) {
-                            mainFragment = new MainFragment();
-                            getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
+                        if(bottomNavigationView.getSelectedItemId() == R.id.navigation_main) {
+                            mainFragment.toTheTop();
+                        }else{
+                            if (mainFragment == null) {
+                                mainFragment = new MainFragment();
+                                getSupportFragmentManager().beginTransaction().add(R.id.main_view, mainFragment).commit();
+                            }
+                            if (mainFragment != null)
+                                getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
+                            if (searchFragment != null)
+                                getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
+                            if (tonightSkyFragment != null)
+                                getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
+                            if (personFragment != null)
+                                getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
+                            showBottom();
+                            removeFragments();
                         }
-                        if (mainFragment != null)
-                            getSupportFragmentManager().beginTransaction().show(mainFragment).commit();
-                        if (searchFragment != null)
-                            getSupportFragmentManager().beginTransaction().hide(searchFragment).commit();
-                        if (tonightSkyFragment != null)
-                            getSupportFragmentManager().beginTransaction().hide(tonightSkyFragment).commit();
-                        if (personFragment != null)
-                            getSupportFragmentManager().beginTransaction().hide(personFragment).commit();
-                        showBottom();
-                        removeFragments();
                         return true;
                     case R.id.navigation_search:
                         if (searchFragment == null) {
@@ -216,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.main_view, f);
         fragmentTransaction.commit();
     }
-
+    //뒤로가기 버튼 클릭 시
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_view);
@@ -322,14 +337,10 @@ public class MainActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    public void replaceFragment() {
-        super.onResume();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.main_view, fragment).commitAllowingStateLoss();
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.detach(mainFragment).attach(mainFragment).commit();
+        fragmentTransaction.replace(R.id.main_view, fragment).commitAllowingStateLoss();
     }
 
 
@@ -373,6 +384,12 @@ public class MainActivity extends AppCompatActivity {
         this.filter = filter;
     }
 
+    /**
+         * TODO 남아있는 프래그먼트를 전부 없앰
+         * @param   -
+         * @return
+         * @throws
+     */
     private void removeFragments() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 

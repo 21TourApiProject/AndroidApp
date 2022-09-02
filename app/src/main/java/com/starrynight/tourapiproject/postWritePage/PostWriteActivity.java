@@ -22,7 +22,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -80,6 +82,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * className :  PostWriteActivity
+ * description : 게시물 작성 페이지 class
+ * modification : 2022.08.01(박진혁) 주석 수정
+ * author : jinhyeok
+ * date : 2022-08-01
+ * version : 1.0
+ * ====개정이력(Modification Information)====
+ * 수정일        수정자        수정내용
+ * -----------------------------------------
+ * 2022-08-01      jinhyeok      주석 수정
+ */
 public class PostWriteActivity extends AppCompatActivity {
 
     final int PICK_IMAGE_SAMSUNG = 200;
@@ -104,6 +118,7 @@ public class PostWriteActivity extends AppCompatActivity {
     String[] WRITE_PERMISSION = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
     String[] READ_PERMISSION = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
     String[] INTERNET_PERMISSION = new String[]{Manifest.permission.INTERNET};
+    EditText addContext;
 
     int PERMISSIONS_REQUEST_CODE = 100;
 
@@ -125,6 +140,7 @@ public class PostWriteActivity extends AppCompatActivity {
     private String todaydate;
     private String todaytime;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +149,7 @@ public class PostWriteActivity extends AppCompatActivity {
         ob_linear = findViewById(R.id.postwrite_ob_linear);
         examplelayout = findViewById(R.id.exampleLinear);
         dialog = new PostWriteLoadingDialog(PostWriteActivity.this);
+        addContext = findViewById(R.id.postContentText);
 
 //      앱 내부저장소에서 userId 가져오기
         String fileName = "userId";
@@ -147,6 +164,21 @@ public class PostWriteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        addContext.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(@SuppressLint("ClickableViewAccessibility") View v, MotionEvent event) {
+                if (addContext.hasFocus()) {
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_SCROLL:
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            return true;
+                    }
+                }
+                return false;
+            }
+        });
+
         // + 버튼 클릭 이벤트
         addPicture = findViewById(R.id.addPicture);
         addPicture.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +186,7 @@ public class PostWriteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 examplelayout.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
-                if (numOfPicture >= 10) {
+                if (numOfPicture > 10) {
                     Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -334,7 +366,7 @@ public class PostWriteActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "관측 시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        if (hashTagList.isEmpty() && optionhashTagList.get(0) == null) {
+                        if (hashTagList.isEmpty() && optionhashTagList.isEmpty()) {
                             Toast.makeText(getApplicationContext(), "해시태그를 입력해주세요.", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -592,7 +624,7 @@ public class PostWriteActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     ClipData clipData = data.getClipData();
                     if (clipData != null) {
-                        if (numOfPicture + clipData.getItemCount() >= 10) {
+                        if (numOfPicture + clipData.getItemCount() > 10) {
                             Toast.makeText(PostWriteActivity.this, "사진은 최대 10장까지 선택할수있습니다.", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -726,7 +758,7 @@ public class PostWriteActivity extends AppCompatActivity {
         todaytime = formatMin.format(c.getTime());
         int todayHour = Integer.parseInt(todaydate);
         int todayTime = Integer.parseInt(todaytime);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar, callbackMethod2, todayHour, todayTime, false);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, android.R.style.Theme_Holo_Dialog_NoActionBar, callbackMethod2, todayHour, todayTime, false);
         timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         timePickerDialog.show();
     }
@@ -845,5 +877,22 @@ public class PostWriteActivity extends AppCompatActivity {
             dialog.dismiss();
             finish();
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View focusView = getCurrentFocus();
+        if (focusView != null) {
+            Rect rect = new Rect();
+            focusView.getGlobalVisibleRect(rect);
+            int x = (int) ev.getX(), y = (int) ev.getY();
+            if (!rect.contains(x, y)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(focusView.getWindowToken(), 0);
+                focusView.clearFocus();
+            }
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

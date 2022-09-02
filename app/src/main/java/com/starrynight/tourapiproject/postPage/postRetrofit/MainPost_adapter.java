@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,19 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+/**
+* @className : MainPost_adapter
+* @description : 메인 페이지 게시물 adapter
+* @modification : 2022-09-02 (jinhyeok) 주석 수정
+* @author : jinhyeok
+* @date : 2022-09-02
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   2022-09-02      jinhyeok       주석 수정
 
+ */
 public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.ViewHolder> {
     List<MainPost> items = new ArrayList<MainPost>();
     OnMainPostClickListener listener;
@@ -53,7 +66,6 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
     private static Context context;
     String beforeImage;
     ArrayList<Integer> area = new ArrayList<Integer>(Collections.nCopies(17, 0));
-    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
 
     public MainPost_adapter(List<MainPost> items, Context context) {
         this.items = items;
@@ -137,6 +149,14 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                                 isWish[position] = true;
                                 v.setSelected(!v.isSelected());
                                 Toast.makeText(viewHolder.bookmark.getContext(), "나의 여행버킷리스트에 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                viewHolder.bookmark.setEnabled(false);
+                                Handler handle = new Handler();
+                                handle.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        viewHolder.bookmark.setEnabled(true);
+                                    }
+                                },1500);
                             } else {
                                 Log.d("myWish", "게시물 찜 실패");
                             }
@@ -214,22 +234,26 @@ public class MainPost_adapter extends RecyclerView.Adapter<MainPost_adapter.View
                         public void onItemClick(PostHashTagItemAdapter.ViewHolder holder, View view, int position) {
                             Intent intent1 = new Intent(viewHolder.itemView.getContext(), MainActivity.class);
                             PostHashTagItem item1 = adapter.getItem(position);
-                            if (item1.getHashTagId() != null) {
-                                keyword[position] = null;
-                                intent1.putExtra("keyword", keyword[position]);
-                                int x = item1.getHashTagId().intValue();
-                                hashTag.set(x - 1, 1);
-                                intent1.putExtra("area", area);
-                                intent1.putExtra("hashTag", hashTag);
-                                intent1.putExtra("FromWhere", Activities.POST);
-                                viewHolder.itemView.getContext().startActivity(intent1);
-                            } else {
-                                keyword[position] = item1.getHashTagname();
-                                intent1.putExtra("keyword", keyword[position]);
-                                intent1.putExtra("area", area);
-                                intent1.putExtra("hashTag", hashTag);
-                                intent1.putExtra("FromWhere", Activities.POST);
-                                viewHolder.itemView.getContext().startActivity(intent1);
+                            if (position!=0) {
+                                if (item1.getHashTagId() != null) {
+                                    keyword[position] = null;
+                                    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+                                    intent1.putExtra("keyword", keyword[position]);
+                                    int x = item1.getHashTagId().intValue();
+                                    hashTag.set(x - 1, 1);
+                                    intent1.putExtra("area", area);
+                                    intent1.putExtra("hashTag", hashTag);
+                                    intent1.putExtra("FromWhere", Activities.POST);
+                                    viewHolder.itemView.getContext().startActivity(intent1);
+                                } else {
+                                    ArrayList<Integer> hashTag = new ArrayList<Integer>(Collections.nCopies(22, 0));
+                                    keyword[position] = item1.getHashTagname();
+                                    intent1.putExtra("keyword", keyword[position]);
+                                    intent1.putExtra("area", area);
+                                    intent1.putExtra("hashTag", hashTag);
+                                    intent1.putExtra("FromWhere", Activities.POST);
+                                    viewHolder.itemView.getContext().startActivity(intent1);
+                                }
                             }
                         }
                     });

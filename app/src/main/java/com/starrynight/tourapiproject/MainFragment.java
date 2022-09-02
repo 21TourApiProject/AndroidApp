@@ -45,6 +45,19 @@ import retrofit2.Response;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+/**
+* @className : MainFragment
+* @description : 홈 화면 Fragment 입니다.
+* @modification : 2022-09-02 (jinhyeok) 주석 수정
+* @author : jinhyeok
+* @date : 2022-09-02
+* @version : 1.0
+   ====개정이력(Modification Information)====
+  수정일        수정자        수정내용
+   -----------------------------------------
+   2022-09-02      jinhyeok       주석 수정
+
+ */
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     Long userId;
     String[] filename2 = new String[10];
@@ -63,7 +76,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
 
@@ -76,10 +88,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         swipeRefreshLayout = v.findViewById(R.id.swipe_layout);
@@ -90,7 +100,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         progressBar = v.findViewById(R.id.mainProgressBar);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        String fileName = "userId";
+        String fileName = "userId"; // 유저 아이디 가져오기
         try {
             FileInputStream fis = getActivity().openFileInput(fileName);
             String line = new BufferedReader(new InputStreamReader(fis)).readLine();
@@ -101,6 +111,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //유저 아이디를 통해 선호 해시태그 목록 가져오기
         Call<List<Long>> call = RetrofitClient.getApiService().getMyHashTagIdList(userId);
         call.enqueue(new Callback<List<Long>>() {
             @Override
@@ -108,6 +119,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 if (response.isSuccessful()) {
                     myhashTagIdList = response.body();
                     Filter filter = new Filter(null, myhashTagIdList);
+                    //선호 해시태그 목록에 따라 선호 게시물 메인화면에 먼저 가져오기
                     Call<List<MainPost>> call2 = RetrofitClient.getApiService().getMainPosts(filter);
                     call2.enqueue(new Callback<List<MainPost>>() {
                         @Override
@@ -129,6 +141,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                             Log.d("mainPostList", "인터넷 오류");
                         }
                     });
+                    // 밑으로 스크롤시 게시물 목록 업로딩
                     nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
                         @Override
                         public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -155,7 +168,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         });
 
-
+        //날씨 버튼
         ImageButton button = (ImageButton) v.findViewById(R.id.weather_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +202,13 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return v;
     }
 
+    public void toTheTop() {
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+        if (linearLayoutManager != null) {
+            nestedScrollView.fullScroll(View.FOCUS_UP);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -210,5 +230,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         ft.detach(this).attach(this).commit();
         swipeRefreshLayout.setRefreshing(false);
     }
+
 
 }
