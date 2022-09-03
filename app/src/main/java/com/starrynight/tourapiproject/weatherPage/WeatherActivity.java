@@ -63,6 +63,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * @className : WeatherActivity
+ * @description : 날씨 페이지입니다.
+ * @modification : 2022-09-03 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-03
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+hyeonz       2022-09-03   주석추가
+ */
 public class WeatherActivity extends AppCompatActivity {
     WeatherLoadingDialog dialog;
     WeatherActivity.LoadingAsyncTask task;
@@ -392,9 +404,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
+    // 별 관측 적합도 recycler 메소드
     @SuppressLint("SetTextI18n")
     public void setObFitRecycler() {
-        //관측 적합도 recyclerview
         obFitRecycler = findViewById(R.id.ob_fit_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         obFitRecycler.setLayoutManager(linearLayoutManager);
@@ -435,6 +447,7 @@ public class WeatherActivity extends AppCompatActivity {
         obFitRecycler.setAdapter(obFitViewAdapter);
     }
 
+    // textView를 세팅하는 메소드
     public void setTextView() {
         commentTv = findViewById(R.id.wt_comment);
         todayWeatherTv = findViewById(R.id.wt_today_weather_info);
@@ -471,7 +484,7 @@ public class WeatherActivity extends AppCompatActivity {
         wtWeather = findViewById(R.id.wt_weather);
     }
 
-    //뒤로가기 버튼 이벤트
+    // 뒤로가기 버튼 이벤트 메소드
     public void onClickBackBtn() {
         ImageView button = findViewById(R.id.wt_back_btn);
         button.setOnClickListener(new View.OnClickListener() {
@@ -482,7 +495,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    //도움말 버튼 이벤트
+    // 도움말 버튼 이벤트 메소드
     public void onClickHelpBtn() {
         wtHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -493,7 +506,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    //기상청 구름 정보 페이지로 이동
+    // 기상청 구름 정보 페이지로 이동 이벤트 메소드
     public void onClickCloudInfo() {
         TextView button1 = findViewById(R.id.wt_today_cloud);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -506,7 +519,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    //날짜 설정
+    // 날짜 Picker 설정 메소드
     public void onSetDatePicker() {
 //        cal.add(Calendar.DATE, 2);
 //        plusDay = formatDate2.format(cal.getTime());
@@ -597,7 +610,7 @@ public class WeatherActivity extends AppCompatActivity {
         };
     }
 
-    //날짜 선택 이벤트
+    // 날짜 선택 이벤트 메소드
     public void wtClickDatePicker(View view) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, dateListener, mYear, mMonth, mDay);
         datePickerDialog.getDatePicker().setMinDate(today.getTimeInMillis());
@@ -607,7 +620,7 @@ public class WeatherActivity extends AppCompatActivity {
         today.add(Calendar.DAY_OF_MONTH, -7);
     }
 
-    // 시간 설정
+    // 시간 설정 메소드
     public void onSetTimePicker() {
         timePicker = findViewById(R.id.wt_timePicker);
 
@@ -628,7 +641,7 @@ public class WeatherActivity extends AppCompatActivity {
         c.add(Calendar.DATE, -2);
     }
 
-    //시간 선택 이벤트
+    //시간 선택 이벤트 메소드
     public void wtClickTimePicker(View view) {
         timePicker = findViewById(R.id.wt_timePicker);
 
@@ -864,6 +877,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
+    // 지역별 날씨 연결 메소드
     public void connectMetApi() {
         Log.d("latitude1`", String.valueOf(latitude));
         Log.d("longitude1", String.valueOf(longitude));
@@ -1461,7 +1475,10 @@ public class WeatherActivity extends AppCompatActivity {
         Log.d("openWeatherApi", "불러진다");
     }
 
-    //unix 시간 변환
+    /**
+     * TODO unix 시간 변환 메소드
+     * @param  unixTime - unix 시간
+     */
     public void unixChange(String unixTime) {
         //yyyyMMddHH
         unixDate = new java.util.Date(Long.parseLong(unixTime) * 1000L);
@@ -1484,7 +1501,7 @@ public class WeatherActivity extends AppCompatActivity {
         unixToHour = formatHour.format(unixHour);
     }
 
-    //미세먼지 API 연결
+    // 미세먼지 API 연결
     public void connectFineDustApi() {
         if (dustCheck == 0) {
             if ((todayTime.equals("00") || todayTime.equals("01") || todayTime.equals("02") || todayTime.equals("03") || todayTime.equals("04"))) {
@@ -1866,7 +1883,11 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    //관측적합도
+    /**
+     * TODO 관측적합도 계산 메소드
+     * @return 관측적합도 결과값
+     * @throws
+     */
     public double setObservationalFitDegree() {
         cloudVolumeValue = Math.round(100 * (-(1 / (-(0.25) * (cloudVolume / 100 - 2.7)) - 1.48148)) * 100) / 100.0;
 
@@ -1932,7 +1953,7 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
-    //시,도 Spinner 동작
+    // 시,도 Spinner 동작 메소드
     public void onSetAreaSpinner() {
         final Spinner citySpinner = (Spinner) findViewById(R.id.wt_citySpinner);
         final Spinner provSpinner = (Spinner) findViewById(R.id.wt_provinceSpinner);
@@ -2303,11 +2324,11 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
+    // 지역명으로 경도, 위도, 광공해 받아오기
     public void connectWtArea() {
         Log.d("cityName1", cityName);
         Log.d("provName1", provName);
 
-        //지역명으로 경도, 위도, 광공해 받아오기
         Call<WtAreaParams> areaInfoCall = RetrofitClient.getApiService().getAreaInfo(cityName, provName);
         areaInfoCall.enqueue(new Callback<WtAreaParams>() {
             @Override
@@ -2345,6 +2366,10 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * TODO 날짜별 제공하는 최소 시 설정 메소드
+     * @param  num - 설정할 최소 시
+     */
     public void setMinHour(int num) {
         for (int i = 0; i < num + 1; i++) {
             String remove = list2.remove(0);
@@ -2362,6 +2387,10 @@ public class WeatherActivity extends AppCompatActivity {
         // hourChange = list2.toArray(new String[0]);
     }
 
+    /**
+     * TODO 날짜별 제공하는 최대 시 설정 메소드
+     * @param  num - 설정할 최대 시
+     */
     public void setLimitHour(int num) {
         hourChange = list2.toArray(new String[0]);
         numberPicker.setMinValue(0);
@@ -2369,6 +2398,10 @@ public class WeatherActivity extends AppCompatActivity {
         numberPicker.setDisplayedValues(hourChange);
     }
 
+    /**
+     * TODO 상세 날씨 정보에서 제공하는 최저/최고 기온 설정 메소드
+     * @param  state - 최저/최고 기온을 설정할 상태
+     */
     public void setTempVisibility(int state) {
         if (state == 0) {
             tempTv.setVisibility(View.VISIBLE);
@@ -2383,6 +2416,10 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * TODO 상세 날씨 정보에서 제공하는 광공해 설정 메소드
+     * @param  state - 광공해를 설정할 상태
+     */
     public void setLightPolVisibility(int state) {
         if (state == 0) {
             lightPolTv.setVisibility(View.VISIBLE);
@@ -2428,7 +2465,10 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    //관측 적합도 멘트
+    /**
+     * TODO 별 관측 적합도 멘트 설정 메소드
+     * @param  obFitValueSelect - 계산한 별 관측 적합도 값
+     */
     public void setObFitComment(Double obFitValueSelect) {
         if (obFitValueSelect < 40) {
             commentTv.setText("별을 보기 어려워요");
@@ -2448,6 +2488,17 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * TODO 상세 날씨 정보 성태 설정 메소드
+     * @param  cloud - 구름량
+     * @param  temp - 기온
+     * @param  humidity - 습도
+     * @param  moonAge - 월령
+     * @param  wind - 풍속
+     * @param  precip - 강수량
+     * @param  lightPol - 광공해
+     * @param  fineDust - 미세먼지
+     */
     public void setDetailState(Double cloud, Double temp, Double humidity, Double moonAge, Double wind, Double precip, Double lightPol, String fineDust) {
         if (cloud < 11) {
             cloudState = "매우좋음";
@@ -2544,6 +2595,11 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * TODO 미세먼지 상태로 미세먼지 상세값 설정 메소드
+     * @param  fineDustApiValue - 미세먼지 상태
+     * @return fineDust 상세 값
+     */
     public String setFineDustValue(String fineDustApiValue) {
         if (fineDustApiValue.equals("좋음")) {
             fineDust = "0~30㎍/㎥";
@@ -2629,8 +2685,8 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
+    //런타임 퍼미션 처리
     void checkRunTimePermission() {
-        //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(WeatherActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
@@ -2671,6 +2727,12 @@ public class WeatherActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * TODO 현제 위도, 적도로 지역 조회 메소드
+     * @param  latitude - 위도
+     * @param  longitude - 경도
+     * @return 에러 메시지
+     */
     public String getCurrentAddress(double latitude, double longitude) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> addresses;
@@ -2742,8 +2804,7 @@ public class WeatherActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
-
-
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -2796,6 +2857,7 @@ public class WeatherActivity extends AppCompatActivity {
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    // 시 이름 설정 메소드
     public void setCityName() {
         if (nowCity.equals("서울특별시")) {
             nowCity = "서울";
