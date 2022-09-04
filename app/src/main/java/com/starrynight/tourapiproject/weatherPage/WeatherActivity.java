@@ -73,7 +73,7 @@ import retrofit2.Response;
 ====개정이력(Modification Information)====
 수정일        수정자        수정내용
 -----------------------------------------
-hyeonz       2022-09-03   주석추가
+2022-09-03      hyeonz    주석추가
  */
 public class WeatherActivity extends AppCompatActivity {
     WeatherLoadingDialog dialog;
@@ -141,8 +141,8 @@ public class WeatherActivity extends AppCompatActivity {
     double feel_likeValue;
     double moonAge;
     double moonAgeValue;
-    String fineDust;
-    String fineDustSt;
+    String fineDust="없음";
+    String fineDustSt="없음";
     double fineDustValue;
     double precipitationProbability;
     double precipitationProbabilityValue;
@@ -1904,14 +1904,26 @@ public class WeatherActivity extends AppCompatActivity {
             feel_likeValue = Math.round(-0.09 * Math.pow((feel_like - 18), 2) * 100) / 100.0;
         }
 
-        if (fineDust.equals("좋음")) {
-            fineDustValue = 0;
-        } else if (fineDust.equals("보통")) {
-            fineDustValue = -5;
-        } else if (fineDust.equals("나쁨")) {
-            fineDustValue = -15;
-        } else if (fineDust.equals("매우나쁨")) {
-            fineDustValue = -30;
+        switch (fineDust) {
+            case "좋음":
+                fineDustValue = 0;
+                break;
+            case "보통":
+                fineDustValue = -5;
+                break;
+            case "나쁨":
+                fineDustValue = -15;
+                break;
+            case "매우나쁨":
+                fineDustValue = -30;
+                break;
+            case"없음":
+                fineDustValue = 0;
+                Log.d("fineDust", "미세먼지 정보 없음");
+                break;
+            default:
+                fineDustValue = 0;
+                break;
         }
         precipitationProbabilityValue = Math.round(100 * (-(1 / (-(1.2) * (precipitationProbability / 100 - 1.5)) - 0.55556)) * 100) / 100.0;
 
@@ -2497,9 +2509,9 @@ public class WeatherActivity extends AppCompatActivity {
      * @param  wind - 풍속
      * @param  precip - 강수량
      * @param  lightPol - 광공해
-     * @param  fineDust - 미세먼지
+     * @param  Dust - 미세먼지
      */
-    public void setDetailState(Double cloud, Double temp, Double humidity, Double moonAge, Double wind, Double precip, Double lightPol, String fineDust) {
+    public void setDetailState(Double cloud, Double temp, Double humidity, Double moonAge, Double wind, Double precip, Double lightPol, String Dust) {
         if (cloud < 11) {
             cloudState = "매우좋음";
         } else if (cloud < 21) {
@@ -2584,13 +2596,18 @@ public class WeatherActivity extends AppCompatActivity {
             lightPolState = "매우나쁨";
         }
 
-        if (fineDust.equals("151㎍/㎥ 이상")) {
+        if (Dust.equals("151㎍/㎥ 이상")) {
             fineDustState = "매우나쁨";
-        } else if (fineDust.equals("31~80㎍/㎥")) {
+        } else if (Dust.equals("31~80㎍/㎥")) {
             fineDustState = "보통";
-        } else if (fineDust.equals("81~150㎍/㎥")) {
+        } else if (Dust.equals("81~150㎍/㎥")) {
             fineDustState = "나쁨";
-        } else {
+        } else if(Dust.equals("없음")){
+            fineDustState = "좋음";
+            fineDustSt="정보 없음";
+            Log.d("fineDustState","미세먼지 상태 정보 없음");
+        }
+        else {
             fineDustState = "좋음";
         }
     }
@@ -2601,16 +2618,17 @@ public class WeatherActivity extends AppCompatActivity {
      * @return fineDust 상세 값
      */
     public String setFineDustValue(String fineDustApiValue) {
+        String dust;
         if (fineDustApiValue.equals("좋음")) {
-            fineDust = "0~30㎍/㎥";
+            dust = "0~30㎍/㎥";
         } else if (fineDustApiValue.equals("보통")) {
-            fineDust = "31~80㎍/㎥";
+            dust= "31~80㎍/㎥";
         } else if (fineDustApiValue.equals("나쁨")) {
-            fineDust = "81~150㎍/㎥";
+            dust = "81~150㎍/㎥";
         } else {
-            fineDust = "151㎍/㎥ 이상";
+            dust = "151㎍/㎥ 이상";
         }
-        return fineDust;
+        return dust;
     }
 
     /*
