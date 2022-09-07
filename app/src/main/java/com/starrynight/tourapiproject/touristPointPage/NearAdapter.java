@@ -18,6 +18,20 @@ import com.starrynight.tourapiproject.touristPointPage.touristPointRetrofit.Near
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @className : NearAdapter.java
+ * @description : 주변 관광지 Adapter 입니다.
+ * @modification : 2022-09-07(sein) 수정
+ * @author : sein
+ * @date : 2022-09-07
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-09-07     sein        주석 생성
+
+ */
 public class NearAdapter extends RecyclerView.Adapter<NearAdapter.ViewHolder> {
     private static List<Near> items;
     OnNearItemClickListener listener;

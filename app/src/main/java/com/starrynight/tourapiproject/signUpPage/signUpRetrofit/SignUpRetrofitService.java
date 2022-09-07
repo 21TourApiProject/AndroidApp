@@ -9,6 +9,20 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
+/**
+ * @className : SignUpRetrofitService.java
+ * @description : 회원가입 관련 Retrofit 주소 설정 입니다.
+ * @modification : 2022-09-07(sein) 수정
+ * @author : sein
+ * @date : 2022-09-07
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-09-07     sein        주석 생성
+
+ */
 public interface SignUpRetrofitService {
 
     @POST("user")

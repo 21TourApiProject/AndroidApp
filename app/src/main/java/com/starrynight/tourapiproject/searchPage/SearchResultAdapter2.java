@@ -19,6 +19,20 @@ import com.starrynight.tourapiproject.touristPointPage.HashTagAdapter2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @className : SearchResultAdapter2.java
+ * @description : 관광지, 관측지 검색 결과 Adapter 입니다.
+ * @modification : 2022-09-07(sein) 수정
+ * @author : sein
+ * @date : 2022-09-07
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-09-07     sein        주석 생성
+
+ */
 public class SearchResultAdapter2 extends RecyclerView.Adapter<SearchResultAdapter2.ViewHolder> {
     private List<SearchParams1> items;
     OnSearchResultItemClickListener2 listener;
