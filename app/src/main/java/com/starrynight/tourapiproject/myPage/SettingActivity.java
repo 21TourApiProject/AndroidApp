@@ -14,6 +14,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.starrynight.tourapiproject.R;
 
+/**
+ * @className : SettingActivity.java
+ * @description : 환경설정 페이지 입니다.
+ * @modification : 2022-09-07(sein) 수정
+ * @author : sein
+ * @date : 2022-09-07
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-09-07     sein        주석 생성
+
+ */
 public class SettingActivity extends AppCompatActivity {
     Long userId;
 

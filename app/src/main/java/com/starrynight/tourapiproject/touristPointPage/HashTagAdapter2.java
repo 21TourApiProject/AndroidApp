@@ -13,6 +13,21 @@ import com.starrynight.tourapiproject.R;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @className : HashTagAdapter2.java
+ * @description : 관광지 해시태그 Adapter 입니다.
+ * @modification : 2022-09-07(sein) 수정
+ * @author : sein
+ * @date : 2022-09-07
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-09-07     sein        주석 생성
+
+ */
 public class HashTagAdapter2 extends RecyclerView.Adapter<HashTagAdapter2.ViewHolder> {
     private static List<String> items;
 
