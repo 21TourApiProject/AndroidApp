@@ -11,6 +11,20 @@ import android.widget.LinearLayout;
 
 import com.starrynight.tourapiproject.R;
 
+/**
+ * @className : ThanksToActivity.java
+ * @description : 기여한 사람 페이지 입니다.
+ * @modification : 2022-09-07(sein) 수정
+ * @author : sein
+ * @date : 2022-09-07
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-09-07     sein        주석 생성
+
+ */
 public class ThanksToActivity extends AppCompatActivity {
 
     @Override

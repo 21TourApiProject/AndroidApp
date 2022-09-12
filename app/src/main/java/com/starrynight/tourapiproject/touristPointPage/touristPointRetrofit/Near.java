@@ -4,6 +4,20 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * @className : Near.java
+ * @description : 주변 관광지 정보 클래스 입니다.
+ * @modification : 2022-09-07(sein) 수정
+ * @author : sein
+ * @date : 2022-09-07
+ * @version : 1.0
+
+    ====개정이력(Modification Information)====
+        수정일        수정자        수정내용
+    -----------------------------------------
+      2022-09-07     sein        주석 생성
+
+ */
 public class Near {
 
     @SerializedName("contentId")

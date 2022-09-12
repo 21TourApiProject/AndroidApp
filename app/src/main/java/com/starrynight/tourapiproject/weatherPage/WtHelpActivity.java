@@ -10,6 +10,18 @@ import android.widget.TextView;
 
 import com.starrynight.tourapiproject.R;
 
+/**
+ * @className : WtHelpActivity
+ * @description : 날씨 도움말 페이지입니다.
+ * @modification : 2022-09-03 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-03
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+hyeonz       2022-09-03   주석추가
+ */
 public class WtHelpActivity extends AppCompatActivity {
 
     // 아이템 열기 터치 영역

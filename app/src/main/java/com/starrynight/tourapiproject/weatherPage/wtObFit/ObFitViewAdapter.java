@@ -15,6 +15,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+/**
+ * @className : ObFitViewAdapter
+ * @description : 날씨페이지 별 관측적합도 Adapter입니다.
+ * @modification : 2022-09-03 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-03
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+hyeonz       2022-09-03   주석추가
+ */
 public class ObFitViewAdapter extends RecyclerView.Adapter<ObFitViewAdapter.ObFitViewHolder> {
     ArrayList<ObFitItem> items = new ArrayList<>();
 

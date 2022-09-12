@@ -14,6 +14,18 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
+/**
+ * @className : GpsTracker
+ * @description : 사용자의 GPS위치 추적 Class
+ * @modification : 2022-09-03 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-03
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+hyeonz       2022-09-03   주석추가
+ */
 public class GpsTracker extends Service implements LocationListener {
 
     private final Context mContext;
