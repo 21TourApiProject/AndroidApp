@@ -53,7 +53,7 @@ public interface SignUpRetrofitService {
     Call<String> getEmail(@Path("realName") String realName, @Path("mobilePhoneNumber") String mobilePhoneNumber);
 
     @GET("user/login/password/{email}/{realName}/{mobilePhoneNumber}")
-    Call<String> getPassword(@Path("email") String email, @Path("realName") String realName, @Path("mobilePhoneNumber") String mobilePhoneNumber);
+    Call<Boolean> getPassword(@Path("email") String email, @Path("realName") String realName, @Path("mobilePhoneNumber") String mobilePhoneNumber);
 
     @POST("myHashTag/change/{userId}")
     Call<Void> changeMyHashTag(@Path("userId") Long userId, @Body List<MyHashTagParams> myHashTagParams);

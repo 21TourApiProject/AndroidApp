@@ -218,16 +218,17 @@ public class FindPasswordActivity extends AppCompatActivity implements
                             String realName = ((EditText) findViewById(R.id.findPwdRealName)).getText().toString();
 
                             //비밀번호 찾기를 위한 get api
-                            Call<String> call = RetrofitClient.getApiService().getPassword(email, realName, mobilePhoneNumber.getText().toString());
-                            call.enqueue(new Callback<String>() {
+                            Call<Boolean> call = RetrofitClient.getApiService().getPassword(email, realName, mobilePhoneNumber.getText().toString());
+                            call.enqueue(new Callback<Boolean>() {
                                 @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
+                                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                                     if (response.isSuccessful()) {
-                                        String result = response.body();
-                                        if (!result.equals("none")) {
+                                        Boolean result = response.body();
+                                        if (result) {
                                             Log.d(TAG, "비밀번호 찾기 성공");
                                             signOut();
-                                            showPassword.setText("비밀번호: " + result);
+//                                            showPassword.setText("비밀번호: " + result);
+                                            Toast.makeText(getApplicationContext(), "위 이메일로 임시 비밀번호를 전송했습니다.", Toast.LENGTH_LONG).show();
                                         } else {
                                             Toast.makeText(getApplicationContext(), "해당 정보와 일치하는 계정이 없습니다.", Toast.LENGTH_SHORT).show();
                                             showPassword.setText("");
@@ -239,7 +240,7 @@ public class FindPasswordActivity extends AppCompatActivity implements
                                 }
 
                                 @Override
-                                public void onFailure(Call<String> call, Throwable t) {
+                                public void onFailure(Call<Boolean> call, Throwable t) {
                                     Log.e("연결실패", t.getMessage());
                                     showPassword.setText("");
                                 }
