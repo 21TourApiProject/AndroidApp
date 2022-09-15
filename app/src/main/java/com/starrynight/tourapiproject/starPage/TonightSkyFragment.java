@@ -30,7 +30,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.ortiz.touchview.TouchImageView;
 import com.starrynight.tourapiproject.MainActivity;
 import com.starrynight.tourapiproject.R;
-import com.starrynight.tourapiproject.StarHelpActivity;
 import com.starrynight.tourapiproject.starPage.horItemPage.HorItem;
 import com.starrynight.tourapiproject.starPage.horItemPage.HoroscopeAdapter;
 import com.starrynight.tourapiproject.starPage.starItemPage.OnStarItemClickListener;
