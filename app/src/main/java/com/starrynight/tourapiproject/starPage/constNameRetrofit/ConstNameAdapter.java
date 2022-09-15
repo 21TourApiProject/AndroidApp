@@ -14,6 +14,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+/**
+ * @className : ConstNameAdapter
+ * @description : 별자리 검색 페이지의 Adapter 입니다.
+ * @modification : 2022-09-15 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-15
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+2022-09-15   hyeonz      주석추가
+ */
 public class ConstNameAdapter extends RecyclerView.Adapter<ConstNameAdapter.TodayViewHolder> {
     ArrayList<ConstellationParams2> items = new ArrayList<>();
 
