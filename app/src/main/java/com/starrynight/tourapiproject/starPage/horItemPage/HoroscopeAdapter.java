@@ -17,6 +17,18 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+/**
+ * @className : HoroscopeAdapter
+ * @description : 별자리 운세 Adapter입니다.
+ * @modification : 2022-09-15 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-15
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+2022-09-15   hyeonz      주석추가
+ */
 public class HoroscopeAdapter extends RecyclerView.Adapter<HoroscopeAdapter.HorViewHolder> {
     ArrayList<HorItem> horItems = new ArrayList<>();
 
