@@ -7,6 +7,18 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+/**
+ * @className : StarHelpActivity
+ * @description : 별자리 도움말 페이지입니다.
+ * @modification : 2022-09-15 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-15
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+2022-09-15   hyeonz      주석추가
+ */
 public class StarHelpActivity extends AppCompatActivity {
     // 아이템 열기 터치 영역
     ConstraintLayout observeEasilyOpen;

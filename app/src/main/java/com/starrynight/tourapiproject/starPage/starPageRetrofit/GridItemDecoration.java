@@ -9,6 +9,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * @className : GridItemDecoration
+ * @description : 오늘 볼 수 있는 천체, 모든 천체 보기에서 쓰이는 grid 관련 class
+ * @modification : 2022-09-15 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-15
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+2022-09-15   hyeonz      주석추가
+ */
 public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     private int size12;

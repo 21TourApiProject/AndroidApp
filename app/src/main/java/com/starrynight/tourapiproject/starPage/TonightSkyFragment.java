@@ -52,6 +52,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * @className : TonightSkyFragment
+ * @description : 별자리 지도 Fragment입니다.
+ * @modification : 2022-09-15 (hyeonz) 주석추가
+ * @author : hyeonz
+ * @date : 2022-09-15
+ * @version : 1.0
+====개정이력(Modification Information)====
+수정일        수정자        수정내용
+-----------------------------------------
+2022-09-15   hyeonz      주석추가
+ */
 public class TonightSkyFragment extends Fragment implements SensorEventListener {
     //bottomSheet 관련
     private LinearLayout bottomSheet;
